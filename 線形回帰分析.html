@@ -30,7 +30,7 @@
   
   
 <link rel="prev" href="r言語の基本.html"/>
-
+<link rel="next" href="ロジットブロビット回帰分析.html"/>
 <script src="libs/jquery-3.6.0/jquery-3.6.0.min.js"></script>
 <script src="https://cdn.jsdelivr.net/npm/fuse.js@6.4.6/dist/fuse.min.js"></script>
 <link href="libs/gitbook-2.6.7/css/style.css" rel="stylesheet" />
@@ -55,7 +55,7 @@
 
 <style type="text/css">
 pre > code.sourceCode { white-space: pre; position: relative; }
-pre > code.sourceCode > span { display: inline-block; line-height: 1.25; }
+pre > code.sourceCode > span { line-height: 1.25; }
 pre > code.sourceCode > span:empty { height: 1.2em; }
 .sourceCode { overflow: visible; }
 code.sourceCode > span { color: inherit; text-decoration: inherit; }
@@ -210,6 +210,28 @@ code span.wa { color: #60a0b0; font-weight: bold; font-style: italic; } /* Warni
 <li class="chapter" data-level="3.4" data-path="線形回帰分析.html"><a href="線形回帰分析.html#時系列データ同士の回帰"><i class="fa fa-check"></i><b>3.4</b> 時系列データ同士の回帰</a>
 <ul>
 <li class="chapter" data-level="" data-path="線形回帰分析.html"><a href="線形回帰分析.html#データセット4-株式市場"><i class="fa fa-check"></i>データセット#4: 株式市場</a></li>
+</ul></li>
+<li class="chapter" data-level="3.5" data-path="線形回帰分析.html"><a href="線形回帰分析.html#関数factorについて"><i class="fa fa-check"></i><b>3.5</b> 関数<code>factor()</code>について</a>
+<ul>
+<li class="chapter" data-level="" data-path="線形回帰分析.html"><a href="線形回帰分析.html#rでのfactor関数の使い方"><i class="fa fa-check"></i>Rでのfactor関数の使い方</a></li>
+</ul></li>
+</ul></li>
+<li class="chapter" data-level="4" data-path="ロジットブロビット回帰分析.html"><a href="ロジットブロビット回帰分析.html"><i class="fa fa-check"></i><b>4</b> ロジット/ブロビット回帰分析</a>
+<ul>
+<li class="chapter" data-level="4.1" data-path="ロジットブロビット回帰分析.html"><a href="ロジットブロビット回帰分析.html#ロジット回帰分析の基本操作"><i class="fa fa-check"></i><b>4.1</b> ロジット回帰分析の基本操作</a>
+<ul>
+<li class="chapter" data-level="" data-path="ロジットブロビット回帰分析.html"><a href="ロジットブロビット回帰分析.html#ロジットモデル-シミュレーションデータ"><i class="fa fa-check"></i>ロジットモデル: シミュレーションデータ</a></li>
+</ul></li>
+<li class="chapter" data-level="4.2" data-path="ロジットブロビット回帰分析.html"><a href="ロジットブロビット回帰分析.html#データ分析例"><i class="fa fa-check"></i><b>4.2</b> データ分析例</a>
+<ul>
+<li class="chapter" data-level="" data-path="ロジットブロビット回帰分析.html"><a href="ロジットブロビット回帰分析.html#データセット-1-企業パフォーマンスデータ-仮想"><i class="fa fa-check"></i>データセット (1): 企業パフォーマンス・データ (仮想)</a></li>
+<li class="chapter" data-level="" data-path="ロジットブロビット回帰分析.html"><a href="ロジットブロビット回帰分析.html#データセット-2-個人ローンデフォルトデータ-仮想"><i class="fa fa-check"></i>データセット (2): 個人ローン・デフォルト・データ (仮想)</a></li>
+</ul></li>
+<li class="chapter" data-level="4.3" data-path="ロジットブロビット回帰分析.html"><a href="ロジットブロビット回帰分析.html#疑似r2の計算"><i class="fa fa-check"></i><b>4.3</b> 疑似R2の計算</a>
+<ul>
+<li class="chapter" data-level="" data-path="ロジットブロビット回帰分析.html"><a href="ロジットブロビット回帰分析.html#パッケージdesctoolsの利用"><i class="fa fa-check"></i>パッケージ<code>DescTools</code>の利用</a></li>
+<li class="chapter" data-level="" data-path="ロジットブロビット回帰分析.html"><a href="ロジットブロビット回帰分析.html#パッケージpsclの利用"><i class="fa fa-check"></i>パッケージ<code>pscl</code>の利用</a></li>
+<li class="chapter" data-level="" data-path="ロジットブロビット回帰分析.html"><a href="ロジットブロビット回帰分析.html#パッケージperformanceの利用"><i class="fa fa-check"></i>パッケージ<code>performance</code>の利用</a></li>
 </ul></li>
 </ul></li>
 </ul>
@@ -1187,14 +1209,177 @@ code span.wa { color: #60a0b0; font-weight: bold; font-style: italic; } /* Warni
 
 </div>
 </div>
+<div id="関数factorについて" class="section level2 hasAnchor" number="3.5">
+<h2><span class="header-section-number">3.5</span> 関数<code>factor()</code>について<a href="線形回帰分析.html#関数factorについて" class="anchor-section" aria-label="Anchor link to header"></a></h2>
+<!-- FDS2024用に作成 -->
+<p>Rの初心者向けに関数<code>factor()</code>の使い方に関する簡単な説明を行う.</p>
+<hr />
+<div id="rでのfactor関数の使い方" class="section level3 unnumbered hasAnchor">
+<h3>Rでのfactor関数の使い方<a href="線形回帰分析.html#rでのfactor関数の使い方" class="anchor-section" aria-label="Anchor link to header"></a></h3>
+<p>関数<code>factor()</code>は, カテゴリーデータ（文字列や整数を値に持つベクトル）を因子型（factor）に変換するために使用される.</p>
+<div id="ベクトルを因子に変換" class="section level4 unnumbered hasAnchor">
+<h4>ベクトルを因子に変換<a href="線形回帰分析.html#ベクトルを因子に変換" class="anchor-section" aria-label="Anchor link to header"></a></h4>
+<div class="sourceCode" id="cb187"><pre class="sourceCode r"><code class="sourceCode r"><span id="cb187-1"><a href="線形回帰分析.html#cb187-1" tabindex="-1"></a><span class="co"># 質的変数 (文字列ベクトル) を定義</span></span>
+<span id="cb187-2"><a href="線形回帰分析.html#cb187-2" tabindex="-1"></a>ratings <span class="ot">&lt;-</span> <span class="fu">c</span>(<span class="st">&quot;A&quot;</span>, <span class="st">&quot;B&quot;</span>, <span class="st">&quot;C&quot;</span>, <span class="st">&quot;B&quot;</span>, <span class="st">&quot;A&quot;</span>, <span class="st">&quot;C&quot;</span>, <span class="st">&quot;A&quot;</span>, <span class="st">&quot;B&quot;</span>)</span>
+<span id="cb187-3"><a href="線形回帰分析.html#cb187-3" tabindex="-1"></a></span>
+<span id="cb187-4"><a href="線形回帰分析.html#cb187-4" tabindex="-1"></a><span class="co"># 因子 (ファクター) 化</span></span>
+<span id="cb187-5"><a href="線形回帰分析.html#cb187-5" tabindex="-1"></a>ratings_factor <span class="ot">&lt;-</span> <span class="fu">factor</span>(ratings)</span>
+<span id="cb187-6"><a href="線形回帰分析.html#cb187-6" tabindex="-1"></a>ratings_factor</span>
+<span id="cb187-7"><a href="線形回帰分析.html#cb187-7" tabindex="-1"></a><span class="co">#&gt; [1] A B C B A C A B</span></span>
+<span id="cb187-8"><a href="線形回帰分析.html#cb187-8" tabindex="-1"></a><span class="co">#&gt; Levels: A B C</span></span></code></pre></div>
+</div>
+<div id="因子水準カテゴリーの確認" class="section level4 unnumbered hasAnchor">
+<h4>因子水準（カテゴリー）の確認<a href="線形回帰分析.html#因子水準カテゴリーの確認" class="anchor-section" aria-label="Anchor link to header"></a></h4>
+<div class="sourceCode" id="cb188"><pre class="sourceCode r"><code class="sourceCode r"><span id="cb188-1"><a href="線形回帰分析.html#cb188-1" tabindex="-1"></a><span class="co"># 因子水準</span></span>
+<span id="cb188-2"><a href="線形回帰分析.html#cb188-2" tabindex="-1"></a><span class="fu">levels</span>(ratings_factor)</span>
+<span id="cb188-3"><a href="線形回帰分析.html#cb188-3" tabindex="-1"></a><span class="co">#&gt; [1] &quot;A&quot; &quot;B&quot; &quot;C&quot;</span></span></code></pre></div>
+</div>
+<div id="因子ラベルの変更" class="section level4 unnumbered hasAnchor">
+<h4>因子ラベルの変更<a href="線形回帰分析.html#因子ラベルの変更" class="anchor-section" aria-label="Anchor link to header"></a></h4>
+<div class="sourceCode" id="cb189"><pre class="sourceCode r"><code class="sourceCode r"><span id="cb189-1"><a href="線形回帰分析.html#cb189-1" tabindex="-1"></a><span class="co"># 因子ラベルを付け替え 注) 実行前に,</span></span>
+<span id="cb189-2"><a href="線形回帰分析.html#cb189-2" tabindex="-1"></a><span class="co"># 水準とラベルが正しく対応していることを確認すること</span></span>
+<span id="cb189-3"><a href="線形回帰分析.html#cb189-3" tabindex="-1"></a><span class="fu">levels</span>(ratings_factor) <span class="ot">&lt;-</span> <span class="fu">c</span>(<span class="st">&quot;Excellent&quot;</span>, <span class="st">&quot;Good&quot;</span>, <span class="st">&quot;Fair&quot;</span>)</span>
+<span id="cb189-4"><a href="線形回帰分析.html#cb189-4" tabindex="-1"></a><span class="fu">levels</span>(ratings_factor)</span>
+<span id="cb189-5"><a href="線形回帰分析.html#cb189-5" tabindex="-1"></a><span class="co">#&gt; [1] &quot;Excellent&quot; &quot;Good&quot;      &quot;Fair&quot;</span></span></code></pre></div>
+</div>
+<div id="因子の並べ替え" class="section level4 unnumbered hasAnchor">
+<h4>因子の並べ替え<a href="線形回帰分析.html#因子の並べ替え" class="anchor-section" aria-label="Anchor link to header"></a></h4>
+<div class="sourceCode" id="cb190"><pre class="sourceCode r"><code class="sourceCode r"><span id="cb190-1"><a href="線形回帰分析.html#cb190-1" tabindex="-1"></a><span class="co"># ファクターの並び替え</span></span>
+<span id="cb190-2"><a href="線形回帰分析.html#cb190-2" tabindex="-1"></a>ratings_factor <span class="ot">&lt;-</span> <span class="fu">factor</span>(ratings_factor, <span class="at">levels =</span> <span class="fu">c</span>(<span class="st">&quot;Fair&quot;</span>, <span class="st">&quot;Good&quot;</span>, <span class="st">&quot;Excellent&quot;</span>))</span>
+<span id="cb190-3"><a href="線形回帰分析.html#cb190-3" tabindex="-1"></a>ratings_factor</span>
+<span id="cb190-4"><a href="線形回帰分析.html#cb190-4" tabindex="-1"></a><span class="co">#&gt; [1] Excellent Good      Fair      Good      Excellent Fair      Excellent</span></span>
+<span id="cb190-5"><a href="線形回帰分析.html#cb190-5" tabindex="-1"></a><span class="co">#&gt; [8] Good     </span></span>
+<span id="cb190-6"><a href="線形回帰分析.html#cb190-6" tabindex="-1"></a><span class="co">#&gt; Levels: Fair Good Excellent</span></span></code></pre></div>
+<p>(質的な値を持つ) ベクトルを<code>factor()</code>により因子に変換する際,
+Rのデフォルトでは水準の値に対してアルファベット順に順番 (整数) が割当てられる.
+名義尺度変数であれば水準に割り当てられる順番自体には本来意味は持たないはずであるが,
+それでも, 例えば箱ひげ図など質的変数を使ったプロットする場合,
+意図とは異なる順番に配置され不都合が起こることがある.
+例えば, “level1”, “level2”, …,“level9”, “level10”のような数値を含んたベクトルに対して<code>factor()</code> を適用して因子化すると, “level1”の次に”level2”ではなく, “level10”が配置されてしまったりする.</p>
+<div class="sourceCode" id="cb191"><pre class="sourceCode r"><code class="sourceCode r"><span id="cb191-1"><a href="線形回帰分析.html#cb191-1" tabindex="-1"></a>aaa <span class="ot">&lt;-</span> <span class="fu">c</span>(<span class="st">&quot;level1&quot;</span>, <span class="st">&quot;level2&quot;</span>, <span class="st">&quot;level1&quot;</span>, <span class="st">&quot;level10&quot;</span>, <span class="st">&quot;level2&quot;</span>, <span class="st">&quot;level10&quot;</span>)</span>
+<span id="cb191-2"><a href="線形回帰分析.html#cb191-2" tabindex="-1"></a><span class="fu">factor</span>(aaa)</span>
+<span id="cb191-3"><a href="線形回帰分析.html#cb191-3" tabindex="-1"></a><span class="co">#&gt; [1] level1  level2  level1  level10 level2  level10</span></span>
+<span id="cb191-4"><a href="線形回帰分析.html#cb191-4" tabindex="-1"></a><span class="co">#&gt; Levels: level1 level10 level2</span></span></code></pre></div>
+<p>このような不具合を防ぐには, <code>factor()</code>を適用する際に,
+因子水準 (並び順) を引数<code>levels</code>で予め指定しておくのが良い.
+その際, 引数<code>labels</code>も併用し, 使いやすいラベルを付与しておくと良い.</p>
+<div class="sourceCode" id="cb192"><pre class="sourceCode r"><code class="sourceCode r"><span id="cb192-1"><a href="線形回帰分析.html#cb192-1" tabindex="-1"></a>aaa_factor <span class="ot">&lt;-</span> <span class="fu">factor</span>(aaa, <span class="at">levels =</span> <span class="fu">c</span>(<span class="st">&quot;level1&quot;</span>, <span class="st">&quot;level2&quot;</span>, <span class="st">&quot;level10&quot;</span>), <span class="at">labels =</span> <span class="fu">c</span>(<span class="st">&quot;L1&quot;</span>,</span>
+<span id="cb192-2"><a href="線形回帰分析.html#cb192-2" tabindex="-1"></a>  <span class="st">&quot;L2&quot;</span>, <span class="st">&quot;L10&quot;</span>))</span>
+<span id="cb192-3"><a href="線形回帰分析.html#cb192-3" tabindex="-1"></a>aaa_factor</span>
+<span id="cb192-4"><a href="線形回帰分析.html#cb192-4" tabindex="-1"></a><span class="co">#&gt; [1] L1  L2  L1  L10 L2  L10</span></span>
+<span id="cb192-5"><a href="線形回帰分析.html#cb192-5" tabindex="-1"></a><span class="co">#&gt; Levels: L1 L2 L10</span></span></code></pre></div>
+</div>
+<div id="因子の利用" class="section level4 unnumbered hasAnchor">
+<h4>因子の利用<a href="線形回帰分析.html#因子の利用" class="anchor-section" aria-label="Anchor link to header"></a></h4>
+<p>Rのデータフレーム (data.frame) は, 行列の形をしているが, 実際は, 長さは等しいものの 異なる”データ型”のベクトルを要素に持つリスト (list) である.
+因子に変換されたデータは, データフレーム内でカテゴリー変数として保持することで, 統計解析や可視化などで利用される.</p>
+<div class="sourceCode" id="cb193"><pre class="sourceCode r"><code class="sourceCode r"><span id="cb193-1"><a href="線形回帰分析.html#cb193-1" tabindex="-1"></a><span class="co"># サンプルのカテゴリーデータ</span></span>
+<span id="cb193-2"><a href="線形回帰分析.html#cb193-2" tabindex="-1"></a>ratings <span class="ot">&lt;-</span> <span class="fu">c</span>(<span class="st">&quot;A&quot;</span>, <span class="st">&quot;B&quot;</span>, <span class="st">&quot;C&quot;</span>, <span class="st">&quot;B&quot;</span>, <span class="st">&quot;A&quot;</span>, <span class="st">&quot;C&quot;</span>, <span class="st">&quot;A&quot;</span>, <span class="st">&quot;B&quot;</span>)</span>
+<span id="cb193-3"><a href="線形回帰分析.html#cb193-3" tabindex="-1"></a>prices <span class="ot">&lt;-</span> <span class="fu">c</span>(<span class="dv">100</span>, <span class="dv">85</span>, <span class="dv">60</span>, <span class="dv">79</span>, <span class="dv">90</span>, <span class="dv">65</span>, <span class="dv">92</span>, <span class="dv">84</span>)</span>
+<span id="cb193-4"><a href="線形回帰分析.html#cb193-4" tabindex="-1"></a></span>
+<span id="cb193-5"><a href="線形回帰分析.html#cb193-5" tabindex="-1"></a><span class="co"># データフレームの作成</span></span>
+<span id="cb193-6"><a href="線形回帰分析.html#cb193-6" tabindex="-1"></a>df <span class="ot">&lt;-</span> <span class="fu">data.frame</span>(<span class="at">ratings =</span> <span class="fu">factor</span>(ratings), <span class="at">prices =</span> prices)</span>
+<span id="cb193-7"><a href="線形回帰分析.html#cb193-7" tabindex="-1"></a>df</span>
+<span id="cb193-8"><a href="線形回帰分析.html#cb193-8" tabindex="-1"></a><span class="co">#&gt;   ratings prices</span></span>
+<span id="cb193-9"><a href="線形回帰分析.html#cb193-9" tabindex="-1"></a><span class="co">#&gt; 1       A    100</span></span>
+<span id="cb193-10"><a href="線形回帰分析.html#cb193-10" tabindex="-1"></a><span class="co">#&gt; 2       B     85</span></span>
+<span id="cb193-11"><a href="線形回帰分析.html#cb193-11" tabindex="-1"></a><span class="co">#&gt; 3       C     60</span></span>
+<span id="cb193-12"><a href="線形回帰分析.html#cb193-12" tabindex="-1"></a><span class="co">#&gt; 4       B     79</span></span>
+<span id="cb193-13"><a href="線形回帰分析.html#cb193-13" tabindex="-1"></a><span class="co">#&gt; 5       A     90</span></span>
+<span id="cb193-14"><a href="線形回帰分析.html#cb193-14" tabindex="-1"></a><span class="co">#&gt; 6       C     65</span></span>
+<span id="cb193-15"><a href="線形回帰分析.html#cb193-15" tabindex="-1"></a><span class="co">#&gt; 7       A     92</span></span>
+<span id="cb193-16"><a href="線形回帰分析.html#cb193-16" tabindex="-1"></a><span class="co">#&gt; 8       B     84</span></span>
+<span id="cb193-17"><a href="線形回帰分析.html#cb193-17" tabindex="-1"></a></span>
+<span id="cb193-18"><a href="線形回帰分析.html#cb193-18" tabindex="-1"></a><span class="co"># データフレームの要約</span></span>
+<span id="cb193-19"><a href="線形回帰分析.html#cb193-19" tabindex="-1"></a><span class="fu">summary</span>(df)</span>
+<span id="cb193-20"><a href="線形回帰分析.html#cb193-20" tabindex="-1"></a><span class="co">#&gt;  ratings     prices      </span></span>
+<span id="cb193-21"><a href="線形回帰分析.html#cb193-21" tabindex="-1"></a><span class="co">#&gt;  A:3     Min.   : 60.00  </span></span>
+<span id="cb193-22"><a href="線形回帰分析.html#cb193-22" tabindex="-1"></a><span class="co">#&gt;  B:3     1st Qu.: 75.50  </span></span>
+<span id="cb193-23"><a href="線形回帰分析.html#cb193-23" tabindex="-1"></a><span class="co">#&gt;  C:2     Median : 84.50  </span></span>
+<span id="cb193-24"><a href="線形回帰分析.html#cb193-24" tabindex="-1"></a><span class="co">#&gt;          Mean   : 81.88  </span></span>
+<span id="cb193-25"><a href="線形回帰分析.html#cb193-25" tabindex="-1"></a><span class="co">#&gt;          3rd Qu.: 90.50  </span></span>
+<span id="cb193-26"><a href="線形回帰分析.html#cb193-26" tabindex="-1"></a><span class="co">#&gt;          Max.   :100.00</span></span>
+<span id="cb193-27"><a href="線形回帰分析.html#cb193-27" tabindex="-1"></a></span>
+<span id="cb193-28"><a href="線形回帰分析.html#cb193-28" tabindex="-1"></a><span class="co"># 箱ひげ図</span></span>
+<span id="cb193-29"><a href="線形回帰分析.html#cb193-29" tabindex="-1"></a><span class="fu">plot</span>(prices <span class="sc">~</span> ratings, <span class="at">data =</span> df)</span></code></pre></div>
+<p><img src="046-factor_files/figure-html/unnamed-chunk-9-1.png" width="75%" /></p>
+<p>Rにおける標準的な統計解析や可視化を行う場合には,
+関数<code>factor()</code>を使うことで, カテゴリー変数はR内部で適正に処理されるため
+一変数のままで使用することができる. すなわち, 通常,
+カテゴリーの水準に対応するダミー変数を作る作業は不要である.</p>
+<p>関数<code>lm()</code>や<code>glm()</code>等においては, 文字列を値に持つカテゴリー変数は明示的に<code>factor()</code>を使って因子型に
+変換せずとも, Rは因子型と解釈して関数を実行するが, もしそのカテゴリー変数が整数値 (例, <code>area &lt;- c(1, 2, 2, 1, 1)</code>) を持つ場合には, <code>factor()</code>を使って
+変換しないと, 意図とは異なる結果やエラーを生じることになる</p>
+<div class="sourceCode" id="cb194"><pre class="sourceCode r"><code class="sourceCode r"><span id="cb194-1"><a href="線形回帰分析.html#cb194-1" tabindex="-1"></a><span class="co"># カテゴリーデータが整数値で記録されている場合</span></span>
+<span id="cb194-2"><a href="線形回帰分析.html#cb194-2" tabindex="-1"></a>ratings <span class="ot">&lt;-</span> <span class="fu">c</span>(<span class="dv">1</span>, <span class="dv">2</span>, <span class="dv">3</span>, <span class="dv">2</span>, <span class="dv">1</span>, <span class="dv">3</span>, <span class="dv">1</span>, <span class="dv">2</span>)</span>
+<span id="cb194-3"><a href="線形回帰分析.html#cb194-3" tabindex="-1"></a>prices <span class="ot">&lt;-</span> <span class="fu">c</span>(<span class="dv">100</span>, <span class="dv">85</span>, <span class="dv">60</span>, <span class="dv">79</span>, <span class="dv">90</span>, <span class="dv">65</span>, <span class="dv">92</span>, <span class="dv">84</span>)</span>
+<span id="cb194-4"><a href="線形回帰分析.html#cb194-4" tabindex="-1"></a></span>
+<span id="cb194-5"><a href="線形回帰分析.html#cb194-5" tabindex="-1"></a><span class="co"># データフレームの作成</span></span>
+<span id="cb194-6"><a href="線形回帰分析.html#cb194-6" tabindex="-1"></a>df <span class="ot">&lt;-</span> <span class="fu">data.frame</span>(<span class="at">ratings =</span> <span class="fu">factor</span>(ratings), <span class="at">prices =</span> prices)</span>
+<span id="cb194-7"><a href="線形回帰分析.html#cb194-7" tabindex="-1"></a>df</span>
+<span id="cb194-8"><a href="線形回帰分析.html#cb194-8" tabindex="-1"></a><span class="co">#&gt;   ratings prices</span></span>
+<span id="cb194-9"><a href="線形回帰分析.html#cb194-9" tabindex="-1"></a><span class="co">#&gt; 1       1    100</span></span>
+<span id="cb194-10"><a href="線形回帰分析.html#cb194-10" tabindex="-1"></a><span class="co">#&gt; 2       2     85</span></span>
+<span id="cb194-11"><a href="線形回帰分析.html#cb194-11" tabindex="-1"></a><span class="co">#&gt; 3       3     60</span></span>
+<span id="cb194-12"><a href="線形回帰分析.html#cb194-12" tabindex="-1"></a><span class="co">#&gt; 4       2     79</span></span>
+<span id="cb194-13"><a href="線形回帰分析.html#cb194-13" tabindex="-1"></a><span class="co">#&gt; 5       1     90</span></span>
+<span id="cb194-14"><a href="線形回帰分析.html#cb194-14" tabindex="-1"></a><span class="co">#&gt; 6       3     65</span></span>
+<span id="cb194-15"><a href="線形回帰分析.html#cb194-15" tabindex="-1"></a><span class="co">#&gt; 7       1     92</span></span>
+<span id="cb194-16"><a href="線形回帰分析.html#cb194-16" tabindex="-1"></a><span class="co">#&gt; 8       2     84</span></span>
+<span id="cb194-17"><a href="線形回帰分析.html#cb194-17" tabindex="-1"></a></span>
+<span id="cb194-18"><a href="線形回帰分析.html#cb194-18" tabindex="-1"></a><span class="co"># データフレームの要約?</span></span>
+<span id="cb194-19"><a href="線形回帰分析.html#cb194-19" tabindex="-1"></a><span class="fu">summary</span>(df)</span>
+<span id="cb194-20"><a href="線形回帰分析.html#cb194-20" tabindex="-1"></a><span class="co">#&gt;  ratings     prices      </span></span>
+<span id="cb194-21"><a href="線形回帰分析.html#cb194-21" tabindex="-1"></a><span class="co">#&gt;  1:3     Min.   : 60.00  </span></span>
+<span id="cb194-22"><a href="線形回帰分析.html#cb194-22" tabindex="-1"></a><span class="co">#&gt;  2:3     1st Qu.: 75.50  </span></span>
+<span id="cb194-23"><a href="線形回帰分析.html#cb194-23" tabindex="-1"></a><span class="co">#&gt;  3:2     Median : 84.50  </span></span>
+<span id="cb194-24"><a href="線形回帰分析.html#cb194-24" tabindex="-1"></a><span class="co">#&gt;          Mean   : 81.88  </span></span>
+<span id="cb194-25"><a href="線形回帰分析.html#cb194-25" tabindex="-1"></a><span class="co">#&gt;          3rd Qu.: 90.50  </span></span>
+<span id="cb194-26"><a href="線形回帰分析.html#cb194-26" tabindex="-1"></a><span class="co">#&gt;          Max.   :100.00</span></span>
+<span id="cb194-27"><a href="線形回帰分析.html#cb194-27" tabindex="-1"></a></span>
+<span id="cb194-28"><a href="線形回帰分析.html#cb194-28" tabindex="-1"></a><span class="co"># 箱ひげ図?</span></span>
+<span id="cb194-29"><a href="線形回帰分析.html#cb194-29" tabindex="-1"></a><span class="fu">plot</span>(prices <span class="sc">~</span> ratings, <span class="at">data =</span> df)</span></code></pre></div>
+<p><img src="046-factor_files/figure-html/unnamed-chunk-10-1.png" width="75%" /></p>
+<div class="sourceCode" id="cb195"><pre class="sourceCode r"><code class="sourceCode r"><span id="cb195-1"><a href="線形回帰分析.html#cb195-1" tabindex="-1"></a><span class="co"># 適切な処理: 関数factor()の使用</span></span>
+<span id="cb195-2"><a href="線形回帰分析.html#cb195-2" tabindex="-1"></a>df <span class="ot">&lt;-</span> <span class="fu">data.frame</span>(<span class="at">area =</span> <span class="fu">factor</span>(ratings, <span class="at">levels =</span> <span class="fu">c</span>(<span class="st">&quot;1&quot;</span>, <span class="st">&quot;2&quot;</span>, <span class="st">&quot;3&quot;</span>), <span class="at">labels =</span> <span class="fu">c</span>(<span class="st">&quot;A&quot;</span>,</span>
+<span id="cb195-3"><a href="線形回帰分析.html#cb195-3" tabindex="-1"></a>  <span class="st">&quot;B&quot;</span>, <span class="st">&quot;C&quot;</span>)), <span class="at">prices =</span> prices)</span>
+<span id="cb195-4"><a href="線形回帰分析.html#cb195-4" tabindex="-1"></a>df</span>
+<span id="cb195-5"><a href="線形回帰分析.html#cb195-5" tabindex="-1"></a><span class="co">#&gt;   area prices</span></span>
+<span id="cb195-6"><a href="線形回帰分析.html#cb195-6" tabindex="-1"></a><span class="co">#&gt; 1    A    100</span></span>
+<span id="cb195-7"><a href="線形回帰分析.html#cb195-7" tabindex="-1"></a><span class="co">#&gt; 2    B     85</span></span>
+<span id="cb195-8"><a href="線形回帰分析.html#cb195-8" tabindex="-1"></a><span class="co">#&gt; 3    C     60</span></span>
+<span id="cb195-9"><a href="線形回帰分析.html#cb195-9" tabindex="-1"></a><span class="co">#&gt; 4    B     79</span></span>
+<span id="cb195-10"><a href="線形回帰分析.html#cb195-10" tabindex="-1"></a><span class="co">#&gt; 5    A     90</span></span>
+<span id="cb195-11"><a href="線形回帰分析.html#cb195-11" tabindex="-1"></a><span class="co">#&gt; 6    C     65</span></span>
+<span id="cb195-12"><a href="線形回帰分析.html#cb195-12" tabindex="-1"></a><span class="co">#&gt; 7    A     92</span></span>
+<span id="cb195-13"><a href="線形回帰分析.html#cb195-13" tabindex="-1"></a><span class="co">#&gt; 8    B     84</span></span>
+<span id="cb195-14"><a href="線形回帰分析.html#cb195-14" tabindex="-1"></a></span>
+<span id="cb195-15"><a href="線形回帰分析.html#cb195-15" tabindex="-1"></a><span class="co"># データフレームの要約</span></span>
+<span id="cb195-16"><a href="線形回帰分析.html#cb195-16" tabindex="-1"></a><span class="fu">summary</span>(df)</span>
+<span id="cb195-17"><a href="線形回帰分析.html#cb195-17" tabindex="-1"></a><span class="co">#&gt;  area      prices      </span></span>
+<span id="cb195-18"><a href="線形回帰分析.html#cb195-18" tabindex="-1"></a><span class="co">#&gt;  A:3   Min.   : 60.00  </span></span>
+<span id="cb195-19"><a href="線形回帰分析.html#cb195-19" tabindex="-1"></a><span class="co">#&gt;  B:3   1st Qu.: 75.50  </span></span>
+<span id="cb195-20"><a href="線形回帰分析.html#cb195-20" tabindex="-1"></a><span class="co">#&gt;  C:2   Median : 84.50  </span></span>
+<span id="cb195-21"><a href="線形回帰分析.html#cb195-21" tabindex="-1"></a><span class="co">#&gt;        Mean   : 81.88  </span></span>
+<span id="cb195-22"><a href="線形回帰分析.html#cb195-22" tabindex="-1"></a><span class="co">#&gt;        3rd Qu.: 90.50  </span></span>
+<span id="cb195-23"><a href="線形回帰分析.html#cb195-23" tabindex="-1"></a><span class="co">#&gt;        Max.   :100.00</span></span>
+<span id="cb195-24"><a href="線形回帰分析.html#cb195-24" tabindex="-1"></a></span>
+<span id="cb195-25"><a href="線形回帰分析.html#cb195-25" tabindex="-1"></a><span class="co"># 箱ひげ図</span></span>
+<span id="cb195-26"><a href="線形回帰分析.html#cb195-26" tabindex="-1"></a><span class="fu">boxplot</span>(prices <span class="sc">~</span> ratings, <span class="at">data =</span> df)</span></code></pre></div>
+<p><img src="046-factor_files/figure-html/unnamed-chunk-11-1.png" width="75%" /></p>
+<hr />
+
+</div>
+</div>
+</div>
 </div>
             </section>
 
           </div>
         </div>
       </div>
-<a href="r言語の基本.html" class="navigation navigation-prev navigation-unique" aria-label="Previous page"><i class="fa fa-angle-left"></i></a>
-
+<a href="r言語の基本.html" class="navigation navigation-prev " aria-label="Previous page"><i class="fa fa-angle-left"></i></a>
+<a href="ロジットブロビット回帰分析.html" class="navigation navigation-next " aria-label="Next page"><i class="fa fa-angle-right"></i></a>
     </div>
   </div>
 <script src="libs/gitbook-2.6.7/js/app.min.js"></script>
