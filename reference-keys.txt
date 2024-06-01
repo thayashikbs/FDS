@@ -51,3 +51,9 @@ tidyverseの基本
 パッケージgamの利用
 パッケージmgcvの利用
 パッケージprophetの利用
+正則化回帰-lasso-ridge回帰
+検証用セット法による回帰モデルの予測精度評価
+lasso
+ridge回帰
+一般化線形モデル-glm-正則化
+補足-glmに対する変数選択の代替的方法

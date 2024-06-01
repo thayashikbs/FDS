@@ -30,7 +30,7 @@
   
   
 <link rel="prev" href="ロジットブロビット回帰分析.html"/>
-
+<link rel="next" href="正則化回帰-lasso-ridge回帰.html"/>
 <script src="libs/jquery-3.6.0/jquery-3.6.0.min.js"></script>
 <script src="https://cdn.jsdelivr.net/npm/fuse.js@6.4.6/dist/fuse.min.js"></script>
 <link href="libs/gitbook-2.6.7/css/style.css" rel="stylesheet" />
@@ -251,7 +251,26 @@ code span.wa { color: #60a0b0; font-weight: bold; font-style: italic; } /* Warni
 <li class="chapter" data-level="" data-path="一般化加法モデル-gam.html"><a href="一般化加法モデル-gam.html#gam"><i class="fa fa-check"></i>GAM</a></li>
 </ul></li>
 <li class="chapter" data-level="5.2" data-path="一般化加法モデル-gam.html"><a href="一般化加法モデル-gam.html#パッケージmgcvの利用"><i class="fa fa-check"></i><b>5.2</b> パッケージ<code>mgcv</code>の利用</a></li>
-<li class="chapter" data-level="5.3" data-path="一般化加法モデル-gam.html"><a href="一般化加法モデル-gam.html#パッケージprophetの利用"><i class="fa fa-check"></i><b>5.3</b> パッケージ’prophet’の利用</a></li>
+<li class="chapter" data-level="5.3" data-path="一般化加法モデル-gam.html"><a href="一般化加法モデル-gam.html#パッケージprophetの利用"><i class="fa fa-check"></i><b>5.3</b> パッケージ<code>prophet</code>の利用</a></li>
+</ul></li>
+<li class="chapter" data-level="6" data-path="正則化回帰-lasso-ridge回帰.html"><a href="正則化回帰-lasso-ridge回帰.html"><i class="fa fa-check"></i><b>6</b> 正則化回帰 (lasso, ridge回帰)</a>
+<ul>
+<li class="chapter" data-level="6.1" data-path="正則化回帰-lasso-ridge回帰.html"><a href="正則化回帰-lasso-ridge回帰.html#検証用セット法による回帰モデルの予測精度評価"><i class="fa fa-check"></i><b>6.1</b> 検証用セット法による回帰モデルの予測精度評価</a>
+<ul>
+<li class="chapter" data-level="" data-path="正則化回帰-lasso-ridge回帰.html"><a href="正則化回帰-lasso-ridge回帰.html#データセット1-ワイン品質データ"><i class="fa fa-check"></i>データセット1: ワイン品質データ</a></li>
+</ul></li>
+<li class="chapter" data-level="6.2" data-path="正則化回帰-lasso-ridge回帰.html"><a href="正則化回帰-lasso-ridge回帰.html#lasso"><i class="fa fa-check"></i><b>6.2</b> lasso</a>
+<ul>
+<li class="chapter" data-level="" data-path="正則化回帰-lasso-ridge回帰.html"><a href="正則化回帰-lasso-ridge回帰.html#関数glmnetの基本操作"><i class="fa fa-check"></i>関数<code>glmnet()</code>の基本操作</a></li>
+<li class="chapter" data-level="" data-path="正則化回帰-lasso-ridge回帰.html"><a href="正則化回帰-lasso-ridge回帰.html#lambdaのグリッド指定によるglmnetの一括実行"><i class="fa fa-check"></i><code>lambda</code>のグリッド指定による<code>glmnet</code>の一括実行</a></li>
+<li class="chapter" data-level="" data-path="正則化回帰-lasso-ridge回帰.html"><a href="正則化回帰-lasso-ridge回帰.html#交差検証によるチューニング"><i class="fa fa-check"></i>交差検証によるチューニング</a></li>
+</ul></li>
+<li class="chapter" data-level="6.3" data-path="正則化回帰-lasso-ridge回帰.html"><a href="正則化回帰-lasso-ridge回帰.html#ridge回帰"><i class="fa fa-check"></i><b>6.3</b> ridge回帰</a></li>
+<li class="chapter" data-level="6.4" data-path="正則化回帰-lasso-ridge回帰.html"><a href="正則化回帰-lasso-ridge回帰.html#一般化線形モデル-glm-正則化"><i class="fa fa-check"></i><b>6.4</b> 一般化線形モデル (GLM) + 正則化</a>
+<ul>
+<li class="chapter" data-level="" data-path="正則化回帰-lasso-ridge回帰.html"><a href="正則化回帰-lasso-ridge回帰.html#データセット2-german-creditデータ"><i class="fa fa-check"></i>データセット2: german creditデータ</a></li>
+</ul></li>
+<li class="chapter" data-level="6.5" data-path="正則化回帰-lasso-ridge回帰.html"><a href="正則化回帰-lasso-ridge回帰.html#補足-glmに対する変数選択の代替的方法"><i class="fa fa-check"></i><b>6.5</b> 補足: GLMに対する変数選択の代替的方法</a></li>
 </ul></li>
 </ul>
 
@@ -272,6 +291,24 @@ code span.wa { color: #60a0b0; font-weight: bold; font-style: italic; } /* Warni
             <section class="normal" id="section-">
 <div id="一般化加法モデル-gam" class="section level1 hasAnchor" number="5">
 <h1><span class="header-section-number">5</span> 一般化加法モデル (GAM)<a href="一般化加法モデル-gam.html#一般化加法モデル-gam" class="anchor-section" aria-label="Anchor link to header"></a></h1>
+<p>二つのパッケージ<code>gam</code>および<code>mgcv</code>は, 同一名の関数<code>gam()</code>, <code>s()</code>を持つ. これらは, 同じ名前ながら指定できるパラメータが互いに異なっているため,
+二つのライブラリを同時に読み込むことで,
+プログラムの一部が正常に動作しなくなる可能性がある.
+そこで, 例えば, パッケージ<code>gam</code>の関数<code>gam()</code>であれば,
+<code>gam::gam()</code>等と指定するなどの対応が取り得るが,
+機能に重複があることから,
+両方同時ではなく, どちから一方のみをロードし使うのが
+安全であろう.
+こだわりがなければ, より多様な機能を有する
+<code>mgcv</code>に限定して使用して良いと思われる</p>
+<!--
+したがって, 両方同時ではなく, どちから一方のみをロードし使うのが良い.
+どちらが良いか分かなければ, `mgcv`に限定して良いと思われる: -->
+<ul>
+<li>パッケージ<code>mgcv</code>の方の<code>gam()</code>関数は, 予測変数間の交互作用をモデルに
+取り入れられるなど柔軟性に富む.</li>
+<li><code>s()</code>関数は,多様な平滑化項を指定することができる.</li>
+</ul>
 <div id="パッケージgamの利用" class="section level2 hasAnchor" number="5.1">
 <h2><span class="header-section-number">5.1</span> パッケージ<code>gam</code>の利用<a href="一般化加法モデル-gam.html#パッケージgamの利用" class="anchor-section" aria-label="Anchor link to header"></a></h2>
 <div class="sourceCode" id="cb244"><pre class="sourceCode r"><code class="sourceCode r"><span id="cb244-1"><a href="一般化加法モデル-gam.html#cb244-1" tabindex="-1"></a><span class="fu">library</span>(gam)</span></code></pre></div>
@@ -391,10 +428,10 @@ code span.wa { color: #60a0b0; font-weight: bold; font-style: italic; } /* Warni
 <span id="cb253-5"><a href="一般化加法モデル-gam.html#cb253-5" tabindex="-1"></a>fit_sp4<span class="sc">$</span>df</span>
 <span id="cb253-6"><a href="一般化加法モデル-gam.html#cb253-6" tabindex="-1"></a><span class="co">#&gt; [1] 6.794596</span></span>
 <span id="cb253-7"><a href="一般化加法モデル-gam.html#cb253-7" tabindex="-1"></a>pred_sp2 <span class="ot">&lt;-</span> <span class="fu">predict</span>(fit_sp2, <span class="at">newdata =</span> <span class="fu">list</span>(<span class="at">age =</span> age_grid), <span class="at">se =</span> T)</span>
-<span id="cb253-8"><a href="一般化加法モデル-gam.html#cb253-8" tabindex="-1"></a><span class="fu">lines</span>(fit_sp3, <span class="at">col =</span> <span class="st">&quot;red&quot;</span>, <span class="at">lw =</span> <span class="dv">2</span>)</span>
-<span id="cb253-9"><a href="一般化加法モデル-gam.html#cb253-9" tabindex="-1"></a><span class="fu">lines</span>(fit_sp4, <span class="at">col =</span> <span class="st">&quot;blue&quot;</span>, <span class="at">lw =</span> <span class="dv">2</span>)</span>
-<span id="cb253-10"><a href="一般化加法モデル-gam.html#cb253-10" tabindex="-1"></a><span class="fu">legend</span>(<span class="st">&quot;topright&quot;</span>, <span class="at">legend =</span> <span class="fu">c</span>(<span class="st">&quot;16 DF&quot;</span>, <span class="st">&quot;6.8 DF&quot;</span>), <span class="at">col =</span> <span class="fu">c</span>(<span class="st">&quot;red&quot;</span>, <span class="st">&quot;blue&quot;</span>), <span class="at">lty =</span> <span class="dv">1</span>,</span>
-<span id="cb253-11"><a href="一般化加法モデル-gam.html#cb253-11" tabindex="-1"></a>  <span class="at">lwd =</span> <span class="dv">2</span>, <span class="at">cex =</span> <span class="fl">0.8</span>)</span></code></pre></div>
+<span id="cb253-8"><a href="一般化加法モデル-gam.html#cb253-8" tabindex="-1"></a><span class="fu">lines</span>(fit_sp3, <span class="at">col =</span> <span class="st">&quot;orange&quot;</span>, <span class="at">lw =</span> <span class="dv">2</span>)</span>
+<span id="cb253-9"><a href="一般化加法モデル-gam.html#cb253-9" tabindex="-1"></a><span class="fu">lines</span>(fit_sp4, <span class="at">col =</span> <span class="st">&quot;lightblue&quot;</span>, <span class="at">lw =</span> <span class="dv">2</span>)</span>
+<span id="cb253-10"><a href="一般化加法モデル-gam.html#cb253-10" tabindex="-1"></a><span class="fu">legend</span>(<span class="st">&quot;topright&quot;</span>, <span class="at">legend =</span> <span class="fu">c</span>(<span class="st">&quot;16 DF&quot;</span>, <span class="st">&quot;6.8 DF&quot;</span>), <span class="at">col =</span> <span class="fu">c</span>(<span class="st">&quot;orange&quot;</span>, <span class="st">&quot;lightblue&quot;</span>),</span>
+<span id="cb253-11"><a href="一般化加法モデル-gam.html#cb253-11" tabindex="-1"></a>  <span class="at">lty =</span> <span class="dv">1</span>, <span class="at">lwd =</span> <span class="dv">2</span>, <span class="at">cex =</span> <span class="fl">0.8</span>)</span></code></pre></div>
 <p><img src="060-GAM_files/figure-html/unnamed-chunk-10-1.png" width="75%" /></p>
 </div>
 <div id="gam" class="section level3 unnumbered hasAnchor">
@@ -435,67 +472,69 @@ code span.wa { color: #60a0b0; font-weight: bold; font-style: italic; } /* Warni
 <span id="cb254-33"><a href="一般化加法モデル-gam.html#cb254-33" tabindex="-1"></a><span class="co">#&gt; Multiple R-squared:  0.293,  Adjusted R-squared:  0.2899 </span></span>
 <span id="cb254-34"><a href="一般化加法モデル-gam.html#cb254-34" tabindex="-1"></a><span class="co">#&gt; F-statistic:  95.2 on 13 and 2986 DF,  p-value: &lt; 2.2e-16</span></span>
 <span id="cb254-35"><a href="一般化加法モデル-gam.html#cb254-35" tabindex="-1"></a><span class="fu">par</span>(<span class="at">mfrow =</span> <span class="fu">c</span>(<span class="dv">1</span>, <span class="dv">2</span>))</span>
-<span id="cb254-36"><a href="一般化加法モデル-gam.html#cb254-36" tabindex="-1"></a><span class="fu">plot</span>(fit_gam1, <span class="at">se =</span> <span class="cn">TRUE</span>, <span class="at">col =</span> <span class="st">&quot;red&quot;</span>)</span></code></pre></div>
+<span id="cb254-36"><a href="一般化加法モデル-gam.html#cb254-36" tabindex="-1"></a><span class="fu">plot</span>(fit_gam1, <span class="at">se =</span> <span class="cn">TRUE</span>, <span class="at">col =</span> <span class="st">&quot;orange&quot;</span>)</span></code></pre></div>
 <p><img src="060-GAM_files/figure-html/unnamed-chunk-11-1.png" width="75%" /><img src="060-GAM_files/figure-html/unnamed-chunk-11-2.png" width="75%" /></p>
+<!-- RK(060124): 以下のように, gam::gam(), gam::s()を指定しないとコンパイルエラーが発生.
+おそらく, mgcvのgam(), s()と干渉
+fit_gam3 <- gam(wage ~ s(year, 4) + s(age, 5) + education, data  =  Wage)
+-->
 <div class="sourceCode" id="cb255"><pre class="sourceCode r"><code class="sourceCode r"><span id="cb255-1"><a href="一般化加法モデル-gam.html#cb255-1" tabindex="-1"></a><span class="co"># GAM</span></span>
-<span id="cb255-2"><a href="一般化加法モデル-gam.html#cb255-2" tabindex="-1"></a>fit_gam3 <span class="ot">&lt;-</span> gam<span class="sc">::</span><span class="fu">gam</span>(wage <span class="sc">~</span> <span class="fu">s</span>(year, <span class="dv">4</span>) <span class="sc">+</span> <span class="fu">s</span>(age, <span class="dv">5</span>) <span class="sc">+</span> education, <span class="at">data =</span> Wage)</span>
-<span id="cb255-3"><a href="一般化加法モデル-gam.html#cb255-3" tabindex="-1"></a><span class="co"># s: 平滑化スプライン fit_gam3 &lt;- gam::gam(wage ~ gam::s(year, 4) + gam::s(age,</span></span>
-<span id="cb255-4"><a href="一般化加法モデル-gam.html#cb255-4" tabindex="-1"></a><span class="co"># 5) + education, data = Wage) head(gam::s(Wage$age, 5))</span></span>
-<span id="cb255-5"><a href="一般化加法モデル-gam.html#cb255-5" tabindex="-1"></a><span class="fu">summary</span>(fit_gam3)  <span class="co"># --&gt; ANOVA</span></span>
-<span id="cb255-6"><a href="一般化加法モデル-gam.html#cb255-6" tabindex="-1"></a><span class="co">#&gt; </span></span>
-<span id="cb255-7"><a href="一般化加法モデル-gam.html#cb255-7" tabindex="-1"></a><span class="co">#&gt; Call: gam::gam(formula = wage ~ s(year, 4) + s(age, 5) + education, </span></span>
-<span id="cb255-8"><a href="一般化加法モデル-gam.html#cb255-8" tabindex="-1"></a><span class="co">#&gt;     data = Wage)</span></span>
-<span id="cb255-9"><a href="一般化加法モデル-gam.html#cb255-9" tabindex="-1"></a><span class="co">#&gt; Deviance Residuals:</span></span>
-<span id="cb255-10"><a href="一般化加法モデル-gam.html#cb255-10" tabindex="-1"></a><span class="co">#&gt;     Min      1Q  Median      3Q     Max </span></span>
-<span id="cb255-11"><a href="一般化加法モデル-gam.html#cb255-11" tabindex="-1"></a><span class="co">#&gt; -119.43  -19.70   -3.33   14.17  213.48 </span></span>
-<span id="cb255-12"><a href="一般化加法モデル-gam.html#cb255-12" tabindex="-1"></a><span class="co">#&gt; </span></span>
-<span id="cb255-13"><a href="一般化加法モデル-gam.html#cb255-13" tabindex="-1"></a><span class="co">#&gt; (Dispersion Parameter for gaussian family taken to be 1235.69)</span></span>
-<span id="cb255-14"><a href="一般化加法モデル-gam.html#cb255-14" tabindex="-1"></a><span class="co">#&gt; </span></span>
-<span id="cb255-15"><a href="一般化加法モデル-gam.html#cb255-15" tabindex="-1"></a><span class="co">#&gt;     Null Deviance: 5222086 on 2999 degrees of freedom</span></span>
-<span id="cb255-16"><a href="一般化加法モデル-gam.html#cb255-16" tabindex="-1"></a><span class="co">#&gt; Residual Deviance: 3689770 on 2986 degrees of freedom</span></span>
-<span id="cb255-17"><a href="一般化加法モデル-gam.html#cb255-17" tabindex="-1"></a><span class="co">#&gt; AIC: 29887.75 </span></span>
-<span id="cb255-18"><a href="一般化加法モデル-gam.html#cb255-18" tabindex="-1"></a><span class="co">#&gt; </span></span>
-<span id="cb255-19"><a href="一般化加法モデル-gam.html#cb255-19" tabindex="-1"></a><span class="co">#&gt; Number of Local Scoring Iterations: NA </span></span>
-<span id="cb255-20"><a href="一般化加法モデル-gam.html#cb255-20" tabindex="-1"></a><span class="co">#&gt; </span></span>
-<span id="cb255-21"><a href="一般化加法モデル-gam.html#cb255-21" tabindex="-1"></a><span class="co">#&gt; Anova for Parametric Effects</span></span>
-<span id="cb255-22"><a href="一般化加法モデル-gam.html#cb255-22" tabindex="-1"></a><span class="co">#&gt;              Df  Sum Sq Mean Sq F value    Pr(&gt;F)    </span></span>
-<span id="cb255-23"><a href="一般化加法モデル-gam.html#cb255-23" tabindex="-1"></a><span class="co">#&gt; s(year, 4)    1   27162   27162  21.981 2.877e-06 ***</span></span>
-<span id="cb255-24"><a href="一般化加法モデル-gam.html#cb255-24" tabindex="-1"></a><span class="co">#&gt; s(age, 5)     1  195338  195338 158.081 &lt; 2.2e-16 ***</span></span>
-<span id="cb255-25"><a href="一般化加法モデル-gam.html#cb255-25" tabindex="-1"></a><span class="co">#&gt; education     4 1069726  267432 216.423 &lt; 2.2e-16 ***</span></span>
-<span id="cb255-26"><a href="一般化加法モデル-gam.html#cb255-26" tabindex="-1"></a><span class="co">#&gt; Residuals  2986 3689770    1236                      </span></span>
-<span id="cb255-27"><a href="一般化加法モデル-gam.html#cb255-27" tabindex="-1"></a><span class="co">#&gt; ---</span></span>
-<span id="cb255-28"><a href="一般化加法モデル-gam.html#cb255-28" tabindex="-1"></a><span class="co">#&gt; Signif. codes:  0 &#39;***&#39; 0.001 &#39;**&#39; 0.01 &#39;*&#39; 0.05 &#39;.&#39; 0.1 &#39; &#39; 1</span></span>
-<span id="cb255-29"><a href="一般化加法モデル-gam.html#cb255-29" tabindex="-1"></a><span class="co">#&gt; </span></span>
-<span id="cb255-30"><a href="一般化加法モデル-gam.html#cb255-30" tabindex="-1"></a><span class="co">#&gt; Anova for Nonparametric Effects</span></span>
-<span id="cb255-31"><a href="一般化加法モデル-gam.html#cb255-31" tabindex="-1"></a><span class="co">#&gt;             Npar Df Npar F  Pr(F)    </span></span>
-<span id="cb255-32"><a href="一般化加法モデル-gam.html#cb255-32" tabindex="-1"></a><span class="co">#&gt; (Intercept)                          </span></span>
-<span id="cb255-33"><a href="一般化加法モデル-gam.html#cb255-33" tabindex="-1"></a><span class="co">#&gt; s(year, 4)        3  1.086 0.3537    </span></span>
-<span id="cb255-34"><a href="一般化加法モデル-gam.html#cb255-34" tabindex="-1"></a><span class="co">#&gt; s(age, 5)         4 32.380 &lt;2e-16 ***</span></span>
-<span id="cb255-35"><a href="一般化加法モデル-gam.html#cb255-35" tabindex="-1"></a><span class="co">#&gt; education                            </span></span>
-<span id="cb255-36"><a href="一般化加法モデル-gam.html#cb255-36" tabindex="-1"></a><span class="co">#&gt; ---</span></span>
-<span id="cb255-37"><a href="一般化加法モデル-gam.html#cb255-37" tabindex="-1"></a><span class="co">#&gt; Signif. codes:  0 &#39;***&#39; 0.001 &#39;**&#39; 0.01 &#39;*&#39; 0.05 &#39;.&#39; 0.1 &#39; &#39; 1</span></span>
-<span id="cb255-38"><a href="一般化加法モデル-gam.html#cb255-38" tabindex="-1"></a><span class="fu">par</span>(<span class="at">mfrow =</span> <span class="fu">c</span>(<span class="dv">1</span>, <span class="dv">3</span>))</span>
-<span id="cb255-39"><a href="一般化加法モデル-gam.html#cb255-39" tabindex="-1"></a><span class="fu">plot</span>(fit_gam3, <span class="at">se =</span> <span class="cn">TRUE</span>, <span class="at">col =</span> <span class="st">&quot;blue&quot;</span>)</span></code></pre></div>
+<span id="cb255-2"><a href="一般化加法モデル-gam.html#cb255-2" tabindex="-1"></a>fit_gam3 <span class="ot">&lt;-</span> gam<span class="sc">::</span><span class="fu">gam</span>(wage <span class="sc">~</span> gam<span class="sc">::</span><span class="fu">s</span>(year, <span class="dv">4</span>) <span class="sc">+</span> gam<span class="sc">::</span><span class="fu">s</span>(age, <span class="dv">5</span>) <span class="sc">+</span> education, <span class="at">data =</span> Wage)</span>
+<span id="cb255-3"><a href="一般化加法モデル-gam.html#cb255-3" tabindex="-1"></a><span class="co"># s: 平滑化スプライン head(gam::s(Wage$age, 5))</span></span>
+<span id="cb255-4"><a href="一般化加法モデル-gam.html#cb255-4" tabindex="-1"></a><span class="fu">summary</span>(fit_gam3)  <span class="co"># --&gt; ANOVA</span></span>
+<span id="cb255-5"><a href="一般化加法モデル-gam.html#cb255-5" tabindex="-1"></a><span class="co">#&gt; </span></span>
+<span id="cb255-6"><a href="一般化加法モデル-gam.html#cb255-6" tabindex="-1"></a><span class="co">#&gt; Call: gam::gam(formula = wage ~ gam::s(year, 4) + gam::s(age, 5) + </span></span>
+<span id="cb255-7"><a href="一般化加法モデル-gam.html#cb255-7" tabindex="-1"></a><span class="co">#&gt;     education, data = Wage)</span></span>
+<span id="cb255-8"><a href="一般化加法モデル-gam.html#cb255-8" tabindex="-1"></a><span class="co">#&gt; Deviance Residuals:</span></span>
+<span id="cb255-9"><a href="一般化加法モデル-gam.html#cb255-9" tabindex="-1"></a><span class="co">#&gt;      Min       1Q   Median       3Q      Max </span></span>
+<span id="cb255-10"><a href="一般化加法モデル-gam.html#cb255-10" tabindex="-1"></a><span class="co">#&gt; -113.323  -19.521   -3.964   14.438  219.172 </span></span>
+<span id="cb255-11"><a href="一般化加法モデル-gam.html#cb255-11" tabindex="-1"></a><span class="co">#&gt; </span></span>
+<span id="cb255-12"><a href="一般化加法モデル-gam.html#cb255-12" tabindex="-1"></a><span class="co">#&gt; (Dispersion Parameter for gaussian family taken to be 1287.767)</span></span>
+<span id="cb255-13"><a href="一般化加法モデル-gam.html#cb255-13" tabindex="-1"></a><span class="co">#&gt; </span></span>
+<span id="cb255-14"><a href="一般化加法モデル-gam.html#cb255-14" tabindex="-1"></a><span class="co">#&gt;     Null Deviance: 5222086 on 2999 degrees of freedom</span></span>
+<span id="cb255-15"><a href="一般化加法モデル-gam.html#cb255-15" tabindex="-1"></a><span class="co">#&gt; Residual Deviance: 3854286 on 2993 degrees of freedom</span></span>
+<span id="cb255-16"><a href="一般化加法モデル-gam.html#cb255-16" tabindex="-1"></a><span class="co">#&gt; AIC: 30004.62 </span></span>
+<span id="cb255-17"><a href="一般化加法モデル-gam.html#cb255-17" tabindex="-1"></a><span class="co">#&gt; </span></span>
+<span id="cb255-18"><a href="一般化加法モデル-gam.html#cb255-18" tabindex="-1"></a><span class="co">#&gt; Number of Local Scoring Iterations: 2 </span></span>
+<span id="cb255-19"><a href="一般化加法モデル-gam.html#cb255-19" tabindex="-1"></a><span class="co">#&gt; </span></span>
+<span id="cb255-20"><a href="一般化加法モデル-gam.html#cb255-20" tabindex="-1"></a><span class="co">#&gt; Anova for Parametric Effects</span></span>
+<span id="cb255-21"><a href="一般化加法モデル-gam.html#cb255-21" tabindex="-1"></a><span class="co">#&gt;                   Df  Sum Sq Mean Sq F value    Pr(&gt;F)    </span></span>
+<span id="cb255-22"><a href="一般化加法モデル-gam.html#cb255-22" tabindex="-1"></a><span class="co">#&gt; gam::s(year, 4)    1   22434   22434  17.421  3.08e-05 ***</span></span>
+<span id="cb255-23"><a href="一般化加法モデル-gam.html#cb255-23" tabindex="-1"></a><span class="co">#&gt; gam::s(age, 5)     1  195045  195045 151.460 &lt; 2.2e-16 ***</span></span>
+<span id="cb255-24"><a href="一般化加法モデル-gam.html#cb255-24" tabindex="-1"></a><span class="co">#&gt; education          4 1150320  287580 223.317 &lt; 2.2e-16 ***</span></span>
+<span id="cb255-25"><a href="一般化加法モデル-gam.html#cb255-25" tabindex="-1"></a><span class="co">#&gt; Residuals       2993 3854286    1288                      </span></span>
+<span id="cb255-26"><a href="一般化加法モデル-gam.html#cb255-26" tabindex="-1"></a><span class="co">#&gt; ---</span></span>
+<span id="cb255-27"><a href="一般化加法モデル-gam.html#cb255-27" tabindex="-1"></a><span class="co">#&gt; Signif. codes:  0 &#39;***&#39; 0.001 &#39;**&#39; 0.01 &#39;*&#39; 0.05 &#39;.&#39; 0.1 &#39; &#39; 1</span></span>
+<span id="cb255-28"><a href="一般化加法モデル-gam.html#cb255-28" tabindex="-1"></a><span class="fu">par</span>(<span class="at">mfrow =</span> <span class="fu">c</span>(<span class="dv">1</span>, <span class="dv">3</span>))</span>
+<span id="cb255-29"><a href="一般化加法モデル-gam.html#cb255-29" tabindex="-1"></a><span class="fu">plot</span>(fit_gam3, <span class="at">se =</span> <span class="cn">TRUE</span>, <span class="at">col =</span> <span class="st">&quot;lightblue&quot;</span>)</span></code></pre></div>
 <p><img src="060-GAM_files/figure-html/unnamed-chunk-12-1.png" width="75%" /></p>
-<div class="sourceCode" id="cb256"><pre class="sourceCode r"><code class="sourceCode r"><span id="cb256-1"><a href="一般化加法モデル-gam.html#cb256-1" tabindex="-1"></a>fit_gam1 <span class="ot">&lt;-</span> gam<span class="sc">::</span><span class="fu">gam</span>(wage <span class="sc">~</span> <span class="fu">s</span>(age, <span class="dv">5</span>) <span class="sc">+</span> education, <span class="at">data =</span> Wage)</span>
-<span id="cb256-2"><a href="一般化加法モデル-gam.html#cb256-2" tabindex="-1"></a>fit_gam2 <span class="ot">&lt;-</span> gam<span class="sc">::</span><span class="fu">gam</span>(wage <span class="sc">~</span> year <span class="sc">+</span> <span class="fu">s</span>(age, <span class="dv">5</span>) <span class="sc">+</span> education, <span class="at">data =</span> Wage)</span>
-<span id="cb256-3"><a href="一般化加法モデル-gam.html#cb256-3" tabindex="-1"></a><span class="co"># fit_gam1 &lt;- gam::gam(wage ~ gam::s(age, 5) + education, data = Wage) fit_gam2</span></span>
-<span id="cb256-4"><a href="一般化加法モデル-gam.html#cb256-4" tabindex="-1"></a><span class="co"># &lt;- gam::gam(wage ~ year + gam::s(age, 5) + education, data = Wage)</span></span>
-<span id="cb256-5"><a href="一般化加法モデル-gam.html#cb256-5" tabindex="-1"></a><span class="fu">anova</span>(fit_gam1, fit_gam2, fit_gam3, <span class="at">test =</span> <span class="st">&quot;F&quot;</span>)</span>
-<span id="cb256-6"><a href="一般化加法モデル-gam.html#cb256-6" tabindex="-1"></a><span class="co">#&gt; Analysis of Deviance Table</span></span>
-<span id="cb256-7"><a href="一般化加法モデル-gam.html#cb256-7" tabindex="-1"></a><span class="co">#&gt; </span></span>
-<span id="cb256-8"><a href="一般化加法モデル-gam.html#cb256-8" tabindex="-1"></a><span class="co">#&gt; Model 1: wage ~ s(age, 5) + education</span></span>
-<span id="cb256-9"><a href="一般化加法モデル-gam.html#cb256-9" tabindex="-1"></a><span class="co">#&gt; Model 2: wage ~ year + s(age, 5) + education</span></span>
-<span id="cb256-10"><a href="一般化加法モデル-gam.html#cb256-10" tabindex="-1"></a><span class="co">#&gt; Model 3: wage ~ s(year, 4) + s(age, 5) + education</span></span>
-<span id="cb256-11"><a href="一般化加法モデル-gam.html#cb256-11" tabindex="-1"></a><span class="co">#&gt;   Resid. Df Resid. Dev Df Deviance       F    Pr(&gt;F)    </span></span>
-<span id="cb256-12"><a href="一般化加法モデル-gam.html#cb256-12" tabindex="-1"></a><span class="co">#&gt; 1      2990    3711731                                  </span></span>
-<span id="cb256-13"><a href="一般化加法モデル-gam.html#cb256-13" tabindex="-1"></a><span class="co">#&gt; 2      2989    3693842  1  17889.2 14.4771 0.0001447 ***</span></span>
-<span id="cb256-14"><a href="一般化加法モデル-gam.html#cb256-14" tabindex="-1"></a><span class="co">#&gt; 3      2986    3689770  3   4071.1  1.0982 0.3485661    </span></span>
-<span id="cb256-15"><a href="一般化加法モデル-gam.html#cb256-15" tabindex="-1"></a><span class="co">#&gt; ---</span></span>
-<span id="cb256-16"><a href="一般化加法モデル-gam.html#cb256-16" tabindex="-1"></a><span class="co">#&gt; Signif. codes:  0 &#39;***&#39; 0.001 &#39;**&#39; 0.01 &#39;*&#39; 0.05 &#39;.&#39; 0.1 &#39; &#39; 1</span></span></code></pre></div>
-<div class="sourceCode" id="cb257"><pre class="sourceCode r"><code class="sourceCode r"><span id="cb257-1"><a href="一般化加法モデル-gam.html#cb257-1" tabindex="-1"></a><span class="co"># 修正(05/27/22): preplot.Gam → preplot</span></span>
+<!--
+# fit_gam3 <- gam::gam(wage ~ gam::s(year, 4) + gam::s(age, 5) + education, data  =  Wage)
+#fit_gam1 <- gam::gam(wage ~ gam::s(age, 5) + education, data  =  Wage)
+#fit_gam2 <- gam::gam(wage ~ year + gam::s(age, 5) + education, data  =  Wage)
+-->
+<div class="sourceCode" id="cb256"><pre class="sourceCode r"><code class="sourceCode r"><span id="cb256-1"><a href="一般化加法モデル-gam.html#cb256-1" tabindex="-1"></a>fit_gam1 <span class="ot">&lt;-</span> gam<span class="sc">::</span><span class="fu">gam</span>(wage <span class="sc">~</span> gam<span class="sc">::</span><span class="fu">s</span>(age, <span class="dv">5</span>) <span class="sc">+</span> education, <span class="at">data =</span> Wage)</span>
+<span id="cb256-2"><a href="一般化加法モデル-gam.html#cb256-2" tabindex="-1"></a>fit_gam2 <span class="ot">&lt;-</span> gam<span class="sc">::</span><span class="fu">gam</span>(wage <span class="sc">~</span> year <span class="sc">+</span> gam<span class="sc">::</span><span class="fu">s</span>(age, <span class="dv">5</span>) <span class="sc">+</span> education, <span class="at">data =</span> Wage)</span>
+<span id="cb256-3"><a href="一般化加法モデル-gam.html#cb256-3" tabindex="-1"></a><span class="fu">anova</span>(fit_gam1, fit_gam2, fit_gam3, <span class="at">test =</span> <span class="st">&quot;F&quot;</span>)</span>
+<span id="cb256-4"><a href="一般化加法モデル-gam.html#cb256-4" tabindex="-1"></a><span class="co">#&gt; Analysis of Deviance Table</span></span>
+<span id="cb256-5"><a href="一般化加法モデル-gam.html#cb256-5" tabindex="-1"></a><span class="co">#&gt; </span></span>
+<span id="cb256-6"><a href="一般化加法モデル-gam.html#cb256-6" tabindex="-1"></a><span class="co">#&gt; Model 1: wage ~ gam::s(age, 5) + education</span></span>
+<span id="cb256-7"><a href="一般化加法モデル-gam.html#cb256-7" tabindex="-1"></a><span class="co">#&gt; Model 2: wage ~ year + gam::s(age, 5) + education</span></span>
+<span id="cb256-8"><a href="一般化加法モデル-gam.html#cb256-8" tabindex="-1"></a><span class="co">#&gt; Model 3: wage ~ gam::s(year, 4) + gam::s(age, 5) + education</span></span>
+<span id="cb256-9"><a href="一般化加法モデル-gam.html#cb256-9" tabindex="-1"></a><span class="co">#&gt;   Resid. Df Resid. Dev Df Deviance      F   Pr(&gt;F)   </span></span>
+<span id="cb256-10"><a href="一般化加法モデル-gam.html#cb256-10" tabindex="-1"></a><span class="co">#&gt; 1      2994    3867992                               </span></span>
+<span id="cb256-11"><a href="一般化加法モデル-gam.html#cb256-11" tabindex="-1"></a><span class="co">#&gt; 2      2993    3854286  1    13706 10.643 0.001117 **</span></span>
+<span id="cb256-12"><a href="一般化加法モデル-gam.html#cb256-12" tabindex="-1"></a><span class="co">#&gt; 3      2993    3854286  0        0                   </span></span>
+<span id="cb256-13"><a href="一般化加法モデル-gam.html#cb256-13" tabindex="-1"></a><span class="co">#&gt; ---</span></span>
+<span id="cb256-14"><a href="一般化加法モデル-gam.html#cb256-14" tabindex="-1"></a><span class="co">#&gt; Signif. codes:  0 &#39;***&#39; 0.001 &#39;**&#39; 0.01 &#39;*&#39; 0.05 &#39;.&#39; 0.1 &#39; &#39; 1</span></span>
+<span id="cb256-15"><a href="一般化加法モデル-gam.html#cb256-15" tabindex="-1"></a><span class="fu">AIC</span>(fit_gam1, fit_gam2, fit_gam3)</span>
+<span id="cb256-16"><a href="一般化加法モデル-gam.html#cb256-16" tabindex="-1"></a><span class="co">#&gt;          df      AIC</span></span>
+<span id="cb256-17"><a href="一般化加法モデル-gam.html#cb256-17" tabindex="-1"></a><span class="co">#&gt; fit_gam1  7 30013.27</span></span>
+<span id="cb256-18"><a href="一般化加法モデル-gam.html#cb256-18" tabindex="-1"></a><span class="co">#&gt; fit_gam2  8 30004.62</span></span>
+<span id="cb256-19"><a href="一般化加法モデル-gam.html#cb256-19" tabindex="-1"></a><span class="co">#&gt; fit_gam3  8 30004.62</span></span></code></pre></div>
+<div class="sourceCode" id="cb257"><pre class="sourceCode r"><code class="sourceCode r"><span id="cb257-1"><a href="一般化加法モデル-gam.html#cb257-1" tabindex="-1"></a><span class="co"># ISLRの修正: preplot.Gam → preplot</span></span>
 <span id="cb257-2"><a href="一般化加法モデル-gam.html#cb257-2" tabindex="-1"></a>tmp <span class="ot">&lt;-</span> <span class="fu">preplot</span>(fit_gam2, <span class="at">terms =</span> <span class="fu">labels</span>(fit_gam2))</span>
-<span id="cb257-3"><a href="一般化加法モデル-gam.html#cb257-3" tabindex="-1"></a>age_sm <span class="ot">&lt;-</span> <span class="fu">cbind</span>(tmp<span class="sc">$</span><span class="st">`</span><span class="at">s(age, 5)</span><span class="st">`</span><span class="sc">$</span>x, tmp<span class="sc">$</span><span class="st">`</span><span class="at">s(age, 5)</span><span class="st">`</span><span class="sc">$</span>y)</span>
+<span id="cb257-3"><a href="一般化加法モデル-gam.html#cb257-3" tabindex="-1"></a>age_sm <span class="ot">&lt;-</span> <span class="fu">cbind</span>(tmp<span class="sc">$</span><span class="st">`</span><span class="at">gam::s(age, 5)</span><span class="st">`</span><span class="sc">$</span>x, tmp<span class="sc">$</span><span class="st">`</span><span class="at">gam::s(age, 5)</span><span class="st">`</span><span class="sc">$</span>y)</span>
 <span id="cb257-4"><a href="一般化加法モデル-gam.html#cb257-4" tabindex="-1"></a>age_sm_uniq <span class="ot">&lt;-</span> <span class="fu">unique</span>(age_sm[<span class="fu">order</span>(age_sm[, <span class="dv">1</span>]), ])</span>
 <span id="cb257-5"><a href="一般化加法モデル-gam.html#cb257-5" tabindex="-1"></a><span class="fu">plot</span>(age_sm_uniq, <span class="at">type =</span> <span class="st">&quot;l&quot;</span>, <span class="at">xlab =</span> <span class="st">&quot;age&quot;</span>, <span class="at">ylab =</span> <span class="st">&quot;s(age, 5)&quot;</span>)</span></code></pre></div>
 <p><img src="060-GAM_files/figure-html/unnamed-chunk-14-1.png" width="75%" /></p>
@@ -616,10 +655,14 @@ code span.wa { color: #60a0b0; font-weight: bold; font-style: italic; } /* Warni
 <span id="cb267-29"><a href="一般化加法モデル-gam.html#cb267-29" tabindex="-1"></a><span class="co">#&gt; Model 2: medv ~ s(ptratio) + s(rm)</span></span>
 <span id="cb267-30"><a href="一般化加法モデル-gam.html#cb267-30" tabindex="-1"></a><span class="co">#&gt;   Resid. Df Resid. Dev      Df Deviance</span></span>
 <span id="cb267-31"><a href="一般化加法モデル-gam.html#cb267-31" tabindex="-1"></a><span class="co">#&gt; 1    478.40      12691                 </span></span>
-<span id="cb267-32"><a href="一般化加法モデル-gam.html#cb267-32" tabindex="-1"></a><span class="co">#&gt; 2    488.88      13867 -10.485  -1176.7</span></span></code></pre></div>
+<span id="cb267-32"><a href="一般化加法モデル-gam.html#cb267-32" tabindex="-1"></a><span class="co">#&gt; 2    488.88      13867 -10.485  -1176.7</span></span>
+<span id="cb267-33"><a href="一般化加法モデル-gam.html#cb267-33" tabindex="-1"></a><span class="fu">AIC</span>(fit_gam, fit_gam0)</span>
+<span id="cb267-34"><a href="一般化加法モデル-gam.html#cb267-34" tabindex="-1"></a><span class="co">#&gt;                df      AIC</span></span>
+<span id="cb267-35"><a href="一般化加法モデル-gam.html#cb267-35" tabindex="-1"></a><span class="co">#&gt; fit_gam  23.39062 3113.127</span></span>
+<span id="cb267-36"><a href="一般化加法モデル-gam.html#cb267-36" tabindex="-1"></a><span class="co">#&gt; fit_gam0 16.35950 3143.930</span></span></code></pre></div>
 </div>
 <div id="パッケージprophetの利用" class="section level2 hasAnchor" number="5.3">
-<h2><span class="header-section-number">5.3</span> パッケージ’prophet’の利用<a href="一般化加法モデル-gam.html#パッケージprophetの利用" class="anchor-section" aria-label="Anchor link to header"></a></h2>
+<h2><span class="header-section-number">5.3</span> パッケージ<code>prophet</code>の利用<a href="一般化加法モデル-gam.html#パッケージprophetの利用" class="anchor-section" aria-label="Anchor link to header"></a></h2>
 <p>時系列予測を目的とした関数および補助関数のパッケージ.</p>
 <pre><code>prophet: 
 - 非線形のトレンドに年次・週次・日次の季節性, さらに 休日効果を加えた加法モデルに基づいて時系列データを予測
@@ -671,12 +714,12 @@ code span.wa { color: #60a0b0; font-weight: bold; font-style: italic; } /* Warni
 <span id="cb271-20"><a href="一般化加法モデル-gam.html#cb271-20" tabindex="-1"></a>air_forecast <span class="ot">&lt;-</span> <span class="fu">predict</span>(air_ppht, dates_ft)</span>
 <span id="cb271-21"><a href="一般化加法モデル-gam.html#cb271-21" tabindex="-1"></a><span class="fu">tail</span>(air_forecast[<span class="fu">c</span>(<span class="st">&quot;ds&quot;</span>, <span class="st">&quot;yhat&quot;</span>, <span class="st">&quot;yhat_lower&quot;</span>, <span class="st">&quot;yhat_upper&quot;</span>)])</span>
 <span id="cb271-22"><a href="一般化加法モデル-gam.html#cb271-22" tabindex="-1"></a><span class="co">#&gt;             ds     yhat yhat_lower yhat_upper</span></span>
-<span id="cb271-23"><a href="一般化加法モデル-gam.html#cb271-23" tabindex="-1"></a><span class="co">#&gt; 151 1961-07-01 576.8046   549.2890   606.3837</span></span>
-<span id="cb271-24"><a href="一般化加法モデル-gam.html#cb271-24" tabindex="-1"></a><span class="co">#&gt; 152 1961-08-01 577.2261   549.2352   605.1666</span></span>
-<span id="cb271-25"><a href="一般化加法モデル-gam.html#cb271-25" tabindex="-1"></a><span class="co">#&gt; 153 1961-09-01 528.6678   499.5570   557.7746</span></span>
-<span id="cb271-26"><a href="一般化加法モデル-gam.html#cb271-26" tabindex="-1"></a><span class="co">#&gt; 154 1961-10-01 493.5023   465.1895   520.3273</span></span>
-<span id="cb271-27"><a href="一般化加法モデル-gam.html#cb271-27" tabindex="-1"></a><span class="co">#&gt; 155 1961-11-01 459.6479   430.3986   488.7128</span></span>
-<span id="cb271-28"><a href="一般化加法モデル-gam.html#cb271-28" tabindex="-1"></a><span class="co">#&gt; 156 1961-12-01 489.0093   462.0579   518.2175</span></span>
+<span id="cb271-23"><a href="一般化加法モデル-gam.html#cb271-23" tabindex="-1"></a><span class="co">#&gt; 151 1961-07-01 576.8046   546.7116   603.3298</span></span>
+<span id="cb271-24"><a href="一般化加法モデル-gam.html#cb271-24" tabindex="-1"></a><span class="co">#&gt; 152 1961-08-01 577.2261   548.2101   605.5586</span></span>
+<span id="cb271-25"><a href="一般化加法モデル-gam.html#cb271-25" tabindex="-1"></a><span class="co">#&gt; 153 1961-09-01 528.6678   500.4157   558.7419</span></span>
+<span id="cb271-26"><a href="一般化加法モデル-gam.html#cb271-26" tabindex="-1"></a><span class="co">#&gt; 154 1961-10-01 493.5023   465.5860   522.3716</span></span>
+<span id="cb271-27"><a href="一般化加法モデル-gam.html#cb271-27" tabindex="-1"></a><span class="co">#&gt; 155 1961-11-01 459.6479   431.5710   486.9923</span></span>
+<span id="cb271-28"><a href="一般化加法モデル-gam.html#cb271-28" tabindex="-1"></a><span class="co">#&gt; 156 1961-12-01 489.0093   459.7529   517.5486</span></span>
 <span id="cb271-29"><a href="一般化加法モデル-gam.html#cb271-29" tabindex="-1"></a><span class="fu">str</span>(air_forecast)</span>
 <span id="cb271-30"><a href="一般化加法モデル-gam.html#cb271-30" tabindex="-1"></a><span class="co">#&gt; &#39;data.frame&#39;:    156 obs. of  16 variables:</span></span>
 <span id="cb271-31"><a href="一般化加法モデル-gam.html#cb271-31" tabindex="-1"></a><span class="co">#&gt;  $ ds                        : POSIXct, format: &quot;1949-01-01&quot; &quot;1949-02-01&quot; ...</span></span>
@@ -690,8 +733,8 @@ code span.wa { color: #60a0b0; font-weight: bold; font-style: italic; } /* Warni
 <span id="cb271-39"><a href="一般化加法モデル-gam.html#cb271-39" tabindex="-1"></a><span class="co">#&gt;  $ multiplicative_terms      : num  0 0 0 0 0 0 0 0 0 0 ...</span></span>
 <span id="cb271-40"><a href="一般化加法モデル-gam.html#cb271-40" tabindex="-1"></a><span class="co">#&gt;  $ multiplicative_terms_lower: num  0 0 0 0 0 0 0 0 0 0 ...</span></span>
 <span id="cb271-41"><a href="一般化加法モデル-gam.html#cb271-41" tabindex="-1"></a><span class="co">#&gt;  $ multiplicative_terms_upper: num  0 0 0 0 0 0 0 0 0 0 ...</span></span>
-<span id="cb271-42"><a href="一般化加法モデル-gam.html#cb271-42" tabindex="-1"></a><span class="co">#&gt;  $ yhat_lower                : num  56.6 50.3 81.7 79.4 82.8 ...</span></span>
-<span id="cb271-43"><a href="一般化加法モデル-gam.html#cb271-43" tabindex="-1"></a><span class="co">#&gt;  $ yhat_upper                : num  115 106 139 138 141 ...</span></span>
+<span id="cb271-42"><a href="一般化加法モデル-gam.html#cb271-42" tabindex="-1"></a><span class="co">#&gt;  $ yhat_lower                : num  56.2 50.5 83.3 80.4 83 ...</span></span>
+<span id="cb271-43"><a href="一般化加法モデル-gam.html#cb271-43" tabindex="-1"></a><span class="co">#&gt;  $ yhat_upper                : num  116 105 140 136 142 ...</span></span>
 <span id="cb271-44"><a href="一般化加法モデル-gam.html#cb271-44" tabindex="-1"></a><span class="co">#&gt;  $ trend_lower               : num  107 109 111 114 116 ...</span></span>
 <span id="cb271-45"><a href="一般化加法モデル-gam.html#cb271-45" tabindex="-1"></a><span class="co">#&gt;  $ trend_upper               : num  107 109 111 114 116 ...</span></span>
 <span id="cb271-46"><a href="一般化加法モデル-gam.html#cb271-46" tabindex="-1"></a><span class="co">#&gt;  $ yhat                      : num  85.9 79.4 110.9 108.6 112 ...</span></span>
@@ -720,8 +763,8 @@ code span.wa { color: #60a0b0; font-weight: bold; font-style: italic; } /* Warni
           </div>
         </div>
       </div>
-<a href="ロジットブロビット回帰分析.html" class="navigation navigation-prev navigation-unique" aria-label="Previous page"><i class="fa fa-angle-left"></i></a>
-
+<a href="ロジットブロビット回帰分析.html" class="navigation navigation-prev " aria-label="Previous page"><i class="fa fa-angle-left"></i></a>
+<a href="正則化回帰-lasso-ridge回帰.html" class="navigation navigation-next " aria-label="Next page"><i class="fa fa-angle-right"></i></a>
     </div>
   </div>
 <script src="libs/gitbook-2.6.7/js/app.min.js"></script>
