@@ -272,6 +272,20 @@ code span.wa { color: #60a0b0; font-weight: bold; font-style: italic; } /* Warni
 </ul></li>
 <li class="chapter" data-level="6.5" data-path="正則化回帰-lasso-ridge回帰.html"><a href="正則化回帰-lasso-ridge回帰.html#補足-glmに対する変数選択の代替的方法"><i class="fa fa-check"></i><b>6.5</b> 補足: GLMに対する変数選択の代替的方法</a></li>
 </ul></li>
+<li class="chapter" data-level="7" data-path="判別分析.html"><a href="判別分析.html"><i class="fa fa-check"></i><b>7</b> 判別分析</a>
+<ul>
+<li class="chapter" data-level="7.1" data-path="判別分析.html"><a href="判別分析.html#線形判別-2次判別-パッケージmassの利用"><i class="fa fa-check"></i><b>7.1</b> 線形判別 &amp; 2次判別: パッケージMASSの利用</a>
+<ul>
+<li class="chapter" data-level="" data-path="判別分析.html"><a href="判別分析.html#データセット1-米国sp500日次リターンデータ"><i class="fa fa-check"></i>データセット#1: 米国S&amp;P500日次リターンデータ</a></li>
+<li class="chapter" data-level="" data-path="判別分析.html"><a href="判別分析.html#線形判別-lda"><i class="fa fa-check"></i>線形判別 (LDA)</a></li>
+<li class="chapter" data-level="" data-path="判別分析.html"><a href="判別分析.html#次判別-qda"><i class="fa fa-check"></i>2次判別 (QDA)</a></li>
+</ul></li>
+<li class="chapter" data-level="7.2" data-path="判別分析.html"><a href="判別分析.html#knn法-パッケージclassの利用"><i class="fa fa-check"></i><b>7.2</b> kNN法: パッケージ<strong>class</strong>の利用</a></li>
+<li class="chapter" data-level="7.3" data-path="判別分析.html"><a href="判別分析.html#他パッケージの利用-パッケージklar"><i class="fa fa-check"></i><b>7.3</b> 他パッケージの利用: パッケージ<strong>klaR</strong></a>
+<ul>
+<li class="chapter" data-level="" data-path="判別分析.html"><a href="判別分析.html#データセット2-ビジネススクールの入学許可データ"><i class="fa fa-check"></i>データセット#2: ビジネススクールの入学許可データ</a></li>
+</ul></li>
+</ul></li>
 </ul>
 
       </nav>
@@ -714,12 +728,12 @@ fit_gam3 <- gam(wage ~ s(year, 4) + s(age, 5) + education, data  =  Wage)
 <span id="cb271-20"><a href="一般化加法モデル-gam.html#cb271-20" tabindex="-1"></a>air_forecast <span class="ot">&lt;-</span> <span class="fu">predict</span>(air_ppht, dates_ft)</span>
 <span id="cb271-21"><a href="一般化加法モデル-gam.html#cb271-21" tabindex="-1"></a><span class="fu">tail</span>(air_forecast[<span class="fu">c</span>(<span class="st">&quot;ds&quot;</span>, <span class="st">&quot;yhat&quot;</span>, <span class="st">&quot;yhat_lower&quot;</span>, <span class="st">&quot;yhat_upper&quot;</span>)])</span>
 <span id="cb271-22"><a href="一般化加法モデル-gam.html#cb271-22" tabindex="-1"></a><span class="co">#&gt;             ds     yhat yhat_lower yhat_upper</span></span>
-<span id="cb271-23"><a href="一般化加法モデル-gam.html#cb271-23" tabindex="-1"></a><span class="co">#&gt; 151 1961-07-01 576.8046   546.6013   605.8411</span></span>
-<span id="cb271-24"><a href="一般化加法モデル-gam.html#cb271-24" tabindex="-1"></a><span class="co">#&gt; 152 1961-08-01 577.2261   549.8125   605.0174</span></span>
-<span id="cb271-25"><a href="一般化加法モデル-gam.html#cb271-25" tabindex="-1"></a><span class="co">#&gt; 153 1961-09-01 528.6678   499.7018   558.8646</span></span>
-<span id="cb271-26"><a href="一般化加法モデル-gam.html#cb271-26" tabindex="-1"></a><span class="co">#&gt; 154 1961-10-01 493.5023   465.1778   523.5808</span></span>
-<span id="cb271-27"><a href="一般化加法モデル-gam.html#cb271-27" tabindex="-1"></a><span class="co">#&gt; 155 1961-11-01 459.6479   431.0400   488.6425</span></span>
-<span id="cb271-28"><a href="一般化加法モデル-gam.html#cb271-28" tabindex="-1"></a><span class="co">#&gt; 156 1961-12-01 489.0093   458.7115   518.1620</span></span>
+<span id="cb271-23"><a href="一般化加法モデル-gam.html#cb271-23" tabindex="-1"></a><span class="co">#&gt; 151 1961-07-01 576.8046   548.1398   606.0848</span></span>
+<span id="cb271-24"><a href="一般化加法モデル-gam.html#cb271-24" tabindex="-1"></a><span class="co">#&gt; 152 1961-08-01 577.2261   547.0532   607.1505</span></span>
+<span id="cb271-25"><a href="一般化加法モデル-gam.html#cb271-25" tabindex="-1"></a><span class="co">#&gt; 153 1961-09-01 528.6678   500.3528   558.4666</span></span>
+<span id="cb271-26"><a href="一般化加法モデル-gam.html#cb271-26" tabindex="-1"></a><span class="co">#&gt; 154 1961-10-01 493.5023   464.2157   521.8004</span></span>
+<span id="cb271-27"><a href="一般化加法モデル-gam.html#cb271-27" tabindex="-1"></a><span class="co">#&gt; 155 1961-11-01 459.6479   429.8239   487.4720</span></span>
+<span id="cb271-28"><a href="一般化加法モデル-gam.html#cb271-28" tabindex="-1"></a><span class="co">#&gt; 156 1961-12-01 489.0093   459.2771   516.4367</span></span>
 <span id="cb271-29"><a href="一般化加法モデル-gam.html#cb271-29" tabindex="-1"></a><span class="fu">str</span>(air_forecast)</span>
 <span id="cb271-30"><a href="一般化加法モデル-gam.html#cb271-30" tabindex="-1"></a><span class="co">#&gt; &#39;data.frame&#39;:    156 obs. of  16 variables:</span></span>
 <span id="cb271-31"><a href="一般化加法モデル-gam.html#cb271-31" tabindex="-1"></a><span class="co">#&gt;  $ ds                        : POSIXct, format: &quot;1949-01-01&quot; &quot;1949-02-01&quot; ...</span></span>
@@ -733,8 +747,8 @@ fit_gam3 <- gam(wage ~ s(year, 4) + s(age, 5) + education, data  =  Wage)
 <span id="cb271-39"><a href="一般化加法モデル-gam.html#cb271-39" tabindex="-1"></a><span class="co">#&gt;  $ multiplicative_terms      : num  0 0 0 0 0 0 0 0 0 0 ...</span></span>
 <span id="cb271-40"><a href="一般化加法モデル-gam.html#cb271-40" tabindex="-1"></a><span class="co">#&gt;  $ multiplicative_terms_lower: num  0 0 0 0 0 0 0 0 0 0 ...</span></span>
 <span id="cb271-41"><a href="一般化加法モデル-gam.html#cb271-41" tabindex="-1"></a><span class="co">#&gt;  $ multiplicative_terms_upper: num  0 0 0 0 0 0 0 0 0 0 ...</span></span>
-<span id="cb271-42"><a href="一般化加法モデル-gam.html#cb271-42" tabindex="-1"></a><span class="co">#&gt;  $ yhat_lower                : num  56.8 50.3 83.9 82.2 82.5 ...</span></span>
-<span id="cb271-43"><a href="一般化加法モデル-gam.html#cb271-43" tabindex="-1"></a><span class="co">#&gt;  $ yhat_upper                : num  116 110 140 138 141 ...</span></span>
+<span id="cb271-42"><a href="一般化加法モデル-gam.html#cb271-42" tabindex="-1"></a><span class="co">#&gt;  $ yhat_lower                : num  55.7 53.1 83 79.5 84.1 ...</span></span>
+<span id="cb271-43"><a href="一般化加法モデル-gam.html#cb271-43" tabindex="-1"></a><span class="co">#&gt;  $ yhat_upper                : num  114 110 138 137 138 ...</span></span>
 <span id="cb271-44"><a href="一般化加法モデル-gam.html#cb271-44" tabindex="-1"></a><span class="co">#&gt;  $ trend_lower               : num  107 109 111 114 116 ...</span></span>
 <span id="cb271-45"><a href="一般化加法モデル-gam.html#cb271-45" tabindex="-1"></a><span class="co">#&gt;  $ trend_upper               : num  107 109 111 114 116 ...</span></span>
 <span id="cb271-46"><a href="一般化加法モデル-gam.html#cb271-46" tabindex="-1"></a><span class="co">#&gt;  $ yhat                      : num  85.9 79.4 110.9 108.6 112 ...</span></span>
