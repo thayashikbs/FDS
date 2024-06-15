@@ -469,9 +469,9 @@ code span.wa { color: #60a0b0; font-weight: bold; font-style: italic; } /* Warni
 <span id="cb340-6"><a href="決定木分析.html#cb340-6" tabindex="-1"></a><span class="co">#&gt;   n= 50 </span></span>
 <span id="cb340-7"><a href="決定木分析.html#cb340-7" tabindex="-1"></a><span class="co">#&gt; </span></span>
 <span id="cb340-8"><a href="決定木分析.html#cb340-8" tabindex="-1"></a><span class="co">#&gt;          CP nsplit rel error    xerror      xstd</span></span>
-<span id="cb340-9"><a href="決定木分析.html#cb340-9" tabindex="-1"></a><span class="co">#&gt; 1 0.4676398      0 1.0000000 1.0605929 0.2233500</span></span>
-<span id="cb340-10"><a href="決定木分析.html#cb340-10" tabindex="-1"></a><span class="co">#&gt; 2 0.1104944      1 0.5323602 0.5873632 0.1370295</span></span>
-<span id="cb340-11"><a href="決定木分析.html#cb340-11" tabindex="-1"></a><span class="co">#&gt; 3 0.0100000      2 0.4218658 0.4653301 0.1201163</span></span>
+<span id="cb340-9"><a href="決定木分析.html#cb340-9" tabindex="-1"></a><span class="co">#&gt; 1 0.4676398      0 1.0000000 1.0330869 0.2187574</span></span>
+<span id="cb340-10"><a href="決定木分析.html#cb340-10" tabindex="-1"></a><span class="co">#&gt; 2 0.1104944      1 0.5323602 0.6745867 0.1483002</span></span>
+<span id="cb340-11"><a href="決定木分析.html#cb340-11" tabindex="-1"></a><span class="co">#&gt; 3 0.0100000      2 0.4218658 0.5392356 0.1214836</span></span>
 <span id="cb340-12"><a href="決定木分析.html#cb340-12" tabindex="-1"></a><span class="co">#&gt; </span></span>
 <span id="cb340-13"><a href="決定木分析.html#cb340-13" tabindex="-1"></a><span class="co">#&gt; Variable importance</span></span>
 <span id="cb340-14"><a href="決定木分析.html#cb340-14" tabindex="-1"></a><span class="co">#&gt; speed </span></span>
@@ -658,7 +658,7 @@ code span.wa { color: #60a0b0; font-weight: bold; font-style: italic; } /* Warni
 <span id="cb347-40"><a href="決定木分析.html#cb347-40" tabindex="-1"></a><span class="co">#&gt;         23) Lag5&gt;=-1.7375 223  322.61330  0.30973990 *</span></span>
 <span id="cb347-41"><a href="決定木分析.html#cb347-41" tabindex="-1"></a><span class="co">#&gt;    3) Lag5&lt; -2.892 14   56.19987  1.41200000 *</span></span></code></pre></div>
 <ul>
-<li>得られた木 (分類規則) の可視化</li>
+<li>得られた回帰木の可視化</li>
 </ul>
 <div class="sourceCode" id="cb348"><pre class="sourceCode r"><code class="sourceCode r"><span id="cb348-1"><a href="決定木分析.html#cb348-1" tabindex="-1"></a><span class="co"># 可視化</span></span>
 <span id="cb348-2"><a href="決定木分析.html#cb348-2" tabindex="-1"></a><span class="fu">library</span>(rpart.plot)</span>
@@ -667,9 +667,9 @@ code span.wa { color: #60a0b0; font-weight: bold; font-style: italic; } /* Warni
 <div class="sourceCode" id="cb349"><pre class="sourceCode r"><code class="sourceCode r"><span id="cb349-1"><a href="決定木分析.html#cb349-1" tabindex="-1"></a><span class="fu">rpart.plot</span>(sp_rp, <span class="at">digit =</span> <span class="dv">4</span>, <span class="at">fallen.leaves =</span> T, <span class="at">type =</span> <span class="dv">3</span>, <span class="at">extra =</span> <span class="dv">101</span>)</span></code></pre></div>
 <p><img src="090-DT_files/figure-html/unnamed-chunk-14-2.png" width="75%" /></p>
 <ul>
-<li>得られた木 (分類規則) の情報</li>
+<li>CP表 (Complexity Parameter Table)</li>
 </ul>
-<div class="sourceCode" id="cb350"><pre class="sourceCode r"><code class="sourceCode r"><span id="cb350-1"><a href="決定木分析.html#cb350-1" tabindex="-1"></a><span class="co"># 分類規則の表示</span></span>
+<div class="sourceCode" id="cb350"><pre class="sourceCode r"><code class="sourceCode r"><span id="cb350-1"><a href="決定木分析.html#cb350-1" tabindex="-1"></a><span class="co"># CP値 vs 交差検証 (CV) 予測誤差</span></span>
 <span id="cb350-2"><a href="決定木分析.html#cb350-2" tabindex="-1"></a><span class="fu">printcp</span>(sp_rp)</span>
 <span id="cb350-3"><a href="決定木分析.html#cb350-3" tabindex="-1"></a><span class="co">#&gt; </span></span>
 <span id="cb350-4"><a href="決定木分析.html#cb350-4" tabindex="-1"></a><span class="co">#&gt; Regression tree:</span></span>
@@ -683,13 +683,12 @@ code span.wa { color: #60a0b0; font-weight: bold; font-style: italic; } /* Warni
 <span id="cb350-12"><a href="決定木分析.html#cb350-12" tabindex="-1"></a><span class="co">#&gt; n= 1250 </span></span>
 <span id="cb350-13"><a href="決定木分析.html#cb350-13" tabindex="-1"></a><span class="co">#&gt; </span></span>
 <span id="cb350-14"><a href="決定木分析.html#cb350-14" tabindex="-1"></a><span class="co">#&gt;          CP nsplit rel error xerror     xstd</span></span>
-<span id="cb350-15"><a href="決定木分析.html#cb350-15" tabindex="-1"></a><span class="co">#&gt; 1 0.0174254      0   1.00000 1.0009 0.059287</span></span>
-<span id="cb350-16"><a href="決定木分析.html#cb350-16" tabindex="-1"></a><span class="co">#&gt; 2 0.0079811      1   0.98257 1.0179 0.061831</span></span>
-<span id="cb350-17"><a href="決定木分析.html#cb350-17" tabindex="-1"></a><span class="co">#&gt; 3 0.0079000      4   0.95863 1.0871 0.064266</span></span>
+<span id="cb350-15"><a href="決定木分析.html#cb350-15" tabindex="-1"></a><span class="co">#&gt; 1 0.0174254      0   1.00000 1.0012 0.059314</span></span>
+<span id="cb350-16"><a href="決定木分析.html#cb350-16" tabindex="-1"></a><span class="co">#&gt; 2 0.0079811      1   0.98257 1.0196 0.065413</span></span>
+<span id="cb350-17"><a href="決定木分析.html#cb350-17" tabindex="-1"></a><span class="co">#&gt; 3 0.0079000      4   0.95863 1.0828 0.069458</span></span>
 <span id="cb350-18"><a href="決定木分析.html#cb350-18" tabindex="-1"></a><span class="fu">plotcp</span>(sp_rp)</span></code></pre></div>
-<p><img src="090-DT_files/figure-html/unnamed-chunk-15-1.png" width="75%" /></p>
-<div class="sourceCode" id="cb351"><pre class="sourceCode r"><code class="sourceCode r"><span id="cb351-1"><a href="決定木分析.html#cb351-1" tabindex="-1"></a><span class="co"># cp増 → 右肩下がりにならない → 木を複雑にしても改善しない</span></span></code></pre></div>
-<p><code>plotcp()</code>は, 木の複雑性 (cp) (横軸) に対する
+<p><img src="090-DT_files/figure-html/unnamed-chunk-15-1.png" width="75%" />
+<code>plotcp()</code>は, 木の複雑度 (CP) (横軸) に対する
 交差検証 (CV) 予測誤差の大きさ (縦軸) をプロットした図であり,
 通常, 閾値
 (点線で表される水平線. フルに成長した剪定前の木の持つ誤差の大きさ) を下回る最初のcpの値を
@@ -701,14 +700,16 @@ code span.wa { color: #60a0b0; font-weight: bold; font-style: italic; } /* Warni
 1から2になると若干だが誤差は大きくなっており,
 データセットを分割することの説得性がこの図からは得らない.
 株価予測の難しさを反映していると考えられる.</p>
-<div class="sourceCode" id="cb352"><pre class="sourceCode r"><code class="sourceCode r"><span id="cb352-1"><a href="決定木分析.html#cb352-1" tabindex="-1"></a><span class="co"># 手動による剪定例 cp (complex parameter) の大きさでコントロール</span></span>
-<span id="cb352-2"><a href="決定木分析.html#cb352-2" tabindex="-1"></a>prn_rp <span class="ot">&lt;-</span> <span class="fu">prune</span>(sp_rp, <span class="at">cp =</span> <span class="fl">0.008</span>)</span>
-<span id="cb352-3"><a href="決定木分析.html#cb352-3" tabindex="-1"></a><span class="fu">plot</span>(prn_rp, <span class="at">uniform =</span> T, <span class="at">margin =</span> <span class="fl">0.05</span>)</span>
-<span id="cb352-4"><a href="決定木分析.html#cb352-4" tabindex="-1"></a><span class="fu">text</span>(prn_rp, <span class="at">all =</span> T, <span class="at">use.n =</span> T)</span></code></pre></div>
+<div class="sourceCode" id="cb351"><pre class="sourceCode r"><code class="sourceCode r"><span id="cb351-1"><a href="決定木分析.html#cb351-1" tabindex="-1"></a><span class="co"># 手動による剪定例 cp (complex parameter) の大きさでコントロール</span></span>
+<span id="cb351-2"><a href="決定木分析.html#cb351-2" tabindex="-1"></a>prn_rp <span class="ot">&lt;-</span> <span class="fu">prune</span>(sp_rp, <span class="at">cp =</span> <span class="fl">0.008</span>)</span>
+<span id="cb351-3"><a href="決定木分析.html#cb351-3" tabindex="-1"></a><span class="fu">plot</span>(prn_rp, <span class="at">uniform =</span> T, <span class="at">margin =</span> <span class="fl">0.05</span>)</span>
+<span id="cb351-4"><a href="決定木分析.html#cb351-4" tabindex="-1"></a><span class="fu">text</span>(prn_rp, <span class="at">all =</span> T, <span class="at">use.n =</span> T)</span></code></pre></div>
 <p><img src="090-DT_files/figure-html/unnamed-chunk-16-1.png" width="75%" /></p>
 <ul>
 <li>パフォーマンス評価 (内挿予測)</li>
 </ul>
+<p><strong>自主課題</strong>
+上で得られた決定木を解釈してみよう.</p>
 </div>
 </div>
 <div id="分類木" class="section level2 hasAnchor" number="8.3">
@@ -718,151 +719,157 @@ code span.wa { color: #60a0b0; font-weight: bold; font-style: italic; } /* Warni
 ここでは, 量的変数<code>Direction</code>を目的変数に設定する.
 <code>Direction</code>は, <code>Today</code>を使って作られていることから,
 <code>Today</code>を予測変数に使わないように<code>Year</code>, <code>Volume</code>と共に除く.</p>
-<div class="sourceCode" id="cb353"><pre class="sourceCode r"><code class="sourceCode r"><span id="cb353-1"><a href="決定木分析.html#cb353-1" tabindex="-1"></a>sp500_2 <span class="ot">&lt;-</span> Smarket <span class="sc">%&gt;%</span></span>
-<span id="cb353-2"><a href="決定木分析.html#cb353-2" tabindex="-1"></a>  dplyr<span class="sc">::</span><span class="fu">select</span>(<span class="sc">-</span>Year, <span class="sc">-</span>Today, <span class="sc">-</span>Volume)</span>
-<span id="cb353-3"><a href="決定木分析.html#cb353-3" tabindex="-1"></a><span class="co"># sp500_2$Vol_lag1 &lt;- dplyr::lead(Smarket$Volume, n = 1)</span></span></code></pre></div>
+<div class="sourceCode" id="cb352"><pre class="sourceCode r"><code class="sourceCode r"><span id="cb352-1"><a href="決定木分析.html#cb352-1" tabindex="-1"></a>sp500_2 <span class="ot">&lt;-</span> Smarket <span class="sc">%&gt;%</span></span>
+<span id="cb352-2"><a href="決定木分析.html#cb352-2" tabindex="-1"></a>  dplyr<span class="sc">::</span><span class="fu">select</span>(<span class="sc">-</span>Year, <span class="sc">-</span>Today, <span class="sc">-</span>Volume)</span>
+<span id="cb352-3"><a href="決定木分析.html#cb352-3" tabindex="-1"></a><span class="co"># sp500_2$Vol_lag1 &lt;- dplyr::lead(Smarket$Volume, n = 1)</span></span></code></pre></div>
 <ul>
 <li>分類木の適合</li>
 </ul>
-<div class="sourceCode" id="cb354"><pre class="sourceCode r"><code class="sourceCode r"><span id="cb354-1"><a href="決定木分析.html#cb354-1" tabindex="-1"></a>sp2_rp <span class="ot">&lt;-</span> <span class="fu">rpart</span>(Direction <span class="sc">~</span> ., <span class="at">data =</span> sp500_2)</span>
-<span id="cb354-2"><a href="決定木分析.html#cb354-2" tabindex="-1"></a>sp2_rp</span>
-<span id="cb354-3"><a href="決定木分析.html#cb354-3" tabindex="-1"></a><span class="co">#&gt; n= 1250 </span></span>
-<span id="cb354-4"><a href="決定木分析.html#cb354-4" tabindex="-1"></a><span class="co">#&gt; </span></span>
-<span id="cb354-5"><a href="決定木分析.html#cb354-5" tabindex="-1"></a><span class="co">#&gt; node), split, n, loss, yval, (yprob)</span></span>
-<span id="cb354-6"><a href="決定木分析.html#cb354-6" tabindex="-1"></a><span class="co">#&gt;       * denotes terminal node</span></span>
-<span id="cb354-7"><a href="決定木分析.html#cb354-7" tabindex="-1"></a><span class="co">#&gt; </span></span>
-<span id="cb354-8"><a href="決定木分析.html#cb354-8" tabindex="-1"></a><span class="co">#&gt;  1) root 1250 602 Up (0.4816000 0.5184000)  </span></span>
-<span id="cb354-9"><a href="決定木分析.html#cb354-9" tabindex="-1"></a><span class="co">#&gt;    2) Lag1&gt;=0.0555 610 286 Down (0.5311475 0.4688525)  </span></span>
-<span id="cb354-10"><a href="決定木分析.html#cb354-10" tabindex="-1"></a><span class="co">#&gt;      4) Lag1&lt; 0.1375 50  14 Down (0.7200000 0.2800000) *</span></span>
-<span id="cb354-11"><a href="決定木分析.html#cb354-11" tabindex="-1"></a><span class="co">#&gt;      5) Lag1&gt;=0.1375 560 272 Down (0.5142857 0.4857143)  </span></span>
-<span id="cb354-12"><a href="決定木分析.html#cb354-12" tabindex="-1"></a><span class="co">#&gt;       10) Lag2&gt;=0.635 118  45 Down (0.6186441 0.3813559) *</span></span>
-<span id="cb354-13"><a href="決定木分析.html#cb354-13" tabindex="-1"></a><span class="co">#&gt;       11) Lag2&lt; 0.635 442 215 Up (0.4864253 0.5135747)  </span></span>
-<span id="cb354-14"><a href="決定木分析.html#cb354-14" tabindex="-1"></a><span class="co">#&gt;         22) Lag4&gt;=1.1645 53  18 Down (0.6603774 0.3396226) *</span></span>
-<span id="cb354-15"><a href="決定木分析.html#cb354-15" tabindex="-1"></a><span class="co">#&gt;         23) Lag4&lt; 1.1645 389 180 Up (0.4627249 0.5372751)  </span></span>
-<span id="cb354-16"><a href="決定木分析.html#cb354-16" tabindex="-1"></a><span class="co">#&gt;           46) Lag4&lt; 0.833 363 174 Up (0.4793388 0.5206612)  </span></span>
-<span id="cb354-17"><a href="決定木分析.html#cb354-17" tabindex="-1"></a><span class="co">#&gt;             92) Lag2&lt; -0.5965 134  60 Down (0.5522388 0.4477612) *</span></span>
-<span id="cb354-18"><a href="決定木分析.html#cb354-18" tabindex="-1"></a><span class="co">#&gt;             93) Lag2&gt;=-0.5965 229 100 Up (0.4366812 0.5633188) *</span></span>
-<span id="cb354-19"><a href="決定木分析.html#cb354-19" tabindex="-1"></a><span class="co">#&gt;           47) Lag4&gt;=0.833 26   6 Up (0.2307692 0.7692308) *</span></span>
-<span id="cb354-20"><a href="決定木分析.html#cb354-20" tabindex="-1"></a><span class="co">#&gt;    3) Lag1&lt; 0.0555 640 278 Up (0.4343750 0.5656250)  </span></span>
-<span id="cb354-21"><a href="決定木分析.html#cb354-21" tabindex="-1"></a><span class="co">#&gt;      6) Lag5&lt; -0.8225 128  57 Down (0.5546875 0.4453125)  </span></span>
-<span id="cb354-22"><a href="決定木分析.html#cb354-22" tabindex="-1"></a><span class="co">#&gt;       12) Lag4&lt; 1.3205 111  44 Down (0.6036036 0.3963964) *</span></span>
-<span id="cb354-23"><a href="決定木分析.html#cb354-23" tabindex="-1"></a><span class="co">#&gt;       13) Lag4&gt;=1.3205 17   4 Up (0.2352941 0.7647059) *</span></span>
-<span id="cb354-24"><a href="決定木分析.html#cb354-24" tabindex="-1"></a><span class="co">#&gt;      7) Lag5&gt;=-0.8225 512 207 Up (0.4042969 0.5957031)  </span></span>
-<span id="cb354-25"><a href="決定木分析.html#cb354-25" tabindex="-1"></a><span class="co">#&gt;       14) Lag2&gt;=0.7265 101  49 Down (0.5148515 0.4851485)  </span></span>
-<span id="cb354-26"><a href="決定木分析.html#cb354-26" tabindex="-1"></a><span class="co">#&gt;         28) Lag2&lt; 1.097 39  11 Down (0.7179487 0.2820513) *</span></span>
-<span id="cb354-27"><a href="決定木分析.html#cb354-27" tabindex="-1"></a><span class="co">#&gt;         29) Lag2&gt;=1.097 62  24 Up (0.3870968 0.6129032) *</span></span>
-<span id="cb354-28"><a href="決定木分析.html#cb354-28" tabindex="-1"></a><span class="co">#&gt;       15) Lag2&lt; 0.7265 411 155 Up (0.3771290 0.6228710) *</span></span></code></pre></div>
+<div class="sourceCode" id="cb353"><pre class="sourceCode r"><code class="sourceCode r"><span id="cb353-1"><a href="決定木分析.html#cb353-1" tabindex="-1"></a>sp2_rp <span class="ot">&lt;-</span> <span class="fu">rpart</span>(Direction <span class="sc">~</span> ., <span class="at">data =</span> sp500_2)</span>
+<span id="cb353-2"><a href="決定木分析.html#cb353-2" tabindex="-1"></a>sp2_rp</span>
+<span id="cb353-3"><a href="決定木分析.html#cb353-3" tabindex="-1"></a><span class="co">#&gt; n= 1250 </span></span>
+<span id="cb353-4"><a href="決定木分析.html#cb353-4" tabindex="-1"></a><span class="co">#&gt; </span></span>
+<span id="cb353-5"><a href="決定木分析.html#cb353-5" tabindex="-1"></a><span class="co">#&gt; node), split, n, loss, yval, (yprob)</span></span>
+<span id="cb353-6"><a href="決定木分析.html#cb353-6" tabindex="-1"></a><span class="co">#&gt;       * denotes terminal node</span></span>
+<span id="cb353-7"><a href="決定木分析.html#cb353-7" tabindex="-1"></a><span class="co">#&gt; </span></span>
+<span id="cb353-8"><a href="決定木分析.html#cb353-8" tabindex="-1"></a><span class="co">#&gt;  1) root 1250 602 Up (0.4816000 0.5184000)  </span></span>
+<span id="cb353-9"><a href="決定木分析.html#cb353-9" tabindex="-1"></a><span class="co">#&gt;    2) Lag1&gt;=0.0555 610 286 Down (0.5311475 0.4688525)  </span></span>
+<span id="cb353-10"><a href="決定木分析.html#cb353-10" tabindex="-1"></a><span class="co">#&gt;      4) Lag1&lt; 0.1375 50  14 Down (0.7200000 0.2800000) *</span></span>
+<span id="cb353-11"><a href="決定木分析.html#cb353-11" tabindex="-1"></a><span class="co">#&gt;      5) Lag1&gt;=0.1375 560 272 Down (0.5142857 0.4857143)  </span></span>
+<span id="cb353-12"><a href="決定木分析.html#cb353-12" tabindex="-1"></a><span class="co">#&gt;       10) Lag2&gt;=0.635 118  45 Down (0.6186441 0.3813559) *</span></span>
+<span id="cb353-13"><a href="決定木分析.html#cb353-13" tabindex="-1"></a><span class="co">#&gt;       11) Lag2&lt; 0.635 442 215 Up (0.4864253 0.5135747)  </span></span>
+<span id="cb353-14"><a href="決定木分析.html#cb353-14" tabindex="-1"></a><span class="co">#&gt;         22) Lag4&gt;=1.1645 53  18 Down (0.6603774 0.3396226) *</span></span>
+<span id="cb353-15"><a href="決定木分析.html#cb353-15" tabindex="-1"></a><span class="co">#&gt;         23) Lag4&lt; 1.1645 389 180 Up (0.4627249 0.5372751)  </span></span>
+<span id="cb353-16"><a href="決定木分析.html#cb353-16" tabindex="-1"></a><span class="co">#&gt;           46) Lag4&lt; 0.833 363 174 Up (0.4793388 0.5206612)  </span></span>
+<span id="cb353-17"><a href="決定木分析.html#cb353-17" tabindex="-1"></a><span class="co">#&gt;             92) Lag2&lt; -0.5965 134  60 Down (0.5522388 0.4477612) *</span></span>
+<span id="cb353-18"><a href="決定木分析.html#cb353-18" tabindex="-1"></a><span class="co">#&gt;             93) Lag2&gt;=-0.5965 229 100 Up (0.4366812 0.5633188) *</span></span>
+<span id="cb353-19"><a href="決定木分析.html#cb353-19" tabindex="-1"></a><span class="co">#&gt;           47) Lag4&gt;=0.833 26   6 Up (0.2307692 0.7692308) *</span></span>
+<span id="cb353-20"><a href="決定木分析.html#cb353-20" tabindex="-1"></a><span class="co">#&gt;    3) Lag1&lt; 0.0555 640 278 Up (0.4343750 0.5656250)  </span></span>
+<span id="cb353-21"><a href="決定木分析.html#cb353-21" tabindex="-1"></a><span class="co">#&gt;      6) Lag5&lt; -0.8225 128  57 Down (0.5546875 0.4453125)  </span></span>
+<span id="cb353-22"><a href="決定木分析.html#cb353-22" tabindex="-1"></a><span class="co">#&gt;       12) Lag4&lt; 1.3205 111  44 Down (0.6036036 0.3963964) *</span></span>
+<span id="cb353-23"><a href="決定木分析.html#cb353-23" tabindex="-1"></a><span class="co">#&gt;       13) Lag4&gt;=1.3205 17   4 Up (0.2352941 0.7647059) *</span></span>
+<span id="cb353-24"><a href="決定木分析.html#cb353-24" tabindex="-1"></a><span class="co">#&gt;      7) Lag5&gt;=-0.8225 512 207 Up (0.4042969 0.5957031)  </span></span>
+<span id="cb353-25"><a href="決定木分析.html#cb353-25" tabindex="-1"></a><span class="co">#&gt;       14) Lag2&gt;=0.7265 101  49 Down (0.5148515 0.4851485)  </span></span>
+<span id="cb353-26"><a href="決定木分析.html#cb353-26" tabindex="-1"></a><span class="co">#&gt;         28) Lag2&lt; 1.097 39  11 Down (0.7179487 0.2820513) *</span></span>
+<span id="cb353-27"><a href="決定木分析.html#cb353-27" tabindex="-1"></a><span class="co">#&gt;         29) Lag2&gt;=1.097 62  24 Up (0.3870968 0.6129032) *</span></span>
+<span id="cb353-28"><a href="決定木分析.html#cb353-28" tabindex="-1"></a><span class="co">#&gt;       15) Lag2&lt; 0.7265 411 155 Up (0.3771290 0.6228710) *</span></span></code></pre></div>
 <ul>
-<li>得られた木 (分類規則)</li>
+<li>得られた分類木の可視化</li>
 </ul>
-<div class="sourceCode" id="cb355"><pre class="sourceCode r"><code class="sourceCode r"><span id="cb355-1"><a href="決定木分析.html#cb355-1" tabindex="-1"></a><span class="fu">rpart.plot</span>(sp2_rp, <span class="at">digit =</span> <span class="dv">3</span>)</span></code></pre></div>
+<div class="sourceCode" id="cb354"><pre class="sourceCode r"><code class="sourceCode r"><span id="cb354-1"><a href="決定木分析.html#cb354-1" tabindex="-1"></a><span class="co"># 決定木の可視化</span></span>
+<span id="cb354-2"><a href="決定木分析.html#cb354-2" tabindex="-1"></a><span class="fu">rpart.plot</span>(sp2_rp, <span class="at">digit =</span> <span class="dv">3</span>)</span></code></pre></div>
 <p><img src="090-DT_files/figure-html/unnamed-chunk-19-1.png" width="75%" /></p>
-<div class="sourceCode" id="cb356"><pre class="sourceCode r"><code class="sourceCode r"><span id="cb356-1"><a href="決定木分析.html#cb356-1" tabindex="-1"></a><span class="fu">rpart.plot</span>(sp2_rp, <span class="at">digit =</span> <span class="dv">4</span>, <span class="at">fallen.leaves =</span> T, <span class="at">type =</span> <span class="dv">3</span>, <span class="at">extra =</span> <span class="dv">101</span>)</span></code></pre></div>
+<div class="sourceCode" id="cb355"><pre class="sourceCode r"><code class="sourceCode r"><span id="cb355-1"><a href="決定木分析.html#cb355-1" tabindex="-1"></a><span class="fu">rpart.plot</span>(sp2_rp, <span class="at">digit =</span> <span class="dv">4</span>, <span class="at">fallen.leaves =</span> T, <span class="at">type =</span> <span class="dv">3</span>, <span class="at">extra =</span> <span class="dv">101</span>)</span></code></pre></div>
 <p><img src="090-DT_files/figure-html/unnamed-chunk-19-2.png" width="75%" /></p>
-<div class="sourceCode" id="cb357"><pre class="sourceCode r"><code class="sourceCode r"><span id="cb357-1"><a href="決定木分析.html#cb357-1" tabindex="-1"></a></span>
-<span id="cb357-2"><a href="決定木分析.html#cb357-2" tabindex="-1"></a><span class="fu">printcp</span>(sp2_rp)</span>
-<span id="cb357-3"><a href="決定木分析.html#cb357-3" tabindex="-1"></a><span class="co">#&gt; </span></span>
-<span id="cb357-4"><a href="決定木分析.html#cb357-4" tabindex="-1"></a><span class="co">#&gt; Classification tree:</span></span>
-<span id="cb357-5"><a href="決定木分析.html#cb357-5" tabindex="-1"></a><span class="co">#&gt; rpart(formula = Direction ~ ., data = sp500_2)</span></span>
-<span id="cb357-6"><a href="決定木分析.html#cb357-6" tabindex="-1"></a><span class="co">#&gt; </span></span>
-<span id="cb357-7"><a href="決定木分析.html#cb357-7" tabindex="-1"></a><span class="co">#&gt; Variables actually used in tree construction:</span></span>
-<span id="cb357-8"><a href="決定木分析.html#cb357-8" tabindex="-1"></a><span class="co">#&gt; [1] Lag1 Lag2 Lag4 Lag5</span></span>
-<span id="cb357-9"><a href="決定木分析.html#cb357-9" tabindex="-1"></a><span class="co">#&gt; </span></span>
-<span id="cb357-10"><a href="決定木分析.html#cb357-10" tabindex="-1"></a><span class="co">#&gt; Root node error: 602/1250 = 0.4816</span></span>
-<span id="cb357-11"><a href="決定木分析.html#cb357-11" tabindex="-1"></a><span class="co">#&gt; </span></span>
-<span id="cb357-12"><a href="決定木分析.html#cb357-12" tabindex="-1"></a><span class="co">#&gt; n= 1250 </span></span>
-<span id="cb357-13"><a href="決定木分析.html#cb357-13" tabindex="-1"></a><span class="co">#&gt; </span></span>
-<span id="cb357-14"><a href="決定木分析.html#cb357-14" tabindex="-1"></a><span class="co">#&gt;         CP nsplit rel error  xerror     xstd</span></span>
-<span id="cb357-15"><a href="決定木分析.html#cb357-15" tabindex="-1"></a><span class="co">#&gt; 1 0.063123      0   1.00000 1.00000 0.029345</span></span>
-<span id="cb357-16"><a href="決定木分析.html#cb357-16" tabindex="-1"></a><span class="co">#&gt; 2 0.023256      1   0.93688 0.99336 0.029337</span></span>
-<span id="cb357-17"><a href="決定木分析.html#cb357-17" tabindex="-1"></a><span class="co">#&gt; 3 0.016058      2   0.91362 1.00997 0.029354</span></span>
-<span id="cb357-18"><a href="決定木分析.html#cb357-18" tabindex="-1"></a><span class="co">#&gt; 4 0.014950      5   0.86545 1.01163 0.029355</span></span>
-<span id="cb357-19"><a href="決定木分析.html#cb357-19" tabindex="-1"></a><span class="co">#&gt; 5 0.014120      6   0.85050 1.00997 0.029354</span></span>
-<span id="cb357-20"><a href="決定木分析.html#cb357-20" tabindex="-1"></a><span class="co">#&gt; 6 0.011628      8   0.82226 1.00831 0.029353</span></span>
-<span id="cb357-21"><a href="決定木分析.html#cb357-21" tabindex="-1"></a><span class="co">#&gt; 7 0.010000     10   0.79900 1.01329 0.029356</span></span>
-<span id="cb357-22"><a href="決定木分析.html#cb357-22" tabindex="-1"></a><span class="fu">plotcp</span>(sp2_rp)</span></code></pre></div>
-<p><img src="090-DT_files/figure-html/unnamed-chunk-19-3.png" width="75%" />
+<ul>
+<li>CP表 (Complexity Parameter Table)</li>
+</ul>
+<div class="sourceCode" id="cb356"><pre class="sourceCode r"><code class="sourceCode r"><span id="cb356-1"><a href="決定木分析.html#cb356-1" tabindex="-1"></a><span class="co"># CP値 vs 交差検証 (CV) 予測誤差</span></span>
+<span id="cb356-2"><a href="決定木分析.html#cb356-2" tabindex="-1"></a><span class="fu">printcp</span>(sp2_rp)</span>
+<span id="cb356-3"><a href="決定木分析.html#cb356-3" tabindex="-1"></a><span class="co">#&gt; </span></span>
+<span id="cb356-4"><a href="決定木分析.html#cb356-4" tabindex="-1"></a><span class="co">#&gt; Classification tree:</span></span>
+<span id="cb356-5"><a href="決定木分析.html#cb356-5" tabindex="-1"></a><span class="co">#&gt; rpart(formula = Direction ~ ., data = sp500_2)</span></span>
+<span id="cb356-6"><a href="決定木分析.html#cb356-6" tabindex="-1"></a><span class="co">#&gt; </span></span>
+<span id="cb356-7"><a href="決定木分析.html#cb356-7" tabindex="-1"></a><span class="co">#&gt; Variables actually used in tree construction:</span></span>
+<span id="cb356-8"><a href="決定木分析.html#cb356-8" tabindex="-1"></a><span class="co">#&gt; [1] Lag1 Lag2 Lag4 Lag5</span></span>
+<span id="cb356-9"><a href="決定木分析.html#cb356-9" tabindex="-1"></a><span class="co">#&gt; </span></span>
+<span id="cb356-10"><a href="決定木分析.html#cb356-10" tabindex="-1"></a><span class="co">#&gt; Root node error: 602/1250 = 0.4816</span></span>
+<span id="cb356-11"><a href="決定木分析.html#cb356-11" tabindex="-1"></a><span class="co">#&gt; </span></span>
+<span id="cb356-12"><a href="決定木分析.html#cb356-12" tabindex="-1"></a><span class="co">#&gt; n= 1250 </span></span>
+<span id="cb356-13"><a href="決定木分析.html#cb356-13" tabindex="-1"></a><span class="co">#&gt; </span></span>
+<span id="cb356-14"><a href="決定木分析.html#cb356-14" tabindex="-1"></a><span class="co">#&gt;         CP nsplit rel error xerror     xstd</span></span>
+<span id="cb356-15"><a href="決定木分析.html#cb356-15" tabindex="-1"></a><span class="co">#&gt; 1 0.063123      0   1.00000 1.0000 0.029345</span></span>
+<span id="cb356-16"><a href="決定木分析.html#cb356-16" tabindex="-1"></a><span class="co">#&gt; 2 0.023256      1   0.93688 1.0066 0.029351</span></span>
+<span id="cb356-17"><a href="決定木分析.html#cb356-17" tabindex="-1"></a><span class="co">#&gt; 3 0.016058      2   0.91362 1.0316 0.029364</span></span>
+<span id="cb356-18"><a href="決定木分析.html#cb356-18" tabindex="-1"></a><span class="co">#&gt; 4 0.014950      5   0.86545 1.0150 0.029358</span></span>
+<span id="cb356-19"><a href="決定木分析.html#cb356-19" tabindex="-1"></a><span class="co">#&gt; 5 0.014120      6   0.85050 1.0166 0.029359</span></span>
+<span id="cb356-20"><a href="決定木分析.html#cb356-20" tabindex="-1"></a><span class="co">#&gt; 6 0.011628      8   0.82226 1.0150 0.029358</span></span>
+<span id="cb356-21"><a href="決定木分析.html#cb356-21" tabindex="-1"></a><span class="co">#&gt; 7 0.010000     10   0.79900 1.0266 0.029363</span></span>
+<span id="cb356-22"><a href="決定木分析.html#cb356-22" tabindex="-1"></a><span class="fu">plotcp</span>(sp2_rp)</span></code></pre></div>
+<p><img src="090-DT_files/figure-html/unnamed-chunk-20-1.png" width="75%" />
 上の図は, cp (横軸) が増えても,
 交差検証予測誤差の大きさ (縦軸) が点線の回りで上下するだけで
 大きな変化が見られない,
-すなわち, 木の複雑性を変えても適合が改善しないことを示している.
+すなわち, 木の複雑度を変えても適合が改善しないことを示している.
 やはり, 株価予測 (実質的にランダム) を行っていることに
 よる帰結だと考えられる.</p>
 <ul>
 <li>パフォーマンス評価 (内挿予測)</li>
 </ul>
-<div class="sourceCode" id="cb358"><pre class="sourceCode r"><code class="sourceCode r"><span id="cb358-1"><a href="決定木分析.html#cb358-1" tabindex="-1"></a><span class="co"># クラス分類の内挿予測</span></span>
-<span id="cb358-2"><a href="決定木分析.html#cb358-2" tabindex="-1"></a>pcls_sp_rp <span class="ot">&lt;-</span> <span class="fu">predict</span>(sp2_rp, sp500_2, <span class="at">type =</span> <span class="st">&quot;class&quot;</span>)  <span class="co"># クラス分類の予測結果出力</span></span>
-<span id="cb358-3"><a href="決定木分析.html#cb358-3" tabindex="-1"></a></span>
-<span id="cb358-4"><a href="決定木分析.html#cb358-4" tabindex="-1"></a><span class="co"># 正解率</span></span>
-<span id="cb358-5"><a href="決定木分析.html#cb358-5" tabindex="-1"></a><span class="fu">mean</span>(pcls_sp_rp <span class="sc">==</span> sp500_2<span class="sc">$</span>Direction)</span>
-<span id="cb358-6"><a href="決定木分析.html#cb358-6" tabindex="-1"></a><span class="co">#&gt; [1] 0.6152</span></span>
-<span id="cb358-7"><a href="決定木分析.html#cb358-7" tabindex="-1"></a></span>
-<span id="cb358-8"><a href="決定木分析.html#cb358-8" tabindex="-1"></a><span class="co"># 混同行列</span></span>
-<span id="cb358-9"><a href="決定木分析.html#cb358-9" tabindex="-1"></a>tbl_rp <span class="ot">&lt;-</span> <span class="fu">table</span>(pcls_sp_rp, sp500_2<span class="sc">$</span>Direction)</span></code></pre></div>
+<div class="sourceCode" id="cb357"><pre class="sourceCode r"><code class="sourceCode r"><span id="cb357-1"><a href="決定木分析.html#cb357-1" tabindex="-1"></a><span class="co"># クラス分類の内挿予測</span></span>
+<span id="cb357-2"><a href="決定木分析.html#cb357-2" tabindex="-1"></a>pcls_sp_rp <span class="ot">&lt;-</span> <span class="fu">predict</span>(sp2_rp, sp500_2, <span class="at">type =</span> <span class="st">&quot;class&quot;</span>)  <span class="co"># クラス分類の予測結果出力</span></span>
+<span id="cb357-3"><a href="決定木分析.html#cb357-3" tabindex="-1"></a></span>
+<span id="cb357-4"><a href="決定木分析.html#cb357-4" tabindex="-1"></a><span class="co"># 正解率</span></span>
+<span id="cb357-5"><a href="決定木分析.html#cb357-5" tabindex="-1"></a><span class="fu">mean</span>(pcls_sp_rp <span class="sc">==</span> sp500_2<span class="sc">$</span>Direction)</span>
+<span id="cb357-6"><a href="決定木分析.html#cb357-6" tabindex="-1"></a><span class="co">#&gt; [1] 0.6152</span></span>
+<span id="cb357-7"><a href="決定木分析.html#cb357-7" tabindex="-1"></a></span>
+<span id="cb357-8"><a href="決定木分析.html#cb357-8" tabindex="-1"></a><span class="co"># 混同行列</span></span>
+<span id="cb357-9"><a href="決定木分析.html#cb357-9" tabindex="-1"></a>tbl_rp <span class="ot">&lt;-</span> <span class="fu">table</span>(pcls_sp_rp, sp500_2<span class="sc">$</span>Direction)</span></code></pre></div>
+<p><strong>自主課題</strong>
+上で得られた決定木 (分類規則) を解釈してみよう.</p>
 <p>パッケージ<strong>caret</strong>の関数<code>confusionMatrix()</code>を使って,
 混同行列より各種評価指標を計算する.
 2種類の表示モードで結果を示す:
 - 適合率 (precision) - 再現率 (recall) 表示
 - 感度(sensitivity) - 特異度 (specificity) 表示</p>
-<div class="sourceCode" id="cb359"><pre class="sourceCode r"><code class="sourceCode r"><span id="cb359-1"><a href="決定木分析.html#cb359-1" tabindex="-1"></a><span class="fu">library</span>(caret)</span>
-<span id="cb359-2"><a href="決定木分析.html#cb359-2" tabindex="-1"></a><span class="co"># 適合率 (precision) - 再現率 (recall) 表示</span></span>
-<span id="cb359-3"><a href="決定木分析.html#cb359-3" tabindex="-1"></a><span class="fu">confusionMatrix</span>(tbl_rp, <span class="at">mode =</span> <span class="st">&quot;prec_recall&quot;</span>)</span>
-<span id="cb359-4"><a href="決定木分析.html#cb359-4" tabindex="-1"></a><span class="co">#&gt; Confusion Matrix and Statistics</span></span>
-<span id="cb359-5"><a href="決定木分析.html#cb359-5" tabindex="-1"></a><span class="co">#&gt; </span></span>
-<span id="cb359-6"><a href="決定木分析.html#cb359-6" tabindex="-1"></a><span class="co">#&gt;           </span></span>
-<span id="cb359-7"><a href="決定木分析.html#cb359-7" tabindex="-1"></a><span class="co">#&gt; pcls_sp_rp Down  Up</span></span>
-<span id="cb359-8"><a href="決定木分析.html#cb359-8" tabindex="-1"></a><span class="co">#&gt;       Down  313 192</span></span>
-<span id="cb359-9"><a href="決定木分析.html#cb359-9" tabindex="-1"></a><span class="co">#&gt;       Up    289 456</span></span>
-<span id="cb359-10"><a href="決定木分析.html#cb359-10" tabindex="-1"></a><span class="co">#&gt;                                           </span></span>
-<span id="cb359-11"><a href="決定木分析.html#cb359-11" tabindex="-1"></a><span class="co">#&gt;                Accuracy : 0.6152          </span></span>
-<span id="cb359-12"><a href="決定木分析.html#cb359-12" tabindex="-1"></a><span class="co">#&gt;                  95% CI : (0.5876, 0.6423)</span></span>
-<span id="cb359-13"><a href="決定木分析.html#cb359-13" tabindex="-1"></a><span class="co">#&gt;     No Information Rate : 0.5184          </span></span>
-<span id="cb359-14"><a href="決定木分析.html#cb359-14" tabindex="-1"></a><span class="co">#&gt;     P-Value [Acc &gt; NIR] : 3.483e-12       </span></span>
-<span id="cb359-15"><a href="決定木分析.html#cb359-15" tabindex="-1"></a><span class="co">#&gt;                                           </span></span>
-<span id="cb359-16"><a href="決定木分析.html#cb359-16" tabindex="-1"></a><span class="co">#&gt;                   Kappa : 0.2249          </span></span>
-<span id="cb359-17"><a href="決定木分析.html#cb359-17" tabindex="-1"></a><span class="co">#&gt;                                           </span></span>
-<span id="cb359-18"><a href="決定木分析.html#cb359-18" tabindex="-1"></a><span class="co">#&gt;  Mcnemar&#39;s Test P-Value : 1.202e-05       </span></span>
-<span id="cb359-19"><a href="決定木分析.html#cb359-19" tabindex="-1"></a><span class="co">#&gt;                                           </span></span>
-<span id="cb359-20"><a href="決定木分析.html#cb359-20" tabindex="-1"></a><span class="co">#&gt;               Precision : 0.6198          </span></span>
-<span id="cb359-21"><a href="決定木分析.html#cb359-21" tabindex="-1"></a><span class="co">#&gt;                  Recall : 0.5199          </span></span>
-<span id="cb359-22"><a href="決定木分析.html#cb359-22" tabindex="-1"></a><span class="co">#&gt;                      F1 : 0.5655          </span></span>
-<span id="cb359-23"><a href="決定木分析.html#cb359-23" tabindex="-1"></a><span class="co">#&gt;              Prevalence : 0.4816          </span></span>
-<span id="cb359-24"><a href="決定木分析.html#cb359-24" tabindex="-1"></a><span class="co">#&gt;          Detection Rate : 0.2504          </span></span>
-<span id="cb359-25"><a href="決定木分析.html#cb359-25" tabindex="-1"></a><span class="co">#&gt;    Detection Prevalence : 0.4040          </span></span>
-<span id="cb359-26"><a href="決定木分析.html#cb359-26" tabindex="-1"></a><span class="co">#&gt;       Balanced Accuracy : 0.6118          </span></span>
-<span id="cb359-27"><a href="決定木分析.html#cb359-27" tabindex="-1"></a><span class="co">#&gt;                                           </span></span>
-<span id="cb359-28"><a href="決定木分析.html#cb359-28" tabindex="-1"></a><span class="co">#&gt;        &#39;Positive&#39; Class : Down            </span></span>
-<span id="cb359-29"><a href="決定木分析.html#cb359-29" tabindex="-1"></a><span class="co">#&gt; </span></span>
-<span id="cb359-30"><a href="決定木分析.html#cb359-30" tabindex="-1"></a><span class="co"># 感度(sensitivity) - 特異度 (specificity) 表示</span></span>
-<span id="cb359-31"><a href="決定木分析.html#cb359-31" tabindex="-1"></a><span class="fu">confusionMatrix</span>(tbl_rp)  <span class="co"># mode = &#39;sens_spec&#39; (デフォルト)</span></span>
-<span id="cb359-32"><a href="決定木分析.html#cb359-32" tabindex="-1"></a><span class="co">#&gt; Confusion Matrix and Statistics</span></span>
-<span id="cb359-33"><a href="決定木分析.html#cb359-33" tabindex="-1"></a><span class="co">#&gt; </span></span>
-<span id="cb359-34"><a href="決定木分析.html#cb359-34" tabindex="-1"></a><span class="co">#&gt;           </span></span>
-<span id="cb359-35"><a href="決定木分析.html#cb359-35" tabindex="-1"></a><span class="co">#&gt; pcls_sp_rp Down  Up</span></span>
-<span id="cb359-36"><a href="決定木分析.html#cb359-36" tabindex="-1"></a><span class="co">#&gt;       Down  313 192</span></span>
-<span id="cb359-37"><a href="決定木分析.html#cb359-37" tabindex="-1"></a><span class="co">#&gt;       Up    289 456</span></span>
-<span id="cb359-38"><a href="決定木分析.html#cb359-38" tabindex="-1"></a><span class="co">#&gt;                                           </span></span>
-<span id="cb359-39"><a href="決定木分析.html#cb359-39" tabindex="-1"></a><span class="co">#&gt;                Accuracy : 0.6152          </span></span>
-<span id="cb359-40"><a href="決定木分析.html#cb359-40" tabindex="-1"></a><span class="co">#&gt;                  95% CI : (0.5876, 0.6423)</span></span>
-<span id="cb359-41"><a href="決定木分析.html#cb359-41" tabindex="-1"></a><span class="co">#&gt;     No Information Rate : 0.5184          </span></span>
-<span id="cb359-42"><a href="決定木分析.html#cb359-42" tabindex="-1"></a><span class="co">#&gt;     P-Value [Acc &gt; NIR] : 3.483e-12       </span></span>
-<span id="cb359-43"><a href="決定木分析.html#cb359-43" tabindex="-1"></a><span class="co">#&gt;                                           </span></span>
-<span id="cb359-44"><a href="決定木分析.html#cb359-44" tabindex="-1"></a><span class="co">#&gt;                   Kappa : 0.2249          </span></span>
-<span id="cb359-45"><a href="決定木分析.html#cb359-45" tabindex="-1"></a><span class="co">#&gt;                                           </span></span>
-<span id="cb359-46"><a href="決定木分析.html#cb359-46" tabindex="-1"></a><span class="co">#&gt;  Mcnemar&#39;s Test P-Value : 1.202e-05       </span></span>
-<span id="cb359-47"><a href="決定木分析.html#cb359-47" tabindex="-1"></a><span class="co">#&gt;                                           </span></span>
-<span id="cb359-48"><a href="決定木分析.html#cb359-48" tabindex="-1"></a><span class="co">#&gt;             Sensitivity : 0.5199          </span></span>
-<span id="cb359-49"><a href="決定木分析.html#cb359-49" tabindex="-1"></a><span class="co">#&gt;             Specificity : 0.7037          </span></span>
-<span id="cb359-50"><a href="決定木分析.html#cb359-50" tabindex="-1"></a><span class="co">#&gt;          Pos Pred Value : 0.6198          </span></span>
-<span id="cb359-51"><a href="決定木分析.html#cb359-51" tabindex="-1"></a><span class="co">#&gt;          Neg Pred Value : 0.6121          </span></span>
-<span id="cb359-52"><a href="決定木分析.html#cb359-52" tabindex="-1"></a><span class="co">#&gt;              Prevalence : 0.4816          </span></span>
-<span id="cb359-53"><a href="決定木分析.html#cb359-53" tabindex="-1"></a><span class="co">#&gt;          Detection Rate : 0.2504          </span></span>
-<span id="cb359-54"><a href="決定木分析.html#cb359-54" tabindex="-1"></a><span class="co">#&gt;    Detection Prevalence : 0.4040          </span></span>
-<span id="cb359-55"><a href="決定木分析.html#cb359-55" tabindex="-1"></a><span class="co">#&gt;       Balanced Accuracy : 0.6118          </span></span>
-<span id="cb359-56"><a href="決定木分析.html#cb359-56" tabindex="-1"></a><span class="co">#&gt;                                           </span></span>
-<span id="cb359-57"><a href="決定木分析.html#cb359-57" tabindex="-1"></a><span class="co">#&gt;        &#39;Positive&#39; Class : Down            </span></span>
-<span id="cb359-58"><a href="決定木分析.html#cb359-58" tabindex="-1"></a><span class="co">#&gt; </span></span></code></pre></div>
+<div class="sourceCode" id="cb358"><pre class="sourceCode r"><code class="sourceCode r"><span id="cb358-1"><a href="決定木分析.html#cb358-1" tabindex="-1"></a><span class="fu">library</span>(caret)</span>
+<span id="cb358-2"><a href="決定木分析.html#cb358-2" tabindex="-1"></a><span class="co"># 適合率 (precision) - 再現率 (recall) 表示</span></span>
+<span id="cb358-3"><a href="決定木分析.html#cb358-3" tabindex="-1"></a><span class="fu">confusionMatrix</span>(tbl_rp, <span class="at">mode =</span> <span class="st">&quot;prec_recall&quot;</span>)</span>
+<span id="cb358-4"><a href="決定木分析.html#cb358-4" tabindex="-1"></a><span class="co">#&gt; Confusion Matrix and Statistics</span></span>
+<span id="cb358-5"><a href="決定木分析.html#cb358-5" tabindex="-1"></a><span class="co">#&gt; </span></span>
+<span id="cb358-6"><a href="決定木分析.html#cb358-6" tabindex="-1"></a><span class="co">#&gt;           </span></span>
+<span id="cb358-7"><a href="決定木分析.html#cb358-7" tabindex="-1"></a><span class="co">#&gt; pcls_sp_rp Down  Up</span></span>
+<span id="cb358-8"><a href="決定木分析.html#cb358-8" tabindex="-1"></a><span class="co">#&gt;       Down  313 192</span></span>
+<span id="cb358-9"><a href="決定木分析.html#cb358-9" tabindex="-1"></a><span class="co">#&gt;       Up    289 456</span></span>
+<span id="cb358-10"><a href="決定木分析.html#cb358-10" tabindex="-1"></a><span class="co">#&gt;                                           </span></span>
+<span id="cb358-11"><a href="決定木分析.html#cb358-11" tabindex="-1"></a><span class="co">#&gt;                Accuracy : 0.6152          </span></span>
+<span id="cb358-12"><a href="決定木分析.html#cb358-12" tabindex="-1"></a><span class="co">#&gt;                  95% CI : (0.5876, 0.6423)</span></span>
+<span id="cb358-13"><a href="決定木分析.html#cb358-13" tabindex="-1"></a><span class="co">#&gt;     No Information Rate : 0.5184          </span></span>
+<span id="cb358-14"><a href="決定木分析.html#cb358-14" tabindex="-1"></a><span class="co">#&gt;     P-Value [Acc &gt; NIR] : 3.483e-12       </span></span>
+<span id="cb358-15"><a href="決定木分析.html#cb358-15" tabindex="-1"></a><span class="co">#&gt;                                           </span></span>
+<span id="cb358-16"><a href="決定木分析.html#cb358-16" tabindex="-1"></a><span class="co">#&gt;                   Kappa : 0.2249          </span></span>
+<span id="cb358-17"><a href="決定木分析.html#cb358-17" tabindex="-1"></a><span class="co">#&gt;                                           </span></span>
+<span id="cb358-18"><a href="決定木分析.html#cb358-18" tabindex="-1"></a><span class="co">#&gt;  Mcnemar&#39;s Test P-Value : 1.202e-05       </span></span>
+<span id="cb358-19"><a href="決定木分析.html#cb358-19" tabindex="-1"></a><span class="co">#&gt;                                           </span></span>
+<span id="cb358-20"><a href="決定木分析.html#cb358-20" tabindex="-1"></a><span class="co">#&gt;               Precision : 0.6198          </span></span>
+<span id="cb358-21"><a href="決定木分析.html#cb358-21" tabindex="-1"></a><span class="co">#&gt;                  Recall : 0.5199          </span></span>
+<span id="cb358-22"><a href="決定木分析.html#cb358-22" tabindex="-1"></a><span class="co">#&gt;                      F1 : 0.5655          </span></span>
+<span id="cb358-23"><a href="決定木分析.html#cb358-23" tabindex="-1"></a><span class="co">#&gt;              Prevalence : 0.4816          </span></span>
+<span id="cb358-24"><a href="決定木分析.html#cb358-24" tabindex="-1"></a><span class="co">#&gt;          Detection Rate : 0.2504          </span></span>
+<span id="cb358-25"><a href="決定木分析.html#cb358-25" tabindex="-1"></a><span class="co">#&gt;    Detection Prevalence : 0.4040          </span></span>
+<span id="cb358-26"><a href="決定木分析.html#cb358-26" tabindex="-1"></a><span class="co">#&gt;       Balanced Accuracy : 0.6118          </span></span>
+<span id="cb358-27"><a href="決定木分析.html#cb358-27" tabindex="-1"></a><span class="co">#&gt;                                           </span></span>
+<span id="cb358-28"><a href="決定木分析.html#cb358-28" tabindex="-1"></a><span class="co">#&gt;        &#39;Positive&#39; Class : Down            </span></span>
+<span id="cb358-29"><a href="決定木分析.html#cb358-29" tabindex="-1"></a><span class="co">#&gt; </span></span>
+<span id="cb358-30"><a href="決定木分析.html#cb358-30" tabindex="-1"></a><span class="co"># 感度(sensitivity) - 特異度 (specificity) 表示</span></span>
+<span id="cb358-31"><a href="決定木分析.html#cb358-31" tabindex="-1"></a><span class="fu">confusionMatrix</span>(tbl_rp)  <span class="co"># mode = &#39;sens_spec&#39; (デフォルト)</span></span>
+<span id="cb358-32"><a href="決定木分析.html#cb358-32" tabindex="-1"></a><span class="co">#&gt; Confusion Matrix and Statistics</span></span>
+<span id="cb358-33"><a href="決定木分析.html#cb358-33" tabindex="-1"></a><span class="co">#&gt; </span></span>
+<span id="cb358-34"><a href="決定木分析.html#cb358-34" tabindex="-1"></a><span class="co">#&gt;           </span></span>
+<span id="cb358-35"><a href="決定木分析.html#cb358-35" tabindex="-1"></a><span class="co">#&gt; pcls_sp_rp Down  Up</span></span>
+<span id="cb358-36"><a href="決定木分析.html#cb358-36" tabindex="-1"></a><span class="co">#&gt;       Down  313 192</span></span>
+<span id="cb358-37"><a href="決定木分析.html#cb358-37" tabindex="-1"></a><span class="co">#&gt;       Up    289 456</span></span>
+<span id="cb358-38"><a href="決定木分析.html#cb358-38" tabindex="-1"></a><span class="co">#&gt;                                           </span></span>
+<span id="cb358-39"><a href="決定木分析.html#cb358-39" tabindex="-1"></a><span class="co">#&gt;                Accuracy : 0.6152          </span></span>
+<span id="cb358-40"><a href="決定木分析.html#cb358-40" tabindex="-1"></a><span class="co">#&gt;                  95% CI : (0.5876, 0.6423)</span></span>
+<span id="cb358-41"><a href="決定木分析.html#cb358-41" tabindex="-1"></a><span class="co">#&gt;     No Information Rate : 0.5184          </span></span>
+<span id="cb358-42"><a href="決定木分析.html#cb358-42" tabindex="-1"></a><span class="co">#&gt;     P-Value [Acc &gt; NIR] : 3.483e-12       </span></span>
+<span id="cb358-43"><a href="決定木分析.html#cb358-43" tabindex="-1"></a><span class="co">#&gt;                                           </span></span>
+<span id="cb358-44"><a href="決定木分析.html#cb358-44" tabindex="-1"></a><span class="co">#&gt;                   Kappa : 0.2249          </span></span>
+<span id="cb358-45"><a href="決定木分析.html#cb358-45" tabindex="-1"></a><span class="co">#&gt;                                           </span></span>
+<span id="cb358-46"><a href="決定木分析.html#cb358-46" tabindex="-1"></a><span class="co">#&gt;  Mcnemar&#39;s Test P-Value : 1.202e-05       </span></span>
+<span id="cb358-47"><a href="決定木分析.html#cb358-47" tabindex="-1"></a><span class="co">#&gt;                                           </span></span>
+<span id="cb358-48"><a href="決定木分析.html#cb358-48" tabindex="-1"></a><span class="co">#&gt;             Sensitivity : 0.5199          </span></span>
+<span id="cb358-49"><a href="決定木分析.html#cb358-49" tabindex="-1"></a><span class="co">#&gt;             Specificity : 0.7037          </span></span>
+<span id="cb358-50"><a href="決定木分析.html#cb358-50" tabindex="-1"></a><span class="co">#&gt;          Pos Pred Value : 0.6198          </span></span>
+<span id="cb358-51"><a href="決定木分析.html#cb358-51" tabindex="-1"></a><span class="co">#&gt;          Neg Pred Value : 0.6121          </span></span>
+<span id="cb358-52"><a href="決定木分析.html#cb358-52" tabindex="-1"></a><span class="co">#&gt;              Prevalence : 0.4816          </span></span>
+<span id="cb358-53"><a href="決定木分析.html#cb358-53" tabindex="-1"></a><span class="co">#&gt;          Detection Rate : 0.2504          </span></span>
+<span id="cb358-54"><a href="決定木分析.html#cb358-54" tabindex="-1"></a><span class="co">#&gt;    Detection Prevalence : 0.4040          </span></span>
+<span id="cb358-55"><a href="決定木分析.html#cb358-55" tabindex="-1"></a><span class="co">#&gt;       Balanced Accuracy : 0.6118          </span></span>
+<span id="cb358-56"><a href="決定木分析.html#cb358-56" tabindex="-1"></a><span class="co">#&gt;                                           </span></span>
+<span id="cb358-57"><a href="決定木分析.html#cb358-57" tabindex="-1"></a><span class="co">#&gt;        &#39;Positive&#39; Class : Down            </span></span>
+<span id="cb358-58"><a href="決定木分析.html#cb358-58" tabindex="-1"></a><span class="co">#&gt; </span></span></code></pre></div>
 <p>パッケージ<strong>caret</strong>は, 多種多様な機械学習アルゴリズムを統一的な環境で
 実行し比較できる環境を提供する.
 サポートベクターマシン (SVM), 勾配ブースティング, ランダムフォレスト,
