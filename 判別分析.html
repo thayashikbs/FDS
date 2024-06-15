@@ -30,7 +30,7 @@
   
   
 <link rel="prev" href="正則化回帰-lasso-ridge回帰.html"/>
-
+<link rel="next" href="決定木分析.html"/>
 <script src="libs/jquery-3.6.0/jquery-3.6.0.min.js"></script>
 <script src="https://cdn.jsdelivr.net/npm/fuse.js@6.4.6/dist/fuse.min.js"></script>
 <link href="libs/gitbook-2.6.7/css/style.css" rel="stylesheet" />
@@ -286,6 +286,19 @@ code span.wa { color: #60a0b0; font-weight: bold; font-style: italic; } /* Warni
 <li class="chapter" data-level="" data-path="判別分析.html"><a href="判別分析.html#データセット2-ビジネススクールの入学許可データ"><i class="fa fa-check"></i>データセット#2: ビジネススクールの入学許可データ</a></li>
 </ul></li>
 </ul></li>
+<li class="chapter" data-level="8" data-path="決定木分析.html"><a href="決定木分析.html"><i class="fa fa-check"></i><b>8</b> 決定木分析</a>
+<ul>
+<li class="chapter" data-level="8.1" data-path="決定木分析.html"><a href="決定木分析.html#導入-回帰木-vs-線形回帰"><i class="fa fa-check"></i><b>8.1</b> 導入: 回帰木 vs 線形回帰</a>
+<ul>
+<li class="chapter" data-level="" data-path="決定木分析.html"><a href="決定木分析.html#データセット1-自動車の制動距離"><i class="fa fa-check"></i>データセット1: 自動車の制動距離</a></li>
+<li class="chapter" data-level="8.1.1" data-path="決定木分析.html"><a href="決定木分析.html#基本操作-回帰木"><i class="fa fa-check"></i><b>8.1.1</b> 基本操作: 回帰木</a></li>
+</ul></li>
+<li class="chapter" data-level="8.2" data-path="決定木分析.html"><a href="決定木分析.html#回帰木"><i class="fa fa-check"></i><b>8.2</b> 回帰木</a>
+<ul>
+<li class="chapter" data-level="" data-path="決定木分析.html"><a href="決定木分析.html#データセット2-米國株価指数データ-再掲"><i class="fa fa-check"></i>データセット2: 米國株価指数データ (再掲)</a></li>
+</ul></li>
+<li class="chapter" data-level="8.3" data-path="決定木分析.html"><a href="決定木分析.html#分類木"><i class="fa fa-check"></i><b>8.3</b> 分類木</a></li>
+</ul></li>
 </ul>
 
       </nav>
@@ -383,7 +396,7 @@ code span.wa { color: #60a0b0; font-weight: bold; font-style: italic; } /* Warni
 <span id="cb305-5"><a href="判別分析.html#cb305-5" tabindex="-1"></a><span class="fu">dim</span>(Smarket_2005)</span>
 <span id="cb305-6"><a href="判別分析.html#cb305-6" tabindex="-1"></a><span class="co">#&gt; [1] 252   9</span></span>
 <span id="cb305-7"><a href="判別分析.html#cb305-7" tabindex="-1"></a>Direction_2005 <span class="ot">&lt;-</span> Smarket[<span class="sc">-</span>idx_train, <span class="st">&quot;Direction&quot;</span>]</span></code></pre></div>
-<div class="sourceCode" id="cb306"><pre class="sourceCode r"><code class="sourceCode r"><span id="cb306-1"><a href="判別分析.html#cb306-1" tabindex="-1"></a><span class="co"># 代替的方法-1 (ISRL)</span></span>
+<div class="sourceCode" id="cb306"><pre class="sourceCode r"><code class="sourceCode r"><span id="cb306-1"><a href="判別分析.html#cb306-1" tabindex="-1"></a><span class="co"># 代替的方法-1 (ISLR)</span></span>
 <span id="cb306-2"><a href="判別分析.html#cb306-2" tabindex="-1"></a>train <span class="ot">&lt;-</span> (Smarket<span class="sc">$</span>Year <span class="sc">&lt;</span> <span class="dv">2005</span>)</span>
 <span id="cb306-3"><a href="判別分析.html#cb306-3" tabindex="-1"></a>Smarket_2005 <span class="ot">&lt;-</span> Smarket[<span class="sc">!</span>train, ]</span>
 <span id="cb306-4"><a href="判別分析.html#cb306-4" tabindex="-1"></a>Direction_2005 <span class="ot">&lt;-</span> Smarket[<span class="sc">!</span>train, <span class="st">&quot;Direction&quot;</span>]</span></code></pre></div>
@@ -638,7 +651,7 @@ LOOCV (leave-oen-out cross validation) を実行することができる.
 <span id="cb321-9"><a href="判別分析.html#cb321-9" tabindex="-1"></a><span class="co">#&gt; [1] 0.496</span></span></code></pre></div>
 <p>正解率は50%を下回り, 予測がうまくいってないことを示している.</p>
 <p>一般に, kNN法は<span class="math inline">\(k\)</span>の大きさに結果が左右されることから,
-適切なkの選択は重要である.</p>
+適切な<span class="math inline">\(k\)</span>の選択は重要である.</p>
 <div class="sourceCode" id="cb322"><pre class="sourceCode r"><code class="sourceCode r"><span id="cb322-1"><a href="判別分析.html#cb322-1" tabindex="-1"></a><span class="cf">for</span> (k_tmp <span class="cf">in</span> <span class="dv">1</span><span class="sc">:</span><span class="dv">10</span>) {</span>
 <span id="cb322-2"><a href="判別分析.html#cb322-2" tabindex="-1"></a>  <span class="fu">print</span>(<span class="fu">paste0</span>(<span class="st">&quot;k=&quot;</span>, k_tmp))</span>
 <span id="cb322-3"><a href="判別分析.html#cb322-3" tabindex="-1"></a>  pred_knn_cv <span class="ot">&lt;-</span> <span class="fu">knn.cv</span>(x, y, <span class="at">k =</span> k_tmp)</span>
@@ -656,9 +669,9 @@ LOOCV (leave-oen-out cross validation) を実行することができる.
 <span id="cb322-15"><a href="判別分析.html#cb322-15" tabindex="-1"></a><span class="co">#&gt; [1] &quot;k=2&quot;</span></span>
 <span id="cb322-16"><a href="判別分析.html#cb322-16" tabindex="-1"></a><span class="co">#&gt;            y</span></span>
 <span id="cb322-17"><a href="判別分析.html#cb322-17" tabindex="-1"></a><span class="co">#&gt; pred_knn_cv Down  Up</span></span>
-<span id="cb322-18"><a href="判別分析.html#cb322-18" tabindex="-1"></a><span class="co">#&gt;        Down  290 300</span></span>
-<span id="cb322-19"><a href="判別分析.html#cb322-19" tabindex="-1"></a><span class="co">#&gt;        Up    312 348</span></span>
-<span id="cb322-20"><a href="判別分析.html#cb322-20" tabindex="-1"></a><span class="co">#&gt; [1] 0.5104</span></span>
+<span id="cb322-18"><a href="判別分析.html#cb322-18" tabindex="-1"></a><span class="co">#&gt;        Down  287 292</span></span>
+<span id="cb322-19"><a href="判別分析.html#cb322-19" tabindex="-1"></a><span class="co">#&gt;        Up    315 356</span></span>
+<span id="cb322-20"><a href="判別分析.html#cb322-20" tabindex="-1"></a><span class="co">#&gt; [1] 0.5144</span></span>
 <span id="cb322-21"><a href="判別分析.html#cb322-21" tabindex="-1"></a><span class="co">#&gt; [1] &quot;k=3&quot;</span></span>
 <span id="cb322-22"><a href="判別分析.html#cb322-22" tabindex="-1"></a><span class="co">#&gt;            y</span></span>
 <span id="cb322-23"><a href="判別分析.html#cb322-23" tabindex="-1"></a><span class="co">#&gt; pred_knn_cv Down  Up</span></span>
@@ -668,9 +681,9 @@ LOOCV (leave-oen-out cross validation) を実行することができる.
 <span id="cb322-27"><a href="判別分析.html#cb322-27" tabindex="-1"></a><span class="co">#&gt; [1] &quot;k=4&quot;</span></span>
 <span id="cb322-28"><a href="判別分析.html#cb322-28" tabindex="-1"></a><span class="co">#&gt;            y</span></span>
 <span id="cb322-29"><a href="判別分析.html#cb322-29" tabindex="-1"></a><span class="co">#&gt; pred_knn_cv Down  Up</span></span>
-<span id="cb322-30"><a href="判別分析.html#cb322-30" tabindex="-1"></a><span class="co">#&gt;        Down  273 305</span></span>
-<span id="cb322-31"><a href="判別分析.html#cb322-31" tabindex="-1"></a><span class="co">#&gt;        Up    329 343</span></span>
-<span id="cb322-32"><a href="判別分析.html#cb322-32" tabindex="-1"></a><span class="co">#&gt; [1] 0.4928</span></span>
+<span id="cb322-30"><a href="判別分析.html#cb322-30" tabindex="-1"></a><span class="co">#&gt;        Down  265 317</span></span>
+<span id="cb322-31"><a href="判別分析.html#cb322-31" tabindex="-1"></a><span class="co">#&gt;        Up    337 331</span></span>
+<span id="cb322-32"><a href="判別分析.html#cb322-32" tabindex="-1"></a><span class="co">#&gt; [1] 0.4768</span></span>
 <span id="cb322-33"><a href="判別分析.html#cb322-33" tabindex="-1"></a><span class="co">#&gt; [1] &quot;k=5&quot;</span></span>
 <span id="cb322-34"><a href="判別分析.html#cb322-34" tabindex="-1"></a><span class="co">#&gt;            y</span></span>
 <span id="cb322-35"><a href="判別分析.html#cb322-35" tabindex="-1"></a><span class="co">#&gt; pred_knn_cv Down  Up</span></span>
@@ -680,9 +693,9 @@ LOOCV (leave-oen-out cross validation) を実行することができる.
 <span id="cb322-39"><a href="判別分析.html#cb322-39" tabindex="-1"></a><span class="co">#&gt; [1] &quot;k=6&quot;</span></span>
 <span id="cb322-40"><a href="判別分析.html#cb322-40" tabindex="-1"></a><span class="co">#&gt;            y</span></span>
 <span id="cb322-41"><a href="判別分析.html#cb322-41" tabindex="-1"></a><span class="co">#&gt; pred_knn_cv Down  Up</span></span>
-<span id="cb322-42"><a href="判別分析.html#cb322-42" tabindex="-1"></a><span class="co">#&gt;        Down  263 312</span></span>
-<span id="cb322-43"><a href="判別分析.html#cb322-43" tabindex="-1"></a><span class="co">#&gt;        Up    339 336</span></span>
-<span id="cb322-44"><a href="判別分析.html#cb322-44" tabindex="-1"></a><span class="co">#&gt; [1] 0.4792</span></span>
+<span id="cb322-42"><a href="判別分析.html#cb322-42" tabindex="-1"></a><span class="co">#&gt;        Down  279 305</span></span>
+<span id="cb322-43"><a href="判別分析.html#cb322-43" tabindex="-1"></a><span class="co">#&gt;        Up    323 343</span></span>
+<span id="cb322-44"><a href="判別分析.html#cb322-44" tabindex="-1"></a><span class="co">#&gt; [1] 0.4976</span></span>
 <span id="cb322-45"><a href="判別分析.html#cb322-45" tabindex="-1"></a><span class="co">#&gt; [1] &quot;k=7&quot;</span></span>
 <span id="cb322-46"><a href="判別分析.html#cb322-46" tabindex="-1"></a><span class="co">#&gt;            y</span></span>
 <span id="cb322-47"><a href="判別分析.html#cb322-47" tabindex="-1"></a><span class="co">#&gt; pred_knn_cv Down  Up</span></span>
@@ -692,9 +705,9 @@ LOOCV (leave-oen-out cross validation) を実行することができる.
 <span id="cb322-51"><a href="判別分析.html#cb322-51" tabindex="-1"></a><span class="co">#&gt; [1] &quot;k=8&quot;</span></span>
 <span id="cb322-52"><a href="判別分析.html#cb322-52" tabindex="-1"></a><span class="co">#&gt;            y</span></span>
 <span id="cb322-53"><a href="判別分析.html#cb322-53" tabindex="-1"></a><span class="co">#&gt; pred_knn_cv Down  Up</span></span>
-<span id="cb322-54"><a href="判別分析.html#cb322-54" tabindex="-1"></a><span class="co">#&gt;        Down  257 292</span></span>
-<span id="cb322-55"><a href="判別分析.html#cb322-55" tabindex="-1"></a><span class="co">#&gt;        Up    345 356</span></span>
-<span id="cb322-56"><a href="判別分析.html#cb322-56" tabindex="-1"></a><span class="co">#&gt; [1] 0.4904</span></span>
+<span id="cb322-54"><a href="判別分析.html#cb322-54" tabindex="-1"></a><span class="co">#&gt;        Down  259 288</span></span>
+<span id="cb322-55"><a href="判別分析.html#cb322-55" tabindex="-1"></a><span class="co">#&gt;        Up    343 360</span></span>
+<span id="cb322-56"><a href="判別分析.html#cb322-56" tabindex="-1"></a><span class="co">#&gt; [1] 0.4952</span></span>
 <span id="cb322-57"><a href="判別分析.html#cb322-57" tabindex="-1"></a><span class="co">#&gt; [1] &quot;k=9&quot;</span></span>
 <span id="cb322-58"><a href="判別分析.html#cb322-58" tabindex="-1"></a><span class="co">#&gt;            y</span></span>
 <span id="cb322-59"><a href="判別分析.html#cb322-59" tabindex="-1"></a><span class="co">#&gt; pred_knn_cv Down  Up</span></span>
@@ -704,12 +717,12 @@ LOOCV (leave-oen-out cross validation) を実行することができる.
 <span id="cb322-63"><a href="判別分析.html#cb322-63" tabindex="-1"></a><span class="co">#&gt; [1] &quot;k=10&quot;</span></span>
 <span id="cb322-64"><a href="判別分析.html#cb322-64" tabindex="-1"></a><span class="co">#&gt;            y</span></span>
 <span id="cb322-65"><a href="判別分析.html#cb322-65" tabindex="-1"></a><span class="co">#&gt; pred_knn_cv Down  Up</span></span>
-<span id="cb322-66"><a href="判別分析.html#cb322-66" tabindex="-1"></a><span class="co">#&gt;        Down  266 301</span></span>
-<span id="cb322-67"><a href="判別分析.html#cb322-67" tabindex="-1"></a><span class="co">#&gt;        Up    336 347</span></span>
-<span id="cb322-68"><a href="判別分析.html#cb322-68" tabindex="-1"></a><span class="co">#&gt; [1] 0.4904</span></span></code></pre></div>
-<p>やはり, <span class="math inline">\(k\)</span>を変えても, 正解率はいずれも50%を下回った.
+<span id="cb322-66"><a href="判別分析.html#cb322-66" tabindex="-1"></a><span class="co">#&gt;        Down  258 294</span></span>
+<span id="cb322-67"><a href="判別分析.html#cb322-67" tabindex="-1"></a><span class="co">#&gt;        Up    344 354</span></span>
+<span id="cb322-68"><a href="判別分析.html#cb322-68" tabindex="-1"></a><span class="co">#&gt; [1] 0.4896</span></span></code></pre></div>
+<p><span class="math inline">\(k\)</span>を変えても, 正解率は大きく変わらず, いずれも50%を下回った.
 本データセットが時系列データであることを考えれば,
-当然と言える.</p>
+不自然とは言えない.</p>
 </div>
 <div id="他パッケージの利用-パッケージklar" class="section level2 hasAnchor" number="7.3">
 <h2><span class="header-section-number">7.3</span> 他パッケージの利用: パッケージ<strong>klaR</strong><a href="判別分析.html#他パッケージの利用-パッケージklar" class="anchor-section" aria-label="Anchor link to header"></a></h2>
@@ -777,8 +790,8 @@ LOOCV (leave-oen-out cross validation) を実行することができる.
           </div>
         </div>
       </div>
-<a href="正則化回帰-lasso-ridge回帰.html" class="navigation navigation-prev navigation-unique" aria-label="Previous page"><i class="fa fa-angle-left"></i></a>
-
+<a href="正則化回帰-lasso-ridge回帰.html" class="navigation navigation-prev " aria-label="Previous page"><i class="fa fa-angle-left"></i></a>
+<a href="決定木分析.html" class="navigation navigation-next " aria-label="Next page"><i class="fa fa-angle-right"></i></a>
     </div>
   </div>
 <script src="libs/gitbook-2.6.7/js/app.min.js"></script>
