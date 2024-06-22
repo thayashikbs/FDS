@@ -30,7 +30,7 @@
   
   
 <link rel="prev" href="判別分析.html"/>
-
+<link rel="next" href="アンサンブル学習.html"/>
 <script src="libs/jquery-3.6.0/jquery-3.6.0.min.js"></script>
 <script src="https://cdn.jsdelivr.net/npm/fuse.js@6.4.6/dist/fuse.min.js"></script>
 <link href="libs/gitbook-2.6.7/css/style.css" rel="stylesheet" />
@@ -299,6 +299,15 @@ code span.wa { color: #60a0b0; font-weight: bold; font-style: italic; } /* Warni
 </ul></li>
 <li class="chapter" data-level="8.3" data-path="決定木分析.html"><a href="決定木分析.html#分類木"><i class="fa fa-check"></i><b>8.3</b> 分類木</a></li>
 </ul></li>
+<li class="chapter" data-level="9" data-path="アンサンブル学習.html"><a href="アンサンブル学習.html"><i class="fa fa-check"></i><b>9</b> アンサンブル学習</a>
+<ul>
+<li class="chapter" data-level="9.1" data-path="アンサンブル学習.html"><a href="アンサンブル学習.html#決定木-分類木"><i class="fa fa-check"></i><b>9.1</b> 決定木 (分類木)</a>
+<ul>
+<li class="chapter" data-level="" data-path="アンサンブル学習.html"><a href="アンサンブル学習.html#データセット3-個人ローン信用データ-再掲"><i class="fa fa-check"></i>データセット3: 個人ローン信用データ (再掲)</a></li>
+</ul></li>
+<li class="chapter" data-level="9.2" data-path="アンサンブル学習.html"><a href="アンサンブル学習.html#ランダムフォレスト分類木"><i class="fa fa-check"></i><b>9.2</b> ランダムフォレスト分類木</a></li>
+<li class="chapter" data-level="9.3" data-path="アンサンブル学習.html"><a href="アンサンブル学習.html#一般ブースティング回帰モデル"><i class="fa fa-check"></i><b>9.3</b> 一般ブースティング回帰モデル</a></li>
+</ul></li>
 </ul>
 
       </nav>
@@ -469,9 +478,9 @@ code span.wa { color: #60a0b0; font-weight: bold; font-style: italic; } /* Warni
 <span id="cb340-6"><a href="決定木分析.html#cb340-6" tabindex="-1"></a><span class="co">#&gt;   n= 50 </span></span>
 <span id="cb340-7"><a href="決定木分析.html#cb340-7" tabindex="-1"></a><span class="co">#&gt; </span></span>
 <span id="cb340-8"><a href="決定木分析.html#cb340-8" tabindex="-1"></a><span class="co">#&gt;          CP nsplit rel error    xerror      xstd</span></span>
-<span id="cb340-9"><a href="決定木分析.html#cb340-9" tabindex="-1"></a><span class="co">#&gt; 1 0.4676398      0 1.0000000 1.0330869 0.2187574</span></span>
-<span id="cb340-10"><a href="決定木分析.html#cb340-10" tabindex="-1"></a><span class="co">#&gt; 2 0.1104944      1 0.5323602 0.6745867 0.1483002</span></span>
-<span id="cb340-11"><a href="決定木分析.html#cb340-11" tabindex="-1"></a><span class="co">#&gt; 3 0.0100000      2 0.4218658 0.5392356 0.1214836</span></span>
+<span id="cb340-9"><a href="決定木分析.html#cb340-9" tabindex="-1"></a><span class="co">#&gt; 1 0.4676398      0 1.0000000 1.0358061 0.2148068</span></span>
+<span id="cb340-10"><a href="決定木分析.html#cb340-10" tabindex="-1"></a><span class="co">#&gt; 2 0.1104944      1 0.5323602 0.6554200 0.1434040</span></span>
+<span id="cb340-11"><a href="決定木分析.html#cb340-11" tabindex="-1"></a><span class="co">#&gt; 3 0.0100000      2 0.4218658 0.5058393 0.1271457</span></span>
 <span id="cb340-12"><a href="決定木分析.html#cb340-12" tabindex="-1"></a><span class="co">#&gt; </span></span>
 <span id="cb340-13"><a href="決定木分析.html#cb340-13" tabindex="-1"></a><span class="co">#&gt; Variable importance</span></span>
 <span id="cb340-14"><a href="決定木分析.html#cb340-14" tabindex="-1"></a><span class="co">#&gt; speed </span></span>
@@ -683,9 +692,9 @@ code span.wa { color: #60a0b0; font-weight: bold; font-style: italic; } /* Warni
 <span id="cb350-12"><a href="決定木分析.html#cb350-12" tabindex="-1"></a><span class="co">#&gt; n= 1250 </span></span>
 <span id="cb350-13"><a href="決定木分析.html#cb350-13" tabindex="-1"></a><span class="co">#&gt; </span></span>
 <span id="cb350-14"><a href="決定木分析.html#cb350-14" tabindex="-1"></a><span class="co">#&gt;          CP nsplit rel error xerror     xstd</span></span>
-<span id="cb350-15"><a href="決定木分析.html#cb350-15" tabindex="-1"></a><span class="co">#&gt; 1 0.0174254      0   1.00000 1.0012 0.059314</span></span>
-<span id="cb350-16"><a href="決定木分析.html#cb350-16" tabindex="-1"></a><span class="co">#&gt; 2 0.0079811      1   0.98257 1.0196 0.065413</span></span>
-<span id="cb350-17"><a href="決定木分析.html#cb350-17" tabindex="-1"></a><span class="co">#&gt; 3 0.0079000      4   0.95863 1.0828 0.069458</span></span>
+<span id="cb350-15"><a href="決定木分析.html#cb350-15" tabindex="-1"></a><span class="co">#&gt; 1 0.0174254      0   1.00000 1.0029 0.059400</span></span>
+<span id="cb350-16"><a href="決定木分析.html#cb350-16" tabindex="-1"></a><span class="co">#&gt; 2 0.0079811      1   0.98257 1.0280 0.062183</span></span>
+<span id="cb350-17"><a href="決定木分析.html#cb350-17" tabindex="-1"></a><span class="co">#&gt; 3 0.0079000      4   0.95863 1.1529 0.072403</span></span>
 <span id="cb350-18"><a href="決定木分析.html#cb350-18" tabindex="-1"></a><span class="fu">plotcp</span>(sp_rp)</span></code></pre></div>
 <p><img src="090-DT_files/figure-html/unnamed-chunk-15-1.png" width="75%" />
 <code>plotcp()</code>は, 木の複雑度 (CP) (横軸) に対する
@@ -777,14 +786,14 @@ code span.wa { color: #60a0b0; font-weight: bold; font-style: italic; } /* Warni
 <span id="cb356-11"><a href="決定木分析.html#cb356-11" tabindex="-1"></a><span class="co">#&gt; </span></span>
 <span id="cb356-12"><a href="決定木分析.html#cb356-12" tabindex="-1"></a><span class="co">#&gt; n= 1250 </span></span>
 <span id="cb356-13"><a href="決定木分析.html#cb356-13" tabindex="-1"></a><span class="co">#&gt; </span></span>
-<span id="cb356-14"><a href="決定木分析.html#cb356-14" tabindex="-1"></a><span class="co">#&gt;         CP nsplit rel error xerror     xstd</span></span>
-<span id="cb356-15"><a href="決定木分析.html#cb356-15" tabindex="-1"></a><span class="co">#&gt; 1 0.063123      0   1.00000 1.0000 0.029345</span></span>
-<span id="cb356-16"><a href="決定木分析.html#cb356-16" tabindex="-1"></a><span class="co">#&gt; 2 0.023256      1   0.93688 1.0066 0.029351</span></span>
-<span id="cb356-17"><a href="決定木分析.html#cb356-17" tabindex="-1"></a><span class="co">#&gt; 3 0.016058      2   0.91362 1.0316 0.029364</span></span>
-<span id="cb356-18"><a href="決定木分析.html#cb356-18" tabindex="-1"></a><span class="co">#&gt; 4 0.014950      5   0.86545 1.0150 0.029358</span></span>
-<span id="cb356-19"><a href="決定木分析.html#cb356-19" tabindex="-1"></a><span class="co">#&gt; 5 0.014120      6   0.85050 1.0166 0.029359</span></span>
-<span id="cb356-20"><a href="決定木分析.html#cb356-20" tabindex="-1"></a><span class="co">#&gt; 6 0.011628      8   0.82226 1.0150 0.029358</span></span>
-<span id="cb356-21"><a href="決定木分析.html#cb356-21" tabindex="-1"></a><span class="co">#&gt; 7 0.010000     10   0.79900 1.0266 0.029363</span></span>
+<span id="cb356-14"><a href="決定木分析.html#cb356-14" tabindex="-1"></a><span class="co">#&gt;         CP nsplit rel error  xerror     xstd</span></span>
+<span id="cb356-15"><a href="決定木分析.html#cb356-15" tabindex="-1"></a><span class="co">#&gt; 1 0.063123      0   1.00000 1.00000 0.029345</span></span>
+<span id="cb356-16"><a href="決定木分析.html#cb356-16" tabindex="-1"></a><span class="co">#&gt; 2 0.023256      1   0.93688 0.98339 0.029324</span></span>
+<span id="cb356-17"><a href="決定木分析.html#cb356-17" tabindex="-1"></a><span class="co">#&gt; 3 0.016058      2   0.91362 1.01163 0.029355</span></span>
+<span id="cb356-18"><a href="決定木分析.html#cb356-18" tabindex="-1"></a><span class="co">#&gt; 4 0.014950      5   0.86545 1.01661 0.029359</span></span>
+<span id="cb356-19"><a href="決定木分析.html#cb356-19" tabindex="-1"></a><span class="co">#&gt; 5 0.014120      6   0.85050 1.01661 0.029359</span></span>
+<span id="cb356-20"><a href="決定木分析.html#cb356-20" tabindex="-1"></a><span class="co">#&gt; 6 0.011628      8   0.82226 1.01495 0.029358</span></span>
+<span id="cb356-21"><a href="決定木分析.html#cb356-21" tabindex="-1"></a><span class="co">#&gt; 7 0.010000     10   0.79900 1.01163 0.029355</span></span>
 <span id="cb356-22"><a href="決定木分析.html#cb356-22" tabindex="-1"></a><span class="fu">plotcp</span>(sp2_rp)</span></code></pre></div>
 <p><img src="090-DT_files/figure-html/unnamed-chunk-20-1.png" width="75%" />
 上の図は, cp (横軸) が増えても,
@@ -888,8 +897,8 @@ code span.wa { color: #60a0b0; font-weight: bold; font-style: italic; } /* Warni
           </div>
         </div>
       </div>
-<a href="判別分析.html" class="navigation navigation-prev navigation-unique" aria-label="Previous page"><i class="fa fa-angle-left"></i></a>
-
+<a href="判別分析.html" class="navigation navigation-prev " aria-label="Previous page"><i class="fa fa-angle-left"></i></a>
+<a href="アンサンブル学習.html" class="navigation navigation-next " aria-label="Next page"><i class="fa fa-angle-right"></i></a>
     </div>
   </div>
 <script src="libs/gitbook-2.6.7/js/app.min.js"></script>

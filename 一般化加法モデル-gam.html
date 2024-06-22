@@ -299,6 +299,15 @@ code span.wa { color: #60a0b0; font-weight: bold; font-style: italic; } /* Warni
 </ul></li>
 <li class="chapter" data-level="8.3" data-path="決定木分析.html"><a href="決定木分析.html#分類木"><i class="fa fa-check"></i><b>8.3</b> 分類木</a></li>
 </ul></li>
+<li class="chapter" data-level="9" data-path="アンサンブル学習.html"><a href="アンサンブル学習.html"><i class="fa fa-check"></i><b>9</b> アンサンブル学習</a>
+<ul>
+<li class="chapter" data-level="9.1" data-path="アンサンブル学習.html"><a href="アンサンブル学習.html#決定木-分類木"><i class="fa fa-check"></i><b>9.1</b> 決定木 (分類木)</a>
+<ul>
+<li class="chapter" data-level="" data-path="アンサンブル学習.html"><a href="アンサンブル学習.html#データセット3-個人ローン信用データ-再掲"><i class="fa fa-check"></i>データセット3: 個人ローン信用データ (再掲)</a></li>
+</ul></li>
+<li class="chapter" data-level="9.2" data-path="アンサンブル学習.html"><a href="アンサンブル学習.html#ランダムフォレスト分類木"><i class="fa fa-check"></i><b>9.2</b> ランダムフォレスト分類木</a></li>
+<li class="chapter" data-level="9.3" data-path="アンサンブル学習.html"><a href="アンサンブル学習.html#一般ブースティング回帰モデル"><i class="fa fa-check"></i><b>9.3</b> 一般ブースティング回帰モデル</a></li>
+</ul></li>
 </ul>
 
       </nav>
@@ -741,12 +750,12 @@ fit_gam3 <- gam(wage ~ s(year, 4) + s(age, 5) + education, data  =  Wage)
 <span id="cb271-20"><a href="一般化加法モデル-gam.html#cb271-20" tabindex="-1"></a>air_forecast <span class="ot">&lt;-</span> <span class="fu">predict</span>(air_ppht, dates_ft)</span>
 <span id="cb271-21"><a href="一般化加法モデル-gam.html#cb271-21" tabindex="-1"></a><span class="fu">tail</span>(air_forecast[<span class="fu">c</span>(<span class="st">&quot;ds&quot;</span>, <span class="st">&quot;yhat&quot;</span>, <span class="st">&quot;yhat_lower&quot;</span>, <span class="st">&quot;yhat_upper&quot;</span>)])</span>
 <span id="cb271-22"><a href="一般化加法モデル-gam.html#cb271-22" tabindex="-1"></a><span class="co">#&gt;             ds     yhat yhat_lower yhat_upper</span></span>
-<span id="cb271-23"><a href="一般化加法モデル-gam.html#cb271-23" tabindex="-1"></a><span class="co">#&gt; 151 1961-07-01 576.8046   548.5158   606.6060</span></span>
-<span id="cb271-24"><a href="一般化加法モデル-gam.html#cb271-24" tabindex="-1"></a><span class="co">#&gt; 152 1961-08-01 577.2261   550.3899   605.2809</span></span>
-<span id="cb271-25"><a href="一般化加法モデル-gam.html#cb271-25" tabindex="-1"></a><span class="co">#&gt; 153 1961-09-01 528.6678   500.1183   557.8730</span></span>
-<span id="cb271-26"><a href="一般化加法モデル-gam.html#cb271-26" tabindex="-1"></a><span class="co">#&gt; 154 1961-10-01 493.5023   465.8601   523.2430</span></span>
-<span id="cb271-27"><a href="一般化加法モデル-gam.html#cb271-27" tabindex="-1"></a><span class="co">#&gt; 155 1961-11-01 459.6479   430.1331   490.1623</span></span>
-<span id="cb271-28"><a href="一般化加法モデル-gam.html#cb271-28" tabindex="-1"></a><span class="co">#&gt; 156 1961-12-01 489.0093   459.1747   517.5210</span></span>
+<span id="cb271-23"><a href="一般化加法モデル-gam.html#cb271-23" tabindex="-1"></a><span class="co">#&gt; 151 1961-07-01 576.8046   549.1349   605.0138</span></span>
+<span id="cb271-24"><a href="一般化加法モデル-gam.html#cb271-24" tabindex="-1"></a><span class="co">#&gt; 152 1961-08-01 577.2261   547.2341   605.2090</span></span>
+<span id="cb271-25"><a href="一般化加法モデル-gam.html#cb271-25" tabindex="-1"></a><span class="co">#&gt; 153 1961-09-01 528.6678   501.9380   559.7771</span></span>
+<span id="cb271-26"><a href="一般化加法モデル-gam.html#cb271-26" tabindex="-1"></a><span class="co">#&gt; 154 1961-10-01 493.5023   466.1462   521.7012</span></span>
+<span id="cb271-27"><a href="一般化加法モデル-gam.html#cb271-27" tabindex="-1"></a><span class="co">#&gt; 155 1961-11-01 459.6479   431.5901   489.2510</span></span>
+<span id="cb271-28"><a href="一般化加法モデル-gam.html#cb271-28" tabindex="-1"></a><span class="co">#&gt; 156 1961-12-01 489.0093   461.8061   519.3560</span></span>
 <span id="cb271-29"><a href="一般化加法モデル-gam.html#cb271-29" tabindex="-1"></a><span class="fu">str</span>(air_forecast)</span>
 <span id="cb271-30"><a href="一般化加法モデル-gam.html#cb271-30" tabindex="-1"></a><span class="co">#&gt; &#39;data.frame&#39;:    156 obs. of  16 variables:</span></span>
 <span id="cb271-31"><a href="一般化加法モデル-gam.html#cb271-31" tabindex="-1"></a><span class="co">#&gt;  $ ds                        : POSIXct, format: &quot;1949-01-01&quot; &quot;1949-02-01&quot; ...</span></span>
@@ -760,8 +769,8 @@ fit_gam3 <- gam(wage ~ s(year, 4) + s(age, 5) + education, data  =  Wage)
 <span id="cb271-39"><a href="一般化加法モデル-gam.html#cb271-39" tabindex="-1"></a><span class="co">#&gt;  $ multiplicative_terms      : num  0 0 0 0 0 0 0 0 0 0 ...</span></span>
 <span id="cb271-40"><a href="一般化加法モデル-gam.html#cb271-40" tabindex="-1"></a><span class="co">#&gt;  $ multiplicative_terms_lower: num  0 0 0 0 0 0 0 0 0 0 ...</span></span>
 <span id="cb271-41"><a href="一般化加法モデル-gam.html#cb271-41" tabindex="-1"></a><span class="co">#&gt;  $ multiplicative_terms_upper: num  0 0 0 0 0 0 0 0 0 0 ...</span></span>
-<span id="cb271-42"><a href="一般化加法モデル-gam.html#cb271-42" tabindex="-1"></a><span class="co">#&gt;  $ yhat_lower                : num  57.5 48.1 79.6 78.5 83 ...</span></span>
-<span id="cb271-43"><a href="一般化加法モデル-gam.html#cb271-43" tabindex="-1"></a><span class="co">#&gt;  $ yhat_upper                : num  114 110 141 135 141 ...</span></span>
+<span id="cb271-42"><a href="一般化加法モデル-gam.html#cb271-42" tabindex="-1"></a><span class="co">#&gt;  $ yhat_lower                : num  57.3 52.2 78.9 80.2 83.4 ...</span></span>
+<span id="cb271-43"><a href="一般化加法モデル-gam.html#cb271-43" tabindex="-1"></a><span class="co">#&gt;  $ yhat_upper                : num  115 109 137 139 140 ...</span></span>
 <span id="cb271-44"><a href="一般化加法モデル-gam.html#cb271-44" tabindex="-1"></a><span class="co">#&gt;  $ trend_lower               : num  107 109 111 114 116 ...</span></span>
 <span id="cb271-45"><a href="一般化加法モデル-gam.html#cb271-45" tabindex="-1"></a><span class="co">#&gt;  $ trend_upper               : num  107 109 111 114 116 ...</span></span>
 <span id="cb271-46"><a href="一般化加法モデル-gam.html#cb271-46" tabindex="-1"></a><span class="co">#&gt;  $ yhat                      : num  85.9 79.4 110.9 108.6 112 ...</span></span>
