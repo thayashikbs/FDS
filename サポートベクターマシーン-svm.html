@@ -328,7 +328,7 @@ code span.wa { color: #60a0b0; font-weight: bold; font-style: italic; } /* Warni
 <ul>
 <li class="chapter" data-level="" data-path="サポートベクターマシーン-svm.html"><a href="サポートベクターマシーン-svm.html#svmの実行-3"><i class="fa fa-check"></i>SVMの実行</a></li>
 </ul></li>
-<li class="chapter" data-level="10.5" data-path="サポートベクターマシーン-svm.html"><a href="サポートベクターマシーン-svm.html#ハイパーパラメータのチューニング"><i class="fa fa-check"></i><b>10.5</b> ハイパー・パラメータのチューニング</a>
+<li class="chapter" data-level="10.5" data-path="サポートベクターマシーン-svm.html"><a href="サポートベクターマシーン-svm.html#ハイパーパラメータのチューニング"><i class="fa fa-check"></i><b>10.5</b> ハイパーパラメータのチューニング</a>
 <ul>
 <li class="chapter" data-level="" data-path="サポートベクターマシーン-svm.html"><a href="サポートベクターマシーン-svm.html#線形カーネルの場合"><i class="fa fa-check"></i>線形カーネルの場合</a></li>
 <li class="chapter" data-level="" data-path="サポートベクターマシーン-svm.html"><a href="サポートベクターマシーン-svm.html#rbfカーネルの場合"><i class="fa fa-check"></i>RBFカーネルの場合</a></li>
@@ -381,14 +381,16 @@ code span.wa { color: #60a0b0; font-weight: bold; font-style: italic; } /* Warni
 <span id="cb397-3"><a href="サポートベクターマシーン-svm.html#cb397-3" tabindex="-1"></a><span class="fu">table</span>(<span class="fu">predict</span>(iris_ksvm, iris1[, <span class="dv">1</span><span class="sc">:</span><span class="dv">2</span>]), iris1<span class="sc">$</span>Species)</span>
 <span id="cb397-4"><a href="サポートベクターマシーン-svm.html#cb397-4" tabindex="-1"></a><span class="co">#&gt;             </span></span>
 <span id="cb397-5"><a href="サポートベクターマシーン-svm.html#cb397-5" tabindex="-1"></a><span class="co">#&gt;              setosa versicolor virginica</span></span>
-<span id="cb397-6"><a href="サポートベクターマシーン-svm.html#cb397-6" tabindex="-1"></a><span class="co">#&gt;   setosa          0         47         3</span></span>
-<span id="cb397-7"><a href="サポートベクターマシーン-svm.html#cb397-7" tabindex="-1"></a><span class="co">#&gt;   versicolor      0          3        47</span></span>
+<span id="cb397-6"><a href="サポートベクターマシーン-svm.html#cb397-6" tabindex="-1"></a><span class="co">#&gt;   setosa          0         48         2</span></span>
+<span id="cb397-7"><a href="サポートベクターマシーン-svm.html#cb397-7" tabindex="-1"></a><span class="co">#&gt;   versicolor      0          2        48</span></span>
 <span id="cb397-8"><a href="サポートベクターマシーン-svm.html#cb397-8" tabindex="-1"></a><span class="co">#&gt;   virginica       0          0         0</span></span>
 <span id="cb397-9"><a href="サポートベクターマシーン-svm.html#cb397-9" tabindex="-1"></a><span class="fu">plot</span>(iris_ksvm, <span class="at">data =</span> iris1[, <span class="dv">1</span><span class="sc">:</span><span class="dv">2</span>])</span></code></pre></div>
 <p><img src="100-svm_files/figure-html/unnamed-chunk-4-1.png" width="75%" /></p>
-<p>2予測変数 + 2値分類のケース → 境界を可視化できる.
-- 黒点…サポートベクター</p>
-<p>ハイパー・パラメータ (<code>C</code>, <code>sigma</code>) の値を変えて実行してみる.
+<p>2予測変数 + 2値分類のケース → 境界を可視化できる.</p>
+<ul>
+<li>黒点…サポートベクター</li>
+</ul>
+<p>ハイパーパラメータ (<code>C</code>, <code>sigma</code>) の値を変えて実行してみる.
 学習データを (内挿) 予測させ分離境界を描く.</p>
 <div class="sourceCode" id="cb398"><pre class="sourceCode r"><code class="sourceCode r"><span id="cb398-1"><a href="サポートベクターマシーン-svm.html#cb398-1" tabindex="-1"></a>iris_ksvm <span class="ot">&lt;-</span> <span class="fu">ksvm</span>(Species <span class="sc">~</span> ., <span class="at">data =</span> iris1, <span class="at">kpar =</span> <span class="fu">list</span>(<span class="at">sigma =</span> <span class="dv">10</span>))  <span class="co"># → より複雑</span></span>
 <span id="cb398-2"><a href="サポートベクターマシーン-svm.html#cb398-2" tabindex="-1"></a><span class="fu">table</span>(<span class="fu">predict</span>(iris_ksvm, iris1[, <span class="dv">1</span><span class="sc">:</span><span class="dv">2</span>]), iris1<span class="sc">$</span>Species)</span>
@@ -446,10 +448,12 @@ code span.wa { color: #60a0b0; font-weight: bold; font-style: italic; } /* Warni
 <span id="cb405-7"><a href="サポートベクターマシーン-svm.html#cb405-7" tabindex="-1"></a><span class="co">#&gt;   virginica       0          0         0</span></span>
 <span id="cb405-8"><a href="サポートベクターマシーン-svm.html#cb405-8" tabindex="-1"></a><span class="fu">plot</span>(iris_ksvm, <span class="at">data =</span> iris1[, <span class="dv">1</span><span class="sc">:</span><span class="dv">2</span>])</span></code></pre></div>
 <p><img src="100-svm_files/figure-html/unnamed-chunk-10-1.png" width="75%" /></p>
-<p>すなわち,
-- sigma大 → より複雑な分離境界
-- C小 → より多数のsupport vectors
-が確認される.</p>
+<p>すなわち,</p>
+<ul>
+<li>sigma大 → より複雑な分離境界</li>
+<li>C小 → より多数のsupport vectors
+が確認される.</li>
+</ul>
 </div>
 </div>
 <div id="値分類" class="section level2 hasAnchor" number="10.2">
@@ -619,7 +623,7 @@ code span.wa { color: #60a0b0; font-weight: bold; font-style: italic; } /* Warni
 <span id="cb414-37"><a href="サポートベクターマシーン-svm.html#cb414-37" tabindex="-1"></a>(<span class="fu">confusionMatrix</span>(spam_tab)<span class="sc">$</span>overall[<span class="st">&quot;Accuracy&quot;</span>])</span>
 <span id="cb414-38"><a href="サポートベクターマシーン-svm.html#cb414-38" tabindex="-1"></a><span class="co">#&gt; Accuracy </span></span>
 <span id="cb414-39"><a href="サポートベクターマシーン-svm.html#cb414-39" tabindex="-1"></a><span class="co">#&gt; 0.934811</span></span></code></pre></div>
-<p>kernelの種類に応じて適切なハイパー・パラメータを
+<p>kernelの種類に応じて適切なハイパーパラメータを
 引数kparの中で設定する必要. マニュアルでの確認が必要.
 (コストCの設定はkernelは共通)</p>
 <ul>
@@ -683,7 +687,7 @@ code span.wa { color: #60a0b0; font-weight: bold; font-style: italic; } /* Warni
 <span id="cb416-37"><a href="サポートベクターマシーン-svm.html#cb416-37" tabindex="-1"></a>(<span class="fu">confusionMatrix</span>(spam_tab)<span class="sc">$</span>overall[<span class="st">&quot;Accuracy&quot;</span>])</span>
 <span id="cb416-38"><a href="サポートベクターマシーン-svm.html#cb416-38" tabindex="-1"></a><span class="co">#&gt;  Accuracy </span></span>
 <span id="cb416-39"><a href="サポートベクターマシーン-svm.html#cb416-39" tabindex="-1"></a><span class="co">#&gt; 0.9093872</span></span></code></pre></div>
-<p>ハイパー・パラメータを変えて実行してみる.</p>
+<p>ハイパーパラメータを変えて実行してみる.</p>
 <div class="sourceCode" id="cb417"><pre class="sourceCode r"><code class="sourceCode r"><span id="cb417-1"><a href="サポートベクターマシーン-svm.html#cb417-1" tabindex="-1"></a>(spam_ksvm <span class="ot">&lt;-</span> <span class="fu">ksvm</span>(type <span class="sc">~</span> ., <span class="at">data =</span> spam_train, <span class="at">C =</span> <span class="fl">0.1</span>, <span class="at">cross =</span> <span class="dv">3</span>, <span class="at">prob.model =</span> T,</span>
 <span id="cb417-2"><a href="サポートベクターマシーン-svm.html#cb417-2" tabindex="-1"></a>  <span class="at">kpar =</span> <span class="fu">list</span>(<span class="at">sigma =</span> <span class="fl">0.1</span>)))</span>
 <span id="cb417-3"><a href="サポートベクターマシーン-svm.html#cb417-3" tabindex="-1"></a><span class="co">#&gt; Support Vector Machine object of class &quot;ksvm&quot; </span></span>
@@ -751,7 +755,7 @@ code span.wa { color: #60a0b0; font-weight: bold; font-style: italic; } /* Warni
 <span id="cb419-4"><a href="サポートベクターマシーン-svm.html#cb419-4" tabindex="-1"></a>iris_test <span class="ot">&lt;-</span> iris[<span class="sc">-</span>train_idx, ]</span></code></pre></div>
 <div id="svmの実行-2" class="section level3 unnumbered hasAnchor">
 <h3>SVMの実行<a href="サポートベクターマシーン-svm.html#svmの実行-2" class="anchor-section" aria-label="Anchor link to header"></a></h3>
-<p>引き続き, ライブラリ<strong>kernlab</strong>, 関数ksvm()を使用する
+<p>引き続き, ライブラリ<strong>kernlab</strong>, 関数ksvm()を使用する.
 <code>ksvm()</code>は, クラス数k&gt;2の場合, “One-vs-One”アプローチを実行する.</p>
 <div class="sourceCode" id="cb420"><pre class="sourceCode r"><code class="sourceCode r"><span id="cb420-1"><a href="サポートベクターマシーン-svm.html#cb420-1" tabindex="-1"></a><span class="co"># iris_ksvm &lt;- ksvm(Species ~ ., data = iris_train)\t\t# デフォルト (kpar =</span></span>
 <span id="cb420-2"><a href="サポートベクターマシーン-svm.html#cb420-2" tabindex="-1"></a><span class="co"># &#39;automatic&#39;)</span></span>
@@ -833,7 +837,7 @@ code span.wa { color: #60a0b0; font-weight: bold; font-style: italic; } /* Warni
 <div id="svmの実行-3" class="section level3 unnumbered hasAnchor">
 <h3>SVMの実行<a href="サポートベクターマシーン-svm.html#svmの実行-3" class="anchor-section" aria-label="Anchor link to header"></a></h3>
 <p><strong>e1071</strong>では, 多クラス(k&gt;2)のケース, “One-vs-One”アプローチ採用している.
-関数<code>svm()</code>では, RBFカーネルのハイパー・パラメータは <code>gamma</code>, <code>cost</code>である.</p>
+関数<code>svm()</code>では, RBFカーネルのハイパーパラメータは <code>gamma</code>, <code>cost</code>である.</p>
 <div class="sourceCode" id="cb426"><pre class="sourceCode r"><code class="sourceCode r"><span id="cb426-1"><a href="サポートベクターマシーン-svm.html#cb426-1" tabindex="-1"></a><span class="fu">library</span>(<span class="st">&quot;e1071&quot;</span>)</span>
 <span id="cb426-2"><a href="サポートベクターマシーン-svm.html#cb426-2" tabindex="-1"></a>iris_svm <span class="ot">&lt;-</span> <span class="fu">svm</span>(Species <span class="sc">~</span> ., <span class="at">data =</span> iris_train, <span class="at">method =</span> <span class="st">&quot;C-Speciesification&quot;</span>, <span class="at">kernel =</span> <span class="st">&quot;radial&quot;</span>,</span>
 <span id="cb426-3"><a href="サポートベクターマシーン-svm.html#cb426-3" tabindex="-1"></a>  <span class="at">cost =</span> <span class="dv">10</span>, <span class="at">gamma =</span> <span class="fl">0.1</span>)</span>
@@ -884,7 +888,7 @@ code span.wa { color: #60a0b0; font-weight: bold; font-style: italic; } /* Warni
 </div>
 </div>
 <div id="ハイパーパラメータのチューニング" class="section level2 hasAnchor" number="10.5">
-<h2><span class="header-section-number">10.5</span> ハイパー・パラメータのチューニング<a href="サポートベクターマシーン-svm.html#ハイパーパラメータのチューニング" class="anchor-section" aria-label="Anchor link to header"></a></h2>
+<h2><span class="header-section-number">10.5</span> ハイパーパラメータのチューニング<a href="サポートベクターマシーン-svm.html#ハイパーパラメータのチューニング" class="anchor-section" aria-label="Anchor link to header"></a></h2>
 <p>引き続き, パッケージ<strong>e1071</strong>内の関数tune()を使用する.</p>
 <div id="線形カーネルの場合" class="section level3 unnumbered hasAnchor">
 <h3>線形カーネルの場合<a href="サポートベクターマシーン-svm.html#線形カーネルの場合" class="anchor-section" aria-label="Anchor link to header"></a></h3>
@@ -939,7 +943,7 @@ code span.wa { color: #60a0b0; font-weight: bold; font-style: italic; } /* Warni
 <span id="cb430-44"><a href="サポートベクターマシーン-svm.html#cb430-44" tabindex="-1"></a><span class="co">#&gt; 28 1e-01 1e+02 0.02818182 0.04544444</span></span>
 <span id="cb430-45"><a href="サポートベクターマシーン-svm.html#cb430-45" tabindex="-1"></a><span class="co">#&gt; 29 1e+00 1e+02 0.03727273 0.04819039</span></span>
 <span id="cb430-46"><a href="サポートベクターマシーン-svm.html#cb430-46" tabindex="-1"></a><span class="co">#&gt; 30 1e+01 1e+02 0.11454545 0.04070093</span></span></code></pre></div>
-<div class="sourceCode" id="cb431"><pre class="sourceCode r"><code class="sourceCode r"><span id="cb431-1"><a href="サポートベクターマシーン-svm.html#cb431-1" tabindex="-1"></a><span class="co"># 最適なハイパー・パラメータを用いたモデル</span></span>
+<div class="sourceCode" id="cb431"><pre class="sourceCode r"><code class="sourceCode r"><span id="cb431-1"><a href="サポートベクターマシーン-svm.html#cb431-1" tabindex="-1"></a><span class="co"># 最適なハイパーパラメータを用いたモデル</span></span>
 <span id="cb431-2"><a href="サポートベクターマシーン-svm.html#cb431-2" tabindex="-1"></a>bestmod_svm <span class="ot">&lt;-</span> tune_svm<span class="sc">$</span>best.model</span>
 <span id="cb431-3"><a href="サポートベクターマシーン-svm.html#cb431-3" tabindex="-1"></a><span class="fu">summary</span>(bestmod_svm)</span>
 <span id="cb431-4"><a href="サポートベクターマシーン-svm.html#cb431-4" tabindex="-1"></a><span class="co">#&gt; </span></span>
@@ -979,7 +983,7 @@ code span.wa { color: #60a0b0; font-weight: bold; font-style: italic; } /* Warni
 <p>パッケージ内には, <strong>tune.XXX</strong>と命名された関数群がある.
 これらは, 上記tune()を使用したwrapper関数で,
 これを用いることで機械学習アルゴリズムXXXの
-ハイパー・パラメータ・チューニングを行うことができる.</p>
+ハイパーパラメータ・チューニングを行うことができる.</p>
 <ul>
 <li><code>tune.svm()</code>, <code>tune.rpart()</code>, <code>tune.randomForest()</code>, <code>tune.knn()</code>, 等.</li>
 </ul>
@@ -1052,9 +1056,12 @@ rpart()のパラメータするための関数rpart.conctrol()
 <span id="cb434-19"><a href="サポートベクターマシーン-svm.html#cb434-19" tabindex="-1"></a><span class="co">#&gt; 3       15 19.12135  11.868442</span></span>
 <span id="cb434-20"><a href="サポートベクターマシーン-svm.html#cb434-20" tabindex="-1"></a><span class="fu">plot</span>(res_tune_rpart)</span></code></pre></div>
 <p><img src="100-svm_files/figure-html/unnamed-chunk-34-1.png" width="75%" /></p>
-<p>呼び出すアルゴリズム/モデルごとに異なるハイパー・パラメータを持つため, 正しい設定を行うには, 各々の関数のマニュアルを確認する必要.</p>
-<p>ハイパー・パラメータのチューニングは, 他のパッケージ,
+<p>呼び出すアルゴリズム/モデルごとに異なるハイパーパラメータを持つため, 正しい設定を行うには, 各々の関数のマニュアルを確認する必要.</p>
+<p>ハイパーパラメータのチューニングは, 他のパッケージ,
 例えば, <strong>caret</strong>の機能を用いても実行することができる.</p>
+<!--
+SV regressionについてカバーする??
+-->
 
 </div>
 </div>
