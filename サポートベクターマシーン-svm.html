@@ -30,7 +30,7 @@
   
   
 <link rel="prev" href="アンサンブル学習.html"/>
-
+<link rel="next" href="主成分分析-pca.html"/>
 <script src="libs/jquery-3.6.0/jquery-3.6.0.min.js"></script>
 <script src="https://cdn.jsdelivr.net/npm/fuse.js@6.4.6/dist/fuse.min.js"></script>
 <link href="libs/gitbook-2.6.7/css/style.css" rel="stylesheet" />
@@ -335,6 +335,18 @@ code span.wa { color: #60a0b0; font-weight: bold; font-style: italic; } /* Warni
 <li class="chapter" data-level="" data-path="サポートベクターマシーン-svm.html"><a href="サポートベクターマシーン-svm.html#e1071内にあるチューニング用の便利な関数群"><i class="fa fa-check"></i><strong>e1071</strong>内にあるチューニング用の便利な関数群</a></li>
 </ul></li>
 </ul></li>
+<li class="chapter" data-level="11" data-path="主成分分析-pca.html"><a href="主成分分析-pca.html"><i class="fa fa-check"></i><b>11</b> 主成分分析 (PCA)</a>
+<ul>
+<li class="chapter" data-level="11.1" data-path="主成分分析-pca.html"><a href="主成分分析-pca.html#基本操作-1"><i class="fa fa-check"></i><b>11.1</b> 基本操作</a>
+<ul>
+<li class="chapter" data-level="" data-path="主成分分析-pca.html"><a href="主成分分析-pca.html#データセット1-ソニー株価リターン-vs-パナソニック株価リターン"><i class="fa fa-check"></i>データセット1: ソニー株価リターン vs パナソニック株価リターン</a></li>
+<li class="chapter" data-level="" data-path="主成分分析-pca.html"><a href="主成分分析-pca.html#データセット2-従業員スキル評価データ仮想"><i class="fa fa-check"></i>データセット2: 従業員スキル評価データ(仮想)</a></li>
+</ul></li>
+<li class="chapter" data-level="11.2" data-path="主成分分析-pca.html"><a href="主成分分析-pca.html#分散共分散行列-vs-相関行列"><i class="fa fa-check"></i><b>11.2</b> 分散共分散行列 vs 相関行列</a>
+<ul>
+<li class="chapter" data-level="" data-path="主成分分析-pca.html"><a href="主成分分析-pca.html#データセット3-usarrests-data"><i class="fa fa-check"></i>データセット3: USArrests data</a></li>
+</ul></li>
+</ul></li>
 </ul>
 
       </nav>
@@ -382,8 +394,8 @@ code span.wa { color: #60a0b0; font-weight: bold; font-style: italic; } /* Warni
 <span id="cb397-3"><a href="サポートベクターマシーン-svm.html#cb397-3" tabindex="-1"></a><span class="fu">table</span>(<span class="fu">predict</span>(iris_ksvm, iris1[, <span class="dv">1</span><span class="sc">:</span><span class="dv">2</span>]), iris1<span class="sc">$</span>Species)</span>
 <span id="cb397-4"><a href="サポートベクターマシーン-svm.html#cb397-4" tabindex="-1"></a><span class="co">#&gt;             </span></span>
 <span id="cb397-5"><a href="サポートベクターマシーン-svm.html#cb397-5" tabindex="-1"></a><span class="co">#&gt;              versicolor virginica</span></span>
-<span id="cb397-6"><a href="サポートベクターマシーン-svm.html#cb397-6" tabindex="-1"></a><span class="co">#&gt;   versicolor         48         3</span></span>
-<span id="cb397-7"><a href="サポートベクターマシーン-svm.html#cb397-7" tabindex="-1"></a><span class="co">#&gt;   virginica           2        47</span></span>
+<span id="cb397-6"><a href="サポートベクターマシーン-svm.html#cb397-6" tabindex="-1"></a><span class="co">#&gt;   versicolor         48         2</span></span>
+<span id="cb397-7"><a href="サポートベクターマシーン-svm.html#cb397-7" tabindex="-1"></a><span class="co">#&gt;   virginica           2        48</span></span>
 <span id="cb397-8"><a href="サポートベクターマシーン-svm.html#cb397-8" tabindex="-1"></a><span class="fu">plot</span>(iris_ksvm, <span class="at">data =</span> iris1[, <span class="dv">1</span><span class="sc">:</span><span class="dv">2</span>])</span></code></pre></div>
 <p><img src="100-svm_files/figure-html/unnamed-chunk-4-1.png" width="75%" /></p>
 <p>2予測変数 + 2値分類のケース → 境界を可視化できる.</p>
@@ -1066,8 +1078,8 @@ SV regressionについてカバーする??
           </div>
         </div>
       </div>
-<a href="アンサンブル学習.html" class="navigation navigation-prev navigation-unique" aria-label="Previous page"><i class="fa fa-angle-left"></i></a>
-
+<a href="アンサンブル学習.html" class="navigation navigation-prev " aria-label="Previous page"><i class="fa fa-angle-left"></i></a>
+<a href="主成分分析-pca.html" class="navigation navigation-next " aria-label="Next page"><i class="fa fa-angle-right"></i></a>
     </div>
   </div>
 <script src="libs/gitbook-2.6.7/js/app.min.js"></script>
