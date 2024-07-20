@@ -347,6 +347,32 @@ code span.wa { color: #60a0b0; font-weight: bold; font-style: italic; } /* Warni
 <li class="chapter" data-level="" data-path="主成分分析-pca.html"><a href="主成分分析-pca.html#データセット3-usarrests-data"><i class="fa fa-check"></i>データセット3: USArrests data</a></li>
 </ul></li>
 </ul></li>
+<li class="chapter" data-level="12" data-path="クラスター分析.html"><a href="クラスター分析.html"><i class="fa fa-check"></i><b>12</b> クラスター分析</a>
+<ul>
+<li class="chapter" data-level="12.1" data-path="クラスター分析.html"><a href="クラスター分析.html#基本操作-2"><i class="fa fa-check"></i><b>12.1</b> 基本操作</a>
+<ul>
+<li class="chapter" data-level="" data-path="クラスター分析.html"><a href="クラスター分析.html#階層型クラスタリング"><i class="fa fa-check"></i>階層型クラスタリング</a></li>
+<li class="chapter" data-level="" data-path="クラスター分析.html"><a href="クラスター分析.html#k-means法"><i class="fa fa-check"></i>k-means法</a></li>
+<li class="chapter" data-level="" data-path="クラスター分析.html"><a href="クラスター分析.html#変数に対するクラスタリング"><i class="fa fa-check"></i>変数に対するクラスタリング</a></li>
+</ul></li>
+<li class="chapter" data-level="12.2" data-path="クラスター分析.html"><a href="クラスター分析.html#データ分析例-1"><i class="fa fa-check"></i><b>12.2</b> データ分析例</a>
+<ul>
+<li class="chapter" data-level="" data-path="クラスター分析.html"><a href="クラスター分析.html#データセット-1-ワイン品質データ-再掲"><i class="fa fa-check"></i>データセット (1): ワイン品質データ (再掲)</a></li>
+<li class="chapter" data-level="" data-path="クラスター分析.html"><a href="クラスター分析.html#データセット-2-id無し-posデータ"><i class="fa fa-check"></i>データセット (2): (ID無し) POSデータ</a></li>
+</ul></li>
+<li class="chapter" data-level="12.3" data-path="クラスター分析.html"><a href="クラスター分析.html#クラスター数kの決定"><i class="fa fa-check"></i><b>12.3</b> クラスター数<span class="math inline">\(k\)</span>の決定</a>
+<ul>
+<li class="chapter" data-level="" data-path="クラスター分析.html"><a href="クラスター分析.html#エルボー法"><i class="fa fa-check"></i>エルボー法</a></li>
+<li class="chapter" data-level="" data-path="クラスター分析.html"><a href="クラスター分析.html#hartiganルール"><i class="fa fa-check"></i>Hartiganルール</a></li>
+<li class="chapter" data-level="" data-path="クラスター分析.html"><a href="クラスター分析.html#平均シルエット法"><i class="fa fa-check"></i>平均シルエット法</a></li>
+</ul></li>
+<li class="chapter" data-level="12.4" data-path="クラスター分析.html"><a href="クラスター分析.html#発展的なクラスター分析"><i class="fa fa-check"></i><b>12.4</b> 発展的なクラスター分析</a>
+<ul>
+<li class="chapter" data-level="" data-path="クラスター分析.html"><a href="クラスター分析.html#関数agnes"><i class="fa fa-check"></i>関数<code>agnes</code></a></li>
+<li class="chapter" data-level="" data-path="クラスター分析.html"><a href="クラスター分析.html#関数pheatmap"><i class="fa fa-check"></i>関数<code>pheatmap</code></a></li>
+<li class="chapter" data-level="" data-path="クラスター分析.html"><a href="クラスター分析.html#関数pam"><i class="fa fa-check"></i>関数<code>pam</code></a></li>
+</ul></li>
+</ul></li>
 </ul>
 
       </nav>
@@ -789,12 +815,12 @@ fit_gam3 <- gam(wage ~ s(year, 4) + s(age, 5) + education, data  =  Wage)
 <span id="cb271-20"><a href="一般化加法モデル-gam.html#cb271-20" tabindex="-1"></a>air_forecast <span class="ot">&lt;-</span> <span class="fu">predict</span>(air_ppht, dates_ft)</span>
 <span id="cb271-21"><a href="一般化加法モデル-gam.html#cb271-21" tabindex="-1"></a><span class="fu">tail</span>(air_forecast[<span class="fu">c</span>(<span class="st">&quot;ds&quot;</span>, <span class="st">&quot;yhat&quot;</span>, <span class="st">&quot;yhat_lower&quot;</span>, <span class="st">&quot;yhat_upper&quot;</span>)])</span>
 <span id="cb271-22"><a href="一般化加法モデル-gam.html#cb271-22" tabindex="-1"></a><span class="co">#&gt;             ds     yhat yhat_lower yhat_upper</span></span>
-<span id="cb271-23"><a href="一般化加法モデル-gam.html#cb271-23" tabindex="-1"></a><span class="co">#&gt; 151 1961-07-01 576.8046   547.8052   605.6223</span></span>
-<span id="cb271-24"><a href="一般化加法モデル-gam.html#cb271-24" tabindex="-1"></a><span class="co">#&gt; 152 1961-08-01 577.2261   548.6592   604.7868</span></span>
-<span id="cb271-25"><a href="一般化加法モデル-gam.html#cb271-25" tabindex="-1"></a><span class="co">#&gt; 153 1961-09-01 528.6678   501.1829   557.7249</span></span>
-<span id="cb271-26"><a href="一般化加法モデル-gam.html#cb271-26" tabindex="-1"></a><span class="co">#&gt; 154 1961-10-01 493.5023   464.6830   520.5292</span></span>
-<span id="cb271-27"><a href="一般化加法モデル-gam.html#cb271-27" tabindex="-1"></a><span class="co">#&gt; 155 1961-11-01 459.6479   432.8139   489.9924</span></span>
-<span id="cb271-28"><a href="一般化加法モデル-gam.html#cb271-28" tabindex="-1"></a><span class="co">#&gt; 156 1961-12-01 489.0093   460.9850   517.0323</span></span>
+<span id="cb271-23"><a href="一般化加法モデル-gam.html#cb271-23" tabindex="-1"></a><span class="co">#&gt; 151 1961-07-01 576.8046   547.9643   606.9771</span></span>
+<span id="cb271-24"><a href="一般化加法モデル-gam.html#cb271-24" tabindex="-1"></a><span class="co">#&gt; 152 1961-08-01 577.2261   549.1444   604.6201</span></span>
+<span id="cb271-25"><a href="一般化加法モデル-gam.html#cb271-25" tabindex="-1"></a><span class="co">#&gt; 153 1961-09-01 528.6678   501.8740   558.1124</span></span>
+<span id="cb271-26"><a href="一般化加法モデル-gam.html#cb271-26" tabindex="-1"></a><span class="co">#&gt; 154 1961-10-01 493.5023   464.4844   522.1039</span></span>
+<span id="cb271-27"><a href="一般化加法モデル-gam.html#cb271-27" tabindex="-1"></a><span class="co">#&gt; 155 1961-11-01 459.6479   430.5903   489.5482</span></span>
+<span id="cb271-28"><a href="一般化加法モデル-gam.html#cb271-28" tabindex="-1"></a><span class="co">#&gt; 156 1961-12-01 489.0093   459.4143   517.1172</span></span>
 <span id="cb271-29"><a href="一般化加法モデル-gam.html#cb271-29" tabindex="-1"></a><span class="fu">str</span>(air_forecast)</span>
 <span id="cb271-30"><a href="一般化加法モデル-gam.html#cb271-30" tabindex="-1"></a><span class="co">#&gt; &#39;data.frame&#39;:    156 obs. of  16 variables:</span></span>
 <span id="cb271-31"><a href="一般化加法モデル-gam.html#cb271-31" tabindex="-1"></a><span class="co">#&gt;  $ ds                        : POSIXct, format: &quot;1949-01-01&quot; &quot;1949-02-01&quot; ...</span></span>
@@ -808,8 +834,8 @@ fit_gam3 <- gam(wage ~ s(year, 4) + s(age, 5) + education, data  =  Wage)
 <span id="cb271-39"><a href="一般化加法モデル-gam.html#cb271-39" tabindex="-1"></a><span class="co">#&gt;  $ multiplicative_terms      : num  0 0 0 0 0 0 0 0 0 0 ...</span></span>
 <span id="cb271-40"><a href="一般化加法モデル-gam.html#cb271-40" tabindex="-1"></a><span class="co">#&gt;  $ multiplicative_terms_lower: num  0 0 0 0 0 0 0 0 0 0 ...</span></span>
 <span id="cb271-41"><a href="一般化加法モデル-gam.html#cb271-41" tabindex="-1"></a><span class="co">#&gt;  $ multiplicative_terms_upper: num  0 0 0 0 0 0 0 0 0 0 ...</span></span>
-<span id="cb271-42"><a href="一般化加法モデル-gam.html#cb271-42" tabindex="-1"></a><span class="co">#&gt;  $ yhat_lower                : num  59.5 50.5 80.8 80.1 83.9 ...</span></span>
-<span id="cb271-43"><a href="一般化加法モデル-gam.html#cb271-43" tabindex="-1"></a><span class="co">#&gt;  $ yhat_upper                : num  114 108 138 137 141 ...</span></span>
+<span id="cb271-42"><a href="一般化加法モデル-gam.html#cb271-42" tabindex="-1"></a><span class="co">#&gt;  $ yhat_lower                : num  55.8 51.7 83 79 82.1 ...</span></span>
+<span id="cb271-43"><a href="一般化加法モデル-gam.html#cb271-43" tabindex="-1"></a><span class="co">#&gt;  $ yhat_upper                : num  116 108 141 138 141 ...</span></span>
 <span id="cb271-44"><a href="一般化加法モデル-gam.html#cb271-44" tabindex="-1"></a><span class="co">#&gt;  $ trend_lower               : num  107 109 111 114 116 ...</span></span>
 <span id="cb271-45"><a href="一般化加法モデル-gam.html#cb271-45" tabindex="-1"></a><span class="co">#&gt;  $ trend_upper               : num  107 109 111 114 116 ...</span></span>
 <span id="cb271-46"><a href="一般化加法モデル-gam.html#cb271-46" tabindex="-1"></a><span class="co">#&gt;  $ yhat                      : num  85.9 79.4 110.9 108.6 112 ...</span></span>

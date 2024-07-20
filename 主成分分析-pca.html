@@ -30,7 +30,7 @@
   
   
 <link rel="prev" href="サポートベクターマシーン-svm.html"/>
-
+<link rel="next" href="クラスター分析.html"/>
 <script src="libs/jquery-3.6.0/jquery-3.6.0.min.js"></script>
 <script src="https://cdn.jsdelivr.net/npm/fuse.js@6.4.6/dist/fuse.min.js"></script>
 <link href="libs/gitbook-2.6.7/css/style.css" rel="stylesheet" />
@@ -347,6 +347,32 @@ code span.wa { color: #60a0b0; font-weight: bold; font-style: italic; } /* Warni
 <li class="chapter" data-level="" data-path="主成分分析-pca.html"><a href="主成分分析-pca.html#データセット3-usarrests-data"><i class="fa fa-check"></i>データセット3: USArrests data</a></li>
 </ul></li>
 </ul></li>
+<li class="chapter" data-level="12" data-path="クラスター分析.html"><a href="クラスター分析.html"><i class="fa fa-check"></i><b>12</b> クラスター分析</a>
+<ul>
+<li class="chapter" data-level="12.1" data-path="クラスター分析.html"><a href="クラスター分析.html#基本操作-2"><i class="fa fa-check"></i><b>12.1</b> 基本操作</a>
+<ul>
+<li class="chapter" data-level="" data-path="クラスター分析.html"><a href="クラスター分析.html#階層型クラスタリング"><i class="fa fa-check"></i>階層型クラスタリング</a></li>
+<li class="chapter" data-level="" data-path="クラスター分析.html"><a href="クラスター分析.html#k-means法"><i class="fa fa-check"></i>k-means法</a></li>
+<li class="chapter" data-level="" data-path="クラスター分析.html"><a href="クラスター分析.html#変数に対するクラスタリング"><i class="fa fa-check"></i>変数に対するクラスタリング</a></li>
+</ul></li>
+<li class="chapter" data-level="12.2" data-path="クラスター分析.html"><a href="クラスター分析.html#データ分析例-1"><i class="fa fa-check"></i><b>12.2</b> データ分析例</a>
+<ul>
+<li class="chapter" data-level="" data-path="クラスター分析.html"><a href="クラスター分析.html#データセット-1-ワイン品質データ-再掲"><i class="fa fa-check"></i>データセット (1): ワイン品質データ (再掲)</a></li>
+<li class="chapter" data-level="" data-path="クラスター分析.html"><a href="クラスター分析.html#データセット-2-id無し-posデータ"><i class="fa fa-check"></i>データセット (2): (ID無し) POSデータ</a></li>
+</ul></li>
+<li class="chapter" data-level="12.3" data-path="クラスター分析.html"><a href="クラスター分析.html#クラスター数kの決定"><i class="fa fa-check"></i><b>12.3</b> クラスター数<span class="math inline">\(k\)</span>の決定</a>
+<ul>
+<li class="chapter" data-level="" data-path="クラスター分析.html"><a href="クラスター分析.html#エルボー法"><i class="fa fa-check"></i>エルボー法</a></li>
+<li class="chapter" data-level="" data-path="クラスター分析.html"><a href="クラスター分析.html#hartiganルール"><i class="fa fa-check"></i>Hartiganルール</a></li>
+<li class="chapter" data-level="" data-path="クラスター分析.html"><a href="クラスター分析.html#平均シルエット法"><i class="fa fa-check"></i>平均シルエット法</a></li>
+</ul></li>
+<li class="chapter" data-level="12.4" data-path="クラスター分析.html"><a href="クラスター分析.html#発展的なクラスター分析"><i class="fa fa-check"></i><b>12.4</b> 発展的なクラスター分析</a>
+<ul>
+<li class="chapter" data-level="" data-path="クラスター分析.html"><a href="クラスター分析.html#関数agnes"><i class="fa fa-check"></i>関数<code>agnes</code></a></li>
+<li class="chapter" data-level="" data-path="クラスター分析.html"><a href="クラスター分析.html#関数pheatmap"><i class="fa fa-check"></i>関数<code>pheatmap</code></a></li>
+<li class="chapter" data-level="" data-path="クラスター分析.html"><a href="クラスター分析.html#関数pam"><i class="fa fa-check"></i>関数<code>pam</code></a></li>
+</ul></li>
+</ul></li>
 </ul>
 
       </nav>
@@ -478,10 +504,9 @@ PC負荷量の符号を同時に反転させても良い.</p>
 これにより, データの構造と変数の寄与を視覚的に確認できる.</p>
 <pre><code>biplotとは
   - PC得点: 
-    - データのPC得点を (選択した2本のPCを軸に持つ) 2次元空間に散布図としてプロット.
-    - 各データ点が, 各PCについてどのように分布しているかを示す.
+    - データのPC得点を (選択した2本のPCを軸に持つ) 2次元空間に散布図としてプロット. 各データ点が, 各PCについてどのように分布しているかを示す.
   - PC負荷量
-  - 元の変数が主成分にどの程度寄与しているかを矢印としてプロット. 矢印の方向と長さが変数の主成分への寄与の方向と大きさを示す.</code></pre>
+    - 元の変数が主成分にどの程度寄与しているかを矢印としてプロット. 矢印の方向と長さが変数の主成分への寄与の方向と大きさを示す.</code></pre>
 <!--
 PC得点: データ点の新しい座標. 元の変数空間から主成分の作る空間 (PC空間) に射影された位置を示す
 -->
@@ -848,8 +873,8 @@ PCAの結果が大きく変わってしまったことが確認される.</p>
           </div>
         </div>
       </div>
-<a href="サポートベクターマシーン-svm.html" class="navigation navigation-prev navigation-unique" aria-label="Previous page"><i class="fa fa-angle-left"></i></a>
-
+<a href="サポートベクターマシーン-svm.html" class="navigation navigation-prev " aria-label="Previous page"><i class="fa fa-angle-left"></i></a>
+<a href="クラスター分析.html" class="navigation navigation-next " aria-label="Next page"><i class="fa fa-angle-right"></i></a>
     </div>
   </div>
 <script src="libs/gitbook-2.6.7/js/app.min.js"></script>

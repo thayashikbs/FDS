@@ -347,6 +347,32 @@ code span.wa { color: #60a0b0; font-weight: bold; font-style: italic; } /* Warni
 <li class="chapter" data-level="" data-path="主成分分析-pca.html"><a href="主成分分析-pca.html#データセット3-usarrests-data"><i class="fa fa-check"></i>データセット3: USArrests data</a></li>
 </ul></li>
 </ul></li>
+<li class="chapter" data-level="12" data-path="クラスター分析.html"><a href="クラスター分析.html"><i class="fa fa-check"></i><b>12</b> クラスター分析</a>
+<ul>
+<li class="chapter" data-level="12.1" data-path="クラスター分析.html"><a href="クラスター分析.html#基本操作-2"><i class="fa fa-check"></i><b>12.1</b> 基本操作</a>
+<ul>
+<li class="chapter" data-level="" data-path="クラスター分析.html"><a href="クラスター分析.html#階層型クラスタリング"><i class="fa fa-check"></i>階層型クラスタリング</a></li>
+<li class="chapter" data-level="" data-path="クラスター分析.html"><a href="クラスター分析.html#k-means法"><i class="fa fa-check"></i>k-means法</a></li>
+<li class="chapter" data-level="" data-path="クラスター分析.html"><a href="クラスター分析.html#変数に対するクラスタリング"><i class="fa fa-check"></i>変数に対するクラスタリング</a></li>
+</ul></li>
+<li class="chapter" data-level="12.2" data-path="クラスター分析.html"><a href="クラスター分析.html#データ分析例-1"><i class="fa fa-check"></i><b>12.2</b> データ分析例</a>
+<ul>
+<li class="chapter" data-level="" data-path="クラスター分析.html"><a href="クラスター分析.html#データセット-1-ワイン品質データ-再掲"><i class="fa fa-check"></i>データセット (1): ワイン品質データ (再掲)</a></li>
+<li class="chapter" data-level="" data-path="クラスター分析.html"><a href="クラスター分析.html#データセット-2-id無し-posデータ"><i class="fa fa-check"></i>データセット (2): (ID無し) POSデータ</a></li>
+</ul></li>
+<li class="chapter" data-level="12.3" data-path="クラスター分析.html"><a href="クラスター分析.html#クラスター数kの決定"><i class="fa fa-check"></i><b>12.3</b> クラスター数<span class="math inline">\(k\)</span>の決定</a>
+<ul>
+<li class="chapter" data-level="" data-path="クラスター分析.html"><a href="クラスター分析.html#エルボー法"><i class="fa fa-check"></i>エルボー法</a></li>
+<li class="chapter" data-level="" data-path="クラスター分析.html"><a href="クラスター分析.html#hartiganルール"><i class="fa fa-check"></i>Hartiganルール</a></li>
+<li class="chapter" data-level="" data-path="クラスター分析.html"><a href="クラスター分析.html#平均シルエット法"><i class="fa fa-check"></i>平均シルエット法</a></li>
+</ul></li>
+<li class="chapter" data-level="12.4" data-path="クラスター分析.html"><a href="クラスター分析.html#発展的なクラスター分析"><i class="fa fa-check"></i><b>12.4</b> 発展的なクラスター分析</a>
+<ul>
+<li class="chapter" data-level="" data-path="クラスター分析.html"><a href="クラスター分析.html#関数agnes"><i class="fa fa-check"></i>関数<code>agnes</code></a></li>
+<li class="chapter" data-level="" data-path="クラスター分析.html"><a href="クラスター分析.html#関数pheatmap"><i class="fa fa-check"></i>関数<code>pheatmap</code></a></li>
+<li class="chapter" data-level="" data-path="クラスター分析.html"><a href="クラスター分析.html#関数pam"><i class="fa fa-check"></i>関数<code>pam</code></a></li>
+</ul></li>
+</ul></li>
 </ul>
 
       </nav>
@@ -717,21 +743,21 @@ LOOCV (leave-oen-out cross validation) を実行することができる.
 <span id="cb322-15"><a href="判別分析.html#cb322-15" tabindex="-1"></a><span class="co">#&gt; [1] &quot;k=2&quot;</span></span>
 <span id="cb322-16"><a href="判別分析.html#cb322-16" tabindex="-1"></a><span class="co">#&gt;            y</span></span>
 <span id="cb322-17"><a href="判別分析.html#cb322-17" tabindex="-1"></a><span class="co">#&gt; pred_knn_cv Down  Up</span></span>
-<span id="cb322-18"><a href="判別分析.html#cb322-18" tabindex="-1"></a><span class="co">#&gt;        Down  278 293</span></span>
-<span id="cb322-19"><a href="判別分析.html#cb322-19" tabindex="-1"></a><span class="co">#&gt;        Up    324 355</span></span>
-<span id="cb322-20"><a href="判別分析.html#cb322-20" tabindex="-1"></a><span class="co">#&gt; [1] 0.5064</span></span>
+<span id="cb322-18"><a href="判別分析.html#cb322-18" tabindex="-1"></a><span class="co">#&gt;        Down  280 294</span></span>
+<span id="cb322-19"><a href="判別分析.html#cb322-19" tabindex="-1"></a><span class="co">#&gt;        Up    322 354</span></span>
+<span id="cb322-20"><a href="判別分析.html#cb322-20" tabindex="-1"></a><span class="co">#&gt; [1] 0.5072</span></span>
 <span id="cb322-21"><a href="判別分析.html#cb322-21" tabindex="-1"></a><span class="co">#&gt; [1] &quot;k=3&quot;</span></span>
 <span id="cb322-22"><a href="判別分析.html#cb322-22" tabindex="-1"></a><span class="co">#&gt;            y</span></span>
 <span id="cb322-23"><a href="判別分析.html#cb322-23" tabindex="-1"></a><span class="co">#&gt; pred_knn_cv Down  Up</span></span>
-<span id="cb322-24"><a href="判別分析.html#cb322-24" tabindex="-1"></a><span class="co">#&gt;        Down  269 297</span></span>
-<span id="cb322-25"><a href="判別分析.html#cb322-25" tabindex="-1"></a><span class="co">#&gt;        Up    333 351</span></span>
-<span id="cb322-26"><a href="判別分析.html#cb322-26" tabindex="-1"></a><span class="co">#&gt; [1] 0.496</span></span>
+<span id="cb322-24"><a href="判別分析.html#cb322-24" tabindex="-1"></a><span class="co">#&gt;        Down  269 298</span></span>
+<span id="cb322-25"><a href="判別分析.html#cb322-25" tabindex="-1"></a><span class="co">#&gt;        Up    333 350</span></span>
+<span id="cb322-26"><a href="判別分析.html#cb322-26" tabindex="-1"></a><span class="co">#&gt; [1] 0.4952</span></span>
 <span id="cb322-27"><a href="判別分析.html#cb322-27" tabindex="-1"></a><span class="co">#&gt; [1] &quot;k=4&quot;</span></span>
 <span id="cb322-28"><a href="判別分析.html#cb322-28" tabindex="-1"></a><span class="co">#&gt;            y</span></span>
 <span id="cb322-29"><a href="判別分析.html#cb322-29" tabindex="-1"></a><span class="co">#&gt; pred_knn_cv Down  Up</span></span>
-<span id="cb322-30"><a href="判別分析.html#cb322-30" tabindex="-1"></a><span class="co">#&gt;        Down  261 294</span></span>
-<span id="cb322-31"><a href="判別分析.html#cb322-31" tabindex="-1"></a><span class="co">#&gt;        Up    341 354</span></span>
-<span id="cb322-32"><a href="判別分析.html#cb322-32" tabindex="-1"></a><span class="co">#&gt; [1] 0.492</span></span>
+<span id="cb322-30"><a href="判別分析.html#cb322-30" tabindex="-1"></a><span class="co">#&gt;        Down  262 305</span></span>
+<span id="cb322-31"><a href="判別分析.html#cb322-31" tabindex="-1"></a><span class="co">#&gt;        Up    340 343</span></span>
+<span id="cb322-32"><a href="判別分析.html#cb322-32" tabindex="-1"></a><span class="co">#&gt; [1] 0.484</span></span>
 <span id="cb322-33"><a href="判別分析.html#cb322-33" tabindex="-1"></a><span class="co">#&gt; [1] &quot;k=5&quot;</span></span>
 <span id="cb322-34"><a href="判別分析.html#cb322-34" tabindex="-1"></a><span class="co">#&gt;            y</span></span>
 <span id="cb322-35"><a href="判別分析.html#cb322-35" tabindex="-1"></a><span class="co">#&gt; pred_knn_cv Down  Up</span></span>
@@ -741,33 +767,33 @@ LOOCV (leave-oen-out cross validation) を実行することができる.
 <span id="cb322-39"><a href="判別分析.html#cb322-39" tabindex="-1"></a><span class="co">#&gt; [1] &quot;k=6&quot;</span></span>
 <span id="cb322-40"><a href="判別分析.html#cb322-40" tabindex="-1"></a><span class="co">#&gt;            y</span></span>
 <span id="cb322-41"><a href="判別分析.html#cb322-41" tabindex="-1"></a><span class="co">#&gt; pred_knn_cv Down  Up</span></span>
-<span id="cb322-42"><a href="判別分析.html#cb322-42" tabindex="-1"></a><span class="co">#&gt;        Down  267 299</span></span>
-<span id="cb322-43"><a href="判別分析.html#cb322-43" tabindex="-1"></a><span class="co">#&gt;        Up    335 349</span></span>
-<span id="cb322-44"><a href="判別分析.html#cb322-44" tabindex="-1"></a><span class="co">#&gt; [1] 0.4928</span></span>
+<span id="cb322-42"><a href="判別分析.html#cb322-42" tabindex="-1"></a><span class="co">#&gt;        Down  264 301</span></span>
+<span id="cb322-43"><a href="判別分析.html#cb322-43" tabindex="-1"></a><span class="co">#&gt;        Up    338 347</span></span>
+<span id="cb322-44"><a href="判別分析.html#cb322-44" tabindex="-1"></a><span class="co">#&gt; [1] 0.4888</span></span>
 <span id="cb322-45"><a href="判別分析.html#cb322-45" tabindex="-1"></a><span class="co">#&gt; [1] &quot;k=7&quot;</span></span>
 <span id="cb322-46"><a href="判別分析.html#cb322-46" tabindex="-1"></a><span class="co">#&gt;            y</span></span>
 <span id="cb322-47"><a href="判別分析.html#cb322-47" tabindex="-1"></a><span class="co">#&gt; pred_knn_cv Down  Up</span></span>
-<span id="cb322-48"><a href="判別分析.html#cb322-48" tabindex="-1"></a><span class="co">#&gt;        Down  268 305</span></span>
-<span id="cb322-49"><a href="判別分析.html#cb322-49" tabindex="-1"></a><span class="co">#&gt;        Up    334 343</span></span>
-<span id="cb322-50"><a href="判別分析.html#cb322-50" tabindex="-1"></a><span class="co">#&gt; [1] 0.4888</span></span>
+<span id="cb322-48"><a href="判別分析.html#cb322-48" tabindex="-1"></a><span class="co">#&gt;        Down  268 304</span></span>
+<span id="cb322-49"><a href="判別分析.html#cb322-49" tabindex="-1"></a><span class="co">#&gt;        Up    334 344</span></span>
+<span id="cb322-50"><a href="判別分析.html#cb322-50" tabindex="-1"></a><span class="co">#&gt; [1] 0.4896</span></span>
 <span id="cb322-51"><a href="判別分析.html#cb322-51" tabindex="-1"></a><span class="co">#&gt; [1] &quot;k=8&quot;</span></span>
 <span id="cb322-52"><a href="判別分析.html#cb322-52" tabindex="-1"></a><span class="co">#&gt;            y</span></span>
 <span id="cb322-53"><a href="判別分析.html#cb322-53" tabindex="-1"></a><span class="co">#&gt; pred_knn_cv Down  Up</span></span>
-<span id="cb322-54"><a href="判別分析.html#cb322-54" tabindex="-1"></a><span class="co">#&gt;        Down  253 293</span></span>
-<span id="cb322-55"><a href="判別分析.html#cb322-55" tabindex="-1"></a><span class="co">#&gt;        Up    349 355</span></span>
-<span id="cb322-56"><a href="判別分析.html#cb322-56" tabindex="-1"></a><span class="co">#&gt; [1] 0.4864</span></span>
+<span id="cb322-54"><a href="判別分析.html#cb322-54" tabindex="-1"></a><span class="co">#&gt;        Down  265 301</span></span>
+<span id="cb322-55"><a href="判別分析.html#cb322-55" tabindex="-1"></a><span class="co">#&gt;        Up    337 347</span></span>
+<span id="cb322-56"><a href="判別分析.html#cb322-56" tabindex="-1"></a><span class="co">#&gt; [1] 0.4896</span></span>
 <span id="cb322-57"><a href="判別分析.html#cb322-57" tabindex="-1"></a><span class="co">#&gt; [1] &quot;k=9&quot;</span></span>
 <span id="cb322-58"><a href="判別分析.html#cb322-58" tabindex="-1"></a><span class="co">#&gt;            y</span></span>
 <span id="cb322-59"><a href="判別分析.html#cb322-59" tabindex="-1"></a><span class="co">#&gt; pred_knn_cv Down  Up</span></span>
-<span id="cb322-60"><a href="判別分析.html#cb322-60" tabindex="-1"></a><span class="co">#&gt;        Down  270 296</span></span>
-<span id="cb322-61"><a href="判別分析.html#cb322-61" tabindex="-1"></a><span class="co">#&gt;        Up    332 352</span></span>
-<span id="cb322-62"><a href="判別分析.html#cb322-62" tabindex="-1"></a><span class="co">#&gt; [1] 0.4976</span></span>
+<span id="cb322-60"><a href="判別分析.html#cb322-60" tabindex="-1"></a><span class="co">#&gt;        Down  270 295</span></span>
+<span id="cb322-61"><a href="判別分析.html#cb322-61" tabindex="-1"></a><span class="co">#&gt;        Up    332 353</span></span>
+<span id="cb322-62"><a href="判別分析.html#cb322-62" tabindex="-1"></a><span class="co">#&gt; [1] 0.4984</span></span>
 <span id="cb322-63"><a href="判別分析.html#cb322-63" tabindex="-1"></a><span class="co">#&gt; [1] &quot;k=10&quot;</span></span>
 <span id="cb322-64"><a href="判別分析.html#cb322-64" tabindex="-1"></a><span class="co">#&gt;            y</span></span>
 <span id="cb322-65"><a href="判別分析.html#cb322-65" tabindex="-1"></a><span class="co">#&gt; pred_knn_cv Down  Up</span></span>
-<span id="cb322-66"><a href="判別分析.html#cb322-66" tabindex="-1"></a><span class="co">#&gt;        Down  253 300</span></span>
-<span id="cb322-67"><a href="判別分析.html#cb322-67" tabindex="-1"></a><span class="co">#&gt;        Up    349 348</span></span>
-<span id="cb322-68"><a href="判別分析.html#cb322-68" tabindex="-1"></a><span class="co">#&gt; [1] 0.4808</span></span></code></pre></div>
+<span id="cb322-66"><a href="判別分析.html#cb322-66" tabindex="-1"></a><span class="co">#&gt;        Down  253 305</span></span>
+<span id="cb322-67"><a href="判別分析.html#cb322-67" tabindex="-1"></a><span class="co">#&gt;        Up    349 343</span></span>
+<span id="cb322-68"><a href="判別分析.html#cb322-68" tabindex="-1"></a><span class="co">#&gt; [1] 0.4768</span></span></code></pre></div>
 <p><span class="math inline">\(k\)</span>を変えても, 正解率は大きく変わらず, いずれも50%を下回った.
 本データセットが時系列データであることを考えれば,
 不自然とは言えない.</p>
