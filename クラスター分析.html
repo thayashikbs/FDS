@@ -746,7 +746,8 @@ Rの標準パッケージの一つ<strong>stats</strong>に含まれる
 </div>
 <div id="変数のクラスタリング" class="section level4 unnumbered hasAnchor">
 <h4>変数のクラスタリング<a href="クラスター分析.html#変数のクラスタリング" class="anchor-section" aria-label="Anchor link to header"></a></h4>
-<p>11個の化学的特性 (列) を, ワインに関する類似性によりクラスタリングする.</p>
+<p>次に, クラスタリングの対象を行から列に変えて実行してみる.
+具体的には, 11個の化学的特性 (列) を, 個別ワインでの現れ方・含有量の大きさの類似性によりクラスタリングする.</p>
 <div class="sourceCode" id="cb491"><pre class="sourceCode r"><code class="sourceCode r"><span id="cb491-1"><a href="クラスター分析.html#cb491-1" tabindex="-1"></a><span class="co"># wine_dist &lt;- dist(t(wine))</span></span>
 <span id="cb491-2"><a href="クラスター分析.html#cb491-2" tabindex="-1"></a>wine_dist <span class="ot">&lt;-</span> <span class="fu">dist</span>(<span class="fu">t</span>(wine_s))</span>
 <span id="cb491-3"><a href="クラスター分析.html#cb491-3" tabindex="-1"></a>(wine_hc <span class="ot">&lt;-</span> <span class="fu">hclust</span>(wine_dist, <span class="at">method =</span> <span class="st">&quot;ward.D2&quot;</span>))  <span class="co"># ウォード法</span></span>
