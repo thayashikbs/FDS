@@ -938,72 +938,102 @@ inversion現象の発生が確認される.</p>
 変数の次元が大きい場合には, クラスタリングの実行に先立って,
 類似性を測る変数の次元を落とすのが効果的なことが多い.
 本データセットの商品分類数 (16) は大きいとは言えないが,
-手順例を紹介する. ここでは, PCAによる次元縮約によって
+手順例を紹介する.</p>
+<!--
+ここでは, PCAによる次元縮約によって
 事前に5つに絞り込んでおく.
-(なお, “超高次元”の場合には, 通常のPCAはうまく機能しないことが
-理論的に示されているため, 別途対応が必要となる.)</p>
-<div class="sourceCode" id="cb507"><pre class="sourceCode r"><code class="sourceCode r"><span id="cb507-1"><a href="クラスター分析.html#cb507-1" tabindex="-1"></a><span class="co"># 変数(商品)に関して次元縮約pca実行 posdat_pc &lt;- prcomp(posdat)</span></span>
-<span id="cb507-2"><a href="クラスター分析.html#cb507-2" tabindex="-1"></a>posdat_pc <span class="ot">&lt;-</span> <span class="fu">prcomp</span>(posdat, <span class="at">scale. =</span> T)  <span class="co"># 標準化</span></span>
-<span id="cb507-3"><a href="クラスター分析.html#cb507-3" tabindex="-1"></a><span class="fu">summary</span>(posdat_pc)</span>
-<span id="cb507-4"><a href="クラスター分析.html#cb507-4" tabindex="-1"></a><span class="co">#&gt; Importance of components:</span></span>
-<span id="cb507-5"><a href="クラスター分析.html#cb507-5" tabindex="-1"></a><span class="co">#&gt;                            PC1     PC2     PC3     PC4     PC5    PC6     PC7</span></span>
-<span id="cb507-6"><a href="クラスター分析.html#cb507-6" tabindex="-1"></a><span class="co">#&gt; Standard deviation     1.26384 1.22037 1.10340 1.07873 1.03901 1.0245 0.99523</span></span>
-<span id="cb507-7"><a href="クラスター分析.html#cb507-7" tabindex="-1"></a><span class="co">#&gt; Proportion of Variance 0.09983 0.09308 0.07609 0.07273 0.06747 0.0656 0.06191</span></span>
-<span id="cb507-8"><a href="クラスター分析.html#cb507-8" tabindex="-1"></a><span class="co">#&gt; Cumulative Proportion  0.09983 0.19291 0.26901 0.34174 0.40921 0.4748 0.53672</span></span>
-<span id="cb507-9"><a href="クラスター分析.html#cb507-9" tabindex="-1"></a><span class="co">#&gt;                           PC8    PC9    PC10    PC11    PC12    PC13   PC14</span></span>
-<span id="cb507-10"><a href="クラスター分析.html#cb507-10" tabindex="-1"></a><span class="co">#&gt; Standard deviation     0.9911 0.9847 0.96511 0.93339 0.91726 0.89735 0.8772</span></span>
-<span id="cb507-11"><a href="クラスター分析.html#cb507-11" tabindex="-1"></a><span class="co">#&gt; Proportion of Variance 0.0614 0.0606 0.05821 0.05445 0.05259 0.05033 0.0481</span></span>
-<span id="cb507-12"><a href="クラスター分析.html#cb507-12" tabindex="-1"></a><span class="co">#&gt; Cumulative Proportion  0.5981 0.6587 0.71693 0.77138 0.82397 0.87430 0.9224</span></span>
-<span id="cb507-13"><a href="クラスター分析.html#cb507-13" tabindex="-1"></a><span class="co">#&gt;                          PC15    PC16</span></span>
-<span id="cb507-14"><a href="クラスター分析.html#cb507-14" tabindex="-1"></a><span class="co">#&gt; Standard deviation     0.8070 0.76844</span></span>
-<span id="cb507-15"><a href="クラスター分析.html#cb507-15" tabindex="-1"></a><span class="co">#&gt; Proportion of Variance 0.0407 0.03691</span></span>
-<span id="cb507-16"><a href="クラスター分析.html#cb507-16" tabindex="-1"></a><span class="co">#&gt; Cumulative Proportion  0.9631 1.00000</span></span>
-<span id="cb507-17"><a href="クラスター分析.html#cb507-17" tabindex="-1"></a><span class="fu">plot</span>(posdat_pc, <span class="at">family =</span> <span class="st">&quot;HiraKakuProN-W3&quot;</span>)</span></code></pre></div>
-<p><img src="120-clust_files/figure-html/clust_pos_6-1.png" width="75%" /></p>
-<div class="sourceCode" id="cb508"><pre class="sourceCode r"><code class="sourceCode r"><span id="cb508-1"><a href="クラスター分析.html#cb508-1" tabindex="-1"></a></span>
-<span id="cb508-2"><a href="クラスター分析.html#cb508-2" tabindex="-1"></a><span class="co"># 主成分得点 (第5主成分まで選択)</span></span>
-<span id="cb508-3"><a href="クラスター分析.html#cb508-3" tabindex="-1"></a>posdat_score5 <span class="ot">&lt;-</span> posdat_pc<span class="sc">$</span>x[, <span class="dv">1</span><span class="sc">:</span><span class="dv">5</span>]</span>
-<span id="cb508-4"><a href="クラスター分析.html#cb508-4" tabindex="-1"></a><span class="co"># → クラスタリングに使用</span></span></code></pre></div>
-<div class="sourceCode" id="cb509"><pre class="sourceCode r"><code class="sourceCode r"><span id="cb509-1"><a href="クラスター分析.html#cb509-1" tabindex="-1"></a><span class="co"># 主成分負荷量</span></span>
-<span id="cb509-2"><a href="クラスター分析.html#cb509-2" tabindex="-1"></a>posdat_pc<span class="sc">$</span>rotation[, <span class="dv">1</span><span class="sc">:</span><span class="dv">5</span>]</span>
-<span id="cb509-3"><a href="クラスター分析.html#cb509-3" tabindex="-1"></a><span class="co">#&gt;                            PC1         PC2         PC3          PC4         PC5</span></span>
-<span id="cb509-4"><a href="クラスター分析.html#cb509-4" tabindex="-1"></a><span class="co">#&gt; 洋菓子土産          0.19801045 -0.41680964  0.07830286 -0.204893941  0.15189427</span></span>
-<span id="cb509-5"><a href="クラスター分析.html#cb509-5" tabindex="-1"></a><span class="co">#&gt; 和菓子土産          0.31926545 -0.17429488  0.29451622 -0.024368667 -0.06823826</span></span>
-<span id="cb509-6"><a href="クラスター分析.html#cb509-6" tabindex="-1"></a><span class="co">#&gt; 地域限定菓子        0.11093983 -0.21464500  0.08853735 -0.122379290  0.51464240</span></span>
-<span id="cb509-7"><a href="クラスター分析.html#cb509-7" tabindex="-1"></a><span class="co">#&gt; 水産加工品          0.38402139  0.47345139  0.12406842  0.018704524 -0.05301032</span></span>
-<span id="cb509-8"><a href="クラスター分析.html#cb509-8" tabindex="-1"></a><span class="co">#&gt; 地元名産品          0.28312609  0.25920695  0.07566671  0.432182990  0.21885500</span></span>
-<span id="cb509-9"><a href="クラスター分析.html#cb509-9" tabindex="-1"></a><span class="co">#&gt; 畜産加工品          0.31510689  0.36152933  0.04970947 -0.404289871  0.10659114</span></span>
-<span id="cb509-10"><a href="クラスター分析.html#cb509-10" tabindex="-1"></a><span class="co">#&gt; 農産加工品          0.14914158 -0.03604771  0.16126513  0.142280575 -0.30221851</span></span>
-<span id="cb509-11"><a href="クラスター分析.html#cb509-11" tabindex="-1"></a><span class="co">#&gt; ご当地グロッサリー  0.20348286  0.20049364  0.03892426 -0.150258935 -0.38320847</span></span>
-<span id="cb509-12"><a href="クラスター分析.html#cb509-12" tabindex="-1"></a><span class="co">#&gt; 玩具土産           -0.18783969  0.06869904  0.48245433 -0.205983425  0.07184299</span></span>
-<span id="cb509-13"><a href="クラスター分析.html#cb509-13" tabindex="-1"></a><span class="co">#&gt; 雑貨土産           -0.08771897  0.09893981  0.46577309 -0.185847154 -0.18455564</span></span>
-<span id="cb509-14"><a href="クラスター分析.html#cb509-14" tabindex="-1"></a><span class="co">#&gt; 雑貨類             -0.13980819  0.13804035 -0.38617293 -0.166604346 -0.17361526</span></span>
-<span id="cb509-15"><a href="クラスター分析.html#cb509-15" tabindex="-1"></a><span class="co">#&gt; 菓子類             -0.33688987  0.10484451  0.32900498 -0.001601135  0.21715666</span></span>
-<span id="cb509-16"><a href="クラスター分析.html#cb509-16" tabindex="-1"></a><span class="co">#&gt; 麺類                0.21239584  0.14992291 -0.10107137 -0.106430151  0.49276377</span></span>
-<span id="cb509-17"><a href="クラスター分析.html#cb509-17" tabindex="-1"></a><span class="co">#&gt; パン.弁当類        -0.14576690  0.29113765 -0.32482427 -0.311169546  0.14077896</span></span>
-<span id="cb509-18"><a href="クラスター分析.html#cb509-18" tabindex="-1"></a><span class="co">#&gt; 飲料               -0.46157964  0.32927414  0.15896997  0.041046373  0.11399644</span></span>
-<span id="cb509-19"><a href="クラスター分析.html#cb509-19" tabindex="-1"></a><span class="co">#&gt; デザート等         -0.02334359  0.16142448  0.01003826  0.578340358  0.12251255</span></span>
-<span id="cb509-20"><a href="クラスター分析.html#cb509-20" tabindex="-1"></a><span class="co"># 可視化</span></span>
-<span id="cb509-21"><a href="クラスター分析.html#cb509-21" tabindex="-1"></a><span class="fu">library</span>(tidyverse)</span>
-<span id="cb509-22"><a href="クラスター分析.html#cb509-22" tabindex="-1"></a>posdat_longer <span class="ot">&lt;-</span> posdat_pc<span class="sc">$</span>rotation[, <span class="dv">1</span><span class="sc">:</span><span class="dv">5</span>] <span class="sc">%&gt;%</span></span>
-<span id="cb509-23"><a href="クラスター分析.html#cb509-23" tabindex="-1"></a>  <span class="fu">as.data.frame</span>() <span class="sc">%&gt;%</span></span>
-<span id="cb509-24"><a href="クラスター分析.html#cb509-24" tabindex="-1"></a>  <span class="fu">rownames_to_column</span>(<span class="at">var =</span> <span class="st">&quot;item&quot;</span>) <span class="sc">%&gt;%</span></span>
-<span id="cb509-25"><a href="クラスター分析.html#cb509-25" tabindex="-1"></a>  <span class="fu">pivot_longer</span>(<span class="at">cols =</span> <span class="dv">2</span><span class="sc">:</span><span class="dv">6</span>, <span class="at">names_to =</span> <span class="st">&quot;pc&quot;</span>, <span class="at">values_to =</span> <span class="st">&quot;value&quot;</span>)</span>
-<span id="cb509-26"><a href="クラスター分析.html#cb509-26" tabindex="-1"></a><span class="fu">ggplot</span>(posdat_longer, <span class="fu">aes</span>(<span class="at">x =</span> item, <span class="at">y =</span> value)) <span class="sc">+</span> <span class="fu">geom_col</span>() <span class="sc">+</span> <span class="fu">facet_grid</span>(pc <span class="sc">~</span> .)</span></code></pre></div>
-<p><img src="120-clust_files/figure-html/unnamed-chunk-21-1.png" width="75%" /></p>
-<p>主成分得点 (5変数) に集約後のレコード間の距離行列を計算し,
-これを使ってウォード法により階層型クラスタリングを行う.</p>
-<div class="sourceCode" id="cb510"><pre class="sourceCode r"><code class="sourceCode r"><span id="cb510-1"><a href="クラスター分析.html#cb510-1" tabindex="-1"></a><span class="co"># 主成分得点 (5変数) に集約後のレコード間の距離</span></span>
-<span id="cb510-2"><a href="クラスター分析.html#cb510-2" tabindex="-1"></a>posdat_dist5 <span class="ot">&lt;-</span> <span class="fu">dist</span>(posdat_score5)  <span class="co"># レコード間</span></span>
-<span id="cb510-3"><a href="クラスター分析.html#cb510-3" tabindex="-1"></a><span class="co"># posdat_dist5 &lt;- dist(t(posdat_score5)) # 合成変数間 階層型クラスタリング</span></span>
-<span id="cb510-4"><a href="クラスター分析.html#cb510-4" tabindex="-1"></a>posdat_hc5 <span class="ot">&lt;-</span> <span class="fu">hclust</span>(posdat_dist5, <span class="at">method =</span> <span class="st">&quot;ward.D2&quot;</span>)</span>
-<span id="cb510-5"><a href="クラスター分析.html#cb510-5" tabindex="-1"></a><span class="fu">plot</span>(posdat_hc5, <span class="at">family =</span> <span class="st">&quot;HiraKakuProN-W3&quot;</span>)</span>
-<span id="cb510-6"><a href="クラスター分析.html#cb510-6" tabindex="-1"></a><span class="co"># デンドログラムの切断</span></span>
-<span id="cb510-7"><a href="クラスター分析.html#cb510-7" tabindex="-1"></a><span class="fu">rect.hclust</span>(posdat_hc5, <span class="at">k =</span> <span class="dv">8</span>, <span class="at">border =</span> <span class="st">&quot;blue&quot;</span>)</span></code></pre></div>
-<p><img src="120-clust_files/figure-html/unnamed-chunk-22-1.png" width="75%" /></p>
-<div class="sourceCode" id="cb511"><pre class="sourceCode r"><code class="sourceCode r"><span id="cb511-1"><a href="クラスター分析.html#cb511-1" tabindex="-1"></a></span>
-<span id="cb511-2"><a href="クラスター分析.html#cb511-2" tabindex="-1"></a><span class="co"># pos_km5 &lt;- FitKMeans(posdat_score5, max.cluster = 20, seed = 1)</span></span>
-<span id="cb511-3"><a href="クラスター分析.html#cb511-3" tabindex="-1"></a><span class="co"># PlotHartigan(pos_km5)</span></span></code></pre></div>
+(なお, "超高次元"の場合には, 通常のPCAはうまく機能しないことが
+理論的に示されているため, 別途対応が必要となる.)
+-->
+<!--
+主成分得点 (5変数) に集約後のレコード間の距離行列を計算し,
+これを使ってウォード法により階層型クラスタリングを行う. -->
+<p>元のデータは0の多い疎 (“スパース”)なデータであるため,
+ここでは, 次元縮約の手法の一つとして購買有無 (0/1) に対して多重対応分析 (MCA) を利用
+することにする.
+(MCAは, 複数のカテゴリー変数を持つデータセットの次元縮約や視覚化に使われる. また, テキスト解析でも多用される.)
+関数<code>mca()</code>実行のためには説明変数はfactor型である必要があるため,
+以下のような関数によって, 上記<code>posdat2</code>の各ダミー変数（0/1）を2水準のfactorに変換する.</p>
+<div class="sourceCode" id="cb507"><pre class="sourceCode r"><code class="sourceCode r"><span id="cb507-1"><a href="クラスター分析.html#cb507-1" tabindex="-1"></a>convert_to_factor <span class="ot">&lt;-</span> <span class="cf">function</span>(df) {</span>
+<span id="cb507-2"><a href="クラスター分析.html#cb507-2" tabindex="-1"></a>  <span class="cf">for</span> (col <span class="cf">in</span> <span class="fu">colnames</span>(df)) {</span>
+<span id="cb507-3"><a href="クラスター分析.html#cb507-3" tabindex="-1"></a>    <span class="cf">if</span> (<span class="fu">all</span>(df[[col]] <span class="sc">%in%</span> <span class="fu">c</span>(<span class="dv">0</span>, <span class="dv">1</span>))) {</span>
+<span id="cb507-4"><a href="クラスター分析.html#cb507-4" tabindex="-1"></a>      df[[col]] <span class="ot">&lt;-</span> <span class="fu">factor</span>(df[[col]], <span class="at">levels =</span> <span class="fu">c</span>(<span class="dv">0</span>, <span class="dv">1</span>), <span class="at">labels =</span> <span class="fu">c</span>(<span class="st">&quot;No&quot;</span>, <span class="st">&quot;Yes&quot;</span>))</span>
+<span id="cb507-5"><a href="クラスター分析.html#cb507-5" tabindex="-1"></a>    }</span>
+<span id="cb507-6"><a href="クラスター分析.html#cb507-6" tabindex="-1"></a>  }</span>
+<span id="cb507-7"><a href="クラスター分析.html#cb507-7" tabindex="-1"></a>  <span class="fu">return</span>(df)</span>
+<span id="cb507-8"><a href="クラスター分析.html#cb507-8" tabindex="-1"></a>}</span>
+<span id="cb507-9"><a href="クラスター分析.html#cb507-9" tabindex="-1"></a></span>
+<span id="cb507-10"><a href="クラスター分析.html#cb507-10" tabindex="-1"></a><span class="co"># 変換実行</span></span>
+<span id="cb507-11"><a href="クラスター分析.html#cb507-11" tabindex="-1"></a>posdat2_fctr <span class="ot">&lt;-</span> <span class="fu">convert_to_factor</span>(posdat2)</span></code></pre></div>
+<p>関数<code>mca()</code>により, 次元縮約を行う. ここでは,
+5次元に縮約する例を示す.</p>
+<div class="sourceCode" id="cb508"><pre class="sourceCode r"><code class="sourceCode r"><span id="cb508-1"><a href="クラスター分析.html#cb508-1" tabindex="-1"></a><span class="fu">library</span>(MASS)</span>
+<span id="cb508-2"><a href="クラスター分析.html#cb508-2" tabindex="-1"></a>posdat_mca <span class="ot">&lt;-</span> <span class="fu">mca</span>(posdat2_fctr, <span class="at">nf =</span> <span class="dv">5</span>)  <span class="co"># 例えば, 5変数に集約</span></span>
+<span id="cb508-3"><a href="クラスター分析.html#cb508-3" tabindex="-1"></a><span class="fu">plot</span>(posdat_mca)  <span class="co"># 最初の2成分の同時プロット</span></span></code></pre></div>
+<p><img src="120-clust_files/figure-html/unnamed-chunk-24-1.png" width="75%" /></p>
+<div class="sourceCode" id="cb509"><pre class="sourceCode r"><code class="sourceCode r"><span id="cb509-1"><a href="クラスター分析.html#cb509-1" tabindex="-1"></a></span>
+<span id="cb509-2"><a href="クラスター分析.html#cb509-2" tabindex="-1"></a><span class="co"># 各行 (個体) の各成分に関する得点 (→ PC得点に対応)</span></span>
+<span id="cb509-3"><a href="クラスター分析.html#cb509-3" tabindex="-1"></a>posdat_score5 <span class="ot">&lt;-</span> posdat_mca<span class="sc">$</span>rs</span>
+<span id="cb509-4"><a href="クラスター分析.html#cb509-4" tabindex="-1"></a><span class="co"># → クラスタリングに使用</span></span>
+<span id="cb509-5"><a href="クラスター分析.html#cb509-5" tabindex="-1"></a></span>
+<span id="cb509-6"><a href="クラスター分析.html#cb509-6" tabindex="-1"></a><span class="co"># 各成分の特徴を表すベクトル (→ PC負荷量に対応)</span></span>
+<span id="cb509-7"><a href="クラスター分析.html#cb509-7" tabindex="-1"></a><span class="fu">round</span>(posdat_mca<span class="sc">$</span>cs, <span class="dv">3</span>)</span>
+<span id="cb509-8"><a href="クラスター分析.html#cb509-8" tabindex="-1"></a><span class="co">#&gt;                             1      2      3      4      5</span></span>
+<span id="cb509-9"><a href="クラスター分析.html#cb509-9" tabindex="-1"></a><span class="co">#&gt; 洋菓子土産.No           0.002 -0.003  0.001 -0.001  0.000</span></span>
+<span id="cb509-10"><a href="クラスター分析.html#cb509-10" tabindex="-1"></a><span class="co">#&gt; 洋菓子土産.Yes         -0.004  0.007 -0.002  0.002  0.000</span></span>
+<span id="cb509-11"><a href="クラスター分析.html#cb509-11" tabindex="-1"></a><span class="co">#&gt; 和菓子土産.No           0.004 -0.002 -0.002 -0.002  0.000</span></span>
+<span id="cb509-12"><a href="クラスター分析.html#cb509-12" tabindex="-1"></a><span class="co">#&gt; 和菓子土産.Yes         -0.004  0.002  0.002  0.002  0.000</span></span>
+<span id="cb509-13"><a href="クラスター分析.html#cb509-13" tabindex="-1"></a><span class="co">#&gt; 地域限定菓子.No         0.000  0.000  0.001  0.000 -0.001</span></span>
+<span id="cb509-14"><a href="クラスター分析.html#cb509-14" tabindex="-1"></a><span class="co">#&gt; 地域限定菓子.Yes       -0.007  0.011 -0.021 -0.007  0.028</span></span>
+<span id="cb509-15"><a href="クラスター分析.html#cb509-15" tabindex="-1"></a><span class="co">#&gt; 水産加工品.No           0.001  0.002  0.000  0.000  0.000</span></span>
+<span id="cb509-16"><a href="クラスター分析.html#cb509-16" tabindex="-1"></a><span class="co">#&gt; 水産加工品.Yes         -0.011 -0.016  0.002 -0.001 -0.001</span></span>
+<span id="cb509-17"><a href="クラスター分析.html#cb509-17" tabindex="-1"></a><span class="co">#&gt; 地元名産品.No           0.001  0.000  0.001  0.001 -0.001</span></span>
+<span id="cb509-18"><a href="クラスター分析.html#cb509-18" tabindex="-1"></a><span class="co">#&gt; 地元名産品.Yes         -0.011 -0.008 -0.014 -0.022  0.009</span></span>
+<span id="cb509-19"><a href="クラスター分析.html#cb509-19" tabindex="-1"></a><span class="co">#&gt; 畜産加工品.No           0.001  0.001  0.000  0.000  0.000</span></span>
+<span id="cb509-20"><a href="クラスター分析.html#cb509-20" tabindex="-1"></a><span class="co">#&gt; 畜産加工品.Yes         -0.018 -0.018  0.003  0.012  0.009</span></span>
+<span id="cb509-21"><a href="クラスター分析.html#cb509-21" tabindex="-1"></a><span class="co">#&gt; 農産加工品.No           0.000  0.000  0.000  0.000  0.000</span></span>
+<span id="cb509-22"><a href="クラスター分析.html#cb509-22" tabindex="-1"></a><span class="co">#&gt; 農産加工品.Yes         -0.016 -0.010  0.019 -0.013 -0.020</span></span>
+<span id="cb509-23"><a href="クラスター分析.html#cb509-23" tabindex="-1"></a><span class="co">#&gt; ご当地グロッサリー.No   0.001  0.001  0.000 -0.001  0.000</span></span>
+<span id="cb509-24"><a href="クラスター分析.html#cb509-24" tabindex="-1"></a><span class="co">#&gt; ご当地グロッサリー.Yes -0.008 -0.016  0.002  0.016 -0.004</span></span>
+<span id="cb509-25"><a href="クラスター分析.html#cb509-25" tabindex="-1"></a><span class="co">#&gt; 玩具土産.No             0.000  0.000  0.000  0.000 -0.001</span></span>
+<span id="cb509-26"><a href="クラスター分析.html#cb509-26" tabindex="-1"></a><span class="co">#&gt; 玩具土産.Yes            0.005  0.002  0.027  0.004  0.036</span></span>
+<span id="cb509-27"><a href="クラスター分析.html#cb509-27" tabindex="-1"></a><span class="co">#&gt; 雑貨土産.No             0.000  0.000 -0.001  0.000  0.000</span></span>
+<span id="cb509-28"><a href="クラスター分析.html#cb509-28" tabindex="-1"></a><span class="co">#&gt; 雑貨土産.Yes            0.000 -0.009  0.024 -0.006  0.015</span></span>
+<span id="cb509-29"><a href="クラスター分析.html#cb509-29" tabindex="-1"></a><span class="co">#&gt; 雑貨類.No              -0.001  0.000  0.001  0.000  0.001</span></span>
+<span id="cb509-30"><a href="クラスター分析.html#cb509-30" tabindex="-1"></a><span class="co">#&gt; 雑貨類.Yes              0.009 -0.007 -0.011 -0.002 -0.016</span></span>
+<span id="cb509-31"><a href="クラスター分析.html#cb509-31" tabindex="-1"></a><span class="co">#&gt; 菓子類.No              -0.001  0.000 -0.001  0.000 -0.001</span></span>
+<span id="cb509-32"><a href="クラスター分析.html#cb509-32" tabindex="-1"></a><span class="co">#&gt; 菓子類.Yes              0.010 -0.004  0.009 -0.004  0.014</span></span>
+<span id="cb509-33"><a href="クラスター分析.html#cb509-33" tabindex="-1"></a><span class="co">#&gt; 麺類.No                 0.000  0.000  0.001  0.000 -0.001</span></span>
+<span id="cb509-34"><a href="クラスター分析.html#cb509-34" tabindex="-1"></a><span class="co">#&gt; 麺類.Yes               -0.010 -0.007 -0.028  0.008  0.024</span></span>
+<span id="cb509-35"><a href="クラスター分析.html#cb509-35" tabindex="-1"></a><span class="co">#&gt; パン.弁当類.No         -0.001  0.001  0.001 -0.001  0.000</span></span>
+<span id="cb509-36"><a href="クラスター分析.html#cb509-36" tabindex="-1"></a><span class="co">#&gt; パン.弁当類.Yes         0.009 -0.012 -0.014  0.011  0.001</span></span>
+<span id="cb509-37"><a href="クラスター分析.html#cb509-37" tabindex="-1"></a><span class="co">#&gt; 飲料.No                -0.004  0.002  0.000  0.000  0.000</span></span>
+<span id="cb509-38"><a href="クラスター分析.html#cb509-38" tabindex="-1"></a><span class="co">#&gt; 飲料.Yes                0.008 -0.005  0.000  0.000  0.001</span></span>
+<span id="cb509-39"><a href="クラスター分析.html#cb509-39" tabindex="-1"></a><span class="co">#&gt; デザート等.No           0.000  0.000  0.000  0.001  0.000</span></span>
+<span id="cb509-40"><a href="クラスター分析.html#cb509-40" tabindex="-1"></a><span class="co">#&gt; デザート等.Yes         -0.005 -0.006  0.000 -0.042 -0.009</span></span>
+<span id="cb509-41"><a href="クラスター分析.html#cb509-41" tabindex="-1"></a><span class="fu">library</span>(tidyverse)</span>
+<span id="cb509-42"><a href="クラスター分析.html#cb509-42" tabindex="-1"></a>posdat_longer <span class="ot">&lt;-</span> posdat_mca<span class="sc">$</span>cs <span class="sc">%&gt;%</span></span>
+<span id="cb509-43"><a href="クラスター分析.html#cb509-43" tabindex="-1"></a>  <span class="fu">as.data.frame</span>() <span class="sc">%&gt;%</span></span>
+<span id="cb509-44"><a href="クラスター分析.html#cb509-44" tabindex="-1"></a>  <span class="fu">rownames_to_column</span>(<span class="at">var =</span> <span class="st">&quot;item&quot;</span>) <span class="sc">%&gt;%</span></span>
+<span id="cb509-45"><a href="クラスター分析.html#cb509-45" tabindex="-1"></a>  <span class="fu">pivot_longer</span>(<span class="at">cols =</span> <span class="dv">2</span><span class="sc">:</span><span class="dv">6</span>, <span class="at">names_to =</span> <span class="st">&quot;pc&quot;</span>, <span class="at">values_to =</span> <span class="st">&quot;value&quot;</span>)</span>
+<span id="cb509-46"><a href="クラスター分析.html#cb509-46" tabindex="-1"></a><span class="fu">ggplot</span>(posdat_longer, <span class="fu">aes</span>(<span class="at">x =</span> item, <span class="at">y =</span> value)) <span class="sc">+</span> <span class="fu">geom_col</span>() <span class="sc">+</span> <span class="fu">facet_grid</span>(pc <span class="sc">~</span> .)</span></code></pre></div>
+<p><img src="120-clust_files/figure-html/unnamed-chunk-24-2.png" width="75%" /></p>
+<div class="sourceCode" id="cb510"><pre class="sourceCode r"><code class="sourceCode r"><span id="cb510-1"><a href="クラスター分析.html#cb510-1" tabindex="-1"></a></span>
+<span id="cb510-2"><a href="クラスター分析.html#cb510-2" tabindex="-1"></a><span class="co"># 各成分のウェイト (特異値)</span></span>
+<span id="cb510-3"><a href="クラスター分析.html#cb510-3" tabindex="-1"></a><span class="fu">barplot</span>(posdat_mca<span class="sc">$</span>d)</span></code></pre></div>
+<p><img src="120-clust_files/figure-html/unnamed-chunk-24-3.png" width="75%" /></p>
+<p>MCAによって得られた5成分の得点を使って, 各行 (顧客) に対する階層型クラスタリングを行う.</p>
+<div class="sourceCode" id="cb511"><pre class="sourceCode r"><code class="sourceCode r"><span id="cb511-1"><a href="クラスター分析.html#cb511-1" tabindex="-1"></a><span class="co"># 成分得点 (5変数) に集約後のレコード間の距離</span></span>
+<span id="cb511-2"><a href="クラスター分析.html#cb511-2" tabindex="-1"></a>posdat_dist5 <span class="ot">&lt;-</span> <span class="fu">dist</span>(posdat_score5)  <span class="co"># レコード間</span></span>
+<span id="cb511-3"><a href="クラスター分析.html#cb511-3" tabindex="-1"></a><span class="co"># posdat_dist5 &lt;- dist(t(posdat_score5)) # 合成変数間</span></span>
+<span id="cb511-4"><a href="クラスター分析.html#cb511-4" tabindex="-1"></a></span>
+<span id="cb511-5"><a href="クラスター分析.html#cb511-5" tabindex="-1"></a><span class="co"># 階層型クラスタリング</span></span>
+<span id="cb511-6"><a href="クラスター分析.html#cb511-6" tabindex="-1"></a>posdat_hc5 <span class="ot">&lt;-</span> <span class="fu">hclust</span>(posdat_dist5, <span class="at">method =</span> <span class="st">&quot;ward.D2&quot;</span>)</span>
+<span id="cb511-7"><a href="クラスター分析.html#cb511-7" tabindex="-1"></a><span class="fu">plot</span>(posdat_hc5)</span>
+<span id="cb511-8"><a href="クラスター分析.html#cb511-8" tabindex="-1"></a></span>
+<span id="cb511-9"><a href="クラスター分析.html#cb511-9" tabindex="-1"></a><span class="co"># デンドログラムの切断</span></span>
+<span id="cb511-10"><a href="クラスター分析.html#cb511-10" tabindex="-1"></a><span class="fu">rect.hclust</span>(posdat_hc5, <span class="at">k =</span> <span class="dv">8</span>, <span class="at">border =</span> <span class="st">&quot;blue&quot;</span>)</span></code></pre></div>
+<p><img src="120-clust_files/figure-html/unnamed-chunk-25-1.png" width="75%" /></p>
 <p>上では, 顧客 (レシート) に対して階層クラスタリングを実施したが,
 件数の多い場合には, 注意が必要である.
 主な問題点は計算コストと可視化の困難さである. 階層的クラスタリングにおいて, データ点の数が非常に多い場合, 計算時間やメモリ消費が膨大になる可能性がある (全てのデータ点間で距離を計算し, これらの距離に基づいて段階的にクラスターを形成する必要性) .
@@ -1040,7 +1070,7 @@ inversion現象の発生が確認される.</p>
 <span id="cb512-12"><a href="クラスター分析.html#cb512-12" tabindex="-1"></a></span>
 <span id="cb512-13"><a href="クラスター分析.html#cb512-13" tabindex="-1"></a><span class="fu">plot</span>(k_values, withinSS_values, <span class="at">type =</span> <span class="st">&quot;b&quot;</span>, <span class="at">pch =</span> <span class="dv">20</span>, <span class="at">frame =</span> <span class="cn">FALSE</span>, <span class="at">xlab =</span> <span class="st">&quot;クラスター数 k&quot;</span>,</span>
 <span id="cb512-14"><a href="クラスター分析.html#cb512-14" tabindex="-1"></a>  <span class="at">ylab =</span> <span class="st">&quot;クラスター内平方和&quot;</span>)</span></code></pre></div>
-<p><img src="120-clust_files/figure-html/unnamed-chunk-23-1.png" width="75%" /></p>
+<p><img src="120-clust_files/figure-html/unnamed-chunk-26-1.png" width="75%" /></p>
 <p>今回のposデータセットの商品群については, 明確な”エルボー”が見られない.</p>
 </div>
 <div id="hartiganルール" class="section level3 unnumbered hasAnchor">
@@ -1095,7 +1125,7 @@ A data.frame consisting of columns, for the number of clusters, the Hartigan Num
 <span id="cb514-13"><a href="クラスター分析.html#cb514-13" tabindex="-1"></a></span>
 <span id="cb514-14"><a href="クラスター分析.html#cb514-14" tabindex="-1"></a><span class="fu">plot</span>(k_values, avg_slh_values, <span class="at">type =</span> <span class="st">&quot;b&quot;</span>, <span class="at">pch =</span> <span class="dv">20</span>, <span class="at">frame =</span> <span class="cn">FALSE</span>, <span class="at">xlab =</span> <span class="st">&quot;クラスター数 k&quot;</span>,</span>
 <span id="cb514-15"><a href="クラスター分析.html#cb514-15" tabindex="-1"></a>  <span class="at">ylab =</span> <span class="st">&quot;平均シルエット値&quot;</span>)</span></code></pre></div>
-<p><img src="120-clust_files/figure-html/unnamed-chunk-25-1.png" width="75%" /></p>
+<p><img src="120-clust_files/figure-html/unnamed-chunk-28-1.png" width="75%" /></p>
 <p>プロットでは<span class="math inline">\(k=2\)</span>の時が最大, 次に<span class="math inline">\(k=4\)</span>が2番目に大きな値となっている.</p>
 </div>
 </div>
@@ -1111,11 +1141,11 @@ A data.frame consisting of columns, for the number of clusters, the Hartigan Num
 <span id="cb516-2"><a href="クラスター分析.html#cb516-2" tabindex="-1"></a>dist_matrix <span class="ot">&lt;-</span> <span class="fu">as.dist</span>(<span class="dv">1</span> <span class="sc">-</span> <span class="fu">cor</span>(tokuten))</span>
 <span id="cb516-3"><a href="クラスター分析.html#cb516-3" tabindex="-1"></a>res_agnes <span class="ot">&lt;-</span> <span class="fu">agnes</span>(dist_matrix, <span class="at">method =</span> <span class="st">&quot;average&quot;</span>)</span>
 <span id="cb516-4"><a href="クラスター分析.html#cb516-4" tabindex="-1"></a><span class="fu">plot</span>(res_agnes)</span></code></pre></div>
-<p><img src="120-clust_files/figure-html/unnamed-chunk-28-1.png" width="75%" /><img src="120-clust_files/figure-html/unnamed-chunk-28-2.png" width="75%" /></p>
+<p><img src="120-clust_files/figure-html/unnamed-chunk-31-1.png" width="75%" /><img src="120-clust_files/figure-html/unnamed-chunk-31-2.png" width="75%" /></p>
 <div class="sourceCode" id="cb517"><pre class="sourceCode r"><code class="sourceCode r"><span id="cb517-1"><a href="クラスター分析.html#cb517-1" tabindex="-1"></a>dist_matrix <span class="ot">&lt;-</span> <span class="fu">as.dist</span>(<span class="dv">1</span> <span class="sc">-</span> <span class="fu">cor</span>(<span class="fu">t</span>(tokuten)))</span>
 <span id="cb517-2"><a href="クラスター分析.html#cb517-2" tabindex="-1"></a>res_agnes <span class="ot">&lt;-</span> <span class="fu">agnes</span>(dist_matrix, <span class="at">method =</span> <span class="st">&quot;average&quot;</span>)</span>
 <span id="cb517-3"><a href="クラスター分析.html#cb517-3" tabindex="-1"></a><span class="fu">plot</span>(res_agnes)</span></code></pre></div>
-<p><img src="120-clust_files/figure-html/unnamed-chunk-29-1.png" width="75%" /><img src="120-clust_files/figure-html/unnamed-chunk-29-2.png" width="75%" /></p>
+<p><img src="120-clust_files/figure-html/unnamed-chunk-32-1.png" width="75%" /><img src="120-clust_files/figure-html/unnamed-chunk-32-2.png" width="75%" /></p>
 </div>
 <div id="関数pheatmap" class="section level3 unnumbered hasAnchor">
 <h3>関数<code>pheatmap</code><a href="クラスター分析.html#関数pheatmap" class="anchor-section" aria-label="Anchor link to header"></a></h3>
@@ -1124,7 +1154,7 @@ A data.frame consisting of columns, for the number of clusters, the Hartigan Num
 <div class="sourceCode" id="cb518"><pre class="sourceCode r"><code class="sourceCode r"><span id="cb518-1"><a href="クラスター分析.html#cb518-1" tabindex="-1"></a><span class="fu">library</span>(pheatmap)</span>
 <span id="cb518-2"><a href="クラスター分析.html#cb518-2" tabindex="-1"></a><span class="fu">pheatmap</span>(tokuten, <span class="at">clustering_distance_rows =</span> <span class="fu">as.dist</span>(<span class="dv">1</span> <span class="sc">-</span> <span class="fu">cor</span>(<span class="fu">t</span>(tokuten))), <span class="at">clustering_distance_cols =</span> <span class="fu">as.dist</span>(<span class="dv">1</span> <span class="sc">-</span></span>
 <span id="cb518-3"><a href="クラスター分析.html#cb518-3" tabindex="-1"></a>  <span class="fu">cor</span>(tokuten)))</span></code></pre></div>
-<p><img src="120-clust_files/figure-html/unnamed-chunk-30-1.png" width="75%" /></p>
+<p><img src="120-clust_files/figure-html/unnamed-chunk-33-1.png" width="75%" /></p>
 </div>
 <div id="関数pam" class="section level3 unnumbered hasAnchor">
 <h3>関数<code>pam</code><a href="クラスター分析.html#関数pam" class="anchor-section" aria-label="Anchor link to header"></a></h3>
@@ -1157,7 +1187,7 @@ K-median法がある. K-median法は, 各クラスタ内のデータポイント
 <span id="cb519-22"><a href="クラスター分析.html#cb519-22" tabindex="-1"></a><span class="co">#&gt;  [1] &quot;medoids&quot;    &quot;id.med&quot;     &quot;clustering&quot; &quot;objective&quot;  &quot;isolation&quot; </span></span>
 <span id="cb519-23"><a href="クラスター分析.html#cb519-23" tabindex="-1"></a><span class="co">#&gt;  [6] &quot;clusinfo&quot;   &quot;silinfo&quot;    &quot;diss&quot;       &quot;call&quot;       &quot;data&quot;</span></span>
 <span id="cb519-24"><a href="クラスター分析.html#cb519-24" tabindex="-1"></a><span class="fu">plot</span>(res_pam)</span></code></pre></div>
-<p><img src="120-clust_files/figure-html/unnamed-chunk-31-1.png" width="75%" /><img src="120-clust_files/figure-html/unnamed-chunk-31-2.png" width="75%" /></p>
+<p><img src="120-clust_files/figure-html/unnamed-chunk-34-1.png" width="75%" /><img src="120-clust_files/figure-html/unnamed-chunk-34-2.png" width="75%" /></p>
 
 </div>
 </div>
