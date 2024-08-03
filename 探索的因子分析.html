@@ -353,7 +353,7 @@ code span.wa { color: #60a0b0; font-weight: bold; font-style: italic; } /* Warni
 <ul>
 <li class="chapter" data-level="" data-path="探索的因子分析.html"><a href="探索的因子分析.html#データセット1-従業員評価データ-仮想"><i class="fa fa-check"></i>データセット1: 従業員評価データ (仮想)</a></li>
 </ul></li>
-<li class="chapter" data-level="12.2" data-path="探索的因子分析.html"><a href="探索的因子分析.html#ライブラリpsychの利用"><i class="fa fa-check"></i><b>12.2</b> ライブラリ<strong>psych</strong>の利用</a></li>
+<li class="chapter" data-level="12.2" data-path="探索的因子分析.html"><a href="探索的因子分析.html#パッケージpsychの利用"><i class="fa fa-check"></i><b>12.2</b> パッケージ<strong>psych</strong>の利用</a></li>
 <li class="chapter" data-level="12.3" data-path="探索的因子分析.html"><a href="探索的因子分析.html#因子分析に有用なツール"><i class="fa fa-check"></i><b>12.3</b> 因子分析に有用なツール</a>
 <ul>
 <li class="chapter" data-level="" data-path="探索的因子分析.html"><a href="探索的因子分析.html#データセット2-topix-core30-月次リターン"><i class="fa fa-check"></i>データセット#2: TOPIX Core30 月次リターン</a></li>
@@ -383,6 +383,25 @@ code span.wa { color: #60a0b0; font-weight: bold; font-style: italic; } /* Warni
 <li class="chapter" data-level="" data-path="クラスター分析.html"><a href="クラスター分析.html#関数agnes"><i class="fa fa-check"></i>関数<code>agnes</code></a></li>
 <li class="chapter" data-level="" data-path="クラスター分析.html"><a href="クラスター分析.html#関数pheatmap"><i class="fa fa-check"></i>関数<code>pheatmap</code></a></li>
 <li class="chapter" data-level="" data-path="クラスター分析.html"><a href="クラスター分析.html#関数pam"><i class="fa fa-check"></i>関数<code>pam</code></a></li>
+</ul></li>
+</ul></li>
+<li class="chapter" data-level="14" data-path="xai-explainable-ai.html"><a href="xai-explainable-ai.html"><i class="fa fa-check"></i><b>14</b> XAI (Explainable AI)</a>
+<ul>
+<li class="chapter" data-level="14.1" data-path="xai-explainable-ai.html"><a href="xai-explainable-ai.html#パッケージiml"><i class="fa fa-check"></i><b>14.1</b> パッケージ<strong>iml</strong></a>
+<ul>
+<li class="chapter" data-level="" data-path="xai-explainable-ai.html"><a href="xai-explainable-ai.html#データセット-1-ボストン市内住宅物件価格データ"><i class="fa fa-check"></i>データセット (1): ボストン市内住宅物件価格データ</a></li>
+</ul></li>
+<li class="chapter" data-level="14.2" data-path="xai-explainable-ai.html"><a href="xai-explainable-ai.html#permuation-feature-importance-pfi"><i class="fa fa-check"></i><b>14.2</b> Permuation Feature Importance (PFI)</a></li>
+<li class="chapter" data-level="14.3" data-path="xai-explainable-ai.html"><a href="xai-explainable-ai.html#partial-dependence-plot-pdp"><i class="fa fa-check"></i><b>14.3</b> Partial Dependence Plot (PDP)</a></li>
+<li class="chapter" data-level="14.4" data-path="xai-explainable-ai.html"><a href="xai-explainable-ai.html#individual-conditional-expectaion-ice"><i class="fa fa-check"></i><b>14.4</b> Individual Conditional Expectaion (ICE)</a>
+<ul>
+<li class="chapter" data-level="" data-path="xai-explainable-ai.html"><a href="xai-explainable-ai.html#pdp-ice"><i class="fa fa-check"></i>PDP + ICE</a></li>
+</ul></li>
+<li class="chapter" data-level="14.5" data-path="xai-explainable-ai.html"><a href="xai-explainable-ai.html#局所代理モデル"><i class="fa fa-check"></i><b>14.5</b> 局所代理モデル</a></li>
+<li class="chapter" data-level="14.6" data-path="xai-explainable-ai.html"><a href="xai-explainable-ai.html#shap-shapley-additive-explanations"><i class="fa fa-check"></i><b>14.6</b> SHAP (SHapley Additive exPlanations)</a>
+<ul>
+<li class="chapter" data-level="" data-path="xai-explainable-ai.html"><a href="xai-explainable-ai.html#多値分類問題の例-iris"><i class="fa fa-check"></i>多値分類問題の例 (iris)</a></li>
+<li class="chapter" data-level="" data-path="xai-explainable-ai.html"><a href="xai-explainable-ai.html#値分類問題"><i class="fa fa-check"></i>2値分類問題</a></li>
 </ul></li>
 </ul></li>
 </ul>
@@ -638,8 +657,8 @@ code span.wa { color: #60a0b0; font-weight: bold; font-style: italic; } /* Warni
 <span id="cb483-4"><a href="探索的因子分析.html#cb483-4" tabindex="-1"></a><span class="co">#&gt;     0.84871769     0.23762850     0.00500000     0.20796645     0.09970145</span></span></code></pre></div>
 </div>
 </div>
-<div id="ライブラリpsychの利用" class="section level2 hasAnchor" number="12.2">
-<h2><span class="header-section-number">12.2</span> ライブラリ<strong>psych</strong>の利用<a href="探索的因子分析.html#ライブラリpsychの利用" class="anchor-section" aria-label="Anchor link to header"></a></h2>
+<div id="パッケージpsychの利用" class="section level2 hasAnchor" number="12.2">
+<h2><span class="header-section-number">12.2</span> パッケージ<strong>psych</strong>の利用<a href="探索的因子分析.html#パッケージpsychの利用" class="anchor-section" aria-label="Anchor link to header"></a></h2>
 <ul>
 <li>関数<code>psych()</code>では, モデル推定方法や因子負荷行列の回転方法等に選択肢がある.</li>
 </ul>
@@ -744,38 +763,36 @@ code span.wa { color: #60a0b0; font-weight: bold; font-style: italic; } /* Warni
 <p><img src="120-fa_files/figure-html/unnamed-chunk-12-2.png" width="75%" /></p>
 <div class="sourceCode" id="cb489"><pre class="sourceCode r"><code class="sourceCode r"><span id="cb489-1"><a href="探索的因子分析.html#cb489-1" tabindex="-1"></a><span class="co"># VSS.plot(tmp_vss)</span></span>
 <span id="cb489-2"><a href="探索的因子分析.html#cb489-2" tabindex="-1"></a><span class="fu">print</span>(tmp_vss)</span>
-<span id="cb489-3"><a href="探索的因子分析.html#cb489-3" tabindex="-1"></a><span class="co">#&gt; Parallel analysis suggests that the number of factors =  2  and the number of components =  1 </span></span>
+<span id="cb489-3"><a href="探索的因子分析.html#cb489-3" tabindex="-1"></a><span class="co">#&gt; Parallel analysis suggests that the number of factors =  1  and the number of components =  1 </span></span>
 <span id="cb489-4"><a href="探索的因子分析.html#cb489-4" tabindex="-1"></a><span class="co">#&gt; Call: fa.parallel(x = tokuten)</span></span>
-<span id="cb489-5"><a href="探索的因子分析.html#cb489-5" tabindex="-1"></a><span class="co">#&gt; Parallel analysis suggests that the number of factors =  2  and the number of components =  1 </span></span>
+<span id="cb489-5"><a href="探索的因子分析.html#cb489-5" tabindex="-1"></a><span class="co">#&gt; Parallel analysis suggests that the number of factors =  1  and the number of components =  1 </span></span>
 <span id="cb489-6"><a href="探索的因子分析.html#cb489-6" tabindex="-1"></a><span class="co">#&gt; </span></span>
 <span id="cb489-7"><a href="探索的因子分析.html#cb489-7" tabindex="-1"></a><span class="co">#&gt;  Eigen Values of </span></span>
 <span id="cb489-8"><a href="探索的因子分析.html#cb489-8" tabindex="-1"></a><span class="co">#&gt;   Original factors Resampled data Simulated data Original components</span></span>
-<span id="cb489-9"><a href="探索的因子分析.html#cb489-9" tabindex="-1"></a><span class="co">#&gt; 1             2.78           1.03           1.02                2.96</span></span>
-<span id="cb489-10"><a href="探索的因子分析.html#cb489-10" tabindex="-1"></a><span class="co">#&gt; 2             0.39           0.28           0.26                1.23</span></span>
-<span id="cb489-11"><a href="探索的因子分析.html#cb489-11" tabindex="-1"></a><span class="co">#&gt;   Resampled components Simulated components</span></span>
-<span id="cb489-12"><a href="探索的因子分析.html#cb489-12" tabindex="-1"></a><span class="co">#&gt; 1                 1.58                 1.55</span></span>
-<span id="cb489-13"><a href="探索的因子分析.html#cb489-13" tabindex="-1"></a><span class="co">#&gt; 2                 1.20                 1.19</span></span>
-<span id="cb489-14"><a href="探索的因子分析.html#cb489-14" tabindex="-1"></a><span class="co">#&gt; </span></span>
-<span id="cb489-15"><a href="探索的因子分析.html#cb489-15" tabindex="-1"></a><span class="co">#&gt; Very Simple Structure</span></span>
-<span id="cb489-16"><a href="探索的因子分析.html#cb489-16" tabindex="-1"></a><span class="co">#&gt; Call: vss(x = tokuten, n = 4, fm = &quot;ml&quot;)</span></span>
-<span id="cb489-17"><a href="探索的因子分析.html#cb489-17" tabindex="-1"></a><span class="co">#&gt; VSS complexity 1 achieves a maximimum of 0.81  with  1  factors</span></span>
-<span id="cb489-18"><a href="探索的因子分析.html#cb489-18" tabindex="-1"></a><span class="co">#&gt; VSS complexity 2 achieves a maximimum of 0.92  with  3  factors</span></span>
-<span id="cb489-19"><a href="探索的因子分析.html#cb489-19" tabindex="-1"></a><span class="co">#&gt; </span></span>
-<span id="cb489-20"><a href="探索的因子分析.html#cb489-20" tabindex="-1"></a><span class="co">#&gt; The Velicer MAP achieves a minimum of 0.15  with  1  factors </span></span>
-<span id="cb489-21"><a href="探索的因子分析.html#cb489-21" tabindex="-1"></a><span class="co">#&gt; BIC achieves a minimum of  1.04  with  2  factors</span></span>
-<span id="cb489-22"><a href="探索的因子分析.html#cb489-22" tabindex="-1"></a><span class="co">#&gt; Sample Size adjusted BIC achieves a minimum of  4.15  with  2  factors</span></span>
-<span id="cb489-23"><a href="探索的因子分析.html#cb489-23" tabindex="-1"></a><span class="co">#&gt; </span></span>
-<span id="cb489-24"><a href="探索的因子分析.html#cb489-24" tabindex="-1"></a><span class="co">#&gt; Statistics by number of factors </span></span>
-<span id="cb489-25"><a href="探索的因子分析.html#cb489-25" tabindex="-1"></a><span class="co">#&gt;   vss1 vss2  map dof   chisq    prob sqresid  fit RMSEA BIC SABIC complex</span></span>
-<span id="cb489-26"><a href="探索的因子分析.html#cb489-26" tabindex="-1"></a><span class="co">#&gt; 1 0.81 0.00 0.15   5 2.1e+01 0.00083    2.01 0.81  0.32 3.9  19.5     1.0</span></span>
-<span id="cb489-27"><a href="探索的因子分析.html#cb489-27" tabindex="-1"></a><span class="co">#&gt; 2 0.80 0.92 0.27   1 4.4e+00 0.03506    0.88 0.92  0.34 1.0   4.2     1.2</span></span>
-<span id="cb489-28"><a href="探索的因子分析.html#cb489-28" tabindex="-1"></a><span class="co">#&gt; 3 0.79 0.92 0.45  -2 0.0e+00      NA    0.52 0.95    NA  NA    NA     1.5</span></span>
-<span id="cb489-29"><a href="探索的因子分析.html#cb489-29" tabindex="-1"></a><span class="co">#&gt; 4 0.79 0.92 1.00  -4 2.1e-14      NA    0.54 0.95    NA  NA    NA     1.5</span></span>
-<span id="cb489-30"><a href="探索的因子分析.html#cb489-30" tabindex="-1"></a><span class="co">#&gt;    eChisq    SRMR eCRMS eBIC</span></span>
-<span id="cb489-31"><a href="探索的因子分析.html#cb489-31" tabindex="-1"></a><span class="co">#&gt; 1 1.1e+01 1.4e-01  0.19 -5.7</span></span>
-<span id="cb489-32"><a href="探索的因子分析.html#cb489-32" tabindex="-1"></a><span class="co">#&gt; 2 1.6e+00 5.2e-02  0.16 -1.8</span></span>
-<span id="cb489-33"><a href="探索的因子分析.html#cb489-33" tabindex="-1"></a><span class="co">#&gt; 3 7.8e-17 3.6e-10    NA   NA</span></span>
-<span id="cb489-34"><a href="探索的因子分析.html#cb489-34" tabindex="-1"></a><span class="co">#&gt; 4 1.7e-14 5.3e-09    NA   NA</span></span></code></pre></div>
+<span id="cb489-9"><a href="探索的因子分析.html#cb489-9" tabindex="-1"></a><span class="co">#&gt; 1             2.78           1.07           1.03                2.96</span></span>
+<span id="cb489-10"><a href="探索的因子分析.html#cb489-10" tabindex="-1"></a><span class="co">#&gt;   Resampled components Simulated components</span></span>
+<span id="cb489-11"><a href="探索的因子分析.html#cb489-11" tabindex="-1"></a><span class="co">#&gt; 1                 1.58                  1.6</span></span>
+<span id="cb489-12"><a href="探索的因子分析.html#cb489-12" tabindex="-1"></a><span class="co">#&gt; </span></span>
+<span id="cb489-13"><a href="探索的因子分析.html#cb489-13" tabindex="-1"></a><span class="co">#&gt; Very Simple Structure</span></span>
+<span id="cb489-14"><a href="探索的因子分析.html#cb489-14" tabindex="-1"></a><span class="co">#&gt; Call: vss(x = tokuten, n = 4, fm = &quot;ml&quot;)</span></span>
+<span id="cb489-15"><a href="探索的因子分析.html#cb489-15" tabindex="-1"></a><span class="co">#&gt; VSS complexity 1 achieves a maximimum of 0.81  with  1  factors</span></span>
+<span id="cb489-16"><a href="探索的因子分析.html#cb489-16" tabindex="-1"></a><span class="co">#&gt; VSS complexity 2 achieves a maximimum of 0.92  with  3  factors</span></span>
+<span id="cb489-17"><a href="探索的因子分析.html#cb489-17" tabindex="-1"></a><span class="co">#&gt; </span></span>
+<span id="cb489-18"><a href="探索的因子分析.html#cb489-18" tabindex="-1"></a><span class="co">#&gt; The Velicer MAP achieves a minimum of 0.15  with  1  factors </span></span>
+<span id="cb489-19"><a href="探索的因子分析.html#cb489-19" tabindex="-1"></a><span class="co">#&gt; BIC achieves a minimum of  1.04  with  2  factors</span></span>
+<span id="cb489-20"><a href="探索的因子分析.html#cb489-20" tabindex="-1"></a><span class="co">#&gt; Sample Size adjusted BIC achieves a minimum of  4.15  with  2  factors</span></span>
+<span id="cb489-21"><a href="探索的因子分析.html#cb489-21" tabindex="-1"></a><span class="co">#&gt; </span></span>
+<span id="cb489-22"><a href="探索的因子分析.html#cb489-22" tabindex="-1"></a><span class="co">#&gt; Statistics by number of factors </span></span>
+<span id="cb489-23"><a href="探索的因子分析.html#cb489-23" tabindex="-1"></a><span class="co">#&gt;   vss1 vss2  map dof   chisq    prob sqresid  fit RMSEA BIC SABIC complex</span></span>
+<span id="cb489-24"><a href="探索的因子分析.html#cb489-24" tabindex="-1"></a><span class="co">#&gt; 1 0.81 0.00 0.15   5 2.1e+01 0.00083    2.01 0.81  0.32 3.9  19.5     1.0</span></span>
+<span id="cb489-25"><a href="探索的因子分析.html#cb489-25" tabindex="-1"></a><span class="co">#&gt; 2 0.80 0.92 0.27   1 4.4e+00 0.03506    0.88 0.92  0.34 1.0   4.2     1.2</span></span>
+<span id="cb489-26"><a href="探索的因子分析.html#cb489-26" tabindex="-1"></a><span class="co">#&gt; 3 0.79 0.92 0.45  -2 0.0e+00      NA    0.52 0.95    NA  NA    NA     1.5</span></span>
+<span id="cb489-27"><a href="探索的因子分析.html#cb489-27" tabindex="-1"></a><span class="co">#&gt; 4 0.79 0.92 1.00  -4 2.1e-14      NA    0.54 0.95    NA  NA    NA     1.5</span></span>
+<span id="cb489-28"><a href="探索的因子分析.html#cb489-28" tabindex="-1"></a><span class="co">#&gt;    eChisq    SRMR eCRMS eBIC</span></span>
+<span id="cb489-29"><a href="探索的因子分析.html#cb489-29" tabindex="-1"></a><span class="co">#&gt; 1 1.1e+01 1.4e-01  0.19 -5.7</span></span>
+<span id="cb489-30"><a href="探索的因子分析.html#cb489-30" tabindex="-1"></a><span class="co">#&gt; 2 1.6e+00 5.2e-02  0.16 -1.8</span></span>
+<span id="cb489-31"><a href="探索的因子分析.html#cb489-31" tabindex="-1"></a><span class="co">#&gt; 3 7.8e-17 3.6e-10    NA   NA</span></span>
+<span id="cb489-32"><a href="探索的因子分析.html#cb489-32" tabindex="-1"></a><span class="co">#&gt; 4 1.7e-14 5.3e-09    NA   NA</span></span></code></pre></div>
 <p>ライブラリ<strong>psych</strong>内の関数<code>fa.plot()</code>や<code>fa.diagram()</code>は, 因子間の関係性 (相関構造や階層構造) を調べるのに有用である.</p>
 <div class="sourceCode" id="cb490"><pre class="sourceCode r"><code class="sourceCode r"><span id="cb490-1"><a href="探索的因子分析.html#cb490-1" tabindex="-1"></a><span class="fu">fa.plot</span>(tokuten_fa, <span class="at">cut =</span> <span class="fl">0.5</span>)</span></code></pre></div>
 <p><img src="120-fa_files/figure-html/unnamed-chunk-13-1.png" width="75%" /></p>

@@ -353,7 +353,7 @@ code span.wa { color: #60a0b0; font-weight: bold; font-style: italic; } /* Warni
 <ul>
 <li class="chapter" data-level="" data-path="探索的因子分析.html"><a href="探索的因子分析.html#データセット1-従業員評価データ-仮想"><i class="fa fa-check"></i>データセット1: 従業員評価データ (仮想)</a></li>
 </ul></li>
-<li class="chapter" data-level="12.2" data-path="探索的因子分析.html"><a href="探索的因子分析.html#ライブラリpsychの利用"><i class="fa fa-check"></i><b>12.2</b> ライブラリ<strong>psych</strong>の利用</a></li>
+<li class="chapter" data-level="12.2" data-path="探索的因子分析.html"><a href="探索的因子分析.html#パッケージpsychの利用"><i class="fa fa-check"></i><b>12.2</b> パッケージ<strong>psych</strong>の利用</a></li>
 <li class="chapter" data-level="12.3" data-path="探索的因子分析.html"><a href="探索的因子分析.html#因子分析に有用なツール"><i class="fa fa-check"></i><b>12.3</b> 因子分析に有用なツール</a>
 <ul>
 <li class="chapter" data-level="" data-path="探索的因子分析.html"><a href="探索的因子分析.html#データセット2-topix-core30-月次リターン"><i class="fa fa-check"></i>データセット#2: TOPIX Core30 月次リターン</a></li>
@@ -383,6 +383,25 @@ code span.wa { color: #60a0b0; font-weight: bold; font-style: italic; } /* Warni
 <li class="chapter" data-level="" data-path="クラスター分析.html"><a href="クラスター分析.html#関数agnes"><i class="fa fa-check"></i>関数<code>agnes</code></a></li>
 <li class="chapter" data-level="" data-path="クラスター分析.html"><a href="クラスター分析.html#関数pheatmap"><i class="fa fa-check"></i>関数<code>pheatmap</code></a></li>
 <li class="chapter" data-level="" data-path="クラスター分析.html"><a href="クラスター分析.html#関数pam"><i class="fa fa-check"></i>関数<code>pam</code></a></li>
+</ul></li>
+</ul></li>
+<li class="chapter" data-level="14" data-path="xai-explainable-ai.html"><a href="xai-explainable-ai.html"><i class="fa fa-check"></i><b>14</b> XAI (Explainable AI)</a>
+<ul>
+<li class="chapter" data-level="14.1" data-path="xai-explainable-ai.html"><a href="xai-explainable-ai.html#パッケージiml"><i class="fa fa-check"></i><b>14.1</b> パッケージ<strong>iml</strong></a>
+<ul>
+<li class="chapter" data-level="" data-path="xai-explainable-ai.html"><a href="xai-explainable-ai.html#データセット-1-ボストン市内住宅物件価格データ"><i class="fa fa-check"></i>データセット (1): ボストン市内住宅物件価格データ</a></li>
+</ul></li>
+<li class="chapter" data-level="14.2" data-path="xai-explainable-ai.html"><a href="xai-explainable-ai.html#permuation-feature-importance-pfi"><i class="fa fa-check"></i><b>14.2</b> Permuation Feature Importance (PFI)</a></li>
+<li class="chapter" data-level="14.3" data-path="xai-explainable-ai.html"><a href="xai-explainable-ai.html#partial-dependence-plot-pdp"><i class="fa fa-check"></i><b>14.3</b> Partial Dependence Plot (PDP)</a></li>
+<li class="chapter" data-level="14.4" data-path="xai-explainable-ai.html"><a href="xai-explainable-ai.html#individual-conditional-expectaion-ice"><i class="fa fa-check"></i><b>14.4</b> Individual Conditional Expectaion (ICE)</a>
+<ul>
+<li class="chapter" data-level="" data-path="xai-explainable-ai.html"><a href="xai-explainable-ai.html#pdp-ice"><i class="fa fa-check"></i>PDP + ICE</a></li>
+</ul></li>
+<li class="chapter" data-level="14.5" data-path="xai-explainable-ai.html"><a href="xai-explainable-ai.html#局所代理モデル"><i class="fa fa-check"></i><b>14.5</b> 局所代理モデル</a></li>
+<li class="chapter" data-level="14.6" data-path="xai-explainable-ai.html"><a href="xai-explainable-ai.html#shap-shapley-additive-explanations"><i class="fa fa-check"></i><b>14.6</b> SHAP (SHapley Additive exPlanations)</a>
+<ul>
+<li class="chapter" data-level="" data-path="xai-explainable-ai.html"><a href="xai-explainable-ai.html#多値分類問題の例-iris"><i class="fa fa-check"></i>多値分類問題の例 (iris)</a></li>
+<li class="chapter" data-level="" data-path="xai-explainable-ai.html"><a href="xai-explainable-ai.html#値分類問題"><i class="fa fa-check"></i>2値分類問題</a></li>
 </ul></li>
 </ul></li>
 </ul>
@@ -555,9 +574,9 @@ code span.wa { color: #60a0b0; font-weight: bold; font-style: italic; } /* Warni
 <span id="cb340-6"><a href="決定木分析.html#cb340-6" tabindex="-1"></a><span class="co">#&gt;   n= 50 </span></span>
 <span id="cb340-7"><a href="決定木分析.html#cb340-7" tabindex="-1"></a><span class="co">#&gt; </span></span>
 <span id="cb340-8"><a href="決定木分析.html#cb340-8" tabindex="-1"></a><span class="co">#&gt;          CP nsplit rel error    xerror      xstd</span></span>
-<span id="cb340-9"><a href="決定木分析.html#cb340-9" tabindex="-1"></a><span class="co">#&gt; 1 0.4676398      0 1.0000000 1.0501949 0.2236569</span></span>
-<span id="cb340-10"><a href="決定木分析.html#cb340-10" tabindex="-1"></a><span class="co">#&gt; 2 0.1104944      1 0.5323602 0.6757696 0.1392562</span></span>
-<span id="cb340-11"><a href="決定木分析.html#cb340-11" tabindex="-1"></a><span class="co">#&gt; 3 0.0100000      2 0.4218658 0.4990745 0.1214356</span></span>
+<span id="cb340-9"><a href="決定木分析.html#cb340-9" tabindex="-1"></a><span class="co">#&gt; 1 0.4676398      0 1.0000000 1.0399123 0.2153442</span></span>
+<span id="cb340-10"><a href="決定木分析.html#cb340-10" tabindex="-1"></a><span class="co">#&gt; 2 0.1104944      1 0.5323602 0.8048863 0.1508927</span></span>
+<span id="cb340-11"><a href="決定木分析.html#cb340-11" tabindex="-1"></a><span class="co">#&gt; 3 0.0100000      2 0.4218658 0.5873951 0.1282469</span></span>
 <span id="cb340-12"><a href="決定木分析.html#cb340-12" tabindex="-1"></a><span class="co">#&gt; </span></span>
 <span id="cb340-13"><a href="決定木分析.html#cb340-13" tabindex="-1"></a><span class="co">#&gt; Variable importance</span></span>
 <span id="cb340-14"><a href="決定木分析.html#cb340-14" tabindex="-1"></a><span class="co">#&gt; speed </span></span>
@@ -769,9 +788,9 @@ code span.wa { color: #60a0b0; font-weight: bold; font-style: italic; } /* Warni
 <span id="cb350-12"><a href="決定木分析.html#cb350-12" tabindex="-1"></a><span class="co">#&gt; n= 1250 </span></span>
 <span id="cb350-13"><a href="決定木分析.html#cb350-13" tabindex="-1"></a><span class="co">#&gt; </span></span>
 <span id="cb350-14"><a href="決定木分析.html#cb350-14" tabindex="-1"></a><span class="co">#&gt;          CP nsplit rel error xerror     xstd</span></span>
-<span id="cb350-15"><a href="決定木分析.html#cb350-15" tabindex="-1"></a><span class="co">#&gt; 1 0.0174254      0   1.00000 1.0022 0.059430</span></span>
-<span id="cb350-16"><a href="決定木分析.html#cb350-16" tabindex="-1"></a><span class="co">#&gt; 2 0.0079811      1   0.98257 1.0213 0.061658</span></span>
-<span id="cb350-17"><a href="決定木分析.html#cb350-17" tabindex="-1"></a><span class="co">#&gt; 3 0.0079000      4   0.95863 1.1234 0.071073</span></span>
+<span id="cb350-15"><a href="決定木分析.html#cb350-15" tabindex="-1"></a><span class="co">#&gt; 1 0.0174254      0   1.00000 1.0012 0.059297</span></span>
+<span id="cb350-16"><a href="決定木分析.html#cb350-16" tabindex="-1"></a><span class="co">#&gt; 2 0.0079811      1   0.98257 1.0674 0.065611</span></span>
+<span id="cb350-17"><a href="決定木分析.html#cb350-17" tabindex="-1"></a><span class="co">#&gt; 3 0.0079000      4   0.95863 1.1593 0.074439</span></span>
 <span id="cb350-18"><a href="決定木分析.html#cb350-18" tabindex="-1"></a><span class="fu">plotcp</span>(sp_rp)</span></code></pre></div>
 <p><img src="090-DT_files/figure-html/unnamed-chunk-15-1.png" width="75%" />
 <code>plotcp()</code>は, 木の複雑度 (CP) (横軸) に対する
@@ -865,12 +884,12 @@ code span.wa { color: #60a0b0; font-weight: bold; font-style: italic; } /* Warni
 <span id="cb356-13"><a href="決定木分析.html#cb356-13" tabindex="-1"></a><span class="co">#&gt; </span></span>
 <span id="cb356-14"><a href="決定木分析.html#cb356-14" tabindex="-1"></a><span class="co">#&gt;         CP nsplit rel error  xerror     xstd</span></span>
 <span id="cb356-15"><a href="決定木分析.html#cb356-15" tabindex="-1"></a><span class="co">#&gt; 1 0.063123      0   1.00000 1.00000 0.029345</span></span>
-<span id="cb356-16"><a href="決定木分析.html#cb356-16" tabindex="-1"></a><span class="co">#&gt; 2 0.023256      1   0.93688 1.00997 0.029354</span></span>
-<span id="cb356-17"><a href="決定木分析.html#cb356-17" tabindex="-1"></a><span class="co">#&gt; 3 0.016058      2   0.91362 1.03488 0.029365</span></span>
-<span id="cb356-18"><a href="決定木分析.html#cb356-18" tabindex="-1"></a><span class="co">#&gt; 4 0.014950      5   0.86545 1.00831 0.029353</span></span>
-<span id="cb356-19"><a href="決定木分析.html#cb356-19" tabindex="-1"></a><span class="co">#&gt; 5 0.014120      6   0.85050 1.01827 0.029359</span></span>
-<span id="cb356-20"><a href="決定木分析.html#cb356-20" tabindex="-1"></a><span class="co">#&gt; 6 0.011628      8   0.82226 0.99834 0.029343</span></span>
-<span id="cb356-21"><a href="決定木分析.html#cb356-21" tabindex="-1"></a><span class="co">#&gt; 7 0.010000     10   0.79900 1.00166 0.029347</span></span>
+<span id="cb356-16"><a href="決定木分析.html#cb356-16" tabindex="-1"></a><span class="co">#&gt; 2 0.023256      1   0.93688 0.98173 0.029321</span></span>
+<span id="cb356-17"><a href="決定木分析.html#cb356-17" tabindex="-1"></a><span class="co">#&gt; 3 0.016058      2   0.91362 1.00332 0.029348</span></span>
+<span id="cb356-18"><a href="決定木分析.html#cb356-18" tabindex="-1"></a><span class="co">#&gt; 4 0.014950      5   0.86545 0.98007 0.029319</span></span>
+<span id="cb356-19"><a href="決定木分析.html#cb356-19" tabindex="-1"></a><span class="co">#&gt; 5 0.014120      6   0.85050 0.98339 0.029324</span></span>
+<span id="cb356-20"><a href="決定木分析.html#cb356-20" tabindex="-1"></a><span class="co">#&gt; 6 0.011628      8   0.82226 0.98007 0.029319</span></span>
+<span id="cb356-21"><a href="決定木分析.html#cb356-21" tabindex="-1"></a><span class="co">#&gt; 7 0.010000     10   0.79900 1.00000 0.029345</span></span>
 <span id="cb356-22"><a href="決定木分析.html#cb356-22" tabindex="-1"></a><span class="fu">plotcp</span>(sp2_rp)</span></code></pre></div>
 <p><img src="090-DT_files/figure-html/unnamed-chunk-20-1.png" width="75%" />
 上の図は, cp (横軸) が増えても,
