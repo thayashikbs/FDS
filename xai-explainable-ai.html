@@ -391,14 +391,14 @@ code span.wa { color: #60a0b0; font-weight: bold; font-style: italic; } /* Warni
 <ul>
 <li class="chapter" data-level="" data-path="xai-explainable-ai.html"><a href="xai-explainable-ai.html#データセット-1-ボストン市内住宅物件価格データ"><i class="fa fa-check"></i>データセット (1): ボストン市内住宅物件価格データ</a></li>
 </ul></li>
-<li class="chapter" data-level="14.2" data-path="xai-explainable-ai.html"><a href="xai-explainable-ai.html#permuation-feature-importance-pfi"><i class="fa fa-check"></i><b>14.2</b> Permuation Feature Importance (PFI)</a></li>
-<li class="chapter" data-level="14.3" data-path="xai-explainable-ai.html"><a href="xai-explainable-ai.html#partial-dependence-plot-pdp"><i class="fa fa-check"></i><b>14.3</b> Partial Dependence Plot (PDP)</a></li>
-<li class="chapter" data-level="14.4" data-path="xai-explainable-ai.html"><a href="xai-explainable-ai.html#individual-conditional-expectaion-ice"><i class="fa fa-check"></i><b>14.4</b> Individual Conditional Expectaion (ICE)</a>
+<li class="chapter" data-level="14.2" data-path="xai-explainable-ai.html"><a href="xai-explainable-ai.html#pfi"><i class="fa fa-check"></i><b>14.2</b> PFI</a></li>
+<li class="chapter" data-level="14.3" data-path="xai-explainable-ai.html"><a href="xai-explainable-ai.html#pdp"><i class="fa fa-check"></i><b>14.3</b> PDP</a></li>
+<li class="chapter" data-level="14.4" data-path="xai-explainable-ai.html"><a href="xai-explainable-ai.html#ice"><i class="fa fa-check"></i><b>14.4</b> ICE</a>
 <ul>
 <li class="chapter" data-level="" data-path="xai-explainable-ai.html"><a href="xai-explainable-ai.html#pdp-ice"><i class="fa fa-check"></i>PDP + ICE</a></li>
 </ul></li>
-<li class="chapter" data-level="14.5" data-path="xai-explainable-ai.html"><a href="xai-explainable-ai.html#局所代理モデル"><i class="fa fa-check"></i><b>14.5</b> 局所代理モデル</a></li>
-<li class="chapter" data-level="14.6" data-path="xai-explainable-ai.html"><a href="xai-explainable-ai.html#shap-shapley-additive-explanations"><i class="fa fa-check"></i><b>14.6</b> SHAP (SHapley Additive exPlanations)</a>
+<li class="chapter" data-level="14.5" data-path="xai-explainable-ai.html"><a href="xai-explainable-ai.html#lime"><i class="fa fa-check"></i><b>14.5</b> LIME</a></li>
+<li class="chapter" data-level="14.6" data-path="xai-explainable-ai.html"><a href="xai-explainable-ai.html#shap"><i class="fa fa-check"></i><b>14.6</b> SHAP</a>
 <ul>
 <li class="chapter" data-level="" data-path="xai-explainable-ai.html"><a href="xai-explainable-ai.html#多値分類問題の例-iris"><i class="fa fa-check"></i>多値分類問題の例 (iris)</a></li>
 <li class="chapter" data-level="" data-path="xai-explainable-ai.html"><a href="xai-explainable-ai.html#値分類問題"><i class="fa fa-check"></i>2値分類問題</a></li>
@@ -432,7 +432,8 @@ code span.wa { color: #60a0b0; font-weight: bold; font-style: italic; } /* Warni
 XAIの以下の4つの手法を実際に動かしてみる.</p>
 <ul>
 <li>PDP (Partial Dependence Plot</li>
-<li>ICE (Individual Conditional Expectaion</li>
+<li>ICE (Individual Conditional Expectaion
+<!--  - 局所代理モデル --></li>
 <li>LIME (Local Interpretable Model-agnostic Explanations)</li>
 <li>SHAP (SHapley Additive exPlanations)</li>
 </ul>
@@ -577,9 +578,9 @@ Rのオブジェクト・クラスを使用
 <code>predictor</code>に対して, 各手法の関数を適用する.</p>
 </div>
 </div>
-<div id="permuation-feature-importance-pfi" class="section level2 hasAnchor" number="14.2">
-<h2><span class="header-section-number">14.2</span> Permuation Feature Importance (PFI)<a href="xai-explainable-ai.html#permuation-feature-importance-pfi" class="anchor-section" aria-label="Anchor link to header"></a></h2>
-<p>特徴量<code>lstat</code>に対するPFIを見たい場合には, 以下のコマンドを実行する.</p>
+<div id="pfi" class="section level2 hasAnchor" number="14.2">
+<h2><span class="header-section-number">14.2</span> PFI<a href="xai-explainable-ai.html#pfi" class="anchor-section" aria-label="Anchor link to header"></a></h2>
+<p>特徴量<code>lstat</code>に対するPFI (Permuation Feature Importance) を見たい場合には, 以下のコマンドを実行する.</p>
 <div class="sourceCode" id="cb570"><pre class="sourceCode r"><code class="sourceCode r"><span id="cb570-1"><a href="xai-explainable-ai.html#cb570-1" tabindex="-1"></a><span class="co"># imp &lt;- FeatureImp$new(predictor, loss = &#39;mse&#39;) # 損失関数=MSE</span></span>
 <span id="cb570-2"><a href="xai-explainable-ai.html#cb570-2" tabindex="-1"></a><span class="fu">set.seed</span>(<span class="dv">111</span>)</span>
 <span id="cb570-3"><a href="xai-explainable-ai.html#cb570-3" tabindex="-1"></a>imp <span class="ot">&lt;-</span> FeatureImp<span class="sc">$</span><span class="fu">new</span>(predictor, <span class="at">loss =</span> <span class="st">&quot;mae&quot;</span>)  <span class="co"># 同MAE</span></span>
@@ -603,9 +604,9 @@ Rのオブジェクト・クラスを使用
 <span id="cb571-15"><a href="xai-explainable-ai.html#cb571-15" tabindex="-1"></a><span class="co">#&gt; 13    chas      1.029757   1.037440      1.047849         0.9758753</span></span></code></pre></div>
 <p>これより, <code>lstat</code>, 次に<code>rm</code>の重要度が特に大きいことが分かる.</p>
 </div>
-<div id="partial-dependence-plot-pdp" class="section level2 hasAnchor" number="14.3">
-<h2><span class="header-section-number">14.3</span> Partial Dependence Plot (PDP)<a href="xai-explainable-ai.html#partial-dependence-plot-pdp" class="anchor-section" aria-label="Anchor link to header"></a></h2>
-<p>特徴量<code>lstat</code>に対するPDPを見たい場合には, 以下のコマンドを実行する.</p>
+<div id="pdp" class="section level2 hasAnchor" number="14.3">
+<h2><span class="header-section-number">14.3</span> PDP<a href="xai-explainable-ai.html#pdp" class="anchor-section" aria-label="Anchor link to header"></a></h2>
+<p>特徴量<code>lstat</code>に対するPDP (Partial Dependence Plot) を見たい場合には, 以下のコマンドを実行する.</p>
 <div class="sourceCode" id="cb572"><pre class="sourceCode r"><code class="sourceCode r"><span id="cb572-1"><a href="xai-explainable-ai.html#cb572-1" tabindex="-1"></a><span class="co"># 特徴量lstatに対するPDP</span></span>
 <span id="cb572-2"><a href="xai-explainable-ai.html#cb572-2" tabindex="-1"></a>pdp <span class="ot">&lt;-</span> FeatureEffect<span class="sc">$</span><span class="fu">new</span>(predictor, <span class="at">feature =</span> <span class="st">&quot;lstat&quot;</span>, <span class="at">method =</span> <span class="st">&quot;pdp&quot;</span>, <span class="at">grid.size =</span> <span class="dv">10</span>)</span>
 <span id="cb572-3"><a href="xai-explainable-ai.html#cb572-3" tabindex="-1"></a>pdp<span class="sc">$</span><span class="fu">plot</span>()</span></code></pre></div>
@@ -621,9 +622,9 @@ Rのオブジェクト・クラスを使用
 <span id="cb574-2"><a href="xai-explainable-ai.html#cb574-2" tabindex="-1"></a>pdp<span class="sc">$</span><span class="fu">plot</span>()</span></code></pre></div>
 <p><img src="140-xai_files/figure-html/unnamed-chunk-12-2.png" width="75%" /></p>
 </div>
-<div id="individual-conditional-expectaion-ice" class="section level2 hasAnchor" number="14.4">
-<h2><span class="header-section-number">14.4</span> Individual Conditional Expectaion (ICE)<a href="xai-explainable-ai.html#individual-conditional-expectaion-ice" class="anchor-section" aria-label="Anchor link to header"></a></h2>
-<p>データ点ごとの, 特徴量に対する予測値の変化はICEで知ることができる.
+<div id="ice" class="section level2 hasAnchor" number="14.4">
+<h2><span class="header-section-number">14.4</span> ICE<a href="xai-explainable-ai.html#ice" class="anchor-section" aria-label="Anchor link to header"></a></h2>
+<p>データ点ごとの, 特徴量に対する予測値の変化はICE (Individual Conditional Expectaion) で知ることができる.
 <!-- 必要に応じて, (特異な動きをする) 特定のデータ点についてさらに
 分析を進めればよい.-->
 特徴量<code>lstat</code>に対するICEを見たい場合には, 以下のコマンドを実行する.</p>
@@ -646,8 +647,9 @@ Rのオブジェクト・クラスを使用
 <p><img src="140-xai_files/figure-html/unnamed-chunk-15-1.png" width="75%" /></p>
 </div>
 </div>
-<div id="局所代理モデル" class="section level2 hasAnchor" number="14.5">
-<h2><span class="header-section-number">14.5</span> 局所代理モデル<a href="xai-explainable-ai.html#局所代理モデル" class="anchor-section" aria-label="Anchor link to header"></a></h2>
+<div id="lime" class="section level2 hasAnchor" number="14.5">
+<h2><span class="header-section-number">14.5</span> LIME<a href="xai-explainable-ai.html#lime" class="anchor-section" aria-label="Anchor link to header"></a></h2>
+<!-- 局所代理モデル -->
 <p>局所代理モデルの一手法であるLIME (Local Interpretable Model-agnostic Explanations), そのバリエーションを実行する.</p>
 <pre><code>LocalModel():
 - LIMEの一種. 局所的重み付け回帰モデルによる適合
@@ -662,7 +664,7 @@ Rのオブジェクト・クラスを使用
 (正規分布からの) 乱数
 - weighted GLMにより局所的にターゲットに適合 
 -->
-<p>1番目のデータ点の予測値に対するLIMEは以下のように実行する.</p>
+<p>1番目のデータ点の予測値 (25.61) に対するLIMEは以下のように実行する.</p>
 <div class="sourceCode" id="cb580"><pre class="sourceCode r"><code class="sourceCode r"><span id="cb580-1"><a href="xai-explainable-ai.html#cb580-1" tabindex="-1"></a>lime_explain <span class="ot">&lt;-</span> LocalModel<span class="sc">$</span><span class="fu">new</span>(predictor, <span class="at">x.interest =</span> X[<span class="dv">1</span>, ])</span>
 <span id="cb580-2"><a href="xai-explainable-ai.html#cb580-2" tabindex="-1"></a><span class="co"># 線形近似 (LocalModel()) による予測値</span></span>
 <span id="cb580-3"><a href="xai-explainable-ai.html#cb580-3" tabindex="-1"></a><span class="fu">predict</span>(lime_explain)</span>
@@ -677,15 +679,15 @@ Rのオブジェクト・クラスを使用
 <p><img src="140-xai_files/figure-html/unnamed-chunk-16-1.png" width="75%" /></p>
 <p>得られた結果は, 1番目のデータ点の予測に対する判断の根拠を
 線形回帰の結果を解釈しながら与えることができる.
-すなわち, (LASSOにより選択された) 変数の回帰係数の推定値が <span class="math inline">\(\beta_{rm}=4.34\)</span>, <span class="math inline">\(\beta_{ptratio}=-0.56\)</span>, <span class="math inline">\(\beta_{lstat}=-0.439\)</span>
+すなわち, (LASSOにより選択された) 変数の回帰係数の推定値が <span class="math inline">\(\beta_{rm}=4.29\)</span>, <span class="math inline">\(\beta_{ptratio}=-0.52\)</span>, <span class="math inline">\(\beta_{lstat}=-0.43\)</span>
 であることから, 1番目の予測に対しては, 変数<code>rm</code>は (他の
-全ての変数を固定した状態で) 1単位増えれば, <span class="math inline">\(4,34\)</span>増加する要因と
-なっているが, 一方, <code>lstat</code>, <code>ptratio</code>はそれぞれ, <span class="math inline">\(-0.56, -0.44\)</span>減少
+全ての変数を固定した状態で) 1単位増えれば, <span class="math inline">\(4,29\)</span>増加する要因と
+なっているが, 一方, <code>lstat</code>, <code>ptratio</code>はそれぞれ, <span class="math inline">\(-0.52, -0.43\)</span>減少
 させていることを示す.
 また, 各変数が1番目の予測にもたらしている貢献度の大きさは,
 各変数の値を対応する係数と掛け合せることで,
-<span class="math inline">\((4.34) \cdot 6.58 \approx 28.52\)</span>, <span class="math inline">\((-0.56) \cdot 15.3 \approx -8.50\)</span>,
-<span class="math inline">\((-0.44) \cdot 4.98 \approx -2.19\)</span> と (近似的に) 見積もることができる.
+<span class="math inline">\((4.29) \cdot 6.58 \approx 28.22\)</span>, <span class="math inline">\((-0.52) \cdot 15.3 \approx -7.97\)</span>,
+<span class="math inline">\((-0.43) \cdot 4.98 \approx -2.14\)</span> と (近似的に) 見積もることができ, これが横棒グラフで示されている.
 <!--
 3つの項を足す意味はあるのか? 切片項の扱いは??
 予測値$25.72$に対して, 局所線形モデルの予測値$29.01$は,
@@ -693,7 +695,7 @@ Rのオブジェクト・クラスを使用
 (4.34) \dot 6.58 + (-0.56) \dot 15.3 + (-0.44) \dot 4.98 = 17.798 (!?)
 \]
 --></p>
-<p>同様に. 2番目のデータ点は以下の通りである.</p>
+<p>同様に, 2番目のデータ点の予測値 (22.27) に対するLIMEは以下の通りである.</p>
 <div class="sourceCode" id="cb581"><pre class="sourceCode r"><code class="sourceCode r"><span id="cb581-1"><a href="xai-explainable-ai.html#cb581-1" tabindex="-1"></a>lime_explain<span class="sc">$</span><span class="fu">explain</span>(X[<span class="dv">2</span>, ])</span>
 <span id="cb581-2"><a href="xai-explainable-ai.html#cb581-2" tabindex="-1"></a>lime_explain<span class="sc">$</span>results</span>
 <span id="cb581-3"><a href="xai-explainable-ai.html#cb581-3" tabindex="-1"></a><span class="co">#&gt;               beta x.recoded    effect x.original feature feature.value</span></span>
@@ -701,11 +703,26 @@ Rのオブジェクト・クラスを使用
 <span id="cb581-5"><a href="xai-explainable-ai.html#cb581-5" tabindex="-1"></a><span class="co">#&gt; ptratio -0.5276824    17.800 -9.392746       17.8 ptratio  ptratio=17.8</span></span>
 <span id="cb581-6"><a href="xai-explainable-ai.html#cb581-6" tabindex="-1"></a><span class="co">#&gt; lstat   -0.4368639     9.140 -3.992936       9.14   lstat    lstat=9.14</span></span>
 <span id="cb581-7"><a href="xai-explainable-ai.html#cb581-7" tabindex="-1"></a><span class="fu">plot</span>(lime_explain)</span></code></pre></div>
-<p><img src="140-xai_files/figure-html/unnamed-chunk-17-1.png" width="75%" /></p>
+<p><img src="140-xai_files/figure-html/unnamed-chunk-17-1.png" width="75%" />
+<!--
+1番目データ点と比較して, 2番目は
+予測値が約3.3 (千ドル) 減少している. 
+--></p>
+<p>1番目と比較して, 各変数の値ばかりでなく, 回帰係数の大きさも多少ではあるが異なっている. すなわち,
+貢献度の大きさとしては, <code>rm</code>は1.7程度減少し, 一方, <code>ptratio</code>, <code>lstat</code>はそれぞれ-1.4, -1.8程度マイナス方向に大きくなっており,
+これらが, 予測値を相対的に小さくすることに
+つながっている可能性が考えられる.</p>
+<p>ただし, LIMEでは, 各データ点ことに異なる
+代理モデルによる説明がなされることから,
+異なるデータ点間の結果を直接比較することは元来想定しておらず,
+上のような推察の妥当性はただちに保証されるものではない.
+<!-- 正当化するものではない. 保証するものではないことに注意が必要である
+適切ではない.--></p>
+<p>異なるデータ点直接比較したい場合には, 例えば, 先のICEや, 次のSHAP等が有効である.</p>
 </div>
-<div id="shap-shapley-additive-explanations" class="section level2 hasAnchor" number="14.6">
-<h2><span class="header-section-number">14.6</span> SHAP (SHapley Additive exPlanations)<a href="xai-explainable-ai.html#shap-shapley-additive-explanations" class="anchor-section" aria-label="Anchor link to header"></a></h2>
-<p>SHAP値は, 協力ゲーム理論に基づいて,
+<div id="shap" class="section level2 hasAnchor" number="14.6">
+<h2><span class="header-section-number">14.6</span> SHAP<a href="xai-explainable-ai.html#shap" class="anchor-section" aria-label="Anchor link to header"></a></h2>
+<p>SHAP (SHapley Additive exPlanations) は, 協力ゲーム理論に基づいて,
 データ点に対するモデル予測値を, 平均的なモデル予測値と各特徴量の“貢献度”の和で表現する方法で,
 各データ点の予測値に対して解釈性を与える一手法である.</p>
 <div class="sourceCode" id="cb582"><pre class="sourceCode r"><code class="sourceCode r"><span id="cb582-1"><a href="xai-explainable-ai.html#cb582-1" tabindex="-1"></a><span class="fu">set.seed</span>(<span class="dv">123</span>)</span>

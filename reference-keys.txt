@@ -90,8 +90,8 @@ svm-rbfカーネル-の動作の確認
 発展的なクラスター分析
 xai-explainable-ai
 パッケージiml
-permuation-feature-importance-pfi
-partial-dependence-plot-pdp
-individual-conditional-expectaion-ice
-局所代理モデル
-shap-shapley-additive-explanations
+pfi
+pdp
+ice
+lime
+shap

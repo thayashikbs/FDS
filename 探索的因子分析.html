@@ -391,14 +391,14 @@ code span.wa { color: #60a0b0; font-weight: bold; font-style: italic; } /* Warni
 <ul>
 <li class="chapter" data-level="" data-path="xai-explainable-ai.html"><a href="xai-explainable-ai.html#データセット-1-ボストン市内住宅物件価格データ"><i class="fa fa-check"></i>データセット (1): ボストン市内住宅物件価格データ</a></li>
 </ul></li>
-<li class="chapter" data-level="14.2" data-path="xai-explainable-ai.html"><a href="xai-explainable-ai.html#permuation-feature-importance-pfi"><i class="fa fa-check"></i><b>14.2</b> Permuation Feature Importance (PFI)</a></li>
-<li class="chapter" data-level="14.3" data-path="xai-explainable-ai.html"><a href="xai-explainable-ai.html#partial-dependence-plot-pdp"><i class="fa fa-check"></i><b>14.3</b> Partial Dependence Plot (PDP)</a></li>
-<li class="chapter" data-level="14.4" data-path="xai-explainable-ai.html"><a href="xai-explainable-ai.html#individual-conditional-expectaion-ice"><i class="fa fa-check"></i><b>14.4</b> Individual Conditional Expectaion (ICE)</a>
+<li class="chapter" data-level="14.2" data-path="xai-explainable-ai.html"><a href="xai-explainable-ai.html#pfi"><i class="fa fa-check"></i><b>14.2</b> PFI</a></li>
+<li class="chapter" data-level="14.3" data-path="xai-explainable-ai.html"><a href="xai-explainable-ai.html#pdp"><i class="fa fa-check"></i><b>14.3</b> PDP</a></li>
+<li class="chapter" data-level="14.4" data-path="xai-explainable-ai.html"><a href="xai-explainable-ai.html#ice"><i class="fa fa-check"></i><b>14.4</b> ICE</a>
 <ul>
 <li class="chapter" data-level="" data-path="xai-explainable-ai.html"><a href="xai-explainable-ai.html#pdp-ice"><i class="fa fa-check"></i>PDP + ICE</a></li>
 </ul></li>
-<li class="chapter" data-level="14.5" data-path="xai-explainable-ai.html"><a href="xai-explainable-ai.html#局所代理モデル"><i class="fa fa-check"></i><b>14.5</b> 局所代理モデル</a></li>
-<li class="chapter" data-level="14.6" data-path="xai-explainable-ai.html"><a href="xai-explainable-ai.html#shap-shapley-additive-explanations"><i class="fa fa-check"></i><b>14.6</b> SHAP (SHapley Additive exPlanations)</a>
+<li class="chapter" data-level="14.5" data-path="xai-explainable-ai.html"><a href="xai-explainable-ai.html#lime"><i class="fa fa-check"></i><b>14.5</b> LIME</a></li>
+<li class="chapter" data-level="14.6" data-path="xai-explainable-ai.html"><a href="xai-explainable-ai.html#shap"><i class="fa fa-check"></i><b>14.6</b> SHAP</a>
 <ul>
 <li class="chapter" data-level="" data-path="xai-explainable-ai.html"><a href="xai-explainable-ai.html#多値分類問題の例-iris"><i class="fa fa-check"></i>多値分類問題の例 (iris)</a></li>
 <li class="chapter" data-level="" data-path="xai-explainable-ai.html"><a href="xai-explainable-ai.html#値分類問題"><i class="fa fa-check"></i>2値分類問題</a></li>
@@ -769,9 +769,9 @@ code span.wa { color: #60a0b0; font-weight: bold; font-style: italic; } /* Warni
 <span id="cb489-6"><a href="探索的因子分析.html#cb489-6" tabindex="-1"></a><span class="co">#&gt; </span></span>
 <span id="cb489-7"><a href="探索的因子分析.html#cb489-7" tabindex="-1"></a><span class="co">#&gt;  Eigen Values of </span></span>
 <span id="cb489-8"><a href="探索的因子分析.html#cb489-8" tabindex="-1"></a><span class="co">#&gt;   Original factors Resampled data Simulated data Original components</span></span>
-<span id="cb489-9"><a href="探索的因子分析.html#cb489-9" tabindex="-1"></a><span class="co">#&gt; 1             2.78           1.07           1.03                2.96</span></span>
+<span id="cb489-9"><a href="探索的因子分析.html#cb489-9" tabindex="-1"></a><span class="co">#&gt; 1             2.78           1.11           0.94                2.96</span></span>
 <span id="cb489-10"><a href="探索的因子分析.html#cb489-10" tabindex="-1"></a><span class="co">#&gt;   Resampled components Simulated components</span></span>
-<span id="cb489-11"><a href="探索的因子分析.html#cb489-11" tabindex="-1"></a><span class="co">#&gt; 1                 1.58                  1.6</span></span>
+<span id="cb489-11"><a href="探索的因子分析.html#cb489-11" tabindex="-1"></a><span class="co">#&gt; 1                 1.52                 1.51</span></span>
 <span id="cb489-12"><a href="探索的因子分析.html#cb489-12" tabindex="-1"></a><span class="co">#&gt; </span></span>
 <span id="cb489-13"><a href="探索的因子分析.html#cb489-13" tabindex="-1"></a><span class="co">#&gt; Very Simple Structure</span></span>
 <span id="cb489-14"><a href="探索的因子分析.html#cb489-14" tabindex="-1"></a><span class="co">#&gt; Call: vss(x = tokuten, n = 4, fm = &quot;ml&quot;)</span></span>

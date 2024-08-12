@@ -391,14 +391,14 @@ code span.wa { color: #60a0b0; font-weight: bold; font-style: italic; } /* Warni
 <ul>
 <li class="chapter" data-level="" data-path="xai-explainable-ai.html"><a href="xai-explainable-ai.html#データセット-1-ボストン市内住宅物件価格データ"><i class="fa fa-check"></i>データセット (1): ボストン市内住宅物件価格データ</a></li>
 </ul></li>
-<li class="chapter" data-level="14.2" data-path="xai-explainable-ai.html"><a href="xai-explainable-ai.html#permuation-feature-importance-pfi"><i class="fa fa-check"></i><b>14.2</b> Permuation Feature Importance (PFI)</a></li>
-<li class="chapter" data-level="14.3" data-path="xai-explainable-ai.html"><a href="xai-explainable-ai.html#partial-dependence-plot-pdp"><i class="fa fa-check"></i><b>14.3</b> Partial Dependence Plot (PDP)</a></li>
-<li class="chapter" data-level="14.4" data-path="xai-explainable-ai.html"><a href="xai-explainable-ai.html#individual-conditional-expectaion-ice"><i class="fa fa-check"></i><b>14.4</b> Individual Conditional Expectaion (ICE)</a>
+<li class="chapter" data-level="14.2" data-path="xai-explainable-ai.html"><a href="xai-explainable-ai.html#pfi"><i class="fa fa-check"></i><b>14.2</b> PFI</a></li>
+<li class="chapter" data-level="14.3" data-path="xai-explainable-ai.html"><a href="xai-explainable-ai.html#pdp"><i class="fa fa-check"></i><b>14.3</b> PDP</a></li>
+<li class="chapter" data-level="14.4" data-path="xai-explainable-ai.html"><a href="xai-explainable-ai.html#ice"><i class="fa fa-check"></i><b>14.4</b> ICE</a>
 <ul>
 <li class="chapter" data-level="" data-path="xai-explainable-ai.html"><a href="xai-explainable-ai.html#pdp-ice"><i class="fa fa-check"></i>PDP + ICE</a></li>
 </ul></li>
-<li class="chapter" data-level="14.5" data-path="xai-explainable-ai.html"><a href="xai-explainable-ai.html#局所代理モデル"><i class="fa fa-check"></i><b>14.5</b> 局所代理モデル</a></li>
-<li class="chapter" data-level="14.6" data-path="xai-explainable-ai.html"><a href="xai-explainable-ai.html#shap-shapley-additive-explanations"><i class="fa fa-check"></i><b>14.6</b> SHAP (SHapley Additive exPlanations)</a>
+<li class="chapter" data-level="14.5" data-path="xai-explainable-ai.html"><a href="xai-explainable-ai.html#lime"><i class="fa fa-check"></i><b>14.5</b> LIME</a></li>
+<li class="chapter" data-level="14.6" data-path="xai-explainable-ai.html"><a href="xai-explainable-ai.html#shap"><i class="fa fa-check"></i><b>14.6</b> SHAP</a>
 <ul>
 <li class="chapter" data-level="" data-path="xai-explainable-ai.html"><a href="xai-explainable-ai.html#多値分類問題の例-iris"><i class="fa fa-check"></i>多値分類問題の例 (iris)</a></li>
 <li class="chapter" data-level="" data-path="xai-explainable-ai.html"><a href="xai-explainable-ai.html#値分類問題"><i class="fa fa-check"></i>2値分類問題</a></li>
@@ -451,8 +451,8 @@ code span.wa { color: #60a0b0; font-weight: bold; font-style: italic; } /* Warni
 <span id="cb397-3"><a href="サポートベクターマシーン-svm.html#cb397-3" tabindex="-1"></a><span class="fu">table</span>(<span class="fu">predict</span>(iris_ksvm, iris1[, <span class="dv">1</span><span class="sc">:</span><span class="dv">2</span>]), iris1<span class="sc">$</span>Species)</span>
 <span id="cb397-4"><a href="サポートベクターマシーン-svm.html#cb397-4" tabindex="-1"></a><span class="co">#&gt;             </span></span>
 <span id="cb397-5"><a href="サポートベクターマシーン-svm.html#cb397-5" tabindex="-1"></a><span class="co">#&gt;              versicolor virginica</span></span>
-<span id="cb397-6"><a href="サポートベクターマシーン-svm.html#cb397-6" tabindex="-1"></a><span class="co">#&gt;   versicolor         48         2</span></span>
-<span id="cb397-7"><a href="サポートベクターマシーン-svm.html#cb397-7" tabindex="-1"></a><span class="co">#&gt;   virginica           2        48</span></span>
+<span id="cb397-6"><a href="サポートベクターマシーン-svm.html#cb397-6" tabindex="-1"></a><span class="co">#&gt;   versicolor         49         2</span></span>
+<span id="cb397-7"><a href="サポートベクターマシーン-svm.html#cb397-7" tabindex="-1"></a><span class="co">#&gt;   virginica           1        48</span></span>
 <span id="cb397-8"><a href="サポートベクターマシーン-svm.html#cb397-8" tabindex="-1"></a><span class="fu">plot</span>(iris_ksvm, <span class="at">data =</span> iris1[, <span class="dv">1</span><span class="sc">:</span><span class="dv">2</span>])</span></code></pre></div>
 <p><img src="100-svm_files/figure-html/unnamed-chunk-4-1.png" width="75%" /></p>
 <p>2予測変数 + 2値分類のケース → 境界を可視化できる.</p>
