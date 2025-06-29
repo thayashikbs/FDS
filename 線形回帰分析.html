@@ -1260,9 +1260,13 @@ VIFを拡張した<strong>GVIF (Generalized VIF)</strong> を算出している.
 <p><code>summary(lm1_mod1)</code>の出力結果から, この回帰分析のベースラインは
 業種Aであることが分かる. すなわち, ２つ目の回帰係数<code>業種B</code>は,
 業種Bに属することによる相対効果, すなわち, 業種BのAに対する目的変数<code>月収</code>の平均値の差分を表している.</p>
-<p>具体的には, 回帰係数の切片項の値が <span class="math inline">\(22.92898\)</span> が業種Aの切片となっていて,
-一方, 業種Bは <span class="math inline">\(23.92898-3.77837=20.15061\)</span> を切片に持つと読むことができる.</p>
-<p>業種の違いによるキャリア年数の影響度 (傾き) の違い を調べるためには,
+<p>具体的には, 回帰係数の切片項の値が <span class="math inline">\(20.7222\)</span> が業種Aの切片となっていて,
+一方, 業種Bは <span class="math inline">\(20.7222-3.5982=17.1240\)</span> を切片に持つと読むことができる.
+<!---
+具体的には, 回帰係数の切片項の値が $22.92898$ が業種Aの切片となっていて,
+一方, 業種Bは $23.92898-3.77837=20.15061$ を切片に持つと読むことができる.
+--->
+業種の違いによるキャリア年数の影響度 (傾き) の違い を調べるためには,
 業種とキャリア年数の2つの項を持つモデルに両者の交互作用項を加え,
 その交互作用項の有意性 (<span class="math inline">\(t\)</span>値に基づく<span class="math inline">\(p\)</span>値) を確認すれば良い.</p>
 <div class="sourceCode" id="cb182"><pre class="sourceCode r"><code class="sourceCode r"><span id="cb182-1"><a href="線形回帰分析.html#cb182-1" tabindex="-1"></a><span class="co"># 交互作用項有りモデル</span></span>
