@@ -50,6 +50,7 @@ tidyverseの基本
 パッケージgamの利用
 パッケージmgcvの利用
 パッケージprophetの利用
+追加分析boston-housingデータセットの変数間の関係性
 正則化回帰-lasso-ridge回帰-elastic-net
 検証用セット法による回帰モデルの予測精度評価
 lasso
