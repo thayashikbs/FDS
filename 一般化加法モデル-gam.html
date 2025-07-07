@@ -790,44 +790,77 @@ GAMを実行する前に, <code>lm()</code>を走らせてみる.</p>
 <span id="cb272-22"><a href="一般化加法モデル-gam.html#cb272-22" tabindex="-1"></a><span class="co">#&gt; </span></span>
 <span id="cb272-23"><a href="一般化加法モデル-gam.html#cb272-23" tabindex="-1"></a><span class="co">#&gt; R-sq.(adj) =  0.725   Deviance explained = 74.4%</span></span>
 <span id="cb272-24"><a href="一般化加法モデル-gam.html#cb272-24" tabindex="-1"></a><span class="co">#&gt; GCV = 25.063  Scale est. = 23.254    n = 506</span></span></code></pre></div>
-<div class="sourceCode" id="cb273"><pre class="sourceCode r"><code class="sourceCode r"><span id="cb273-1"><a href="一般化加法モデル-gam.html#cb273-1" tabindex="-1"></a>fit_gam0 <span class="ot">&lt;-</span> mgcv<span class="sc">::</span><span class="fu">gam</span>(medv <span class="sc">~</span> <span class="fu">s</span>(ptratio) <span class="sc">+</span> <span class="fu">s</span>(rm), <span class="at">data =</span> Boston) <span class="co"># 交互作用項を持たないモデル</span></span>
-<span id="cb273-2"><a href="一般化加法モデル-gam.html#cb273-2" tabindex="-1"></a><span class="fu">summary</span>(fit_gam0)</span>
-<span id="cb273-3"><a href="一般化加法モデル-gam.html#cb273-3" tabindex="-1"></a><span class="co">#&gt; </span></span>
-<span id="cb273-4"><a href="一般化加法モデル-gam.html#cb273-4" tabindex="-1"></a><span class="co">#&gt; Family: gaussian </span></span>
-<span id="cb273-5"><a href="一般化加法モデル-gam.html#cb273-5" tabindex="-1"></a><span class="co">#&gt; Link function: identity </span></span>
-<span id="cb273-6"><a href="一般化加法モデル-gam.html#cb273-6" tabindex="-1"></a><span class="co">#&gt; </span></span>
-<span id="cb273-7"><a href="一般化加法モデル-gam.html#cb273-7" tabindex="-1"></a><span class="co">#&gt; Formula:</span></span>
-<span id="cb273-8"><a href="一般化加法モデル-gam.html#cb273-8" tabindex="-1"></a><span class="co">#&gt; medv ~ s(ptratio) + s(rm)</span></span>
-<span id="cb273-9"><a href="一般化加法モデル-gam.html#cb273-9" tabindex="-1"></a><span class="co">#&gt; </span></span>
-<span id="cb273-10"><a href="一般化加法モデル-gam.html#cb273-10" tabindex="-1"></a><span class="co">#&gt; Parametric coefficients:</span></span>
-<span id="cb273-11"><a href="一般化加法モデル-gam.html#cb273-11" tabindex="-1"></a><span class="co">#&gt;             Estimate Std. Error t value Pr(&gt;|t|)    </span></span>
-<span id="cb273-12"><a href="一般化加法モデル-gam.html#cb273-12" tabindex="-1"></a><span class="co">#&gt; (Intercept)  22.5328     0.2363   95.34   &lt;2e-16 ***</span></span>
-<span id="cb273-13"><a href="一般化加法モデル-gam.html#cb273-13" tabindex="-1"></a><span class="co">#&gt; ---</span></span>
-<span id="cb273-14"><a href="一般化加法モデル-gam.html#cb273-14" tabindex="-1"></a><span class="co">#&gt; Signif. codes:  0 &#39;***&#39; 0.001 &#39;**&#39; 0.01 &#39;*&#39; 0.05 &#39;.&#39; 0.1 &#39; &#39; 1</span></span>
-<span id="cb273-15"><a href="一般化加法モデル-gam.html#cb273-15" tabindex="-1"></a><span class="co">#&gt; </span></span>
-<span id="cb273-16"><a href="一般化加法モデル-gam.html#cb273-16" tabindex="-1"></a><span class="co">#&gt; Approximate significance of smooth terms:</span></span>
-<span id="cb273-17"><a href="一般化加法モデル-gam.html#cb273-17" tabindex="-1"></a><span class="co">#&gt;              edf Ref.df     F p-value    </span></span>
-<span id="cb273-18"><a href="一般化加法モデル-gam.html#cb273-18" tabindex="-1"></a><span class="co">#&gt; s(ptratio) 6.312  7.357 16.21  &lt;2e-16 ***</span></span>
-<span id="cb273-19"><a href="一般化加法モデル-gam.html#cb273-19" tabindex="-1"></a><span class="co">#&gt; s(rm)      8.047  8.759 61.38  &lt;2e-16 ***</span></span>
-<span id="cb273-20"><a href="一般化加法モデル-gam.html#cb273-20" tabindex="-1"></a><span class="co">#&gt; ---</span></span>
-<span id="cb273-21"><a href="一般化加法モデル-gam.html#cb273-21" tabindex="-1"></a><span class="co">#&gt; Signif. codes:  0 &#39;***&#39; 0.001 &#39;**&#39; 0.01 &#39;*&#39; 0.05 &#39;.&#39; 0.1 &#39; &#39; 1</span></span>
-<span id="cb273-22"><a href="一般化加法モデル-gam.html#cb273-22" tabindex="-1"></a><span class="co">#&gt; </span></span>
-<span id="cb273-23"><a href="一般化加法モデル-gam.html#cb273-23" tabindex="-1"></a><span class="co">#&gt; R-sq.(adj) =  0.666   Deviance explained = 67.5%</span></span>
-<span id="cb273-24"><a href="一般化加法モデル-gam.html#cb273-24" tabindex="-1"></a><span class="co">#&gt; GCV = 29.149  Scale est. = 28.264    n = 506</span></span>
-<span id="cb273-25"><a href="一般化加法モデル-gam.html#cb273-25" tabindex="-1"></a><span class="fu">anova</span>(fit_gam, fit_gam0)    <span class="co"># 注) test = &quot;F&quot;/&quot;Chisq&quot;は機能しない (← 不要)</span></span>
-<span id="cb273-26"><a href="一般化加法モデル-gam.html#cb273-26" tabindex="-1"></a><span class="co">#&gt; Analysis of Deviance Table</span></span>
-<span id="cb273-27"><a href="一般化加法モデル-gam.html#cb273-27" tabindex="-1"></a><span class="co">#&gt; </span></span>
-<span id="cb273-28"><a href="一般化加法モデル-gam.html#cb273-28" tabindex="-1"></a><span class="co">#&gt; Model 1: medv ~ s(crim) + s(rm) + s(crim, rm)</span></span>
-<span id="cb273-29"><a href="一般化加法モデル-gam.html#cb273-29" tabindex="-1"></a><span class="co">#&gt; Model 2: medv ~ s(ptratio) + s(rm)</span></span>
-<span id="cb273-30"><a href="一般化加法モデル-gam.html#cb273-30" tabindex="-1"></a><span class="co">#&gt;   Resid. Df Resid. Dev      Df Deviance      F    Pr(&gt;F)    </span></span>
-<span id="cb273-31"><a href="一般化加法モデル-gam.html#cb273-31" tabindex="-1"></a><span class="co">#&gt; 1    467.70      10917                                      </span></span>
-<span id="cb273-32"><a href="一般化加法モデル-gam.html#cb273-32" tabindex="-1"></a><span class="co">#&gt; 2    488.88      13867 -21.181  -2950.5 5.9904 8.425e-15 ***</span></span>
-<span id="cb273-33"><a href="一般化加法モデル-gam.html#cb273-33" tabindex="-1"></a><span class="co">#&gt; ---</span></span>
-<span id="cb273-34"><a href="一般化加法モデル-gam.html#cb273-34" tabindex="-1"></a><span class="co">#&gt; Signif. codes:  0 &#39;***&#39; 0.001 &#39;**&#39; 0.01 &#39;*&#39; 0.05 &#39;.&#39; 0.1 &#39; &#39; 1</span></span>
-<span id="cb273-35"><a href="一般化加法モデル-gam.html#cb273-35" tabindex="-1"></a><span class="fu">AIC</span>(fit_gam, fit_gam0)</span>
-<span id="cb273-36"><a href="一般化加法モデル-gam.html#cb273-36" tabindex="-1"></a><span class="co">#&gt;                df      AIC</span></span>
-<span id="cb273-37"><a href="一般化加法モデル-gam.html#cb273-37" tabindex="-1"></a><span class="co">#&gt; fit_gam  37.52942 3065.221</span></span>
-<span id="cb273-38"><a href="一般化加法モデル-gam.html#cb273-38" tabindex="-1"></a><span class="co">#&gt; fit_gam0 16.35950 3143.930</span></span></code></pre></div>
+<div class="sourceCode" id="cb273"><pre class="sourceCode r"><code class="sourceCode r"><span id="cb273-1"><a href="一般化加法モデル-gam.html#cb273-1" tabindex="-1"></a><span class="co"># 交互作用を含めたGAM-4</span></span>
+<span id="cb273-2"><a href="一般化加法モデル-gam.html#cb273-2" tabindex="-1"></a>fit_gam <span class="ot">&lt;-</span> mgcv<span class="sc">::</span><span class="fu">gam</span>(medv <span class="sc">~</span> <span class="fu">s</span>(dis) <span class="sc">+</span> <span class="fu">s</span>(rm) <span class="sc">+</span> <span class="fu">s</span>(dis, rm), <span class="at">data =</span> Boston)  </span>
+<span id="cb273-3"><a href="一般化加法モデル-gam.html#cb273-3" tabindex="-1"></a><span class="fu">vis.gam</span>(fit_gam, <span class="at">color =</span> <span class="st">&quot;topo&quot;</span>, <span class="at">theta =</span> <span class="dv">50</span>)</span></code></pre></div>
+<p><img src="060-GAM_files/figure-html/unnamed-chunk-26-1.png" width="75%" /></p>
+<div class="sourceCode" id="cb274"><pre class="sourceCode r"><code class="sourceCode r"><span id="cb274-1"><a href="一般化加法モデル-gam.html#cb274-1" tabindex="-1"></a><span class="fu">vis.gam</span>(fit_gam, <span class="at">color =</span> <span class="st">&quot;topo&quot;</span>, <span class="at">plot.type =</span> <span class="st">&quot;contour&quot;</span>)</span></code></pre></div>
+<p><img src="060-GAM_files/figure-html/unnamed-chunk-26-2.png" width="75%" /></p>
+<div class="sourceCode" id="cb275"><pre class="sourceCode r"><code class="sourceCode r"><span id="cb275-1"><a href="一般化加法モデル-gam.html#cb275-1" tabindex="-1"></a><span class="fu">summary</span>(fit_gam)</span>
+<span id="cb275-2"><a href="一般化加法モデル-gam.html#cb275-2" tabindex="-1"></a><span class="co">#&gt; </span></span>
+<span id="cb275-3"><a href="一般化加法モデル-gam.html#cb275-3" tabindex="-1"></a><span class="co">#&gt; Family: gaussian </span></span>
+<span id="cb275-4"><a href="一般化加法モデル-gam.html#cb275-4" tabindex="-1"></a><span class="co">#&gt; Link function: identity </span></span>
+<span id="cb275-5"><a href="一般化加法モデル-gam.html#cb275-5" tabindex="-1"></a><span class="co">#&gt; </span></span>
+<span id="cb275-6"><a href="一般化加法モデル-gam.html#cb275-6" tabindex="-1"></a><span class="co">#&gt; Formula:</span></span>
+<span id="cb275-7"><a href="一般化加法モデル-gam.html#cb275-7" tabindex="-1"></a><span class="co">#&gt; medv ~ s(dis) + s(rm) + s(dis, rm)</span></span>
+<span id="cb275-8"><a href="一般化加法モデル-gam.html#cb275-8" tabindex="-1"></a><span class="co">#&gt; </span></span>
+<span id="cb275-9"><a href="一般化加法モデル-gam.html#cb275-9" tabindex="-1"></a><span class="co">#&gt; Parametric coefficients:</span></span>
+<span id="cb275-10"><a href="一般化加法モデル-gam.html#cb275-10" tabindex="-1"></a><span class="co">#&gt;             Estimate Std. Error t value Pr(&gt;|t|)    </span></span>
+<span id="cb275-11"><a href="一般化加法モデル-gam.html#cb275-11" tabindex="-1"></a><span class="co">#&gt; (Intercept)  22.5328     0.2321   97.07   &lt;2e-16 ***</span></span>
+<span id="cb275-12"><a href="一般化加法モデル-gam.html#cb275-12" tabindex="-1"></a><span class="co">#&gt; ---</span></span>
+<span id="cb275-13"><a href="一般化加法モデル-gam.html#cb275-13" tabindex="-1"></a><span class="co">#&gt; Signif. codes:  0 &#39;***&#39; 0.001 &#39;**&#39; 0.01 &#39;*&#39; 0.05 &#39;.&#39; 0.1 &#39; &#39; 1</span></span>
+<span id="cb275-14"><a href="一般化加法モデル-gam.html#cb275-14" tabindex="-1"></a><span class="co">#&gt; </span></span>
+<span id="cb275-15"><a href="一般化加法モデル-gam.html#cb275-15" tabindex="-1"></a><span class="co">#&gt; Approximate significance of smooth terms:</span></span>
+<span id="cb275-16"><a href="一般化加法モデル-gam.html#cb275-16" tabindex="-1"></a><span class="co">#&gt;              edf Ref.df     F  p-value    </span></span>
+<span id="cb275-17"><a href="一般化加法モデル-gam.html#cb275-17" tabindex="-1"></a><span class="co">#&gt; s(dis)     6.054  7.471 1.577 0.128824    </span></span>
+<span id="cb275-18"><a href="一般化加法モデル-gam.html#cb275-18" tabindex="-1"></a><span class="co">#&gt; s(rm)      8.233  8.765 3.315 0.000455 ***</span></span>
+<span id="cb275-19"><a href="一般化加法モデル-gam.html#cb275-19" tabindex="-1"></a><span class="co">#&gt; s(dis,rm) 27.000 27.000 2.370 1.99e-05 ***</span></span>
+<span id="cb275-20"><a href="一般化加法モデル-gam.html#cb275-20" tabindex="-1"></a><span class="co">#&gt; ---</span></span>
+<span id="cb275-21"><a href="一般化加法モデル-gam.html#cb275-21" tabindex="-1"></a><span class="co">#&gt; Signif. codes:  0 &#39;***&#39; 0.001 &#39;**&#39; 0.01 &#39;*&#39; 0.05 &#39;.&#39; 0.1 &#39; &#39; 1</span></span>
+<span id="cb275-22"><a href="一般化加法モデル-gam.html#cb275-22" tabindex="-1"></a><span class="co">#&gt; </span></span>
+<span id="cb275-23"><a href="一般化加法モデル-gam.html#cb275-23" tabindex="-1"></a><span class="co">#&gt; R-sq.(adj) =  0.678   Deviance explained = 70.4%</span></span>
+<span id="cb275-24"><a href="一般化加法モデル-gam.html#cb275-24" tabindex="-1"></a><span class="co">#&gt; GCV = 29.749  Scale est. = 27.263    n = 506</span></span></code></pre></div>
+<p>線形モデルでは捉えることのできなかた変数ペア間の非線形な関係性を表現している.
+注意点としては, データが少ない, あるいは存在しない領域まで面を描いてしまう可能性のあることから,
+誤った解釈を加えることのないようにしなければならない.</p>
+<div class="sourceCode" id="cb276"><pre class="sourceCode r"><code class="sourceCode r"><span id="cb276-1"><a href="一般化加法モデル-gam.html#cb276-1" tabindex="-1"></a>fit_gam0 <span class="ot">&lt;-</span> mgcv<span class="sc">::</span><span class="fu">gam</span>(medv <span class="sc">~</span> <span class="fu">s</span>(ptratio) <span class="sc">+</span> <span class="fu">s</span>(rm), <span class="at">data =</span> Boston) <span class="co"># 交互作用項を持たないモデル</span></span>
+<span id="cb276-2"><a href="一般化加法モデル-gam.html#cb276-2" tabindex="-1"></a><span class="fu">summary</span>(fit_gam0)</span>
+<span id="cb276-3"><a href="一般化加法モデル-gam.html#cb276-3" tabindex="-1"></a><span class="co">#&gt; </span></span>
+<span id="cb276-4"><a href="一般化加法モデル-gam.html#cb276-4" tabindex="-1"></a><span class="co">#&gt; Family: gaussian </span></span>
+<span id="cb276-5"><a href="一般化加法モデル-gam.html#cb276-5" tabindex="-1"></a><span class="co">#&gt; Link function: identity </span></span>
+<span id="cb276-6"><a href="一般化加法モデル-gam.html#cb276-6" tabindex="-1"></a><span class="co">#&gt; </span></span>
+<span id="cb276-7"><a href="一般化加法モデル-gam.html#cb276-7" tabindex="-1"></a><span class="co">#&gt; Formula:</span></span>
+<span id="cb276-8"><a href="一般化加法モデル-gam.html#cb276-8" tabindex="-1"></a><span class="co">#&gt; medv ~ s(ptratio) + s(rm)</span></span>
+<span id="cb276-9"><a href="一般化加法モデル-gam.html#cb276-9" tabindex="-1"></a><span class="co">#&gt; </span></span>
+<span id="cb276-10"><a href="一般化加法モデル-gam.html#cb276-10" tabindex="-1"></a><span class="co">#&gt; Parametric coefficients:</span></span>
+<span id="cb276-11"><a href="一般化加法モデル-gam.html#cb276-11" tabindex="-1"></a><span class="co">#&gt;             Estimate Std. Error t value Pr(&gt;|t|)    </span></span>
+<span id="cb276-12"><a href="一般化加法モデル-gam.html#cb276-12" tabindex="-1"></a><span class="co">#&gt; (Intercept)  22.5328     0.2363   95.34   &lt;2e-16 ***</span></span>
+<span id="cb276-13"><a href="一般化加法モデル-gam.html#cb276-13" tabindex="-1"></a><span class="co">#&gt; ---</span></span>
+<span id="cb276-14"><a href="一般化加法モデル-gam.html#cb276-14" tabindex="-1"></a><span class="co">#&gt; Signif. codes:  0 &#39;***&#39; 0.001 &#39;**&#39; 0.01 &#39;*&#39; 0.05 &#39;.&#39; 0.1 &#39; &#39; 1</span></span>
+<span id="cb276-15"><a href="一般化加法モデル-gam.html#cb276-15" tabindex="-1"></a><span class="co">#&gt; </span></span>
+<span id="cb276-16"><a href="一般化加法モデル-gam.html#cb276-16" tabindex="-1"></a><span class="co">#&gt; Approximate significance of smooth terms:</span></span>
+<span id="cb276-17"><a href="一般化加法モデル-gam.html#cb276-17" tabindex="-1"></a><span class="co">#&gt;              edf Ref.df     F p-value    </span></span>
+<span id="cb276-18"><a href="一般化加法モデル-gam.html#cb276-18" tabindex="-1"></a><span class="co">#&gt; s(ptratio) 6.312  7.357 16.21  &lt;2e-16 ***</span></span>
+<span id="cb276-19"><a href="一般化加法モデル-gam.html#cb276-19" tabindex="-1"></a><span class="co">#&gt; s(rm)      8.047  8.759 61.38  &lt;2e-16 ***</span></span>
+<span id="cb276-20"><a href="一般化加法モデル-gam.html#cb276-20" tabindex="-1"></a><span class="co">#&gt; ---</span></span>
+<span id="cb276-21"><a href="一般化加法モデル-gam.html#cb276-21" tabindex="-1"></a><span class="co">#&gt; Signif. codes:  0 &#39;***&#39; 0.001 &#39;**&#39; 0.01 &#39;*&#39; 0.05 &#39;.&#39; 0.1 &#39; &#39; 1</span></span>
+<span id="cb276-22"><a href="一般化加法モデル-gam.html#cb276-22" tabindex="-1"></a><span class="co">#&gt; </span></span>
+<span id="cb276-23"><a href="一般化加法モデル-gam.html#cb276-23" tabindex="-1"></a><span class="co">#&gt; R-sq.(adj) =  0.666   Deviance explained = 67.5%</span></span>
+<span id="cb276-24"><a href="一般化加法モデル-gam.html#cb276-24" tabindex="-1"></a><span class="co">#&gt; GCV = 29.149  Scale est. = 28.264    n = 506</span></span>
+<span id="cb276-25"><a href="一般化加法モデル-gam.html#cb276-25" tabindex="-1"></a><span class="fu">anova</span>(fit_gam, fit_gam0)    <span class="co"># 注) test = &quot;F&quot;/&quot;Chisq&quot;は機能しない (← 不要)</span></span>
+<span id="cb276-26"><a href="一般化加法モデル-gam.html#cb276-26" tabindex="-1"></a><span class="co">#&gt; Analysis of Deviance Table</span></span>
+<span id="cb276-27"><a href="一般化加法モデル-gam.html#cb276-27" tabindex="-1"></a><span class="co">#&gt; </span></span>
+<span id="cb276-28"><a href="一般化加法モデル-gam.html#cb276-28" tabindex="-1"></a><span class="co">#&gt; Model 1: medv ~ s(dis) + s(rm) + s(dis, rm)</span></span>
+<span id="cb276-29"><a href="一般化加法モデル-gam.html#cb276-29" tabindex="-1"></a><span class="co">#&gt; Model 2: medv ~ s(ptratio) + s(rm)</span></span>
+<span id="cb276-30"><a href="一般化加法モデル-gam.html#cb276-30" tabindex="-1"></a><span class="co">#&gt;   Resid. Df Resid. Dev      Df Deviance      F  Pr(&gt;F)  </span></span>
+<span id="cb276-31"><a href="一般化加法モデル-gam.html#cb276-31" tabindex="-1"></a><span class="co">#&gt; 1    461.76      12642                                  </span></span>
+<span id="cb276-32"><a href="一般化加法モデル-gam.html#cb276-32" tabindex="-1"></a><span class="co">#&gt; 2    488.88      13867 -27.121  -1225.3 1.6571 0.02125 *</span></span>
+<span id="cb276-33"><a href="一般化加法モデル-gam.html#cb276-33" tabindex="-1"></a><span class="co">#&gt; ---</span></span>
+<span id="cb276-34"><a href="一般化加法モデル-gam.html#cb276-34" tabindex="-1"></a><span class="co">#&gt; Signif. codes:  0 &#39;***&#39; 0.001 &#39;**&#39; 0.01 &#39;*&#39; 0.05 &#39;.&#39; 0.1 &#39; &#39; 1</span></span>
+<span id="cb276-35"><a href="一般化加法モデル-gam.html#cb276-35" tabindex="-1"></a><span class="fu">AIC</span>(fit_gam, fit_gam0)</span>
+<span id="cb276-36"><a href="一般化加法モデル-gam.html#cb276-36" tabindex="-1"></a><span class="co">#&gt;                df      AIC</span></span>
+<span id="cb276-37"><a href="一般化加法モデル-gam.html#cb276-37" tabindex="-1"></a><span class="co">#&gt; fit_gam  43.28713 3150.978</span></span>
+<span id="cb276-38"><a href="一般化加法モデル-gam.html#cb276-38" tabindex="-1"></a><span class="co">#&gt; fit_gam0 16.35950 3143.930</span></span></code></pre></div>
 <p>(自主課題)</p>
 <ul>
 <li><p>以上のGAMの実行結果を解釈してみよう.</p></li>
@@ -842,82 +875,82 @@ GAMを実行する前に, <code>lm()</code>を走らせてみる.</p>
 - 強い季節性があり, 数シーズンの過去データを持つ時系列データに対して良く機能
 - 欠損値やトレンドのシフトに対して頑強. 通常, 外れ値をうまく処理
 - 出所: https://facebook.github.io/prophet/docs/quick_start.html#r-api</code></pre>
-<div class="sourceCode" id="cb275"><pre class="sourceCode r"><code class="sourceCode r"><span id="cb275-1"><a href="一般化加法モデル-gam.html#cb275-1" tabindex="-1"></a><span class="co">#install.packages(&quot;prophet&quot;)</span></span>
-<span id="cb275-2"><a href="一般化加法モデル-gam.html#cb275-2" tabindex="-1"></a><span class="fu">library</span>(prophet)</span>
-<span id="cb275-3"><a href="一般化加法モデル-gam.html#cb275-3" tabindex="-1"></a><span class="fu">library</span>(zoo) <span class="co"># index, yearmon</span></span></code></pre></div>
-<div class="sourceCode" id="cb276"><pre class="sourceCode r"><code class="sourceCode r"><span id="cb276-1"><a href="一般化加法モデル-gam.html#cb276-1" tabindex="-1"></a>air <span class="ot">&lt;-</span> AirPassengers</span>
-<span id="cb276-2"><a href="一般化加法モデル-gam.html#cb276-2" tabindex="-1"></a><span class="co"># Pan Am, # international passenger bokking (in 1000s) per month</span></span>
-<span id="cb276-3"><a href="一般化加法モデル-gam.html#cb276-3" tabindex="-1"></a><span class="co"># 1949--1960 (Brown, 1963)</span></span>
-<span id="cb276-4"><a href="一般化加法モデル-gam.html#cb276-4" tabindex="-1"></a><span class="fu">class</span>(air)</span>
-<span id="cb276-5"><a href="一般化加法モデル-gam.html#cb276-5" tabindex="-1"></a><span class="co">#&gt; [1] &quot;ts&quot;</span></span>
-<span id="cb276-6"><a href="一般化加法モデル-gam.html#cb276-6" tabindex="-1"></a>air</span>
-<span id="cb276-7"><a href="一般化加法モデル-gam.html#cb276-7" tabindex="-1"></a><span class="co">#&gt;      Jan Feb Mar Apr May Jun Jul Aug Sep Oct Nov Dec</span></span>
-<span id="cb276-8"><a href="一般化加法モデル-gam.html#cb276-8" tabindex="-1"></a><span class="co">#&gt; 1949 112 118 132 129 121 135 148 148 136 119 104 118</span></span>
-<span id="cb276-9"><a href="一般化加法モデル-gam.html#cb276-9" tabindex="-1"></a><span class="co">#&gt; 1950 115 126 141 135 125 149 170 170 158 133 114 140</span></span>
-<span id="cb276-10"><a href="一般化加法モデル-gam.html#cb276-10" tabindex="-1"></a><span class="co">#&gt; 1951 145 150 178 163 172 178 199 199 184 162 146 166</span></span>
-<span id="cb276-11"><a href="一般化加法モデル-gam.html#cb276-11" tabindex="-1"></a><span class="co">#&gt; 1952 171 180 193 181 183 218 230 242 209 191 172 194</span></span>
-<span id="cb276-12"><a href="一般化加法モデル-gam.html#cb276-12" tabindex="-1"></a><span class="co">#&gt; 1953 196 196 236 235 229 243 264 272 237 211 180 201</span></span>
-<span id="cb276-13"><a href="一般化加法モデル-gam.html#cb276-13" tabindex="-1"></a><span class="co">#&gt; 1954 204 188 235 227 234 264 302 293 259 229 203 229</span></span>
-<span id="cb276-14"><a href="一般化加法モデル-gam.html#cb276-14" tabindex="-1"></a><span class="co">#&gt; 1955 242 233 267 269 270 315 364 347 312 274 237 278</span></span>
-<span id="cb276-15"><a href="一般化加法モデル-gam.html#cb276-15" tabindex="-1"></a><span class="co">#&gt; 1956 284 277 317 313 318 374 413 405 355 306 271 306</span></span>
-<span id="cb276-16"><a href="一般化加法モデル-gam.html#cb276-16" tabindex="-1"></a><span class="co">#&gt; 1957 315 301 356 348 355 422 465 467 404 347 305 336</span></span>
-<span id="cb276-17"><a href="一般化加法モデル-gam.html#cb276-17" tabindex="-1"></a><span class="co">#&gt; 1958 340 318 362 348 363 435 491 505 404 359 310 337</span></span>
-<span id="cb276-18"><a href="一般化加法モデル-gam.html#cb276-18" tabindex="-1"></a><span class="co">#&gt; 1959 360 342 406 396 420 472 548 559 463 407 362 405</span></span>
-<span id="cb276-19"><a href="一般化加法モデル-gam.html#cb276-19" tabindex="-1"></a><span class="co">#&gt; 1960 417 391 419 461 472 535 622 606 508 461 390 432</span></span>
-<span id="cb276-20"><a href="一般化加法モデル-gam.html#cb276-20" tabindex="-1"></a><span class="co"># ここでは, 生データのまま使用 (対数変換せず)</span></span></code></pre></div>
-<div class="sourceCode" id="cb277"><pre class="sourceCode r"><code class="sourceCode r"><span id="cb277-1"><a href="一般化加法モデル-gam.html#cb277-1" tabindex="-1"></a><span class="co"># 年月の取り出し</span></span>
-<span id="cb277-2"><a href="一般化加法モデル-gam.html#cb277-2" tabindex="-1"></a>tt <span class="ot">&lt;-</span> <span class="fu">as.Date</span>(<span class="fu">yearmon</span>(<span class="fu">index</span>(air)))</span>
-<span id="cb277-3"><a href="一般化加法モデル-gam.html#cb277-3" tabindex="-1"></a></span>
-<span id="cb277-4"><a href="一般化加法モデル-gam.html#cb277-4" tabindex="-1"></a><span class="co"># prophetモデルの生成</span></span>
-<span id="cb277-5"><a href="一般化加法モデル-gam.html#cb277-5" tabindex="-1"></a>air_df <span class="ot">&lt;-</span> <span class="fu">data.frame</span>(<span class="at">ds =</span> tt, <span class="at">y =</span> air)</span>
-<span id="cb277-6"><a href="一般化加法モデル-gam.html#cb277-6" tabindex="-1"></a>air_ppht <span class="ot">&lt;-</span> <span class="fu">prophet</span>(air_df)</span>
-<span id="cb277-7"><a href="一般化加法モデル-gam.html#cb277-7" tabindex="-1"></a></span>
-<span id="cb277-8"><a href="一般化加法モデル-gam.html#cb277-8" tabindex="-1"></a><span class="co"># 予測年月の生成</span></span>
-<span id="cb277-9"><a href="一般化加法モデル-gam.html#cb277-9" tabindex="-1"></a>dates_ft <span class="ot">&lt;-</span> <span class="fu">make_future_dataframe</span>(air_ppht, <span class="at">periods =</span> <span class="dv">12</span>, <span class="at">freq =</span> <span class="st">&quot;month&quot;</span>)</span>
-<span id="cb277-10"><a href="一般化加法モデル-gam.html#cb277-10" tabindex="-1"></a><span class="fu">tail</span>(dates_ft)</span>
-<span id="cb277-11"><a href="一般化加法モデル-gam.html#cb277-11" tabindex="-1"></a><span class="co">#&gt;             ds</span></span>
-<span id="cb277-12"><a href="一般化加法モデル-gam.html#cb277-12" tabindex="-1"></a><span class="co">#&gt; 151 1961-07-01</span></span>
-<span id="cb277-13"><a href="一般化加法モデル-gam.html#cb277-13" tabindex="-1"></a><span class="co">#&gt; 152 1961-08-01</span></span>
-<span id="cb277-14"><a href="一般化加法モデル-gam.html#cb277-14" tabindex="-1"></a><span class="co">#&gt; 153 1961-09-01</span></span>
-<span id="cb277-15"><a href="一般化加法モデル-gam.html#cb277-15" tabindex="-1"></a><span class="co">#&gt; 154 1961-10-01</span></span>
-<span id="cb277-16"><a href="一般化加法モデル-gam.html#cb277-16" tabindex="-1"></a><span class="co">#&gt; 155 1961-11-01</span></span>
-<span id="cb277-17"><a href="一般化加法モデル-gam.html#cb277-17" tabindex="-1"></a><span class="co">#&gt; 156 1961-12-01</span></span>
-<span id="cb277-18"><a href="一般化加法モデル-gam.html#cb277-18" tabindex="-1"></a></span>
-<span id="cb277-19"><a href="一般化加法モデル-gam.html#cb277-19" tabindex="-1"></a><span class="co"># 予測値の生成</span></span>
-<span id="cb277-20"><a href="一般化加法モデル-gam.html#cb277-20" tabindex="-1"></a>air_forecast <span class="ot">&lt;-</span> <span class="fu">predict</span>(air_ppht, dates_ft)</span>
-<span id="cb277-21"><a href="一般化加法モデル-gam.html#cb277-21" tabindex="-1"></a><span class="fu">tail</span>(air_forecast[<span class="fu">c</span>(<span class="st">&#39;ds&#39;</span>, <span class="st">&#39;yhat&#39;</span>, <span class="st">&#39;yhat_lower&#39;</span>, <span class="st">&#39;yhat_upper&#39;</span>)])</span>
-<span id="cb277-22"><a href="一般化加法モデル-gam.html#cb277-22" tabindex="-1"></a><span class="co">#&gt;             ds     yhat yhat_lower yhat_upper</span></span>
-<span id="cb277-23"><a href="一般化加法モデル-gam.html#cb277-23" tabindex="-1"></a><span class="co">#&gt; 151 1961-07-01 576.3980   545.7456   604.8217</span></span>
-<span id="cb277-24"><a href="一般化加法モデル-gam.html#cb277-24" tabindex="-1"></a><span class="co">#&gt; 152 1961-08-01 576.8090   548.0881   607.6136</span></span>
-<span id="cb277-25"><a href="一般化加法モデル-gam.html#cb277-25" tabindex="-1"></a><span class="co">#&gt; 153 1961-09-01 528.3037   499.5705   557.6630</span></span>
-<span id="cb277-26"><a href="一般化加法モデル-gam.html#cb277-26" tabindex="-1"></a><span class="co">#&gt; 154 1961-10-01 493.0463   463.5130   519.6700</span></span>
-<span id="cb277-27"><a href="一般化加法モデル-gam.html#cb277-27" tabindex="-1"></a><span class="co">#&gt; 155 1961-11-01 459.2066   430.3126   489.5333</span></span>
-<span id="cb277-28"><a href="一般化加法モデル-gam.html#cb277-28" tabindex="-1"></a><span class="co">#&gt; 156 1961-12-01 488.5528   460.6740   518.2706</span></span>
-<span id="cb277-29"><a href="一般化加法モデル-gam.html#cb277-29" tabindex="-1"></a><span class="fu">str</span>(air_forecast)</span>
-<span id="cb277-30"><a href="一般化加法モデル-gam.html#cb277-30" tabindex="-1"></a><span class="co">#&gt; &#39;data.frame&#39;:    156 obs. of  16 variables:</span></span>
-<span id="cb277-31"><a href="一般化加法モデル-gam.html#cb277-31" tabindex="-1"></a><span class="co">#&gt;  $ ds                        : POSIXct, format: &quot;1949-01-01&quot; &quot;1949-02-01&quot; ...</span></span>
-<span id="cb277-32"><a href="一般化加法モデル-gam.html#cb277-32" tabindex="-1"></a><span class="co">#&gt;  $ trend                     : num  106 108 110 113 115 ...</span></span>
-<span id="cb277-33"><a href="一般化加法モデル-gam.html#cb277-33" tabindex="-1"></a><span class="co">#&gt;  $ additive_terms            : num  -21.951 -30.725 -0.498 -5.184 -3.774 ...</span></span>
-<span id="cb277-34"><a href="一般化加法モデル-gam.html#cb277-34" tabindex="-1"></a><span class="co">#&gt;  $ additive_terms_lower      : num  -21.951 -30.725 -0.498 -5.184 -3.774 ...</span></span>
-<span id="cb277-35"><a href="一般化加法モデル-gam.html#cb277-35" tabindex="-1"></a><span class="co">#&gt;  $ additive_terms_upper      : num  -21.951 -30.725 -0.498 -5.184 -3.774 ...</span></span>
-<span id="cb277-36"><a href="一般化加法モデル-gam.html#cb277-36" tabindex="-1"></a><span class="co">#&gt;  $ yearly                    : num  -21.951 -30.725 -0.498 -5.184 -3.774 ...</span></span>
-<span id="cb277-37"><a href="一般化加法モデル-gam.html#cb277-37" tabindex="-1"></a><span class="co">#&gt;  $ yearly_lower              : num  -21.951 -30.725 -0.498 -5.184 -3.774 ...</span></span>
-<span id="cb277-38"><a href="一般化加法モデル-gam.html#cb277-38" tabindex="-1"></a><span class="co">#&gt;  $ yearly_upper              : num  -21.951 -30.725 -0.498 -5.184 -3.774 ...</span></span>
-<span id="cb277-39"><a href="一般化加法モデル-gam.html#cb277-39" tabindex="-1"></a><span class="co">#&gt;  $ multiplicative_terms      : num  0 0 0 0 0 0 0 0 0 0 ...</span></span>
-<span id="cb277-40"><a href="一般化加法モデル-gam.html#cb277-40" tabindex="-1"></a><span class="co">#&gt;  $ multiplicative_terms_lower: num  0 0 0 0 0 0 0 0 0 0 ...</span></span>
-<span id="cb277-41"><a href="一般化加法モデル-gam.html#cb277-41" tabindex="-1"></a><span class="co">#&gt;  $ multiplicative_terms_upper: num  0 0 0 0 0 0 0 0 0 0 ...</span></span>
-<span id="cb277-42"><a href="一般化加法モデル-gam.html#cb277-42" tabindex="-1"></a><span class="co">#&gt;  $ yhat_lower                : num  56.2 49.3 81.5 79.5 81.7 ...</span></span>
-<span id="cb277-43"><a href="一般化加法モデル-gam.html#cb277-43" tabindex="-1"></a><span class="co">#&gt;  $ yhat_upper                : num  115 106 139 137 139 ...</span></span>
-<span id="cb277-44"><a href="一般化加法モデル-gam.html#cb277-44" tabindex="-1"></a><span class="co">#&gt;  $ trend_lower               : num  106 108 110 113 115 ...</span></span>
-<span id="cb277-45"><a href="一般化加法モデル-gam.html#cb277-45" tabindex="-1"></a><span class="co">#&gt;  $ trend_upper               : num  106 108 110 113 115 ...</span></span>
-<span id="cb277-46"><a href="一般化加法モデル-gam.html#cb277-46" tabindex="-1"></a><span class="co">#&gt;  $ yhat                      : num  84.3 77.7 109.9 107.4 110.9 ...</span></span>
-<span id="cb277-47"><a href="一般化加法モデル-gam.html#cb277-47" tabindex="-1"></a></span>
-<span id="cb277-48"><a href="一般化加法モデル-gam.html#cb277-48" tabindex="-1"></a><span class="fu">plot</span>(air_ppht, air_forecast)</span></code></pre></div>
-<p><img src="060-GAM_files/figure-html/unnamed-chunk-29-1.png" width="75%" /></p>
-<div class="sourceCode" id="cb278"><pre class="sourceCode r"><code class="sourceCode r"><span id="cb278-1"><a href="一般化加法モデル-gam.html#cb278-1" tabindex="-1"></a></span>
-<span id="cb278-2"><a href="一般化加法モデル-gam.html#cb278-2" tabindex="-1"></a><span class="co"># prophetによる予測の各成分のプロット</span></span>
-<span id="cb278-3"><a href="一般化加法モデル-gam.html#cb278-3" tabindex="-1"></a><span class="fu">prophet_plot_components</span>(air_ppht, air_forecast)</span></code></pre></div>
-<p><img src="060-GAM_files/figure-html/unnamed-chunk-29-2.png" width="75%" /></p>
+<div class="sourceCode" id="cb278"><pre class="sourceCode r"><code class="sourceCode r"><span id="cb278-1"><a href="一般化加法モデル-gam.html#cb278-1" tabindex="-1"></a><span class="co">#install.packages(&quot;prophet&quot;)</span></span>
+<span id="cb278-2"><a href="一般化加法モデル-gam.html#cb278-2" tabindex="-1"></a><span class="fu">library</span>(prophet)</span>
+<span id="cb278-3"><a href="一般化加法モデル-gam.html#cb278-3" tabindex="-1"></a><span class="fu">library</span>(zoo) <span class="co"># index, yearmon</span></span></code></pre></div>
+<div class="sourceCode" id="cb279"><pre class="sourceCode r"><code class="sourceCode r"><span id="cb279-1"><a href="一般化加法モデル-gam.html#cb279-1" tabindex="-1"></a>air <span class="ot">&lt;-</span> AirPassengers</span>
+<span id="cb279-2"><a href="一般化加法モデル-gam.html#cb279-2" tabindex="-1"></a><span class="co"># Pan Am, # international passenger bokking (in 1000s) per month</span></span>
+<span id="cb279-3"><a href="一般化加法モデル-gam.html#cb279-3" tabindex="-1"></a><span class="co"># 1949--1960 (Brown, 1963)</span></span>
+<span id="cb279-4"><a href="一般化加法モデル-gam.html#cb279-4" tabindex="-1"></a><span class="fu">class</span>(air)</span>
+<span id="cb279-5"><a href="一般化加法モデル-gam.html#cb279-5" tabindex="-1"></a><span class="co">#&gt; [1] &quot;ts&quot;</span></span>
+<span id="cb279-6"><a href="一般化加法モデル-gam.html#cb279-6" tabindex="-1"></a>air</span>
+<span id="cb279-7"><a href="一般化加法モデル-gam.html#cb279-7" tabindex="-1"></a><span class="co">#&gt;      Jan Feb Mar Apr May Jun Jul Aug Sep Oct Nov Dec</span></span>
+<span id="cb279-8"><a href="一般化加法モデル-gam.html#cb279-8" tabindex="-1"></a><span class="co">#&gt; 1949 112 118 132 129 121 135 148 148 136 119 104 118</span></span>
+<span id="cb279-9"><a href="一般化加法モデル-gam.html#cb279-9" tabindex="-1"></a><span class="co">#&gt; 1950 115 126 141 135 125 149 170 170 158 133 114 140</span></span>
+<span id="cb279-10"><a href="一般化加法モデル-gam.html#cb279-10" tabindex="-1"></a><span class="co">#&gt; 1951 145 150 178 163 172 178 199 199 184 162 146 166</span></span>
+<span id="cb279-11"><a href="一般化加法モデル-gam.html#cb279-11" tabindex="-1"></a><span class="co">#&gt; 1952 171 180 193 181 183 218 230 242 209 191 172 194</span></span>
+<span id="cb279-12"><a href="一般化加法モデル-gam.html#cb279-12" tabindex="-1"></a><span class="co">#&gt; 1953 196 196 236 235 229 243 264 272 237 211 180 201</span></span>
+<span id="cb279-13"><a href="一般化加法モデル-gam.html#cb279-13" tabindex="-1"></a><span class="co">#&gt; 1954 204 188 235 227 234 264 302 293 259 229 203 229</span></span>
+<span id="cb279-14"><a href="一般化加法モデル-gam.html#cb279-14" tabindex="-1"></a><span class="co">#&gt; 1955 242 233 267 269 270 315 364 347 312 274 237 278</span></span>
+<span id="cb279-15"><a href="一般化加法モデル-gam.html#cb279-15" tabindex="-1"></a><span class="co">#&gt; 1956 284 277 317 313 318 374 413 405 355 306 271 306</span></span>
+<span id="cb279-16"><a href="一般化加法モデル-gam.html#cb279-16" tabindex="-1"></a><span class="co">#&gt; 1957 315 301 356 348 355 422 465 467 404 347 305 336</span></span>
+<span id="cb279-17"><a href="一般化加法モデル-gam.html#cb279-17" tabindex="-1"></a><span class="co">#&gt; 1958 340 318 362 348 363 435 491 505 404 359 310 337</span></span>
+<span id="cb279-18"><a href="一般化加法モデル-gam.html#cb279-18" tabindex="-1"></a><span class="co">#&gt; 1959 360 342 406 396 420 472 548 559 463 407 362 405</span></span>
+<span id="cb279-19"><a href="一般化加法モデル-gam.html#cb279-19" tabindex="-1"></a><span class="co">#&gt; 1960 417 391 419 461 472 535 622 606 508 461 390 432</span></span>
+<span id="cb279-20"><a href="一般化加法モデル-gam.html#cb279-20" tabindex="-1"></a><span class="co"># ここでは, 生データのまま使用 (対数変換せず)</span></span></code></pre></div>
+<div class="sourceCode" id="cb280"><pre class="sourceCode r"><code class="sourceCode r"><span id="cb280-1"><a href="一般化加法モデル-gam.html#cb280-1" tabindex="-1"></a><span class="co"># 年月の取り出し</span></span>
+<span id="cb280-2"><a href="一般化加法モデル-gam.html#cb280-2" tabindex="-1"></a>tt <span class="ot">&lt;-</span> <span class="fu">as.Date</span>(<span class="fu">yearmon</span>(<span class="fu">index</span>(air)))</span>
+<span id="cb280-3"><a href="一般化加法モデル-gam.html#cb280-3" tabindex="-1"></a></span>
+<span id="cb280-4"><a href="一般化加法モデル-gam.html#cb280-4" tabindex="-1"></a><span class="co"># prophetモデルの生成</span></span>
+<span id="cb280-5"><a href="一般化加法モデル-gam.html#cb280-5" tabindex="-1"></a>air_df <span class="ot">&lt;-</span> <span class="fu">data.frame</span>(<span class="at">ds =</span> tt, <span class="at">y =</span> air)</span>
+<span id="cb280-6"><a href="一般化加法モデル-gam.html#cb280-6" tabindex="-1"></a>air_ppht <span class="ot">&lt;-</span> <span class="fu">prophet</span>(air_df)</span>
+<span id="cb280-7"><a href="一般化加法モデル-gam.html#cb280-7" tabindex="-1"></a></span>
+<span id="cb280-8"><a href="一般化加法モデル-gam.html#cb280-8" tabindex="-1"></a><span class="co"># 予測年月の生成</span></span>
+<span id="cb280-9"><a href="一般化加法モデル-gam.html#cb280-9" tabindex="-1"></a>dates_ft <span class="ot">&lt;-</span> <span class="fu">make_future_dataframe</span>(air_ppht, <span class="at">periods =</span> <span class="dv">12</span>, <span class="at">freq =</span> <span class="st">&quot;month&quot;</span>)</span>
+<span id="cb280-10"><a href="一般化加法モデル-gam.html#cb280-10" tabindex="-1"></a><span class="fu">tail</span>(dates_ft)</span>
+<span id="cb280-11"><a href="一般化加法モデル-gam.html#cb280-11" tabindex="-1"></a><span class="co">#&gt;             ds</span></span>
+<span id="cb280-12"><a href="一般化加法モデル-gam.html#cb280-12" tabindex="-1"></a><span class="co">#&gt; 151 1961-07-01</span></span>
+<span id="cb280-13"><a href="一般化加法モデル-gam.html#cb280-13" tabindex="-1"></a><span class="co">#&gt; 152 1961-08-01</span></span>
+<span id="cb280-14"><a href="一般化加法モデル-gam.html#cb280-14" tabindex="-1"></a><span class="co">#&gt; 153 1961-09-01</span></span>
+<span id="cb280-15"><a href="一般化加法モデル-gam.html#cb280-15" tabindex="-1"></a><span class="co">#&gt; 154 1961-10-01</span></span>
+<span id="cb280-16"><a href="一般化加法モデル-gam.html#cb280-16" tabindex="-1"></a><span class="co">#&gt; 155 1961-11-01</span></span>
+<span id="cb280-17"><a href="一般化加法モデル-gam.html#cb280-17" tabindex="-1"></a><span class="co">#&gt; 156 1961-12-01</span></span>
+<span id="cb280-18"><a href="一般化加法モデル-gam.html#cb280-18" tabindex="-1"></a></span>
+<span id="cb280-19"><a href="一般化加法モデル-gam.html#cb280-19" tabindex="-1"></a><span class="co"># 予測値の生成</span></span>
+<span id="cb280-20"><a href="一般化加法モデル-gam.html#cb280-20" tabindex="-1"></a>air_forecast <span class="ot">&lt;-</span> <span class="fu">predict</span>(air_ppht, dates_ft)</span>
+<span id="cb280-21"><a href="一般化加法モデル-gam.html#cb280-21" tabindex="-1"></a><span class="fu">tail</span>(air_forecast[<span class="fu">c</span>(<span class="st">&#39;ds&#39;</span>, <span class="st">&#39;yhat&#39;</span>, <span class="st">&#39;yhat_lower&#39;</span>, <span class="st">&#39;yhat_upper&#39;</span>)])</span>
+<span id="cb280-22"><a href="一般化加法モデル-gam.html#cb280-22" tabindex="-1"></a><span class="co">#&gt;             ds     yhat yhat_lower yhat_upper</span></span>
+<span id="cb280-23"><a href="一般化加法モデル-gam.html#cb280-23" tabindex="-1"></a><span class="co">#&gt; 151 1961-07-01 576.3980   547.2635   604.7322</span></span>
+<span id="cb280-24"><a href="一般化加法モデル-gam.html#cb280-24" tabindex="-1"></a><span class="co">#&gt; 152 1961-08-01 576.8090   549.0934   605.4373</span></span>
+<span id="cb280-25"><a href="一般化加法モデル-gam.html#cb280-25" tabindex="-1"></a><span class="co">#&gt; 153 1961-09-01 528.3037   501.2114   557.9127</span></span>
+<span id="cb280-26"><a href="一般化加法モデル-gam.html#cb280-26" tabindex="-1"></a><span class="co">#&gt; 154 1961-10-01 493.0463   465.2402   521.4152</span></span>
+<span id="cb280-27"><a href="一般化加法モデル-gam.html#cb280-27" tabindex="-1"></a><span class="co">#&gt; 155 1961-11-01 459.2066   432.6749   488.9358</span></span>
+<span id="cb280-28"><a href="一般化加法モデル-gam.html#cb280-28" tabindex="-1"></a><span class="co">#&gt; 156 1961-12-01 488.5528   457.6911   515.8942</span></span>
+<span id="cb280-29"><a href="一般化加法モデル-gam.html#cb280-29" tabindex="-1"></a><span class="fu">str</span>(air_forecast)</span>
+<span id="cb280-30"><a href="一般化加法モデル-gam.html#cb280-30" tabindex="-1"></a><span class="co">#&gt; &#39;data.frame&#39;:    156 obs. of  16 variables:</span></span>
+<span id="cb280-31"><a href="一般化加法モデル-gam.html#cb280-31" tabindex="-1"></a><span class="co">#&gt;  $ ds                        : POSIXct, format: &quot;1949-01-01&quot; &quot;1949-02-01&quot; ...</span></span>
+<span id="cb280-32"><a href="一般化加法モデル-gam.html#cb280-32" tabindex="-1"></a><span class="co">#&gt;  $ trend                     : num  106 108 110 113 115 ...</span></span>
+<span id="cb280-33"><a href="一般化加法モデル-gam.html#cb280-33" tabindex="-1"></a><span class="co">#&gt;  $ additive_terms            : num  -21.951 -30.725 -0.498 -5.184 -3.774 ...</span></span>
+<span id="cb280-34"><a href="一般化加法モデル-gam.html#cb280-34" tabindex="-1"></a><span class="co">#&gt;  $ additive_terms_lower      : num  -21.951 -30.725 -0.498 -5.184 -3.774 ...</span></span>
+<span id="cb280-35"><a href="一般化加法モデル-gam.html#cb280-35" tabindex="-1"></a><span class="co">#&gt;  $ additive_terms_upper      : num  -21.951 -30.725 -0.498 -5.184 -3.774 ...</span></span>
+<span id="cb280-36"><a href="一般化加法モデル-gam.html#cb280-36" tabindex="-1"></a><span class="co">#&gt;  $ yearly                    : num  -21.951 -30.725 -0.498 -5.184 -3.774 ...</span></span>
+<span id="cb280-37"><a href="一般化加法モデル-gam.html#cb280-37" tabindex="-1"></a><span class="co">#&gt;  $ yearly_lower              : num  -21.951 -30.725 -0.498 -5.184 -3.774 ...</span></span>
+<span id="cb280-38"><a href="一般化加法モデル-gam.html#cb280-38" tabindex="-1"></a><span class="co">#&gt;  $ yearly_upper              : num  -21.951 -30.725 -0.498 -5.184 -3.774 ...</span></span>
+<span id="cb280-39"><a href="一般化加法モデル-gam.html#cb280-39" tabindex="-1"></a><span class="co">#&gt;  $ multiplicative_terms      : num  0 0 0 0 0 0 0 0 0 0 ...</span></span>
+<span id="cb280-40"><a href="一般化加法モデル-gam.html#cb280-40" tabindex="-1"></a><span class="co">#&gt;  $ multiplicative_terms_lower: num  0 0 0 0 0 0 0 0 0 0 ...</span></span>
+<span id="cb280-41"><a href="一般化加法モデル-gam.html#cb280-41" tabindex="-1"></a><span class="co">#&gt;  $ multiplicative_terms_upper: num  0 0 0 0 0 0 0 0 0 0 ...</span></span>
+<span id="cb280-42"><a href="一般化加法モデル-gam.html#cb280-42" tabindex="-1"></a><span class="co">#&gt;  $ yhat_lower                : num  56 48.1 81 80.5 83.1 ...</span></span>
+<span id="cb280-43"><a href="一般化加法モデル-gam.html#cb280-43" tabindex="-1"></a><span class="co">#&gt;  $ yhat_upper                : num  113 107 138 136 140 ...</span></span>
+<span id="cb280-44"><a href="一般化加法モデル-gam.html#cb280-44" tabindex="-1"></a><span class="co">#&gt;  $ trend_lower               : num  106 108 110 113 115 ...</span></span>
+<span id="cb280-45"><a href="一般化加法モデル-gam.html#cb280-45" tabindex="-1"></a><span class="co">#&gt;  $ trend_upper               : num  106 108 110 113 115 ...</span></span>
+<span id="cb280-46"><a href="一般化加法モデル-gam.html#cb280-46" tabindex="-1"></a><span class="co">#&gt;  $ yhat                      : num  84.3 77.7 109.9 107.4 110.9 ...</span></span>
+<span id="cb280-47"><a href="一般化加法モデル-gam.html#cb280-47" tabindex="-1"></a></span>
+<span id="cb280-48"><a href="一般化加法モデル-gam.html#cb280-48" tabindex="-1"></a><span class="fu">plot</span>(air_ppht, air_forecast)</span></code></pre></div>
+<p><img src="060-GAM_files/figure-html/unnamed-chunk-30-1.png" width="75%" /></p>
+<div class="sourceCode" id="cb281"><pre class="sourceCode r"><code class="sourceCode r"><span id="cb281-1"><a href="一般化加法モデル-gam.html#cb281-1" tabindex="-1"></a></span>
+<span id="cb281-2"><a href="一般化加法モデル-gam.html#cb281-2" tabindex="-1"></a><span class="co"># prophetによる予測の各成分のプロット</span></span>
+<span id="cb281-3"><a href="一般化加法モデル-gam.html#cb281-3" tabindex="-1"></a><span class="fu">prophet_plot_components</span>(air_ppht, air_forecast)</span></code></pre></div>
+<p><img src="060-GAM_files/figure-html/unnamed-chunk-30-2.png" width="75%" /></p>
 <pre><code>prophetの主な引数
 - growth: &quot;linear&quot;(デフォルト), &quot;logisitc&quot;, &quot;flat&quot;
 - changepoints (変化点): 日付ベクトルをユーザー指定 or 潜在的な変化点の自動選択(デフォルト)
@@ -932,44 +965,44 @@ GAMを実行する前に, <code>lm()</code>を走らせてみる.</p>
 <div id="追加分析boston-housingデータセットの変数間の関係性" class="section level2 hasAnchor" number="5.4">
 <h2><span class="header-section-number">5.4</span> 【追加分析】Boston housingデータセットの変数間の関係性<a href="一般化加法モデル-gam.html#追加分析boston-housingデータセットの変数間の関係性" class="anchor-section" aria-label="Anchor link to header"></a></h2>
 <p>※ 以下のRコードの出所: ChatGPT (GPT-4o) (一部修正)</p>
-<div class="sourceCode" id="cb280"><pre class="sourceCode r"><code class="sourceCode r"><span id="cb280-1"><a href="一般化加法モデル-gam.html#cb280-1" tabindex="-1"></a><span class="fu">library</span>(ggplot2)</span>
-<span id="cb280-2"><a href="一般化加法モデル-gam.html#cb280-2" tabindex="-1"></a></span>
-<span id="cb280-3"><a href="一般化加法モデル-gam.html#cb280-3" tabindex="-1"></a><span class="co"># データ確認</span></span>
-<span id="cb280-4"><a href="一般化加法モデル-gam.html#cb280-4" tabindex="-1"></a><span class="fu">data</span>(Boston)</span>
-<span id="cb280-5"><a href="一般化加法モデル-gam.html#cb280-5" tabindex="-1"></a></span>
-<span id="cb280-6"><a href="一般化加法モデル-gam.html#cb280-6" tabindex="-1"></a><span class="co"># chasを因子型に変換（形状の制御に便利）</span></span>
-<span id="cb280-7"><a href="一般化加法モデル-gam.html#cb280-7" tabindex="-1"></a>Boston<span class="sc">$</span>chas <span class="ot">&lt;-</span> <span class="fu">as.factor</span>(Boston<span class="sc">$</span>chas)</span>
-<span id="cb280-8"><a href="一般化加法モデル-gam.html#cb280-8" tabindex="-1"></a></span>
-<span id="cb280-9"><a href="一般化加法モデル-gam.html#cb280-9" tabindex="-1"></a><span class="co"># プロット作成</span></span>
-<span id="cb280-10"><a href="一般化加法モデル-gam.html#cb280-10" tabindex="-1"></a><span class="fu">ggplot</span>(Boston, <span class="fu">aes</span>(<span class="at">x =</span> dis, <span class="at">y =</span> rm, <span class="at">size =</span> medv, <span class="at">shape =</span> chas, <span class="at">color =</span> rad)) <span class="sc">+</span></span>
-<span id="cb280-11"><a href="一般化加法モデル-gam.html#cb280-11" tabindex="-1"></a>  <span class="fu">geom_point</span>(<span class="at">alpha =</span> <span class="fl">0.7</span>) <span class="sc">+</span></span>
-<span id="cb280-12"><a href="一般化加法モデル-gam.html#cb280-12" tabindex="-1"></a>  <span class="fu">scale_size_continuous</span>(<span class="at">name =</span> <span class="st">&quot;住宅価格中央値 (medv)&quot;</span>, <span class="at">range =</span> <span class="fu">c</span>(<span class="dv">1</span>, <span class="dv">10</span>)) <span class="sc">+</span></span>
-<span id="cb280-13"><a href="一般化加法モデル-gam.html#cb280-13" tabindex="-1"></a>  <span class="fu">scale_shape_manual</span>(<span class="at">values =</span> <span class="fu">c</span>(<span class="dv">16</span>, <span class="dv">17</span>), <span class="at">labels =</span> <span class="fu">c</span>(<span class="st">&quot;川沿いでない&quot;</span>, <span class="st">&quot;川沿い&quot;</span>)) <span class="sc">+</span></span>
-<span id="cb280-14"><a href="一般化加法モデル-gam.html#cb280-14" tabindex="-1"></a>  <span class="fu">scale_color_gradient</span>(<span class="at">low =</span> <span class="st">&quot;navy&quot;</span>, <span class="at">high =</span> <span class="st">&quot;orange&quot;</span>) <span class="sc">+</span></span>
-<span id="cb280-15"><a href="一般化加法モデル-gam.html#cb280-15" tabindex="-1"></a>  <span class="fu">labs</span>(</span>
-<span id="cb280-16"><a href="一般化加法モデル-gam.html#cb280-16" tabindex="-1"></a>    <span class="at">title =</span> <span class="st">&quot;住宅の平均部屋数と雇用集積地距離・価格・立地・高速道路アクセスの関係&quot;</span>,</span>
-<span id="cb280-17"><a href="一般化加法モデル-gam.html#cb280-17" tabindex="-1"></a>    <span class="at">x =</span> <span class="st">&quot;雇用集積地への距離 (dis)&quot;</span>,</span>
-<span id="cb280-18"><a href="一般化加法モデル-gam.html#cb280-18" tabindex="-1"></a>    <span class="at">y =</span> <span class="st">&quot;住宅の平均部屋数 (rm)&quot;</span>,</span>
-<span id="cb280-19"><a href="一般化加法モデル-gam.html#cb280-19" tabindex="-1"></a>    <span class="at">shape =</span> <span class="st">&quot;チャールズ川沿い&quot;</span>,</span>
-<span id="cb280-20"><a href="一般化加法モデル-gam.html#cb280-20" tabindex="-1"></a>    <span class="at">color =</span> <span class="st">&quot;高速道路アクセス (rad)&quot;</span></span>
-<span id="cb280-21"><a href="一般化加法モデル-gam.html#cb280-21" tabindex="-1"></a>  ) <span class="sc">+</span></span>
-<span id="cb280-22"><a href="一般化加法モデル-gam.html#cb280-22" tabindex="-1"></a>  <span class="fu">theme_minimal</span>()</span></code></pre></div>
-<p><img src="060-GAM_files/figure-html/unnamed-chunk-30-1.png" width="75%" /></p>
-<div class="sourceCode" id="cb281"><pre class="sourceCode r"><code class="sourceCode r"><span id="cb281-1"><a href="一般化加法モデル-gam.html#cb281-1" tabindex="-1"></a><span class="co"># プロット作成</span></span>
-<span id="cb281-2"><a href="一般化加法モデル-gam.html#cb281-2" tabindex="-1"></a><span class="fu">ggplot</span>(Boston, <span class="fu">aes</span>(<span class="at">x =</span> dis, <span class="at">y =</span> medv, <span class="at">size =</span> rm, <span class="at">shape =</span> chas, <span class="at">color =</span> rad)) <span class="sc">+</span></span>
-<span id="cb281-3"><a href="一般化加法モデル-gam.html#cb281-3" tabindex="-1"></a>  <span class="fu">geom_point</span>(<span class="at">alpha =</span> <span class="fl">0.7</span>) <span class="sc">+</span></span>
-<span id="cb281-4"><a href="一般化加法モデル-gam.html#cb281-4" tabindex="-1"></a>  <span class="fu">scale_size_continuous</span>(<span class="at">name =</span> <span class="st">&quot;平均部屋数 (rm)&quot;</span>) <span class="sc">+</span></span>
-<span id="cb281-5"><a href="一般化加法モデル-gam.html#cb281-5" tabindex="-1"></a>  <span class="fu">scale_shape_manual</span>(<span class="at">values =</span> <span class="fu">c</span>(<span class="dv">16</span>, <span class="dv">17</span>), <span class="at">labels =</span> <span class="fu">c</span>(<span class="st">&quot;川沿いでない&quot;</span>, <span class="st">&quot;川沿い&quot;</span>)) <span class="sc">+</span></span>
-<span id="cb281-6"><a href="一般化加法モデル-gam.html#cb281-6" tabindex="-1"></a>  <span class="fu">scale_color_gradient</span>(<span class="at">low =</span> <span class="st">&quot;navy&quot;</span>, <span class="at">high =</span> <span class="st">&quot;orange&quot;</span>) <span class="sc">+</span></span>
-<span id="cb281-7"><a href="一般化加法モデル-gam.html#cb281-7" tabindex="-1"></a>  <span class="fu">labs</span>(</span>
-<span id="cb281-8"><a href="一般化加法モデル-gam.html#cb281-8" tabindex="-1"></a>    <span class="at">title =</span> <span class="st">&quot;住宅価格と雇用集積地距離・部屋数・立地・高速道路アクセスの関係&quot;</span>,</span>
-<span id="cb281-9"><a href="一般化加法モデル-gam.html#cb281-9" tabindex="-1"></a>    <span class="at">x =</span> <span class="st">&quot;雇用集積地への距離 (dis)&quot;</span>,</span>
-<span id="cb281-10"><a href="一般化加法モデル-gam.html#cb281-10" tabindex="-1"></a>    <span class="at">y =</span> <span class="st">&quot;住宅価格中央値 (medv, $1000単位)&quot;</span>,</span>
-<span id="cb281-11"><a href="一般化加法モデル-gam.html#cb281-11" tabindex="-1"></a>    <span class="at">shape =</span> <span class="st">&quot;チャールズ川沿い&quot;</span>,</span>
-<span id="cb281-12"><a href="一般化加法モデル-gam.html#cb281-12" tabindex="-1"></a>    <span class="at">color =</span> <span class="st">&quot;高速道路アクセス (rad)&quot;</span></span>
-<span id="cb281-13"><a href="一般化加法モデル-gam.html#cb281-13" tabindex="-1"></a>  ) <span class="sc">+</span></span>
-<span id="cb281-14"><a href="一般化加法モデル-gam.html#cb281-14" tabindex="-1"></a>  <span class="fu">theme_minimal</span>()</span></code></pre></div>
+<div class="sourceCode" id="cb283"><pre class="sourceCode r"><code class="sourceCode r"><span id="cb283-1"><a href="一般化加法モデル-gam.html#cb283-1" tabindex="-1"></a><span class="fu">library</span>(ggplot2)</span>
+<span id="cb283-2"><a href="一般化加法モデル-gam.html#cb283-2" tabindex="-1"></a></span>
+<span id="cb283-3"><a href="一般化加法モデル-gam.html#cb283-3" tabindex="-1"></a><span class="co"># データ確認</span></span>
+<span id="cb283-4"><a href="一般化加法モデル-gam.html#cb283-4" tabindex="-1"></a><span class="fu">data</span>(Boston)</span>
+<span id="cb283-5"><a href="一般化加法モデル-gam.html#cb283-5" tabindex="-1"></a></span>
+<span id="cb283-6"><a href="一般化加法モデル-gam.html#cb283-6" tabindex="-1"></a><span class="co"># chasを因子型に変換（形状の制御に便利）</span></span>
+<span id="cb283-7"><a href="一般化加法モデル-gam.html#cb283-7" tabindex="-1"></a>Boston<span class="sc">$</span>chas <span class="ot">&lt;-</span> <span class="fu">as.factor</span>(Boston<span class="sc">$</span>chas)</span>
+<span id="cb283-8"><a href="一般化加法モデル-gam.html#cb283-8" tabindex="-1"></a></span>
+<span id="cb283-9"><a href="一般化加法モデル-gam.html#cb283-9" tabindex="-1"></a><span class="co"># プロット作成</span></span>
+<span id="cb283-10"><a href="一般化加法モデル-gam.html#cb283-10" tabindex="-1"></a><span class="fu">ggplot</span>(Boston, <span class="fu">aes</span>(<span class="at">x =</span> dis, <span class="at">y =</span> rm, <span class="at">size =</span> medv, <span class="at">shape =</span> chas, <span class="at">color =</span> rad)) <span class="sc">+</span></span>
+<span id="cb283-11"><a href="一般化加法モデル-gam.html#cb283-11" tabindex="-1"></a>  <span class="fu">geom_point</span>(<span class="at">alpha =</span> <span class="fl">0.7</span>) <span class="sc">+</span></span>
+<span id="cb283-12"><a href="一般化加法モデル-gam.html#cb283-12" tabindex="-1"></a>  <span class="fu">scale_size_continuous</span>(<span class="at">name =</span> <span class="st">&quot;住宅価格中央値 (medv)&quot;</span>, <span class="at">range =</span> <span class="fu">c</span>(<span class="dv">1</span>, <span class="dv">10</span>)) <span class="sc">+</span></span>
+<span id="cb283-13"><a href="一般化加法モデル-gam.html#cb283-13" tabindex="-1"></a>  <span class="fu">scale_shape_manual</span>(<span class="at">values =</span> <span class="fu">c</span>(<span class="dv">16</span>, <span class="dv">17</span>), <span class="at">labels =</span> <span class="fu">c</span>(<span class="st">&quot;川沿いでない&quot;</span>, <span class="st">&quot;川沿い&quot;</span>)) <span class="sc">+</span></span>
+<span id="cb283-14"><a href="一般化加法モデル-gam.html#cb283-14" tabindex="-1"></a>  <span class="fu">scale_color_gradient</span>(<span class="at">low =</span> <span class="st">&quot;navy&quot;</span>, <span class="at">high =</span> <span class="st">&quot;orange&quot;</span>) <span class="sc">+</span></span>
+<span id="cb283-15"><a href="一般化加法モデル-gam.html#cb283-15" tabindex="-1"></a>  <span class="fu">labs</span>(</span>
+<span id="cb283-16"><a href="一般化加法モデル-gam.html#cb283-16" tabindex="-1"></a>    <span class="at">title =</span> <span class="st">&quot;住宅の平均部屋数と雇用中心地距離・価格・立地・高速道路アクセスの関係&quot;</span>,</span>
+<span id="cb283-17"><a href="一般化加法モデル-gam.html#cb283-17" tabindex="-1"></a>    <span class="at">x =</span> <span class="st">&quot;雇用中心地への距離 (dis)&quot;</span>,</span>
+<span id="cb283-18"><a href="一般化加法モデル-gam.html#cb283-18" tabindex="-1"></a>    <span class="at">y =</span> <span class="st">&quot;住宅の平均部屋数 (rm)&quot;</span>,</span>
+<span id="cb283-19"><a href="一般化加法モデル-gam.html#cb283-19" tabindex="-1"></a>    <span class="at">shape =</span> <span class="st">&quot;チャールズ川沿い&quot;</span>,</span>
+<span id="cb283-20"><a href="一般化加法モデル-gam.html#cb283-20" tabindex="-1"></a>    <span class="at">color =</span> <span class="st">&quot;高速道路アクセス (rad)&quot;</span></span>
+<span id="cb283-21"><a href="一般化加法モデル-gam.html#cb283-21" tabindex="-1"></a>  ) <span class="sc">+</span></span>
+<span id="cb283-22"><a href="一般化加法モデル-gam.html#cb283-22" tabindex="-1"></a>  <span class="fu">theme_minimal</span>()</span></code></pre></div>
 <p><img src="060-GAM_files/figure-html/unnamed-chunk-31-1.png" width="75%" /></p>
+<div class="sourceCode" id="cb284"><pre class="sourceCode r"><code class="sourceCode r"><span id="cb284-1"><a href="一般化加法モデル-gam.html#cb284-1" tabindex="-1"></a><span class="co"># プロット作成</span></span>
+<span id="cb284-2"><a href="一般化加法モデル-gam.html#cb284-2" tabindex="-1"></a><span class="fu">ggplot</span>(Boston, <span class="fu">aes</span>(<span class="at">x =</span> dis, <span class="at">y =</span> medv, <span class="at">size =</span> rm, <span class="at">shape =</span> chas, <span class="at">color =</span> rad)) <span class="sc">+</span></span>
+<span id="cb284-3"><a href="一般化加法モデル-gam.html#cb284-3" tabindex="-1"></a>  <span class="fu">geom_point</span>(<span class="at">alpha =</span> <span class="fl">0.7</span>) <span class="sc">+</span></span>
+<span id="cb284-4"><a href="一般化加法モデル-gam.html#cb284-4" tabindex="-1"></a>  <span class="fu">scale_size_continuous</span>(<span class="at">name =</span> <span class="st">&quot;平均部屋数 (rm)&quot;</span>) <span class="sc">+</span></span>
+<span id="cb284-5"><a href="一般化加法モデル-gam.html#cb284-5" tabindex="-1"></a>  <span class="fu">scale_shape_manual</span>(<span class="at">values =</span> <span class="fu">c</span>(<span class="dv">16</span>, <span class="dv">17</span>), <span class="at">labels =</span> <span class="fu">c</span>(<span class="st">&quot;川沿いでない&quot;</span>, <span class="st">&quot;川沿い&quot;</span>)) <span class="sc">+</span></span>
+<span id="cb284-6"><a href="一般化加法モデル-gam.html#cb284-6" tabindex="-1"></a>  <span class="fu">scale_color_gradient</span>(<span class="at">low =</span> <span class="st">&quot;navy&quot;</span>, <span class="at">high =</span> <span class="st">&quot;orange&quot;</span>) <span class="sc">+</span></span>
+<span id="cb284-7"><a href="一般化加法モデル-gam.html#cb284-7" tabindex="-1"></a>  <span class="fu">labs</span>(</span>
+<span id="cb284-8"><a href="一般化加法モデル-gam.html#cb284-8" tabindex="-1"></a>    <span class="at">title =</span> <span class="st">&quot;住宅価格と雇用中心地距離・部屋数・立地・高速道路アクセスの関係&quot;</span>,</span>
+<span id="cb284-9"><a href="一般化加法モデル-gam.html#cb284-9" tabindex="-1"></a>    <span class="at">x =</span> <span class="st">&quot;雇用中心地への距離 (dis)&quot;</span>,</span>
+<span id="cb284-10"><a href="一般化加法モデル-gam.html#cb284-10" tabindex="-1"></a>    <span class="at">y =</span> <span class="st">&quot;住宅価格中央値 (medv, $1000単位)&quot;</span>,</span>
+<span id="cb284-11"><a href="一般化加法モデル-gam.html#cb284-11" tabindex="-1"></a>    <span class="at">shape =</span> <span class="st">&quot;チャールズ川沿い&quot;</span>,</span>
+<span id="cb284-12"><a href="一般化加法モデル-gam.html#cb284-12" tabindex="-1"></a>    <span class="at">color =</span> <span class="st">&quot;高速道路アクセス (rad)&quot;</span></span>
+<span id="cb284-13"><a href="一般化加法モデル-gam.html#cb284-13" tabindex="-1"></a>  ) <span class="sc">+</span></span>
+<span id="cb284-14"><a href="一般化加法モデル-gam.html#cb284-14" tabindex="-1"></a>  <span class="fu">theme_minimal</span>()</span></code></pre></div>
+<p><img src="060-GAM_files/figure-html/unnamed-chunk-32-1.png" width="75%" /></p>
 
 </div>
 </div>

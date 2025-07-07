@@ -549,7 +549,7 @@ code span.wa { color: #60a0b0; font-weight: bold; font-style: italic; } /* Warni
 <li>Harrison, D., &amp; Rubinfeld, D. L. (1978). Hedonic prices and the demand for clean air. <em>Journal of Environmental Economics and Management</em>, 5(1), 81–102.</li>
 </ul>
 <p><font color="red">(7/7/25) 変数<code>dis</code>の訳がミスリーディングだったため, 訂正いたします.
-(旧)雇用センター → (新)雇用集積地 (employment centres)</font></p>
+(旧)雇用センター → (新)雇用中心地 (employment centers)</font></p>
 <pre><code>- Boston Housingデータセット
   - crim: 地域の一人当たり犯罪率
   - zn: 25,000平方フィート以上の住宅用地の割合
@@ -558,7 +558,7 @@ code span.wa { color: #60a0b0; font-weight: bold; font-style: italic; } /* Warni
   - nox: 窒素酸化物濃度（1000万ppm）
   - rm: 住宅の平均部屋数
   - age: 1940年以前に建設された持ち家の割合
-  - dis: ボストンの5つの雇用集積地 (employment centres) までの距離の加重平均
+  - dis: ボストンの5つの雇用中心地 (employment centers) までの距離の加重平均
   - rad: 放射状高速道路へのアクセス指数
   - tax: 10,000米ドル当たりの固定資産税率
   - ptratio: 地域の生徒数・教師数比率
@@ -570,14 +570,19 @@ code span.wa { color: #60a0b0; font-weight: bold; font-style: italic; } /* Warni
 <!--- library(MASS)を呼び出せば良い...
 library(MASS)のバージョンは, `b`ではなく, `black`
 -->
-<pre><code>注意:
+<!--
+注意:
 ネット上では, `dis`に対する誤訳が散見される (“雇用安定所”など). 
 Harrison and Rubinfeld (78) の原文抜粋（p. 84-85）
-&quot;Accessibility to employment is measured by an index of weighted distances to five major employment centres in the Boston region. The five centres were chosen to reflect the locations of major concentrations of jobs in the metropolitan area. These include the central business district of Boston, the Cambridge area, and three other locations where employment is concentrated.&quot;
+"Accessibility to employment is measured by an index of weighted distances to five major employment centres in the Boston region. The five centres were chosen to reflect the locations of major concentrations of jobs in the metropolitan area. These include the central business district of Boston, the Cambridge area, and three other locations where employment is concentrated."
 (和訳)
 雇用へのアクセス性は, ボストン地域における5つの主要な雇用集積地への加重距離の指標によって測定されている.
 この5つの雇用集積地は, 都市圏内における主要な雇用の集中地点の位置を反映するように選定されている.
-これらには, ボストンの中心業務地区 (Central Business District, CBD), ケンブリッジ地区 (Cambridge area), およびその他3つの雇用が集中している地点が含まれる.</code></pre>
+これらには, ボストンの中心業務地区 (Central Business District, CBD), ケンブリッジ地区 (Cambridge area), およびその他3つの雇用が集中している地点が含まれる.
+-->
+<pre><code>注意:
+Harrison and Rubinfeld (78) の原文には, “employment centers&quot;に関する明確な説明はないものの, 
+`dis`の定義として, “Weighted distances to five employment centers in the Boston region. According to traditional theories of urban land rent gradients, housing values should be higher near employment renters. DIS is entered in logarithm form; the expected sign is negative.”(p.97) とある. また, 不動産市場の文献における“accessibility to employment centers&quot;等の用法を調べる限りにおいて, “employment centers&quot;をいわゆる“職業安定所&quot;と解釈するのは誤りで, むしろ, (ビジネスが集まり労働人口の多い) &quot;雇用の中心地&quot;, “雇用集積地&quot;等と解釈するのが適切と考えられる.</code></pre>
 <div class="sourceCode" id="cb155"><pre class="sourceCode r"><code class="sourceCode r"><span id="cb155-1"><a href="線形回帰分析.html#cb155-1" tabindex="-1"></a><span class="co"># library(MASS) # Bostonデータセット</span></span>
 <span id="cb155-2"><a href="線形回帰分析.html#cb155-2" tabindex="-1"></a><span class="co"># housing &lt;- Boston # 変数bではなくblack</span></span>
 <span id="cb155-3"><a href="線形回帰分析.html#cb155-3" tabindex="-1"></a>housing <span class="ot">&lt;-</span> <span class="fu">read.csv</span>(<span class="st">&quot;boston_housing.csv&quot;</span>, <span class="at">header =</span> T)</span>
