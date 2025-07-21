@@ -303,7 +303,7 @@ code span.wa { color: #60a0b0; font-weight: bold; font-style: italic; } /* Warni
 <li class="chapter" data-level="" data-path="アンサンブル学習.html"><a href="アンサンブル学習.html#データセット3-個人ローン信用データ-再掲"><i class="fa fa-check"></i>データセット3: 個人ローン信用データ (再掲)</a></li>
 </ul></li>
 <li class="chapter" data-level="9.2" data-path="アンサンブル学習.html"><a href="アンサンブル学習.html#ランダムフォレスト分類木"><i class="fa fa-check"></i><b>9.2</b> ランダムフォレスト分類木</a></li>
-<li class="chapter" data-level="9.3" data-path="アンサンブル学習.html"><a href="アンサンブル学習.html#一般化ブースト回帰モデル"><i class="fa fa-check"></i><b>9.3</b> 一般化ブースト回帰モデル</a></li>
+<li class="chapter" data-level="9.3" data-path="アンサンブル学習.html"><a href="アンサンブル学習.html#一般化ブースト回帰"><i class="fa fa-check"></i><b>9.3</b> 一般化ブースト回帰</a></li>
 </ul></li>
 <li class="chapter" data-level="10" data-path="サポートベクターマシーン-svm.html"><a href="サポートベクターマシーン-svm.html"><i class="fa fa-check"></i><b>10</b> サポート・ベクター・マシーン (SVM)</a>
 <ul>
@@ -351,6 +351,17 @@ code span.wa { color: #60a0b0; font-weight: bold; font-style: italic; } /* Warni
             <section class="normal" id="section-">
 <div id="アンサンブル学習" class="section level1 hasAnchor" number="9">
 <h1><span class="header-section-number">9</span> アンサンブル学習<a href="アンサンブル学習.html#アンサンブル学習" class="anchor-section" aria-label="Anchor link to header"></a></h1>
+<p>個々には必ずしも精度の高くない予測モデル (“弱い学習器”) の結果を集約することで, より精度の高い予測モデル (“強い学習器”) を構築する手法を<strong>アンサンブル学習</strong>と呼ぶ.</p>
+<p>これは, “集団の叡智”を計算機内に実装したもので,</p>
+<ul>
+<li>分類問題 → 個々の回答の多数決</li>
+<li>回帰問題 → 個々の予測値の平均値
+によって, 個々の予測値を集約する.
+近年の計算機パワーの向上と伴に, 研究・実用化とも急拡大している.</li>
+</ul>
+<p>主な技法として, バギング (bagging), ブースティング (Boosting), スタッキング (Stacking) がある.</p>
+<p>本章では, 決定木を“弱い学習器”とするアンサンブル学習のアルゴリズムとして, 機械学習分野で多用されている, <strong>ランダムフォレスト (Random Forest)</strong> と <strong>勾配ブースティング木 (Gradient Boosting/Boosted Tree)</strong> について取り上げる.</p>
+<p>以下では, ランダムフォレスト, 勾配ブースティング木ともに分類問題のみを扱うが, これらはいずれも回帰問題にも対応することができる.</p>
 <div id="決定木-分類木" class="section level2 hasAnchor" number="9.1">
 <h2><span class="header-section-number">9.1</span> 決定木 (分類木)<a href="アンサンブル学習.html#決定木-分類木" class="anchor-section" aria-label="Anchor link to header"></a></h2>
 <p>前章では, パッケージ<strong>rpart</strong>の関数<code>rpart()</code>を使用したが,
@@ -541,11 +552,11 @@ code span.wa { color: #60a0b0; font-weight: bold; font-style: italic; } /* Warni
 <span id="cb387-15"><a href="アンサンブル学習.html#cb387-15" tabindex="-1"></a><span class="fu">text</span>(prn_tree, <span class="at">pretty =</span> <span class="dv">0</span>)</span></code></pre></div>
 <p><img src="092-ensemble_files/figure-html/unnamed-chunk-11-1.png" width="75%" /></p>
 <ul>
-<li>テスト用データセットを用いて外挿予測
-ここでは, 適合された木 (剪定なし) を用いて, テスト用データに対する予測を行う.
-デフォルトでは<code>predict()</code>は確率を出力してしまうため,
-ここではを引数<code>type=class</code>を指定する.</li>
+<li>テスト用データセットを用いて外挿予測</li>
 </ul>
+<p>ここでは, 適合された木 (剪定なし) を用いて, テスト用データに対する予測を行う.
+デフォルトでは<code>predict()</code>は確率を出力してしまうため,
+ここではを引数<code>type=class</code>を指定する.</p>
 <div class="sourceCode" id="cb388"><pre class="sourceCode r"><code class="sourceCode r"><span id="cb388-1"><a href="アンサンブル学習.html#cb388-1" tabindex="-1"></a><span class="co">#yhat_tree &lt;- predict(fit_tree, newdata = credit_df_noNA[-train, ])     # --&gt; 確率</span></span>
 <span id="cb388-2"><a href="アンサンブル学習.html#cb388-2" tabindex="-1"></a>yhat_tree <span class="ot">&lt;-</span> <span class="fu">predict</span>(fit_tree, <span class="at">newdata =</span> credit_df_noNA[<span class="sc">-</span>train, ], <span class="at">type =</span> <span class="st">&quot;class&quot;</span>)      <span class="co"># --&gt; good/bad</span></span></code></pre></div>
 <ul>
@@ -703,8 +714,8 @@ accuracyや, F1 (“F尺度”) 等の特定の指標の値を取り出すこと
 <span id="cb396-2"><a href="アンサンブル学習.html#cb396-2" tabindex="-1"></a>(auc <span class="ot">&lt;-</span> <span class="fu">as.numeric</span>(auc_rf<span class="sc">@</span>y.values))</span>
 <span id="cb396-3"><a href="アンサンブル学習.html#cb396-3" tabindex="-1"></a><span class="co">#&gt; [1] 0.7725884</span></span></code></pre></div>
 </div>
-<div id="一般化ブースト回帰モデル" class="section level2 hasAnchor" number="9.3">
-<h2><span class="header-section-number">9.3</span> 一般化ブースト回帰モデル<a href="アンサンブル学習.html#一般化ブースト回帰モデル" class="anchor-section" aria-label="Anchor link to header"></a></h2>
+<div id="一般化ブースト回帰" class="section level2 hasAnchor" number="9.3">
+<h2><span class="header-section-number">9.3</span> 一般化ブースト回帰<a href="アンサンブル学習.html#一般化ブースト回帰" class="anchor-section" aria-label="Anchor link to header"></a></h2>
 <p>パッケージ<strong>gbm</strong>, 関数<code>gbm()</code>を用いて,
 <strong>勾配ブースティング木 (gradient boosting/boosted tree)</strong> を実行する.</p>
 <pre><code>注: `gbm()`関数は, generalized boosted regression modelを適合する関数であるとマニュアルで説明されている. この関数では, 分布 (引数`distribution`) として, “gaussian”の他に, “bernoulli” (0/1), “possion” (カウント)等をカバーすることから,「一般化線形モデル (GLM)」における”generalized”の使い方をしていると思われる.
@@ -726,6 +737,7 @@ credit_df_01$Customer2 <- model.matrix( ~ Customer, data = credit_df_noNA)[, -1]
 →
 model.matrix()内, 何故かbookdown実行時, "contr.sum"になっていた!? 出力が{-1,1}
 -->
+<p>GBTにおいては, パラメータの選択がパフォーマンスに大きく左右する.</p>
 <pre><code>gbm():
 重要なパラメータ
 - n.trees   適合する木の総数=繰り返し計算回数

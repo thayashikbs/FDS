@@ -303,7 +303,7 @@ code span.wa { color: #60a0b0; font-weight: bold; font-style: italic; } /* Warni
 <li class="chapter" data-level="" data-path="アンサンブル学習.html"><a href="アンサンブル学習.html#データセット3-個人ローン信用データ-再掲"><i class="fa fa-check"></i>データセット3: 個人ローン信用データ (再掲)</a></li>
 </ul></li>
 <li class="chapter" data-level="9.2" data-path="アンサンブル学習.html"><a href="アンサンブル学習.html#ランダムフォレスト分類木"><i class="fa fa-check"></i><b>9.2</b> ランダムフォレスト分類木</a></li>
-<li class="chapter" data-level="9.3" data-path="アンサンブル学習.html"><a href="アンサンブル学習.html#一般化ブースト回帰モデル"><i class="fa fa-check"></i><b>9.3</b> 一般化ブースト回帰モデル</a></li>
+<li class="chapter" data-level="9.3" data-path="アンサンブル学習.html"><a href="アンサンブル学習.html#一般化ブースト回帰"><i class="fa fa-check"></i><b>9.3</b> 一般化ブースト回帰</a></li>
 </ul></li>
 <li class="chapter" data-level="10" data-path="サポートベクターマシーン-svm.html"><a href="サポートベクターマシーン-svm.html"><i class="fa fa-check"></i><b>10</b> サポート・ベクター・マシーン (SVM)</a>
 <ul>
@@ -535,9 +535,9 @@ code span.wa { color: #60a0b0; font-weight: bold; font-style: italic; } /* Warni
 <span id="cb354-6"><a href="決定木分析.html#cb354-6" tabindex="-1"></a><span class="co">#&gt;   n= 50 </span></span>
 <span id="cb354-7"><a href="決定木分析.html#cb354-7" tabindex="-1"></a><span class="co">#&gt; </span></span>
 <span id="cb354-8"><a href="決定木分析.html#cb354-8" tabindex="-1"></a><span class="co">#&gt;          CP nsplit rel error    xerror      xstd</span></span>
-<span id="cb354-9"><a href="決定木分析.html#cb354-9" tabindex="-1"></a><span class="co">#&gt; 1 0.4676398      0 1.0000000 1.0518443 0.2198435</span></span>
-<span id="cb354-10"><a href="決定木分析.html#cb354-10" tabindex="-1"></a><span class="co">#&gt; 2 0.1104944      1 0.5323602 0.6534443 0.1583640</span></span>
-<span id="cb354-11"><a href="決定木分析.html#cb354-11" tabindex="-1"></a><span class="co">#&gt; 3 0.0100000      2 0.4218658 0.4754756 0.1226205</span></span>
+<span id="cb354-9"><a href="決定木分析.html#cb354-9" tabindex="-1"></a><span class="co">#&gt; 1 0.4676398      0 1.0000000 1.0312126 0.2169766</span></span>
+<span id="cb354-10"><a href="決定木分析.html#cb354-10" tabindex="-1"></a><span class="co">#&gt; 2 0.1104944      1 0.5323602 0.6574539 0.1413474</span></span>
+<span id="cb354-11"><a href="決定木分析.html#cb354-11" tabindex="-1"></a><span class="co">#&gt; 3 0.0100000      2 0.4218658 0.4931894 0.1213547</span></span>
 <span id="cb354-12"><a href="決定木分析.html#cb354-12" tabindex="-1"></a><span class="co">#&gt; </span></span>
 <span id="cb354-13"><a href="決定木分析.html#cb354-13" tabindex="-1"></a><span class="co">#&gt; Variable importance</span></span>
 <span id="cb354-14"><a href="決定木分析.html#cb354-14" tabindex="-1"></a><span class="co">#&gt; speed </span></span>
@@ -779,9 +779,9 @@ code span.wa { color: #60a0b0; font-weight: bold; font-style: italic; } /* Warni
 <span id="cb364-12"><a href="決定木分析.html#cb364-12" tabindex="-1"></a><span class="co">#&gt; n= 1250 </span></span>
 <span id="cb364-13"><a href="決定木分析.html#cb364-13" tabindex="-1"></a><span class="co">#&gt; </span></span>
 <span id="cb364-14"><a href="決定木分析.html#cb364-14" tabindex="-1"></a><span class="co">#&gt;          CP nsplit rel error xerror     xstd</span></span>
-<span id="cb364-15"><a href="決定木分析.html#cb364-15" tabindex="-1"></a><span class="co">#&gt; 1 0.0174254      0   1.00000 1.0018 0.059385</span></span>
-<span id="cb364-16"><a href="決定木分析.html#cb364-16" tabindex="-1"></a><span class="co">#&gt; 2 0.0079811      1   0.98257 1.0302 0.063261</span></span>
-<span id="cb364-17"><a href="決定木分析.html#cb364-17" tabindex="-1"></a><span class="co">#&gt; 3 0.0079000      4   0.95863 1.1148 0.066612</span></span>
+<span id="cb364-15"><a href="決定木分析.html#cb364-15" tabindex="-1"></a><span class="co">#&gt; 1 0.0174254      0   1.00000 1.0010 0.059329</span></span>
+<span id="cb364-16"><a href="決定木分析.html#cb364-16" tabindex="-1"></a><span class="co">#&gt; 2 0.0079811      1   0.98257 1.0102 0.060142</span></span>
+<span id="cb364-17"><a href="決定木分析.html#cb364-17" tabindex="-1"></a><span class="co">#&gt; 3 0.0079000      4   0.95863 1.0941 0.068650</span></span>
 <span id="cb364-18"><a href="決定木分析.html#cb364-18" tabindex="-1"></a><span class="fu">plotcp</span>(sp_rp)       </span></code></pre></div>
 <p><img src="090-DT_files/figure-html/unnamed-chunk-15-1.png" width="75%" /></p>
 <p><code>plotcp()</code>は, 木の複雑度 (CP) (横軸) に対する
@@ -876,12 +876,12 @@ code span.wa { color: #60a0b0; font-weight: bold; font-style: italic; } /* Warni
 <span id="cb370-13"><a href="決定木分析.html#cb370-13" tabindex="-1"></a><span class="co">#&gt; </span></span>
 <span id="cb370-14"><a href="決定木分析.html#cb370-14" tabindex="-1"></a><span class="co">#&gt;         CP nsplit rel error  xerror     xstd</span></span>
 <span id="cb370-15"><a href="決定木分析.html#cb370-15" tabindex="-1"></a><span class="co">#&gt; 1 0.063123      0   1.00000 1.00000 0.029345</span></span>
-<span id="cb370-16"><a href="決定木分析.html#cb370-16" tabindex="-1"></a><span class="co">#&gt; 2 0.023256      1   0.93688 0.96844 0.029299</span></span>
-<span id="cb370-17"><a href="決定木分析.html#cb370-17" tabindex="-1"></a><span class="co">#&gt; 3 0.016058      2   0.91362 0.99668 0.029341</span></span>
-<span id="cb370-18"><a href="決定木分析.html#cb370-18" tabindex="-1"></a><span class="co">#&gt; 4 0.014950      5   0.86545 1.01661 0.029359</span></span>
-<span id="cb370-19"><a href="決定木分析.html#cb370-19" tabindex="-1"></a><span class="co">#&gt; 5 0.014120      6   0.85050 1.00997 0.029354</span></span>
-<span id="cb370-20"><a href="決定木分析.html#cb370-20" tabindex="-1"></a><span class="co">#&gt; 6 0.011628      8   0.82226 0.99668 0.029341</span></span>
-<span id="cb370-21"><a href="決定木分析.html#cb370-21" tabindex="-1"></a><span class="co">#&gt; 7 0.010000     10   0.79900 1.00664 0.029351</span></span>
+<span id="cb370-16"><a href="決定木分析.html#cb370-16" tabindex="-1"></a><span class="co">#&gt; 2 0.023256      1   0.93688 0.99834 0.029343</span></span>
+<span id="cb370-17"><a href="決定木分析.html#cb370-17" tabindex="-1"></a><span class="co">#&gt; 3 0.016058      2   0.91362 1.00332 0.029348</span></span>
+<span id="cb370-18"><a href="決定木分析.html#cb370-18" tabindex="-1"></a><span class="co">#&gt; 4 0.014950      5   0.86545 0.99502 0.029339</span></span>
+<span id="cb370-19"><a href="決定木分析.html#cb370-19" tabindex="-1"></a><span class="co">#&gt; 5 0.014120      6   0.85050 1.00000 0.029345</span></span>
+<span id="cb370-20"><a href="決定木分析.html#cb370-20" tabindex="-1"></a><span class="co">#&gt; 6 0.011628      8   0.82226 0.98505 0.029326</span></span>
+<span id="cb370-21"><a href="決定木分析.html#cb370-21" tabindex="-1"></a><span class="co">#&gt; 7 0.010000     10   0.79900 0.99502 0.029339</span></span>
 <span id="cb370-22"><a href="決定木分析.html#cb370-22" tabindex="-1"></a><span class="fu">plotcp</span>(sp2_rp)</span></code></pre></div>
 <p><img src="090-DT_files/figure-html/unnamed-chunk-20-1.png" width="75%" /></p>
 <p>上の図は, cp (横軸) が増えても,
