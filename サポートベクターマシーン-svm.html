@@ -1,0 +1,1212 @@
+<!DOCTYPE html>
+<html lang="" xml:lang="">
+<head>
+
+  <meta charset="utf-8" />
+  <meta http-equiv="X-UA-Compatible" content="IE=edge" />
+  <title>10 サポート・ベクター・マシーン (SVM) | 金融データサイエンス</title>
+  <meta name="description" content="10 サポート・ベクター・マシーン (SVM) | 金融データサイエンス" />
+  <meta name="generator" content="bookdown 0.40 and GitBook 2.6.7" />
+
+  <meta property="og:title" content="10 サポート・ベクター・マシーン (SVM) | 金融データサイエンス" />
+  <meta property="og:type" content="book" />
+  
+  
+  
+
+  <meta name="twitter:card" content="summary" />
+  <meta name="twitter:title" content="10 サポート・ベクター・マシーン (SVM) | 金融データサイエンス" />
+  
+  
+  
+
+<meta name="author" content="林 高樹" />
+
+
+
+  <meta name="viewport" content="width=device-width, initial-scale=1" />
+  <meta name="apple-mobile-web-app-capable" content="yes" />
+  <meta name="apple-mobile-web-app-status-bar-style" content="black" />
+  
+  
+<link rel="prev" href="アンサンブル学習.html"/>
+
+<script src="libs/jquery-3.6.0/jquery-3.6.0.min.js"></script>
+<script src="https://cdn.jsdelivr.net/npm/fuse.js@6.4.6/dist/fuse.min.js"></script>
+<link href="libs/gitbook-2.6.7/css/style.css" rel="stylesheet" />
+<link href="libs/gitbook-2.6.7/css/plugin-table.css" rel="stylesheet" />
+<link href="libs/gitbook-2.6.7/css/plugin-bookdown.css" rel="stylesheet" />
+<link href="libs/gitbook-2.6.7/css/plugin-highlight.css" rel="stylesheet" />
+<link href="libs/gitbook-2.6.7/css/plugin-search.css" rel="stylesheet" />
+<link href="libs/gitbook-2.6.7/css/plugin-fontsettings.css" rel="stylesheet" />
+<link href="libs/gitbook-2.6.7/css/plugin-clipboard.css" rel="stylesheet" />
+
+
+
+
+
+
+
+
+<link href="libs/anchor-sections-1.1.0/anchor-sections.css" rel="stylesheet" />
+<link href="libs/anchor-sections-1.1.0/anchor-sections-hash.css" rel="stylesheet" />
+<script src="libs/anchor-sections-1.1.0/anchor-sections.js"></script>
+
+
+<style type="text/css">
+pre > code.sourceCode { white-space: pre; position: relative; }
+pre > code.sourceCode > span { line-height: 1.25; }
+pre > code.sourceCode > span:empty { height: 1.2em; }
+.sourceCode { overflow: visible; }
+code.sourceCode > span { color: inherit; text-decoration: inherit; }
+pre.sourceCode { margin: 0; }
+@media screen {
+div.sourceCode { overflow: auto; }
+}
+@media print {
+pre > code.sourceCode { white-space: pre-wrap; }
+pre > code.sourceCode > span { display: inline-block; text-indent: -5em; padding-left: 5em; }
+}
+pre.numberSource code
+  { counter-reset: source-line 0; }
+pre.numberSource code > span
+  { position: relative; left: -4em; counter-increment: source-line; }
+pre.numberSource code > span > a:first-child::before
+  { content: counter(source-line);
+    position: relative; left: -1em; text-align: right; vertical-align: baseline;
+    border: none; display: inline-block;
+    -webkit-touch-callout: none; -webkit-user-select: none;
+    -khtml-user-select: none; -moz-user-select: none;
+    -ms-user-select: none; user-select: none;
+    padding: 0 4px; width: 4em;
+    color: #aaaaaa;
+  }
+pre.numberSource { margin-left: 3em; border-left: 1px solid #aaaaaa;  padding-left: 4px; }
+div.sourceCode
+  {   }
+@media screen {
+pre > code.sourceCode > span > a:first-child::before { text-decoration: underline; }
+}
+code span.al { color: #ff0000; font-weight: bold; } /* Alert */
+code span.an { color: #60a0b0; font-weight: bold; font-style: italic; } /* Annotation */
+code span.at { color: #7d9029; } /* Attribute */
+code span.bn { color: #40a070; } /* BaseN */
+code span.bu { color: #008000; } /* BuiltIn */
+code span.cf { color: #007020; font-weight: bold; } /* ControlFlow */
+code span.ch { color: #4070a0; } /* Char */
+code span.cn { color: #880000; } /* Constant */
+code span.co { color: #60a0b0; font-style: italic; } /* Comment */
+code span.cv { color: #60a0b0; font-weight: bold; font-style: italic; } /* CommentVar */
+code span.do { color: #ba2121; font-style: italic; } /* Documentation */
+code span.dt { color: #902000; } /* DataType */
+code span.dv { color: #40a070; } /* DecVal */
+code span.er { color: #ff0000; font-weight: bold; } /* Error */
+code span.ex { } /* Extension */
+code span.fl { color: #40a070; } /* Float */
+code span.fu { color: #06287e; } /* Function */
+code span.im { color: #008000; font-weight: bold; } /* Import */
+code span.in { color: #60a0b0; font-weight: bold; font-style: italic; } /* Information */
+code span.kw { color: #007020; font-weight: bold; } /* Keyword */
+code span.op { color: #666666; } /* Operator */
+code span.ot { color: #007020; } /* Other */
+code span.pp { color: #bc7a00; } /* Preprocessor */
+code span.sc { color: #4070a0; } /* SpecialChar */
+code span.ss { color: #bb6688; } /* SpecialString */
+code span.st { color: #4070a0; } /* String */
+code span.va { color: #19177c; } /* Variable */
+code span.vs { color: #4070a0; } /* VerbatimString */
+code span.wa { color: #60a0b0; font-weight: bold; font-style: italic; } /* Warning */
+</style>
+
+<style type="text/css">
+  
+  div.hanging-indent{margin-left: 1.5em; text-indent: -1.5em;}
+</style>
+
+</head>
+
+<body>
+
+
+
+  <div class="book without-animation with-summary font-size-2 font-family-1" data-basepath=".">
+
+    <div class="book-summary">
+      <nav role="navigation">
+
+<ul class="summary">
+<li class="chapter" data-level="1" data-path="index.html"><a href="index.html"><i class="fa fa-check"></i><b>1</b> はじめに</a>
+<ul>
+<li class="chapter" data-level="1.1" data-path="index.html"><a href="index.html#コースの目的"><i class="fa fa-check"></i><b>1.1</b> コースの目的</a></li>
+<li class="chapter" data-level="1.2" data-path="index.html"><a href="index.html#統計学統計的手法の学習について"><i class="fa fa-check"></i><b>1.2</b> 統計学/統計的手法の学習について</a>
+<ul>
+<li class="chapter" data-level="" data-path="index.html"><a href="index.html#学習の目標"><i class="fa fa-check"></i>学習の目標</a></li>
+<li class="chapter" data-level="" data-path="index.html"><a href="index.html#統計学統計的手法の学習方法"><i class="fa fa-check"></i>統計学/統計的手法の学習方法</a></li>
+<li class="chapter" data-level="" data-path="index.html"><a href="index.html#統計学統計的手法の学習ステップ"><i class="fa fa-check"></i>統計学/統計的手法の学習ステップ</a></li>
+</ul></li>
+<li class="chapter" data-level="1.3" data-path="index.html"><a href="index.html#ビジネス応用における統計学の最近の趨勢"><i class="fa fa-check"></i><b>1.3</b> ビジネス応用における統計学の最近の趨勢</a></li>
+<li class="chapter" data-level="1.4" data-path="index.html"><a href="index.html#本書内の記載の注意点"><i class="fa fa-check"></i><b>1.4</b> 本書内の記載の注意点</a></li>
+</ul></li>
+<li class="chapter" data-level="2" data-path="r言語の基本.html"><a href="r言語の基本.html"><i class="fa fa-check"></i><b>2</b> R言語の基本</a>
+<ul>
+<li class="chapter" data-level="2.1" data-path="r言語の基本.html"><a href="r言語の基本.html#rの基本プログラミング"><i class="fa fa-check"></i><b>2.1</b> Rの基本プログラミング</a>
+<ul>
+<li class="chapter" data-level="2.1.1" data-path="r言語の基本.html"><a href="r言語の基本.html#基本操作"><i class="fa fa-check"></i><b>2.1.1</b> 基本操作</a></li>
+<li class="chapter" data-level="2.1.2" data-path="r言語の基本.html"><a href="r言語の基本.html#基本構文"><i class="fa fa-check"></i><b>2.1.2</b> 基本構文</a></li>
+<li class="chapter" data-level="2.1.3" data-path="r言語の基本.html"><a href="r言語の基本.html#自作関数"><i class="fa fa-check"></i><b>2.1.3</b> 自作関数</a></li>
+<li class="chapter" data-level="2.1.4" data-path="r言語の基本.html"><a href="r言語の基本.html#パッケージのインストール-読み込み"><i class="fa fa-check"></i><b>2.1.4</b> パッケージのインストール &amp; 読み込み</a></li>
+<li class="chapter" data-level="2.1.5" data-path="r言語の基本.html"><a href="r言語の基本.html#ヘルプ"><i class="fa fa-check"></i><b>2.1.5</b> ヘルプ</a></li>
+</ul></li>
+<li class="chapter" data-level="2.2" data-path="r言語の基本.html"><a href="r言語の基本.html#データの型や構造"><i class="fa fa-check"></i><b>2.2</b> データの型や構造</a>
+<ul>
+<li class="chapter" data-level="2.2.1" data-path="r言語の基本.html"><a href="r言語の基本.html#データの値の種類-データ型"><i class="fa fa-check"></i><b>2.2.1</b> データの値の種類 (“データ型”)</a></li>
+<li class="chapter" data-level="2.2.2" data-path="r言語の基本.html"><a href="r言語の基本.html#データの配列の仕方-データ構造"><i class="fa fa-check"></i><b>2.2.2</b> データの配列の仕方 (“データ構造”)</a></li>
+<li class="chapter" data-level="2.2.3" data-path="r言語の基本.html"><a href="r言語の基本.html#ベクトル"><i class="fa fa-check"></i><b>2.2.3</b> ベクトル</a></li>
+<li class="chapter" data-level="2.2.4" data-path="r言語の基本.html"><a href="r言語の基本.html#行列"><i class="fa fa-check"></i><b>2.2.4</b> 行列</a></li>
+<li class="chapter" data-level="2.2.5" data-path="r言語の基本.html"><a href="r言語の基本.html#リスト"><i class="fa fa-check"></i><b>2.2.5</b> リスト</a></li>
+<li class="chapter" data-level="2.2.6" data-path="r言語の基本.html"><a href="r言語の基本.html#データフレーム"><i class="fa fa-check"></i><b>2.2.6</b> データフレーム</a></li>
+</ul></li>
+<li class="chapter" data-level="2.3" data-path="r言語の基本.html"><a href="r言語の基本.html#データの操作演算"><i class="fa fa-check"></i><b>2.3</b> データの操作・演算</a>
+<ul>
+<li class="chapter" data-level="2.3.1" data-path="r言語の基本.html"><a href="r言語の基本.html#ベクトルの結合-ソート"><i class="fa fa-check"></i><b>2.3.1</b> ベクトルの結合, ソート</a></li>
+<li class="chapter" data-level="2.3.2" data-path="r言語の基本.html"><a href="r言語の基本.html#二項演算"><i class="fa fa-check"></i><b>2.3.2</b> 二項演算</a></li>
+<li class="chapter" data-level="2.3.3" data-path="r言語の基本.html"><a href="r言語の基本.html#論理演算"><i class="fa fa-check"></i><b>2.3.3</b> 論理演算</a></li>
+<li class="chapter" data-level="2.3.4" data-path="r言語の基本.html"><a href="r言語の基本.html#条件式"><i class="fa fa-check"></i><b>2.3.4</b> 条件式</a></li>
+<li class="chapter" data-level="2.3.5" data-path="r言語の基本.html"><a href="r言語の基本.html#行列演算"><i class="fa fa-check"></i><b>2.3.5</b> 行列演算</a></li>
+</ul></li>
+<li class="chapter" data-level="2.4" data-path="r言語の基本.html"><a href="r言語の基本.html#r関数"><i class="fa fa-check"></i><b>2.4</b> R関数</a>
+<ul>
+<li class="chapter" data-level="2.4.1" data-path="r言語の基本.html"><a href="r言語の基本.html#数学基本関数"><i class="fa fa-check"></i><b>2.4.1</b> 数学基本関数</a></li>
+<li class="chapter" data-level="2.4.2" data-path="r言語の基本.html"><a href="r言語の基本.html#基本統計量の計算"><i class="fa fa-check"></i><b>2.4.2</b> 基本統計量の計算</a></li>
+<li class="chapter" data-level="2.4.3" data-path="r言語の基本.html"><a href="r言語の基本.html#確率分布"><i class="fa fa-check"></i><b>2.4.3</b> 確率分布</a></li>
+<li class="chapter" data-level="2.4.4" data-path="r言語の基本.html"><a href="r言語の基本.html#その他便利な関数"><i class="fa fa-check"></i><b>2.4.4</b> その他便利な関数</a></li>
+</ul></li>
+<li class="chapter" data-level="2.5" data-path="r言語の基本.html"><a href="r言語の基本.html#データの可視化"><i class="fa fa-check"></i><b>2.5</b> データの可視化</a></li>
+<li class="chapter" data-level="2.6" data-path="r言語の基本.html"><a href="r言語の基本.html#ファイル入出力"><i class="fa fa-check"></i><b>2.6</b> ファイル入出力</a>
+<ul>
+<li class="chapter" data-level="2.6.1" data-path="r言語の基本.html"><a href="r言語の基本.html#テキストファイル読み込み"><i class="fa fa-check"></i><b>2.6.1</b> テキストファイル読み込み</a></li>
+<li class="chapter" data-level="2.6.2" data-path="r言語の基本.html"><a href="r言語の基本.html#テキストファイル書き出し"><i class="fa fa-check"></i><b>2.6.2</b> テキストファイル書き出し</a></li>
+</ul></li>
+<li class="chapter" data-level="2.7" data-path="r言語の基本.html"><a href="r言語の基本.html#パッケージtidyverse"><i class="fa fa-check"></i><b>2.7</b> パッケージ<code>tidyverse</code></a>
+<ul>
+<li class="chapter" data-level="2.7.1" data-path="r言語の基本.html"><a href="r言語の基本.html#q-rの初心者はtidyverseから勉強することは可能か"><i class="fa fa-check"></i><b>2.7.1</b> Q: Rの初心者は<code>tidyverse</code>から勉強することは可能か?</a></li>
+<li class="chapter" data-level="2.7.2" data-path="r言語の基本.html"><a href="r言語の基本.html#tidyverseの基本"><i class="fa fa-check"></i><b>2.7.2</b> <code>tidyverse</code>の基本</a></li>
+</ul></li>
+</ul></li>
+<li class="chapter" data-level="3" data-path="線形回帰分析.html"><a href="線形回帰分析.html"><i class="fa fa-check"></i><b>3</b> 線形回帰分析</a>
+<ul>
+<li class="chapter" data-level="3.1" data-path="線形回帰分析.html"><a href="線形回帰分析.html#重回帰分析の基本操作"><i class="fa fa-check"></i><b>3.1</b> 重回帰分析の基本操作</a>
+<ul>
+<li class="chapter" data-level="" data-path="線形回帰分析.html"><a href="線形回帰分析.html#データ1-1ルーム賃貸マンション"><i class="fa fa-check"></i>データ1: 1ルーム賃貸マンション</a></li>
+</ul></li>
+<li class="chapter" data-level="3.2" data-path="線形回帰分析.html"><a href="線形回帰分析.html#変数の選択"><i class="fa fa-check"></i><b>3.2</b> 変数の選択</a>
+<ul>
+<li class="chapter" data-level="" data-path="線形回帰分析.html"><a href="線形回帰分析.html#データ2-ボストン市内住宅物件価格データ"><i class="fa fa-check"></i>データ2: ボストン市内住宅物件価格データ</a></li>
+</ul></li>
+<li class="chapter" data-level="3.3" data-path="線形回帰分析.html"><a href="線形回帰分析.html#説明変数に質的変数を含む回帰"><i class="fa fa-check"></i><b>3.3</b> 説明変数に質的変数を含む回帰</a>
+<ul>
+<li class="chapter" data-level="" data-path="線形回帰分析.html"><a href="線形回帰分析.html#データセット3-高速道路事故データ"><i class="fa fa-check"></i>データセット#3: 高速道路事故データ</a></li>
+</ul></li>
+<li class="chapter" data-level="3.4" data-path="線形回帰分析.html"><a href="線形回帰分析.html#説明変数に質的変数を含む回帰-2"><i class="fa fa-check"></i><b>3.4</b> 説明変数に質的変数を含む回帰 (2)</a>
+<ul>
+<li class="chapter" data-level="" data-path="線形回帰分析.html"><a href="線形回帰分析.html#データセット5-収入データ-仮想"><i class="fa fa-check"></i>データセット#5: 収入データ (仮想)</a></li>
+</ul></li>
+<li class="chapter" data-level="3.5" data-path="線形回帰分析.html"><a href="線形回帰分析.html#多項式回帰"><i class="fa fa-check"></i><b>3.5</b> 多項式回帰</a>
+<ul>
+<li class="chapter" data-level="" data-path="線形回帰分析.html"><a href="線形回帰分析.html#データセット6-wage"><i class="fa fa-check"></i>データセット#6: <code>Wage</code></a></li>
+</ul></li>
+<li class="chapter" data-level="3.6" data-path="線形回帰分析.html"><a href="線形回帰分析.html#関数factorについて"><i class="fa fa-check"></i><b>3.6</b> 関数<code>factor()</code>について</a>
+<ul>
+<li class="chapter" data-level="" data-path="線形回帰分析.html"><a href="線形回帰分析.html#rでのfactor関数の使い方"><i class="fa fa-check"></i>Rでのfactor関数の使い方</a></li>
+</ul></li>
+</ul></li>
+<li class="chapter" data-level="4" data-path="ロジットブロビット回帰分析.html"><a href="ロジットブロビット回帰分析.html"><i class="fa fa-check"></i><b>4</b> ロジット/ブロビット回帰分析</a>
+<ul>
+<li class="chapter" data-level="4.1" data-path="ロジットブロビット回帰分析.html"><a href="ロジットブロビット回帰分析.html#ロジット回帰分析の基本操作"><i class="fa fa-check"></i><b>4.1</b> ロジット回帰分析の基本操作</a>
+<ul>
+<li class="chapter" data-level="" data-path="ロジットブロビット回帰分析.html"><a href="ロジットブロビット回帰分析.html#ロジットモデル-シミュレーションデータ"><i class="fa fa-check"></i>ロジットモデル: シミュレーションデータ</a></li>
+</ul></li>
+<li class="chapter" data-level="4.2" data-path="ロジットブロビット回帰分析.html"><a href="ロジットブロビット回帰分析.html#データ分析例"><i class="fa fa-check"></i><b>4.2</b> データ分析例</a>
+<ul>
+<li class="chapter" data-level="" data-path="ロジットブロビット回帰分析.html"><a href="ロジットブロビット回帰分析.html#データセット-1-企業パフォーマンスデータ-仮想"><i class="fa fa-check"></i>データセット (1): 企業パフォーマンス・データ (仮想)</a></li>
+<li class="chapter" data-level="" data-path="ロジットブロビット回帰分析.html"><a href="ロジットブロビット回帰分析.html#データセット-2-個人ローンデフォルトデータ-仮想"><i class="fa fa-check"></i>データセット (2): 個人ローン・デフォルト・データ (仮想)</a></li>
+</ul></li>
+<li class="chapter" data-level="4.3" data-path="ロジットブロビット回帰分析.html"><a href="ロジットブロビット回帰分析.html#疑似r2の計算"><i class="fa fa-check"></i><b>4.3</b> 疑似R2の計算</a>
+<ul>
+<li class="chapter" data-level="" data-path="ロジットブロビット回帰分析.html"><a href="ロジットブロビット回帰分析.html#パッケージdesctoolsの利用"><i class="fa fa-check"></i>パッケージ<code>DescTools</code>の利用</a></li>
+<li class="chapter" data-level="" data-path="ロジットブロビット回帰分析.html"><a href="ロジットブロビット回帰分析.html#パッケージpsclの利用"><i class="fa fa-check"></i>パッケージ<code>pscl</code>の利用</a></li>
+<li class="chapter" data-level="" data-path="ロジットブロビット回帰分析.html"><a href="ロジットブロビット回帰分析.html#パッケージperformanceの利用"><i class="fa fa-check"></i>パッケージ<code>performance</code>の利用</a></li>
+</ul></li>
+</ul></li>
+<li class="chapter" data-level="5" data-path="一般化加法モデル-gam.html"><a href="一般化加法モデル-gam.html"><i class="fa fa-check"></i><b>5</b> 一般化加法モデル (GAM)</a>
+<ul>
+<li class="chapter" data-level="5.1" data-path="一般化加法モデル-gam.html"><a href="一般化加法モデル-gam.html#パッケージgamの利用"><i class="fa fa-check"></i><b>5.1</b> パッケージ<code>gam</code>の利用</a>
+<ul>
+<li class="chapter" data-level="" data-path="一般化加法モデル-gam.html"><a href="一般化加法モデル-gam.html#多項式回帰-1"><i class="fa fa-check"></i>多項式回帰</a></li>
+<li class="chapter" data-level="" data-path="一般化加法モデル-gam.html"><a href="一般化加法モデル-gam.html#スプライン適合"><i class="fa fa-check"></i>スプライン適合</a></li>
+<li class="chapter" data-level="" data-path="一般化加法モデル-gam.html"><a href="一般化加法モデル-gam.html#gam"><i class="fa fa-check"></i>GAM</a></li>
+</ul></li>
+<li class="chapter" data-level="5.2" data-path="一般化加法モデル-gam.html"><a href="一般化加法モデル-gam.html#パッケージmgcvの利用"><i class="fa fa-check"></i><b>5.2</b> パッケージ<code>mgcv</code>の利用</a></li>
+<li class="chapter" data-level="5.3" data-path="一般化加法モデル-gam.html"><a href="一般化加法モデル-gam.html#パッケージprophetの利用"><i class="fa fa-check"></i><b>5.3</b> パッケージ<code>prophet</code>の利用</a></li>
+<li class="chapter" data-level="5.4" data-path="一般化加法モデル-gam.html"><a href="一般化加法モデル-gam.html#追加分析boston-housingデータセットの変数間の関係性"><i class="fa fa-check"></i><b>5.4</b> 【追加分析】Boston housingデータセットの変数間の関係性</a></li>
+</ul></li>
+<li class="chapter" data-level="6" data-path="正則化回帰-lasso-ridge回帰-elastic-net.html"><a href="正則化回帰-lasso-ridge回帰-elastic-net.html"><i class="fa fa-check"></i><b>6</b> 正則化回帰 (lasso, ridge回帰, elastic net)</a>
+<ul>
+<li class="chapter" data-level="6.1" data-path="正則化回帰-lasso-ridge回帰-elastic-net.html"><a href="正則化回帰-lasso-ridge回帰-elastic-net.html#検証用セット法による回帰モデルの予測精度評価"><i class="fa fa-check"></i><b>6.1</b> 検証用セット法による回帰モデルの予測精度評価</a>
+<ul>
+<li class="chapter" data-level="" data-path="正則化回帰-lasso-ridge回帰-elastic-net.html"><a href="正則化回帰-lasso-ridge回帰-elastic-net.html#データセット1-ワイン品質データ"><i class="fa fa-check"></i>データセット1: ワイン品質データ</a></li>
+</ul></li>
+<li class="chapter" data-level="6.2" data-path="正則化回帰-lasso-ridge回帰-elastic-net.html"><a href="正則化回帰-lasso-ridge回帰-elastic-net.html#lasso"><i class="fa fa-check"></i><b>6.2</b> lasso</a>
+<ul>
+<li class="chapter" data-level="" data-path="正則化回帰-lasso-ridge回帰-elastic-net.html"><a href="正則化回帰-lasso-ridge回帰-elastic-net.html#関数glmnetの基本操作"><i class="fa fa-check"></i>関数<code>glmnet()</code>の基本操作</a></li>
+<li class="chapter" data-level="" data-path="正則化回帰-lasso-ridge回帰-elastic-net.html"><a href="正則化回帰-lasso-ridge回帰-elastic-net.html#lambdaのグリッド指定によるglmnetの一括実行"><i class="fa fa-check"></i><code>lambda</code>のグリッド指定による<code>glmnet</code>の一括実行</a></li>
+<li class="chapter" data-level="" data-path="正則化回帰-lasso-ridge回帰-elastic-net.html"><a href="正則化回帰-lasso-ridge回帰-elastic-net.html#交差検証によるパラメータチューニング"><i class="fa fa-check"></i>交差検証によるパラメータ・チューニング</a></li>
+</ul></li>
+<li class="chapter" data-level="6.3" data-path="正則化回帰-lasso-ridge回帰-elastic-net.html"><a href="正則化回帰-lasso-ridge回帰-elastic-net.html#ridge回帰"><i class="fa fa-check"></i><b>6.3</b> ridge回帰</a></li>
+<li class="chapter" data-level="6.4" data-path="正則化回帰-lasso-ridge回帰-elastic-net.html"><a href="正則化回帰-lasso-ridge回帰-elastic-net.html#一般化線形モデル-glm-正則化"><i class="fa fa-check"></i><b>6.4</b> 一般化線形モデル (GLM) + 正則化</a>
+<ul>
+<li class="chapter" data-level="" data-path="正則化回帰-lasso-ridge回帰-elastic-net.html"><a href="正則化回帰-lasso-ridge回帰-elastic-net.html#データセット2-german-creditデータ"><i class="fa fa-check"></i>データセット2: german creditデータ</a></li>
+</ul></li>
+<li class="chapter" data-level="6.5" data-path="正則化回帰-lasso-ridge回帰-elastic-net.html"><a href="正則化回帰-lasso-ridge回帰-elastic-net.html#補足-glmに対する変数選択の代替的方法"><i class="fa fa-check"></i><b>6.5</b> 補足: GLMに対する変数選択の代替的方法</a></li>
+</ul></li>
+<li class="chapter" data-level="7" data-path="判別分析.html"><a href="判別分析.html"><i class="fa fa-check"></i><b>7</b> 判別分析</a>
+<ul>
+<li class="chapter" data-level="7.1" data-path="判別分析.html"><a href="判別分析.html#線形判別-2次判別-パッケージmassの利用"><i class="fa fa-check"></i><b>7.1</b> 線形判別 &amp; 2次判別: パッケージMASSの利用</a>
+<ul>
+<li class="chapter" data-level="" data-path="判別分析.html"><a href="判別分析.html#データセット1-米国sp500日次リターンデータ"><i class="fa fa-check"></i>データセット#1: 米国S&amp;P500日次リターンデータ</a></li>
+<li class="chapter" data-level="" data-path="判別分析.html"><a href="判別分析.html#線形判別-lda"><i class="fa fa-check"></i>線形判別 (LDA)</a></li>
+<li class="chapter" data-level="" data-path="判別分析.html"><a href="判別分析.html#次判別-qda"><i class="fa fa-check"></i>2次判別 (QDA)</a></li>
+</ul></li>
+<li class="chapter" data-level="7.2" data-path="判別分析.html"><a href="判別分析.html#knn法-パッケージclassの利用"><i class="fa fa-check"></i><b>7.2</b> kNN法: パッケージ<strong>class</strong>の利用</a></li>
+<li class="chapter" data-level="7.3" data-path="判別分析.html"><a href="判別分析.html#他パッケージの利用-パッケージklar"><i class="fa fa-check"></i><b>7.3</b> 他パッケージの利用: パッケージ<strong>klaR</strong></a>
+<ul>
+<li class="chapter" data-level="" data-path="判別分析.html"><a href="判別分析.html#データセット2-ビジネススクールの入学許可データ"><i class="fa fa-check"></i>データセット#2: ビジネススクールの入学許可データ</a></li>
+</ul></li>
+</ul></li>
+<li class="chapter" data-level="8" data-path="決定木分析.html"><a href="決定木分析.html"><i class="fa fa-check"></i><b>8</b> 決定木分析</a>
+<ul>
+<li class="chapter" data-level="8.1" data-path="決定木分析.html"><a href="決定木分析.html#導入-回帰木-vs-線形回帰"><i class="fa fa-check"></i><b>8.1</b> 導入: 回帰木 vs 線形回帰</a>
+<ul>
+<li class="chapter" data-level="" data-path="決定木分析.html"><a href="決定木分析.html#データセット1-自動車の制動距離"><i class="fa fa-check"></i>データセット1: 自動車の制動距離</a></li>
+<li class="chapter" data-level="8.1.1" data-path="決定木分析.html"><a href="決定木分析.html#基本操作-回帰木"><i class="fa fa-check"></i><b>8.1.1</b> 基本操作: 回帰木</a></li>
+</ul></li>
+<li class="chapter" data-level="8.2" data-path="決定木分析.html"><a href="決定木分析.html#回帰木"><i class="fa fa-check"></i><b>8.2</b> 回帰木</a>
+<ul>
+<li class="chapter" data-level="" data-path="決定木分析.html"><a href="決定木分析.html#データセット2-米國株価指数データ-再掲"><i class="fa fa-check"></i>データセット2: 米國株価指数データ (再掲)</a></li>
+</ul></li>
+<li class="chapter" data-level="8.3" data-path="決定木分析.html"><a href="決定木分析.html#分類木"><i class="fa fa-check"></i><b>8.3</b> 分類木</a></li>
+</ul></li>
+<li class="chapter" data-level="9" data-path="アンサンブル学習.html"><a href="アンサンブル学習.html"><i class="fa fa-check"></i><b>9</b> アンサンブル学習</a>
+<ul>
+<li class="chapter" data-level="9.1" data-path="アンサンブル学習.html"><a href="アンサンブル学習.html#決定木-分類木"><i class="fa fa-check"></i><b>9.1</b> 決定木 (分類木)</a>
+<ul>
+<li class="chapter" data-level="" data-path="アンサンブル学習.html"><a href="アンサンブル学習.html#データセット3-個人ローン信用データ-再掲"><i class="fa fa-check"></i>データセット3: 個人ローン信用データ (再掲)</a></li>
+</ul></li>
+<li class="chapter" data-level="9.2" data-path="アンサンブル学習.html"><a href="アンサンブル学習.html#ランダムフォレスト分類木"><i class="fa fa-check"></i><b>9.2</b> ランダムフォレスト分類木</a></li>
+<li class="chapter" data-level="9.3" data-path="アンサンブル学習.html"><a href="アンサンブル学習.html#一般化ブースト回帰"><i class="fa fa-check"></i><b>9.3</b> 一般化ブースト回帰</a></li>
+</ul></li>
+<li class="chapter" data-level="10" data-path="サポートベクターマシーン-svm.html"><a href="サポートベクターマシーン-svm.html"><i class="fa fa-check"></i><b>10</b> サポート・ベクター・マシーン (SVM)</a>
+<ul>
+<li class="chapter" data-level="10.1" data-path="サポートベクターマシーン-svm.html"><a href="サポートベクターマシーン-svm.html#svm-rbfカーネル-の動作の確認"><i class="fa fa-check"></i><b>10.1</b> SVM (RBFカーネル) の動作の確認</a>
+<ul>
+<li class="chapter" data-level="" data-path="サポートベクターマシーン-svm.html"><a href="サポートベクターマシーン-svm.html#データセット1-iris-あやめ-データ"><i class="fa fa-check"></i>データセット1: iris (あやめ) データ</a></li>
+<li class="chapter" data-level="" data-path="サポートベクターマシーン-svm.html"><a href="サポートベクターマシーン-svm.html#svmの実行"><i class="fa fa-check"></i>SVMの実行</a></li>
+</ul></li>
+<li class="chapter" data-level="10.2" data-path="サポートベクターマシーン-svm.html"><a href="サポートベクターマシーン-svm.html#値分類"><i class="fa fa-check"></i><b>10.2</b> 2値分類</a>
+<ul>
+<li class="chapter" data-level="" data-path="サポートベクターマシーン-svm.html"><a href="サポートベクターマシーン-svm.html#データセット2-spamデータ"><i class="fa fa-check"></i>データセット2: spamデータ</a></li>
+<li class="chapter" data-level="" data-path="サポートベクターマシーン-svm.html"><a href="サポートベクターマシーン-svm.html#svmの実行-1"><i class="fa fa-check"></i>SVMの実行</a></li>
+</ul></li>
+<li class="chapter" data-level="10.3" data-path="サポートベクターマシーン-svm.html"><a href="サポートベクターマシーン-svm.html#値分類-1"><i class="fa fa-check"></i><b>10.3</b> 3値分類</a>
+<ul>
+<li class="chapter" data-level="" data-path="サポートベクターマシーン-svm.html"><a href="サポートベクターマシーン-svm.html#svmの実行-2"><i class="fa fa-check"></i>SVMの実行</a></li>
+</ul></li>
+<li class="chapter" data-level="10.4" data-path="サポートベクターマシーン-svm.html"><a href="サポートベクターマシーン-svm.html#代替パッケージe1071の利用"><i class="fa fa-check"></i><b>10.4</b> 代替パッケージ<strong>e1071</strong>の利用</a>
+<ul>
+<li class="chapter" data-level="" data-path="サポートベクターマシーン-svm.html"><a href="サポートベクターマシーン-svm.html#svmの実行-3"><i class="fa fa-check"></i>SVMの実行</a></li>
+</ul></li>
+<li class="chapter" data-level="10.5" data-path="サポートベクターマシーン-svm.html"><a href="サポートベクターマシーン-svm.html#ハイパーパラメータのチューニング"><i class="fa fa-check"></i><b>10.5</b> ハイパーパラメータのチューニング</a>
+<ul>
+<li class="chapter" data-level="" data-path="サポートベクターマシーン-svm.html"><a href="サポートベクターマシーン-svm.html#線形カーネルの場合"><i class="fa fa-check"></i>線形カーネルの場合</a></li>
+<li class="chapter" data-level="" data-path="サポートベクターマシーン-svm.html"><a href="サポートベクターマシーン-svm.html#rbfカーネルの場合"><i class="fa fa-check"></i>RBFカーネルの場合</a></li>
+<li class="chapter" data-level="" data-path="サポートベクターマシーン-svm.html"><a href="サポートベクターマシーン-svm.html#e1071内にあるチューニング用の便利な関数群"><i class="fa fa-check"></i><strong>e1071</strong>内にあるチューニング用の便利な関数群</a></li>
+</ul></li>
+</ul></li>
+</ul>
+
+      </nav>
+    </div>
+
+    <div class="book-body">
+      <div class="body-inner">
+        <div class="book-header" role="navigation">
+          <h1>
+            <i class="fa fa-circle-o-notch fa-spin"></i><a href="./">金融データサイエンス</a>
+          </h1>
+        </div>
+
+        <div class="page-wrapper" tabindex="-1" role="main">
+          <div class="page-inner">
+
+            <section class="normal" id="section-">
+<div id="サポートベクターマシーン-svm" class="section level1 hasAnchor" number="10">
+<h1><span class="header-section-number">10</span> サポート・ベクター・マシーン (SVM)<a href="サポートベクターマシーン-svm.html#サポートベクターマシーン-svm" class="anchor-section" aria-label="Anchor link to header"></a></h1>
+<p>サポートベクターマシーン (SVM) は, 説明変数の空間を分割する決定境界を
+データより直接推定するアプローチである**識別モデル (discriminative model) と呼ばれる
+クラス分類問題解決手法の一つである.</p>
+<p>SVMは, 原理的には, 2クラス分類問題に対して適用される.
+他クラス分類問題に対しては, 複数の2クラス問題に分割し, 各々にSVMを適合して得られた個々の分類結果を統合する形で解決を図る.</p>
+<p>SVMは, 多次元の説明変数の空間上に布置された2クラスの点の集合に対して,
+“マージン” (境界面から一番近い点までの距離) が最大となるという意味において,
+2グループができるだけうまく分離されるような平面 (境界面) を引くことを試みる.
+その際, 完全な分離ではなく, 分類の失敗 (誤判別) やマージン違反を許容するような
+平面を引く. 許容の程度はハイパーパラメータを通じて分析者がSVMに与える.</p>
+<p>また, SVMは, カーネル関数を上手に選択することで, 説明変数空間における
+境界面がドーナツ型を含む非線形な形状をしているようなケースにも柔軟に対応することができる.</p>
+<p>どのように非線形なケースに対応するかについてその原理を大雑把に述べると,</p>
+<ul>
+<li><font color="red">数学的には, 再生核ヒルベルト空間 (RKHS) 理論に基づいている</font></li>
+<li>データ点が配置されている元の空間から, 非線形な空間に拡張される
+<ul>
+<li><font color="red">注: 非線形な写像によって高次元 (または無限次元空間) へマッピングされる</font></li>
+</ul></li>
+<li>その非線形な世界で, 線形な平面を引いて分割する
+<ul>
+<li><font color="red">注: 非線形な空間 (RKHS) では線形な識別関数 (すなわち, 超平面) を学習</font></li>
+</ul></li>
+<li>すると, 元の空間で非線形な分割がなされている
+<ul>
+<li><font color="red">注: 高次元空間で線形な分割境界は, 元の空間に戻すと非線形な境界 (非線形SVM)</font></li>
+</ul></li>
+<li>各データ点を非線形な空間にマップするような非線形な変換のことは考える必要ない (実際には計算不要).</li>
+<li>よって, 非線形な変換のことは忘れて (無視して), カーネル関数を選べば良い (“カーネルトリック”)</li>
+</ul>
+<p>ちなみに, 本章では扱わないが, SVMは, 回帰問題にも応用することができる (サポートベクター回帰). そこでは, やはりカーネル関数をうまく選択することで説明変数の元の空間内では非線形な形状の適合回帰平面を得ることができる. また, 分類問題におけるマージン違反の許容に対応するものとして, 最小二乗法の代わりに 回帰残差が閾値以上の絶対値を持つもののみを残すような損失関数を最小化する問題を問いている.</p>
+<p>なお, SVMにおいても, 学習データに対するモデルの過剰・過小学習を避けるには,
+交差検証などによりパラメータ・チューニングを適切行う必要がある.</p>
+<p>本章では, SVMの中でも, 恐らくもっともポピュラーな (Gaussian) RBFカーネルの操作に限定して説明する.</p>
+<!--
+RBFカーネルの使い方を理解すれば,
+他の非線形カーネルの利用は難しくない
+-->
+<p>本章では, パッケージ<strong>kernlab</strong>の関数<code>ksvm()</code>,
+<strong>e1071</strong>の<code>svm()</code>を用いて, SVMを動かしてみる.</p>
+<p>また, 異なるモデル同士のパフォーマンスを同じ”土俵”で比較したり,
+各モデルのパラメータ・チューニングを共通のやり方で行えるような,
+Rによる機械学習実装の”プラットフォーム”として代表的なパッケージ
+<strong>caret</strong>の機能の一部も紹介する.</p>
+<!--
+なお, 本章はSVMの基本的な操作に焦点を当てるため, Rの基本的データセットである
+あやめのデータセット`iris`を用いる.
+-->
+<div id="svm-rbfカーネル-の動作の確認" class="section level2 hasAnchor" number="10.1">
+<h2><span class="header-section-number">10.1</span> SVM (RBFカーネル) の動作の確認<a href="サポートベクターマシーン-svm.html#svm-rbfカーネル-の動作の確認" class="anchor-section" aria-label="Anchor link to header"></a></h2>
+<div id="データセット1-iris-あやめ-データ" class="section level3 unnumbered hasAnchor">
+<h3>データセット1: iris (あやめ) データ<a href="サポートベクターマシーン-svm.html#データセット1-iris-あやめ-データ" class="anchor-section" aria-label="Anchor link to header"></a></h3>
+<pre><code>iris
+- 150 x 4 
+- Sepal.Length (萼片の長さ) (cm)
+- Sepal.Width (萼片の幅 (cm)
+- Petal.Length (花弁の長さ) (cm)
+- Petal.Width (花弁の幅 (cm)
+- Species (あやめの種類): Setosa, Versicolour, Virginica
+- ※ petal 花弁 (花びら), sepal: 萼片 (がくへん)
+- Introduced in Ronald A. Fisher (1934)
+- cf. https://rpubs.com/vidhividhi/irisdataeda</code></pre>
+<p>SVM (RBFカーネル) の特徴を理解するため, もともとは
+目的変数<code>Species</code>は3分類 (50件x3) を持つが, ここでは
+2分類に限定し, かつ, 予測変数も2つに絞って分析を行う</p>
+<div class="sourceCode" id="cb412"><pre class="sourceCode r"><code class="sourceCode r"><span id="cb412-1"><a href="サポートベクターマシーン-svm.html#cb412-1" tabindex="-1"></a>iris1 <span class="ot">&lt;-</span> iris[<span class="dv">51</span><span class="sc">:</span><span class="dv">150</span>, <span class="dv">3</span><span class="sc">:</span><span class="dv">5</span>] <span class="co"># (Petal.Length, Petal.Width, Species)</span></span>
+<span id="cb412-2"><a href="サポートベクターマシーン-svm.html#cb412-2" tabindex="-1"></a>iris1<span class="sc">$</span>Species <span class="ot">&lt;-</span> <span class="fu">droplevels</span>(iris1<span class="sc">$</span>Species)</span></code></pre></div>
+</div>
+<div id="svmの実行" class="section level3 unnumbered hasAnchor">
+<h3>SVMの実行<a href="サポートベクターマシーン-svm.html#svmの実行" class="anchor-section" aria-label="Anchor link to header"></a></h3>
+<p>パッケージ<strong>kernlab</strong>, 関数<code>ksvm()</code>を使用する.</p>
+<div class="sourceCode" id="cb413"><pre class="sourceCode r"><code class="sourceCode r"><span id="cb413-1"><a href="サポートベクターマシーン-svm.html#cb413-1" tabindex="-1"></a><span class="fu">library</span>(kernlab)</span>
+<span id="cb413-2"><a href="サポートベクターマシーン-svm.html#cb413-2" tabindex="-1"></a>iris_ksvm <span class="ot">&lt;-</span> <span class="fu">ksvm</span>(Species <span class="sc">~</span> ., <span class="at">data =</span> iris1)        <span class="co"># デフォルト (kpar = &quot;automatic&quot;)</span></span>
+<span id="cb413-3"><a href="サポートベクターマシーン-svm.html#cb413-3" tabindex="-1"></a><span class="fu">table</span>(<span class="fu">predict</span>(iris_ksvm, iris1[, <span class="dv">1</span><span class="sc">:</span><span class="dv">2</span>]), iris1<span class="sc">$</span>Species)</span>
+<span id="cb413-4"><a href="サポートベクターマシーン-svm.html#cb413-4" tabindex="-1"></a><span class="co">#&gt;             </span></span>
+<span id="cb413-5"><a href="サポートベクターマシーン-svm.html#cb413-5" tabindex="-1"></a><span class="co">#&gt;              versicolor virginica</span></span>
+<span id="cb413-6"><a href="サポートベクターマシーン-svm.html#cb413-6" tabindex="-1"></a><span class="co">#&gt;   versicolor         48         3</span></span>
+<span id="cb413-7"><a href="サポートベクターマシーン-svm.html#cb413-7" tabindex="-1"></a><span class="co">#&gt;   virginica           2        47</span></span>
+<span id="cb413-8"><a href="サポートベクターマシーン-svm.html#cb413-8" tabindex="-1"></a><span class="fu">plot</span>(iris_ksvm, <span class="at">data =</span> iris1[, <span class="dv">1</span><span class="sc">:</span><span class="dv">2</span>])</span></code></pre></div>
+<p><img src="100-svm_files/figure-html/unnamed-chunk-4-1.png" width="75%" /></p>
+<p>2予測変数 + 2値分類のケース → 境界を可視化できる.</p>
+<ul>
+<li>黒点…サポートベクター</li>
+</ul>
+<p>ハイパーパラメータ (<code>C</code>, <code>sigma</code>) の値を変えて実行してみる.
+学習データを (内挿) 予測させ分離境界を描く.</p>
+<div class="sourceCode" id="cb414"><pre class="sourceCode r"><code class="sourceCode r"><span id="cb414-1"><a href="サポートベクターマシーン-svm.html#cb414-1" tabindex="-1"></a>iris_ksvm <span class="ot">&lt;-</span> <span class="fu">ksvm</span>(Species <span class="sc">~</span> ., <span class="at">data =</span> iris1, </span>
+<span id="cb414-2"><a href="サポートベクターマシーン-svm.html#cb414-2" tabindex="-1"></a>                  <span class="at">kpar =</span> <span class="fu">list</span>(<span class="at">sigma =</span> <span class="dv">10</span>))  <span class="co"># → より複雑</span></span>
+<span id="cb414-3"><a href="サポートベクターマシーン-svm.html#cb414-3" tabindex="-1"></a><span class="fu">table</span>(<span class="fu">predict</span>(iris_ksvm, iris1[, <span class="dv">1</span><span class="sc">:</span><span class="dv">2</span>]), iris1<span class="sc">$</span>Species)</span>
+<span id="cb414-4"><a href="サポートベクターマシーン-svm.html#cb414-4" tabindex="-1"></a><span class="co">#&gt;             </span></span>
+<span id="cb414-5"><a href="サポートベクターマシーン-svm.html#cb414-5" tabindex="-1"></a><span class="co">#&gt;              versicolor virginica</span></span>
+<span id="cb414-6"><a href="サポートベクターマシーン-svm.html#cb414-6" tabindex="-1"></a><span class="co">#&gt;   versicolor         49         1</span></span>
+<span id="cb414-7"><a href="サポートベクターマシーン-svm.html#cb414-7" tabindex="-1"></a><span class="co">#&gt;   virginica           1        49</span></span>
+<span id="cb414-8"><a href="サポートベクターマシーン-svm.html#cb414-8" tabindex="-1"></a><span class="fu">plot</span>(iris_ksvm, <span class="at">data =</span> iris1[, <span class="dv">1</span><span class="sc">:</span><span class="dv">2</span>])</span></code></pre></div>
+<p><img src="100-svm_files/figure-html/unnamed-chunk-5-1.png" width="75%" /></p>
+<div class="sourceCode" id="cb415"><pre class="sourceCode r"><code class="sourceCode r"><span id="cb415-1"><a href="サポートベクターマシーン-svm.html#cb415-1" tabindex="-1"></a>iris_ksvm <span class="ot">&lt;-</span> <span class="fu">ksvm</span>(Species <span class="sc">~</span> ., <span class="at">data =</span> iris1, </span>
+<span id="cb415-2"><a href="サポートベクターマシーン-svm.html#cb415-2" tabindex="-1"></a>                  <span class="at">kpar =</span> <span class="fu">list</span>(<span class="at">sigma =</span> <span class="fl">0.1</span>)) <span class="co"># → より大雑把</span></span>
+<span id="cb415-3"><a href="サポートベクターマシーン-svm.html#cb415-3" tabindex="-1"></a><span class="fu">table</span>(<span class="fu">predict</span>(iris_ksvm, iris1[, <span class="dv">1</span><span class="sc">:</span><span class="dv">2</span>]), iris1<span class="sc">$</span>Species)</span>
+<span id="cb415-4"><a href="サポートベクターマシーン-svm.html#cb415-4" tabindex="-1"></a><span class="co">#&gt;             </span></span>
+<span id="cb415-5"><a href="サポートベクターマシーン-svm.html#cb415-5" tabindex="-1"></a><span class="co">#&gt;              versicolor virginica</span></span>
+<span id="cb415-6"><a href="サポートベクターマシーン-svm.html#cb415-6" tabindex="-1"></a><span class="co">#&gt;   versicolor         47         3</span></span>
+<span id="cb415-7"><a href="サポートベクターマシーン-svm.html#cb415-7" tabindex="-1"></a><span class="co">#&gt;   virginica           3        47</span></span>
+<span id="cb415-8"><a href="サポートベクターマシーン-svm.html#cb415-8" tabindex="-1"></a><span class="fu">plot</span>(iris_ksvm, <span class="at">data =</span> iris1[, <span class="dv">1</span><span class="sc">:</span><span class="dv">2</span>])</span></code></pre></div>
+<p><img src="100-svm_files/figure-html/unnamed-chunk-6-1.png" width="75%" /></p>
+<div class="sourceCode" id="cb416"><pre class="sourceCode r"><code class="sourceCode r"><span id="cb416-1"><a href="サポートベクターマシーン-svm.html#cb416-1" tabindex="-1"></a>iris_ksvm <span class="ot">&lt;-</span> <span class="fu">ksvm</span>(Species <span class="sc">~</span> ., <span class="at">data =</span> iris1, </span>
+<span id="cb416-2"><a href="サポートベクターマシーン-svm.html#cb416-2" tabindex="-1"></a>                  <span class="at">kpar =</span> <span class="fu">list</span>(<span class="at">sigma =</span> <span class="fl">0.1</span>), <span class="at">C =</span> <span class="dv">10</span>) <span class="co"># → より少ないSV</span></span>
+<span id="cb416-3"><a href="サポートベクターマシーン-svm.html#cb416-3" tabindex="-1"></a><span class="fu">table</span>(<span class="fu">predict</span>(iris_ksvm, iris1[, <span class="dv">1</span><span class="sc">:</span><span class="dv">2</span>]), iris1<span class="sc">$</span>Species)</span>
+<span id="cb416-4"><a href="サポートベクターマシーン-svm.html#cb416-4" tabindex="-1"></a><span class="co">#&gt;             </span></span>
+<span id="cb416-5"><a href="サポートベクターマシーン-svm.html#cb416-5" tabindex="-1"></a><span class="co">#&gt;              versicolor virginica</span></span>
+<span id="cb416-6"><a href="サポートベクターマシーン-svm.html#cb416-6" tabindex="-1"></a><span class="co">#&gt;   versicolor         47         2</span></span>
+<span id="cb416-7"><a href="サポートベクターマシーン-svm.html#cb416-7" tabindex="-1"></a><span class="co">#&gt;   virginica           3        48</span></span>
+<span id="cb416-8"><a href="サポートベクターマシーン-svm.html#cb416-8" tabindex="-1"></a><span class="fu">plot</span>(iris_ksvm, <span class="at">data =</span> iris1[, <span class="dv">1</span><span class="sc">:</span><span class="dv">2</span>])</span></code></pre></div>
+<p><img src="100-svm_files/figure-html/unnamed-chunk-7-1.png" width="75%" /></p>
+<div class="sourceCode" id="cb417"><pre class="sourceCode r"><code class="sourceCode r"><span id="cb417-1"><a href="サポートベクターマシーン-svm.html#cb417-1" tabindex="-1"></a>iris_ksvm <span class="ot">&lt;-</span> <span class="fu">ksvm</span>(Species <span class="sc">~</span> ., <span class="at">data =</span> iris1, </span>
+<span id="cb417-2"><a href="サポートベクターマシーン-svm.html#cb417-2" tabindex="-1"></a>                  <span class="at">kpar =</span> <span class="fu">list</span>(<span class="at">sigma =</span> <span class="fl">0.1</span>), <span class="at">C =</span> <span class="dv">1</span>)</span>
+<span id="cb417-3"><a href="サポートベクターマシーン-svm.html#cb417-3" tabindex="-1"></a><span class="fu">plot</span>(iris_ksvm, <span class="at">data =</span> iris1[, <span class="dv">1</span><span class="sc">:</span><span class="dv">2</span>])</span></code></pre></div>
+<p><img src="100-svm_files/figure-html/unnamed-chunk-8-1.png" width="75%" /></p>
+<div class="sourceCode" id="cb418"><pre class="sourceCode r"><code class="sourceCode r"><span id="cb418-1"><a href="サポートベクターマシーン-svm.html#cb418-1" tabindex="-1"></a></span>
+<span id="cb418-2"><a href="サポートベクターマシーン-svm.html#cb418-2" tabindex="-1"></a><span class="fu">table</span>(<span class="fu">predict</span>(iris_ksvm, iris1[, <span class="dv">1</span><span class="sc">:</span><span class="dv">2</span>]), iris1<span class="sc">$</span>Species)</span>
+<span id="cb418-3"><a href="サポートベクターマシーン-svm.html#cb418-3" tabindex="-1"></a><span class="co">#&gt;             </span></span>
+<span id="cb418-4"><a href="サポートベクターマシーン-svm.html#cb418-4" tabindex="-1"></a><span class="co">#&gt;              versicolor virginica</span></span>
+<span id="cb418-5"><a href="サポートベクターマシーン-svm.html#cb418-5" tabindex="-1"></a><span class="co">#&gt;   versicolor         47         3</span></span>
+<span id="cb418-6"><a href="サポートベクターマシーン-svm.html#cb418-6" tabindex="-1"></a><span class="co">#&gt;   virginica           3        47</span></span></code></pre></div>
+<div class="sourceCode" id="cb419"><pre class="sourceCode r"><code class="sourceCode r"><span id="cb419-1"><a href="サポートベクターマシーン-svm.html#cb419-1" tabindex="-1"></a>iris_ksvm <span class="ot">&lt;-</span> <span class="fu">ksvm</span>(Species <span class="sc">~</span> ., <span class="at">data =</span> iris1, </span>
+<span id="cb419-2"><a href="サポートベクターマシーン-svm.html#cb419-2" tabindex="-1"></a>                  <span class="at">kpar =</span> <span class="fu">list</span>(<span class="at">sigma =</span> <span class="fl">0.1</span>), <span class="at">C =</span> <span class="fl">0.1</span>)</span>
+<span id="cb419-3"><a href="サポートベクターマシーン-svm.html#cb419-3" tabindex="-1"></a><span class="fu">plot</span>(iris_ksvm, <span class="at">data =</span> iris1[, <span class="dv">1</span><span class="sc">:</span><span class="dv">2</span>])</span></code></pre></div>
+<p><img src="100-svm_files/figure-html/unnamed-chunk-9-1.png" width="75%" /></p>
+<div class="sourceCode" id="cb420"><pre class="sourceCode r"><code class="sourceCode r"><span id="cb420-1"><a href="サポートベクターマシーン-svm.html#cb420-1" tabindex="-1"></a></span>
+<span id="cb420-2"><a href="サポートベクターマシーン-svm.html#cb420-2" tabindex="-1"></a><span class="fu">table</span>(<span class="fu">predict</span>(iris_ksvm, iris1[, <span class="dv">1</span><span class="sc">:</span><span class="dv">2</span>]), iris1<span class="sc">$</span>Species)</span>
+<span id="cb420-3"><a href="サポートベクターマシーン-svm.html#cb420-3" tabindex="-1"></a><span class="co">#&gt;             </span></span>
+<span id="cb420-4"><a href="サポートベクターマシーン-svm.html#cb420-4" tabindex="-1"></a><span class="co">#&gt;              versicolor virginica</span></span>
+<span id="cb420-5"><a href="サポートベクターマシーン-svm.html#cb420-5" tabindex="-1"></a><span class="co">#&gt;   versicolor         48         3</span></span>
+<span id="cb420-6"><a href="サポートベクターマシーン-svm.html#cb420-6" tabindex="-1"></a><span class="co">#&gt;   virginica           2        47</span></span></code></pre></div>
+<div class="sourceCode" id="cb421"><pre class="sourceCode r"><code class="sourceCode r"><span id="cb421-1"><a href="サポートベクターマシーン-svm.html#cb421-1" tabindex="-1"></a>iris_ksvm <span class="ot">&lt;-</span> <span class="fu">ksvm</span>(Species <span class="sc">~</span> ., <span class="at">data =</span> iris1, </span>
+<span id="cb421-2"><a href="サポートベクターマシーン-svm.html#cb421-2" tabindex="-1"></a>                  <span class="at">kpar =</span> <span class="fu">list</span>(<span class="at">sigma =</span> <span class="fl">0.1</span>), <span class="at">C =</span> <span class="fl">0.01</span>)   <span class="co"># → より多くのSV</span></span>
+<span id="cb421-3"><a href="サポートベクターマシーン-svm.html#cb421-3" tabindex="-1"></a><span class="fu">table</span>(<span class="fu">predict</span>(iris_ksvm, iris1[, <span class="dv">1</span><span class="sc">:</span><span class="dv">2</span>]), iris1<span class="sc">$</span>Species)</span>
+<span id="cb421-4"><a href="サポートベクターマシーン-svm.html#cb421-4" tabindex="-1"></a><span class="co">#&gt;             </span></span>
+<span id="cb421-5"><a href="サポートベクターマシーン-svm.html#cb421-5" tabindex="-1"></a><span class="co">#&gt;              versicolor virginica</span></span>
+<span id="cb421-6"><a href="サポートベクターマシーン-svm.html#cb421-6" tabindex="-1"></a><span class="co">#&gt;   versicolor         48         3</span></span>
+<span id="cb421-7"><a href="サポートベクターマシーン-svm.html#cb421-7" tabindex="-1"></a><span class="co">#&gt;   virginica           2        47</span></span>
+<span id="cb421-8"><a href="サポートベクターマシーン-svm.html#cb421-8" tabindex="-1"></a><span class="fu">plot</span>(iris_ksvm, <span class="at">data =</span> iris1[, <span class="dv">1</span><span class="sc">:</span><span class="dv">2</span>])</span></code></pre></div>
+<p><img src="100-svm_files/figure-html/unnamed-chunk-10-1.png" width="75%" /></p>
+<p>すなわち,</p>
+<ul>
+<li><code>sigma</code> (gamma) 大 → より複雑な分離境界</li>
+<li><code>C</code> (cost) 小 → より多数のsupport vectors</li>
+</ul>
+<p>が確認される.</p>
+</div>
+</div>
+<div id="値分類" class="section level2 hasAnchor" number="10.2">
+<h2><span class="header-section-number">10.2</span> 2値分類<a href="サポートベクターマシーン-svm.html#値分類" class="anchor-section" aria-label="Anchor link to header"></a></h2>
+<div id="データセット2-spamデータ" class="section level3 unnumbered hasAnchor">
+<h3>データセット2: spamデータ<a href="サポートベクターマシーン-svm.html#データセット2-spamデータ" class="anchor-section" aria-label="Anchor link to header"></a></h3>
+<pre><code>spam:
+- 4601 x 58 
+- 目的変数 type (58列目): &quot;nonspam&quot;/&quot;spam&quot;
+- 予測変数 (1--57) はすべてnumeric
+- 注) 2値分類問題としては使い易いデータセット</code></pre>
+<div class="sourceCode" id="cb423"><pre class="sourceCode r"><code class="sourceCode r"><span id="cb423-1"><a href="サポートベクターマシーン-svm.html#cb423-1" tabindex="-1"></a><span class="fu">library</span>(kernlab)        <span class="co"># ksvm()</span></span>
+<span id="cb423-2"><a href="サポートベクターマシーン-svm.html#cb423-2" tabindex="-1"></a><span class="fu">data</span>(spam); <span class="fu">dim</span>(spam)       <span class="co"># spamデータの分析</span></span>
+<span id="cb423-3"><a href="サポートベクターマシーン-svm.html#cb423-3" tabindex="-1"></a><span class="co">#&gt; [1] 4601   58</span></span>
+<span id="cb423-4"><a href="サポートベクターマシーン-svm.html#cb423-4" tabindex="-1"></a><span class="fu">head</span>(spam)</span>
+<span id="cb423-5"><a href="サポートベクターマシーン-svm.html#cb423-5" tabindex="-1"></a><span class="co">#&gt;   make address  all num3d  our over remove internet order mail receive will</span></span>
+<span id="cb423-6"><a href="サポートベクターマシーン-svm.html#cb423-6" tabindex="-1"></a><span class="co">#&gt; 1 0.00    0.64 0.64     0 0.32 0.00   0.00     0.00  0.00 0.00    0.00 0.64</span></span>
+<span id="cb423-7"><a href="サポートベクターマシーン-svm.html#cb423-7" tabindex="-1"></a><span class="co">#&gt; 2 0.21    0.28 0.50     0 0.14 0.28   0.21     0.07  0.00 0.94    0.21 0.79</span></span>
+<span id="cb423-8"><a href="サポートベクターマシーン-svm.html#cb423-8" tabindex="-1"></a><span class="co">#&gt; 3 0.06    0.00 0.71     0 1.23 0.19   0.19     0.12  0.64 0.25    0.38 0.45</span></span>
+<span id="cb423-9"><a href="サポートベクターマシーン-svm.html#cb423-9" tabindex="-1"></a><span class="co">#&gt; 4 0.00    0.00 0.00     0 0.63 0.00   0.31     0.63  0.31 0.63    0.31 0.31</span></span>
+<span id="cb423-10"><a href="サポートベクターマシーン-svm.html#cb423-10" tabindex="-1"></a><span class="co">#&gt; 5 0.00    0.00 0.00     0 0.63 0.00   0.31     0.63  0.31 0.63    0.31 0.31</span></span>
+<span id="cb423-11"><a href="サポートベクターマシーン-svm.html#cb423-11" tabindex="-1"></a><span class="co">#&gt; 6 0.00    0.00 0.00     0 1.85 0.00   0.00     1.85  0.00 0.00    0.00 0.00</span></span>
+<span id="cb423-12"><a href="サポートベクターマシーン-svm.html#cb423-12" tabindex="-1"></a><span class="co">#&gt;   people report addresses free business email  you credit your font num000</span></span>
+<span id="cb423-13"><a href="サポートベクターマシーン-svm.html#cb423-13" tabindex="-1"></a><span class="co">#&gt; 1   0.00   0.00      0.00 0.32     0.00  1.29 1.93   0.00 0.96    0   0.00</span></span>
+<span id="cb423-14"><a href="サポートベクターマシーン-svm.html#cb423-14" tabindex="-1"></a><span class="co">#&gt; 2   0.65   0.21      0.14 0.14     0.07  0.28 3.47   0.00 1.59    0   0.43</span></span>
+<span id="cb423-15"><a href="サポートベクターマシーン-svm.html#cb423-15" tabindex="-1"></a><span class="co">#&gt; 3   0.12   0.00      1.75 0.06     0.06  1.03 1.36   0.32 0.51    0   1.16</span></span>
+<span id="cb423-16"><a href="サポートベクターマシーン-svm.html#cb423-16" tabindex="-1"></a><span class="co">#&gt; 4   0.31   0.00      0.00 0.31     0.00  0.00 3.18   0.00 0.31    0   0.00</span></span>
+<span id="cb423-17"><a href="サポートベクターマシーン-svm.html#cb423-17" tabindex="-1"></a><span class="co">#&gt; 5   0.31   0.00      0.00 0.31     0.00  0.00 3.18   0.00 0.31    0   0.00</span></span>
+<span id="cb423-18"><a href="サポートベクターマシーン-svm.html#cb423-18" tabindex="-1"></a><span class="co">#&gt; 6   0.00   0.00      0.00 0.00     0.00  0.00 0.00   0.00 0.00    0   0.00</span></span>
+<span id="cb423-19"><a href="サポートベクターマシーン-svm.html#cb423-19" tabindex="-1"></a><span class="co">#&gt;   money hp hpl george num650 lab labs telnet num857 data num415 num85</span></span>
+<span id="cb423-20"><a href="サポートベクターマシーン-svm.html#cb423-20" tabindex="-1"></a><span class="co">#&gt; 1  0.00  0   0      0      0   0    0      0      0    0      0     0</span></span>
+<span id="cb423-21"><a href="サポートベクターマシーン-svm.html#cb423-21" tabindex="-1"></a><span class="co">#&gt; 2  0.43  0   0      0      0   0    0      0      0    0      0     0</span></span>
+<span id="cb423-22"><a href="サポートベクターマシーン-svm.html#cb423-22" tabindex="-1"></a><span class="co">#&gt; 3  0.06  0   0      0      0   0    0      0      0    0      0     0</span></span>
+<span id="cb423-23"><a href="サポートベクターマシーン-svm.html#cb423-23" tabindex="-1"></a><span class="co">#&gt; 4  0.00  0   0      0      0   0    0      0      0    0      0     0</span></span>
+<span id="cb423-24"><a href="サポートベクターマシーン-svm.html#cb423-24" tabindex="-1"></a><span class="co">#&gt; 5  0.00  0   0      0      0   0    0      0      0    0      0     0</span></span>
+<span id="cb423-25"><a href="サポートベクターマシーン-svm.html#cb423-25" tabindex="-1"></a><span class="co">#&gt; 6  0.00  0   0      0      0   0    0      0      0    0      0     0</span></span>
+<span id="cb423-26"><a href="サポートベクターマシーン-svm.html#cb423-26" tabindex="-1"></a><span class="co">#&gt;   technology num1999 parts pm direct cs meeting original project   re  edu</span></span>
+<span id="cb423-27"><a href="サポートベクターマシーン-svm.html#cb423-27" tabindex="-1"></a><span class="co">#&gt; 1          0    0.00     0  0   0.00  0       0     0.00       0 0.00 0.00</span></span>
+<span id="cb423-28"><a href="サポートベクターマシーン-svm.html#cb423-28" tabindex="-1"></a><span class="co">#&gt; 2          0    0.07     0  0   0.00  0       0     0.00       0 0.00 0.00</span></span>
+<span id="cb423-29"><a href="サポートベクターマシーン-svm.html#cb423-29" tabindex="-1"></a><span class="co">#&gt; 3          0    0.00     0  0   0.06  0       0     0.12       0 0.06 0.06</span></span>
+<span id="cb423-30"><a href="サポートベクターマシーン-svm.html#cb423-30" tabindex="-1"></a><span class="co">#&gt; 4          0    0.00     0  0   0.00  0       0     0.00       0 0.00 0.00</span></span>
+<span id="cb423-31"><a href="サポートベクターマシーン-svm.html#cb423-31" tabindex="-1"></a><span class="co">#&gt; 5          0    0.00     0  0   0.00  0       0     0.00       0 0.00 0.00</span></span>
+<span id="cb423-32"><a href="サポートベクターマシーン-svm.html#cb423-32" tabindex="-1"></a><span class="co">#&gt; 6          0    0.00     0  0   0.00  0       0     0.00       0 0.00 0.00</span></span>
+<span id="cb423-33"><a href="サポートベクターマシーン-svm.html#cb423-33" tabindex="-1"></a><span class="co">#&gt;   table conference charSemicolon charRoundbracket charSquarebracket</span></span>
+<span id="cb423-34"><a href="サポートベクターマシーン-svm.html#cb423-34" tabindex="-1"></a><span class="co">#&gt; 1     0          0          0.00            0.000                 0</span></span>
+<span id="cb423-35"><a href="サポートベクターマシーン-svm.html#cb423-35" tabindex="-1"></a><span class="co">#&gt; 2     0          0          0.00            0.132                 0</span></span>
+<span id="cb423-36"><a href="サポートベクターマシーン-svm.html#cb423-36" tabindex="-1"></a><span class="co">#&gt; 3     0          0          0.01            0.143                 0</span></span>
+<span id="cb423-37"><a href="サポートベクターマシーン-svm.html#cb423-37" tabindex="-1"></a><span class="co">#&gt; 4     0          0          0.00            0.137                 0</span></span>
+<span id="cb423-38"><a href="サポートベクターマシーン-svm.html#cb423-38" tabindex="-1"></a><span class="co">#&gt; 5     0          0          0.00            0.135                 0</span></span>
+<span id="cb423-39"><a href="サポートベクターマシーン-svm.html#cb423-39" tabindex="-1"></a><span class="co">#&gt; 6     0          0          0.00            0.223                 0</span></span>
+<span id="cb423-40"><a href="サポートベクターマシーン-svm.html#cb423-40" tabindex="-1"></a><span class="co">#&gt;   charExclamation charDollar charHash capitalAve capitalLong capitalTotal type</span></span>
+<span id="cb423-41"><a href="サポートベクターマシーン-svm.html#cb423-41" tabindex="-1"></a><span class="co">#&gt; 1           0.778      0.000    0.000      3.756          61          278 spam</span></span>
+<span id="cb423-42"><a href="サポートベクターマシーン-svm.html#cb423-42" tabindex="-1"></a><span class="co">#&gt; 2           0.372      0.180    0.048      5.114         101         1028 spam</span></span>
+<span id="cb423-43"><a href="サポートベクターマシーン-svm.html#cb423-43" tabindex="-1"></a><span class="co">#&gt; 3           0.276      0.184    0.010      9.821         485         2259 spam</span></span>
+<span id="cb423-44"><a href="サポートベクターマシーン-svm.html#cb423-44" tabindex="-1"></a><span class="co">#&gt; 4           0.137      0.000    0.000      3.537          40          191 spam</span></span>
+<span id="cb423-45"><a href="サポートベクターマシーン-svm.html#cb423-45" tabindex="-1"></a><span class="co">#&gt; 5           0.135      0.000    0.000      3.537          40          191 spam</span></span>
+<span id="cb423-46"><a href="サポートベクターマシーン-svm.html#cb423-46" tabindex="-1"></a><span class="co">#&gt; 6           0.000      0.000    0.000      3.000          15           54 spam</span></span></code></pre></div>
+<p>データセットの2/3を学習用に, 残りをテスト用に分割する.</p>
+<div class="sourceCode" id="cb424"><pre class="sourceCode r"><code class="sourceCode r"><span id="cb424-1"><a href="サポートベクターマシーン-svm.html#cb424-1" tabindex="-1"></a><span class="fu">table</span>(spam<span class="sc">$</span>type)    <span class="co"># [, 58]</span></span>
+<span id="cb424-2"><a href="サポートベクターマシーン-svm.html#cb424-2" tabindex="-1"></a><span class="co">#&gt; </span></span>
+<span id="cb424-3"><a href="サポートベクターマシーン-svm.html#cb424-3" tabindex="-1"></a><span class="co">#&gt; nonspam    spam </span></span>
+<span id="cb424-4"><a href="サポートベクターマシーン-svm.html#cb424-4" tabindex="-1"></a><span class="co">#&gt;    2788    1813</span></span>
+<span id="cb424-5"><a href="サポートベクターマシーン-svm.html#cb424-5" tabindex="-1"></a><span class="fu">set.seed</span>(<span class="dv">50</span>)</span>
+<span id="cb424-6"><a href="サポートベクターマシーン-svm.html#cb424-6" tabindex="-1"></a>train_idx <span class="ot">&lt;-</span> <span class="fu">sample</span>(<span class="fu">nrow</span>(spam), <span class="fu">round</span>(<span class="fu">nrow</span>(spam) <span class="sc">*</span> <span class="dv">2</span><span class="sc">/</span><span class="dv">3</span>))</span>
+<span id="cb424-7"><a href="サポートベクターマシーン-svm.html#cb424-7" tabindex="-1"></a>spam_train <span class="ot">&lt;-</span> spam[train_idx, ]</span>
+<span id="cb424-8"><a href="サポートベクターマシーン-svm.html#cb424-8" tabindex="-1"></a>spam_test <span class="ot">&lt;-</span> spam[<span class="sc">-</span>train_idx, ]</span></code></pre></div>
+</div>
+<div id="svmの実行-1" class="section level3 unnumbered hasAnchor">
+<h3>SVMの実行<a href="サポートベクターマシーン-svm.html#svmの実行-1" class="anchor-section" aria-label="Anchor link to header"></a></h3>
+<pre><code>ksvm():
+- supports the well known C-svc, nu-svc, (Speciesification) one-Species-svc (novelty) eps-svr, nu-svr (regression) formulations along with native multi-Species Speciesification formulations and the bound-constraint SVM formulations.
+- also supports Species-probabilities output and confidence intervals for regression.</code></pre>
+<ul>
+<li>交差検証 (CV) 実施</li>
+</ul>
+<div class="sourceCode" id="cb426"><pre class="sourceCode r"><code class="sourceCode r"><span id="cb426-1"><a href="サポートベクターマシーン-svm.html#cb426-1" tabindex="-1"></a><span class="co"># set.seed(50) </span></span>
+<span id="cb426-2"><a href="サポートベクターマシーン-svm.html#cb426-2" tabindex="-1"></a>(spam_ksvm <span class="ot">&lt;-</span> <span class="fu">ksvm</span>(type <span class="sc">~</span> ., <span class="at">data =</span> spam_train, <span class="at">cross =</span> <span class="dv">3</span>))</span>
+<span id="cb426-3"><a href="サポートベクターマシーン-svm.html#cb426-3" tabindex="-1"></a><span class="co">#&gt; Support Vector Machine object of class &quot;ksvm&quot; </span></span>
+<span id="cb426-4"><a href="サポートベクターマシーン-svm.html#cb426-4" tabindex="-1"></a><span class="co">#&gt; </span></span>
+<span id="cb426-5"><a href="サポートベクターマシーン-svm.html#cb426-5" tabindex="-1"></a><span class="co">#&gt; SV type: C-svc  (classification) </span></span>
+<span id="cb426-6"><a href="サポートベクターマシーン-svm.html#cb426-6" tabindex="-1"></a><span class="co">#&gt;  parameter : cost C = 1 </span></span>
+<span id="cb426-7"><a href="サポートベクターマシーン-svm.html#cb426-7" tabindex="-1"></a><span class="co">#&gt; </span></span>
+<span id="cb426-8"><a href="サポートベクターマシーン-svm.html#cb426-8" tabindex="-1"></a><span class="co">#&gt; Gaussian Radial Basis kernel function. </span></span>
+<span id="cb426-9"><a href="サポートベクターマシーン-svm.html#cb426-9" tabindex="-1"></a><span class="co">#&gt;  Hyperparameter : sigma =  0.0278524323556927 </span></span>
+<span id="cb426-10"><a href="サポートベクターマシーン-svm.html#cb426-10" tabindex="-1"></a><span class="co">#&gt; </span></span>
+<span id="cb426-11"><a href="サポートベクターマシーン-svm.html#cb426-11" tabindex="-1"></a><span class="co">#&gt; Number of Support Vectors : 1008 </span></span>
+<span id="cb426-12"><a href="サポートベクターマシーン-svm.html#cb426-12" tabindex="-1"></a><span class="co">#&gt; </span></span>
+<span id="cb426-13"><a href="サポートベクターマシーン-svm.html#cb426-13" tabindex="-1"></a><span class="co">#&gt; Objective Function Value : -584.0049 </span></span>
+<span id="cb426-14"><a href="サポートベクターマシーン-svm.html#cb426-14" tabindex="-1"></a><span class="co">#&gt; Training error : 0.04956 </span></span>
+<span id="cb426-15"><a href="サポートベクターマシーン-svm.html#cb426-15" tabindex="-1"></a><span class="co">#&gt; Cross validation error : 0.074667</span></span></code></pre></div>
+<p>学習データに対して3-fold CVによってモデル適合の精度評価
+→ 最終行, 学習データに対する誤判別率 (CV誤差).</p>
+<pre><code>ksvm():
+- 引数`kernel`: &quot;polydot&quot; (多項式カーネル), &quot;vanilladot&quot; (線形カーネル), &quot;rbfdot&quot; (Gaussianカーネル) (デフォルト=&quot;rbfdot&quot;)
+- prob.model: 分類問題では, =TRUEの場合, 学習データに対する3-fold CV + シグモイド関数適用によりクラス所属計算. (デフォルト=FALSE)
+- パラメータの指定方法 → 例: kpar = list(sigma = 0.1)
+- sigma: kernel幅の逆数 (← 注: gammaに相当)
+- ksvm()のデフォルト設定: kernel = &quot;rbfdot&quot;, C = 1, kpar = &quot;automatic&quot; (← rbfdotに対しては, sigmaを自動的に決定)
+- 注) `spam`データの目的変数名`type`と, `ksvm()`の引数の一つ`type`と紛らわしい.</code></pre>
+<ul>
+<li>線形カーネル</li>
+</ul>
+<div class="sourceCode" id="cb428"><pre class="sourceCode r"><code class="sourceCode r"><span id="cb428-1"><a href="サポートベクターマシーン-svm.html#cb428-1" tabindex="-1"></a>(spam_ksvm <span class="ot">&lt;-</span> <span class="fu">ksvm</span>(type <span class="sc">~</span> ., <span class="at">data =</span> spam_train,</span>
+<span id="cb428-2"><a href="サポートベクターマシーン-svm.html#cb428-2" tabindex="-1"></a>                  <span class="at">kernel =</span> <span class="st">&quot;vanilladot&quot;</span>,</span>
+<span id="cb428-3"><a href="サポートベクターマシーン-svm.html#cb428-3" tabindex="-1"></a>                  <span class="at">C =</span> <span class="dv">10</span>, <span class="at">cross =</span> <span class="dv">3</span>, </span>
+<span id="cb428-4"><a href="サポートベクターマシーン-svm.html#cb428-4" tabindex="-1"></a>                  <span class="at">prob.model =</span> T))  <span class="co"># </span></span>
+<span id="cb428-5"><a href="サポートベクターマシーン-svm.html#cb428-5" tabindex="-1"></a><span class="co">#&gt;  Setting default kernel parameters</span></span>
+<span id="cb428-6"><a href="サポートベクターマシーン-svm.html#cb428-6" tabindex="-1"></a><span class="co">#&gt; Support Vector Machine object of class &quot;ksvm&quot; </span></span>
+<span id="cb428-7"><a href="サポートベクターマシーン-svm.html#cb428-7" tabindex="-1"></a><span class="co">#&gt; </span></span>
+<span id="cb428-8"><a href="サポートベクターマシーン-svm.html#cb428-8" tabindex="-1"></a><span class="co">#&gt; SV type: C-svc  (classification) </span></span>
+<span id="cb428-9"><a href="サポートベクターマシーン-svm.html#cb428-9" tabindex="-1"></a><span class="co">#&gt;  parameter : cost C = 10 </span></span>
+<span id="cb428-10"><a href="サポートベクターマシーン-svm.html#cb428-10" tabindex="-1"></a><span class="co">#&gt; </span></span>
+<span id="cb428-11"><a href="サポートベクターマシーン-svm.html#cb428-11" tabindex="-1"></a><span class="co">#&gt; Linear (vanilla) kernel function. </span></span>
+<span id="cb428-12"><a href="サポートベクターマシーン-svm.html#cb428-12" tabindex="-1"></a><span class="co">#&gt; </span></span>
+<span id="cb428-13"><a href="サポートベクターマシーン-svm.html#cb428-13" tabindex="-1"></a><span class="co">#&gt; Number of Support Vectors : 587 </span></span>
+<span id="cb428-14"><a href="サポートベクターマシーン-svm.html#cb428-14" tabindex="-1"></a><span class="co">#&gt; </span></span>
+<span id="cb428-15"><a href="サポートベクターマシーン-svm.html#cb428-15" tabindex="-1"></a><span class="co">#&gt; Objective Function Value : -5527.534 </span></span>
+<span id="cb428-16"><a href="サポートベクターマシーン-svm.html#cb428-16" tabindex="-1"></a><span class="co">#&gt; Training error : 0.064558 </span></span>
+<span id="cb428-17"><a href="サポートベクターマシーン-svm.html#cb428-17" tabindex="-1"></a><span class="co">#&gt; Cross validation error : 0.072711 </span></span>
+<span id="cb428-18"><a href="サポートベクターマシーン-svm.html#cb428-18" tabindex="-1"></a><span class="co">#&gt; Probability model included.</span></span></code></pre></div>
+<ul>
+<li>出力表示の例</li>
+</ul>
+<div class="sourceCode" id="cb429"><pre class="sourceCode r"><code class="sourceCode r"><span id="cb429-1"><a href="サポートベクターマシーン-svm.html#cb429-1" tabindex="-1"></a>spam_ksvm<span class="sc">@</span>cross <span class="co"># CV誤差</span></span>
+<span id="cb429-2"><a href="サポートベクターマシーン-svm.html#cb429-2" tabindex="-1"></a>spam_ksvm<span class="sc">@</span>alpha <span class="co"># 生成されたサポートベクター (alpha vector)</span></span>
+<span id="cb429-3"><a href="サポートベクターマシーン-svm.html#cb429-3" tabindex="-1"></a>spam_ksvm<span class="sc">@</span>alphaindex    <span class="co"># 同インデックス</span></span>
+<span id="cb429-4"><a href="サポートベクターマシーン-svm.html#cb429-4" tabindex="-1"></a>spam_ksvm<span class="sc">@</span>nSV   <span class="co"># 生成されたサポートベクターの数</span></span>
+<span id="cb429-5"><a href="サポートベクターマシーン-svm.html#cb429-5" tabindex="-1"></a>spam_ksvm<span class="sc">@</span>coef</span></code></pre></div>
+<ul>
+<li>テストデータに対する外挿予測 &amp; 精度評価</li>
+</ul>
+<div class="sourceCode" id="cb430"><pre class="sourceCode r"><code class="sourceCode r"><span id="cb430-1"><a href="サポートベクターマシーン-svm.html#cb430-1" tabindex="-1"></a>spam_pred <span class="ot">&lt;-</span> <span class="fu">predict</span>(spam_ksvm, spam_test[, <span class="sc">-</span><span class="dv">58</span>])</span>
+<span id="cb430-2"><a href="サポートベクターマシーン-svm.html#cb430-2" tabindex="-1"></a>(spam_tab <span class="ot">&lt;-</span> <span class="fu">table</span>(spam_pred, spam_test[, <span class="dv">58</span>]))</span>
+<span id="cb430-3"><a href="サポートベクターマシーン-svm.html#cb430-3" tabindex="-1"></a><span class="co">#&gt;          </span></span>
+<span id="cb430-4"><a href="サポートベクターマシーン-svm.html#cb430-4" tabindex="-1"></a><span class="co">#&gt; spam_pred nonspam spam</span></span>
+<span id="cb430-5"><a href="サポートベクターマシーン-svm.html#cb430-5" tabindex="-1"></a><span class="co">#&gt;   nonspam     916   54</span></span>
+<span id="cb430-6"><a href="サポートベクターマシーン-svm.html#cb430-6" tabindex="-1"></a><span class="co">#&gt;   spam         46  518</span></span>
+<span id="cb430-7"><a href="サポートベクターマシーン-svm.html#cb430-7" tabindex="-1"></a><span class="co"># 1-sum(diag(spam.tab))/sum(spam.tab)       # 誤判別率, 1-&quot;Accuracy&quot;</span></span>
+<span id="cb430-8"><a href="サポートベクターマシーン-svm.html#cb430-8" tabindex="-1"></a></span>
+<span id="cb430-9"><a href="サポートベクターマシーン-svm.html#cb430-9" tabindex="-1"></a><span class="fu">library</span>(caret)</span>
+<span id="cb430-10"><a href="サポートベクターマシーン-svm.html#cb430-10" tabindex="-1"></a><span class="fu">confusionMatrix</span>(spam_tab, <span class="at">mode =</span> <span class="st">&quot;prec_recall&quot;</span>)</span>
+<span id="cb430-11"><a href="サポートベクターマシーン-svm.html#cb430-11" tabindex="-1"></a><span class="co">#&gt; Confusion Matrix and Statistics</span></span>
+<span id="cb430-12"><a href="サポートベクターマシーン-svm.html#cb430-12" tabindex="-1"></a><span class="co">#&gt; </span></span>
+<span id="cb430-13"><a href="サポートベクターマシーン-svm.html#cb430-13" tabindex="-1"></a><span class="co">#&gt;          </span></span>
+<span id="cb430-14"><a href="サポートベクターマシーン-svm.html#cb430-14" tabindex="-1"></a><span class="co">#&gt; spam_pred nonspam spam</span></span>
+<span id="cb430-15"><a href="サポートベクターマシーン-svm.html#cb430-15" tabindex="-1"></a><span class="co">#&gt;   nonspam     916   54</span></span>
+<span id="cb430-16"><a href="サポートベクターマシーン-svm.html#cb430-16" tabindex="-1"></a><span class="co">#&gt;   spam         46  518</span></span>
+<span id="cb430-17"><a href="サポートベクターマシーン-svm.html#cb430-17" tabindex="-1"></a><span class="co">#&gt;                                           </span></span>
+<span id="cb430-18"><a href="サポートベクターマシーン-svm.html#cb430-18" tabindex="-1"></a><span class="co">#&gt;                Accuracy : 0.9348          </span></span>
+<span id="cb430-19"><a href="サポートベクターマシーン-svm.html#cb430-19" tabindex="-1"></a><span class="co">#&gt;                  95% CI : (0.9213, 0.9466)</span></span>
+<span id="cb430-20"><a href="サポートベクターマシーン-svm.html#cb430-20" tabindex="-1"></a><span class="co">#&gt;     No Information Rate : 0.6271          </span></span>
+<span id="cb430-21"><a href="サポートベクターマシーン-svm.html#cb430-21" tabindex="-1"></a><span class="co">#&gt;     P-Value [Acc &gt; NIR] : &lt;2e-16          </span></span>
+<span id="cb430-22"><a href="サポートベクターマシーン-svm.html#cb430-22" tabindex="-1"></a><span class="co">#&gt;                                           </span></span>
+<span id="cb430-23"><a href="サポートベクターマシーン-svm.html#cb430-23" tabindex="-1"></a><span class="co">#&gt;                   Kappa : 0.8602          </span></span>
+<span id="cb430-24"><a href="サポートベクターマシーン-svm.html#cb430-24" tabindex="-1"></a><span class="co">#&gt;                                           </span></span>
+<span id="cb430-25"><a href="サポートベクターマシーン-svm.html#cb430-25" tabindex="-1"></a><span class="co">#&gt;  Mcnemar&#39;s Test P-Value : 0.4839          </span></span>
+<span id="cb430-26"><a href="サポートベクターマシーン-svm.html#cb430-26" tabindex="-1"></a><span class="co">#&gt;                                           </span></span>
+<span id="cb430-27"><a href="サポートベクターマシーン-svm.html#cb430-27" tabindex="-1"></a><span class="co">#&gt;               Precision : 0.9443          </span></span>
+<span id="cb430-28"><a href="サポートベクターマシーン-svm.html#cb430-28" tabindex="-1"></a><span class="co">#&gt;                  Recall : 0.9522          </span></span>
+<span id="cb430-29"><a href="サポートベクターマシーン-svm.html#cb430-29" tabindex="-1"></a><span class="co">#&gt;                      F1 : 0.9482          </span></span>
+<span id="cb430-30"><a href="サポートベクターマシーン-svm.html#cb430-30" tabindex="-1"></a><span class="co">#&gt;              Prevalence : 0.6271          </span></span>
+<span id="cb430-31"><a href="サポートベクターマシーン-svm.html#cb430-31" tabindex="-1"></a><span class="co">#&gt;          Detection Rate : 0.5971          </span></span>
+<span id="cb430-32"><a href="サポートベクターマシーン-svm.html#cb430-32" tabindex="-1"></a><span class="co">#&gt;    Detection Prevalence : 0.6323          </span></span>
+<span id="cb430-33"><a href="サポートベクターマシーン-svm.html#cb430-33" tabindex="-1"></a><span class="co">#&gt;       Balanced Accuracy : 0.9289          </span></span>
+<span id="cb430-34"><a href="サポートベクターマシーン-svm.html#cb430-34" tabindex="-1"></a><span class="co">#&gt;                                           </span></span>
+<span id="cb430-35"><a href="サポートベクターマシーン-svm.html#cb430-35" tabindex="-1"></a><span class="co">#&gt;        &#39;Positive&#39; Class : nonspam         </span></span>
+<span id="cb430-36"><a href="サポートベクターマシーン-svm.html#cb430-36" tabindex="-1"></a><span class="co">#&gt; </span></span>
+<span id="cb430-37"><a href="サポートベクターマシーン-svm.html#cb430-37" tabindex="-1"></a>(<span class="fu">confusionMatrix</span>(spam_tab)<span class="sc">$</span>overall[<span class="st">&quot;Accuracy&quot;</span>])</span>
+<span id="cb430-38"><a href="サポートベクターマシーン-svm.html#cb430-38" tabindex="-1"></a><span class="co">#&gt; Accuracy </span></span>
+<span id="cb430-39"><a href="サポートベクターマシーン-svm.html#cb430-39" tabindex="-1"></a><span class="co">#&gt; 0.934811</span></span></code></pre></div>
+<p>kernelの種類に応じて適切なハイパーパラメータを
+引数<code>kpar</code>の中で設定する必要. マニュアルでの確認が必要.
+(コストCの設定はkernelは共通)</p>
+<ul>
+<li>Gaussianカーネル</li>
+</ul>
+<div class="sourceCode" id="cb431"><pre class="sourceCode r"><code class="sourceCode r"><span id="cb431-1"><a href="サポートベクターマシーン-svm.html#cb431-1" tabindex="-1"></a>(spam_ksvm <span class="ot">&lt;-</span> <span class="fu">ksvm</span>(type <span class="sc">~</span> ., <span class="at">data =</span> spam_train, </span>
+<span id="cb431-2"><a href="サポートベクターマシーン-svm.html#cb431-2" tabindex="-1"></a>                  <span class="at">C =</span> <span class="dv">10</span>, <span class="at">cross =</span> <span class="dv">3</span>, </span>
+<span id="cb431-3"><a href="サポートベクターマシーン-svm.html#cb431-3" tabindex="-1"></a>                  <span class="at">prob.model =</span> T, </span>
+<span id="cb431-4"><a href="サポートベクターマシーン-svm.html#cb431-4" tabindex="-1"></a>                  <span class="at">kpar =</span> <span class="fu">list</span>(<span class="at">sigma =</span> <span class="fl">0.1</span>)))</span>
+<span id="cb431-5"><a href="サポートベクターマシーン-svm.html#cb431-5" tabindex="-1"></a><span class="co">#&gt; Support Vector Machine object of class &quot;ksvm&quot; </span></span>
+<span id="cb431-6"><a href="サポートベクターマシーン-svm.html#cb431-6" tabindex="-1"></a><span class="co">#&gt; </span></span>
+<span id="cb431-7"><a href="サポートベクターマシーン-svm.html#cb431-7" tabindex="-1"></a><span class="co">#&gt; SV type: C-svc  (classification) </span></span>
+<span id="cb431-8"><a href="サポートベクターマシーン-svm.html#cb431-8" tabindex="-1"></a><span class="co">#&gt;  parameter : cost C = 10 </span></span>
+<span id="cb431-9"><a href="サポートベクターマシーン-svm.html#cb431-9" tabindex="-1"></a><span class="co">#&gt; </span></span>
+<span id="cb431-10"><a href="サポートベクターマシーン-svm.html#cb431-10" tabindex="-1"></a><span class="co">#&gt; Gaussian Radial Basis kernel function. </span></span>
+<span id="cb431-11"><a href="サポートベクターマシーン-svm.html#cb431-11" tabindex="-1"></a><span class="co">#&gt;  Hyperparameter : sigma =  0.1 </span></span>
+<span id="cb431-12"><a href="サポートベクターマシーン-svm.html#cb431-12" tabindex="-1"></a><span class="co">#&gt; </span></span>
+<span id="cb431-13"><a href="サポートベクターマシーン-svm.html#cb431-13" tabindex="-1"></a><span class="co">#&gt; Number of Support Vectors : 1560 </span></span>
+<span id="cb431-14"><a href="サポートベクターマシーン-svm.html#cb431-14" tabindex="-1"></a><span class="co">#&gt; </span></span>
+<span id="cb431-15"><a href="サポートベクターマシーン-svm.html#cb431-15" tabindex="-1"></a><span class="co">#&gt; Objective Function Value : -1548.941 </span></span>
+<span id="cb431-16"><a href="サポートベクターマシーン-svm.html#cb431-16" tabindex="-1"></a><span class="co">#&gt; Training error : 0.008477 </span></span>
+<span id="cb431-17"><a href="サポートベクターマシーン-svm.html#cb431-17" tabindex="-1"></a><span class="co">#&gt; Cross validation error : 0.099441 </span></span>
+<span id="cb431-18"><a href="サポートベクターマシーン-svm.html#cb431-18" tabindex="-1"></a><span class="co">#&gt; Probability model included.</span></span></code></pre></div>
+<ul>
+<li>テストデータに対する外挿予測 &amp; 精度評価</li>
+</ul>
+<div class="sourceCode" id="cb432"><pre class="sourceCode r"><code class="sourceCode r"><span id="cb432-1"><a href="サポートベクターマシーン-svm.html#cb432-1" tabindex="-1"></a>spam_pred <span class="ot">&lt;-</span> <span class="fu">predict</span>(spam_ksvm, spam_test[, <span class="sc">-</span><span class="dv">58</span>])</span>
+<span id="cb432-2"><a href="サポートベクターマシーン-svm.html#cb432-2" tabindex="-1"></a>(spam_tab <span class="ot">&lt;-</span> <span class="fu">table</span>(spam_pred, spam_test[, <span class="dv">58</span>]))</span>
+<span id="cb432-3"><a href="サポートベクターマシーン-svm.html#cb432-3" tabindex="-1"></a><span class="co">#&gt;          </span></span>
+<span id="cb432-4"><a href="サポートベクターマシーン-svm.html#cb432-4" tabindex="-1"></a><span class="co">#&gt; spam_pred nonspam spam</span></span>
+<span id="cb432-5"><a href="サポートベクターマシーン-svm.html#cb432-5" tabindex="-1"></a><span class="co">#&gt;   nonspam     913   90</span></span>
+<span id="cb432-6"><a href="サポートベクターマシーン-svm.html#cb432-6" tabindex="-1"></a><span class="co">#&gt;   spam         49  482</span></span>
+<span id="cb432-7"><a href="サポートベクターマシーン-svm.html#cb432-7" tabindex="-1"></a><span class="co">#1-sum(diag(spam_tab))/sum(spam_tab)        # 誤判別率, 1-&quot;Accuracy&quot;</span></span>
+<span id="cb432-8"><a href="サポートベクターマシーン-svm.html#cb432-8" tabindex="-1"></a></span>
+<span id="cb432-9"><a href="サポートベクターマシーン-svm.html#cb432-9" tabindex="-1"></a><span class="fu">library</span>(caret)</span>
+<span id="cb432-10"><a href="サポートベクターマシーン-svm.html#cb432-10" tabindex="-1"></a><span class="fu">confusionMatrix</span>(spam_tab, <span class="at">mode =</span> <span class="st">&quot;prec_recall&quot;</span>)</span>
+<span id="cb432-11"><a href="サポートベクターマシーン-svm.html#cb432-11" tabindex="-1"></a><span class="co">#&gt; Confusion Matrix and Statistics</span></span>
+<span id="cb432-12"><a href="サポートベクターマシーン-svm.html#cb432-12" tabindex="-1"></a><span class="co">#&gt; </span></span>
+<span id="cb432-13"><a href="サポートベクターマシーン-svm.html#cb432-13" tabindex="-1"></a><span class="co">#&gt;          </span></span>
+<span id="cb432-14"><a href="サポートベクターマシーン-svm.html#cb432-14" tabindex="-1"></a><span class="co">#&gt; spam_pred nonspam spam</span></span>
+<span id="cb432-15"><a href="サポートベクターマシーン-svm.html#cb432-15" tabindex="-1"></a><span class="co">#&gt;   nonspam     913   90</span></span>
+<span id="cb432-16"><a href="サポートベクターマシーン-svm.html#cb432-16" tabindex="-1"></a><span class="co">#&gt;   spam         49  482</span></span>
+<span id="cb432-17"><a href="サポートベクターマシーン-svm.html#cb432-17" tabindex="-1"></a><span class="co">#&gt;                                           </span></span>
+<span id="cb432-18"><a href="サポートベクターマシーン-svm.html#cb432-18" tabindex="-1"></a><span class="co">#&gt;                Accuracy : 0.9094          </span></span>
+<span id="cb432-19"><a href="サポートベクターマシーン-svm.html#cb432-19" tabindex="-1"></a><span class="co">#&gt;                  95% CI : (0.8939, 0.9233)</span></span>
+<span id="cb432-20"><a href="サポートベクターマシーン-svm.html#cb432-20" tabindex="-1"></a><span class="co">#&gt;     No Information Rate : 0.6271          </span></span>
+<span id="cb432-21"><a href="サポートベクターマシーン-svm.html#cb432-21" tabindex="-1"></a><span class="co">#&gt;     P-Value [Acc &gt; NIR] : &lt; 2.2e-16       </span></span>
+<span id="cb432-22"><a href="サポートベクターマシーン-svm.html#cb432-22" tabindex="-1"></a><span class="co">#&gt;                                           </span></span>
+<span id="cb432-23"><a href="サポートベクターマシーン-svm.html#cb432-23" tabindex="-1"></a><span class="co">#&gt;                   Kappa : 0.8034          </span></span>
+<span id="cb432-24"><a href="サポートベクターマシーン-svm.html#cb432-24" tabindex="-1"></a><span class="co">#&gt;                                           </span></span>
+<span id="cb432-25"><a href="サポートベクターマシーン-svm.html#cb432-25" tabindex="-1"></a><span class="co">#&gt;  Mcnemar&#39;s Test P-Value : 0.0006919       </span></span>
+<span id="cb432-26"><a href="サポートベクターマシーン-svm.html#cb432-26" tabindex="-1"></a><span class="co">#&gt;                                           </span></span>
+<span id="cb432-27"><a href="サポートベクターマシーン-svm.html#cb432-27" tabindex="-1"></a><span class="co">#&gt;               Precision : 0.9103          </span></span>
+<span id="cb432-28"><a href="サポートベクターマシーン-svm.html#cb432-28" tabindex="-1"></a><span class="co">#&gt;                  Recall : 0.9491          </span></span>
+<span id="cb432-29"><a href="サポートベクターマシーン-svm.html#cb432-29" tabindex="-1"></a><span class="co">#&gt;                      F1 : 0.9293          </span></span>
+<span id="cb432-30"><a href="サポートベクターマシーン-svm.html#cb432-30" tabindex="-1"></a><span class="co">#&gt;              Prevalence : 0.6271          </span></span>
+<span id="cb432-31"><a href="サポートベクターマシーン-svm.html#cb432-31" tabindex="-1"></a><span class="co">#&gt;          Detection Rate : 0.5952          </span></span>
+<span id="cb432-32"><a href="サポートベクターマシーン-svm.html#cb432-32" tabindex="-1"></a><span class="co">#&gt;    Detection Prevalence : 0.6538          </span></span>
+<span id="cb432-33"><a href="サポートベクターマシーン-svm.html#cb432-33" tabindex="-1"></a><span class="co">#&gt;       Balanced Accuracy : 0.8959          </span></span>
+<span id="cb432-34"><a href="サポートベクターマシーン-svm.html#cb432-34" tabindex="-1"></a><span class="co">#&gt;                                           </span></span>
+<span id="cb432-35"><a href="サポートベクターマシーン-svm.html#cb432-35" tabindex="-1"></a><span class="co">#&gt;        &#39;Positive&#39; Class : nonspam         </span></span>
+<span id="cb432-36"><a href="サポートベクターマシーン-svm.html#cb432-36" tabindex="-1"></a><span class="co">#&gt; </span></span>
+<span id="cb432-37"><a href="サポートベクターマシーン-svm.html#cb432-37" tabindex="-1"></a>(<span class="fu">confusionMatrix</span>(spam_tab)<span class="sc">$</span>overall[<span class="st">&quot;Accuracy&quot;</span>])</span>
+<span id="cb432-38"><a href="サポートベクターマシーン-svm.html#cb432-38" tabindex="-1"></a><span class="co">#&gt;  Accuracy </span></span>
+<span id="cb432-39"><a href="サポートベクターマシーン-svm.html#cb432-39" tabindex="-1"></a><span class="co">#&gt; 0.9093872</span></span></code></pre></div>
+<p>ハイパーパラメータを変えて実行してみる.</p>
+<div class="sourceCode" id="cb433"><pre class="sourceCode r"><code class="sourceCode r"><span id="cb433-1"><a href="サポートベクターマシーン-svm.html#cb433-1" tabindex="-1"></a>(spam_ksvm <span class="ot">&lt;-</span> <span class="fu">ksvm</span>(type <span class="sc">~</span> ., <span class="at">data =</span> spam_train,</span>
+<span id="cb433-2"><a href="サポートベクターマシーン-svm.html#cb433-2" tabindex="-1"></a>                   <span class="at">C =</span> <span class="fl">0.1</span>, <span class="at">cross =</span> <span class="dv">3</span>, </span>
+<span id="cb433-3"><a href="サポートベクターマシーン-svm.html#cb433-3" tabindex="-1"></a>                   <span class="at">prob.model =</span> T, </span>
+<span id="cb433-4"><a href="サポートベクターマシーン-svm.html#cb433-4" tabindex="-1"></a>                   <span class="at">kpar =</span> <span class="fu">list</span>(<span class="at">sigma =</span> <span class="fl">0.1</span>)))</span>
+<span id="cb433-5"><a href="サポートベクターマシーン-svm.html#cb433-5" tabindex="-1"></a><span class="co">#&gt; Support Vector Machine object of class &quot;ksvm&quot; </span></span>
+<span id="cb433-6"><a href="サポートベクターマシーン-svm.html#cb433-6" tabindex="-1"></a><span class="co">#&gt; </span></span>
+<span id="cb433-7"><a href="サポートベクターマシーン-svm.html#cb433-7" tabindex="-1"></a><span class="co">#&gt; SV type: C-svc  (classification) </span></span>
+<span id="cb433-8"><a href="サポートベクターマシーン-svm.html#cb433-8" tabindex="-1"></a><span class="co">#&gt;  parameter : cost C = 0.1 </span></span>
+<span id="cb433-9"><a href="サポートベクターマシーン-svm.html#cb433-9" tabindex="-1"></a><span class="co">#&gt; </span></span>
+<span id="cb433-10"><a href="サポートベクターマシーン-svm.html#cb433-10" tabindex="-1"></a><span class="co">#&gt; Gaussian Radial Basis kernel function. </span></span>
+<span id="cb433-11"><a href="サポートベクターマシーン-svm.html#cb433-11" tabindex="-1"></a><span class="co">#&gt;  Hyperparameter : sigma =  0.1 </span></span>
+<span id="cb433-12"><a href="サポートベクターマシーン-svm.html#cb433-12" tabindex="-1"></a><span class="co">#&gt; </span></span>
+<span id="cb433-13"><a href="サポートベクターマシーン-svm.html#cb433-13" tabindex="-1"></a><span class="co">#&gt; Number of Support Vectors : 2210 </span></span>
+<span id="cb433-14"><a href="サポートベクターマシーン-svm.html#cb433-14" tabindex="-1"></a><span class="co">#&gt; </span></span>
+<span id="cb433-15"><a href="サポートベクターマシーン-svm.html#cb433-15" tabindex="-1"></a><span class="co">#&gt; Objective Function Value : -168.8087 </span></span>
+<span id="cb433-16"><a href="サポートベクターマシーン-svm.html#cb433-16" tabindex="-1"></a><span class="co">#&gt; Training error : 0.161396 </span></span>
+<span id="cb433-17"><a href="サポートベクターマシーン-svm.html#cb433-17" tabindex="-1"></a><span class="co">#&gt; Cross validation error : 0.213562 </span></span>
+<span id="cb433-18"><a href="サポートベクターマシーン-svm.html#cb433-18" tabindex="-1"></a><span class="co">#&gt; Probability model included.</span></span>
+<span id="cb433-19"><a href="サポートベクターマシーン-svm.html#cb433-19" tabindex="-1"></a>spam_pred <span class="ot">&lt;-</span> <span class="fu">predict</span>(spam_ksvm, spam_test[, <span class="sc">-</span><span class="dv">58</span>])</span>
+<span id="cb433-20"><a href="サポートベクターマシーン-svm.html#cb433-20" tabindex="-1"></a>(spam_tab <span class="ot">&lt;-</span> <span class="fu">table</span>(spam_pred, spam_test[, <span class="dv">58</span>]))</span>
+<span id="cb433-21"><a href="サポートベクターマシーン-svm.html#cb433-21" tabindex="-1"></a><span class="co">#&gt;          </span></span>
+<span id="cb433-22"><a href="サポートベクターマシーン-svm.html#cb433-22" tabindex="-1"></a><span class="co">#&gt; spam_pred nonspam spam</span></span>
+<span id="cb433-23"><a href="サポートベクターマシーン-svm.html#cb433-23" tabindex="-1"></a><span class="co">#&gt;   nonspam     942  237</span></span>
+<span id="cb433-24"><a href="サポートベクターマシーン-svm.html#cb433-24" tabindex="-1"></a><span class="co">#&gt;   spam         20  335</span></span>
+<span id="cb433-25"><a href="サポートベクターマシーン-svm.html#cb433-25" tabindex="-1"></a>(<span class="fu">confusionMatrix</span>(spam_tab)<span class="sc">$</span>overall[<span class="st">&quot;Accuracy&quot;</span>])</span>
+<span id="cb433-26"><a href="サポートベクターマシーン-svm.html#cb433-26" tabindex="-1"></a><span class="co">#&gt;  Accuracy </span></span>
+<span id="cb433-27"><a href="サポートベクターマシーン-svm.html#cb433-27" tabindex="-1"></a><span class="co">#&gt; 0.8324641</span></span></code></pre></div>
+<div class="sourceCode" id="cb434"><pre class="sourceCode r"><code class="sourceCode r"><span id="cb434-1"><a href="サポートベクターマシーン-svm.html#cb434-1" tabindex="-1"></a>(spam_ksvm <span class="ot">&lt;-</span> <span class="fu">ksvm</span>(type <span class="sc">~</span> ., <span class="at">data =</span> spam_train, </span>
+<span id="cb434-2"><a href="サポートベクターマシーン-svm.html#cb434-2" tabindex="-1"></a>                   <span class="at">C =</span> <span class="dv">10</span>, <span class="at">cross =</span> <span class="dv">3</span>, </span>
+<span id="cb434-3"><a href="サポートベクターマシーン-svm.html#cb434-3" tabindex="-1"></a>                   <span class="at">prob.model =</span> T, </span>
+<span id="cb434-4"><a href="サポートベクターマシーン-svm.html#cb434-4" tabindex="-1"></a>                   <span class="at">kpar =</span> <span class="fu">list</span>(<span class="at">sigma =</span> <span class="dv">10</span>))) </span>
+<span id="cb434-5"><a href="サポートベクターマシーン-svm.html#cb434-5" tabindex="-1"></a><span class="co">#&gt; Support Vector Machine object of class &quot;ksvm&quot; </span></span>
+<span id="cb434-6"><a href="サポートベクターマシーン-svm.html#cb434-6" tabindex="-1"></a><span class="co">#&gt; </span></span>
+<span id="cb434-7"><a href="サポートベクターマシーン-svm.html#cb434-7" tabindex="-1"></a><span class="co">#&gt; SV type: C-svc  (classification) </span></span>
+<span id="cb434-8"><a href="サポートベクターマシーン-svm.html#cb434-8" tabindex="-1"></a><span class="co">#&gt;  parameter : cost C = 10 </span></span>
+<span id="cb434-9"><a href="サポートベクターマシーン-svm.html#cb434-9" tabindex="-1"></a><span class="co">#&gt; </span></span>
+<span id="cb434-10"><a href="サポートベクターマシーン-svm.html#cb434-10" tabindex="-1"></a><span class="co">#&gt; Gaussian Radial Basis kernel function. </span></span>
+<span id="cb434-11"><a href="サポートベクターマシーン-svm.html#cb434-11" tabindex="-1"></a><span class="co">#&gt;  Hyperparameter : sigma =  10 </span></span>
+<span id="cb434-12"><a href="サポートベクターマシーン-svm.html#cb434-12" tabindex="-1"></a><span class="co">#&gt; </span></span>
+<span id="cb434-13"><a href="サポートベクターマシーン-svm.html#cb434-13" tabindex="-1"></a><span class="co">#&gt; Number of Support Vectors : 2756 </span></span>
+<span id="cb434-14"><a href="サポートベクターマシーン-svm.html#cb434-14" tabindex="-1"></a><span class="co">#&gt; </span></span>
+<span id="cb434-15"><a href="サポートベクターマシーン-svm.html#cb434-15" tabindex="-1"></a><span class="co">#&gt; Objective Function Value : -1362.458 </span></span>
+<span id="cb434-16"><a href="サポートベクターマシーン-svm.html#cb434-16" tabindex="-1"></a><span class="co">#&gt; Training error : 0.002282 </span></span>
+<span id="cb434-17"><a href="サポートベクターマシーン-svm.html#cb434-17" tabindex="-1"></a><span class="co">#&gt; Cross validation error : 0.28758 </span></span>
+<span id="cb434-18"><a href="サポートベクターマシーン-svm.html#cb434-18" tabindex="-1"></a><span class="co">#&gt; Probability model included.</span></span>
+<span id="cb434-19"><a href="サポートベクターマシーン-svm.html#cb434-19" tabindex="-1"></a>spam_pred <span class="ot">&lt;-</span> <span class="fu">predict</span>(spam_ksvm, spam_test[, <span class="sc">-</span><span class="dv">58</span>])</span>
+<span id="cb434-20"><a href="サポートベクターマシーン-svm.html#cb434-20" tabindex="-1"></a>(spam_tab <span class="ot">&lt;-</span> <span class="fu">table</span>(spam_pred, spam_test[, <span class="dv">58</span>]))</span>
+<span id="cb434-21"><a href="サポートベクターマシーン-svm.html#cb434-21" tabindex="-1"></a><span class="co">#&gt;          </span></span>
+<span id="cb434-22"><a href="サポートベクターマシーン-svm.html#cb434-22" tabindex="-1"></a><span class="co">#&gt; spam_pred nonspam spam</span></span>
+<span id="cb434-23"><a href="サポートベクターマシーン-svm.html#cb434-23" tabindex="-1"></a><span class="co">#&gt;   nonspam     961  365</span></span>
+<span id="cb434-24"><a href="サポートベクターマシーン-svm.html#cb434-24" tabindex="-1"></a><span class="co">#&gt;   spam          1  207</span></span>
+<span id="cb434-25"><a href="サポートベクターマシーン-svm.html#cb434-25" tabindex="-1"></a>(<span class="fu">confusionMatrix</span>(spam_tab)<span class="sc">$</span>overall[<span class="st">&quot;Accuracy&quot;</span>])</span>
+<span id="cb434-26"><a href="サポートベクターマシーン-svm.html#cb434-26" tabindex="-1"></a><span class="co">#&gt;  Accuracy </span></span>
+<span id="cb434-27"><a href="サポートベクターマシーン-svm.html#cb434-27" tabindex="-1"></a><span class="co">#&gt; 0.7614081</span></span></code></pre></div>
+</div>
+</div>
+<div id="値分類-1" class="section level2 hasAnchor" number="10.3">
+<h2><span class="header-section-number">10.3</span> 3値分類<a href="サポートベクターマシーン-svm.html#値分類-1" class="anchor-section" aria-label="Anchor link to header"></a></h2>
+<p>irisデータセットをオリジナルの3分類のまま使用する.
+データセットの2/3を学習用に, 残りをテスト用に分割する.</p>
+<p>注) irisデータセットは, 件数が150件, 予測変数が4つのスモールデータセットであり,
+かつ, データの構造が単純であるため,
+外挿予測は難しいタスクとは言えないが,
+基本的操作を理解することを目的として
+ここでも使用を続けることにする.</p>
+<div class="sourceCode" id="cb435"><pre class="sourceCode r"><code class="sourceCode r"><span id="cb435-1"><a href="サポートベクターマシーン-svm.html#cb435-1" tabindex="-1"></a><span class="fu">set.seed</span>(<span class="dv">1</span>)</span>
+<span id="cb435-2"><a href="サポートベクターマシーン-svm.html#cb435-2" tabindex="-1"></a>train_idx <span class="ot">&lt;-</span> <span class="fu">sample</span>(<span class="fu">nrow</span>(iris), <span class="fu">round</span>(<span class="fu">nrow</span>(iris) <span class="sc">*</span> <span class="dv">2</span><span class="sc">/</span><span class="dv">3</span>))</span>
+<span id="cb435-3"><a href="サポートベクターマシーン-svm.html#cb435-3" tabindex="-1"></a>iris_train <span class="ot">&lt;-</span> iris[train_idx, ]</span>
+<span id="cb435-4"><a href="サポートベクターマシーン-svm.html#cb435-4" tabindex="-1"></a>iris_test <span class="ot">&lt;-</span> iris[<span class="sc">-</span>train_idx, ]</span></code></pre></div>
+<div id="svmの実行-2" class="section level3 unnumbered hasAnchor">
+<h3>SVMの実行<a href="サポートベクターマシーン-svm.html#svmの実行-2" class="anchor-section" aria-label="Anchor link to header"></a></h3>
+<p>引き続き, ライブラリ<strong>kernlab</strong>, 関数<code>ksvm()</code>を使用する.
+<code>ksvm()</code>は, クラス数<span class="math inline">\(k&gt;2\)</span>の場合, “One-vs-One”アプローチを実行する.</p>
+<div class="sourceCode" id="cb436"><pre class="sourceCode r"><code class="sourceCode r"><span id="cb436-1"><a href="サポートベクターマシーン-svm.html#cb436-1" tabindex="-1"></a><span class="co"># iris_ksvm &lt;- ksvm(Species ~ ., data = iris_train)     # デフォルト (kpar = &quot;automatic&quot;)</span></span>
+<span id="cb436-2"><a href="サポートベクターマシーン-svm.html#cb436-2" tabindex="-1"></a>iris_ksvm <span class="ot">&lt;-</span> <span class="fu">ksvm</span>(Species <span class="sc">~</span> ., <span class="at">data =</span> iris_train, </span>
+<span id="cb436-3"><a href="サポートベクターマシーン-svm.html#cb436-3" tabindex="-1"></a>                  <span class="at">kpar =</span> <span class="fu">list</span>(<span class="at">sigma =</span> <span class="dv">10</span>))  <span class="co"># → より複雑</span></span>
+<span id="cb436-4"><a href="サポートベクターマシーン-svm.html#cb436-4" tabindex="-1"></a>(iris_tab <span class="ot">&lt;-</span> <span class="fu">table</span>(<span class="fu">predict</span>(iris_ksvm, iris_test[, <span class="dv">1</span><span class="sc">:</span><span class="dv">4</span>]), iris_test<span class="sc">$</span>Species))</span>
+<span id="cb436-5"><a href="サポートベクターマシーン-svm.html#cb436-5" tabindex="-1"></a><span class="co">#&gt;             </span></span>
+<span id="cb436-6"><a href="サポートベクターマシーン-svm.html#cb436-6" tabindex="-1"></a><span class="co">#&gt;              setosa versicolor virginica</span></span>
+<span id="cb436-7"><a href="サポートベクターマシーン-svm.html#cb436-7" tabindex="-1"></a><span class="co">#&gt;   setosa         15          0         0</span></span>
+<span id="cb436-8"><a href="サポートベクターマシーン-svm.html#cb436-8" tabindex="-1"></a><span class="co">#&gt;   versicolor      0         14         0</span></span>
+<span id="cb436-9"><a href="サポートベクターマシーン-svm.html#cb436-9" tabindex="-1"></a><span class="co">#&gt;   virginica       1          5        15</span></span>
+<span id="cb436-10"><a href="サポートベクターマシーン-svm.html#cb436-10" tabindex="-1"></a>(<span class="fu">confusionMatrix</span>(iris_tab)<span class="sc">$</span>overall[<span class="st">&quot;Accuracy&quot;</span>])</span>
+<span id="cb436-11"><a href="サポートベクターマシーン-svm.html#cb436-11" tabindex="-1"></a><span class="co">#&gt; Accuracy </span></span>
+<span id="cb436-12"><a href="サポートベクターマシーン-svm.html#cb436-12" tabindex="-1"></a><span class="co">#&gt;     0.88</span></span></code></pre></div>
+<div class="sourceCode" id="cb437"><pre class="sourceCode r"><code class="sourceCode r"><span id="cb437-1"><a href="サポートベクターマシーン-svm.html#cb437-1" tabindex="-1"></a>iris_ksvm <span class="ot">&lt;-</span> <span class="fu">ksvm</span>(Species <span class="sc">~</span> ., <span class="at">data =</span> iris_train, </span>
+<span id="cb437-2"><a href="サポートベクターマシーン-svm.html#cb437-2" tabindex="-1"></a>                  <span class="at">kpar =</span> <span class="fu">list</span>(<span class="at">sigma =</span> <span class="fl">0.1</span>)) <span class="co"># → より大雑把</span></span>
+<span id="cb437-3"><a href="サポートベクターマシーン-svm.html#cb437-3" tabindex="-1"></a>(iris_tab <span class="ot">&lt;-</span> <span class="fu">table</span>(<span class="fu">predict</span>(iris_ksvm, iris_test[, <span class="dv">1</span><span class="sc">:</span><span class="dv">4</span>]), iris_test<span class="sc">$</span>Species))</span>
+<span id="cb437-4"><a href="サポートベクターマシーン-svm.html#cb437-4" tabindex="-1"></a><span class="co">#&gt;             </span></span>
+<span id="cb437-5"><a href="サポートベクターマシーン-svm.html#cb437-5" tabindex="-1"></a><span class="co">#&gt;              setosa versicolor virginica</span></span>
+<span id="cb437-6"><a href="サポートベクターマシーン-svm.html#cb437-6" tabindex="-1"></a><span class="co">#&gt;   setosa         16          0         0</span></span>
+<span id="cb437-7"><a href="サポートベクターマシーン-svm.html#cb437-7" tabindex="-1"></a><span class="co">#&gt;   versicolor      0         19         1</span></span>
+<span id="cb437-8"><a href="サポートベクターマシーン-svm.html#cb437-8" tabindex="-1"></a><span class="co">#&gt;   virginica       0          0        14</span></span>
+<span id="cb437-9"><a href="サポートベクターマシーン-svm.html#cb437-9" tabindex="-1"></a>(<span class="fu">confusionMatrix</span>(iris_tab)<span class="sc">$</span>overall[<span class="st">&quot;Accuracy&quot;</span>])</span>
+<span id="cb437-10"><a href="サポートベクターマシーン-svm.html#cb437-10" tabindex="-1"></a><span class="co">#&gt; Accuracy </span></span>
+<span id="cb437-11"><a href="サポートベクターマシーン-svm.html#cb437-11" tabindex="-1"></a><span class="co">#&gt;     0.98</span></span>
+<span id="cb437-12"><a href="サポートベクターマシーン-svm.html#cb437-12" tabindex="-1"></a></span>
+<span id="cb437-13"><a href="サポートベクターマシーン-svm.html#cb437-13" tabindex="-1"></a>iris_ksvm <span class="ot">&lt;-</span> <span class="fu">ksvm</span>(Species <span class="sc">~</span> ., <span class="at">data =</span> iris_train, </span>
+<span id="cb437-14"><a href="サポートベクターマシーン-svm.html#cb437-14" tabindex="-1"></a>                  <span class="at">kpar =</span> <span class="fu">list</span>(<span class="at">sigma =</span> <span class="fl">0.1</span>), <span class="at">C =</span> <span class="dv">10</span>) <span class="co"># → より少ないSV</span></span></code></pre></div>
+<div class="sourceCode" id="cb438"><pre class="sourceCode r"><code class="sourceCode r"><span id="cb438-1"><a href="サポートベクターマシーン-svm.html#cb438-1" tabindex="-1"></a>(iris_tab <span class="ot">&lt;-</span> <span class="fu">table</span>(<span class="fu">predict</span>(iris_ksvm, iris_test[, <span class="dv">1</span><span class="sc">:</span><span class="dv">4</span>]), iris_test<span class="sc">$</span>Species))</span>
+<span id="cb438-2"><a href="サポートベクターマシーン-svm.html#cb438-2" tabindex="-1"></a><span class="co">#&gt;             </span></span>
+<span id="cb438-3"><a href="サポートベクターマシーン-svm.html#cb438-3" tabindex="-1"></a><span class="co">#&gt;              setosa versicolor virginica</span></span>
+<span id="cb438-4"><a href="サポートベクターマシーン-svm.html#cb438-4" tabindex="-1"></a><span class="co">#&gt;   setosa         16          0         0</span></span>
+<span id="cb438-5"><a href="サポートベクターマシーン-svm.html#cb438-5" tabindex="-1"></a><span class="co">#&gt;   versicolor      0         17         0</span></span>
+<span id="cb438-6"><a href="サポートベクターマシーン-svm.html#cb438-6" tabindex="-1"></a><span class="co">#&gt;   virginica       0          2        15</span></span>
+<span id="cb438-7"><a href="サポートベクターマシーン-svm.html#cb438-7" tabindex="-1"></a>(<span class="fu">confusionMatrix</span>(iris_tab)<span class="sc">$</span>overall[<span class="st">&quot;Accuracy&quot;</span>])</span>
+<span id="cb438-8"><a href="サポートベクターマシーン-svm.html#cb438-8" tabindex="-1"></a><span class="co">#&gt; Accuracy </span></span>
+<span id="cb438-9"><a href="サポートベクターマシーン-svm.html#cb438-9" tabindex="-1"></a><span class="co">#&gt;     0.96</span></span>
+<span id="cb438-10"><a href="サポートベクターマシーン-svm.html#cb438-10" tabindex="-1"></a></span>
+<span id="cb438-11"><a href="サポートベクターマシーン-svm.html#cb438-11" tabindex="-1"></a>iris_ksvm <span class="ot">&lt;-</span> <span class="fu">ksvm</span>(Species <span class="sc">~</span> ., <span class="at">data =</span> iris_train, </span>
+<span id="cb438-12"><a href="サポートベクターマシーン-svm.html#cb438-12" tabindex="-1"></a>                  <span class="at">kpar =</span> <span class="fu">list</span>(<span class="at">sigma =</span> <span class="fl">0.1</span>), <span class="at">C =</span> <span class="dv">1</span>)</span>
+<span id="cb438-13"><a href="サポートベクターマシーン-svm.html#cb438-13" tabindex="-1"></a>(iris_tab <span class="ot">&lt;-</span> <span class="fu">table</span>(<span class="fu">predict</span>(iris_ksvm, iris_test[, <span class="dv">1</span><span class="sc">:</span><span class="dv">4</span>]), iris_test<span class="sc">$</span>Species))</span>
+<span id="cb438-14"><a href="サポートベクターマシーン-svm.html#cb438-14" tabindex="-1"></a><span class="co">#&gt;             </span></span>
+<span id="cb438-15"><a href="サポートベクターマシーン-svm.html#cb438-15" tabindex="-1"></a><span class="co">#&gt;              setosa versicolor virginica</span></span>
+<span id="cb438-16"><a href="サポートベクターマシーン-svm.html#cb438-16" tabindex="-1"></a><span class="co">#&gt;   setosa         16          0         0</span></span>
+<span id="cb438-17"><a href="サポートベクターマシーン-svm.html#cb438-17" tabindex="-1"></a><span class="co">#&gt;   versicolor      0         19         1</span></span>
+<span id="cb438-18"><a href="サポートベクターマシーン-svm.html#cb438-18" tabindex="-1"></a><span class="co">#&gt;   virginica       0          0        14</span></span>
+<span id="cb438-19"><a href="サポートベクターマシーン-svm.html#cb438-19" tabindex="-1"></a>(<span class="fu">confusionMatrix</span>(iris_tab)<span class="sc">$</span>overall[<span class="st">&quot;Accuracy&quot;</span>])</span>
+<span id="cb438-20"><a href="サポートベクターマシーン-svm.html#cb438-20" tabindex="-1"></a><span class="co">#&gt; Accuracy </span></span>
+<span id="cb438-21"><a href="サポートベクターマシーン-svm.html#cb438-21" tabindex="-1"></a><span class="co">#&gt;     0.98</span></span></code></pre></div>
+<div class="sourceCode" id="cb439"><pre class="sourceCode r"><code class="sourceCode r"><span id="cb439-1"><a href="サポートベクターマシーン-svm.html#cb439-1" tabindex="-1"></a>iris_ksvm <span class="ot">&lt;-</span> <span class="fu">ksvm</span>(Species <span class="sc">~</span> ., <span class="at">data =</span> iris_train, </span>
+<span id="cb439-2"><a href="サポートベクターマシーン-svm.html#cb439-2" tabindex="-1"></a>                  <span class="at">kpar =</span> <span class="fu">list</span>(<span class="at">sigma =</span> <span class="fl">0.1</span>), <span class="at">C =</span> <span class="fl">0.1</span>)</span>
+<span id="cb439-3"><a href="サポートベクターマシーン-svm.html#cb439-3" tabindex="-1"></a>(iris_tab <span class="ot">&lt;-</span> <span class="fu">table</span>(<span class="fu">predict</span>(iris_ksvm, iris_test[, <span class="dv">1</span><span class="sc">:</span><span class="dv">4</span>]), iris_test<span class="sc">$</span>Species))</span>
+<span id="cb439-4"><a href="サポートベクターマシーン-svm.html#cb439-4" tabindex="-1"></a><span class="co">#&gt;             </span></span>
+<span id="cb439-5"><a href="サポートベクターマシーン-svm.html#cb439-5" tabindex="-1"></a><span class="co">#&gt;              setosa versicolor virginica</span></span>
+<span id="cb439-6"><a href="サポートベクターマシーン-svm.html#cb439-6" tabindex="-1"></a><span class="co">#&gt;   setosa         16          0         0</span></span>
+<span id="cb439-7"><a href="サポートベクターマシーン-svm.html#cb439-7" tabindex="-1"></a><span class="co">#&gt;   versicolor      0         14         1</span></span>
+<span id="cb439-8"><a href="サポートベクターマシーン-svm.html#cb439-8" tabindex="-1"></a><span class="co">#&gt;   virginica       0          5        14</span></span>
+<span id="cb439-9"><a href="サポートベクターマシーン-svm.html#cb439-9" tabindex="-1"></a>(<span class="fu">confusionMatrix</span>(iris_tab)<span class="sc">$</span>overall[<span class="st">&quot;Accuracy&quot;</span>])</span>
+<span id="cb439-10"><a href="サポートベクターマシーン-svm.html#cb439-10" tabindex="-1"></a><span class="co">#&gt; Accuracy </span></span>
+<span id="cb439-11"><a href="サポートベクターマシーン-svm.html#cb439-11" tabindex="-1"></a><span class="co">#&gt;     0.88</span></span></code></pre></div>
+<div class="sourceCode" id="cb440"><pre class="sourceCode r"><code class="sourceCode r"><span id="cb440-1"><a href="サポートベクターマシーン-svm.html#cb440-1" tabindex="-1"></a>iris_ksvm <span class="ot">&lt;-</span> <span class="fu">ksvm</span>(Species <span class="sc">~</span> ., <span class="at">data =</span> iris_train, </span>
+<span id="cb440-2"><a href="サポートベクターマシーン-svm.html#cb440-2" tabindex="-1"></a>                  <span class="at">kpar =</span> <span class="fu">list</span>(<span class="at">sigma =</span> <span class="fl">0.1</span>), <span class="at">C =</span> <span class="fl">0.01</span>)   <span class="co"># → より多くのSV</span></span>
+<span id="cb440-3"><a href="サポートベクターマシーン-svm.html#cb440-3" tabindex="-1"></a>(iris_tab <span class="ot">&lt;-</span> <span class="fu">table</span>(<span class="fu">predict</span>(iris_ksvm, iris_test[, <span class="dv">1</span><span class="sc">:</span><span class="dv">4</span>]), iris_test<span class="sc">$</span>Species))</span>
+<span id="cb440-4"><a href="サポートベクターマシーン-svm.html#cb440-4" tabindex="-1"></a><span class="co">#&gt;             </span></span>
+<span id="cb440-5"><a href="サポートベクターマシーン-svm.html#cb440-5" tabindex="-1"></a><span class="co">#&gt;              setosa versicolor virginica</span></span>
+<span id="cb440-6"><a href="サポートベクターマシーン-svm.html#cb440-6" tabindex="-1"></a><span class="co">#&gt;   setosa          0          0         0</span></span>
+<span id="cb440-7"><a href="サポートベクターマシーン-svm.html#cb440-7" tabindex="-1"></a><span class="co">#&gt;   versicolor      0          0         0</span></span>
+<span id="cb440-8"><a href="サポートベクターマシーン-svm.html#cb440-8" tabindex="-1"></a><span class="co">#&gt;   virginica      16         19        15</span></span>
+<span id="cb440-9"><a href="サポートベクターマシーン-svm.html#cb440-9" tabindex="-1"></a>(<span class="fu">confusionMatrix</span>(iris_tab)<span class="sc">$</span>overall[<span class="st">&quot;Accuracy&quot;</span>])</span>
+<span id="cb440-10"><a href="サポートベクターマシーン-svm.html#cb440-10" tabindex="-1"></a><span class="co">#&gt; Accuracy </span></span>
+<span id="cb440-11"><a href="サポートベクターマシーン-svm.html#cb440-11" tabindex="-1"></a><span class="co">#&gt;      0.3</span></span></code></pre></div>
+</div>
+</div>
+<div id="代替パッケージe1071の利用" class="section level2 hasAnchor" number="10.4">
+<h2><span class="header-section-number">10.4</span> 代替パッケージ<strong>e1071</strong>の利用<a href="サポートベクターマシーン-svm.html#代替パッケージe1071の利用" class="anchor-section" aria-label="Anchor link to header"></a></h2>
+<p>ここでは, パッケージ<strong>e1071</strong>, 関数<code>svm()</code>を使用する.
+(注: ISLRでも<strong>e1071</strong>を使用している: Sec. 9.6)</p>
+<p>パッケージ<strong>caret</strong>の関数<code>createDataPartition()</code>を利用して,</p>
+<div class="sourceCode" id="cb441"><pre class="sourceCode r"><code class="sourceCode r"><span id="cb441-1"><a href="サポートベクターマシーン-svm.html#cb441-1" tabindex="-1"></a><span class="co"># irisデータセットを学習用とテスト用に分割</span></span>
+<span id="cb441-2"><a href="サポートベクターマシーン-svm.html#cb441-2" tabindex="-1"></a><span class="fu">set.seed</span>(<span class="dv">0</span>)</span>
+<span id="cb441-3"><a href="サポートベクターマシーン-svm.html#cb441-3" tabindex="-1"></a><span class="co"># library(caret)</span></span>
+<span id="cb441-4"><a href="サポートベクターマシーン-svm.html#cb441-4" tabindex="-1"></a>train_idx <span class="ot">&lt;-</span>caret<span class="sc">::</span><span class="fu">createDataPartition</span>(iris<span class="sc">$</span>Species, </span>
+<span id="cb441-5"><a href="サポートベクターマシーン-svm.html#cb441-5" tabindex="-1"></a>                                       <span class="at">p =</span> <span class="fl">0.7</span>, <span class="at">list =</span> F)</span>
+<span id="cb441-6"><a href="サポートベクターマシーン-svm.html#cb441-6" tabindex="-1"></a>iris_train <span class="ot">&lt;-</span> iris[train_idx, ]</span>
+<span id="cb441-7"><a href="サポートベクターマシーン-svm.html#cb441-7" tabindex="-1"></a>iris_test <span class="ot">&lt;-</span> iris[<span class="sc">-</span>train_idx, ]</span></code></pre></div>
+<div id="svmの実行-3" class="section level3 unnumbered hasAnchor">
+<h3>SVMの実行<a href="サポートベクターマシーン-svm.html#svmの実行-3" class="anchor-section" aria-label="Anchor link to header"></a></h3>
+<p><strong>e1071</strong>では, 多クラス(<span class="math inline">\(k&gt;2\)</span>)のケース, “One-vs-One”アプローチ採用している.
+関数<code>svm()</code>では, RBFカーネルのハイパーパラメータは <code>gamma</code>, <code>cost</code>である.</p>
+<div class="sourceCode" id="cb442"><pre class="sourceCode r"><code class="sourceCode r"><span id="cb442-1"><a href="サポートベクターマシーン-svm.html#cb442-1" tabindex="-1"></a><span class="fu">library</span>(<span class="st">&#39;e1071&#39;</span>)</span>
+<span id="cb442-2"><a href="サポートベクターマシーン-svm.html#cb442-2" tabindex="-1"></a>iris_svm <span class="ot">=</span> <span class="fu">svm</span>(Species <span class="sc">~</span> ., <span class="at">data =</span> iris_train, </span>
+<span id="cb442-3"><a href="サポートベクターマシーン-svm.html#cb442-3" tabindex="-1"></a>               <span class="at">method =</span> <span class="st">&quot;C-Speciesification&quot;</span>, </span>
+<span id="cb442-4"><a href="サポートベクターマシーン-svm.html#cb442-4" tabindex="-1"></a>               <span class="at">kernel =</span> <span class="st">&quot;radial&quot;</span>, </span>
+<span id="cb442-5"><a href="サポートベクターマシーン-svm.html#cb442-5" tabindex="-1"></a>               <span class="at">cost =</span> <span class="dv">10</span>, <span class="at">gamma =</span> <span class="fl">0.1</span>)</span>
+<span id="cb442-6"><a href="サポートベクターマシーン-svm.html#cb442-6" tabindex="-1"></a><span class="fu">summary</span>(iris_svm)</span>
+<span id="cb442-7"><a href="サポートベクターマシーン-svm.html#cb442-7" tabindex="-1"></a><span class="co">#&gt; </span></span>
+<span id="cb442-8"><a href="サポートベクターマシーン-svm.html#cb442-8" tabindex="-1"></a><span class="co">#&gt; Call:</span></span>
+<span id="cb442-9"><a href="サポートベクターマシーン-svm.html#cb442-9" tabindex="-1"></a><span class="co">#&gt; svm(formula = Species ~ ., data = iris_train, method = &quot;C-Speciesification&quot;, </span></span>
+<span id="cb442-10"><a href="サポートベクターマシーン-svm.html#cb442-10" tabindex="-1"></a><span class="co">#&gt;     kernel = &quot;radial&quot;, cost = 10, gamma = 0.1)</span></span>
+<span id="cb442-11"><a href="サポートベクターマシーン-svm.html#cb442-11" tabindex="-1"></a><span class="co">#&gt; </span></span>
+<span id="cb442-12"><a href="サポートベクターマシーン-svm.html#cb442-12" tabindex="-1"></a><span class="co">#&gt; </span></span>
+<span id="cb442-13"><a href="サポートベクターマシーン-svm.html#cb442-13" tabindex="-1"></a><span class="co">#&gt; Parameters:</span></span>
+<span id="cb442-14"><a href="サポートベクターマシーン-svm.html#cb442-14" tabindex="-1"></a><span class="co">#&gt;    SVM-Type:  C-classification </span></span>
+<span id="cb442-15"><a href="サポートベクターマシーン-svm.html#cb442-15" tabindex="-1"></a><span class="co">#&gt;  SVM-Kernel:  radial </span></span>
+<span id="cb442-16"><a href="サポートベクターマシーン-svm.html#cb442-16" tabindex="-1"></a><span class="co">#&gt;        cost:  10 </span></span>
+<span id="cb442-17"><a href="サポートベクターマシーン-svm.html#cb442-17" tabindex="-1"></a><span class="co">#&gt; </span></span>
+<span id="cb442-18"><a href="サポートベクターマシーン-svm.html#cb442-18" tabindex="-1"></a><span class="co">#&gt; Number of Support Vectors:  27</span></span>
+<span id="cb442-19"><a href="サポートベクターマシーン-svm.html#cb442-19" tabindex="-1"></a><span class="co">#&gt; </span></span>
+<span id="cb442-20"><a href="サポートベクターマシーン-svm.html#cb442-20" tabindex="-1"></a><span class="co">#&gt;  ( 3 13 11 )</span></span>
+<span id="cb442-21"><a href="サポートベクターマシーン-svm.html#cb442-21" tabindex="-1"></a><span class="co">#&gt; </span></span>
+<span id="cb442-22"><a href="サポートベクターマシーン-svm.html#cb442-22" tabindex="-1"></a><span class="co">#&gt; </span></span>
+<span id="cb442-23"><a href="サポートベクターマシーン-svm.html#cb442-23" tabindex="-1"></a><span class="co">#&gt; Number of Classes:  3 </span></span>
+<span id="cb442-24"><a href="サポートベクターマシーン-svm.html#cb442-24" tabindex="-1"></a><span class="co">#&gt; </span></span>
+<span id="cb442-25"><a href="サポートベクターマシーン-svm.html#cb442-25" tabindex="-1"></a><span class="co">#&gt; Levels: </span></span>
+<span id="cb442-26"><a href="サポートベクターマシーン-svm.html#cb442-26" tabindex="-1"></a><span class="co">#&gt;  setosa versicolor virginica</span></span>
+<span id="cb442-27"><a href="サポートベクターマシーン-svm.html#cb442-27" tabindex="-1"></a><span class="fu">plot</span>(iris_svm, iris_train, Petal.Width <span class="sc">~</span> Petal.Length, </span>
+<span id="cb442-28"><a href="サポートベクターマシーン-svm.html#cb442-28" tabindex="-1"></a>     <span class="at">slice =</span> <span class="fu">list</span>(<span class="at">Sepal.Width =</span> <span class="dv">3</span>, <span class="at">Sepal.Length =</span> <span class="dv">4</span>))</span>
+<span id="cb442-29"><a href="サポートベクターマシーン-svm.html#cb442-29" tabindex="-1"></a><span class="fu">title</span>(<span class="at">main =</span> <span class="st">&quot;</span><span class="sc">\n\n</span><span class="st">(cost = 10, gamma = 0.1)&quot;</span>)</span></code></pre></div>
+<p><img src="100-svm_files/figure-html/unnamed-chunk-28-1.png" width="75%" /></p>
+<div class="sourceCode" id="cb443"><pre class="sourceCode r"><code class="sourceCode r"><span id="cb443-1"><a href="サポートベクターマシーン-svm.html#cb443-1" tabindex="-1"></a>iris_svm <span class="ot">=</span> <span class="fu">svm</span>(Species<span class="sc">~</span>., <span class="at">data =</span> iris_train, </span>
+<span id="cb443-2"><a href="サポートベクターマシーン-svm.html#cb443-2" tabindex="-1"></a>               <span class="at">method =</span> <span class="st">&quot;C-classification&quot;</span>, </span>
+<span id="cb443-3"><a href="サポートベクターマシーン-svm.html#cb443-3" tabindex="-1"></a>               <span class="at">kernel =</span> <span class="st">&quot;radial&quot;</span>, <span class="at">cost =</span> <span class="dv">10</span>, <span class="at">gamma =</span> <span class="fl">0.4</span>)</span>
+<span id="cb443-4"><a href="サポートベクターマシーン-svm.html#cb443-4" tabindex="-1"></a><span class="fu">plot</span>(iris_svm, iris_train, Petal.Width <span class="sc">~</span> Petal.Length, </span>
+<span id="cb443-5"><a href="サポートベクターマシーン-svm.html#cb443-5" tabindex="-1"></a>     <span class="at">slice =</span> <span class="fu">list</span>(<span class="at">Sepal.Width =</span> <span class="dv">3</span>, <span class="at">Sepal.Length =</span> <span class="dv">4</span>))</span>
+<span id="cb443-6"><a href="サポートベクターマシーン-svm.html#cb443-6" tabindex="-1"></a><span class="fu">title</span>(<span class="at">main =</span> <span class="st">&quot;</span><span class="sc">\n\n</span><span class="st">(cost = 10, gamma = 0.4)&quot;</span>)</span></code></pre></div>
+<p><img src="100-svm_files/figure-html/unnamed-chunk-29-1.png" width="75%" /></p>
+<div class="sourceCode" id="cb444"><pre class="sourceCode r"><code class="sourceCode r"><span id="cb444-1"><a href="サポートベクターマシーン-svm.html#cb444-1" tabindex="-1"></a></span>
+<span id="cb444-2"><a href="サポートベクターマシーン-svm.html#cb444-2" tabindex="-1"></a>iris_predict <span class="ot">&lt;-</span> <span class="fu">predict</span>(iris_svm, iris_test, <span class="at">decision.values =</span> T)</span>
+<span id="cb444-3"><a href="サポートベクターマシーン-svm.html#cb444-3" tabindex="-1"></a><span class="fu">table</span>(iris_predict, iris_test[, <span class="dv">3</span>])</span>
+<span id="cb444-4"><a href="サポートベクターマシーン-svm.html#cb444-4" tabindex="-1"></a><span class="co">#&gt;             </span></span>
+<span id="cb444-5"><a href="サポートベクターマシーン-svm.html#cb444-5" tabindex="-1"></a><span class="co">#&gt; iris_predict 1.2 1.3 1.4 1.5 1.6 1.7 3 3.6 3.8 3.9 4 4.4 4.5 4.6 4.8 4.9 5 5.1</span></span>
+<span id="cb444-6"><a href="サポートベクターマシーン-svm.html#cb444-6" tabindex="-1"></a><span class="co">#&gt;   setosa       1   3   2   5   2   2 0   0   0   0 0   0   0   0   0   0 0   0</span></span>
+<span id="cb444-7"><a href="サポートベクターマシーン-svm.html#cb444-7" tabindex="-1"></a><span class="co">#&gt;   versicolor   0   0   0   0   0   0 1   1   1   2 1   2   3   1   0   1 0   0</span></span>
+<span id="cb444-8"><a href="サポートベクターマシーン-svm.html#cb444-8" tabindex="-1"></a><span class="co">#&gt;   virginica    0   0   0   0   0   0 0   0   0   0 0   0   0   0   1   1 1   2</span></span>
+<span id="cb444-9"><a href="サポートベクターマシーン-svm.html#cb444-9" tabindex="-1"></a><span class="co">#&gt;             </span></span>
+<span id="cb444-10"><a href="サポートベクターマシーン-svm.html#cb444-10" tabindex="-1"></a><span class="co">#&gt; iris_predict 5.4 5.5 5.6 5.8 5.9 6.1 6.3 6.4 6.6</span></span>
+<span id="cb444-11"><a href="サポートベクターマシーン-svm.html#cb444-11" tabindex="-1"></a><span class="co">#&gt;   setosa       0   0   0   0   0   0   0   0   0</span></span>
+<span id="cb444-12"><a href="サポートベクターマシーン-svm.html#cb444-12" tabindex="-1"></a><span class="co">#&gt;   versicolor   0   0   0   0   0   0   0   0   0</span></span>
+<span id="cb444-13"><a href="サポートベクターマシーン-svm.html#cb444-13" tabindex="-1"></a><span class="co">#&gt;   virginica    1   1   3   2   1   1   1   1   1</span></span></code></pre></div>
+</div>
+</div>
+<div id="ハイパーパラメータのチューニング" class="section level2 hasAnchor" number="10.5">
+<h2><span class="header-section-number">10.5</span> ハイパーパラメータのチューニング<a href="サポートベクターマシーン-svm.html#ハイパーパラメータのチューニング" class="anchor-section" aria-label="Anchor link to header"></a></h2>
+<p>引き続き, パッケージ<strong>e1071</strong>内の関数<code>tune()</code>を使用する.</p>
+<div id="線形カーネルの場合" class="section level3 unnumbered hasAnchor">
+<h3>線形カーネルの場合<a href="サポートベクターマシーン-svm.html#線形カーネルの場合" class="anchor-section" aria-label="Anchor link to header"></a></h3>
+<div class="sourceCode" id="cb445"><pre class="sourceCode r"><code class="sourceCode r"><span id="cb445-1"><a href="サポートベクターマシーン-svm.html#cb445-1" tabindex="-1"></a><span class="fu">set.seed</span>(<span class="dv">1</span>)</span>
+<span id="cb445-2"><a href="サポートベクターマシーン-svm.html#cb445-2" tabindex="-1"></a>tune_svm <span class="ot">=</span> <span class="fu">tune</span>(svm, Species <span class="sc">~</span> ., <span class="at">data =</span> iris_train, </span>
+<span id="cb445-3"><a href="サポートベクターマシーン-svm.html#cb445-3" tabindex="-1"></a>                <span class="at">kernel =</span> <span class="st">&quot;linear&quot;</span>, </span>
+<span id="cb445-4"><a href="サポートベクターマシーン-svm.html#cb445-4" tabindex="-1"></a>                <span class="at">ranges =</span> <span class="fu">list</span>(<span class="at">cost =</span> <span class="dv">10</span><span class="sc">^</span>(<span class="sc">-</span><span class="dv">3</span><span class="sc">:</span><span class="dv">2</span>)))</span></code></pre></div>
+</div>
+<div id="rbfカーネルの場合" class="section level3 unnumbered hasAnchor">
+<h3>RBFカーネルの場合<a href="サポートベクターマシーン-svm.html#rbfカーネルの場合" class="anchor-section" aria-label="Anchor link to header"></a></h3>
+<div class="sourceCode" id="cb446"><pre class="sourceCode r"><code class="sourceCode r"><span id="cb446-1"><a href="サポートベクターマシーン-svm.html#cb446-1" tabindex="-1"></a>tune_svm <span class="ot">=</span> <span class="fu">tune</span>(svm, Species <span class="sc">~</span> ., <span class="at">data =</span> iris_train, </span>
+<span id="cb446-2"><a href="サポートベクターマシーン-svm.html#cb446-2" tabindex="-1"></a>                <span class="at">ranges =</span> <span class="fu">list</span>(<span class="at">gamma =</span> <span class="dv">10</span><span class="sc">^</span>(<span class="sc">-</span><span class="dv">3</span><span class="sc">:</span><span class="dv">1</span>), </span>
+<span id="cb446-3"><a href="サポートベクターマシーン-svm.html#cb446-3" tabindex="-1"></a>                              <span class="at">cost =</span> <span class="dv">10</span><span class="sc">^</span>(<span class="sc">-</span><span class="dv">3</span><span class="sc">:</span><span class="dv">2</span>)))</span>
+<span id="cb446-4"><a href="サポートベクターマシーン-svm.html#cb446-4" tabindex="-1"></a><span class="fu">summary</span>(tune_svm)</span>
+<span id="cb446-5"><a href="サポートベクターマシーン-svm.html#cb446-5" tabindex="-1"></a><span class="co">#&gt; </span></span>
+<span id="cb446-6"><a href="サポートベクターマシーン-svm.html#cb446-6" tabindex="-1"></a><span class="co">#&gt; Parameter tuning of &#39;svm&#39;:</span></span>
+<span id="cb446-7"><a href="サポートベクターマシーン-svm.html#cb446-7" tabindex="-1"></a><span class="co">#&gt; </span></span>
+<span id="cb446-8"><a href="サポートベクターマシーン-svm.html#cb446-8" tabindex="-1"></a><span class="co">#&gt; - sampling method: 10-fold cross validation </span></span>
+<span id="cb446-9"><a href="サポートベクターマシーン-svm.html#cb446-9" tabindex="-1"></a><span class="co">#&gt; </span></span>
+<span id="cb446-10"><a href="サポートベクターマシーン-svm.html#cb446-10" tabindex="-1"></a><span class="co">#&gt; - best parameters:</span></span>
+<span id="cb446-11"><a href="サポートベクターマシーン-svm.html#cb446-11" tabindex="-1"></a><span class="co">#&gt;  gamma cost</span></span>
+<span id="cb446-12"><a href="サポートベクターマシーン-svm.html#cb446-12" tabindex="-1"></a><span class="co">#&gt;  0.001  100</span></span>
+<span id="cb446-13"><a href="サポートベクターマシーン-svm.html#cb446-13" tabindex="-1"></a><span class="co">#&gt; </span></span>
+<span id="cb446-14"><a href="サポートベクターマシーン-svm.html#cb446-14" tabindex="-1"></a><span class="co">#&gt; - best performance: 0.02818182 </span></span>
+<span id="cb446-15"><a href="サポートベクターマシーン-svm.html#cb446-15" tabindex="-1"></a><span class="co">#&gt; </span></span>
+<span id="cb446-16"><a href="サポートベクターマシーン-svm.html#cb446-16" tabindex="-1"></a><span class="co">#&gt; - Detailed performance results:</span></span>
+<span id="cb446-17"><a href="サポートベクターマシーン-svm.html#cb446-17" tabindex="-1"></a><span class="co">#&gt;    gamma  cost      error dispersion</span></span>
+<span id="cb446-18"><a href="サポートベクターマシーン-svm.html#cb446-18" tabindex="-1"></a><span class="co">#&gt; 1  1e-03 1e-03 0.74272727 0.17897012</span></span>
+<span id="cb446-19"><a href="サポートベクターマシーン-svm.html#cb446-19" tabindex="-1"></a><span class="co">#&gt; 2  1e-02 1e-03 0.74272727 0.17897012</span></span>
+<span id="cb446-20"><a href="サポートベクターマシーン-svm.html#cb446-20" tabindex="-1"></a><span class="co">#&gt; 3  1e-01 1e-03 0.75181818 0.16991598</span></span>
+<span id="cb446-21"><a href="サポートベクターマシーン-svm.html#cb446-21" tabindex="-1"></a><span class="co">#&gt; 4  1e+00 1e-03 0.73363636 0.19194285</span></span>
+<span id="cb446-22"><a href="サポートベクターマシーン-svm.html#cb446-22" tabindex="-1"></a><span class="co">#&gt; 5  1e+01 1e-03 0.78272727 0.12386862</span></span>
+<span id="cb446-23"><a href="サポートベクターマシーン-svm.html#cb446-23" tabindex="-1"></a><span class="co">#&gt; 6  1e-03 1e-02 0.74272727 0.17897012</span></span>
+<span id="cb446-24"><a href="サポートベクターマシーン-svm.html#cb446-24" tabindex="-1"></a><span class="co">#&gt; 7  1e-02 1e-02 0.74272727 0.17897012</span></span>
+<span id="cb446-25"><a href="サポートベクターマシーン-svm.html#cb446-25" tabindex="-1"></a><span class="co">#&gt; 8  1e-01 1e-02 0.75181818 0.16991598</span></span>
+<span id="cb446-26"><a href="サポートベクターマシーン-svm.html#cb446-26" tabindex="-1"></a><span class="co">#&gt; 9  1e+00 1e-02 0.73363636 0.19194285</span></span>
+<span id="cb446-27"><a href="サポートベクターマシーン-svm.html#cb446-27" tabindex="-1"></a><span class="co">#&gt; 10 1e+01 1e-02 0.78272727 0.12386862</span></span>
+<span id="cb446-28"><a href="サポートベクターマシーン-svm.html#cb446-28" tabindex="-1"></a><span class="co">#&gt; 11 1e-03 1e-01 0.74272727 0.17897012</span></span>
+<span id="cb446-29"><a href="サポートベクターマシーン-svm.html#cb446-29" tabindex="-1"></a><span class="co">#&gt; 12 1e-02 1e-01 0.70636364 0.19787902</span></span>
+<span id="cb446-30"><a href="サポートベクターマシーン-svm.html#cb446-30" tabindex="-1"></a><span class="co">#&gt; 13 1e-01 1e-01 0.20181818 0.24479147</span></span>
+<span id="cb446-31"><a href="サポートベクターマシーン-svm.html#cb446-31" tabindex="-1"></a><span class="co">#&gt; 14 1e+00 1e-01 0.10545455 0.14130443</span></span>
+<span id="cb446-32"><a href="サポートベクターマシーン-svm.html#cb446-32" tabindex="-1"></a><span class="co">#&gt; 15 1e+01 1e-01 0.78272727 0.12386862</span></span>
+<span id="cb446-33"><a href="サポートベクターマシーン-svm.html#cb446-33" tabindex="-1"></a><span class="co">#&gt; 16 1e-03 1e+00 0.67818182 0.18891211</span></span>
+<span id="cb446-34"><a href="サポートベクターマシーン-svm.html#cb446-34" tabindex="-1"></a><span class="co">#&gt; 17 1e-02 1e+00 0.12363636 0.11110927</span></span>
+<span id="cb446-35"><a href="サポートベクターマシーン-svm.html#cb446-35" tabindex="-1"></a><span class="co">#&gt; 18 1e-01 1e+00 0.03727273 0.04819039</span></span>
+<span id="cb446-36"><a href="サポートベクターマシーン-svm.html#cb446-36" tabindex="-1"></a><span class="co">#&gt; 19 1e+00 1e+00 0.04727273 0.04994028</span></span>
+<span id="cb446-37"><a href="サポートベクターマシーン-svm.html#cb446-37" tabindex="-1"></a><span class="co">#&gt; 20 1e+01 1e+00 0.11454545 0.04070093</span></span>
+<span id="cb446-38"><a href="サポートベクターマシーン-svm.html#cb446-38" tabindex="-1"></a><span class="co">#&gt; 21 1e-03 1e+01 0.12363636 0.11110927</span></span>
+<span id="cb446-39"><a href="サポートベクターマシーン-svm.html#cb446-39" tabindex="-1"></a><span class="co">#&gt; 22 1e-02 1e+01 0.03727273 0.04819039</span></span>
+<span id="cb446-40"><a href="サポートベクターマシーン-svm.html#cb446-40" tabindex="-1"></a><span class="co">#&gt; 23 1e-01 1e+01 0.03818182 0.04938557</span></span>
+<span id="cb446-41"><a href="サポートベクターマシーン-svm.html#cb446-41" tabindex="-1"></a><span class="co">#&gt; 24 1e+00 1e+01 0.04727273 0.04994028</span></span>
+<span id="cb446-42"><a href="サポートベクターマシーン-svm.html#cb446-42" tabindex="-1"></a><span class="co">#&gt; 25 1e+01 1e+01 0.11454545 0.04070093</span></span>
+<span id="cb446-43"><a href="サポートベクターマシーン-svm.html#cb446-43" tabindex="-1"></a><span class="co">#&gt; 26 1e-03 1e+02 0.02818182 0.04544444</span></span>
+<span id="cb446-44"><a href="サポートベクターマシーン-svm.html#cb446-44" tabindex="-1"></a><span class="co">#&gt; 27 1e-02 1e+02 0.03818182 0.04938557</span></span>
+<span id="cb446-45"><a href="サポートベクターマシーン-svm.html#cb446-45" tabindex="-1"></a><span class="co">#&gt; 28 1e-01 1e+02 0.02818182 0.04544444</span></span>
+<span id="cb446-46"><a href="サポートベクターマシーン-svm.html#cb446-46" tabindex="-1"></a><span class="co">#&gt; 29 1e+00 1e+02 0.03727273 0.04819039</span></span>
+<span id="cb446-47"><a href="サポートベクターマシーン-svm.html#cb446-47" tabindex="-1"></a><span class="co">#&gt; 30 1e+01 1e+02 0.11454545 0.04070093</span></span></code></pre></div>
+<div class="sourceCode" id="cb447"><pre class="sourceCode r"><code class="sourceCode r"><span id="cb447-1"><a href="サポートベクターマシーン-svm.html#cb447-1" tabindex="-1"></a><span class="co"># 最適なハイパーパラメータを用いたモデル</span></span>
+<span id="cb447-2"><a href="サポートベクターマシーン-svm.html#cb447-2" tabindex="-1"></a>bestmod_svm <span class="ot">=</span> tune_svm<span class="sc">$</span>best.model</span>
+<span id="cb447-3"><a href="サポートベクターマシーン-svm.html#cb447-3" tabindex="-1"></a><span class="fu">summary</span>(bestmod_svm)</span>
+<span id="cb447-4"><a href="サポートベクターマシーン-svm.html#cb447-4" tabindex="-1"></a><span class="co">#&gt; </span></span>
+<span id="cb447-5"><a href="サポートベクターマシーン-svm.html#cb447-5" tabindex="-1"></a><span class="co">#&gt; Call:</span></span>
+<span id="cb447-6"><a href="サポートベクターマシーン-svm.html#cb447-6" tabindex="-1"></a><span class="co">#&gt; best.tune(METHOD = svm, train.x = Species ~ ., data = iris_train, </span></span>
+<span id="cb447-7"><a href="サポートベクターマシーン-svm.html#cb447-7" tabindex="-1"></a><span class="co">#&gt;     ranges = list(gamma = 10^(-3:1), cost = 10^(-3:2)))</span></span>
+<span id="cb447-8"><a href="サポートベクターマシーン-svm.html#cb447-8" tabindex="-1"></a><span class="co">#&gt; </span></span>
+<span id="cb447-9"><a href="サポートベクターマシーン-svm.html#cb447-9" tabindex="-1"></a><span class="co">#&gt; </span></span>
+<span id="cb447-10"><a href="サポートベクターマシーン-svm.html#cb447-10" tabindex="-1"></a><span class="co">#&gt; Parameters:</span></span>
+<span id="cb447-11"><a href="サポートベクターマシーン-svm.html#cb447-11" tabindex="-1"></a><span class="co">#&gt;    SVM-Type:  C-classification </span></span>
+<span id="cb447-12"><a href="サポートベクターマシーン-svm.html#cb447-12" tabindex="-1"></a><span class="co">#&gt;  SVM-Kernel:  radial </span></span>
+<span id="cb447-13"><a href="サポートベクターマシーン-svm.html#cb447-13" tabindex="-1"></a><span class="co">#&gt;        cost:  100 </span></span>
+<span id="cb447-14"><a href="サポートベクターマシーン-svm.html#cb447-14" tabindex="-1"></a><span class="co">#&gt; </span></span>
+<span id="cb447-15"><a href="サポートベクターマシーン-svm.html#cb447-15" tabindex="-1"></a><span class="co">#&gt; Number of Support Vectors:  42</span></span>
+<span id="cb447-16"><a href="サポートベクターマシーン-svm.html#cb447-16" tabindex="-1"></a><span class="co">#&gt; </span></span>
+<span id="cb447-17"><a href="サポートベクターマシーン-svm.html#cb447-17" tabindex="-1"></a><span class="co">#&gt;  ( 4 21 17 )</span></span>
+<span id="cb447-18"><a href="サポートベクターマシーン-svm.html#cb447-18" tabindex="-1"></a><span class="co">#&gt; </span></span>
+<span id="cb447-19"><a href="サポートベクターマシーン-svm.html#cb447-19" tabindex="-1"></a><span class="co">#&gt; </span></span>
+<span id="cb447-20"><a href="サポートベクターマシーン-svm.html#cb447-20" tabindex="-1"></a><span class="co">#&gt; Number of Classes:  3 </span></span>
+<span id="cb447-21"><a href="サポートベクターマシーン-svm.html#cb447-21" tabindex="-1"></a><span class="co">#&gt; </span></span>
+<span id="cb447-22"><a href="サポートベクターマシーン-svm.html#cb447-22" tabindex="-1"></a><span class="co">#&gt; Levels: </span></span>
+<span id="cb447-23"><a href="サポートベクターマシーン-svm.html#cb447-23" tabindex="-1"></a><span class="co">#&gt;  setosa versicolor virginica</span></span></code></pre></div>
+<pre><code>tune()の使い方のヒント:
+- 引数tunecontrolの値を関数tune.control()を使って設定できる
+- 例: tune.control(sampling = &quot;boot&quot;)    
+  - sampling: サンプリング・スキームの指定
+    - &quot;boot&quot;(ブートストラップ), &quot;cross&quot;(クロスバリデーション), &quot;fix&quot;(学習/評価に1回分割のみ)</code></pre>
+</div>
+<div id="e1071内にあるチューニング用の便利な関数群" class="section level3 unnumbered hasAnchor">
+<h3><strong>e1071</strong>内にあるチューニング用の便利な関数群<a href="サポートベクターマシーン-svm.html#e1071内にあるチューニング用の便利な関数群" class="anchor-section" aria-label="Anchor link to header"></a></h3>
+<p><strong>e1071</strong>は, ウィーン工科大学 (TU Wien)
+の統計学科の確率論グループが作成している, 様々な
+機械学習や数値計算を行う関数をカバーするパッケージである.</p>
+<ul>
+<li><a href="https://cran.r-project.org/web/packages/e1071/e1071.pdf">https://cran.r-project.org/web/packages/e1071/e1071.pdf</a></li>
+</ul>
+<p>パッケージ内には, <strong>tune.XXX</strong>と命名された関数群がある.
+これらは, 上記<code>tune()</code>を使用したwrapper関数で,
+これを用いることで機械学習アルゴリズムXXXの
+ハイパーパラメータ・チューニングを行うことができる.</p>
+<ul>
+<li><code>tune.svm()</code>, <code>tune.rpart()</code>, <code>tune.randomForest()</code>, <code>tune.knn()</code>, 等.</li>
+</ul>
+<p>注) 呼び出す関数により, 予測変数と目的変数を個別に指定するもの,
+(x=…, y=…)と, 式 (formula), すなわち, <code>y ~ x</code>のように指定をするものがあることに注意が必要.</p>
+<!--
+上の`svm()`, および`tune.svm()`では,
+libsvmと命名されたC++で書かれた
+SVM用のライブラリが使用されている.
+-->
+<div id="knn法" class="section level4 unnumbered hasAnchor">
+<h4>kNN法<a href="サポートベクターマシーン-svm.html#knn法" class="anchor-section" aria-label="Anchor link to header"></a></h4>
+<p>関数<code>tune.knn()</code>は, <code>knn()</code>を呼び出して実行する.
+<code>knn()</code>のパラメータ<code>k</code>のサーチ範囲を指定することができる.</p>
+<div class="sourceCode" id="cb449"><pre class="sourceCode r"><code class="sourceCode r"><span id="cb449-1"><a href="サポートベクターマシーン-svm.html#cb449-1" tabindex="-1"></a>x <span class="ot">&lt;-</span> iris[, <span class="sc">-</span><span class="dv">5</span>]</span>
+<span id="cb449-2"><a href="サポートベクターマシーン-svm.html#cb449-2" tabindex="-1"></a>y <span class="ot">&lt;-</span> iris[, <span class="dv">5</span>]</span>
+<span id="cb449-3"><a href="サポートベクターマシーン-svm.html#cb449-3" tabindex="-1"></a>res_tune_knn <span class="ot">&lt;-</span> <span class="fu">tune.knn</span>(x, y, <span class="at">k =</span> <span class="dv">1</span><span class="sc">:</span><span class="dv">10</span>, </span>
+<span id="cb449-4"><a href="サポートベクターマシーン-svm.html#cb449-4" tabindex="-1"></a>                         <span class="at">tunecontrol =</span> <span class="fu">tune.control</span>(<span class="at">sampling =</span> <span class="st">&quot;boot&quot;</span>))</span>
+<span id="cb449-5"><a href="サポートベクターマシーン-svm.html#cb449-5" tabindex="-1"></a><span class="fu">summary</span>(res_tune_knn)</span>
+<span id="cb449-6"><a href="サポートベクターマシーン-svm.html#cb449-6" tabindex="-1"></a><span class="co">#&gt; </span></span>
+<span id="cb449-7"><a href="サポートベクターマシーン-svm.html#cb449-7" tabindex="-1"></a><span class="co">#&gt; Parameter tuning of &#39;knn.wrapper&#39;:</span></span>
+<span id="cb449-8"><a href="サポートベクターマシーン-svm.html#cb449-8" tabindex="-1"></a><span class="co">#&gt; </span></span>
+<span id="cb449-9"><a href="サポートベクターマシーン-svm.html#cb449-9" tabindex="-1"></a><span class="co">#&gt; - sampling method: bootstrapping </span></span>
+<span id="cb449-10"><a href="サポートベクターマシーン-svm.html#cb449-10" tabindex="-1"></a><span class="co">#&gt; </span></span>
+<span id="cb449-11"><a href="サポートベクターマシーン-svm.html#cb449-11" tabindex="-1"></a><span class="co">#&gt; - best parameters:</span></span>
+<span id="cb449-12"><a href="サポートベクターマシーン-svm.html#cb449-12" tabindex="-1"></a><span class="co">#&gt;  k</span></span>
+<span id="cb449-13"><a href="サポートベクターマシーン-svm.html#cb449-13" tabindex="-1"></a><span class="co">#&gt;  1</span></span>
+<span id="cb449-14"><a href="サポートベクターマシーン-svm.html#cb449-14" tabindex="-1"></a><span class="co">#&gt; </span></span>
+<span id="cb449-15"><a href="サポートベクターマシーン-svm.html#cb449-15" tabindex="-1"></a><span class="co">#&gt; - best performance: 0.04242248 </span></span>
+<span id="cb449-16"><a href="サポートベクターマシーン-svm.html#cb449-16" tabindex="-1"></a><span class="co">#&gt; </span></span>
+<span id="cb449-17"><a href="サポートベクターマシーン-svm.html#cb449-17" tabindex="-1"></a><span class="co">#&gt; - Detailed performance results:</span></span>
+<span id="cb449-18"><a href="サポートベクターマシーン-svm.html#cb449-18" tabindex="-1"></a><span class="co">#&gt;     k      error dispersion</span></span>
+<span id="cb449-19"><a href="サポートベクターマシーン-svm.html#cb449-19" tabindex="-1"></a><span class="co">#&gt; 1   1 0.04242248 0.01767743</span></span>
+<span id="cb449-20"><a href="サポートベクターマシーン-svm.html#cb449-20" tabindex="-1"></a><span class="co">#&gt; 2   2 0.04935387 0.01928082</span></span>
+<span id="cb449-21"><a href="サポートベクターマシーン-svm.html#cb449-21" tabindex="-1"></a><span class="co">#&gt; 3   3 0.05304685 0.02914612</span></span>
+<span id="cb449-22"><a href="サポートベクターマシーン-svm.html#cb449-22" tabindex="-1"></a><span class="co">#&gt; 4   4 0.05404239 0.04167451</span></span>
+<span id="cb449-23"><a href="サポートベクターマシーン-svm.html#cb449-23" tabindex="-1"></a><span class="co">#&gt; 5   5 0.05522874 0.03213148</span></span>
+<span id="cb449-24"><a href="サポートベクターマシーン-svm.html#cb449-24" tabindex="-1"></a><span class="co">#&gt; 6   6 0.05548034 0.03610984</span></span>
+<span id="cb449-25"><a href="サポートベクターマシーン-svm.html#cb449-25" tabindex="-1"></a><span class="co">#&gt; 7   7 0.04847679 0.02678632</span></span>
+<span id="cb449-26"><a href="サポートベクターマシーン-svm.html#cb449-26" tabindex="-1"></a><span class="co">#&gt; 8   8 0.05191999 0.03424645</span></span>
+<span id="cb449-27"><a href="サポートベクターマシーン-svm.html#cb449-27" tabindex="-1"></a><span class="co">#&gt; 9   9 0.04650720 0.02991595</span></span>
+<span id="cb449-28"><a href="サポートベクターマシーン-svm.html#cb449-28" tabindex="-1"></a><span class="co">#&gt; 10 10 0.04459118 0.02676795</span></span>
+<span id="cb449-29"><a href="サポートベクターマシーン-svm.html#cb449-29" tabindex="-1"></a><span class="fu">plot</span>(res_tune_knn)</span></code></pre></div>
+<p><img src="100-svm_files/figure-html/unnamed-chunk-33-1.png" width="75%" /></p>
+</div>
+<div id="決定木" class="section level4 unnumbered hasAnchor">
+<h4>決定木<a href="サポートベクターマシーン-svm.html#決定木" class="anchor-section" aria-label="Anchor link to header"></a></h4>
+<p>関数<code>tune.rpart()</code>: <code>rpart()</code>を呼び出して実行する.
+<code>rpart()</code>のパラメータするための関数<code>rpart.conctrol()</code>
+に与えるパラメータに対して, チューニングのためのサーチの範囲を
+指定することができる.
+以下は, <code>minsplit</code> (ノード内の最小観測点の数) を与える例を示す:</p>
+<div class="sourceCode" id="cb450"><pre class="sourceCode r"><code class="sourceCode r"><span id="cb450-1"><a href="サポートベクターマシーン-svm.html#cb450-1" tabindex="-1"></a><span class="fu">data</span>(mtcars)</span>
+<span id="cb450-2"><a href="サポートベクターマシーン-svm.html#cb450-2" tabindex="-1"></a>res_tune_rpart <span class="ot">&lt;-</span> <span class="fu">tune.rpart</span>(mpg <span class="sc">~</span> ., <span class="at">data =</span> mtcars, </span>
+<span id="cb450-3"><a href="サポートベクターマシーン-svm.html#cb450-3" tabindex="-1"></a>                             <span class="at">minsplit =</span> <span class="fu">c</span>(<span class="dv">5</span>, <span class="dv">10</span>, <span class="dv">15</span>))</span>
+<span id="cb450-4"><a href="サポートベクターマシーン-svm.html#cb450-4" tabindex="-1"></a><span class="fu">summary</span>(res_tune_rpart)</span>
+<span id="cb450-5"><a href="サポートベクターマシーン-svm.html#cb450-5" tabindex="-1"></a><span class="co">#&gt; </span></span>
+<span id="cb450-6"><a href="サポートベクターマシーン-svm.html#cb450-6" tabindex="-1"></a><span class="co">#&gt; Parameter tuning of &#39;rpart.wrapper&#39;:</span></span>
+<span id="cb450-7"><a href="サポートベクターマシーン-svm.html#cb450-7" tabindex="-1"></a><span class="co">#&gt; </span></span>
+<span id="cb450-8"><a href="サポートベクターマシーン-svm.html#cb450-8" tabindex="-1"></a><span class="co">#&gt; - sampling method: 10-fold cross validation </span></span>
+<span id="cb450-9"><a href="サポートベクターマシーン-svm.html#cb450-9" tabindex="-1"></a><span class="co">#&gt; </span></span>
+<span id="cb450-10"><a href="サポートベクターマシーン-svm.html#cb450-10" tabindex="-1"></a><span class="co">#&gt; - best parameters:</span></span>
+<span id="cb450-11"><a href="サポートベクターマシーン-svm.html#cb450-11" tabindex="-1"></a><span class="co">#&gt;  minsplit</span></span>
+<span id="cb450-12"><a href="サポートベクターマシーン-svm.html#cb450-12" tabindex="-1"></a><span class="co">#&gt;         5</span></span>
+<span id="cb450-13"><a href="サポートベクターマシーン-svm.html#cb450-13" tabindex="-1"></a><span class="co">#&gt; </span></span>
+<span id="cb450-14"><a href="サポートベクターマシーン-svm.html#cb450-14" tabindex="-1"></a><span class="co">#&gt; - best performance: 10.40174 </span></span>
+<span id="cb450-15"><a href="サポートベクターマシーン-svm.html#cb450-15" tabindex="-1"></a><span class="co">#&gt; </span></span>
+<span id="cb450-16"><a href="サポートベクターマシーン-svm.html#cb450-16" tabindex="-1"></a><span class="co">#&gt; - Detailed performance results:</span></span>
+<span id="cb450-17"><a href="サポートベクターマシーン-svm.html#cb450-17" tabindex="-1"></a><span class="co">#&gt;   minsplit    error dispersion</span></span>
+<span id="cb450-18"><a href="サポートベクターマシーン-svm.html#cb450-18" tabindex="-1"></a><span class="co">#&gt; 1        5 10.40174   8.416546</span></span>
+<span id="cb450-19"><a href="サポートベクターマシーン-svm.html#cb450-19" tabindex="-1"></a><span class="co">#&gt; 2       10 11.44564   8.841332</span></span>
+<span id="cb450-20"><a href="サポートベクターマシーン-svm.html#cb450-20" tabindex="-1"></a><span class="co">#&gt; 3       15 19.12135  11.868442</span></span>
+<span id="cb450-21"><a href="サポートベクターマシーン-svm.html#cb450-21" tabindex="-1"></a><span class="fu">plot</span>(res_tune_rpart)</span></code></pre></div>
+<p><img src="100-svm_files/figure-html/unnamed-chunk-34-1.png" width="75%" /></p>
+<p>呼び出すアルゴリズム/モデルごとに異なるハイパーパラメータを持つため, 正しい設定を行うには, 各々の関数のマニュアルを確認する必要.</p>
+<p>ハイパーパラメータのチューニングは, 他のパッケージ,
+例えば, <strong>caret</strong>の機能を用いても実行することができる.</p>
+<!--
+SV regressionについてカバーする??
+-->
+
+</div>
+</div>
+</div>
+</div>
+            </section>
+
+          </div>
+        </div>
+      </div>
+<a href="アンサンブル学習.html" class="navigation navigation-prev navigation-unique" aria-label="Previous page"><i class="fa fa-angle-left"></i></a>
+
+    </div>
+  </div>
+<script src="libs/gitbook-2.6.7/js/app.min.js"></script>
+<script src="libs/gitbook-2.6.7/js/clipboard.min.js"></script>
+<script src="libs/gitbook-2.6.7/js/plugin-search.js"></script>
+<script src="libs/gitbook-2.6.7/js/plugin-sharing.js"></script>
+<script src="libs/gitbook-2.6.7/js/plugin-fontsettings.js"></script>
+<script src="libs/gitbook-2.6.7/js/plugin-bookdown.js"></script>
+<script src="libs/gitbook-2.6.7/js/jquery.highlight.js"></script>
+<script src="libs/gitbook-2.6.7/js/plugin-clipboard.js"></script>
+<script>
+gitbook.require(["gitbook"], function(gitbook) {
+gitbook.start({
+"sharing": {
+"github": false,
+"facebook": true,
+"twitter": true,
+"linkedin": false,
+"weibo": false,
+"instapaper": false,
+"vk": false,
+"whatsapp": false,
+"all": ["facebook", "twitter", "linkedin", "weibo", "instapaper"]
+},
+"fontsettings": {
+"theme": "white",
+"family": "sans",
+"size": 2
+},
+"edit": {
+"link": null,
+"text": null
+},
+"history": {
+"link": null,
+"text": null
+},
+"view": {
+"link": null,
+"text": null
+},
+"download": null,
+"search": {
+"engine": "fuse",
+"options": null
+},
+"toc": {
+"collapse": "subsection"
+}
+});
+});
+</script>
+
+<!-- dynamically load mathjax for compatibility with self-contained -->
+<script>
+  (function () {
+    var script = document.createElement("script");
+    script.type = "text/javascript";
+    var src = "true";
+    if (src === "" || src === "true") src = "https://cdnjs.cloudflare.com/ajax/libs/mathjax/2.7.9/latest.js?config=TeX-MML-AM_CHTML";
+    if (location.protocol !== "file:")
+      if (/^https?:/.test(src))
+        src = src.replace(/^https?:/, '');
+    script.src = src;
+    document.getElementsByTagName("head")[0].appendChild(script);
+  })();
+</script>
+</body>
+
+</html>

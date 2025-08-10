@@ -1,0 +1,1090 @@
+<!DOCTYPE html>
+<html lang="" xml:lang="">
+<head>
+
+  <meta charset="utf-8" />
+  <meta http-equiv="X-UA-Compatible" content="IE=edge" />
+  <title>4 ロジット/ブロビット回帰分析 | 金融データサイエンス</title>
+  <meta name="description" content="4 ロジット/ブロビット回帰分析 | 金融データサイエンス" />
+  <meta name="generator" content="bookdown 0.40 and GitBook 2.6.7" />
+
+  <meta property="og:title" content="4 ロジット/ブロビット回帰分析 | 金融データサイエンス" />
+  <meta property="og:type" content="book" />
+  
+  
+  
+
+  <meta name="twitter:card" content="summary" />
+  <meta name="twitter:title" content="4 ロジット/ブロビット回帰分析 | 金融データサイエンス" />
+  
+  
+  
+
+<meta name="author" content="林 高樹" />
+
+
+
+  <meta name="viewport" content="width=device-width, initial-scale=1" />
+  <meta name="apple-mobile-web-app-capable" content="yes" />
+  <meta name="apple-mobile-web-app-status-bar-style" content="black" />
+  
+  
+<link rel="prev" href="線形回帰分析.html"/>
+<link rel="next" href="一般化加法モデル-gam.html"/>
+<script src="libs/jquery-3.6.0/jquery-3.6.0.min.js"></script>
+<script src="https://cdn.jsdelivr.net/npm/fuse.js@6.4.6/dist/fuse.min.js"></script>
+<link href="libs/gitbook-2.6.7/css/style.css" rel="stylesheet" />
+<link href="libs/gitbook-2.6.7/css/plugin-table.css" rel="stylesheet" />
+<link href="libs/gitbook-2.6.7/css/plugin-bookdown.css" rel="stylesheet" />
+<link href="libs/gitbook-2.6.7/css/plugin-highlight.css" rel="stylesheet" />
+<link href="libs/gitbook-2.6.7/css/plugin-search.css" rel="stylesheet" />
+<link href="libs/gitbook-2.6.7/css/plugin-fontsettings.css" rel="stylesheet" />
+<link href="libs/gitbook-2.6.7/css/plugin-clipboard.css" rel="stylesheet" />
+
+
+
+
+
+
+
+
+<link href="libs/anchor-sections-1.1.0/anchor-sections.css" rel="stylesheet" />
+<link href="libs/anchor-sections-1.1.0/anchor-sections-hash.css" rel="stylesheet" />
+<script src="libs/anchor-sections-1.1.0/anchor-sections.js"></script>
+
+
+<style type="text/css">
+pre > code.sourceCode { white-space: pre; position: relative; }
+pre > code.sourceCode > span { line-height: 1.25; }
+pre > code.sourceCode > span:empty { height: 1.2em; }
+.sourceCode { overflow: visible; }
+code.sourceCode > span { color: inherit; text-decoration: inherit; }
+pre.sourceCode { margin: 0; }
+@media screen {
+div.sourceCode { overflow: auto; }
+}
+@media print {
+pre > code.sourceCode { white-space: pre-wrap; }
+pre > code.sourceCode > span { display: inline-block; text-indent: -5em; padding-left: 5em; }
+}
+pre.numberSource code
+  { counter-reset: source-line 0; }
+pre.numberSource code > span
+  { position: relative; left: -4em; counter-increment: source-line; }
+pre.numberSource code > span > a:first-child::before
+  { content: counter(source-line);
+    position: relative; left: -1em; text-align: right; vertical-align: baseline;
+    border: none; display: inline-block;
+    -webkit-touch-callout: none; -webkit-user-select: none;
+    -khtml-user-select: none; -moz-user-select: none;
+    -ms-user-select: none; user-select: none;
+    padding: 0 4px; width: 4em;
+    color: #aaaaaa;
+  }
+pre.numberSource { margin-left: 3em; border-left: 1px solid #aaaaaa;  padding-left: 4px; }
+div.sourceCode
+  {   }
+@media screen {
+pre > code.sourceCode > span > a:first-child::before { text-decoration: underline; }
+}
+code span.al { color: #ff0000; font-weight: bold; } /* Alert */
+code span.an { color: #60a0b0; font-weight: bold; font-style: italic; } /* Annotation */
+code span.at { color: #7d9029; } /* Attribute */
+code span.bn { color: #40a070; } /* BaseN */
+code span.bu { color: #008000; } /* BuiltIn */
+code span.cf { color: #007020; font-weight: bold; } /* ControlFlow */
+code span.ch { color: #4070a0; } /* Char */
+code span.cn { color: #880000; } /* Constant */
+code span.co { color: #60a0b0; font-style: italic; } /* Comment */
+code span.cv { color: #60a0b0; font-weight: bold; font-style: italic; } /* CommentVar */
+code span.do { color: #ba2121; font-style: italic; } /* Documentation */
+code span.dt { color: #902000; } /* DataType */
+code span.dv { color: #40a070; } /* DecVal */
+code span.er { color: #ff0000; font-weight: bold; } /* Error */
+code span.ex { } /* Extension */
+code span.fl { color: #40a070; } /* Float */
+code span.fu { color: #06287e; } /* Function */
+code span.im { color: #008000; font-weight: bold; } /* Import */
+code span.in { color: #60a0b0; font-weight: bold; font-style: italic; } /* Information */
+code span.kw { color: #007020; font-weight: bold; } /* Keyword */
+code span.op { color: #666666; } /* Operator */
+code span.ot { color: #007020; } /* Other */
+code span.pp { color: #bc7a00; } /* Preprocessor */
+code span.sc { color: #4070a0; } /* SpecialChar */
+code span.ss { color: #bb6688; } /* SpecialString */
+code span.st { color: #4070a0; } /* String */
+code span.va { color: #19177c; } /* Variable */
+code span.vs { color: #4070a0; } /* VerbatimString */
+code span.wa { color: #60a0b0; font-weight: bold; font-style: italic; } /* Warning */
+</style>
+
+<style type="text/css">
+  
+  div.hanging-indent{margin-left: 1.5em; text-indent: -1.5em;}
+</style>
+
+</head>
+
+<body>
+
+
+
+  <div class="book without-animation with-summary font-size-2 font-family-1" data-basepath=".">
+
+    <div class="book-summary">
+      <nav role="navigation">
+
+<ul class="summary">
+<li class="chapter" data-level="1" data-path="index.html"><a href="index.html"><i class="fa fa-check"></i><b>1</b> はじめに</a>
+<ul>
+<li class="chapter" data-level="1.1" data-path="index.html"><a href="index.html#コースの目的"><i class="fa fa-check"></i><b>1.1</b> コースの目的</a></li>
+<li class="chapter" data-level="1.2" data-path="index.html"><a href="index.html#統計学統計的手法の学習について"><i class="fa fa-check"></i><b>1.2</b> 統計学/統計的手法の学習について</a>
+<ul>
+<li class="chapter" data-level="" data-path="index.html"><a href="index.html#学習の目標"><i class="fa fa-check"></i>学習の目標</a></li>
+<li class="chapter" data-level="" data-path="index.html"><a href="index.html#統計学統計的手法の学習方法"><i class="fa fa-check"></i>統計学/統計的手法の学習方法</a></li>
+<li class="chapter" data-level="" data-path="index.html"><a href="index.html#統計学統計的手法の学習ステップ"><i class="fa fa-check"></i>統計学/統計的手法の学習ステップ</a></li>
+</ul></li>
+<li class="chapter" data-level="1.3" data-path="index.html"><a href="index.html#ビジネス応用における統計学の最近の趨勢"><i class="fa fa-check"></i><b>1.3</b> ビジネス応用における統計学の最近の趨勢</a></li>
+<li class="chapter" data-level="1.4" data-path="index.html"><a href="index.html#本書内の記載の注意点"><i class="fa fa-check"></i><b>1.4</b> 本書内の記載の注意点</a></li>
+</ul></li>
+<li class="chapter" data-level="2" data-path="r言語の基本.html"><a href="r言語の基本.html"><i class="fa fa-check"></i><b>2</b> R言語の基本</a>
+<ul>
+<li class="chapter" data-level="2.1" data-path="r言語の基本.html"><a href="r言語の基本.html#rの基本プログラミング"><i class="fa fa-check"></i><b>2.1</b> Rの基本プログラミング</a>
+<ul>
+<li class="chapter" data-level="2.1.1" data-path="r言語の基本.html"><a href="r言語の基本.html#基本操作"><i class="fa fa-check"></i><b>2.1.1</b> 基本操作</a></li>
+<li class="chapter" data-level="2.1.2" data-path="r言語の基本.html"><a href="r言語の基本.html#基本構文"><i class="fa fa-check"></i><b>2.1.2</b> 基本構文</a></li>
+<li class="chapter" data-level="2.1.3" data-path="r言語の基本.html"><a href="r言語の基本.html#自作関数"><i class="fa fa-check"></i><b>2.1.3</b> 自作関数</a></li>
+<li class="chapter" data-level="2.1.4" data-path="r言語の基本.html"><a href="r言語の基本.html#パッケージのインストール-読み込み"><i class="fa fa-check"></i><b>2.1.4</b> パッケージのインストール &amp; 読み込み</a></li>
+<li class="chapter" data-level="2.1.5" data-path="r言語の基本.html"><a href="r言語の基本.html#ヘルプ"><i class="fa fa-check"></i><b>2.1.5</b> ヘルプ</a></li>
+</ul></li>
+<li class="chapter" data-level="2.2" data-path="r言語の基本.html"><a href="r言語の基本.html#データの型や構造"><i class="fa fa-check"></i><b>2.2</b> データの型や構造</a>
+<ul>
+<li class="chapter" data-level="2.2.1" data-path="r言語の基本.html"><a href="r言語の基本.html#データの値の種類-データ型"><i class="fa fa-check"></i><b>2.2.1</b> データの値の種類 (“データ型”)</a></li>
+<li class="chapter" data-level="2.2.2" data-path="r言語の基本.html"><a href="r言語の基本.html#データの配列の仕方-データ構造"><i class="fa fa-check"></i><b>2.2.2</b> データの配列の仕方 (“データ構造”)</a></li>
+<li class="chapter" data-level="2.2.3" data-path="r言語の基本.html"><a href="r言語の基本.html#ベクトル"><i class="fa fa-check"></i><b>2.2.3</b> ベクトル</a></li>
+<li class="chapter" data-level="2.2.4" data-path="r言語の基本.html"><a href="r言語の基本.html#行列"><i class="fa fa-check"></i><b>2.2.4</b> 行列</a></li>
+<li class="chapter" data-level="2.2.5" data-path="r言語の基本.html"><a href="r言語の基本.html#リスト"><i class="fa fa-check"></i><b>2.2.5</b> リスト</a></li>
+<li class="chapter" data-level="2.2.6" data-path="r言語の基本.html"><a href="r言語の基本.html#データフレーム"><i class="fa fa-check"></i><b>2.2.6</b> データフレーム</a></li>
+</ul></li>
+<li class="chapter" data-level="2.3" data-path="r言語の基本.html"><a href="r言語の基本.html#データの操作演算"><i class="fa fa-check"></i><b>2.3</b> データの操作・演算</a>
+<ul>
+<li class="chapter" data-level="2.3.1" data-path="r言語の基本.html"><a href="r言語の基本.html#ベクトルの結合-ソート"><i class="fa fa-check"></i><b>2.3.1</b> ベクトルの結合, ソート</a></li>
+<li class="chapter" data-level="2.3.2" data-path="r言語の基本.html"><a href="r言語の基本.html#二項演算"><i class="fa fa-check"></i><b>2.3.2</b> 二項演算</a></li>
+<li class="chapter" data-level="2.3.3" data-path="r言語の基本.html"><a href="r言語の基本.html#論理演算"><i class="fa fa-check"></i><b>2.3.3</b> 論理演算</a></li>
+<li class="chapter" data-level="2.3.4" data-path="r言語の基本.html"><a href="r言語の基本.html#条件式"><i class="fa fa-check"></i><b>2.3.4</b> 条件式</a></li>
+<li class="chapter" data-level="2.3.5" data-path="r言語の基本.html"><a href="r言語の基本.html#行列演算"><i class="fa fa-check"></i><b>2.3.5</b> 行列演算</a></li>
+</ul></li>
+<li class="chapter" data-level="2.4" data-path="r言語の基本.html"><a href="r言語の基本.html#r関数"><i class="fa fa-check"></i><b>2.4</b> R関数</a>
+<ul>
+<li class="chapter" data-level="2.4.1" data-path="r言語の基本.html"><a href="r言語の基本.html#数学基本関数"><i class="fa fa-check"></i><b>2.4.1</b> 数学基本関数</a></li>
+<li class="chapter" data-level="2.4.2" data-path="r言語の基本.html"><a href="r言語の基本.html#基本統計量の計算"><i class="fa fa-check"></i><b>2.4.2</b> 基本統計量の計算</a></li>
+<li class="chapter" data-level="2.4.3" data-path="r言語の基本.html"><a href="r言語の基本.html#確率分布"><i class="fa fa-check"></i><b>2.4.3</b> 確率分布</a></li>
+<li class="chapter" data-level="2.4.4" data-path="r言語の基本.html"><a href="r言語の基本.html#その他便利な関数"><i class="fa fa-check"></i><b>2.4.4</b> その他便利な関数</a></li>
+</ul></li>
+<li class="chapter" data-level="2.5" data-path="r言語の基本.html"><a href="r言語の基本.html#データの可視化"><i class="fa fa-check"></i><b>2.5</b> データの可視化</a></li>
+<li class="chapter" data-level="2.6" data-path="r言語の基本.html"><a href="r言語の基本.html#ファイル入出力"><i class="fa fa-check"></i><b>2.6</b> ファイル入出力</a>
+<ul>
+<li class="chapter" data-level="2.6.1" data-path="r言語の基本.html"><a href="r言語の基本.html#テキストファイル読み込み"><i class="fa fa-check"></i><b>2.6.1</b> テキストファイル読み込み</a></li>
+<li class="chapter" data-level="2.6.2" data-path="r言語の基本.html"><a href="r言語の基本.html#テキストファイル書き出し"><i class="fa fa-check"></i><b>2.6.2</b> テキストファイル書き出し</a></li>
+</ul></li>
+<li class="chapter" data-level="2.7" data-path="r言語の基本.html"><a href="r言語の基本.html#パッケージtidyverse"><i class="fa fa-check"></i><b>2.7</b> パッケージ<code>tidyverse</code></a>
+<ul>
+<li class="chapter" data-level="2.7.1" data-path="r言語の基本.html"><a href="r言語の基本.html#q-rの初心者はtidyverseから勉強することは可能か"><i class="fa fa-check"></i><b>2.7.1</b> Q: Rの初心者は<code>tidyverse</code>から勉強することは可能か?</a></li>
+<li class="chapter" data-level="2.7.2" data-path="r言語の基本.html"><a href="r言語の基本.html#tidyverseの基本"><i class="fa fa-check"></i><b>2.7.2</b> <code>tidyverse</code>の基本</a></li>
+</ul></li>
+</ul></li>
+<li class="chapter" data-level="3" data-path="線形回帰分析.html"><a href="線形回帰分析.html"><i class="fa fa-check"></i><b>3</b> 線形回帰分析</a>
+<ul>
+<li class="chapter" data-level="3.1" data-path="線形回帰分析.html"><a href="線形回帰分析.html#重回帰分析の基本操作"><i class="fa fa-check"></i><b>3.1</b> 重回帰分析の基本操作</a>
+<ul>
+<li class="chapter" data-level="" data-path="線形回帰分析.html"><a href="線形回帰分析.html#データ1-1ルーム賃貸マンション"><i class="fa fa-check"></i>データ1: 1ルーム賃貸マンション</a></li>
+</ul></li>
+<li class="chapter" data-level="3.2" data-path="線形回帰分析.html"><a href="線形回帰分析.html#変数の選択"><i class="fa fa-check"></i><b>3.2</b> 変数の選択</a>
+<ul>
+<li class="chapter" data-level="" data-path="線形回帰分析.html"><a href="線形回帰分析.html#データ2-ボストン市内住宅物件価格データ"><i class="fa fa-check"></i>データ2: ボストン市内住宅物件価格データ</a></li>
+</ul></li>
+<li class="chapter" data-level="3.3" data-path="線形回帰分析.html"><a href="線形回帰分析.html#説明変数に質的変数を含む回帰"><i class="fa fa-check"></i><b>3.3</b> 説明変数に質的変数を含む回帰</a>
+<ul>
+<li class="chapter" data-level="" data-path="線形回帰分析.html"><a href="線形回帰分析.html#データセット3-高速道路事故データ"><i class="fa fa-check"></i>データセット#3: 高速道路事故データ</a></li>
+</ul></li>
+<li class="chapter" data-level="3.4" data-path="線形回帰分析.html"><a href="線形回帰分析.html#説明変数に質的変数を含む回帰-2"><i class="fa fa-check"></i><b>3.4</b> 説明変数に質的変数を含む回帰 (2)</a>
+<ul>
+<li class="chapter" data-level="" data-path="線形回帰分析.html"><a href="線形回帰分析.html#データセット5-収入データ-仮想"><i class="fa fa-check"></i>データセット#5: 収入データ (仮想)</a></li>
+</ul></li>
+<li class="chapter" data-level="3.5" data-path="線形回帰分析.html"><a href="線形回帰分析.html#多項式回帰"><i class="fa fa-check"></i><b>3.5</b> 多項式回帰</a>
+<ul>
+<li class="chapter" data-level="" data-path="線形回帰分析.html"><a href="線形回帰分析.html#データセット6-wage"><i class="fa fa-check"></i>データセット#6: <code>Wage</code></a></li>
+</ul></li>
+<li class="chapter" data-level="3.6" data-path="線形回帰分析.html"><a href="線形回帰分析.html#関数factorについて"><i class="fa fa-check"></i><b>3.6</b> 関数<code>factor()</code>について</a>
+<ul>
+<li class="chapter" data-level="" data-path="線形回帰分析.html"><a href="線形回帰分析.html#rでのfactor関数の使い方"><i class="fa fa-check"></i>Rでのfactor関数の使い方</a></li>
+</ul></li>
+</ul></li>
+<li class="chapter" data-level="4" data-path="ロジットブロビット回帰分析.html"><a href="ロジットブロビット回帰分析.html"><i class="fa fa-check"></i><b>4</b> ロジット/ブロビット回帰分析</a>
+<ul>
+<li class="chapter" data-level="4.1" data-path="ロジットブロビット回帰分析.html"><a href="ロジットブロビット回帰分析.html#ロジット回帰分析の基本操作"><i class="fa fa-check"></i><b>4.1</b> ロジット回帰分析の基本操作</a>
+<ul>
+<li class="chapter" data-level="" data-path="ロジットブロビット回帰分析.html"><a href="ロジットブロビット回帰分析.html#ロジットモデル-シミュレーションデータ"><i class="fa fa-check"></i>ロジットモデル: シミュレーションデータ</a></li>
+</ul></li>
+<li class="chapter" data-level="4.2" data-path="ロジットブロビット回帰分析.html"><a href="ロジットブロビット回帰分析.html#データ分析例"><i class="fa fa-check"></i><b>4.2</b> データ分析例</a>
+<ul>
+<li class="chapter" data-level="" data-path="ロジットブロビット回帰分析.html"><a href="ロジットブロビット回帰分析.html#データセット-1-企業パフォーマンスデータ-仮想"><i class="fa fa-check"></i>データセット (1): 企業パフォーマンス・データ (仮想)</a></li>
+<li class="chapter" data-level="" data-path="ロジットブロビット回帰分析.html"><a href="ロジットブロビット回帰分析.html#データセット-2-個人ローンデフォルトデータ-仮想"><i class="fa fa-check"></i>データセット (2): 個人ローン・デフォルト・データ (仮想)</a></li>
+</ul></li>
+<li class="chapter" data-level="4.3" data-path="ロジットブロビット回帰分析.html"><a href="ロジットブロビット回帰分析.html#疑似r2の計算"><i class="fa fa-check"></i><b>4.3</b> 疑似R2の計算</a>
+<ul>
+<li class="chapter" data-level="" data-path="ロジットブロビット回帰分析.html"><a href="ロジットブロビット回帰分析.html#パッケージdesctoolsの利用"><i class="fa fa-check"></i>パッケージ<code>DescTools</code>の利用</a></li>
+<li class="chapter" data-level="" data-path="ロジットブロビット回帰分析.html"><a href="ロジットブロビット回帰分析.html#パッケージpsclの利用"><i class="fa fa-check"></i>パッケージ<code>pscl</code>の利用</a></li>
+<li class="chapter" data-level="" data-path="ロジットブロビット回帰分析.html"><a href="ロジットブロビット回帰分析.html#パッケージperformanceの利用"><i class="fa fa-check"></i>パッケージ<code>performance</code>の利用</a></li>
+</ul></li>
+</ul></li>
+<li class="chapter" data-level="5" data-path="一般化加法モデル-gam.html"><a href="一般化加法モデル-gam.html"><i class="fa fa-check"></i><b>5</b> 一般化加法モデル (GAM)</a>
+<ul>
+<li class="chapter" data-level="5.1" data-path="一般化加法モデル-gam.html"><a href="一般化加法モデル-gam.html#パッケージgamの利用"><i class="fa fa-check"></i><b>5.1</b> パッケージ<code>gam</code>の利用</a>
+<ul>
+<li class="chapter" data-level="" data-path="一般化加法モデル-gam.html"><a href="一般化加法モデル-gam.html#多項式回帰-1"><i class="fa fa-check"></i>多項式回帰</a></li>
+<li class="chapter" data-level="" data-path="一般化加法モデル-gam.html"><a href="一般化加法モデル-gam.html#スプライン適合"><i class="fa fa-check"></i>スプライン適合</a></li>
+<li class="chapter" data-level="" data-path="一般化加法モデル-gam.html"><a href="一般化加法モデル-gam.html#gam"><i class="fa fa-check"></i>GAM</a></li>
+</ul></li>
+<li class="chapter" data-level="5.2" data-path="一般化加法モデル-gam.html"><a href="一般化加法モデル-gam.html#パッケージmgcvの利用"><i class="fa fa-check"></i><b>5.2</b> パッケージ<code>mgcv</code>の利用</a></li>
+<li class="chapter" data-level="5.3" data-path="一般化加法モデル-gam.html"><a href="一般化加法モデル-gam.html#パッケージprophetの利用"><i class="fa fa-check"></i><b>5.3</b> パッケージ<code>prophet</code>の利用</a></li>
+<li class="chapter" data-level="5.4" data-path="一般化加法モデル-gam.html"><a href="一般化加法モデル-gam.html#追加分析boston-housingデータセットの変数間の関係性"><i class="fa fa-check"></i><b>5.4</b> 【追加分析】Boston housingデータセットの変数間の関係性</a></li>
+</ul></li>
+<li class="chapter" data-level="6" data-path="正則化回帰-lasso-ridge回帰-elastic-net.html"><a href="正則化回帰-lasso-ridge回帰-elastic-net.html"><i class="fa fa-check"></i><b>6</b> 正則化回帰 (lasso, ridge回帰, elastic net)</a>
+<ul>
+<li class="chapter" data-level="6.1" data-path="正則化回帰-lasso-ridge回帰-elastic-net.html"><a href="正則化回帰-lasso-ridge回帰-elastic-net.html#検証用セット法による回帰モデルの予測精度評価"><i class="fa fa-check"></i><b>6.1</b> 検証用セット法による回帰モデルの予測精度評価</a>
+<ul>
+<li class="chapter" data-level="" data-path="正則化回帰-lasso-ridge回帰-elastic-net.html"><a href="正則化回帰-lasso-ridge回帰-elastic-net.html#データセット1-ワイン品質データ"><i class="fa fa-check"></i>データセット1: ワイン品質データ</a></li>
+</ul></li>
+<li class="chapter" data-level="6.2" data-path="正則化回帰-lasso-ridge回帰-elastic-net.html"><a href="正則化回帰-lasso-ridge回帰-elastic-net.html#lasso"><i class="fa fa-check"></i><b>6.2</b> lasso</a>
+<ul>
+<li class="chapter" data-level="" data-path="正則化回帰-lasso-ridge回帰-elastic-net.html"><a href="正則化回帰-lasso-ridge回帰-elastic-net.html#関数glmnetの基本操作"><i class="fa fa-check"></i>関数<code>glmnet()</code>の基本操作</a></li>
+<li class="chapter" data-level="" data-path="正則化回帰-lasso-ridge回帰-elastic-net.html"><a href="正則化回帰-lasso-ridge回帰-elastic-net.html#lambdaのグリッド指定によるglmnetの一括実行"><i class="fa fa-check"></i><code>lambda</code>のグリッド指定による<code>glmnet</code>の一括実行</a></li>
+<li class="chapter" data-level="" data-path="正則化回帰-lasso-ridge回帰-elastic-net.html"><a href="正則化回帰-lasso-ridge回帰-elastic-net.html#交差検証によるパラメータチューニング"><i class="fa fa-check"></i>交差検証によるパラメータ・チューニング</a></li>
+</ul></li>
+<li class="chapter" data-level="6.3" data-path="正則化回帰-lasso-ridge回帰-elastic-net.html"><a href="正則化回帰-lasso-ridge回帰-elastic-net.html#ridge回帰"><i class="fa fa-check"></i><b>6.3</b> ridge回帰</a></li>
+<li class="chapter" data-level="6.4" data-path="正則化回帰-lasso-ridge回帰-elastic-net.html"><a href="正則化回帰-lasso-ridge回帰-elastic-net.html#一般化線形モデル-glm-正則化"><i class="fa fa-check"></i><b>6.4</b> 一般化線形モデル (GLM) + 正則化</a>
+<ul>
+<li class="chapter" data-level="" data-path="正則化回帰-lasso-ridge回帰-elastic-net.html"><a href="正則化回帰-lasso-ridge回帰-elastic-net.html#データセット2-german-creditデータ"><i class="fa fa-check"></i>データセット2: german creditデータ</a></li>
+</ul></li>
+<li class="chapter" data-level="6.5" data-path="正則化回帰-lasso-ridge回帰-elastic-net.html"><a href="正則化回帰-lasso-ridge回帰-elastic-net.html#補足-glmに対する変数選択の代替的方法"><i class="fa fa-check"></i><b>6.5</b> 補足: GLMに対する変数選択の代替的方法</a></li>
+</ul></li>
+<li class="chapter" data-level="7" data-path="判別分析.html"><a href="判別分析.html"><i class="fa fa-check"></i><b>7</b> 判別分析</a>
+<ul>
+<li class="chapter" data-level="7.1" data-path="判別分析.html"><a href="判別分析.html#線形判別-2次判別-パッケージmassの利用"><i class="fa fa-check"></i><b>7.1</b> 線形判別 &amp; 2次判別: パッケージMASSの利用</a>
+<ul>
+<li class="chapter" data-level="" data-path="判別分析.html"><a href="判別分析.html#データセット1-米国sp500日次リターンデータ"><i class="fa fa-check"></i>データセット#1: 米国S&amp;P500日次リターンデータ</a></li>
+<li class="chapter" data-level="" data-path="判別分析.html"><a href="判別分析.html#線形判別-lda"><i class="fa fa-check"></i>線形判別 (LDA)</a></li>
+<li class="chapter" data-level="" data-path="判別分析.html"><a href="判別分析.html#次判別-qda"><i class="fa fa-check"></i>2次判別 (QDA)</a></li>
+</ul></li>
+<li class="chapter" data-level="7.2" data-path="判別分析.html"><a href="判別分析.html#knn法-パッケージclassの利用"><i class="fa fa-check"></i><b>7.2</b> kNN法: パッケージ<strong>class</strong>の利用</a></li>
+<li class="chapter" data-level="7.3" data-path="判別分析.html"><a href="判別分析.html#他パッケージの利用-パッケージklar"><i class="fa fa-check"></i><b>7.3</b> 他パッケージの利用: パッケージ<strong>klaR</strong></a>
+<ul>
+<li class="chapter" data-level="" data-path="判別分析.html"><a href="判別分析.html#データセット2-ビジネススクールの入学許可データ"><i class="fa fa-check"></i>データセット#2: ビジネススクールの入学許可データ</a></li>
+</ul></li>
+</ul></li>
+<li class="chapter" data-level="8" data-path="決定木分析.html"><a href="決定木分析.html"><i class="fa fa-check"></i><b>8</b> 決定木分析</a>
+<ul>
+<li class="chapter" data-level="8.1" data-path="決定木分析.html"><a href="決定木分析.html#導入-回帰木-vs-線形回帰"><i class="fa fa-check"></i><b>8.1</b> 導入: 回帰木 vs 線形回帰</a>
+<ul>
+<li class="chapter" data-level="" data-path="決定木分析.html"><a href="決定木分析.html#データセット1-自動車の制動距離"><i class="fa fa-check"></i>データセット1: 自動車の制動距離</a></li>
+<li class="chapter" data-level="8.1.1" data-path="決定木分析.html"><a href="決定木分析.html#基本操作-回帰木"><i class="fa fa-check"></i><b>8.1.1</b> 基本操作: 回帰木</a></li>
+</ul></li>
+<li class="chapter" data-level="8.2" data-path="決定木分析.html"><a href="決定木分析.html#回帰木"><i class="fa fa-check"></i><b>8.2</b> 回帰木</a>
+<ul>
+<li class="chapter" data-level="" data-path="決定木分析.html"><a href="決定木分析.html#データセット2-米國株価指数データ-再掲"><i class="fa fa-check"></i>データセット2: 米國株価指数データ (再掲)</a></li>
+</ul></li>
+<li class="chapter" data-level="8.3" data-path="決定木分析.html"><a href="決定木分析.html#分類木"><i class="fa fa-check"></i><b>8.3</b> 分類木</a></li>
+</ul></li>
+<li class="chapter" data-level="9" data-path="アンサンブル学習.html"><a href="アンサンブル学習.html"><i class="fa fa-check"></i><b>9</b> アンサンブル学習</a>
+<ul>
+<li class="chapter" data-level="9.1" data-path="アンサンブル学習.html"><a href="アンサンブル学習.html#決定木-分類木"><i class="fa fa-check"></i><b>9.1</b> 決定木 (分類木)</a>
+<ul>
+<li class="chapter" data-level="" data-path="アンサンブル学習.html"><a href="アンサンブル学習.html#データセット3-個人ローン信用データ-再掲"><i class="fa fa-check"></i>データセット3: 個人ローン信用データ (再掲)</a></li>
+</ul></li>
+<li class="chapter" data-level="9.2" data-path="アンサンブル学習.html"><a href="アンサンブル学習.html#ランダムフォレスト分類木"><i class="fa fa-check"></i><b>9.2</b> ランダムフォレスト分類木</a></li>
+<li class="chapter" data-level="9.3" data-path="アンサンブル学習.html"><a href="アンサンブル学習.html#一般化ブースト回帰"><i class="fa fa-check"></i><b>9.3</b> 一般化ブースト回帰</a></li>
+</ul></li>
+<li class="chapter" data-level="10" data-path="サポートベクターマシン-svm.html"><a href="サポートベクターマシン-svm.html"><i class="fa fa-check"></i><b>10</b> サポートベクターマシン (SVM)</a>
+<ul>
+<li class="chapter" data-level="10.1" data-path="サポートベクターマシン-svm.html"><a href="サポートベクターマシン-svm.html#svm-rbfカーネル-の動作の確認"><i class="fa fa-check"></i><b>10.1</b> SVM (RBFカーネル) の動作の確認</a>
+<ul>
+<li class="chapter" data-level="" data-path="サポートベクターマシン-svm.html"><a href="サポートベクターマシン-svm.html#データセット1-iris-あやめ-データ"><i class="fa fa-check"></i>データセット1: iris (あやめ) データ</a></li>
+<li class="chapter" data-level="" data-path="サポートベクターマシン-svm.html"><a href="サポートベクターマシン-svm.html#svmの実行"><i class="fa fa-check"></i>SVMの実行</a></li>
+</ul></li>
+<li class="chapter" data-level="10.2" data-path="サポートベクターマシン-svm.html"><a href="サポートベクターマシン-svm.html#値分類"><i class="fa fa-check"></i><b>10.2</b> 2値分類</a>
+<ul>
+<li class="chapter" data-level="" data-path="サポートベクターマシン-svm.html"><a href="サポートベクターマシン-svm.html#データセット2-spamデータ"><i class="fa fa-check"></i>データセット2: spamデータ</a></li>
+<li class="chapter" data-level="" data-path="サポートベクターマシン-svm.html"><a href="サポートベクターマシン-svm.html#svmの実行-1"><i class="fa fa-check"></i>SVMの実行</a></li>
+</ul></li>
+<li class="chapter" data-level="10.3" data-path="サポートベクターマシン-svm.html"><a href="サポートベクターマシン-svm.html#値分類-1"><i class="fa fa-check"></i><b>10.3</b> 3値分類</a>
+<ul>
+<li class="chapter" data-level="" data-path="サポートベクターマシン-svm.html"><a href="サポートベクターマシン-svm.html#svmの実行-2"><i class="fa fa-check"></i>SVMの実行</a></li>
+</ul></li>
+<li class="chapter" data-level="10.4" data-path="サポートベクターマシン-svm.html"><a href="サポートベクターマシン-svm.html#代替パッケージe1071の利用"><i class="fa fa-check"></i><b>10.4</b> 代替パッケージ<strong>e1071</strong>の利用</a>
+<ul>
+<li class="chapter" data-level="" data-path="サポートベクターマシン-svm.html"><a href="サポートベクターマシン-svm.html#svmの実行-3"><i class="fa fa-check"></i>SVMの実行</a></li>
+</ul></li>
+<li class="chapter" data-level="10.5" data-path="サポートベクターマシン-svm.html"><a href="サポートベクターマシン-svm.html#ハイパーパラメータのチューニング"><i class="fa fa-check"></i><b>10.5</b> ハイパーパラメータのチューニング</a>
+<ul>
+<li class="chapter" data-level="" data-path="サポートベクターマシン-svm.html"><a href="サポートベクターマシン-svm.html#線形カーネルの場合"><i class="fa fa-check"></i>線形カーネルの場合</a></li>
+<li class="chapter" data-level="" data-path="サポートベクターマシン-svm.html"><a href="サポートベクターマシン-svm.html#rbfカーネルの場合"><i class="fa fa-check"></i>RBFカーネルの場合</a></li>
+<li class="chapter" data-level="" data-path="サポートベクターマシン-svm.html"><a href="サポートベクターマシン-svm.html#e1071内にあるチューニング用の便利な関数群"><i class="fa fa-check"></i><strong>e1071</strong>内にあるチューニング用の便利な関数群</a></li>
+</ul></li>
+</ul></li>
+<li class="chapter" data-level="11" data-path="主成分分析-pca.html"><a href="主成分分析-pca.html"><i class="fa fa-check"></i><b>11</b> 主成分分析 (PCA)</a>
+<ul>
+<li class="chapter" data-level="11.1" data-path="主成分分析-pca.html"><a href="主成分分析-pca.html#基本操作-1"><i class="fa fa-check"></i><b>11.1</b> 基本操作</a>
+<ul>
+<li class="chapter" data-level="" data-path="主成分分析-pca.html"><a href="主成分分析-pca.html#データセット-従業員スキル評価データ仮想"><i class="fa fa-check"></i>データセット: 従業員スキル評価データ(仮想)</a></li>
+</ul></li>
+<li class="chapter" data-level="11.2" data-path="主成分分析-pca.html"><a href="主成分分析-pca.html#種類のpca-相関行列ベース-vs-分散共分散行列ベース"><i class="fa fa-check"></i><b>11.2</b> 2種類のPCA: 相関行列ベース vs 分散共分散行列ベース</a>
+<ul>
+<li class="chapter" data-level="" data-path="主成分分析-pca.html"><a href="主成分分析-pca.html#データセット3-usarrests-data"><i class="fa fa-check"></i>データセット3: USArrests data</a></li>
+</ul></li>
+</ul></li>
+<li class="chapter" data-level="12" data-path="探索的因子分析.html"><a href="探索的因子分析.html"><i class="fa fa-check"></i><b>12</b> 探索的因子分析</a>
+<ul>
+<li class="chapter" data-level="12.1" data-path="探索的因子分析.html"><a href="探索的因子分析.html#基本操作-2"><i class="fa fa-check"></i><b>12.1</b> 基本操作</a>
+<ul>
+<li class="chapter" data-level="" data-path="探索的因子分析.html"><a href="探索的因子分析.html#データセット1-従業員評価データ-仮想"><i class="fa fa-check"></i>データセット1: 従業員評価データ (仮想)</a></li>
+</ul></li>
+<li class="chapter" data-level="12.2" data-path="探索的因子分析.html"><a href="探索的因子分析.html#ライブラリpsychの利用"><i class="fa fa-check"></i><b>12.2</b> ライブラリ<strong>psych</strong>の利用</a></li>
+<li class="chapter" data-level="12.3" data-path="探索的因子分析.html"><a href="探索的因子分析.html#因子分析に有用なツール"><i class="fa fa-check"></i><b>12.3</b> 因子分析に有用なツール</a></li>
+</ul></li>
+<li class="chapter" data-level="13" data-path="クラスター分析.html"><a href="クラスター分析.html"><i class="fa fa-check"></i><b>13</b> クラスター分析</a>
+<ul>
+<li class="chapter" data-level="13.1" data-path="クラスター分析.html"><a href="クラスター分析.html#基本操作-3"><i class="fa fa-check"></i><b>13.1</b> 基本操作</a>
+<ul>
+<li class="chapter" data-level="" data-path="クラスター分析.html"><a href="クラスター分析.html#階層型クラスタリング"><i class="fa fa-check"></i>階層型クラスタリング</a></li>
+<li class="chapter" data-level="" data-path="クラスター分析.html"><a href="クラスター分析.html#k-means法"><i class="fa fa-check"></i>k-means法</a></li>
+<li class="chapter" data-level="" data-path="クラスター分析.html"><a href="クラスター分析.html#変数に対するクラスタリング"><i class="fa fa-check"></i>変数に対するクラスタリング</a></li>
+</ul></li>
+<li class="chapter" data-level="13.2" data-path="クラスター分析.html"><a href="クラスター分析.html#データ分析例-1"><i class="fa fa-check"></i><b>13.2</b> データ分析例</a>
+<ul>
+<li class="chapter" data-level="" data-path="クラスター分析.html"><a href="クラスター分析.html#データセット-1-ワイン品質データ-再掲"><i class="fa fa-check"></i>データセット (1): ワイン品質データ (再掲)</a></li>
+<li class="chapter" data-level="" data-path="クラスター分析.html"><a href="クラスター分析.html#データセット-2-id無し-posデータ"><i class="fa fa-check"></i>データセット (2): (ID無し) POSデータ</a></li>
+</ul></li>
+<li class="chapter" data-level="13.3" data-path="クラスター分析.html"><a href="クラスター分析.html#発展的なクラスター分析"><i class="fa fa-check"></i><b>13.3</b> 発展的なクラスター分析</a>
+<ul>
+<li class="chapter" data-level="" data-path="クラスター分析.html"><a href="クラスター分析.html#関数agnes"><i class="fa fa-check"></i>関数<code>agnes</code></a></li>
+<li class="chapter" data-level="" data-path="クラスター分析.html"><a href="クラスター分析.html#関数pheatmap"><i class="fa fa-check"></i>関数<code>pheatmap</code></a></li>
+<li class="chapter" data-level="" data-path="クラスター分析.html"><a href="クラスター分析.html#関数pam"><i class="fa fa-check"></i>関数<code>pam</code></a></li>
+</ul></li>
+</ul></li>
+<li class="chapter" data-level="14" data-path="xai-explainable-ai.html"><a href="xai-explainable-ai.html"><i class="fa fa-check"></i><b>14</b> XAI (Explainable AI)</a>
+<ul>
+<li class="chapter" data-level="" data-path="xai-explainable-ai.html"><a href="xai-explainable-ai.html#回帰問題のケース"><i class="fa fa-check"></i>回帰問題のケース</a></li>
+<li class="chapter" data-level="14.1" data-path="xai-explainable-ai.html"><a href="xai-explainable-ai.html#pfi"><i class="fa fa-check"></i><b>14.1</b> PFI</a></li>
+<li class="chapter" data-level="14.2" data-path="xai-explainable-ai.html"><a href="xai-explainable-ai.html#pdp"><i class="fa fa-check"></i><b>14.2</b> PDP</a></li>
+<li class="chapter" data-level="14.3" data-path="xai-explainable-ai.html"><a href="xai-explainable-ai.html#ice"><i class="fa fa-check"></i><b>14.3</b> ICE</a>
+<ul>
+<li class="chapter" data-level="" data-path="xai-explainable-ai.html"><a href="xai-explainable-ai.html#pdp-ice"><i class="fa fa-check"></i>PDP + ICE</a></li>
+</ul></li>
+<li class="chapter" data-level="14.4" data-path="xai-explainable-ai.html"><a href="xai-explainable-ai.html#lime"><i class="fa fa-check"></i><b>14.4</b> LIME</a></li>
+<li class="chapter" data-level="14.5" data-path="xai-explainable-ai.html"><a href="xai-explainable-ai.html#shap"><i class="fa fa-check"></i><b>14.5</b> SHAP</a>
+<ul>
+<li class="chapter" data-level="" data-path="xai-explainable-ai.html"><a href="xai-explainable-ai.html#分類問題のケース"><i class="fa fa-check"></i>分類問題のケース</a></li>
+<li class="chapter" data-level="" data-path="xai-explainable-ai.html"><a href="xai-explainable-ai.html#多値分類問題の例-iris"><i class="fa fa-check"></i>多値分類問題の例 (iris)</a></li>
+<li class="chapter" data-level="" data-path="xai-explainable-ai.html"><a href="xai-explainable-ai.html#値分類問題"><i class="fa fa-check"></i>2値分類問題</a></li>
+</ul></li>
+</ul></li>
+</ul>
+
+      </nav>
+    </div>
+
+    <div class="book-body">
+      <div class="body-inner">
+        <div class="book-header" role="navigation">
+          <h1>
+            <i class="fa fa-circle-o-notch fa-spin"></i><a href="./">金融データサイエンス</a>
+          </h1>
+        </div>
+
+        <div class="page-wrapper" tabindex="-1" role="main">
+          <div class="page-inner">
+
+            <section class="normal" id="section-">
+<div id="ロジットブロビット回帰分析" class="section level1 hasAnchor" number="4">
+<h1><span class="header-section-number">4</span> ロジット/ブロビット回帰分析<a href="ロジットブロビット回帰分析.html#ロジットブロビット回帰分析" class="anchor-section" aria-label="Anchor link to header"></a></h1>
+<div id="ロジット回帰分析の基本操作" class="section level2 hasAnchor" number="4.1">
+<h2><span class="header-section-number">4.1</span> ロジット回帰分析の基本操作<a href="ロジットブロビット回帰分析.html#ロジット回帰分析の基本操作" class="anchor-section" aria-label="Anchor link to header"></a></h2>
+<div id="ロジットモデル-シミュレーションデータ" class="section level3 unnumbered hasAnchor">
+<h3>ロジットモデル: シミュレーションデータ<a href="ロジットブロビット回帰分析.html#ロジットモデル-シミュレーションデータ" class="anchor-section" aria-label="Anchor link to header"></a></h3>
+<p>基本操作を確認するため,
+ロジット回帰モデルが想定するデータ生成メカニズムに従って, 人工データを生成する.
+その後, このデータを使って, ロジット回帰分析を行う関数である<code>glm()</code>を呼び出して実行する.</p>
+<div id="シミュレーションデータの生成" class="section level4 unnumbered hasAnchor">
+<h4>シミュレーションデータの生成<a href="ロジットブロビット回帰分析.html#シミュレーションデータの生成" class="anchor-section" aria-label="Anchor link to header"></a></h4>
+<div class="sourceCode" id="cb206"><pre class="sourceCode r"><code class="sourceCode r"><span id="cb206-1"><a href="ロジットブロビット回帰分析.html#cb206-1" tabindex="-1"></a><span class="fu">set.seed</span>(<span class="dv">1</span>)</span>
+<span id="cb206-2"><a href="ロジットブロビット回帰分析.html#cb206-2" tabindex="-1"></a>n <span class="ot">&lt;-</span> <span class="dv">100</span></span>
+<span id="cb206-3"><a href="ロジットブロビット回帰分析.html#cb206-3" tabindex="-1"></a>p <span class="ot">&lt;-</span> <span class="dv">2</span></span>
+<span id="cb206-4"><a href="ロジットブロビット回帰分析.html#cb206-4" tabindex="-1"></a>a <span class="ot">&lt;-</span> <span class="fl">1.2</span>; b <span class="ot">&lt;-</span> <span class="fu">c</span>(<span class="fl">0.5</span>, <span class="fl">1.5</span>)</span>
+<span id="cb206-5"><a href="ロジットブロビット回帰分析.html#cb206-5" tabindex="-1"></a>X <span class="ot">&lt;-</span> <span class="fu">matrix</span>(<span class="fu">runif</span>(n <span class="sc">*</span> p, <span class="sc">-</span><span class="dv">5</span>, <span class="dv">5</span>), <span class="at">ncol =</span> p)      <span class="co"># 予測変数 (X1, X2)</span></span>
+<span id="cb206-6"><a href="ロジットブロビット回帰分析.html#cb206-6" tabindex="-1"></a><span class="fu">colnames</span>(X) <span class="ot">&lt;-</span> <span class="fu">paste0</span>(<span class="st">&quot;X&quot;</span>, <span class="dv">1</span><span class="sc">:</span>p)</span>
+<span id="cb206-7"><a href="ロジットブロビット回帰分析.html#cb206-7" tabindex="-1"></a>eta <span class="ot">&lt;-</span> a <span class="sc">+</span> X <span class="sc">%*%</span> b            <span class="co"># 線形予測子</span></span>
+<span id="cb206-8"><a href="ロジットブロビット回帰分析.html#cb206-8" tabindex="-1"></a>pi <span class="ot">&lt;-</span> <span class="fu">exp</span>(eta)<span class="sc">/</span>(<span class="dv">1</span> <span class="sc">+</span> <span class="fu">exp</span>(eta))   <span class="co"># ロジスティック変換</span></span>
+<span id="cb206-9"><a href="ロジットブロビット回帰分析.html#cb206-9" tabindex="-1"></a>y <span class="ot">&lt;-</span> <span class="fu">rbinom</span>(n, <span class="dv">1</span>, pi)       <span class="co"># 発生頻度 (ランダム)</span></span>
+<span id="cb206-10"><a href="ロジットブロビット回帰分析.html#cb206-10" tabindex="-1"></a></span>
+<span id="cb206-11"><a href="ロジットブロビット回帰分析.html#cb206-11" tabindex="-1"></a><span class="fu">plot</span>(X[, <span class="dv">1</span>], y)</span></code></pre></div>
+<p><img src="050-logit_files/figure-html/logit_1-1.png" width="75%" /></p>
+<div class="sourceCode" id="cb207"><pre class="sourceCode r"><code class="sourceCode r"><span id="cb207-1"><a href="ロジットブロビット回帰分析.html#cb207-1" tabindex="-1"></a><span class="fu">plot</span>(X[, <span class="dv">2</span>], y)</span></code></pre></div>
+<p><img src="050-logit_files/figure-html/logit_1-2.png" width="75%" /></p>
+</div>
+<div id="ロジット回帰分析の実行" class="section level4 unnumbered hasAnchor">
+<h4>ロジット回帰分析の実行<a href="ロジットブロビット回帰分析.html#ロジット回帰分析の実行" class="anchor-section" aria-label="Anchor link to header"></a></h4>
+<p>ロジット回帰分析は, R関数<code>glm()</code>を用いて実行することができる.
+<code>glm()</code>は標準パッケージ<code>stats</code>に含まれているため,
+あらたなインストール作業は不要である.</p>
+<p><code>glm()</code>を用いた分析の操作手順や出力結果の読み方は,
+おおむね<code>lm()</code>を踏襲すれば良い.</p>
+<p><code>glm()</code>に与えるモデル式 (引数<code>formula</code>) のシンタックスは
+<code>lm()</code>と同様である. それに加えて, <code>glm()</code>では,
+引数<code>family</code>によってモデルの (分析データを生成していると想定する) 確率分布を指定する.
+ロジット回帰/プロビット回帰では, <code>binomial</code>を指定する.</p>
+<p>また, <code>lm()</code>と同様に, <code>glm()</code>の出力結果に対して
+<code>summary()</code>関数を適用することで, 推定結果が出力される.</p>
+<div class="sourceCode" id="cb208"><pre class="sourceCode r"><code class="sourceCode r"><span id="cb208-1"><a href="ロジットブロビット回帰分析.html#cb208-1" tabindex="-1"></a><span class="co"># ロジット回帰</span></span>
+<span id="cb208-2"><a href="ロジットブロビット回帰分析.html#cb208-2" tabindex="-1"></a>res_glm <span class="ot">&lt;-</span> <span class="fu">glm</span>(y <span class="sc">~</span> X, <span class="at">family =</span> binomial)</span>
+<span id="cb208-3"><a href="ロジットブロビット回帰分析.html#cb208-3" tabindex="-1"></a><span class="fu">summary</span>(res_glm)</span>
+<span id="cb208-4"><a href="ロジットブロビット回帰分析.html#cb208-4" tabindex="-1"></a><span class="co">#&gt; </span></span>
+<span id="cb208-5"><a href="ロジットブロビット回帰分析.html#cb208-5" tabindex="-1"></a><span class="co">#&gt; Call:</span></span>
+<span id="cb208-6"><a href="ロジットブロビット回帰分析.html#cb208-6" tabindex="-1"></a><span class="co">#&gt; glm(formula = y ~ X, family = binomial)</span></span>
+<span id="cb208-7"><a href="ロジットブロビット回帰分析.html#cb208-7" tabindex="-1"></a><span class="co">#&gt; </span></span>
+<span id="cb208-8"><a href="ロジットブロビット回帰分析.html#cb208-8" tabindex="-1"></a><span class="co">#&gt; Coefficients:</span></span>
+<span id="cb208-9"><a href="ロジットブロビット回帰分析.html#cb208-9" tabindex="-1"></a><span class="co">#&gt;             Estimate Std. Error z value Pr(&gt;|z|)    </span></span>
+<span id="cb208-10"><a href="ロジットブロビット回帰分析.html#cb208-10" tabindex="-1"></a><span class="co">#&gt; (Intercept)   2.5815     0.8647   2.985 0.002831 ** </span></span>
+<span id="cb208-11"><a href="ロジットブロビット回帰分析.html#cb208-11" tabindex="-1"></a><span class="co">#&gt; XX1           1.1494     0.3434   3.347 0.000818 ***</span></span>
+<span id="cb208-12"><a href="ロジットブロビット回帰分析.html#cb208-12" tabindex="-1"></a><span class="co">#&gt; XX2           2.7630     0.7509   3.680 0.000233 ***</span></span>
+<span id="cb208-13"><a href="ロジットブロビット回帰分析.html#cb208-13" tabindex="-1"></a><span class="co">#&gt; ---</span></span>
+<span id="cb208-14"><a href="ロジットブロビット回帰分析.html#cb208-14" tabindex="-1"></a><span class="co">#&gt; Signif. codes:  0 &#39;***&#39; 0.001 &#39;**&#39; 0.01 &#39;*&#39; 0.05 &#39;.&#39; 0.1 &#39; &#39; 1</span></span>
+<span id="cb208-15"><a href="ロジットブロビット回帰分析.html#cb208-15" tabindex="-1"></a><span class="co">#&gt; </span></span>
+<span id="cb208-16"><a href="ロジットブロビット回帰分析.html#cb208-16" tabindex="-1"></a><span class="co">#&gt; (Dispersion parameter for binomial family taken to be 1)</span></span>
+<span id="cb208-17"><a href="ロジットブロビット回帰分析.html#cb208-17" tabindex="-1"></a><span class="co">#&gt; </span></span>
+<span id="cb208-18"><a href="ロジットブロビット回帰分析.html#cb208-18" tabindex="-1"></a><span class="co">#&gt;     Null deviance: 133.750  on 99  degrees of freedom</span></span>
+<span id="cb208-19"><a href="ロジットブロビット回帰分析.html#cb208-19" tabindex="-1"></a><span class="co">#&gt; Residual deviance:  34.478  on 97  degrees of freedom</span></span>
+<span id="cb208-20"><a href="ロジットブロビット回帰分析.html#cb208-20" tabindex="-1"></a><span class="co">#&gt; AIC: 40.478</span></span>
+<span id="cb208-21"><a href="ロジットブロビット回帰分析.html#cb208-21" tabindex="-1"></a><span class="co">#&gt; </span></span>
+<span id="cb208-22"><a href="ロジットブロビット回帰分析.html#cb208-22" tabindex="-1"></a><span class="co">#&gt; Number of Fisher Scoring iterations: 8</span></span></code></pre></div>
+<p><code>summary()</code>の出力結果の主な相違は,
+個別の回帰係数の有意性を見る指標が,
+<code>lm()</code>ではt値であったところが <code>glm()</code>ではz値になっている点
+(それに伴い, 付随するp値の表記も変化),
+および, 全体の適合度の指標について,
+<code>lm()</code>のように<span class="math inline">\(R^2\)</span>, 補正<span class="math inline">\(R^2\)</span>の値が表示されておらず,
+その代わりとして, “Null Deviance”, “Residual Deviance”が表示されている点である.</p>
+</div>
+<div id="内挿-予測" class="section level4 unnumbered hasAnchor">
+<h4>(内挿) 予測<a href="ロジットブロビット回帰分析.html#内挿-予測" class="anchor-section" aria-label="Anchor link to header"></a></h4>
+<p><code>glm()</code>の出力結果を関数<code>predict()</code>に与えることで,
+内挿予測 (適合値の算出) を行うことができる.
+注意点としては, 引数<code>type</code>を指定しない場合 (デフォルト設定) には, 未知パラメータの線形結合である
+“線形予測子”<span class="math inline">\(\eta=\beta_0 + \beta_1 x_1 + \cdots + \beta_k x_k\)</span>の予測値が出力される.</p>
+<pre><code>関数predict():
+- 予測値を返す関数
+- 引数typeの選択肢: &quot;link&quot;(デフォルト), &quot;response&quot;, &quot;terms&quot;
+  - &quot;link&quot;: 線形予測子のスケールにおける予測 
+  - &quot;response&quot;: 反応変数のスケールにおける予測
+  - &quot;terms&quot;: 線形予測子のスケールにおける予測, モデル式の各項の適合値を格納した行列を返す</code></pre>
+<p>ロジット回帰において, 確率の予測を得たい場合には,
+<code>type="response"</code>と指定する必要がある.</p>
+<div class="sourceCode" id="cb210"><pre class="sourceCode r"><code class="sourceCode r"><span id="cb210-1"><a href="ロジットブロビット回帰分析.html#cb210-1" tabindex="-1"></a><span class="co"># 予測 (内挿)</span></span>
+<span id="cb210-2"><a href="ロジットブロビット回帰分析.html#cb210-2" tabindex="-1"></a>eta_hat <span class="ot">&lt;-</span> <span class="fu">predict</span>(res_glm)     <span class="co"># 対数オッズ</span></span>
+<span id="cb210-3"><a href="ロジットブロビット回帰分析.html#cb210-3" tabindex="-1"></a>p_hat <span class="ot">&lt;-</span> <span class="fu">predict</span>(res_glm, <span class="at">type =</span> <span class="st">&quot;response&quot;</span>)        <span class="co"># 確率</span></span>
+<span id="cb210-4"><a href="ロジットブロビット回帰分析.html#cb210-4" tabindex="-1"></a><span class="fu">head</span>(<span class="fu">data.frame</span>(y, p_hat))</span>
+<span id="cb210-5"><a href="ロジットブロビット回帰分析.html#cb210-5" tabindex="-1"></a><span class="co">#&gt;   y     p_hat</span></span>
+<span id="cb210-6"><a href="ロジットブロビット回帰分析.html#cb210-6" tabindex="-1"></a><span class="co">#&gt; 1 1 0.9846543</span></span>
+<span id="cb210-7"><a href="ロジットブロビット回帰分析.html#cb210-7" tabindex="-1"></a><span class="co">#&gt; 2 0 0.0500027</span></span>
+<span id="cb210-8"><a href="ロジットブロビット回帰分析.html#cb210-8" tabindex="-1"></a><span class="co">#&gt; 3 0 0.0507452</span></span>
+<span id="cb210-9"><a href="ロジットブロビット回帰分析.html#cb210-9" tabindex="-1"></a><span class="co">#&gt; 4 1 1.0000000</span></span>
+<span id="cb210-10"><a href="ロジットブロビット回帰分析.html#cb210-10" tabindex="-1"></a><span class="co">#&gt; 5 1 0.9448650</span></span>
+<span id="cb210-11"><a href="ロジットブロビット回帰分析.html#cb210-11" tabindex="-1"></a><span class="co">#&gt; 6 0 0.3178520</span></span>
+<span id="cb210-12"><a href="ロジットブロビット回帰分析.html#cb210-12" tabindex="-1"></a><span class="fu">plot</span>(eta_hat, p_hat)</span></code></pre></div>
+<p><img src="050-logit_files/figure-html/unnamed-chunk-3-1.png" width="75%" /></p>
+<p>以下のように, 線形予測子の予測値に対して, ロジスティク変換 (リンク関数<span class="math inline">\(g(\cdot)\)</span>の逆関数)
+を適用すると, 確率の予測値<code>p_hat</code>と一致することが確認される.</p>
+<div class="sourceCode" id="cb211"><pre class="sourceCode r"><code class="sourceCode r"><span id="cb211-1"><a href="ロジットブロビット回帰分析.html#cb211-1" tabindex="-1"></a><span class="co"># 確認</span></span>
+<span id="cb211-2"><a href="ロジットブロビット回帰分析.html#cb211-2" tabindex="-1"></a><span class="co"># logistic_f &lt;- function(eta){</span></span>
+<span id="cb211-3"><a href="ロジットブロビット回帰分析.html#cb211-3" tabindex="-1"></a><span class="co">#  exp(eta) / (1 + exp(eta))</span></span>
+<span id="cb211-4"><a href="ロジットブロビット回帰分析.html#cb211-4" tabindex="-1"></a><span class="co"># }</span></span>
+<span id="cb211-5"><a href="ロジットブロビット回帰分析.html#cb211-5" tabindex="-1"></a><span class="co"># logistic_f(eta_hat) # 線形予測子のロジスティク変換</span></span>
+<span id="cb211-6"><a href="ロジットブロビット回帰分析.html#cb211-6" tabindex="-1"></a><span class="fu">exp</span>(eta_hat) <span class="sc">/</span> (<span class="dv">1</span> <span class="sc">+</span> <span class="fu">exp</span>(eta_hat))   <span class="co"># 線形予測子のロジスティック変換</span></span>
+<span id="cb211-7"><a href="ロジットブロビット回帰分析.html#cb211-7" tabindex="-1"></a><span class="co">#&gt;            1            2            3            4            5            6 </span></span>
+<span id="cb211-8"><a href="ロジットブロビット回帰分析.html#cb211-8" tabindex="-1"></a><span class="co">#&gt; 9.846543e-01 5.000270e-02 5.074520e-02 1.000000e+00 9.448650e-01 3.178520e-01 </span></span>
+<span id="cb211-9"><a href="ロジットブロビット回帰分析.html#cb211-9" tabindex="-1"></a><span class="co">#&gt;            7            8            9           10           11           12 </span></span>
+<span id="cb211-10"><a href="ロジットブロビット回帰分析.html#cb211-10" tabindex="-1"></a><span class="co">#&gt; 7.255619e-02 9.786489e-01 9.999999e-01 5.680028e-01 9.999957e-01 9.948751e-01 </span></span>
+<span id="cb211-11"><a href="ロジットブロビット回帰分析.html#cb211-11" tabindex="-1"></a><span class="co">#&gt;           13           14           15           16           17           18 </span></span>
+<span id="cb211-12"><a href="ロジットブロビット回帰分析.html#cb211-12" tabindex="-1"></a><span class="co">#&gt; 6.840476e-01 3.443645e-01 1.734430e-02 1.848314e-05 9.999839e-01 6.129494e-02 </span></span>
+<span id="cb211-13"><a href="ロジットブロビット回帰分析.html#cb211-13" tabindex="-1"></a><span class="co">#&gt;           19           20           21           22           23           24 </span></span>
+<span id="cb211-14"><a href="ロジットブロビット回帰分析.html#cb211-14" tabindex="-1"></a><span class="co">#&gt; 4.300994e-01 9.999350e-01 1.000000e+00 2.997055e-01 9.800110e-01 2.155297e-05 </span></span>
+<span id="cb211-15"><a href="ロジットブロビット回帰分析.html#cb211-15" tabindex="-1"></a><span class="co">#&gt;           25           26           27           28           29           30 </span></span>
+<span id="cb211-16"><a href="ロジットブロビット回帰分析.html#cb211-16" tabindex="-1"></a><span class="co">#&gt; 9.990392e-01 4.996798e-01 6.281495e-02 1.057488e-03 3.392529e-01 9.674261e-01 </span></span>
+<span id="cb211-17"><a href="ロジットブロビット回帰分析.html#cb211-17" tabindex="-1"></a><span class="co">#&gt;           31           32           33           34           35           36 </span></span>
+<span id="cb211-18"><a href="ロジットブロビット回帰分析.html#cb211-18" tabindex="-1"></a><span class="co">#&gt; 9.883911e-01 3.490784e-04 3.277648e-05 9.488525e-01 1.000000e+00 9.992746e-01 </span></span>
+<span id="cb211-19"><a href="ロジットブロビット回帰分析.html#cb211-19" tabindex="-1"></a><span class="co">#&gt;           37           38           39           40           41           42 </span></span>
+<span id="cb211-20"><a href="ロジットブロビット回帰分析.html#cb211-20" tabindex="-1"></a><span class="co">#&gt; 9.995223e-01 2.305139e-01 1.000000e+00 8.548202e-01 9.999879e-01 9.991567e-01 </span></span>
+<span id="cb211-21"><a href="ロジットブロビット回帰分析.html#cb211-21" tabindex="-1"></a><span class="co">#&gt;           43           44           45           46           47           48 </span></span>
+<span id="cb211-22"><a href="ロジットブロビット回帰分析.html#cb211-22" tabindex="-1"></a><span class="co">#&gt; 2.007423e-01 2.957535e-02 9.999048e-01 9.900165e-01 6.973787e-06 9.998923e-01 </span></span>
+<span id="cb211-23"><a href="ロジットブロビット回帰分析.html#cb211-23" tabindex="-1"></a><span class="co">#&gt;           49           50           51           52           53           54 </span></span>
+<span id="cb211-24"><a href="ロジットブロビット回帰分析.html#cb211-24" tabindex="-1"></a><span class="co">#&gt; 3.461442e-03 9.999997e-01 9.958972e-01 9.997546e-01 5.412342e-02 1.615667e-01 </span></span>
+<span id="cb211-25"><a href="ロジットブロビット回帰分析.html#cb211-25" tabindex="-1"></a><span class="co">#&gt;           55           56           57           58           59           60 </span></span>
+<span id="cb211-26"><a href="ロジットブロビット回帰分析.html#cb211-26" tabindex="-1"></a><span class="co">#&gt; 8.780960e-02 1.960509e-05 7.839028e-01 1.310930e-04 1.548464e-01 1.613948e-03 </span></span>
+<span id="cb211-27"><a href="ロジットブロビット回帰分析.html#cb211-27" tabindex="-1"></a><span class="co">#&gt;           61           62           63           64           65           66 </span></span>
+<span id="cb211-28"><a href="ロジットブロビット回帰分析.html#cb211-28" tabindex="-1"></a><span class="co">#&gt; 7.990981e-01 9.999853e-01 6.514770e-01 9.997732e-01 9.999996e-01 6.913302e-02 </span></span>
+<span id="cb211-29"><a href="ロジットブロビット回帰分析.html#cb211-29" tabindex="-1"></a><span class="co">#&gt;           67           68           69           70           71           72 </span></span>
+<span id="cb211-30"><a href="ロジットブロビット回帰分析.html#cb211-30" tabindex="-1"></a><span class="co">#&gt; 6.024214e-05 7.496756e-01 9.817408e-01 9.174800e-01 9.870712e-01 9.999999e-01 </span></span>
+<span id="cb211-31"><a href="ロジットブロビット回帰分析.html#cb211-31" tabindex="-1"></a><span class="co">#&gt;           73           74           75           76           77           78 </span></span>
+<span id="cb211-32"><a href="ロジットブロビット回帰分析.html#cb211-32" tabindex="-1"></a><span class="co">#&gt; 9.999765e-01 8.861010e-02 2.704708e-01 1.000000e+00 9.999787e-01 9.996573e-01 </span></span>
+<span id="cb211-33"><a href="ロジットブロビット回帰分析.html#cb211-33" tabindex="-1"></a><span class="co">#&gt;           79           80           81           82           83           84 </span></span>
+<span id="cb211-34"><a href="ロジットブロビット回帰分析.html#cb211-34" tabindex="-1"></a><span class="co">#&gt; 9.998298e-01 1.000000e+00 2.045796e-02 2.912945e-02 9.999945e-01 6.607180e-01 </span></span>
+<span id="cb211-35"><a href="ロジットブロビット回帰分析.html#cb211-35" tabindex="-1"></a><span class="co">#&gt;           85           86           87           88           89           90 </span></span>
+<span id="cb211-36"><a href="ロジットブロビット回帰分析.html#cb211-36" tabindex="-1"></a><span class="co">#&gt; 9.999999e-01 8.082135e-05 9.999947e-01 9.882999e-01 9.999933e-01 4.497550e-01 </span></span>
+<span id="cb211-37"><a href="ロジットブロビット回帰分析.html#cb211-37" tabindex="-1"></a><span class="co">#&gt;           91           92           93           94           95           96 </span></span>
+<span id="cb211-38"><a href="ロジットブロビット回帰分析.html#cb211-38" tabindex="-1"></a><span class="co">#&gt; 9.956770e-01 3.843901e-03 1.100383e-03 1.000000e+00 4.496549e-01 9.997968e-01 </span></span>
+<span id="cb211-39"><a href="ロジットブロビット回帰分析.html#cb211-39" tabindex="-1"></a><span class="co">#&gt;           97           98           99          100 </span></span>
+<span id="cb211-40"><a href="ロジットブロビット回帰分析.html#cb211-40" tabindex="-1"></a><span class="co">#&gt; 1.668414e-04 9.999826e-01 7.548861e-01 9.999909e-01</span></span>
+<span id="cb211-41"><a href="ロジットブロビット回帰分析.html#cb211-41" tabindex="-1"></a><span class="co"># → p_hatと同じ結果となることを確認</span></span></code></pre></div>
+</div>
+<div id="係数の信頼区間" class="section level4 unnumbered hasAnchor">
+<h4>係数の信頼区間<a href="ロジットブロビット回帰分析.html#係数の信頼区間" class="anchor-section" aria-label="Anchor link to header"></a></h4>
+<p>同様に, 回帰係数の信頼区間は関数<code>confint()</code>を使えば良い.</p>
+<div class="sourceCode" id="cb212"><pre class="sourceCode r"><code class="sourceCode r"><span id="cb212-1"><a href="ロジットブロビット回帰分析.html#cb212-1" tabindex="-1"></a><span class="co"># 信頼区間</span></span>
+<span id="cb212-2"><a href="ロジットブロビット回帰分析.html#cb212-2" tabindex="-1"></a><span class="fu">confint</span>(res_glm)                  <span class="co"># 95%信頼区間 (デフォルト)</span></span>
+<span id="cb212-3"><a href="ロジットブロビット回帰分析.html#cb212-3" tabindex="-1"></a><span class="co">#&gt;                 2.5 %   97.5 %</span></span>
+<span id="cb212-4"><a href="ロジットブロビット回帰分析.html#cb212-4" tabindex="-1"></a><span class="co">#&gt; (Intercept) 1.1914472 4.659417</span></span>
+<span id="cb212-5"><a href="ロジットブロビット回帰分析.html#cb212-5" tabindex="-1"></a><span class="co">#&gt; XX1         0.5901329 1.974012</span></span>
+<span id="cb212-6"><a href="ロジットブロビット回帰分析.html#cb212-6" tabindex="-1"></a><span class="co">#&gt; XX2         1.5989191 4.620681</span></span>
+<span id="cb212-7"><a href="ロジットブロビット回帰分析.html#cb212-7" tabindex="-1"></a><span class="fu">confint</span>(res_glm, <span class="at">level =</span> <span class="fl">0.90</span>)  <span class="co"># 90%信頼区間</span></span>
+<span id="cb212-8"><a href="ロジットブロビット回帰分析.html#cb212-8" tabindex="-1"></a><span class="co">#&gt;                   5 %     95 %</span></span>
+<span id="cb212-9"><a href="ロジットブロビット回帰分析.html#cb212-9" tabindex="-1"></a><span class="co">#&gt; (Intercept) 1.3787136 4.269921</span></span>
+<span id="cb212-10"><a href="ロジットブロビット回帰分析.html#cb212-10" tabindex="-1"></a><span class="co">#&gt; XX1         0.6664132 1.818782</span></span>
+<span id="cb212-11"><a href="ロジットブロビット回帰分析.html#cb212-11" tabindex="-1"></a><span class="co">#&gt; XX2         1.7488603 4.265779</span></span></code></pre></div>
+</div>
+</div>
+</div>
+<div id="データ分析例" class="section level2 hasAnchor" number="4.2">
+<h2><span class="header-section-number">4.2</span> データ分析例<a href="ロジットブロビット回帰分析.html#データ分析例" class="anchor-section" aria-label="Anchor link to header"></a></h2>
+<div id="データセット-1-企業パフォーマンスデータ-仮想" class="section level3 unnumbered hasAnchor">
+<h3>データセット (1): 企業パフォーマンス・データ (仮想)<a href="ロジットブロビット回帰分析.html#データセット-1-企業パフォーマンスデータ-仮想" class="anchor-section" aria-label="Anchor link to header"></a></h3>
+<pre><code>- firmperf.txt, 8件
+   - 企業規模 (size): H/L
+   - 人材投資 (hr_invest): H/L 
+   - SDGs活動 (sdg): H/L
+   - 対象企業数 (n_tot): 社
+   - 優良社数 (n_pos): 社</code></pre>
+<div id="データ読み込み" class="section level4 unnumbered hasAnchor">
+<h4>データ読み込み<a href="ロジットブロビット回帰分析.html#データ読み込み" class="anchor-section" aria-label="Anchor link to header"></a></h4>
+<div class="sourceCode" id="cb214"><pre class="sourceCode r"><code class="sourceCode r"><span id="cb214-1"><a href="ロジットブロビット回帰分析.html#cb214-1" tabindex="-1"></a>perf_dat1 <span class="ot">&lt;-</span> <span class="fu">read.csv</span>(<span class="st">&quot;firmperf.txt&quot;</span>, <span class="at">skip =</span> <span class="dv">2</span>) </span>
+<span id="cb214-2"><a href="ロジットブロビット回帰分析.html#cb214-2" tabindex="-1"></a><span class="co"># 注) デフォルトはstringsAsFactors = F (文字列を因子型変数に変換せずに読み込む)</span></span>
+<span id="cb214-3"><a href="ロジットブロビット回帰分析.html#cb214-3" tabindex="-1"></a><span class="co"># size:sdgは, 関数read.csv()でそのまま読み込むと文字型変数となる.</span></span>
+<span id="cb214-4"><a href="ロジットブロビット回帰分析.html#cb214-4" tabindex="-1"></a><span class="co"># 読み込み時に因子型にするには, stringsAsFactors = T</span></span>
+<span id="cb214-5"><a href="ロジットブロビット回帰分析.html#cb214-5" tabindex="-1"></a><span class="co"># 執筆現在 (2024年5月10日)のglm()の仕様では, 文字型のままでもOK</span></span>
+<span id="cb214-6"><a href="ロジットブロビット回帰分析.html#cb214-6" tabindex="-1"></a><span class="fu">colnames</span>(perf_dat1) <span class="ot">&lt;-</span> <span class="fu">c</span>(<span class="st">&quot;size&quot;</span>, <span class="st">&quot;hr_invest&quot;</span>, <span class="st">&quot;sdg&quot;</span>, <span class="st">&quot;n_tot&quot;</span>, <span class="st">&quot;n_pos&quot;</span>)</span>
+<span id="cb214-7"><a href="ロジットブロビット回帰分析.html#cb214-7" tabindex="-1"></a><span class="fu">attach</span>(perf_dat1)</span></code></pre></div>
+</div>
+<div id="ロジット回帰実行" class="section level4 unnumbered hasAnchor">
+<h4>ロジット回帰実行<a href="ロジットブロビット回帰分析.html#ロジット回帰実行" class="anchor-section" aria-label="Anchor link to header"></a></h4>
+<p>ロジット回帰の実行の際, 目的変数として
+<code>glm()</code>へは異なるデータ形式を与えることもできる.</p>
+<p>まず, 目的変数のデータ形式として, “成功回数”,“失敗回数” の2列を持つ行列を<code>glm</code>内でモデル式<code>formula</code>の左辺に与える例である.</p>
+<div class="sourceCode" id="cb215"><pre class="sourceCode r"><code class="sourceCode r"><span id="cb215-1"><a href="ロジットブロビット回帰分析.html#cb215-1" tabindex="-1"></a><span class="co"># データ形式-1</span></span>
+<span id="cb215-2"><a href="ロジットブロビット回帰分析.html#cb215-2" tabindex="-1"></a><span class="co"># &quot;成功回数&quot;、&quot;失敗回数&quot;の2列</span></span>
+<span id="cb215-3"><a href="ロジットブロビット回帰分析.html#cb215-3" tabindex="-1"></a>perf_tbl <span class="ot">&lt;-</span> <span class="fu">cbind</span>(n_pos, n_tot <span class="sc">-</span> n_pos)</span>
+<span id="cb215-4"><a href="ロジットブロビット回帰分析.html#cb215-4" tabindex="-1"></a>res_glm1 <span class="ot">&lt;-</span> <span class="fu">glm</span>(perf_tbl <span class="sc">~</span> size <span class="sc">+</span> hr_invest <span class="sc">+</span> sdg, <span class="at">family =</span> binomial)   </span>
+<span id="cb215-5"><a href="ロジットブロビット回帰分析.html#cb215-5" tabindex="-1"></a><span class="fu">summary</span>(res_glm1)</span>
+<span id="cb215-6"><a href="ロジットブロビット回帰分析.html#cb215-6" tabindex="-1"></a><span class="co">#&gt; </span></span>
+<span id="cb215-7"><a href="ロジットブロビット回帰分析.html#cb215-7" tabindex="-1"></a><span class="co">#&gt; Call:</span></span>
+<span id="cb215-8"><a href="ロジットブロビット回帰分析.html#cb215-8" tabindex="-1"></a><span class="co">#&gt; glm(formula = perf_tbl ~ size + hr_invest + sdg, family = binomial)</span></span>
+<span id="cb215-9"><a href="ロジットブロビット回帰分析.html#cb215-9" tabindex="-1"></a><span class="co">#&gt; </span></span>
+<span id="cb215-10"><a href="ロジットブロビット回帰分析.html#cb215-10" tabindex="-1"></a><span class="co">#&gt; Coefficients:</span></span>
+<span id="cb215-11"><a href="ロジットブロビット回帰分析.html#cb215-11" tabindex="-1"></a><span class="co">#&gt;             Estimate Std. Error z value Pr(&gt;|z|)   </span></span>
+<span id="cb215-12"><a href="ロジットブロビット回帰分析.html#cb215-12" tabindex="-1"></a><span class="co">#&gt; (Intercept) -0.63288    0.25177  -2.514  0.01195 * </span></span>
+<span id="cb215-13"><a href="ロジットブロビット回帰分析.html#cb215-13" tabindex="-1"></a><span class="co">#&gt; sizeL       -0.07844    0.26926  -0.291  0.77082   </span></span>
+<span id="cb215-14"><a href="ロジットブロビット回帰分析.html#cb215-14" tabindex="-1"></a><span class="co">#&gt; hr_investL  -0.82333    0.27607  -2.982  0.00286 **</span></span>
+<span id="cb215-15"><a href="ロジットブロビット回帰分析.html#cb215-15" tabindex="-1"></a><span class="co">#&gt; sdgL        -0.61585    0.35132  -1.753  0.07961 . </span></span>
+<span id="cb215-16"><a href="ロジットブロビット回帰分析.html#cb215-16" tabindex="-1"></a><span class="co">#&gt; ---</span></span>
+<span id="cb215-17"><a href="ロジットブロビット回帰分析.html#cb215-17" tabindex="-1"></a><span class="co">#&gt; Signif. codes:  0 &#39;***&#39; 0.001 &#39;**&#39; 0.01 &#39;*&#39; 0.05 &#39;.&#39; 0.1 &#39; &#39; 1</span></span>
+<span id="cb215-18"><a href="ロジットブロビット回帰分析.html#cb215-18" tabindex="-1"></a><span class="co">#&gt; </span></span>
+<span id="cb215-19"><a href="ロジットブロビット回帰分析.html#cb215-19" tabindex="-1"></a><span class="co">#&gt; (Dispersion parameter for binomial family taken to be 1)</span></span>
+<span id="cb215-20"><a href="ロジットブロビット回帰分析.html#cb215-20" tabindex="-1"></a><span class="co">#&gt; </span></span>
+<span id="cb215-21"><a href="ロジットブロビット回帰分析.html#cb215-21" tabindex="-1"></a><span class="co">#&gt;     Null deviance: 15.2547  on 7  degrees of freedom</span></span>
+<span id="cb215-22"><a href="ロジットブロビット回帰分析.html#cb215-22" tabindex="-1"></a><span class="co">#&gt; Residual deviance:  2.3921  on 4  degrees of freedom</span></span>
+<span id="cb215-23"><a href="ロジットブロビット回帰分析.html#cb215-23" tabindex="-1"></a><span class="co">#&gt; AIC: 36.198</span></span>
+<span id="cb215-24"><a href="ロジットブロビット回帰分析.html#cb215-24" tabindex="-1"></a><span class="co">#&gt; </span></span>
+<span id="cb215-25"><a href="ロジットブロビット回帰分析.html#cb215-25" tabindex="-1"></a><span class="co">#&gt; Number of Fisher Scoring iterations: 4</span></span></code></pre></div>
+<p>線形回帰分析の時と同様,
+二つのモデルの間に包含関係 (ネスト, “nested”) がある場合には,
+分散分析を行う関数<code>anova()</code>を適用することで,
+追加された項がまとめて有意かどうかを評価することができる.</p>
+<p>下の例は, 切片しか持たないNullモデル (<code>perf_tbl ~ 1</code>) による
+モデルの当てはまりの悪さ, “Residual deviance” (残差逸脱度) を, <code>hr_invest</code>と<code>sdg</code>の2変数を
+持つモデルの”Residual deviance”と比較し, 後者の残差逸脱度がこれら2変数を加えることでどれだけ
+改善したのかをみることことで, 有意性を評価している.</p>
+<div class="sourceCode" id="cb216"><pre class="sourceCode r"><code class="sourceCode r"><span id="cb216-1"><a href="ロジットブロビット回帰分析.html#cb216-1" tabindex="-1"></a>res_glm2 <span class="ot">&lt;-</span> <span class="fu">glm</span>(perf_tbl <span class="sc">~</span> hr_invest <span class="sc">+</span> sdg, binomial)   </span>
+<span id="cb216-2"><a href="ロジットブロビット回帰分析.html#cb216-2" tabindex="-1"></a><span class="fu">summary</span>(res_glm2)</span>
+<span id="cb216-3"><a href="ロジットブロビット回帰分析.html#cb216-3" tabindex="-1"></a><span class="co">#&gt; </span></span>
+<span id="cb216-4"><a href="ロジットブロビット回帰分析.html#cb216-4" tabindex="-1"></a><span class="co">#&gt; Call:</span></span>
+<span id="cb216-5"><a href="ロジットブロビット回帰分析.html#cb216-5" tabindex="-1"></a><span class="co">#&gt; glm(formula = perf_tbl ~ hr_invest + sdg, family = binomial)</span></span>
+<span id="cb216-6"><a href="ロジットブロビット回帰分析.html#cb216-6" tabindex="-1"></a><span class="co">#&gt; </span></span>
+<span id="cb216-7"><a href="ロジットブロビット回帰分析.html#cb216-7" tabindex="-1"></a><span class="co">#&gt; Coefficients:</span></span>
+<span id="cb216-8"><a href="ロジットブロビット回帰分析.html#cb216-8" tabindex="-1"></a><span class="co">#&gt;             Estimate Std. Error z value Pr(&gt;|z|)   </span></span>
+<span id="cb216-9"><a href="ロジットブロビット回帰分析.html#cb216-9" tabindex="-1"></a><span class="co">#&gt; (Intercept)  -0.6570     0.2380  -2.760  0.00578 **</span></span>
+<span id="cb216-10"><a href="ロジットブロビット回帰分析.html#cb216-10" tabindex="-1"></a><span class="co">#&gt; hr_investL   -0.8235     0.2760  -2.983  0.00285 **</span></span>
+<span id="cb216-11"><a href="ロジットブロビット回帰分析.html#cb216-11" tabindex="-1"></a><span class="co">#&gt; sdgL         -0.6100     0.3507  -1.739  0.08200 . </span></span>
+<span id="cb216-12"><a href="ロジットブロビット回帰分析.html#cb216-12" tabindex="-1"></a><span class="co">#&gt; ---</span></span>
+<span id="cb216-13"><a href="ロジットブロビット回帰分析.html#cb216-13" tabindex="-1"></a><span class="co">#&gt; Signif. codes:  0 &#39;***&#39; 0.001 &#39;**&#39; 0.01 &#39;*&#39; 0.05 &#39;.&#39; 0.1 &#39; &#39; 1</span></span>
+<span id="cb216-14"><a href="ロジットブロビット回帰分析.html#cb216-14" tabindex="-1"></a><span class="co">#&gt; </span></span>
+<span id="cb216-15"><a href="ロジットブロビット回帰分析.html#cb216-15" tabindex="-1"></a><span class="co">#&gt; (Dispersion parameter for binomial family taken to be 1)</span></span>
+<span id="cb216-16"><a href="ロジットブロビット回帰分析.html#cb216-16" tabindex="-1"></a><span class="co">#&gt; </span></span>
+<span id="cb216-17"><a href="ロジットブロビット回帰分析.html#cb216-17" tabindex="-1"></a><span class="co">#&gt;     Null deviance: 15.2547  on 7  degrees of freedom</span></span>
+<span id="cb216-18"><a href="ロジットブロビット回帰分析.html#cb216-18" tabindex="-1"></a><span class="co">#&gt; Residual deviance:  2.4775  on 5  degrees of freedom</span></span>
+<span id="cb216-19"><a href="ロジットブロビット回帰分析.html#cb216-19" tabindex="-1"></a><span class="co">#&gt; AIC: 34.284</span></span>
+<span id="cb216-20"><a href="ロジットブロビット回帰分析.html#cb216-20" tabindex="-1"></a><span class="co">#&gt; </span></span>
+<span id="cb216-21"><a href="ロジットブロビット回帰分析.html#cb216-21" tabindex="-1"></a><span class="co">#&gt; Number of Fisher Scoring iterations: 4</span></span>
+<span id="cb216-22"><a href="ロジットブロビット回帰分析.html#cb216-22" tabindex="-1"></a></span>
+<span id="cb216-23"><a href="ロジットブロビット回帰分析.html#cb216-23" tabindex="-1"></a>res_glm0 <span class="ot">&lt;-</span> <span class="fu">glm</span>(perf_tbl <span class="sc">~</span> <span class="dv">1</span>, binomial)     <span class="co"># 切片項のみ (null model)</span></span>
+<span id="cb216-24"><a href="ロジットブロビット回帰分析.html#cb216-24" tabindex="-1"></a><span class="fu">summary</span>(res_glm0)</span>
+<span id="cb216-25"><a href="ロジットブロビット回帰分析.html#cb216-25" tabindex="-1"></a><span class="co">#&gt; </span></span>
+<span id="cb216-26"><a href="ロジットブロビット回帰分析.html#cb216-26" tabindex="-1"></a><span class="co">#&gt; Call:</span></span>
+<span id="cb216-27"><a href="ロジットブロビット回帰分析.html#cb216-27" tabindex="-1"></a><span class="co">#&gt; glm(formula = perf_tbl ~ 1, family = binomial)</span></span>
+<span id="cb216-28"><a href="ロジットブロビット回帰分析.html#cb216-28" tabindex="-1"></a><span class="co">#&gt; </span></span>
+<span id="cb216-29"><a href="ロジットブロビット回帰分析.html#cb216-29" tabindex="-1"></a><span class="co">#&gt; Coefficients:</span></span>
+<span id="cb216-30"><a href="ロジットブロビット回帰分析.html#cb216-30" tabindex="-1"></a><span class="co">#&gt;             Estimate Std. Error z value Pr(&gt;|z|)    </span></span>
+<span id="cb216-31"><a href="ロジットブロビット回帰分析.html#cb216-31" tabindex="-1"></a><span class="co">#&gt; (Intercept)  -1.3950     0.1205  -11.58   &lt;2e-16 ***</span></span>
+<span id="cb216-32"><a href="ロジットブロビット回帰分析.html#cb216-32" tabindex="-1"></a><span class="co">#&gt; ---</span></span>
+<span id="cb216-33"><a href="ロジットブロビット回帰分析.html#cb216-33" tabindex="-1"></a><span class="co">#&gt; Signif. codes:  0 &#39;***&#39; 0.001 &#39;**&#39; 0.01 &#39;*&#39; 0.05 &#39;.&#39; 0.1 &#39; &#39; 1</span></span>
+<span id="cb216-34"><a href="ロジットブロビット回帰分析.html#cb216-34" tabindex="-1"></a><span class="co">#&gt; </span></span>
+<span id="cb216-35"><a href="ロジットブロビット回帰分析.html#cb216-35" tabindex="-1"></a><span class="co">#&gt; (Dispersion parameter for binomial family taken to be 1)</span></span>
+<span id="cb216-36"><a href="ロジットブロビット回帰分析.html#cb216-36" tabindex="-1"></a><span class="co">#&gt; </span></span>
+<span id="cb216-37"><a href="ロジットブロビット回帰分析.html#cb216-37" tabindex="-1"></a><span class="co">#&gt;     Null deviance: 15.255  on 7  degrees of freedom</span></span>
+<span id="cb216-38"><a href="ロジットブロビット回帰分析.html#cb216-38" tabindex="-1"></a><span class="co">#&gt; Residual deviance: 15.255  on 7  degrees of freedom</span></span>
+<span id="cb216-39"><a href="ロジットブロビット回帰分析.html#cb216-39" tabindex="-1"></a><span class="co">#&gt; AIC: 43.061</span></span>
+<span id="cb216-40"><a href="ロジットブロビット回帰分析.html#cb216-40" tabindex="-1"></a><span class="co">#&gt; </span></span>
+<span id="cb216-41"><a href="ロジットブロビット回帰分析.html#cb216-41" tabindex="-1"></a><span class="co">#&gt; Number of Fisher Scoring iterations: 4</span></span>
+<span id="cb216-42"><a href="ロジットブロビット回帰分析.html#cb216-42" tabindex="-1"></a></span>
+<span id="cb216-43"><a href="ロジットブロビット回帰分析.html#cb216-43" tabindex="-1"></a><span class="co"># anova(res_glm2, test = &quot;Chisq&quot;)                   # カイ2乗検定 (test = &quot;LRT&quot;でも可)</span></span>
+<span id="cb216-44"><a href="ロジットブロビット回帰分析.html#cb216-44" tabindex="-1"></a><span class="fu">anova</span>(res_glm0, res_glm2, <span class="at">test =</span> <span class="st">&quot;Chisq&quot;</span>)   <span class="co"># 同</span></span>
+<span id="cb216-45"><a href="ロジットブロビット回帰分析.html#cb216-45" tabindex="-1"></a><span class="co">#&gt; Analysis of Deviance Table</span></span>
+<span id="cb216-46"><a href="ロジットブロビット回帰分析.html#cb216-46" tabindex="-1"></a><span class="co">#&gt; </span></span>
+<span id="cb216-47"><a href="ロジットブロビット回帰分析.html#cb216-47" tabindex="-1"></a><span class="co">#&gt; Model 1: perf_tbl ~ 1</span></span>
+<span id="cb216-48"><a href="ロジットブロビット回帰分析.html#cb216-48" tabindex="-1"></a><span class="co">#&gt; Model 2: perf_tbl ~ hr_invest + sdg</span></span>
+<span id="cb216-49"><a href="ロジットブロビット回帰分析.html#cb216-49" tabindex="-1"></a><span class="co">#&gt;   Resid. Df Resid. Dev Df Deviance Pr(&gt;Chi)   </span></span>
+<span id="cb216-50"><a href="ロジットブロビット回帰分析.html#cb216-50" tabindex="-1"></a><span class="co">#&gt; 1         7    15.2547                        </span></span>
+<span id="cb216-51"><a href="ロジットブロビット回帰分析.html#cb216-51" tabindex="-1"></a><span class="co">#&gt; 2         5     2.4775  2   12.777 0.001681 **</span></span>
+<span id="cb216-52"><a href="ロジットブロビット回帰分析.html#cb216-52" tabindex="-1"></a><span class="co">#&gt; ---</span></span>
+<span id="cb216-53"><a href="ロジットブロビット回帰分析.html#cb216-53" tabindex="-1"></a><span class="co">#&gt; Signif. codes:  0 &#39;***&#39; 0.001 &#39;**&#39; 0.01 &#39;*&#39; 0.05 &#39;.&#39; 0.1 &#39; &#39; 1</span></span></code></pre></div>
+<p>今回のケースでは, 2変数を加える (自由度2を使う) ことで,
+残差逸脱度が15.2547から2.4775へと12.777減少すること,
+これにより, 帰無仮説 (二つの変数の回帰係数が同時にゼロ) の下で従う自由度2の<span class="math inline">\(\chi^2\)</span>分布に基づいて計算される<span class="math inline">\(p\)</span>値が0.001681であること,
+したがって, 有意水準1%で有意である (帰無仮説が棄却される) ことを示している.</p>
+<p>目的変数のデータ形式として, 上とは別の形式として, “成功率”を”試行回数”と共に<code>glm</code>に与える例を次に示す.</p>
+<div class="sourceCode" id="cb217"><pre class="sourceCode r"><code class="sourceCode r"><span id="cb217-1"><a href="ロジットブロビット回帰分析.html#cb217-1" tabindex="-1"></a><span class="co"># データ形式-2</span></span>
+<span id="cb217-2"><a href="ロジットブロビット回帰分析.html#cb217-2" tabindex="-1"></a><span class="co"># &quot;成功率&quot;の指定</span></span>
+<span id="cb217-3"><a href="ロジットブロビット回帰分析.html#cb217-3" tabindex="-1"></a>prop_perf <span class="ot">&lt;-</span> n_pos <span class="sc">/</span> n_tot</span>
+<span id="cb217-4"><a href="ロジットブロビット回帰分析.html#cb217-4" tabindex="-1"></a>res_glm1_2 <span class="ot">&lt;-</span> <span class="fu">glm</span>(prop_perf <span class="sc">~</span> size <span class="sc">+</span> hr_invest <span class="sc">+</span> sdg, binomial, <span class="at">weights =</span> n_tot)    </span>
+<span id="cb217-5"><a href="ロジットブロビット回帰分析.html#cb217-5" tabindex="-1"></a><span class="fu">summary</span>(res_glm1_2)</span>
+<span id="cb217-6"><a href="ロジットブロビット回帰分析.html#cb217-6" tabindex="-1"></a><span class="co">#&gt; </span></span>
+<span id="cb217-7"><a href="ロジットブロビット回帰分析.html#cb217-7" tabindex="-1"></a><span class="co">#&gt; Call:</span></span>
+<span id="cb217-8"><a href="ロジットブロビット回帰分析.html#cb217-8" tabindex="-1"></a><span class="co">#&gt; glm(formula = prop_perf ~ size + hr_invest + sdg, family = binomial, </span></span>
+<span id="cb217-9"><a href="ロジットブロビット回帰分析.html#cb217-9" tabindex="-1"></a><span class="co">#&gt;     weights = n_tot)</span></span>
+<span id="cb217-10"><a href="ロジットブロビット回帰分析.html#cb217-10" tabindex="-1"></a><span class="co">#&gt; </span></span>
+<span id="cb217-11"><a href="ロジットブロビット回帰分析.html#cb217-11" tabindex="-1"></a><span class="co">#&gt; Coefficients:</span></span>
+<span id="cb217-12"><a href="ロジットブロビット回帰分析.html#cb217-12" tabindex="-1"></a><span class="co">#&gt;             Estimate Std. Error z value Pr(&gt;|z|)   </span></span>
+<span id="cb217-13"><a href="ロジットブロビット回帰分析.html#cb217-13" tabindex="-1"></a><span class="co">#&gt; (Intercept) -0.63288    0.25177  -2.514  0.01195 * </span></span>
+<span id="cb217-14"><a href="ロジットブロビット回帰分析.html#cb217-14" tabindex="-1"></a><span class="co">#&gt; sizeL       -0.07844    0.26926  -0.291  0.77082   </span></span>
+<span id="cb217-15"><a href="ロジットブロビット回帰分析.html#cb217-15" tabindex="-1"></a><span class="co">#&gt; hr_investL  -0.82333    0.27607  -2.982  0.00286 **</span></span>
+<span id="cb217-16"><a href="ロジットブロビット回帰分析.html#cb217-16" tabindex="-1"></a><span class="co">#&gt; sdgL        -0.61585    0.35132  -1.753  0.07961 . </span></span>
+<span id="cb217-17"><a href="ロジットブロビット回帰分析.html#cb217-17" tabindex="-1"></a><span class="co">#&gt; ---</span></span>
+<span id="cb217-18"><a href="ロジットブロビット回帰分析.html#cb217-18" tabindex="-1"></a><span class="co">#&gt; Signif. codes:  0 &#39;***&#39; 0.001 &#39;**&#39; 0.01 &#39;*&#39; 0.05 &#39;.&#39; 0.1 &#39; &#39; 1</span></span>
+<span id="cb217-19"><a href="ロジットブロビット回帰分析.html#cb217-19" tabindex="-1"></a><span class="co">#&gt; </span></span>
+<span id="cb217-20"><a href="ロジットブロビット回帰分析.html#cb217-20" tabindex="-1"></a><span class="co">#&gt; (Dispersion parameter for binomial family taken to be 1)</span></span>
+<span id="cb217-21"><a href="ロジットブロビット回帰分析.html#cb217-21" tabindex="-1"></a><span class="co">#&gt; </span></span>
+<span id="cb217-22"><a href="ロジットブロビット回帰分析.html#cb217-22" tabindex="-1"></a><span class="co">#&gt;     Null deviance: 15.2547  on 7  degrees of freedom</span></span>
+<span id="cb217-23"><a href="ロジットブロビット回帰分析.html#cb217-23" tabindex="-1"></a><span class="co">#&gt; Residual deviance:  2.3921  on 4  degrees of freedom</span></span>
+<span id="cb217-24"><a href="ロジットブロビット回帰分析.html#cb217-24" tabindex="-1"></a><span class="co">#&gt; AIC: 36.198</span></span>
+<span id="cb217-25"><a href="ロジットブロビット回帰分析.html#cb217-25" tabindex="-1"></a><span class="co">#&gt; </span></span>
+<span id="cb217-26"><a href="ロジットブロビット回帰分析.html#cb217-26" tabindex="-1"></a><span class="co">#&gt; Number of Fisher Scoring iterations: 4</span></span></code></pre></div>
+<p>プロビット回帰については,
+<code>glm()</code>の引数<code>family=binomial (link = "probit")</code>と指定すれば, あとは
+ロジット回帰と同様に実行できる.</p>
+<div class="sourceCode" id="cb218"><pre class="sourceCode r"><code class="sourceCode r"><span id="cb218-1"><a href="ロジットブロビット回帰分析.html#cb218-1" tabindex="-1"></a><span class="co"># プロビット回帰</span></span>
+<span id="cb218-2"><a href="ロジットブロビット回帰分析.html#cb218-2" tabindex="-1"></a>res_glm1_p <span class="ot">&lt;-</span> <span class="fu">glm</span>(perf_tbl <span class="sc">~</span>  size <span class="sc">+</span> hr_invest <span class="sc">+</span> sdg, <span class="at">family =</span> <span class="fu">binomial</span>(<span class="at">link =</span> <span class="st">&quot;probit&quot;</span>))   <span class="co"># probit</span></span>
+<span id="cb218-3"><a href="ロジットブロビット回帰分析.html#cb218-3" tabindex="-1"></a><span class="fu">summary</span>(res_glm1_p)</span>
+<span id="cb218-4"><a href="ロジットブロビット回帰分析.html#cb218-4" tabindex="-1"></a><span class="co">#&gt; </span></span>
+<span id="cb218-5"><a href="ロジットブロビット回帰分析.html#cb218-5" tabindex="-1"></a><span class="co">#&gt; Call:</span></span>
+<span id="cb218-6"><a href="ロジットブロビット回帰分析.html#cb218-6" tabindex="-1"></a><span class="co">#&gt; glm(formula = perf_tbl ~ size + hr_invest + sdg, family = binomial(link = &quot;probit&quot;))</span></span>
+<span id="cb218-7"><a href="ロジットブロビット回帰分析.html#cb218-7" tabindex="-1"></a><span class="co">#&gt; </span></span>
+<span id="cb218-8"><a href="ロジットブロビット回帰分析.html#cb218-8" tabindex="-1"></a><span class="co">#&gt; Coefficients:</span></span>
+<span id="cb218-9"><a href="ロジットブロビット回帰分析.html#cb218-9" tabindex="-1"></a><span class="co">#&gt;             Estimate Std. Error z value Pr(&gt;|z|)   </span></span>
+<span id="cb218-10"><a href="ロジットブロビット回帰分析.html#cb218-10" tabindex="-1"></a><span class="co">#&gt; (Intercept) -0.39738    0.15235  -2.608   0.0091 **</span></span>
+<span id="cb218-11"><a href="ロジットブロビット回帰分析.html#cb218-11" tabindex="-1"></a><span class="co">#&gt; sizeL       -0.04947    0.15331  -0.323   0.7470   </span></span>
+<span id="cb218-12"><a href="ロジットブロビット回帰分析.html#cb218-12" tabindex="-1"></a><span class="co">#&gt; hr_investL  -0.48155    0.16439  -2.929   0.0034 **</span></span>
+<span id="cb218-13"><a href="ロジットブロビット回帰分析.html#cb218-13" tabindex="-1"></a><span class="co">#&gt; sdgL        -0.33830    0.18901  -1.790   0.0735 . </span></span>
+<span id="cb218-14"><a href="ロジットブロビット回帰分析.html#cb218-14" tabindex="-1"></a><span class="co">#&gt; ---</span></span>
+<span id="cb218-15"><a href="ロジットブロビット回帰分析.html#cb218-15" tabindex="-1"></a><span class="co">#&gt; Signif. codes:  0 &#39;***&#39; 0.001 &#39;**&#39; 0.01 &#39;*&#39; 0.05 &#39;.&#39; 0.1 &#39; &#39; 1</span></span>
+<span id="cb218-16"><a href="ロジットブロビット回帰分析.html#cb218-16" tabindex="-1"></a><span class="co">#&gt; </span></span>
+<span id="cb218-17"><a href="ロジットブロビット回帰分析.html#cb218-17" tabindex="-1"></a><span class="co">#&gt; (Dispersion parameter for binomial family taken to be 1)</span></span>
+<span id="cb218-18"><a href="ロジットブロビット回帰分析.html#cb218-18" tabindex="-1"></a><span class="co">#&gt; </span></span>
+<span id="cb218-19"><a href="ロジットブロビット回帰分析.html#cb218-19" tabindex="-1"></a><span class="co">#&gt;     Null deviance: 15.2547  on 7  degrees of freedom</span></span>
+<span id="cb218-20"><a href="ロジットブロビット回帰分析.html#cb218-20" tabindex="-1"></a><span class="co">#&gt; Residual deviance:  2.4259  on 4  degrees of freedom</span></span>
+<span id="cb218-21"><a href="ロジットブロビット回帰分析.html#cb218-21" tabindex="-1"></a><span class="co">#&gt; AIC: 36.232</span></span>
+<span id="cb218-22"><a href="ロジットブロビット回帰分析.html#cb218-22" tabindex="-1"></a><span class="co">#&gt; </span></span>
+<span id="cb218-23"><a href="ロジットブロビット回帰分析.html#cb218-23" tabindex="-1"></a><span class="co">#&gt; Number of Fisher Scoring iterations: 3</span></span></code></pre></div>
+</div>
+<div id="内挿-予測-1" class="section level4 unnumbered hasAnchor">
+<h4>(内挿) 予測<a href="ロジットブロビット回帰分析.html#内挿-予測-1" class="anchor-section" aria-label="Anchor link to header"></a></h4>
+<p>関数<code>predict()</code>を用いて予測値を出力するが, 上述のように引数<code>type</code>を指定しない場合には,
+線形予測子 (のスケールでの) 予測を行う. 具体的には, ロジット回帰では対数オッズを,
+プロビット回帰では標準正規分布の分位点 (分位点関数は累積分布関数の逆関数) を返す.</p>
+<p>一方, <code>type="response"</code>とした場合には, どちらのモデルにおいても, 反応変数のスケール,
+すなわち, 確率の予測値を返す.</p>
+<div class="sourceCode" id="cb219"><pre class="sourceCode r"><code class="sourceCode r"><span id="cb219-1"><a href="ロジットブロビット回帰分析.html#cb219-1" tabindex="-1"></a><span class="co"># 予測 (ロジット回帰)</span></span>
+<span id="cb219-2"><a href="ロジットブロビット回帰分析.html#cb219-2" tabindex="-1"></a><span class="fu">predict</span>(res_glm1_2)     <span class="co"># 対数オッズ (∵ロジット回帰)</span></span>
+<span id="cb219-3"><a href="ロジットブロビット回帰分析.html#cb219-3" tabindex="-1"></a><span class="co">#&gt;          1          2          3          4          5          6          7 </span></span>
+<span id="cb219-4"><a href="ロジットブロビット回帰分析.html#cb219-4" tabindex="-1"></a><span class="co">#&gt; -2.0720496 -1.2487226 -1.4562023 -1.3271595 -1.5346392 -0.6328753 -0.7113122 </span></span>
+<span id="cb219-5"><a href="ロジットブロビット回帰分析.html#cb219-5" tabindex="-1"></a><span class="co">#&gt;          8 </span></span>
+<span id="cb219-6"><a href="ロジットブロビット回帰分析.html#cb219-6" tabindex="-1"></a><span class="co">#&gt; -2.1504865</span></span>
+<span id="cb219-7"><a href="ロジットブロビット回帰分析.html#cb219-7" tabindex="-1"></a>p_hat <span class="ot">&lt;-</span> <span class="fu">predict</span>(res_glm1_2, <span class="at">type =</span> <span class="st">&quot;response&quot;</span>)     <span class="co"># 確率</span></span>
+<span id="cb219-8"><a href="ロジットブロビット回帰分析.html#cb219-8" tabindex="-1"></a></span>
+<span id="cb219-9"><a href="ロジットブロビット回帰分析.html#cb219-9" tabindex="-1"></a><span class="fu">predict</span>(res_glm1_2, <span class="at">type =</span> <span class="st">&quot;terms&quot;</span>) <span class="co"># 線形予測子の項ごとの適合値</span></span>
+<span id="cb219-10"><a href="ロジットブロビット回帰分析.html#cb219-10" tabindex="-1"></a><span class="co">#&gt;          size  hr_invest        sdg</span></span>
+<span id="cb219-11"><a href="ロジットブロビット回帰分析.html#cb219-11" tabindex="-1"></a><span class="co">#&gt; 1  0.03921846 -0.4116635 -0.3079237</span></span>
+<span id="cb219-12"><a href="ロジットブロビット回帰分析.html#cb219-12" tabindex="-1"></a><span class="co">#&gt; 2  0.03921846  0.4116635 -0.3079237</span></span>
+<span id="cb219-13"><a href="ロジットブロビット回帰分析.html#cb219-13" tabindex="-1"></a><span class="co">#&gt; 3  0.03921846 -0.4116635  0.3079237</span></span>
+<span id="cb219-14"><a href="ロジットブロビット回帰分析.html#cb219-14" tabindex="-1"></a><span class="co">#&gt; 4 -0.03921846  0.4116635 -0.3079237</span></span>
+<span id="cb219-15"><a href="ロジットブロビット回帰分析.html#cb219-15" tabindex="-1"></a><span class="co">#&gt; 5 -0.03921846 -0.4116635  0.3079237</span></span>
+<span id="cb219-16"><a href="ロジットブロビット回帰分析.html#cb219-16" tabindex="-1"></a><span class="co">#&gt; 6  0.03921846  0.4116635  0.3079237</span></span>
+<span id="cb219-17"><a href="ロジットブロビット回帰分析.html#cb219-17" tabindex="-1"></a><span class="co">#&gt; 7 -0.03921846  0.4116635  0.3079237</span></span>
+<span id="cb219-18"><a href="ロジットブロビット回帰分析.html#cb219-18" tabindex="-1"></a><span class="co">#&gt; 8 -0.03921846 -0.4116635 -0.3079237</span></span>
+<span id="cb219-19"><a href="ロジットブロビット回帰分析.html#cb219-19" tabindex="-1"></a><span class="co">#&gt; attr(,&quot;constant&quot;)</span></span>
+<span id="cb219-20"><a href="ロジットブロビット回帰分析.html#cb219-20" tabindex="-1"></a><span class="co">#&gt; [1] -1.391681</span></span></code></pre></div>
+<div class="sourceCode" id="cb220"><pre class="sourceCode r"><code class="sourceCode r"><span id="cb220-1"><a href="ロジットブロビット回帰分析.html#cb220-1" tabindex="-1"></a><span class="co"># 同 (プロビット回帰)</span></span>
+<span id="cb220-2"><a href="ロジットブロビット回帰分析.html#cb220-2" tabindex="-1"></a><span class="fu">predict</span>(res_glm1_p)     <span class="co"># 標準正規分布の分位点 (∵プロビット回帰)</span></span>
+<span id="cb220-3"><a href="ロジットブロビット回帰分析.html#cb220-3" tabindex="-1"></a><span class="co">#&gt;          1          2          3          4          5          6          7 </span></span>
+<span id="cb220-4"><a href="ロジットブロビット回帰分析.html#cb220-4" tabindex="-1"></a><span class="co">#&gt; -1.2172398 -0.7356881 -0.8789356 -0.7851545 -0.9284021 -0.3973839 -0.4468504 </span></span>
+<span id="cb220-5"><a href="ロジットブロビット回帰分析.html#cb220-5" tabindex="-1"></a><span class="co">#&gt;          8 </span></span>
+<span id="cb220-6"><a href="ロジットブロビット回帰分析.html#cb220-6" tabindex="-1"></a><span class="co">#&gt; -1.2667063</span></span>
+<span id="cb220-7"><a href="ロジットブロビット回帰分析.html#cb220-7" tabindex="-1"></a>p_hat_p <span class="ot">&lt;-</span> <span class="fu">predict</span>(res_glm1_p, <span class="at">type =</span> <span class="st">&quot;response&quot;</span>)       <span class="co"># 確率</span></span>
+<span id="cb220-8"><a href="ロジットブロビット回帰分析.html#cb220-8" tabindex="-1"></a></span>
+<span id="cb220-9"><a href="ロジットブロビット回帰分析.html#cb220-9" tabindex="-1"></a><span class="co"># 予測値の比較: ロジット vs プロビット</span></span>
+<span id="cb220-10"><a href="ロジットブロビット回帰分析.html#cb220-10" tabindex="-1"></a><span class="fu">data.frame</span>(perf_dat1, <span class="at">logit =</span> p_hat, <span class="at">probit =</span> p_hat_p)</span>
+<span id="cb220-11"><a href="ロジットブロビット回帰分析.html#cb220-11" tabindex="-1"></a><span class="co">#&gt;   size hr_invest sdg n_tot n_pos     logit    probit</span></span>
+<span id="cb220-12"><a href="ロジットブロビット回帰分析.html#cb220-12" tabindex="-1"></a><span class="co">#&gt; 1    H         L   L    60     7 0.1118433 0.1117565</span></span>
+<span id="cb220-13"><a href="ロジットブロビット回帰分析.html#cb220-13" tabindex="-1"></a><span class="co">#&gt; 2    H         H   L     8     2 0.2229213 0.2309603</span></span>
+<span id="cb220-14"><a href="ロジットブロビット回帰分析.html#cb220-14" tabindex="-1"></a><span class="co">#&gt; 3    H         L   H   186    36 0.1890489 0.1897181</span></span>
+<span id="cb220-15"><a href="ロジットブロビット回帰分析.html#cb220-15" tabindex="-1"></a><span class="co">#&gt; 4    L         H   L     3     0 0.2096296 0.2161815</span></span>
+<span id="cb220-16"><a href="ロジットブロビット回帰分析.html#cb220-16" tabindex="-1"></a><span class="co">#&gt; 5    L         L   H    86    14 0.1773159 0.1765995</span></span>
+<span id="cb220-17"><a href="ロジットブロビット回帰分析.html#cb220-17" tabindex="-1"></a><span class="co">#&gt; 6    H         H   H    50    16 0.3468589 0.3455422</span></span>
+<span id="cb220-18"><a href="ロジットブロビット回帰分析.html#cb220-18" tabindex="-1"></a><span class="co">#&gt; 7    L         H   H    22     9 0.3293090 0.3274915</span></span>
+<span id="cb220-19"><a href="ロジットブロビット回帰分析.html#cb220-19" tabindex="-1"></a><span class="co">#&gt; 8    L         L   L    18     2 0.1042858 0.1026302</span></span>
+<span id="cb220-20"><a href="ロジットブロビット回帰分析.html#cb220-20" tabindex="-1"></a></span>
+<span id="cb220-21"><a href="ロジットブロビット回帰分析.html#cb220-21" tabindex="-1"></a><span class="co"># 参考) 説明変数が因子型(factor)でない場合, 以前はエラー発生</span></span>
+<span id="cb220-22"><a href="ロジットブロビット回帰分析.html#cb220-22" tabindex="-1"></a><span class="co"># → 文字型変数は因子型への変換が必要だった</span></span>
+<span id="cb220-23"><a href="ロジットブロビット回帰分析.html#cb220-23" tabindex="-1"></a><span class="fu">plot</span>(<span class="fu">factor</span>(hr_invest), <span class="fu">predict</span>(res_glm2, <span class="at">type =</span> <span class="st">&quot;response&quot;</span>))</span></code></pre></div>
+<p><img src="050-logit_files/figure-html/unnamed-chunk-11-1.png" width="75%" /></p>
+<div class="sourceCode" id="cb221"><pre class="sourceCode r"><code class="sourceCode r"><span id="cb221-1"><a href="ロジットブロビット回帰分析.html#cb221-1" tabindex="-1"></a><span class="fu">plot</span>(<span class="fu">factor</span>(sdg), <span class="fu">predict</span>(res_glm2, <span class="at">type =</span> <span class="st">&quot;response&quot;</span>))</span></code></pre></div>
+<p><img src="050-logit_files/figure-html/unnamed-chunk-11-2.png" width="75%" /></p>
+<div class="sourceCode" id="cb222"><pre class="sourceCode r"><code class="sourceCode r"><span id="cb222-1"><a href="ロジットブロビット回帰分析.html#cb222-1" tabindex="-1"></a><span class="co"># 説明変数が数値型変数ならば、logistic曲線を描く</span></span></code></pre></div>
+</div>
+<div id="係数の信頼区間-1" class="section level4 unnumbered hasAnchor">
+<h4>係数の信頼区間<a href="ロジットブロビット回帰分析.html#係数の信頼区間-1" class="anchor-section" aria-label="Anchor link to header"></a></h4>
+<div class="sourceCode" id="cb223"><pre class="sourceCode r"><code class="sourceCode r"><span id="cb223-1"><a href="ロジットブロビット回帰分析.html#cb223-1" tabindex="-1"></a><span class="co"># 信頼区間</span></span>
+<span id="cb223-2"><a href="ロジットブロビット回帰分析.html#cb223-2" tabindex="-1"></a><span class="fu">confint</span>(res_glm1_2) <span class="co"># 95%信頼区間 (デフォルト)</span></span>
+<span id="cb223-3"><a href="ロジットブロビット回帰分析.html#cb223-3" tabindex="-1"></a><span class="co">#&gt;                  2.5 %      97.5 %</span></span>
+<span id="cb223-4"><a href="ロジットブロビット回帰分析.html#cb223-4" tabindex="-1"></a><span class="co">#&gt; (Intercept) -1.1392044 -0.14805877</span></span>
+<span id="cb223-5"><a href="ロジットブロビット回帰分析.html#cb223-5" tabindex="-1"></a><span class="co">#&gt; sizeL       -0.6194614  0.43967083</span></span>
+<span id="cb223-6"><a href="ロジットブロビット回帰分析.html#cb223-6" tabindex="-1"></a><span class="co">#&gt; hr_investL  -1.3592877 -0.27372310</span></span>
+<span id="cb223-7"><a href="ロジットブロビット回帰分析.html#cb223-7" tabindex="-1"></a><span class="co">#&gt; sdgL        -1.3520115  0.03750972</span></span>
+<span id="cb223-8"><a href="ロジットブロビット回帰分析.html#cb223-8" tabindex="-1"></a><span class="fu">confint</span>(res_glm1_2, <span class="at">level =</span> <span class="fl">0.90</span>)   <span class="co"># 90%信頼区間</span></span>
+<span id="cb223-9"><a href="ロジットブロビット回帰分析.html#cb223-9" tabindex="-1"></a><span class="co">#&gt;                    5 %        95 %</span></span>
+<span id="cb223-10"><a href="ロジットブロビット回帰分析.html#cb223-10" tabindex="-1"></a><span class="co">#&gt; (Intercept) -1.0558140 -0.22506829</span></span>
+<span id="cb223-11"><a href="ロジットブロビット回帰分析.html#cb223-11" tabindex="-1"></a><span class="co">#&gt; sizeL       -0.5304547  0.35748113</span></span>
+<span id="cb223-12"><a href="ロジットブロビット回帰分析.html#cb223-12" tabindex="-1"></a><span class="co">#&gt; hr_investL  -1.2736384 -0.36344375</span></span>
+<span id="cb223-13"><a href="ロジットブロビット回帰分析.html#cb223-13" tabindex="-1"></a><span class="co">#&gt; sdgL        -1.2264225 -0.06339516</span></span>
+<span id="cb223-14"><a href="ロジットブロビット回帰分析.html#cb223-14" tabindex="-1"></a></span>
+<span id="cb223-15"><a href="ロジットブロビット回帰分析.html#cb223-15" tabindex="-1"></a><span class="fu">detach</span>()</span></code></pre></div>
+<p>(自主課題)</p>
+<ul>
+<li>“firmperf.txt”に対するロジット回帰分析の結果を解釈してみよう.</li>
+</ul>
+</div>
+</div>
+<div id="データセット-2-個人ローンデフォルトデータ-仮想" class="section level3 unnumbered hasAnchor">
+<h3>データセット (2): 個人ローン・デフォルト・データ (仮想)<a href="ロジットブロビット回帰分析.html#データセット-2-個人ローンデフォルトデータ-仮想" class="anchor-section" aria-label="Anchor link to header"></a></h3>
+<pre><code>- default.csv, 100件
+  - デフォルト (1/0)
+  - ローン残高 (万円) 
+  - 収入 (万円)
+  - 職種 (A/B)</code></pre>
+<div id="データ読み込み-1" class="section level4 unnumbered hasAnchor">
+<h4>データ読み込み<a href="ロジットブロビット回帰分析.html#データ読み込み-1" class="anchor-section" aria-label="Anchor link to header"></a></h4>
+<div class="sourceCode" id="cb225"><pre class="sourceCode r"><code class="sourceCode r"><span id="cb225-1"><a href="ロジットブロビット回帰分析.html#cb225-1" tabindex="-1"></a>default <span class="ot">&lt;-</span> <span class="fu">read.csv</span>(<span class="st">&quot;default.csv&quot;</span>)</span>
+<span id="cb225-2"><a href="ロジットブロビット回帰分析.html#cb225-2" tabindex="-1"></a><span class="fu">attach</span>(default)</span></code></pre></div>
+</div>
+<div id="ロジット回帰" class="section level4 unnumbered hasAnchor">
+<h4>ロジット回帰<a href="ロジットブロビット回帰分析.html#ロジット回帰" class="anchor-section" aria-label="Anchor link to header"></a></h4>
+<div class="sourceCode" id="cb226"><pre class="sourceCode r"><code class="sourceCode r"><span id="cb226-1"><a href="ロジットブロビット回帰分析.html#cb226-1" tabindex="-1"></a><span class="co"># ロジット回帰</span></span>
+<span id="cb226-2"><a href="ロジットブロビット回帰分析.html#cb226-2" tabindex="-1"></a>res_glm <span class="ot">&lt;-</span> <span class="fu">glm</span>(デフォルト <span class="sc">~</span> ローン残高 <span class="sc">+</span> 収入 <span class="sc">+</span> 職種, <span class="at">family =</span> binomial)</span>
+<span id="cb226-3"><a href="ロジットブロビット回帰分析.html#cb226-3" tabindex="-1"></a><span class="fu">summary</span>(res_glm)</span>
+<span id="cb226-4"><a href="ロジットブロビット回帰分析.html#cb226-4" tabindex="-1"></a><span class="co">#&gt; </span></span>
+<span id="cb226-5"><a href="ロジットブロビット回帰分析.html#cb226-5" tabindex="-1"></a><span class="co">#&gt; Call:</span></span>
+<span id="cb226-6"><a href="ロジットブロビット回帰分析.html#cb226-6" tabindex="-1"></a><span class="co">#&gt; glm(formula = デフォルト ~ ローン残高 + 収入 + 職種, </span></span>
+<span id="cb226-7"><a href="ロジットブロビット回帰分析.html#cb226-7" tabindex="-1"></a><span class="co">#&gt;     family = binomial)</span></span>
+<span id="cb226-8"><a href="ロジットブロビット回帰分析.html#cb226-8" tabindex="-1"></a><span class="co">#&gt; </span></span>
+<span id="cb226-9"><a href="ロジットブロビット回帰分析.html#cb226-9" tabindex="-1"></a><span class="co">#&gt; Coefficients:</span></span>
+<span id="cb226-10"><a href="ロジットブロビット回帰分析.html#cb226-10" tabindex="-1"></a><span class="co">#&gt;               Estimate Std. Error z value Pr(&gt;|z|)    </span></span>
+<span id="cb226-11"><a href="ロジットブロビット回帰分析.html#cb226-11" tabindex="-1"></a><span class="co">#&gt; (Intercept) -1.336e+01  3.505e+00  -3.811 0.000138 ***</span></span>
+<span id="cb226-12"><a href="ロジットブロビット回帰分析.html#cb226-12" tabindex="-1"></a><span class="co">#&gt; ローン残高   4.708e-03  1.224e-03   3.846 0.000120 ***</span></span>
+<span id="cb226-13"><a href="ロジットブロビット回帰分析.html#cb226-13" tabindex="-1"></a><span class="co">#&gt; 収入        -9.227e-04  2.345e-03  -0.394 0.693925    </span></span>
+<span id="cb226-14"><a href="ロジットブロビット回帰分析.html#cb226-14" tabindex="-1"></a><span class="co">#&gt; 職種B        9.713e-01  1.445e+00   0.672 0.501434    </span></span>
+<span id="cb226-15"><a href="ロジットブロビット回帰分析.html#cb226-15" tabindex="-1"></a><span class="co">#&gt; ---</span></span>
+<span id="cb226-16"><a href="ロジットブロビット回帰分析.html#cb226-16" tabindex="-1"></a><span class="co">#&gt; Signif. codes:  0 &#39;***&#39; 0.001 &#39;**&#39; 0.01 &#39;*&#39; 0.05 &#39;.&#39; 0.1 &#39; &#39; 1</span></span>
+<span id="cb226-17"><a href="ロジットブロビット回帰分析.html#cb226-17" tabindex="-1"></a><span class="co">#&gt; </span></span>
+<span id="cb226-18"><a href="ロジットブロビット回帰分析.html#cb226-18" tabindex="-1"></a><span class="co">#&gt; (Dispersion parameter for binomial family taken to be 1)</span></span>
+<span id="cb226-19"><a href="ロジットブロビット回帰分析.html#cb226-19" tabindex="-1"></a><span class="co">#&gt; </span></span>
+<span id="cb226-20"><a href="ロジットブロビット回帰分析.html#cb226-20" tabindex="-1"></a><span class="co">#&gt;     Null deviance: 102.791  on 99  degrees of freedom</span></span>
+<span id="cb226-21"><a href="ロジットブロビット回帰分析.html#cb226-21" tabindex="-1"></a><span class="co">#&gt; Residual deviance:  46.971  on 96  degrees of freedom</span></span>
+<span id="cb226-22"><a href="ロジットブロビット回帰分析.html#cb226-22" tabindex="-1"></a><span class="co">#&gt; AIC: 54.971</span></span>
+<span id="cb226-23"><a href="ロジットブロビット回帰分析.html#cb226-23" tabindex="-1"></a><span class="co">#&gt; </span></span>
+<span id="cb226-24"><a href="ロジットブロビット回帰分析.html#cb226-24" tabindex="-1"></a><span class="co">#&gt; Number of Fisher Scoring iterations: 8</span></span>
+<span id="cb226-25"><a href="ロジットブロビット回帰分析.html#cb226-25" tabindex="-1"></a></span>
+<span id="cb226-26"><a href="ロジットブロビット回帰分析.html#cb226-26" tabindex="-1"></a><span class="fu">plot</span>(ローン残高, <span class="fu">predict</span>(res_glm, <span class="at">type =</span> <span class="st">&quot;response&quot;</span>))</span></code></pre></div>
+<p><img src="050-logit_files/figure-html/unnamed-chunk-13-1.png" width="75%" /></p>
+<div class="sourceCode" id="cb227"><pre class="sourceCode r"><code class="sourceCode r"><span id="cb227-1"><a href="ロジットブロビット回帰分析.html#cb227-1" tabindex="-1"></a><span class="fu">plot</span>(収入, <span class="fu">predict</span>(res_glm, <span class="at">type =</span> <span class="st">&quot;response&quot;</span>))</span></code></pre></div>
+<p><img src="050-logit_files/figure-html/unnamed-chunk-13-2.png" width="75%" /></p>
+<div class="sourceCode" id="cb228"><pre class="sourceCode r"><code class="sourceCode r"><span id="cb228-1"><a href="ロジットブロビット回帰分析.html#cb228-1" tabindex="-1"></a><span class="co"># plot(職種, predict(res_glm, type = &quot;response&quot;))</span></span></code></pre></div>
+</div>
+<div id="プロビット回帰" class="section level4 unnumbered hasAnchor">
+<h4>プロビット回帰<a href="ロジットブロビット回帰分析.html#プロビット回帰" class="anchor-section" aria-label="Anchor link to header"></a></h4>
+<div class="sourceCode" id="cb229"><pre class="sourceCode r"><code class="sourceCode r"><span id="cb229-1"><a href="ロジットブロビット回帰分析.html#cb229-1" tabindex="-1"></a><span class="co"># プロビット回帰</span></span>
+<span id="cb229-2"><a href="ロジットブロビット回帰分析.html#cb229-2" tabindex="-1"></a>res_glm_p <span class="ot">&lt;-</span> <span class="fu">glm</span>(デフォルト <span class="sc">~</span> ローン残高 <span class="sc">+</span> 収入 <span class="sc">+</span> 職種, <span class="at">family =</span> <span class="fu">binomial</span>(<span class="at">link =</span> <span class="st">&quot;probit&quot;</span>))</span>
+<span id="cb229-3"><a href="ロジットブロビット回帰分析.html#cb229-3" tabindex="-1"></a><span class="fu">summary</span>(res_glm_p)</span>
+<span id="cb229-4"><a href="ロジットブロビット回帰分析.html#cb229-4" tabindex="-1"></a><span class="co">#&gt; </span></span>
+<span id="cb229-5"><a href="ロジットブロビット回帰分析.html#cb229-5" tabindex="-1"></a><span class="co">#&gt; Call:</span></span>
+<span id="cb229-6"><a href="ロジットブロビット回帰分析.html#cb229-6" tabindex="-1"></a><span class="co">#&gt; glm(formula = デフォルト ~ ローン残高 + 収入 + 職種, </span></span>
+<span id="cb229-7"><a href="ロジットブロビット回帰分析.html#cb229-7" tabindex="-1"></a><span class="co">#&gt;     family = binomial(link = &quot;probit&quot;))</span></span>
+<span id="cb229-8"><a href="ロジットブロビット回帰分析.html#cb229-8" tabindex="-1"></a><span class="co">#&gt; </span></span>
+<span id="cb229-9"><a href="ロジットブロビット回帰分析.html#cb229-9" tabindex="-1"></a><span class="co">#&gt; Coefficients:</span></span>
+<span id="cb229-10"><a href="ロジットブロビット回帰分析.html#cb229-10" tabindex="-1"></a><span class="co">#&gt;               Estimate Std. Error z value Pr(&gt;|z|)    </span></span>
+<span id="cb229-11"><a href="ロジットブロビット回帰分析.html#cb229-11" tabindex="-1"></a><span class="co">#&gt; (Intercept) -7.0233825  1.6903093  -4.155 3.25e-05 ***</span></span>
+<span id="cb229-12"><a href="ロジットブロビット回帰分析.html#cb229-12" tabindex="-1"></a><span class="co">#&gt; ローン残高   0.0024920  0.0005893   4.229 2.35e-05 ***</span></span>
+<span id="cb229-13"><a href="ロジットブロビット回帰分析.html#cb229-13" tabindex="-1"></a><span class="co">#&gt; 収入        -0.0006478  0.0013082  -0.495    0.620    </span></span>
+<span id="cb229-14"><a href="ロジットブロビット回帰分析.html#cb229-14" tabindex="-1"></a><span class="co">#&gt; 職種B        0.6549554  0.8035424   0.815    0.415    </span></span>
+<span id="cb229-15"><a href="ロジットブロビット回帰分析.html#cb229-15" tabindex="-1"></a><span class="co">#&gt; ---</span></span>
+<span id="cb229-16"><a href="ロジットブロビット回帰分析.html#cb229-16" tabindex="-1"></a><span class="co">#&gt; Signif. codes:  0 &#39;***&#39; 0.001 &#39;**&#39; 0.01 &#39;*&#39; 0.05 &#39;.&#39; 0.1 &#39; &#39; 1</span></span>
+<span id="cb229-17"><a href="ロジットブロビット回帰分析.html#cb229-17" tabindex="-1"></a><span class="co">#&gt; </span></span>
+<span id="cb229-18"><a href="ロジットブロビット回帰分析.html#cb229-18" tabindex="-1"></a><span class="co">#&gt; (Dispersion parameter for binomial family taken to be 1)</span></span>
+<span id="cb229-19"><a href="ロジットブロビット回帰分析.html#cb229-19" tabindex="-1"></a><span class="co">#&gt; </span></span>
+<span id="cb229-20"><a href="ロジットブロビット回帰分析.html#cb229-20" tabindex="-1"></a><span class="co">#&gt;     Null deviance: 102.79  on 99  degrees of freedom</span></span>
+<span id="cb229-21"><a href="ロジットブロビット回帰分析.html#cb229-21" tabindex="-1"></a><span class="co">#&gt; Residual deviance:  47.81  on 96  degrees of freedom</span></span>
+<span id="cb229-22"><a href="ロジットブロビット回帰分析.html#cb229-22" tabindex="-1"></a><span class="co">#&gt; AIC: 55.81</span></span>
+<span id="cb229-23"><a href="ロジットブロビット回帰分析.html#cb229-23" tabindex="-1"></a><span class="co">#&gt; </span></span>
+<span id="cb229-24"><a href="ロジットブロビット回帰分析.html#cb229-24" tabindex="-1"></a><span class="co">#&gt; Number of Fisher Scoring iterations: 8</span></span>
+<span id="cb229-25"><a href="ロジットブロビット回帰分析.html#cb229-25" tabindex="-1"></a></span>
+<span id="cb229-26"><a href="ロジットブロビット回帰分析.html#cb229-26" tabindex="-1"></a><span class="do">## 結果の比較: glm vs lm</span></span>
+<span id="cb229-27"><a href="ロジットブロビット回帰分析.html#cb229-27" tabindex="-1"></a><span class="co"># res_glm_normal &lt;- glm(デフォルト ~ ローン残高 + 収入 + 職種, family = gaussian)</span></span>
+<span id="cb229-28"><a href="ロジットブロビット回帰分析.html#cb229-28" tabindex="-1"></a><span class="co"># summary(res_glm_normal)</span></span>
+<span id="cb229-29"><a href="ロジットブロビット回帰分析.html#cb229-29" tabindex="-1"></a><span class="co"># res_lm &lt;- lm(デフォルト ~ ローン残高 + 収入 + 職種)</span></span>
+<span id="cb229-30"><a href="ロジットブロビット回帰分析.html#cb229-30" tabindex="-1"></a><span class="co"># anova(res_lm)</span></span></code></pre></div>
+</div>
+<div id="外挿-予測" class="section level4 unnumbered hasAnchor">
+<h4>(外挿) 予測<a href="ロジットブロビット回帰分析.html#外挿-予測" class="anchor-section" aria-label="Anchor link to header"></a></h4>
+<p>外挿予測を行いたい場合には, 関数<code>predict()</code>に対して,
+<code>glm()</code>の出力と共に, 予測を行いたい予測変数の値の組をデータフレームとして,
+引数<code>newdata</code>に与えれば良い.</p>
+<div class="sourceCode" id="cb230"><pre class="sourceCode r"><code class="sourceCode r"><span id="cb230-1"><a href="ロジットブロビット回帰分析.html#cb230-1" tabindex="-1"></a><span class="co"># 予測 (新しいデータセットに対して)</span></span>
+<span id="cb230-2"><a href="ロジットブロビット回帰分析.html#cb230-2" tabindex="-1"></a>newdat <span class="ot">&lt;-</span> <span class="fu">data.frame</span>(ローン残高 <span class="ot">=</span> <span class="fu">c</span>(<span class="dv">100</span>, <span class="dv">500</span>, <span class="dv">1000</span>, <span class="dv">10000</span>), </span>
+<span id="cb230-3"><a href="ロジットブロビット回帰分析.html#cb230-3" tabindex="-1"></a>                     収入 <span class="ot">=</span> <span class="dv">30000</span>, 職種 <span class="ot">=</span> <span class="st">&quot;A&quot;</span>)</span>
+<span id="cb230-4"><a href="ロジットブロビット回帰分析.html#cb230-4" tabindex="-1"></a><span class="fu">predict</span>(res_glm, <span class="at">newdata =</span> newdat, <span class="at">type =</span> <span class="st">&quot;response&quot;</span>)</span>
+<span id="cb230-5"><a href="ロジットブロビット回帰分析.html#cb230-5" tabindex="-1"></a><span class="co">#&gt;            1            2            3            4 </span></span>
+<span id="cb230-6"><a href="ロジットブロビット回帰分析.html#cb230-6" tabindex="-1"></a><span class="co">#&gt; 2.220446e-16 2.220446e-16 2.220446e-16 9.976404e-01</span></span></code></pre></div>
+</div>
+<div id="係数の信頼区間-2" class="section level4 unnumbered hasAnchor">
+<h4>係数の信頼区間<a href="ロジットブロビット回帰分析.html#係数の信頼区間-2" class="anchor-section" aria-label="Anchor link to header"></a></h4>
+<div class="sourceCode" id="cb231"><pre class="sourceCode r"><code class="sourceCode r"><span id="cb231-1"><a href="ロジットブロビット回帰分析.html#cb231-1" tabindex="-1"></a><span class="co"># 信頼区間</span></span>
+<span id="cb231-2"><a href="ロジットブロビット回帰分析.html#cb231-2" tabindex="-1"></a><span class="fu">confint</span>(res_glm)    <span class="co"># 95%信頼区間 (デフォルト)</span></span>
+<span id="cb231-3"><a href="ロジットブロビット回帰分析.html#cb231-3" tabindex="-1"></a><span class="co">#&gt;                     2.5 %       97.5 %</span></span>
+<span id="cb231-4"><a href="ロジットブロビット回帰分析.html#cb231-4" tabindex="-1"></a><span class="co">#&gt; (Intercept) -21.713657994 -7.721969240</span></span>
+<span id="cb231-5"><a href="ロジットブロビット回帰分析.html#cb231-5" tabindex="-1"></a><span class="co">#&gt; ローン残高    0.002743950  0.007642011</span></span>
+<span id="cb231-6"><a href="ロジットブロビット回帰分析.html#cb231-6" tabindex="-1"></a><span class="co">#&gt; 収入         -0.005498298  0.003877354</span></span>
+<span id="cb231-7"><a href="ロジットブロビット回帰分析.html#cb231-7" tabindex="-1"></a><span class="co">#&gt; 職種B        -1.917922786  3.862413416</span></span>
+<span id="cb231-8"><a href="ロジットブロビット回帰分析.html#cb231-8" tabindex="-1"></a></span>
+<span id="cb231-9"><a href="ロジットブロビット回帰分析.html#cb231-9" tabindex="-1"></a><span class="fu">detach</span>()</span></code></pre></div>
+</div>
+<div id="便利なツール-パッケージepidisplay" class="section level4 unnumbered hasAnchor">
+<h4>便利なツール: パッケージ<code>epiDisplay</code><a href="ロジットブロビット回帰分析.html#便利なツール-パッケージepidisplay" class="anchor-section" aria-label="Anchor link to header"></a></h4>
+<div class="sourceCode" id="cb232"><pre class="sourceCode r"><code class="sourceCode r"><span id="cb232-1"><a href="ロジットブロビット回帰分析.html#cb232-1" tabindex="-1"></a><span class="co"># (参考) 便利なツール</span></span>
+<span id="cb232-2"><a href="ロジットブロビット回帰分析.html#cb232-2" tabindex="-1"></a><span class="fu">library</span>(epiDisplay)</span>
+<span id="cb232-3"><a href="ロジットブロビット回帰分析.html#cb232-3" tabindex="-1"></a><span class="fu">logistic.display</span>(res_glm, <span class="at">simplified =</span> <span class="cn">TRUE</span>)</span>
+<span id="cb232-4"><a href="ロジットブロビット回帰分析.html#cb232-4" tabindex="-1"></a><span class="co">#&gt;  </span></span>
+<span id="cb232-5"><a href="ロジットブロビット回帰分析.html#cb232-5" tabindex="-1"></a><span class="co">#&gt;                   OR lower95ci upper95ci     Pr(&gt;|Z|)</span></span>
+<span id="cb232-6"><a href="ロジットブロビット回帰分析.html#cb232-6" tabindex="-1"></a><span class="co">#&gt; ローン残高 1.0047194 1.0023118  1.007133 0.0001199072</span></span>
+<span id="cb232-7"><a href="ロジットブロビット回帰分析.html#cb232-7" tabindex="-1"></a><span class="co">#&gt; 収入       0.9990777 0.9944971  1.003679 0.6939246907</span></span>
+<span id="cb232-8"><a href="ロジットブロビット回帰分析.html#cb232-8" tabindex="-1"></a><span class="co">#&gt; 職種B      2.6413382 0.1555813 44.842586 0.5014338592</span></span></code></pre></div>
+<p>(自主課題)</p>
+<ul>
+<li>“default.csv”に対するロジット回帰分析の結果を解釈してみよう.</li>
+</ul>
+</div>
+</div>
+</div>
+<div id="疑似r2の計算" class="section level2 hasAnchor" number="4.3">
+<h2><span class="header-section-number">4.3</span> 疑似R2の計算<a href="ロジットブロビット回帰分析.html#疑似r2の計算" class="anchor-section" aria-label="Anchor link to header"></a></h2>
+<p>線形回帰の場合と異なり, ロジット回帰では, <span class="math inline">\(R^2\)</span>は計算されない.
+しかし, ロジット回帰 (より一般に, 一般化線形モデル)
+においては, 疑似的に<span class="math inline">\(R^2\)</span>を計算する方法が
+複数提案されている.</p>
+<div class="sourceCode" id="cb233"><pre class="sourceCode r"><code class="sourceCode r"><span id="cb233-1"><a href="ロジットブロビット回帰分析.html#cb233-1" tabindex="-1"></a><span class="co"># ロジット回帰</span></span>
+<span id="cb233-2"><a href="ロジットブロビット回帰分析.html#cb233-2" tabindex="-1"></a>res_glm <span class="ot">&lt;-</span> <span class="fu">glm</span>(デフォルト <span class="sc">~</span> ローン残高 <span class="sc">+</span> 収入 <span class="sc">+</span> 職種, </span>
+<span id="cb233-3"><a href="ロジットブロビット回帰分析.html#cb233-3" tabindex="-1"></a>               <span class="at">family =</span> binomial, <span class="at">data =</span> default)</span>
+<span id="cb233-4"><a href="ロジットブロビット回帰分析.html#cb233-4" tabindex="-1"></a><span class="co"># summary(res_glm)</span></span></code></pre></div>
+<p>以下では, 3つのパッケージ<code>DescTools</code>, <code>pscl</code>, <code>performance</code>を使用した例を紹介する.</p>
+<div id="パッケージdesctoolsの利用" class="section level3 unnumbered hasAnchor">
+<h3>パッケージ<code>DescTools</code>の利用<a href="ロジットブロビット回帰分析.html#パッケージdesctoolsの利用" class="anchor-section" aria-label="Anchor link to header"></a></h3>
+<pre><code>DescTools::PseudoR2()
+- usage: PseudoR2(x, which = NULL)
+  - which: 計算したい疑似R2. 
+    選択肢: &quot;McFadden&quot;(デフォルト), &quot;McFaddenAdj&quot;, &quot;CoxSnell&quot;, &quot;Nagelkerke&quot;, &quot;AldrichNelson&quot;, &quot;VeallZimmermann&quot;, &quot;Efron&quot;, &quot;McKelveyZavoina&quot;, &quot;Tjur&quot;, &quot;all&quot;.</code></pre>
+<div class="sourceCode" id="cb235"><pre class="sourceCode r"><code class="sourceCode r"><span id="cb235-1"><a href="ロジットブロビット回帰分析.html#cb235-1" tabindex="-1"></a><span class="co"># 疑似R2の計算</span></span>
+<span id="cb235-2"><a href="ロジットブロビット回帰分析.html#cb235-2" tabindex="-1"></a><span class="fu">library</span>(DescTools)</span>
+<span id="cb235-3"><a href="ロジットブロビット回帰分析.html#cb235-3" tabindex="-1"></a><span class="fu">PseudoR2</span>(res_glm) <span class="co"># McFadden (デフォルト)</span></span>
+<span id="cb235-4"><a href="ロジットブロビット回帰分析.html#cb235-4" tabindex="-1"></a><span class="co">#&gt;  McFadden </span></span>
+<span id="cb235-5"><a href="ロジットブロビット回帰分析.html#cb235-5" tabindex="-1"></a><span class="co">#&gt; 0.5430468</span></span>
+<span id="cb235-6"><a href="ロジットブロビット回帰分析.html#cb235-6" tabindex="-1"></a><span class="fu">PseudoR2</span>(res_glm, <span class="at">which =</span> <span class="st">&quot;CoxSnell&quot;</span>) <span class="co"># Cox-Snell</span></span>
+<span id="cb235-7"><a href="ロジットブロビット回帰分析.html#cb235-7" tabindex="-1"></a><span class="co">#&gt;  CoxSnell </span></span>
+<span id="cb235-8"><a href="ロジットブロビット回帰分析.html#cb235-8" tabindex="-1"></a><span class="co">#&gt; 0.4277647</span></span>
+<span id="cb235-9"><a href="ロジットブロビット回帰分析.html#cb235-9" tabindex="-1"></a><span class="fu">PseudoR2</span>(res_glm, <span class="at">which =</span> <span class="st">&quot;Nagelkerke&quot;</span>) <span class="co"># Nagelkerke</span></span>
+<span id="cb235-10"><a href="ロジットブロビット回帰分析.html#cb235-10" tabindex="-1"></a><span class="co">#&gt; Nagelkerke </span></span>
+<span id="cb235-11"><a href="ロジットブロビット回帰分析.html#cb235-11" tabindex="-1"></a><span class="co">#&gt;  0.6660436</span></span>
+<span id="cb235-12"><a href="ロジットブロビット回帰分析.html#cb235-12" tabindex="-1"></a><span class="fu">PseudoR2</span>(res_glm, <span class="at">which =</span> <span class="st">&quot;all&quot;</span>)</span>
+<span id="cb235-13"><a href="ロジットブロビット回帰分析.html#cb235-13" tabindex="-1"></a><span class="co">#&gt;        McFadden     McFaddenAdj        CoxSnell      Nagelkerke   AldrichNelson </span></span>
+<span id="cb235-14"><a href="ロジットブロビット回帰分析.html#cb235-14" tabindex="-1"></a><span class="co">#&gt;       0.5430468       0.4652192       0.4277647       0.6660436       0.3582359 </span></span>
+<span id="cb235-15"><a href="ロジットブロビット回帰分析.html#cb235-15" tabindex="-1"></a><span class="co">#&gt; VeallZimmermann           Efron McKelveyZavoina            Tjur             AIC </span></span>
+<span id="cb235-16"><a href="ロジットブロビット回帰分析.html#cb235-16" tabindex="-1"></a><span class="co">#&gt;       0.7067438       0.5736644       0.8515845       0.5589555      54.9708332 </span></span>
+<span id="cb235-17"><a href="ロジットブロビット回帰分析.html#cb235-17" tabindex="-1"></a><span class="co">#&gt;             BIC          logLik         logLik0              G2 </span></span>
+<span id="cb235-18"><a href="ロジットブロビット回帰分析.html#cb235-18" tabindex="-1"></a><span class="co">#&gt;      65.3915139     -23.4854166     -51.3956671      55.8205010</span></span></code></pre></div>
+<p>疑似<span class="math inline">\(R^2\)</span>は, 方法により相当異なることが確認される.</p>
+</div>
+<div id="パッケージpsclの利用" class="section level3 unnumbered hasAnchor">
+<h3>パッケージ<code>pscl</code>の利用<a href="ロジットブロビット回帰分析.html#パッケージpsclの利用" class="anchor-section" aria-label="Anchor link to header"></a></h3>
+<pre><code>pscl::pR2()
+- 以下を出力:
+- llh: The log-likelihood from the fitted model
+- llhNull: The log-likelihood from the intercept-only restricted model
+- G2: Minus two times the difference in the log-likelihoods
+- McFadden: McFadden&#39;s pseudo r-squared
+- r2ML: Maximum likelihood pseudo r-squared
+- r2CU: Cragg and Uhler&#39;s pseudo r-squared</code></pre>
+<!--
+GPT-4:
+pR2関数: psclパッケージに含まれるpR2関数は、ロジスティック回帰モデルに対する疑似R^2の計算をサポートしています。McFaddenのR^2、Cox and SnellのR^2、NagelkerkeのR^2など、複数の疑似R^2の指標を提供します。
+とあるので, r2ML → Cox-Snell, r2CU → Nagelkerke,  に対応していると思われる
+-->
+<div class="sourceCode" id="cb237"><pre class="sourceCode r"><code class="sourceCode r"><span id="cb237-1"><a href="ロジットブロビット回帰分析.html#cb237-1" tabindex="-1"></a><span class="co"># install.packages(&quot;pscl&quot;)</span></span>
+<span id="cb237-2"><a href="ロジットブロビット回帰分析.html#cb237-2" tabindex="-1"></a><span class="fu">library</span>(pscl)</span>
+<span id="cb237-3"><a href="ロジットブロビット回帰分析.html#cb237-3" tabindex="-1"></a></span>
+<span id="cb237-4"><a href="ロジットブロビット回帰分析.html#cb237-4" tabindex="-1"></a><span class="co"># 疑似R2の計算</span></span>
+<span id="cb237-5"><a href="ロジットブロビット回帰分析.html#cb237-5" tabindex="-1"></a>pscl<span class="sc">::</span><span class="fu">pR2</span>(res_glm)</span>
+<span id="cb237-6"><a href="ロジットブロビット回帰分析.html#cb237-6" tabindex="-1"></a><span class="co">#&gt; fitting null model for pseudo-r2</span></span>
+<span id="cb237-7"><a href="ロジットブロビット回帰分析.html#cb237-7" tabindex="-1"></a><span class="co">#&gt;         llh     llhNull          G2    McFadden        r2ML        r2CU </span></span>
+<span id="cb237-8"><a href="ロジットブロビット回帰分析.html#cb237-8" tabindex="-1"></a><span class="co">#&gt; -23.4854166 -51.3956671  55.8205010   0.5430468   0.4277647   0.6660436</span></span></code></pre></div>
+</div>
+<div id="パッケージperformanceの利用" class="section level3 unnumbered hasAnchor">
+<h3>パッケージ<code>performance</code>の利用<a href="ロジットブロビット回帰分析.html#パッケージperformanceの利用" class="anchor-section" aria-label="Anchor link to header"></a></h3>
+<pre><code>performance::r2()
+- モデルに応じて適切な疑似R2を選んで出力:
+  - Logistic models: Tjur&#39;s R2
+  - General linear models: Nagelkerke&#39;s R2
+  - Multinomial Logit: McFadden&#39;s R2
+  - Models with zero-inflation: R2 for zero-inflated models
+  - Mixed models: Nakagawa&#39;s R2
+  - Bayesian models: R2 bayes</code></pre>
+<div class="sourceCode" id="cb239"><pre class="sourceCode r"><code class="sourceCode r"><span id="cb239-1"><a href="ロジットブロビット回帰分析.html#cb239-1" tabindex="-1"></a><span class="co"># install.packages(&quot;performance&quot;)</span></span>
+<span id="cb239-2"><a href="ロジットブロビット回帰分析.html#cb239-2" tabindex="-1"></a><span class="fu">library</span>(performance)</span>
+<span id="cb239-3"><a href="ロジットブロビット回帰分析.html#cb239-3" tabindex="-1"></a></span>
+<span id="cb239-4"><a href="ロジットブロビット回帰分析.html#cb239-4" tabindex="-1"></a><span class="co"># 疑似R2の計算</span></span>
+<span id="cb239-5"><a href="ロジットブロビット回帰分析.html#cb239-5" tabindex="-1"></a>performance<span class="sc">::</span><span class="fu">r2</span>(res_glm)</span>
+<span id="cb239-6"><a href="ロジットブロビット回帰分析.html#cb239-6" tabindex="-1"></a><span class="co">#&gt; # R2 for Logistic Regression</span></span>
+<span id="cb239-7"><a href="ロジットブロビット回帰分析.html#cb239-7" tabindex="-1"></a><span class="co">#&gt;   Tjur&#39;s R2: 0.559</span></span></code></pre></div>
+
+</div>
+</div>
+</div>
+            </section>
+
+          </div>
+        </div>
+      </div>
+<a href="線形回帰分析.html" class="navigation navigation-prev " aria-label="Previous page"><i class="fa fa-angle-left"></i></a>
+<a href="一般化加法モデル-gam.html" class="navigation navigation-next " aria-label="Next page"><i class="fa fa-angle-right"></i></a>
+    </div>
+  </div>
+<script src="libs/gitbook-2.6.7/js/app.min.js"></script>
+<script src="libs/gitbook-2.6.7/js/clipboard.min.js"></script>
+<script src="libs/gitbook-2.6.7/js/plugin-search.js"></script>
+<script src="libs/gitbook-2.6.7/js/plugin-sharing.js"></script>
+<script src="libs/gitbook-2.6.7/js/plugin-fontsettings.js"></script>
+<script src="libs/gitbook-2.6.7/js/plugin-bookdown.js"></script>
+<script src="libs/gitbook-2.6.7/js/jquery.highlight.js"></script>
+<script src="libs/gitbook-2.6.7/js/plugin-clipboard.js"></script>
+<script>
+gitbook.require(["gitbook"], function(gitbook) {
+gitbook.start({
+"sharing": {
+"github": false,
+"facebook": true,
+"twitter": true,
+"linkedin": false,
+"weibo": false,
+"instapaper": false,
+"vk": false,
+"whatsapp": false,
+"all": ["facebook", "twitter", "linkedin", "weibo", "instapaper"]
+},
+"fontsettings": {
+"theme": "white",
+"family": "sans",
+"size": 2
+},
+"edit": {
+"link": null,
+"text": null
+},
+"history": {
+"link": null,
+"text": null
+},
+"view": {
+"link": null,
+"text": null
+},
+"download": null,
+"search": {
+"engine": "fuse",
+"options": null
+},
+"toc": {
+"collapse": "subsection"
+}
+});
+});
+</script>
+
+<!-- dynamically load mathjax for compatibility with self-contained -->
+<script>
+  (function () {
+    var script = document.createElement("script");
+    script.type = "text/javascript";
+    var src = "true";
+    if (src === "" || src === "true") src = "https://cdnjs.cloudflare.com/ajax/libs/mathjax/2.7.9/latest.js?config=TeX-MML-AM_CHTML";
+    if (location.protocol !== "file:")
+      if (/^https?:/.test(src))
+        src = src.replace(/^https?:/, '');
+    script.src = src;
+    document.getElementsByTagName("head")[0].appendChild(script);
+  })();
+</script>
+</body>
+
+</html>

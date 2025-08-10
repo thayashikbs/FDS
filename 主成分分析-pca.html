@@ -1,0 +1,880 @@
+<!DOCTYPE html>
+<html lang="" xml:lang="">
+<head>
+
+  <meta charset="utf-8" />
+  <meta http-equiv="X-UA-Compatible" content="IE=edge" />
+  <title>11 主成分分析 (PCA) | 金融データサイエンス</title>
+  <meta name="description" content="11 主成分分析 (PCA) | 金融データサイエンス" />
+  <meta name="generator" content="bookdown 0.40 and GitBook 2.6.7" />
+
+  <meta property="og:title" content="11 主成分分析 (PCA) | 金融データサイエンス" />
+  <meta property="og:type" content="book" />
+  
+  
+  
+
+  <meta name="twitter:card" content="summary" />
+  <meta name="twitter:title" content="11 主成分分析 (PCA) | 金融データサイエンス" />
+  
+  
+  
+
+<meta name="author" content="林 高樹" />
+
+
+
+  <meta name="viewport" content="width=device-width, initial-scale=1" />
+  <meta name="apple-mobile-web-app-capable" content="yes" />
+  <meta name="apple-mobile-web-app-status-bar-style" content="black" />
+  
+  
+<link rel="prev" href="サポートベクターマシン-svm.html"/>
+<link rel="next" href="探索的因子分析.html"/>
+<script src="libs/jquery-3.6.0/jquery-3.6.0.min.js"></script>
+<script src="https://cdn.jsdelivr.net/npm/fuse.js@6.4.6/dist/fuse.min.js"></script>
+<link href="libs/gitbook-2.6.7/css/style.css" rel="stylesheet" />
+<link href="libs/gitbook-2.6.7/css/plugin-table.css" rel="stylesheet" />
+<link href="libs/gitbook-2.6.7/css/plugin-bookdown.css" rel="stylesheet" />
+<link href="libs/gitbook-2.6.7/css/plugin-highlight.css" rel="stylesheet" />
+<link href="libs/gitbook-2.6.7/css/plugin-search.css" rel="stylesheet" />
+<link href="libs/gitbook-2.6.7/css/plugin-fontsettings.css" rel="stylesheet" />
+<link href="libs/gitbook-2.6.7/css/plugin-clipboard.css" rel="stylesheet" />
+
+
+
+
+
+
+
+
+<link href="libs/anchor-sections-1.1.0/anchor-sections.css" rel="stylesheet" />
+<link href="libs/anchor-sections-1.1.0/anchor-sections-hash.css" rel="stylesheet" />
+<script src="libs/anchor-sections-1.1.0/anchor-sections.js"></script>
+
+
+<style type="text/css">
+pre > code.sourceCode { white-space: pre; position: relative; }
+pre > code.sourceCode > span { line-height: 1.25; }
+pre > code.sourceCode > span:empty { height: 1.2em; }
+.sourceCode { overflow: visible; }
+code.sourceCode > span { color: inherit; text-decoration: inherit; }
+pre.sourceCode { margin: 0; }
+@media screen {
+div.sourceCode { overflow: auto; }
+}
+@media print {
+pre > code.sourceCode { white-space: pre-wrap; }
+pre > code.sourceCode > span { display: inline-block; text-indent: -5em; padding-left: 5em; }
+}
+pre.numberSource code
+  { counter-reset: source-line 0; }
+pre.numberSource code > span
+  { position: relative; left: -4em; counter-increment: source-line; }
+pre.numberSource code > span > a:first-child::before
+  { content: counter(source-line);
+    position: relative; left: -1em; text-align: right; vertical-align: baseline;
+    border: none; display: inline-block;
+    -webkit-touch-callout: none; -webkit-user-select: none;
+    -khtml-user-select: none; -moz-user-select: none;
+    -ms-user-select: none; user-select: none;
+    padding: 0 4px; width: 4em;
+    color: #aaaaaa;
+  }
+pre.numberSource { margin-left: 3em; border-left: 1px solid #aaaaaa;  padding-left: 4px; }
+div.sourceCode
+  {   }
+@media screen {
+pre > code.sourceCode > span > a:first-child::before { text-decoration: underline; }
+}
+code span.al { color: #ff0000; font-weight: bold; } /* Alert */
+code span.an { color: #60a0b0; font-weight: bold; font-style: italic; } /* Annotation */
+code span.at { color: #7d9029; } /* Attribute */
+code span.bn { color: #40a070; } /* BaseN */
+code span.bu { color: #008000; } /* BuiltIn */
+code span.cf { color: #007020; font-weight: bold; } /* ControlFlow */
+code span.ch { color: #4070a0; } /* Char */
+code span.cn { color: #880000; } /* Constant */
+code span.co { color: #60a0b0; font-style: italic; } /* Comment */
+code span.cv { color: #60a0b0; font-weight: bold; font-style: italic; } /* CommentVar */
+code span.do { color: #ba2121; font-style: italic; } /* Documentation */
+code span.dt { color: #902000; } /* DataType */
+code span.dv { color: #40a070; } /* DecVal */
+code span.er { color: #ff0000; font-weight: bold; } /* Error */
+code span.ex { } /* Extension */
+code span.fl { color: #40a070; } /* Float */
+code span.fu { color: #06287e; } /* Function */
+code span.im { color: #008000; font-weight: bold; } /* Import */
+code span.in { color: #60a0b0; font-weight: bold; font-style: italic; } /* Information */
+code span.kw { color: #007020; font-weight: bold; } /* Keyword */
+code span.op { color: #666666; } /* Operator */
+code span.ot { color: #007020; } /* Other */
+code span.pp { color: #bc7a00; } /* Preprocessor */
+code span.sc { color: #4070a0; } /* SpecialChar */
+code span.ss { color: #bb6688; } /* SpecialString */
+code span.st { color: #4070a0; } /* String */
+code span.va { color: #19177c; } /* Variable */
+code span.vs { color: #4070a0; } /* VerbatimString */
+code span.wa { color: #60a0b0; font-weight: bold; font-style: italic; } /* Warning */
+</style>
+
+<style type="text/css">
+  
+  div.hanging-indent{margin-left: 1.5em; text-indent: -1.5em;}
+</style>
+
+</head>
+
+<body>
+
+
+
+  <div class="book without-animation with-summary font-size-2 font-family-1" data-basepath=".">
+
+    <div class="book-summary">
+      <nav role="navigation">
+
+<ul class="summary">
+<li class="chapter" data-level="1" data-path="index.html"><a href="index.html"><i class="fa fa-check"></i><b>1</b> はじめに</a>
+<ul>
+<li class="chapter" data-level="1.1" data-path="index.html"><a href="index.html#コースの目的"><i class="fa fa-check"></i><b>1.1</b> コースの目的</a></li>
+<li class="chapter" data-level="1.2" data-path="index.html"><a href="index.html#統計学統計的手法の学習について"><i class="fa fa-check"></i><b>1.2</b> 統計学/統計的手法の学習について</a>
+<ul>
+<li class="chapter" data-level="" data-path="index.html"><a href="index.html#学習の目標"><i class="fa fa-check"></i>学習の目標</a></li>
+<li class="chapter" data-level="" data-path="index.html"><a href="index.html#統計学統計的手法の学習方法"><i class="fa fa-check"></i>統計学/統計的手法の学習方法</a></li>
+<li class="chapter" data-level="" data-path="index.html"><a href="index.html#統計学統計的手法の学習ステップ"><i class="fa fa-check"></i>統計学/統計的手法の学習ステップ</a></li>
+</ul></li>
+<li class="chapter" data-level="1.3" data-path="index.html"><a href="index.html#ビジネス応用における統計学の最近の趨勢"><i class="fa fa-check"></i><b>1.3</b> ビジネス応用における統計学の最近の趨勢</a></li>
+<li class="chapter" data-level="1.4" data-path="index.html"><a href="index.html#本書内の記載の注意点"><i class="fa fa-check"></i><b>1.4</b> 本書内の記載の注意点</a></li>
+</ul></li>
+<li class="chapter" data-level="2" data-path="r言語の基本.html"><a href="r言語の基本.html"><i class="fa fa-check"></i><b>2</b> R言語の基本</a>
+<ul>
+<li class="chapter" data-level="2.1" data-path="r言語の基本.html"><a href="r言語の基本.html#rの基本プログラミング"><i class="fa fa-check"></i><b>2.1</b> Rの基本プログラミング</a>
+<ul>
+<li class="chapter" data-level="2.1.1" data-path="r言語の基本.html"><a href="r言語の基本.html#基本操作"><i class="fa fa-check"></i><b>2.1.1</b> 基本操作</a></li>
+<li class="chapter" data-level="2.1.2" data-path="r言語の基本.html"><a href="r言語の基本.html#基本構文"><i class="fa fa-check"></i><b>2.1.2</b> 基本構文</a></li>
+<li class="chapter" data-level="2.1.3" data-path="r言語の基本.html"><a href="r言語の基本.html#自作関数"><i class="fa fa-check"></i><b>2.1.3</b> 自作関数</a></li>
+<li class="chapter" data-level="2.1.4" data-path="r言語の基本.html"><a href="r言語の基本.html#パッケージのインストール-読み込み"><i class="fa fa-check"></i><b>2.1.4</b> パッケージのインストール &amp; 読み込み</a></li>
+<li class="chapter" data-level="2.1.5" data-path="r言語の基本.html"><a href="r言語の基本.html#ヘルプ"><i class="fa fa-check"></i><b>2.1.5</b> ヘルプ</a></li>
+</ul></li>
+<li class="chapter" data-level="2.2" data-path="r言語の基本.html"><a href="r言語の基本.html#データの型や構造"><i class="fa fa-check"></i><b>2.2</b> データの型や構造</a>
+<ul>
+<li class="chapter" data-level="2.2.1" data-path="r言語の基本.html"><a href="r言語の基本.html#データの値の種類-データ型"><i class="fa fa-check"></i><b>2.2.1</b> データの値の種類 (“データ型”)</a></li>
+<li class="chapter" data-level="2.2.2" data-path="r言語の基本.html"><a href="r言語の基本.html#データの配列の仕方-データ構造"><i class="fa fa-check"></i><b>2.2.2</b> データの配列の仕方 (“データ構造”)</a></li>
+<li class="chapter" data-level="2.2.3" data-path="r言語の基本.html"><a href="r言語の基本.html#ベクトル"><i class="fa fa-check"></i><b>2.2.3</b> ベクトル</a></li>
+<li class="chapter" data-level="2.2.4" data-path="r言語の基本.html"><a href="r言語の基本.html#行列"><i class="fa fa-check"></i><b>2.2.4</b> 行列</a></li>
+<li class="chapter" data-level="2.2.5" data-path="r言語の基本.html"><a href="r言語の基本.html#リスト"><i class="fa fa-check"></i><b>2.2.5</b> リスト</a></li>
+<li class="chapter" data-level="2.2.6" data-path="r言語の基本.html"><a href="r言語の基本.html#データフレーム"><i class="fa fa-check"></i><b>2.2.6</b> データフレーム</a></li>
+</ul></li>
+<li class="chapter" data-level="2.3" data-path="r言語の基本.html"><a href="r言語の基本.html#データの操作演算"><i class="fa fa-check"></i><b>2.3</b> データの操作・演算</a>
+<ul>
+<li class="chapter" data-level="2.3.1" data-path="r言語の基本.html"><a href="r言語の基本.html#ベクトルの結合-ソート"><i class="fa fa-check"></i><b>2.3.1</b> ベクトルの結合, ソート</a></li>
+<li class="chapter" data-level="2.3.2" data-path="r言語の基本.html"><a href="r言語の基本.html#二項演算"><i class="fa fa-check"></i><b>2.3.2</b> 二項演算</a></li>
+<li class="chapter" data-level="2.3.3" data-path="r言語の基本.html"><a href="r言語の基本.html#論理演算"><i class="fa fa-check"></i><b>2.3.3</b> 論理演算</a></li>
+<li class="chapter" data-level="2.3.4" data-path="r言語の基本.html"><a href="r言語の基本.html#条件式"><i class="fa fa-check"></i><b>2.3.4</b> 条件式</a></li>
+<li class="chapter" data-level="2.3.5" data-path="r言語の基本.html"><a href="r言語の基本.html#行列演算"><i class="fa fa-check"></i><b>2.3.5</b> 行列演算</a></li>
+</ul></li>
+<li class="chapter" data-level="2.4" data-path="r言語の基本.html"><a href="r言語の基本.html#r関数"><i class="fa fa-check"></i><b>2.4</b> R関数</a>
+<ul>
+<li class="chapter" data-level="2.4.1" data-path="r言語の基本.html"><a href="r言語の基本.html#数学基本関数"><i class="fa fa-check"></i><b>2.4.1</b> 数学基本関数</a></li>
+<li class="chapter" data-level="2.4.2" data-path="r言語の基本.html"><a href="r言語の基本.html#基本統計量の計算"><i class="fa fa-check"></i><b>2.4.2</b> 基本統計量の計算</a></li>
+<li class="chapter" data-level="2.4.3" data-path="r言語の基本.html"><a href="r言語の基本.html#確率分布"><i class="fa fa-check"></i><b>2.4.3</b> 確率分布</a></li>
+<li class="chapter" data-level="2.4.4" data-path="r言語の基本.html"><a href="r言語の基本.html#その他便利な関数"><i class="fa fa-check"></i><b>2.4.4</b> その他便利な関数</a></li>
+</ul></li>
+<li class="chapter" data-level="2.5" data-path="r言語の基本.html"><a href="r言語の基本.html#データの可視化"><i class="fa fa-check"></i><b>2.5</b> データの可視化</a></li>
+<li class="chapter" data-level="2.6" data-path="r言語の基本.html"><a href="r言語の基本.html#ファイル入出力"><i class="fa fa-check"></i><b>2.6</b> ファイル入出力</a>
+<ul>
+<li class="chapter" data-level="2.6.1" data-path="r言語の基本.html"><a href="r言語の基本.html#テキストファイル読み込み"><i class="fa fa-check"></i><b>2.6.1</b> テキストファイル読み込み</a></li>
+<li class="chapter" data-level="2.6.2" data-path="r言語の基本.html"><a href="r言語の基本.html#テキストファイル書き出し"><i class="fa fa-check"></i><b>2.6.2</b> テキストファイル書き出し</a></li>
+</ul></li>
+<li class="chapter" data-level="2.7" data-path="r言語の基本.html"><a href="r言語の基本.html#パッケージtidyverse"><i class="fa fa-check"></i><b>2.7</b> パッケージ<code>tidyverse</code></a>
+<ul>
+<li class="chapter" data-level="2.7.1" data-path="r言語の基本.html"><a href="r言語の基本.html#q-rの初心者はtidyverseから勉強することは可能か"><i class="fa fa-check"></i><b>2.7.1</b> Q: Rの初心者は<code>tidyverse</code>から勉強することは可能か?</a></li>
+<li class="chapter" data-level="2.7.2" data-path="r言語の基本.html"><a href="r言語の基本.html#tidyverseの基本"><i class="fa fa-check"></i><b>2.7.2</b> <code>tidyverse</code>の基本</a></li>
+</ul></li>
+</ul></li>
+<li class="chapter" data-level="3" data-path="線形回帰分析.html"><a href="線形回帰分析.html"><i class="fa fa-check"></i><b>3</b> 線形回帰分析</a>
+<ul>
+<li class="chapter" data-level="3.1" data-path="線形回帰分析.html"><a href="線形回帰分析.html#重回帰分析の基本操作"><i class="fa fa-check"></i><b>3.1</b> 重回帰分析の基本操作</a>
+<ul>
+<li class="chapter" data-level="" data-path="線形回帰分析.html"><a href="線形回帰分析.html#データ1-1ルーム賃貸マンション"><i class="fa fa-check"></i>データ1: 1ルーム賃貸マンション</a></li>
+</ul></li>
+<li class="chapter" data-level="3.2" data-path="線形回帰分析.html"><a href="線形回帰分析.html#変数の選択"><i class="fa fa-check"></i><b>3.2</b> 変数の選択</a>
+<ul>
+<li class="chapter" data-level="" data-path="線形回帰分析.html"><a href="線形回帰分析.html#データ2-ボストン市内住宅物件価格データ"><i class="fa fa-check"></i>データ2: ボストン市内住宅物件価格データ</a></li>
+</ul></li>
+<li class="chapter" data-level="3.3" data-path="線形回帰分析.html"><a href="線形回帰分析.html#説明変数に質的変数を含む回帰"><i class="fa fa-check"></i><b>3.3</b> 説明変数に質的変数を含む回帰</a>
+<ul>
+<li class="chapter" data-level="" data-path="線形回帰分析.html"><a href="線形回帰分析.html#データセット3-高速道路事故データ"><i class="fa fa-check"></i>データセット#3: 高速道路事故データ</a></li>
+</ul></li>
+<li class="chapter" data-level="3.4" data-path="線形回帰分析.html"><a href="線形回帰分析.html#説明変数に質的変数を含む回帰-2"><i class="fa fa-check"></i><b>3.4</b> 説明変数に質的変数を含む回帰 (2)</a>
+<ul>
+<li class="chapter" data-level="" data-path="線形回帰分析.html"><a href="線形回帰分析.html#データセット5-収入データ-仮想"><i class="fa fa-check"></i>データセット#5: 収入データ (仮想)</a></li>
+</ul></li>
+<li class="chapter" data-level="3.5" data-path="線形回帰分析.html"><a href="線形回帰分析.html#多項式回帰"><i class="fa fa-check"></i><b>3.5</b> 多項式回帰</a>
+<ul>
+<li class="chapter" data-level="" data-path="線形回帰分析.html"><a href="線形回帰分析.html#データセット6-wage"><i class="fa fa-check"></i>データセット#6: <code>Wage</code></a></li>
+</ul></li>
+<li class="chapter" data-level="3.6" data-path="線形回帰分析.html"><a href="線形回帰分析.html#関数factorについて"><i class="fa fa-check"></i><b>3.6</b> 関数<code>factor()</code>について</a>
+<ul>
+<li class="chapter" data-level="" data-path="線形回帰分析.html"><a href="線形回帰分析.html#rでのfactor関数の使い方"><i class="fa fa-check"></i>Rでのfactor関数の使い方</a></li>
+</ul></li>
+</ul></li>
+<li class="chapter" data-level="4" data-path="ロジットブロビット回帰分析.html"><a href="ロジットブロビット回帰分析.html"><i class="fa fa-check"></i><b>4</b> ロジット/ブロビット回帰分析</a>
+<ul>
+<li class="chapter" data-level="4.1" data-path="ロジットブロビット回帰分析.html"><a href="ロジットブロビット回帰分析.html#ロジット回帰分析の基本操作"><i class="fa fa-check"></i><b>4.1</b> ロジット回帰分析の基本操作</a>
+<ul>
+<li class="chapter" data-level="" data-path="ロジットブロビット回帰分析.html"><a href="ロジットブロビット回帰分析.html#ロジットモデル-シミュレーションデータ"><i class="fa fa-check"></i>ロジットモデル: シミュレーションデータ</a></li>
+</ul></li>
+<li class="chapter" data-level="4.2" data-path="ロジットブロビット回帰分析.html"><a href="ロジットブロビット回帰分析.html#データ分析例"><i class="fa fa-check"></i><b>4.2</b> データ分析例</a>
+<ul>
+<li class="chapter" data-level="" data-path="ロジットブロビット回帰分析.html"><a href="ロジットブロビット回帰分析.html#データセット-1-企業パフォーマンスデータ-仮想"><i class="fa fa-check"></i>データセット (1): 企業パフォーマンス・データ (仮想)</a></li>
+<li class="chapter" data-level="" data-path="ロジットブロビット回帰分析.html"><a href="ロジットブロビット回帰分析.html#データセット-2-個人ローンデフォルトデータ-仮想"><i class="fa fa-check"></i>データセット (2): 個人ローン・デフォルト・データ (仮想)</a></li>
+</ul></li>
+<li class="chapter" data-level="4.3" data-path="ロジットブロビット回帰分析.html"><a href="ロジットブロビット回帰分析.html#疑似r2の計算"><i class="fa fa-check"></i><b>4.3</b> 疑似R2の計算</a>
+<ul>
+<li class="chapter" data-level="" data-path="ロジットブロビット回帰分析.html"><a href="ロジットブロビット回帰分析.html#パッケージdesctoolsの利用"><i class="fa fa-check"></i>パッケージ<code>DescTools</code>の利用</a></li>
+<li class="chapter" data-level="" data-path="ロジットブロビット回帰分析.html"><a href="ロジットブロビット回帰分析.html#パッケージpsclの利用"><i class="fa fa-check"></i>パッケージ<code>pscl</code>の利用</a></li>
+<li class="chapter" data-level="" data-path="ロジットブロビット回帰分析.html"><a href="ロジットブロビット回帰分析.html#パッケージperformanceの利用"><i class="fa fa-check"></i>パッケージ<code>performance</code>の利用</a></li>
+</ul></li>
+</ul></li>
+<li class="chapter" data-level="5" data-path="一般化加法モデル-gam.html"><a href="一般化加法モデル-gam.html"><i class="fa fa-check"></i><b>5</b> 一般化加法モデル (GAM)</a>
+<ul>
+<li class="chapter" data-level="5.1" data-path="一般化加法モデル-gam.html"><a href="一般化加法モデル-gam.html#パッケージgamの利用"><i class="fa fa-check"></i><b>5.1</b> パッケージ<code>gam</code>の利用</a>
+<ul>
+<li class="chapter" data-level="" data-path="一般化加法モデル-gam.html"><a href="一般化加法モデル-gam.html#多項式回帰-1"><i class="fa fa-check"></i>多項式回帰</a></li>
+<li class="chapter" data-level="" data-path="一般化加法モデル-gam.html"><a href="一般化加法モデル-gam.html#スプライン適合"><i class="fa fa-check"></i>スプライン適合</a></li>
+<li class="chapter" data-level="" data-path="一般化加法モデル-gam.html"><a href="一般化加法モデル-gam.html#gam"><i class="fa fa-check"></i>GAM</a></li>
+</ul></li>
+<li class="chapter" data-level="5.2" data-path="一般化加法モデル-gam.html"><a href="一般化加法モデル-gam.html#パッケージmgcvの利用"><i class="fa fa-check"></i><b>5.2</b> パッケージ<code>mgcv</code>の利用</a></li>
+<li class="chapter" data-level="5.3" data-path="一般化加法モデル-gam.html"><a href="一般化加法モデル-gam.html#パッケージprophetの利用"><i class="fa fa-check"></i><b>5.3</b> パッケージ<code>prophet</code>の利用</a></li>
+<li class="chapter" data-level="5.4" data-path="一般化加法モデル-gam.html"><a href="一般化加法モデル-gam.html#追加分析boston-housingデータセットの変数間の関係性"><i class="fa fa-check"></i><b>5.4</b> 【追加分析】Boston housingデータセットの変数間の関係性</a></li>
+</ul></li>
+<li class="chapter" data-level="6" data-path="正則化回帰-lasso-ridge回帰-elastic-net.html"><a href="正則化回帰-lasso-ridge回帰-elastic-net.html"><i class="fa fa-check"></i><b>6</b> 正則化回帰 (lasso, ridge回帰, elastic net)</a>
+<ul>
+<li class="chapter" data-level="6.1" data-path="正則化回帰-lasso-ridge回帰-elastic-net.html"><a href="正則化回帰-lasso-ridge回帰-elastic-net.html#検証用セット法による回帰モデルの予測精度評価"><i class="fa fa-check"></i><b>6.1</b> 検証用セット法による回帰モデルの予測精度評価</a>
+<ul>
+<li class="chapter" data-level="" data-path="正則化回帰-lasso-ridge回帰-elastic-net.html"><a href="正則化回帰-lasso-ridge回帰-elastic-net.html#データセット1-ワイン品質データ"><i class="fa fa-check"></i>データセット1: ワイン品質データ</a></li>
+</ul></li>
+<li class="chapter" data-level="6.2" data-path="正則化回帰-lasso-ridge回帰-elastic-net.html"><a href="正則化回帰-lasso-ridge回帰-elastic-net.html#lasso"><i class="fa fa-check"></i><b>6.2</b> lasso</a>
+<ul>
+<li class="chapter" data-level="" data-path="正則化回帰-lasso-ridge回帰-elastic-net.html"><a href="正則化回帰-lasso-ridge回帰-elastic-net.html#関数glmnetの基本操作"><i class="fa fa-check"></i>関数<code>glmnet()</code>の基本操作</a></li>
+<li class="chapter" data-level="" data-path="正則化回帰-lasso-ridge回帰-elastic-net.html"><a href="正則化回帰-lasso-ridge回帰-elastic-net.html#lambdaのグリッド指定によるglmnetの一括実行"><i class="fa fa-check"></i><code>lambda</code>のグリッド指定による<code>glmnet</code>の一括実行</a></li>
+<li class="chapter" data-level="" data-path="正則化回帰-lasso-ridge回帰-elastic-net.html"><a href="正則化回帰-lasso-ridge回帰-elastic-net.html#交差検証によるパラメータチューニング"><i class="fa fa-check"></i>交差検証によるパラメータ・チューニング</a></li>
+</ul></li>
+<li class="chapter" data-level="6.3" data-path="正則化回帰-lasso-ridge回帰-elastic-net.html"><a href="正則化回帰-lasso-ridge回帰-elastic-net.html#ridge回帰"><i class="fa fa-check"></i><b>6.3</b> ridge回帰</a></li>
+<li class="chapter" data-level="6.4" data-path="正則化回帰-lasso-ridge回帰-elastic-net.html"><a href="正則化回帰-lasso-ridge回帰-elastic-net.html#一般化線形モデル-glm-正則化"><i class="fa fa-check"></i><b>6.4</b> 一般化線形モデル (GLM) + 正則化</a>
+<ul>
+<li class="chapter" data-level="" data-path="正則化回帰-lasso-ridge回帰-elastic-net.html"><a href="正則化回帰-lasso-ridge回帰-elastic-net.html#データセット2-german-creditデータ"><i class="fa fa-check"></i>データセット2: german creditデータ</a></li>
+</ul></li>
+<li class="chapter" data-level="6.5" data-path="正則化回帰-lasso-ridge回帰-elastic-net.html"><a href="正則化回帰-lasso-ridge回帰-elastic-net.html#補足-glmに対する変数選択の代替的方法"><i class="fa fa-check"></i><b>6.5</b> 補足: GLMに対する変数選択の代替的方法</a></li>
+</ul></li>
+<li class="chapter" data-level="7" data-path="判別分析.html"><a href="判別分析.html"><i class="fa fa-check"></i><b>7</b> 判別分析</a>
+<ul>
+<li class="chapter" data-level="7.1" data-path="判別分析.html"><a href="判別分析.html#線形判別-2次判別-パッケージmassの利用"><i class="fa fa-check"></i><b>7.1</b> 線形判別 &amp; 2次判別: パッケージMASSの利用</a>
+<ul>
+<li class="chapter" data-level="" data-path="判別分析.html"><a href="判別分析.html#データセット1-米国sp500日次リターンデータ"><i class="fa fa-check"></i>データセット#1: 米国S&amp;P500日次リターンデータ</a></li>
+<li class="chapter" data-level="" data-path="判別分析.html"><a href="判別分析.html#線形判別-lda"><i class="fa fa-check"></i>線形判別 (LDA)</a></li>
+<li class="chapter" data-level="" data-path="判別分析.html"><a href="判別分析.html#次判別-qda"><i class="fa fa-check"></i>2次判別 (QDA)</a></li>
+</ul></li>
+<li class="chapter" data-level="7.2" data-path="判別分析.html"><a href="判別分析.html#knn法-パッケージclassの利用"><i class="fa fa-check"></i><b>7.2</b> kNN法: パッケージ<strong>class</strong>の利用</a></li>
+<li class="chapter" data-level="7.3" data-path="判別分析.html"><a href="判別分析.html#他パッケージの利用-パッケージklar"><i class="fa fa-check"></i><b>7.3</b> 他パッケージの利用: パッケージ<strong>klaR</strong></a>
+<ul>
+<li class="chapter" data-level="" data-path="判別分析.html"><a href="判別分析.html#データセット2-ビジネススクールの入学許可データ"><i class="fa fa-check"></i>データセット#2: ビジネススクールの入学許可データ</a></li>
+</ul></li>
+</ul></li>
+<li class="chapter" data-level="8" data-path="決定木分析.html"><a href="決定木分析.html"><i class="fa fa-check"></i><b>8</b> 決定木分析</a>
+<ul>
+<li class="chapter" data-level="8.1" data-path="決定木分析.html"><a href="決定木分析.html#導入-回帰木-vs-線形回帰"><i class="fa fa-check"></i><b>8.1</b> 導入: 回帰木 vs 線形回帰</a>
+<ul>
+<li class="chapter" data-level="" data-path="決定木分析.html"><a href="決定木分析.html#データセット1-自動車の制動距離"><i class="fa fa-check"></i>データセット1: 自動車の制動距離</a></li>
+<li class="chapter" data-level="8.1.1" data-path="決定木分析.html"><a href="決定木分析.html#基本操作-回帰木"><i class="fa fa-check"></i><b>8.1.1</b> 基本操作: 回帰木</a></li>
+</ul></li>
+<li class="chapter" data-level="8.2" data-path="決定木分析.html"><a href="決定木分析.html#回帰木"><i class="fa fa-check"></i><b>8.2</b> 回帰木</a>
+<ul>
+<li class="chapter" data-level="" data-path="決定木分析.html"><a href="決定木分析.html#データセット2-米國株価指数データ-再掲"><i class="fa fa-check"></i>データセット2: 米國株価指数データ (再掲)</a></li>
+</ul></li>
+<li class="chapter" data-level="8.3" data-path="決定木分析.html"><a href="決定木分析.html#分類木"><i class="fa fa-check"></i><b>8.3</b> 分類木</a></li>
+</ul></li>
+<li class="chapter" data-level="9" data-path="アンサンブル学習.html"><a href="アンサンブル学習.html"><i class="fa fa-check"></i><b>9</b> アンサンブル学習</a>
+<ul>
+<li class="chapter" data-level="9.1" data-path="アンサンブル学習.html"><a href="アンサンブル学習.html#決定木-分類木"><i class="fa fa-check"></i><b>9.1</b> 決定木 (分類木)</a>
+<ul>
+<li class="chapter" data-level="" data-path="アンサンブル学習.html"><a href="アンサンブル学習.html#データセット3-個人ローン信用データ-再掲"><i class="fa fa-check"></i>データセット3: 個人ローン信用データ (再掲)</a></li>
+</ul></li>
+<li class="chapter" data-level="9.2" data-path="アンサンブル学習.html"><a href="アンサンブル学習.html#ランダムフォレスト分類木"><i class="fa fa-check"></i><b>9.2</b> ランダムフォレスト分類木</a></li>
+<li class="chapter" data-level="9.3" data-path="アンサンブル学習.html"><a href="アンサンブル学習.html#一般化ブースト回帰"><i class="fa fa-check"></i><b>9.3</b> 一般化ブースト回帰</a></li>
+</ul></li>
+<li class="chapter" data-level="10" data-path="サポートベクターマシン-svm.html"><a href="サポートベクターマシン-svm.html"><i class="fa fa-check"></i><b>10</b> サポートベクターマシン (SVM)</a>
+<ul>
+<li class="chapter" data-level="10.1" data-path="サポートベクターマシン-svm.html"><a href="サポートベクターマシン-svm.html#svm-rbfカーネル-の動作の確認"><i class="fa fa-check"></i><b>10.1</b> SVM (RBFカーネル) の動作の確認</a>
+<ul>
+<li class="chapter" data-level="" data-path="サポートベクターマシン-svm.html"><a href="サポートベクターマシン-svm.html#データセット1-iris-あやめ-データ"><i class="fa fa-check"></i>データセット1: iris (あやめ) データ</a></li>
+<li class="chapter" data-level="" data-path="サポートベクターマシン-svm.html"><a href="サポートベクターマシン-svm.html#svmの実行"><i class="fa fa-check"></i>SVMの実行</a></li>
+</ul></li>
+<li class="chapter" data-level="10.2" data-path="サポートベクターマシン-svm.html"><a href="サポートベクターマシン-svm.html#値分類"><i class="fa fa-check"></i><b>10.2</b> 2値分類</a>
+<ul>
+<li class="chapter" data-level="" data-path="サポートベクターマシン-svm.html"><a href="サポートベクターマシン-svm.html#データセット2-spamデータ"><i class="fa fa-check"></i>データセット2: spamデータ</a></li>
+<li class="chapter" data-level="" data-path="サポートベクターマシン-svm.html"><a href="サポートベクターマシン-svm.html#svmの実行-1"><i class="fa fa-check"></i>SVMの実行</a></li>
+</ul></li>
+<li class="chapter" data-level="10.3" data-path="サポートベクターマシン-svm.html"><a href="サポートベクターマシン-svm.html#値分類-1"><i class="fa fa-check"></i><b>10.3</b> 3値分類</a>
+<ul>
+<li class="chapter" data-level="" data-path="サポートベクターマシン-svm.html"><a href="サポートベクターマシン-svm.html#svmの実行-2"><i class="fa fa-check"></i>SVMの実行</a></li>
+</ul></li>
+<li class="chapter" data-level="10.4" data-path="サポートベクターマシン-svm.html"><a href="サポートベクターマシン-svm.html#代替パッケージe1071の利用"><i class="fa fa-check"></i><b>10.4</b> 代替パッケージ<strong>e1071</strong>の利用</a>
+<ul>
+<li class="chapter" data-level="" data-path="サポートベクターマシン-svm.html"><a href="サポートベクターマシン-svm.html#svmの実行-3"><i class="fa fa-check"></i>SVMの実行</a></li>
+</ul></li>
+<li class="chapter" data-level="10.5" data-path="サポートベクターマシン-svm.html"><a href="サポートベクターマシン-svm.html#ハイパーパラメータのチューニング"><i class="fa fa-check"></i><b>10.5</b> ハイパーパラメータのチューニング</a>
+<ul>
+<li class="chapter" data-level="" data-path="サポートベクターマシン-svm.html"><a href="サポートベクターマシン-svm.html#線形カーネルの場合"><i class="fa fa-check"></i>線形カーネルの場合</a></li>
+<li class="chapter" data-level="" data-path="サポートベクターマシン-svm.html"><a href="サポートベクターマシン-svm.html#rbfカーネルの場合"><i class="fa fa-check"></i>RBFカーネルの場合</a></li>
+<li class="chapter" data-level="" data-path="サポートベクターマシン-svm.html"><a href="サポートベクターマシン-svm.html#e1071内にあるチューニング用の便利な関数群"><i class="fa fa-check"></i><strong>e1071</strong>内にあるチューニング用の便利な関数群</a></li>
+</ul></li>
+</ul></li>
+<li class="chapter" data-level="11" data-path="主成分分析-pca.html"><a href="主成分分析-pca.html"><i class="fa fa-check"></i><b>11</b> 主成分分析 (PCA)</a>
+<ul>
+<li class="chapter" data-level="11.1" data-path="主成分分析-pca.html"><a href="主成分分析-pca.html#基本操作-1"><i class="fa fa-check"></i><b>11.1</b> 基本操作</a>
+<ul>
+<li class="chapter" data-level="" data-path="主成分分析-pca.html"><a href="主成分分析-pca.html#データセット-従業員スキル評価データ仮想"><i class="fa fa-check"></i>データセット: 従業員スキル評価データ(仮想)</a></li>
+</ul></li>
+<li class="chapter" data-level="11.2" data-path="主成分分析-pca.html"><a href="主成分分析-pca.html#種類のpca-相関行列ベース-vs-分散共分散行列ベース"><i class="fa fa-check"></i><b>11.2</b> 2種類のPCA: 相関行列ベース vs 分散共分散行列ベース</a>
+<ul>
+<li class="chapter" data-level="" data-path="主成分分析-pca.html"><a href="主成分分析-pca.html#データセット3-usarrests-data"><i class="fa fa-check"></i>データセット3: USArrests data</a></li>
+</ul></li>
+</ul></li>
+<li class="chapter" data-level="12" data-path="探索的因子分析.html"><a href="探索的因子分析.html"><i class="fa fa-check"></i><b>12</b> 探索的因子分析</a>
+<ul>
+<li class="chapter" data-level="12.1" data-path="探索的因子分析.html"><a href="探索的因子分析.html#基本操作-2"><i class="fa fa-check"></i><b>12.1</b> 基本操作</a>
+<ul>
+<li class="chapter" data-level="" data-path="探索的因子分析.html"><a href="探索的因子分析.html#データセット1-従業員評価データ-仮想"><i class="fa fa-check"></i>データセット1: 従業員評価データ (仮想)</a></li>
+</ul></li>
+<li class="chapter" data-level="12.2" data-path="探索的因子分析.html"><a href="探索的因子分析.html#ライブラリpsychの利用"><i class="fa fa-check"></i><b>12.2</b> ライブラリ<strong>psych</strong>の利用</a></li>
+<li class="chapter" data-level="12.3" data-path="探索的因子分析.html"><a href="探索的因子分析.html#因子分析に有用なツール"><i class="fa fa-check"></i><b>12.3</b> 因子分析に有用なツール</a></li>
+</ul></li>
+<li class="chapter" data-level="13" data-path="クラスター分析.html"><a href="クラスター分析.html"><i class="fa fa-check"></i><b>13</b> クラスター分析</a>
+<ul>
+<li class="chapter" data-level="13.1" data-path="クラスター分析.html"><a href="クラスター分析.html#基本操作-3"><i class="fa fa-check"></i><b>13.1</b> 基本操作</a>
+<ul>
+<li class="chapter" data-level="" data-path="クラスター分析.html"><a href="クラスター分析.html#階層型クラスタリング"><i class="fa fa-check"></i>階層型クラスタリング</a></li>
+<li class="chapter" data-level="" data-path="クラスター分析.html"><a href="クラスター分析.html#k-means法"><i class="fa fa-check"></i>k-means法</a></li>
+<li class="chapter" data-level="" data-path="クラスター分析.html"><a href="クラスター分析.html#変数に対するクラスタリング"><i class="fa fa-check"></i>変数に対するクラスタリング</a></li>
+</ul></li>
+<li class="chapter" data-level="13.2" data-path="クラスター分析.html"><a href="クラスター分析.html#データ分析例-1"><i class="fa fa-check"></i><b>13.2</b> データ分析例</a>
+<ul>
+<li class="chapter" data-level="" data-path="クラスター分析.html"><a href="クラスター分析.html#データセット-1-ワイン品質データ-再掲"><i class="fa fa-check"></i>データセット (1): ワイン品質データ (再掲)</a></li>
+<li class="chapter" data-level="" data-path="クラスター分析.html"><a href="クラスター分析.html#データセット-2-id無し-posデータ"><i class="fa fa-check"></i>データセット (2): (ID無し) POSデータ</a></li>
+</ul></li>
+<li class="chapter" data-level="13.3" data-path="クラスター分析.html"><a href="クラスター分析.html#発展的なクラスター分析"><i class="fa fa-check"></i><b>13.3</b> 発展的なクラスター分析</a>
+<ul>
+<li class="chapter" data-level="" data-path="クラスター分析.html"><a href="クラスター分析.html#関数agnes"><i class="fa fa-check"></i>関数<code>agnes</code></a></li>
+<li class="chapter" data-level="" data-path="クラスター分析.html"><a href="クラスター分析.html#関数pheatmap"><i class="fa fa-check"></i>関数<code>pheatmap</code></a></li>
+<li class="chapter" data-level="" data-path="クラスター分析.html"><a href="クラスター分析.html#関数pam"><i class="fa fa-check"></i>関数<code>pam</code></a></li>
+</ul></li>
+</ul></li>
+<li class="chapter" data-level="14" data-path="xai-explainable-ai.html"><a href="xai-explainable-ai.html"><i class="fa fa-check"></i><b>14</b> XAI (Explainable AI)</a>
+<ul>
+<li class="chapter" data-level="" data-path="xai-explainable-ai.html"><a href="xai-explainable-ai.html#回帰問題のケース"><i class="fa fa-check"></i>回帰問題のケース</a></li>
+<li class="chapter" data-level="14.1" data-path="xai-explainable-ai.html"><a href="xai-explainable-ai.html#pfi"><i class="fa fa-check"></i><b>14.1</b> PFI</a></li>
+<li class="chapter" data-level="14.2" data-path="xai-explainable-ai.html"><a href="xai-explainable-ai.html#pdp"><i class="fa fa-check"></i><b>14.2</b> PDP</a></li>
+<li class="chapter" data-level="14.3" data-path="xai-explainable-ai.html"><a href="xai-explainable-ai.html#ice"><i class="fa fa-check"></i><b>14.3</b> ICE</a>
+<ul>
+<li class="chapter" data-level="" data-path="xai-explainable-ai.html"><a href="xai-explainable-ai.html#pdp-ice"><i class="fa fa-check"></i>PDP + ICE</a></li>
+</ul></li>
+<li class="chapter" data-level="14.4" data-path="xai-explainable-ai.html"><a href="xai-explainable-ai.html#lime"><i class="fa fa-check"></i><b>14.4</b> LIME</a></li>
+<li class="chapter" data-level="14.5" data-path="xai-explainable-ai.html"><a href="xai-explainable-ai.html#shap"><i class="fa fa-check"></i><b>14.5</b> SHAP</a>
+<ul>
+<li class="chapter" data-level="" data-path="xai-explainable-ai.html"><a href="xai-explainable-ai.html#分類問題のケース"><i class="fa fa-check"></i>分類問題のケース</a></li>
+<li class="chapter" data-level="" data-path="xai-explainable-ai.html"><a href="xai-explainable-ai.html#多値分類問題の例-iris"><i class="fa fa-check"></i>多値分類問題の例 (iris)</a></li>
+<li class="chapter" data-level="" data-path="xai-explainable-ai.html"><a href="xai-explainable-ai.html#値分類問題"><i class="fa fa-check"></i>2値分類問題</a></li>
+</ul></li>
+</ul></li>
+</ul>
+
+      </nav>
+    </div>
+
+    <div class="book-body">
+      <div class="body-inner">
+        <div class="book-header" role="navigation">
+          <h1>
+            <i class="fa fa-circle-o-notch fa-spin"></i><a href="./">金融データサイエンス</a>
+          </h1>
+        </div>
+
+        <div class="page-wrapper" tabindex="-1" role="main">
+          <div class="page-inner">
+
+            <section class="normal" id="section-">
+<div id="主成分分析-pca" class="section level1 hasAnchor" number="11">
+<h1><span class="header-section-number">11</span> 主成分分析 (PCA)<a href="主成分分析-pca.html#主成分分析-pca" class="anchor-section" aria-label="Anchor link to header"></a></h1>
+<div id="基本操作-1" class="section level2 hasAnchor" number="11.1">
+<h2><span class="header-section-number">11.1</span> 基本操作<a href="主成分分析-pca.html#基本操作-1" class="anchor-section" aria-label="Anchor link to header"></a></h2>
+<!--
+### データセット1: ソニー株価リターン vs パナソニック株価リターン {-}
+```
+"sony_pana_close_Oct2015-Feb2016.csv"
+  - date: 10/01/15--02/19/16
+  - sony: ソニー株価 (日次終値)
+  - panasonic: パナソニック株価 (同)
+- n = 94, p = 2
+```
+
+``` r
+price_dat <- read.csv("sony_pana_close_Oct2015-Feb2016.csv", header = T, row.name = 1)
+sony_ret <- diff(log(price_dat[, "sony"]))
+pana_ret <- diff(log(price_dat[, "panasonic"]))
+ret_df <- data.frame(sony = sony_ret, pana = pana_ret,row.names = rownames(price_dat[-1, ]))
+head(ret_df)
+#>                  sony         pana
+#> 10/02/15  0.032186686 -0.012492607
+#> 10/05/15  0.015394788  0.013693327
+#> 10/06/15  0.004445863  0.007174204
+#> 10/07/15  0.015406687  0.028964843
+#> 10/08/15 -0.016357710  0.016832838
+#> 10/09/15  0.018228035  0.036868819
+```
+
+
+``` r
+# PCA (分散共分散行列に対して)
+ret_pca <- princomp(ret_df)     # PCA on covariance matrix
+summary(ret_pca)
+plot(ret_pca)
+```
+
+<img src="110-pca_files/figure-html/unnamed-chunk-4-1.png" width="75%" />
+
+```
+#> Importance of components:
+#>                            Comp.1     Comp.2
+#> Standard deviation     0.03647457 0.01539678
+#> Proportion of Variance 0.84876066 0.15123934
+#> Cumulative Proportion  0.84876066 1.00000000
+```
+
+
+``` r
+ret_pca$center
+ret_pca$sd
+
+# PC負荷量（固有ベクトル）
+ret_pca$loadings
+plot(ret_pca$loadings)
+```
+
+<img src="110-pca_files/figure-html/unnamed-chunk-5-1.png" width="75%" />
+
+``` r
+
+# PC得点（符号反転前)
+plot(ret_pca$scores)
+```
+
+<img src="110-pca_files/figure-html/unnamed-chunk-5-2.png" width="75%" />
+
+``` r
+head(ret_pca$scores)
+#>         sony         pana 
+#> -0.001931057 -0.004103680 
+#>     Comp.1     Comp.2 
+#> 0.03647457 0.01539678 
+#> 
+#> Loadings:
+#>      Comp.1 Comp.2
+#> sony  0.721  0.693
+#> pana  0.693 -0.721
+#> 
+#>                Comp.1 Comp.2
+#> SS loadings       1.0    1.0
+#> Proportion Var    0.5    0.5
+#> Cumulative Var    0.5    1.0
+#>               Comp.1       Comp.2
+#> 10/02/15 0.018766080  0.029702336
+#> 10/05/15 0.024824650 -0.000809378
+#> 10/06/15 0.012415077 -0.003704272
+#> 10/07/15 0.035422744 -0.011804820
+#> 10/08/15 0.004122787 -0.025089215
+#> 10/09/15 0.042936376 -0.015543559
+```
+
+
+``` r
+# PCA (相関行列に対して)
+ret_pca <- princomp(ret_df, cor = T)    # PCA on correlation matrix
+summary(ret_pca)
+
+biplot(ret_pca)
+```
+
+<img src="110-pca_files/figure-html/unnamed-chunk-6-1.png" width="75%" />
+
+```
+#> Importance of components:
+#>                           Comp.1    Comp.2
+#> Standard deviation     1.3027885 0.5502202
+#> Proportion of Variance 0.8486289 0.1513711
+#> Cumulative Proportion  0.8486289 1.0000000
+```
+
+
+``` r
+# 変数のスケーリング影響確認
+ret_df2 <- data.frame(sony = sony_ret*10, pana = pana_ret,row.names = rownames(price_dat[-1, ]))
+
+# PCA (分散共分散行列に対して)
+ret_pca2 <- princomp(ret_df2)       # PCA on covariance matrix
+summary(ret_pca2)
+ret_pca2$loadings
+
+# PCA (分散共分散行列に対して)
+ret_pca3 <- princomp(ret_df2, cor = T)      # PCA on covariance matrix
+summary(ret_pca3)
+ret_pca3$loadings
+#> Importance of components:
+#>                           Comp.1      Comp.2
+#> Standard deviation     0.2843268 0.019751604
+#> Proportion of Variance 0.9951974 0.004802622
+#> Cumulative Proportion  0.9951974 1.000000000
+#> 
+#> Loadings:
+#>      Comp.1 Comp.2
+#> sony  0.998       
+#> pana        -0.998
+#> 
+#>                Comp.1 Comp.2
+#> SS loadings       1.0    1.0
+#> Proportion Var    0.5    0.5
+#> Cumulative Var    0.5    1.0
+#> Importance of components:
+#>                           Comp.1    Comp.2
+#> Standard deviation     1.3027885 0.5502202
+#> Proportion of Variance 0.8486289 0.1513711
+#> Cumulative Proportion  0.8486289 1.0000000
+#> 
+#> Loadings:
+#>      Comp.1 Comp.2
+#> sony  0.707  0.707
+#> pana  0.707 -0.707
+#> 
+#>                Comp.1 Comp.2
+#> SS loadings       1.0    1.0
+#> Proportion Var    0.5    0.5
+#> Cumulative Var    0.5    1.0
+```
+
+### データセット2: 従業員スキル評価データ(仮想) {-}
+文字化けする場合には, 英語版"testdat_eng.csv"を使用しても良い.
+-->
+<div id="データセット-従業員スキル評価データ仮想" class="section level3 unnumbered hasAnchor">
+<h3>データセット: 従業員スキル評価データ(仮想)<a href="主成分分析-pca.html#データセット-従業員スキル評価データ仮想" class="anchor-section" aria-label="Anchor link to header"></a></h3>
+<p>文字化けする場合には, 英語版”testdat_eng.csv”を使用しても良い.</p>
+<pre><code>&quot;testdat_30_jap.csv&quot; (日本語版/英語版)
+  - 氏名/Name
+  - 専門性/Expertise (0-100)
+  - 分析力/Analytics (同)
+  - リーダーシップ/Leadership (同)
+  - プレゼン力/Presentation (同)
+  - コミュ力/Communication (同)
+- n = 9, p = 5</code></pre>
+<div class="sourceCode" id="cb452"><pre class="sourceCode r"><code class="sourceCode r"><span id="cb452-1"><a href="主成分分析-pca.html#cb452-1" tabindex="-1"></a>tokuten <span class="ot">&lt;-</span> <span class="fu">read.csv</span>(<span class="st">&quot;testdat_jap.csv&quot;</span>, <span class="at">header =</span> T, <span class="at">row.names =</span> <span class="dv">1</span>, <span class="at">skip =</span> <span class="dv">1</span>)</span>
+<span id="cb452-2"><a href="主成分分析-pca.html#cb452-2" tabindex="-1"></a><span class="co">#colnames(tokuten) &lt;- c(&quot;name&quot;, &quot;E&quot;, &quot;A&quot;, &quot;L&quot;, &quot;P&quot;, &quot;C&quot;)</span></span>
+<span id="cb452-3"><a href="主成分分析-pca.html#cb452-3" tabindex="-1"></a>tokuten</span>
+<span id="cb452-4"><a href="主成分分析-pca.html#cb452-4" tabindex="-1"></a></span>
+<span id="cb452-5"><a href="主成分分析-pca.html#cb452-5" tabindex="-1"></a><span class="co"># 散布図</span></span>
+<span id="cb452-6"><a href="主成分分析-pca.html#cb452-6" tabindex="-1"></a><span class="fu">pairs</span>(tokuten)</span></code></pre></div>
+<p><img src="110-pca_files/figure-html/pca_data2_1-1.png" width="75%" /></p>
+<pre><code>#&gt;      専門性 分析力 リーダーシップ プレゼン力 コミュ力
+#&gt; 山田     80     87             70         65       67
+#&gt; 鈴木     85     83             65         68       63
+#&gt; 田中     75     70             80         79       75
+#&gt; 中村     70     72             85         83       79
+#&gt; 大野     88     85             85         90       91
+#&gt; 松井     75     78             79         85       80
+#&gt; 高木     80     80             75         75       80
+#&gt; 三浦     83     72             85         80       83
+#&gt; 佐藤     69     82             77         70       80</code></pre>
+<div class="sourceCode" id="cb454"><pre class="sourceCode r"><code class="sourceCode r"><span id="cb454-1"><a href="主成分分析-pca.html#cb454-1" tabindex="-1"></a><span class="co"># 分散共分散行列に対するPCA（デフォルト)</span></span>
+<span id="cb454-2"><a href="主成分分析-pca.html#cb454-2" tabindex="-1"></a>tokuten_pc <span class="ot">&lt;-</span> <span class="fu">princomp</span>(tokuten)</span>
+<span id="cb454-3"><a href="主成分分析-pca.html#cb454-3" tabindex="-1"></a><span class="fu">summary</span>(tokuten_pc)</span>
+<span id="cb454-4"><a href="主成分分析-pca.html#cb454-4" tabindex="-1"></a></span>
+<span id="cb454-5"><a href="主成分分析-pca.html#cb454-5" tabindex="-1"></a><span class="fu">plot</span>(tokuten_pc)    <span class="co"># Scree plot = barplot of PC variances (eigenvalues)</span></span></code></pre></div>
+<p><img src="110-pca_files/figure-html/pca_data2_2-1.png" width="75%" /></p>
+<div class="sourceCode" id="cb455"><pre class="sourceCode r"><code class="sourceCode r"><span id="cb455-1"><a href="主成分分析-pca.html#cb455-1" tabindex="-1"></a><span class="fu">screeplot</span>(tokuten_pc)   <span class="co"># same as above</span></span>
+<span id="cb455-2"><a href="主成分分析-pca.html#cb455-2" tabindex="-1"></a><span class="co">#&gt; Importance of components:</span></span>
+<span id="cb455-3"><a href="主成分分析-pca.html#cb455-3" tabindex="-1"></a><span class="co">#&gt;                            Comp.1    Comp.2     Comp.3    Comp.4     Comp.5</span></span>
+<span id="cb455-4"><a href="主成分分析-pca.html#cb455-4" tabindex="-1"></a><span class="co">#&gt; Standard deviation     12.4807420 7.1424787 4.73037885 2.9724343 1.57269337</span></span>
+<span id="cb455-5"><a href="主成分分析-pca.html#cb455-5" tabindex="-1"></a><span class="co">#&gt; Proportion of Variance  0.6477709 0.2121478 0.09305346 0.0367422 0.01028558</span></span>
+<span id="cb455-6"><a href="主成分分析-pca.html#cb455-6" tabindex="-1"></a><span class="co">#&gt; Cumulative Proportion   0.6477709 0.8599188 0.95297222 0.9897144 1.00000000</span></span></code></pre></div>
+<div class="sourceCode" id="cb456"><pre class="sourceCode r"><code class="sourceCode r"><span id="cb456-1"><a href="主成分分析-pca.html#cb456-1" tabindex="-1"></a><span class="co"># 主成分負荷量(係数)</span></span>
+<span id="cb456-2"><a href="主成分分析-pca.html#cb456-2" tabindex="-1"></a>tokuten_pc<span class="sc">$</span>loadings</span>
+<span id="cb456-3"><a href="主成分分析-pca.html#cb456-3" tabindex="-1"></a><span class="co"># t(tokuten_pc$loadings) %*% tokuten_pc$loadings        # 直交性の確認</span></span>
+<span id="cb456-4"><a href="主成分分析-pca.html#cb456-4" tabindex="-1"></a><span class="co"># 注) 下のprcompの結果と, 符号が逆転</span></span>
+<span id="cb456-5"><a href="主成分分析-pca.html#cb456-5" tabindex="-1"></a></span>
+<span id="cb456-6"><a href="主成分分析-pca.html#cb456-6" tabindex="-1"></a><span class="co"># scatter plot for 1st &amp; 2nd PC</span></span>
+<span id="cb456-7"><a href="主成分分析-pca.html#cb456-7" tabindex="-1"></a><span class="co">#plot(tokuten_pc$loadings[, 1:2])</span></span>
+<span id="cb456-8"><a href="主成分分析-pca.html#cb456-8" tabindex="-1"></a><span class="fu">plot</span>(tokuten_pc<span class="sc">$</span>loadings[, <span class="dv">1</span><span class="sc">:</span><span class="dv">2</span>], <span class="at">type =</span> <span class="st">&quot;n&quot;</span>, <span class="at">main =</span> <span class="st">&quot;PC loadings: PC1 vs PC2&quot;</span>)  <span class="co"># plot only axis</span></span>
+<span id="cb456-9"><a href="主成分分析-pca.html#cb456-9" tabindex="-1"></a><span class="fu">text</span>(tokuten_pc<span class="sc">$</span>loadings, <span class="fu">colnames</span>(tokuten))</span></code></pre></div>
+<p><img src="110-pca_files/figure-html/pca_data2_3-1.png" width="75%" /></p>
+<pre><code>#&gt; 
+#&gt; Loadings:
+#&gt;                Comp.1 Comp.2 Comp.3 Comp.4 Comp.5
+#&gt; 専門性                 0.775  0.536  0.332       
+#&gt; 分析力          0.227  0.554 -0.634 -0.325  0.366
+#&gt; リーダーシップ -0.510 -0.137         0.323  0.786
+#&gt; プレゼン力     -0.591  0.153  0.275 -0.741       
+#&gt; コミュ力       -0.582  0.223 -0.486  0.362 -0.496
+#&gt; 
+#&gt;                Comp.1 Comp.2 Comp.3 Comp.4 Comp.5
+#&gt; SS loadings       1.0    1.0    1.0    1.0    1.0
+#&gt; Proportion Var    0.2    0.2    0.2    0.2    0.2
+#&gt; Cumulative Var    0.2    0.4    0.6    0.8    1.0</code></pre>
+<div class="sourceCode" id="cb458"><pre class="sourceCode r"><code class="sourceCode r"><span id="cb458-1"><a href="主成分分析-pca.html#cb458-1" tabindex="-1"></a><span class="co"># 主成分得点(データ毎)</span></span>
+<span id="cb458-2"><a href="主成分分析-pca.html#cb458-2" tabindex="-1"></a>tokuten_pc<span class="sc">$</span>scores</span>
+<span id="cb458-3"><a href="主成分分析-pca.html#cb458-3" tabindex="-1"></a><span class="fu">plot</span>(tokuten_pc<span class="sc">$</span>scores[, <span class="dv">1</span>], tokuten_pc<span class="sc">$</span>scores[, <span class="dv">2</span>], </span>
+<span id="cb458-4"><a href="主成分分析-pca.html#cb458-4" tabindex="-1"></a>     <span class="at">type =</span> <span class="st">&quot;n&quot;</span>, <span class="at">main =</span> <span class="st">&quot;PC scores: PC1 vs PC2&quot;</span>)</span>
+<span id="cb458-5"><a href="主成分分析-pca.html#cb458-5" tabindex="-1"></a><span class="co">#text(tokuten_pc$scores[, 1], tokuten_pc$scores[, 2], </span></span>
+<span id="cb458-6"><a href="主成分分析-pca.html#cb458-6" tabindex="-1"></a><span class="fu">text</span>(tokuten_pc<span class="sc">$</span>scores[, <span class="dv">1</span>], tokuten_pc<span class="sc">$</span>scores[, <span class="dv">2</span>], <span class="fu">rownames</span>(tokuten), <span class="at">family =</span> <span class="st">&quot;HiraKakuProN-W3&quot;</span>)  <span class="co"># 日本語文字化け対応 (mac)</span></span></code></pre></div>
+<p><img src="110-pca_files/figure-html/pca_data2_4-1.png" width="75%" /></p>
+<div class="sourceCode" id="cb459"><pre class="sourceCode r"><code class="sourceCode r"><span id="cb459-1"><a href="主成分分析-pca.html#cb459-1" tabindex="-1"></a></span>
+<span id="cb459-2"><a href="主成分分析-pca.html#cb459-2" tabindex="-1"></a><span class="co"># バイプロット</span></span>
+<span id="cb459-3"><a href="主成分分析-pca.html#cb459-3" tabindex="-1"></a><span class="fu">biplot</span>(tokuten_pc, <span class="at">family =</span> <span class="st">&quot;HiraKakuProN-W3&quot;</span>)      <span class="co"># 日本語文字化け対応 (mac)</span></span></code></pre></div>
+<p><img src="110-pca_files/figure-html/pca_data2_4-2.png" width="75%" /></p>
+<div class="sourceCode" id="cb460"><pre class="sourceCode r"><code class="sourceCode r"><span id="cb460-1"><a href="主成分分析-pca.html#cb460-1" tabindex="-1"></a><span class="co">#biplot(tokuten_pc)     # plot PC &amp; PC scores ===&gt; display first 2 PCs only...</span></span>
+<span id="cb460-2"><a href="主成分分析-pca.html#cb460-2" tabindex="-1"></a></span>
+<span id="cb460-3"><a href="主成分分析-pca.html#cb460-3" tabindex="-1"></a><span class="co"># # 計算結果確認</span></span>
+<span id="cb460-4"><a href="主成分分析-pca.html#cb460-4" tabindex="-1"></a><span class="co"># (yama &lt;- tokuten[&quot;山田&quot;, ]-apply(tokuten, 2, mean)) # demeaned score</span></span>
+<span id="cb460-5"><a href="主成分分析-pca.html#cb460-5" tabindex="-1"></a><span class="co"># sum(tokuten_pc$loadings[, &quot;Comp.1&quot;] * yama)           # Yamada&#39;s PC1 score</span></span>
+<span id="cb460-6"><a href="主成分分析-pca.html#cb460-6" tabindex="-1"></a><span class="co"># sum(tokuten_pc$loadings[, &quot;Comp.2&quot;] * yama)           # Yamada&#39;s PC2 score</span></span>
+<span id="cb460-7"><a href="主成分分析-pca.html#cb460-7" tabindex="-1"></a><span class="co"># # compare this with tokuten_pc$scores[&quot;Yamada&quot;, ]</span></span>
+<span id="cb460-8"><a href="主成分分析-pca.html#cb460-8" tabindex="-1"></a><span class="co">#&gt;          Comp.1     Comp.2      Comp.3     Comp.4     Comp.5</span></span>
+<span id="cb460-9"><a href="主成分分析-pca.html#cb460-9" tabindex="-1"></a><span class="co">#&gt; 山田  19.304343  2.7048291  -2.4411238  0.5754498  2.6750248</span></span>
+<span id="cb460-10"><a href="主成分分析-pca.html#cb460-10" tabindex="-1"></a><span class="co">#&gt; 鈴木  21.655520  4.6155395   5.6073003 -1.7490457 -0.7368287</span></span>
+<span id="cb460-11"><a href="主成分分析-pca.html#cb460-11" tabindex="-1"></a><span class="co">#&gt; 田中  -2.739766 -8.0346039   5.4765050  0.1887216 -0.4687677</span></span>
+<span id="cb460-12"><a href="主成分分析-pca.html#cb460-12" tabindex="-1"></a><span class="co">#&gt; 中村  -9.682974 -9.9826824   0.6190434 -2.0247358  1.8769769</span></span>
+<span id="cb460-13"><a href="主成分分析-pca.html#cb460-13" tabindex="-1"></a><span class="co">#&gt; 大野 -17.277425 14.9224986  -1.8787424 -1.1322419  0.8666327</span></span>
+<span id="cb460-14"><a href="主成分分析-pca.html#cb460-14" tabindex="-1"></a><span class="co">#&gt; 松井  -6.867523 -1.4328205  -0.3577567 -5.3750278 -1.0885751</span></span>
+<span id="cb460-15"><a href="主成分分析-pca.html#cb460-15" tabindex="-1"></a><span class="co">#&gt; 高木   1.694979  2.5684468  -1.6399325  1.7537323 -2.8802837</span></span>
+<span id="cb460-16"><a href="主成分分析-pca.html#cb460-16" tabindex="-1"></a><span class="co">#&gt; 三浦  -9.824535  0.5291295   4.8161616  5.9565572  0.4056066</span></span>
+<span id="cb460-17"><a href="主成分分析-pca.html#cb460-17" tabindex="-1"></a><span class="co">#&gt; 佐藤   3.737381 -5.8903368 -10.2014547  1.8065903 -0.6497859</span></span></code></pre></div>
+<div class="sourceCode" id="cb461"><pre class="sourceCode r"><code class="sourceCode r"><span id="cb461-1"><a href="主成分分析-pca.html#cb461-1" tabindex="-1"></a><span class="co"># 第1, 2主成分</span></span>
+<span id="cb461-2"><a href="主成分分析-pca.html#cb461-2" tabindex="-1"></a>tokuten_pc<span class="sc">$</span>scores[, <span class="dv">1</span><span class="sc">:</span><span class="dv">2</span>]</span>
+<span id="cb461-3"><a href="主成分分析-pca.html#cb461-3" tabindex="-1"></a>tokuten_pc<span class="sc">$</span>loadings[, <span class="dv">1</span><span class="sc">:</span><span class="dv">2</span>]</span>
+<span id="cb461-4"><a href="主成分分析-pca.html#cb461-4" tabindex="-1"></a><span class="co"># biplot(tokuten_pc$scores[, 1:2], tokuten_pc$loadings[, 1:2])  # loadings accompany &quot;arrows&quot; &lt;-- Looks more useful!!</span></span>
+<span id="cb461-5"><a href="主成分分析-pca.html#cb461-5" tabindex="-1"></a><span class="fu">biplot</span>(tokuten_pc<span class="sc">$</span>scores[, <span class="dv">1</span><span class="sc">:</span><span class="dv">2</span>], tokuten_pc<span class="sc">$</span>loadings[, <span class="dv">1</span><span class="sc">:</span><span class="dv">2</span>], <span class="at">family =</span> <span class="st">&quot;HiraKakuProN-W3&quot;</span>)        <span class="co"># 日本語文字化け対応 (mac)</span></span></code></pre></div>
+<p><img src="110-pca_files/figure-html/pca_data2_5-1.png" width="75%" /></p>
+<div class="sourceCode" id="cb462"><pre class="sourceCode r"><code class="sourceCode r"><span id="cb462-1"><a href="主成分分析-pca.html#cb462-1" tabindex="-1"></a><span class="co"># biplot(tokuten_pc$loadings[, 1:2], tokuten_pc$scores[, 1:2])  # scores accompany &quot;arrows&quot;</span></span>
+<span id="cb462-2"><a href="主成分分析-pca.html#cb462-2" tabindex="-1"></a><span class="fu">biplot</span>(tokuten_pc<span class="sc">$</span>loadings[, <span class="dv">1</span><span class="sc">:</span><span class="dv">2</span>], tokuten_pc<span class="sc">$</span>scores[, <span class="dv">1</span><span class="sc">:</span><span class="dv">2</span>], <span class="at">family =</span> <span class="st">&quot;HiraKakuProN-W3&quot;</span>)        <span class="co"># 日本語文字化け対応 (mac)</span></span></code></pre></div>
+<p><img src="110-pca_files/figure-html/pca_data2_5-2.png" width="75%" /></p>
+<pre><code>#&gt;          Comp.1     Comp.2
+#&gt; 山田  19.304343  2.7048291
+#&gt; 鈴木  21.655520  4.6155395
+#&gt; 田中  -2.739766 -8.0346039
+#&gt; 中村  -9.682974 -9.9826824
+#&gt; 大野 -17.277425 14.9224986
+#&gt; 松井  -6.867523 -1.4328205
+#&gt; 高木   1.694979  2.5684468
+#&gt; 三浦  -9.824535  0.5291295
+#&gt; 佐藤   3.737381 -5.8903368
+#&gt;                     Comp.1     Comp.2
+#&gt; 専門性          0.03162775  0.7753770
+#&gt; 分析力          0.22710092  0.5541994
+#&gt; リーダーシップ -0.50974398 -0.1365068
+#&gt; プレゼン力     -0.59111858  0.1530044
+#&gt; コミュ力       -0.58151936  0.2227311</code></pre>
+<div class="sourceCode" id="cb464"><pre class="sourceCode r"><code class="sourceCode r"><span id="cb464-1"><a href="主成分分析-pca.html#cb464-1" tabindex="-1"></a><span class="co"># 評価項目ペア別, 各従業員のスコア散布図</span></span>
+<span id="cb464-2"><a href="主成分分析-pca.html#cb464-2" tabindex="-1"></a><span class="co">#plot(tokuten)</span></span>
+<span id="cb464-3"><a href="主成分分析-pca.html#cb464-3" tabindex="-1"></a></span>
+<span id="cb464-4"><a href="主成分分析-pca.html#cb464-4" tabindex="-1"></a><span class="co"># par(mfrow = c(2, 2))</span></span>
+<span id="cb464-5"><a href="主成分分析-pca.html#cb464-5" tabindex="-1"></a><span class="fu">plot</span>(tokuten[, <span class="fu">c</span>(<span class="dv">1</span>, <span class="dv">2</span>)], <span class="at">type =</span> <span class="st">&quot;n&quot;</span>, <span class="at">main =</span> <span class="st">&quot;item 1 vs item 2&quot;</span>) <span class="co"># plot only axis</span></span>
+<span id="cb464-6"><a href="主成分分析-pca.html#cb464-6" tabindex="-1"></a><span class="co"># text(tokuten[, c(1, 2)], rownames(tokuten))</span></span>
+<span id="cb464-7"><a href="主成分分析-pca.html#cb464-7" tabindex="-1"></a><span class="fu">text</span>(tokuten[, <span class="fu">c</span>(<span class="dv">1</span>, <span class="dv">2</span>)], <span class="fu">rownames</span>(tokuten), <span class="at">family =</span> <span class="st">&quot;HiraKakuProN-W3&quot;</span>)     <span class="co"># 日本語文字化け対応 (mac)</span></span></code></pre></div>
+<p><img src="110-pca_files/figure-html/pca_data2_6-1.png" width="75%" /></p>
+<div class="sourceCode" id="cb465"><pre class="sourceCode r"><code class="sourceCode r"><span id="cb465-1"><a href="主成分分析-pca.html#cb465-1" tabindex="-1"></a><span class="fu">plot</span>(tokuten[, <span class="fu">c</span>(<span class="dv">2</span>, <span class="dv">3</span>)], <span class="at">type =</span> <span class="st">&quot;n&quot;</span>, <span class="at">main =</span> <span class="st">&quot;item 2 vs item 3&quot;</span>) <span class="co"># plot only axis</span></span>
+<span id="cb465-2"><a href="主成分分析-pca.html#cb465-2" tabindex="-1"></a><span class="co"># text(tokuten[, c(2, 3)], rownames(tokuten))</span></span>
+<span id="cb465-3"><a href="主成分分析-pca.html#cb465-3" tabindex="-1"></a><span class="fu">text</span>(tokuten[, <span class="fu">c</span>(<span class="dv">2</span>, <span class="dv">3</span>)], <span class="fu">rownames</span>(tokuten), <span class="at">family =</span> <span class="st">&quot;HiraKakuProN-W3&quot;</span>)     <span class="co"># 日本語文字化け対応 (mac)</span></span></code></pre></div>
+<p><img src="110-pca_files/figure-html/pca_data2_6-2.png" width="75%" /></p>
+<div class="sourceCode" id="cb466"><pre class="sourceCode r"><code class="sourceCode r"><span id="cb466-1"><a href="主成分分析-pca.html#cb466-1" tabindex="-1"></a><span class="co"># plot(tokuten[, c(3, 4)], type = &quot;n&quot;)  # plot only axis</span></span>
+<span id="cb466-2"><a href="主成分分析-pca.html#cb466-2" tabindex="-1"></a><span class="co"># text(tokuten[, c(3, 4)], rownames(tokuten))</span></span>
+<span id="cb466-3"><a href="主成分分析-pca.html#cb466-3" tabindex="-1"></a><span class="co"># plot(tokuten[, c(4, 5)], type = &quot;n&quot;)  # plot only axis</span></span>
+<span id="cb466-4"><a href="主成分分析-pca.html#cb466-4" tabindex="-1"></a><span class="co"># text(tokuten[, c(4, 5)], rownames(tokuten))</span></span></code></pre></div>
+<div class="sourceCode" id="cb467"><pre class="sourceCode r"><code class="sourceCode r"><span id="cb467-1"><a href="主成分分析-pca.html#cb467-1" tabindex="-1"></a><span class="co"># 相関行列に対するPCA</span></span>
+<span id="cb467-2"><a href="主成分分析-pca.html#cb467-2" tabindex="-1"></a><span class="co"># tokuten_pc2 &lt;- princomp(tokuten, cor = T)</span></span>
+<span id="cb467-3"><a href="主成分分析-pca.html#cb467-3" tabindex="-1"></a><span class="co"># summary(tokuten_pc2)</span></span>
+<span id="cb467-4"><a href="主成分分析-pca.html#cb467-4" tabindex="-1"></a><span class="co"># tokuten_pc2$loadings</span></span>
+<span id="cb467-5"><a href="主成分分析-pca.html#cb467-5" tabindex="-1"></a><span class="co"># tokuten_pc2$scores[, 1:2]</span></span>
+<span id="cb467-6"><a href="主成分分析-pca.html#cb467-6" tabindex="-1"></a><span class="co"># tokuten_pc2$loadings[, 1:2]</span></span>
+<span id="cb467-7"><a href="主成分分析-pca.html#cb467-7" tabindex="-1"></a></span>
+<span id="cb467-8"><a href="主成分分析-pca.html#cb467-8" tabindex="-1"></a><span class="co"># 代替的関数</span></span>
+<span id="cb467-9"><a href="主成分分析-pca.html#cb467-9" tabindex="-1"></a><span class="co"># prcomp()  # 不偏分散共分散行列の使用 (÷(n-1))</span></span>
+<span id="cb467-10"><a href="主成分分析-pca.html#cb467-10" tabindex="-1"></a>tokuten_prcomp <span class="ot">&lt;-</span> <span class="fu">prcomp</span>(tokuten)</span>
+<span id="cb467-11"><a href="主成分分析-pca.html#cb467-11" tabindex="-1"></a><span class="co">#tokuten_prcomp &lt;- prcomp(tokuten, scale = T)</span></span>
+<span id="cb467-12"><a href="主成分分析-pca.html#cb467-12" tabindex="-1"></a><span class="fu">summary</span>(tokuten_prcomp)</span>
+<span id="cb467-13"><a href="主成分分析-pca.html#cb467-13" tabindex="-1"></a>tokuten_prcomp<span class="sc">$</span>rotation     <span class="co"># PC負荷量</span></span>
+<span id="cb467-14"><a href="主成分分析-pca.html#cb467-14" tabindex="-1"></a>tokuten_prcomp<span class="sc">$</span>x        <span class="co"># PC得点</span></span>
+<span id="cb467-15"><a href="主成分分析-pca.html#cb467-15" tabindex="-1"></a><span class="co">#biplot(tokuten_prcomp)</span></span>
+<span id="cb467-16"><a href="主成分分析-pca.html#cb467-16" tabindex="-1"></a><span class="fu">biplot</span>(tokuten_prcomp, <span class="at">family =</span> <span class="st">&quot;HiraKakuProN-W3&quot;</span>)</span></code></pre></div>
+<p><img src="110-pca_files/figure-html/pca_data2_7-1.png" width="75%" /></p>
+<pre><code>#&gt; Importance of components:
+#&gt;                            PC1    PC2     PC3     PC4     PC5
+#&gt; Standard deviation     13.2378 7.5757 5.01732 3.15274 1.66809
+#&gt; Proportion of Variance  0.6478 0.2122 0.09305 0.03674 0.01029
+#&gt; Cumulative Proportion   0.6478 0.8599 0.95297 0.98971 1.00000
+#&gt;                        PC1        PC2         PC3        PC4         PC5
+#&gt; 専門性         -0.03162775  0.7753770  0.53571555  0.3316583 -0.02831625
+#&gt; 分析力         -0.22710092  0.5541994 -0.63357070 -0.3251925 -0.36623249
+#&gt; リーダーシップ  0.50974398 -0.1365068 -0.01367592  0.3227645 -0.78559724
+#&gt; プレゼン力      0.59111858  0.1530044  0.27483158 -0.7411911  0.04766342
+#&gt; コミュ力        0.58151936  0.2227311 -0.48567230  0.3615403  0.49561793
+#&gt;             PC1        PC2         PC3        PC4        PC5
+#&gt; 山田 -19.304343  2.7048291  -2.4411238  0.5754498 -2.6750248
+#&gt; 鈴木 -21.655520  4.6155395   5.6073003 -1.7490457  0.7368287
+#&gt; 田中   2.739766 -8.0346039   5.4765050  0.1887216  0.4687677
+#&gt; 中村   9.682974 -9.9826824   0.6190434 -2.0247358 -1.8769769
+#&gt; 大野  17.277425 14.9224986  -1.8787424 -1.1322419 -0.8666327
+#&gt; 松井   6.867523 -1.4328205  -0.3577567 -5.3750278  1.0885751
+#&gt; 高木  -1.694979  2.5684468  -1.6399325  1.7537323  2.8802837
+#&gt; 三浦   9.824535  0.5291295   4.8161616  5.9565572 -0.4056066
+#&gt; 佐藤  -3.737381 -5.8903368 -10.2014547  1.8065903  0.6497859</code></pre>
+</div>
+</div>
+<div id="種類のpca-相関行列ベース-vs-分散共分散行列ベース" class="section level2 hasAnchor" number="11.2">
+<h2><span class="header-section-number">11.2</span> 2種類のPCA: 相関行列ベース vs 分散共分散行列ベース<a href="主成分分析-pca.html#種類のpca-相関行列ベース-vs-分散共分散行列ベース" class="anchor-section" aria-label="Anchor link to header"></a></h2>
+<div id="データセット3-usarrests-data" class="section level3 unnumbered hasAnchor">
+<h3>データセット3: USArrests data<a href="主成分分析-pca.html#データセット3-usarrests-data" class="anchor-section" aria-label="Anchor link to header"></a></h3>
+<pre><code>USArrests
+- 全米50州, 人口10万人当たり
+- 1973年の凶悪犯罪(assault, murder, rape)件数,  及び都市部の人口割合(%)
+- n = 50, p = 4</code></pre>
+<div class="sourceCode" id="cb470"><pre class="sourceCode r"><code class="sourceCode r"><span id="cb470-1"><a href="主成分分析-pca.html#cb470-1" tabindex="-1"></a><span class="fu">summary</span>(USArrests)</span>
+<span id="cb470-2"><a href="主成分分析-pca.html#cb470-2" tabindex="-1"></a><span class="fu">pairs</span>(USArrests)</span></code></pre></div>
+<p><img src="110-pca_files/figure-html/unnamed-chunk-8-1.png" width="75%" /></p>
+<pre><code>#&gt;      Murder          Assault         UrbanPop          Rape      
+#&gt;  Min.   : 0.800   Min.   : 45.0   Min.   :32.00   Min.   : 7.30  
+#&gt;  1st Qu.: 4.075   1st Qu.:109.0   1st Qu.:54.50   1st Qu.:15.07  
+#&gt;  Median : 7.250   Median :159.0   Median :66.00   Median :20.10  
+#&gt;  Mean   : 7.788   Mean   :170.8   Mean   :65.54   Mean   :21.23  
+#&gt;  3rd Qu.:11.250   3rd Qu.:249.0   3rd Qu.:77.75   3rd Qu.:26.18  
+#&gt;  Max.   :17.400   Max.   :337.0   Max.   :91.00   Max.   :46.00</code></pre>
+<div class="sourceCode" id="cb472"><pre class="sourceCode r"><code class="sourceCode r"><span id="cb472-1"><a href="主成分分析-pca.html#cb472-1" tabindex="-1"></a><span class="co"># どちらが良いか?</span></span>
+<span id="cb472-2"><a href="主成分分析-pca.html#cb472-2" tabindex="-1"></a><span class="co"># (pc_cr1 &lt;- princomp(USArrests))</span></span>
+<span id="cb472-3"><a href="主成分分析-pca.html#cb472-3" tabindex="-1"></a><span class="co"># (pc_cr2 &lt;- princomp(USArrests, cor = TRUE))</span></span>
+<span id="cb472-4"><a href="主成分分析-pca.html#cb472-4" tabindex="-1"></a>(pc_cr3 <span class="ot">&lt;-</span> <span class="fu">prcomp</span>(USArrests))</span>
+<span id="cb472-5"><a href="主成分分析-pca.html#cb472-5" tabindex="-1"></a><span class="co">#&gt; Standard deviations (1, .., p=4):</span></span>
+<span id="cb472-6"><a href="主成分分析-pca.html#cb472-6" tabindex="-1"></a><span class="co">#&gt; [1] 83.732400 14.212402  6.489426  2.482790</span></span>
+<span id="cb472-7"><a href="主成分分析-pca.html#cb472-7" tabindex="-1"></a><span class="co">#&gt; </span></span>
+<span id="cb472-8"><a href="主成分分析-pca.html#cb472-8" tabindex="-1"></a><span class="co">#&gt; Rotation (n x k) = (4 x 4):</span></span>
+<span id="cb472-9"><a href="主成分分析-pca.html#cb472-9" tabindex="-1"></a><span class="co">#&gt;                 PC1         PC2         PC3         PC4</span></span>
+<span id="cb472-10"><a href="主成分分析-pca.html#cb472-10" tabindex="-1"></a><span class="co">#&gt; Murder   0.04170432 -0.04482166  0.07989066 -0.99492173</span></span>
+<span id="cb472-11"><a href="主成分分析-pca.html#cb472-11" tabindex="-1"></a><span class="co">#&gt; Assault  0.99522128 -0.05876003 -0.06756974  0.03893830</span></span>
+<span id="cb472-12"><a href="主成分分析-pca.html#cb472-12" tabindex="-1"></a><span class="co">#&gt; UrbanPop 0.04633575  0.97685748 -0.20054629 -0.05816914</span></span>
+<span id="cb472-13"><a href="主成分分析-pca.html#cb472-13" tabindex="-1"></a><span class="co">#&gt; Rape     0.07515550  0.20071807  0.97408059  0.07232502</span></span>
+<span id="cb472-14"><a href="主成分分析-pca.html#cb472-14" tabindex="-1"></a>(pc_cr4 <span class="ot">&lt;-</span> <span class="fu">prcomp</span>(USArrests, <span class="at">scale =</span> <span class="cn">TRUE</span>))</span>
+<span id="cb472-15"><a href="主成分分析-pca.html#cb472-15" tabindex="-1"></a><span class="co">#&gt; Standard deviations (1, .., p=4):</span></span>
+<span id="cb472-16"><a href="主成分分析-pca.html#cb472-16" tabindex="-1"></a><span class="co">#&gt; [1] 1.5748783 0.9948694 0.5971291 0.4164494</span></span>
+<span id="cb472-17"><a href="主成分分析-pca.html#cb472-17" tabindex="-1"></a><span class="co">#&gt; </span></span>
+<span id="cb472-18"><a href="主成分分析-pca.html#cb472-18" tabindex="-1"></a><span class="co">#&gt; Rotation (n x k) = (4 x 4):</span></span>
+<span id="cb472-19"><a href="主成分分析-pca.html#cb472-19" tabindex="-1"></a><span class="co">#&gt;                 PC1        PC2        PC3         PC4</span></span>
+<span id="cb472-20"><a href="主成分分析-pca.html#cb472-20" tabindex="-1"></a><span class="co">#&gt; Murder   -0.5358995 -0.4181809  0.3412327  0.64922780</span></span>
+<span id="cb472-21"><a href="主成分分析-pca.html#cb472-21" tabindex="-1"></a><span class="co">#&gt; Assault  -0.5831836 -0.1879856  0.2681484 -0.74340748</span></span>
+<span id="cb472-22"><a href="主成分分析-pca.html#cb472-22" tabindex="-1"></a><span class="co">#&gt; UrbanPop -0.2781909  0.8728062  0.3780158  0.13387773</span></span>
+<span id="cb472-23"><a href="主成分分析-pca.html#cb472-23" tabindex="-1"></a><span class="co">#&gt; Rape     -0.5434321  0.1673186 -0.8177779  0.08902432</span></span></code></pre></div>
+<div class="sourceCode" id="cb473"><pre class="sourceCode r"><code class="sourceCode r"><span id="cb473-1"><a href="主成分分析-pca.html#cb473-1" tabindex="-1"></a><span class="fu">plot</span>(pc_cr3)</span></code></pre></div>
+<p><img src="110-pca_files/figure-html/unnamed-chunk-10-1.png" width="75%" /></p>
+<div class="sourceCode" id="cb474"><pre class="sourceCode r"><code class="sourceCode r"><span id="cb474-1"><a href="主成分分析-pca.html#cb474-1" tabindex="-1"></a><span class="fu">summary</span>(pc_cr3)</span>
+<span id="cb474-2"><a href="主成分分析-pca.html#cb474-2" tabindex="-1"></a><span class="co">#&gt; Importance of components:</span></span>
+<span id="cb474-3"><a href="主成分分析-pca.html#cb474-3" tabindex="-1"></a><span class="co">#&gt;                            PC1      PC2    PC3     PC4</span></span>
+<span id="cb474-4"><a href="主成分分析-pca.html#cb474-4" tabindex="-1"></a><span class="co">#&gt; Standard deviation     83.7324 14.21240 6.4894 2.48279</span></span>
+<span id="cb474-5"><a href="主成分分析-pca.html#cb474-5" tabindex="-1"></a><span class="co">#&gt; Proportion of Variance  0.9655  0.02782 0.0058 0.00085</span></span>
+<span id="cb474-6"><a href="主成分分析-pca.html#cb474-6" tabindex="-1"></a><span class="co">#&gt; Cumulative Proportion   0.9655  0.99335 0.9991 1.00000</span></span>
+<span id="cb474-7"><a href="主成分分析-pca.html#cb474-7" tabindex="-1"></a><span class="fu">plot</span>(pc_cr4)</span></code></pre></div>
+<p><img src="110-pca_files/figure-html/unnamed-chunk-10-2.png" width="75%" /></p>
+<div class="sourceCode" id="cb475"><pre class="sourceCode r"><code class="sourceCode r"><span id="cb475-1"><a href="主成分分析-pca.html#cb475-1" tabindex="-1"></a><span class="fu">summary</span>(pc_cr4)</span>
+<span id="cb475-2"><a href="主成分分析-pca.html#cb475-2" tabindex="-1"></a><span class="co">#&gt; Importance of components:</span></span>
+<span id="cb475-3"><a href="主成分分析-pca.html#cb475-3" tabindex="-1"></a><span class="co">#&gt;                           PC1    PC2     PC3     PC4</span></span>
+<span id="cb475-4"><a href="主成分分析-pca.html#cb475-4" tabindex="-1"></a><span class="co">#&gt; Standard deviation     1.5749 0.9949 0.59713 0.41645</span></span>
+<span id="cb475-5"><a href="主成分分析-pca.html#cb475-5" tabindex="-1"></a><span class="co">#&gt; Proportion of Variance 0.6201 0.2474 0.08914 0.04336</span></span>
+<span id="cb475-6"><a href="主成分分析-pca.html#cb475-6" tabindex="-1"></a><span class="co">#&gt; Cumulative Proportion  0.6201 0.8675 0.95664 1.00000</span></span></code></pre></div>
+<div class="sourceCode" id="cb476"><pre class="sourceCode r"><code class="sourceCode r"><span id="cb476-1"><a href="主成分分析-pca.html#cb476-1" tabindex="-1"></a><span class="co"># PCAにかける変数の絞り込み </span></span>
+<span id="cb476-2"><a href="主成分分析-pca.html#cb476-2" tabindex="-1"></a><span class="co"># prcomp(~ Murder + Assault + Rape, data = USArrests, scale = TRUE)</span></span></code></pre></div>
+
+</div>
+</div>
+</div>
+            </section>
+
+          </div>
+        </div>
+      </div>
+<a href="サポートベクターマシン-svm.html" class="navigation navigation-prev " aria-label="Previous page"><i class="fa fa-angle-left"></i></a>
+<a href="探索的因子分析.html" class="navigation navigation-next " aria-label="Next page"><i class="fa fa-angle-right"></i></a>
+    </div>
+  </div>
+<script src="libs/gitbook-2.6.7/js/app.min.js"></script>
+<script src="libs/gitbook-2.6.7/js/clipboard.min.js"></script>
+<script src="libs/gitbook-2.6.7/js/plugin-search.js"></script>
+<script src="libs/gitbook-2.6.7/js/plugin-sharing.js"></script>
+<script src="libs/gitbook-2.6.7/js/plugin-fontsettings.js"></script>
+<script src="libs/gitbook-2.6.7/js/plugin-bookdown.js"></script>
+<script src="libs/gitbook-2.6.7/js/jquery.highlight.js"></script>
+<script src="libs/gitbook-2.6.7/js/plugin-clipboard.js"></script>
+<script>
+gitbook.require(["gitbook"], function(gitbook) {
+gitbook.start({
+"sharing": {
+"github": false,
+"facebook": true,
+"twitter": true,
+"linkedin": false,
+"weibo": false,
+"instapaper": false,
+"vk": false,
+"whatsapp": false,
+"all": ["facebook", "twitter", "linkedin", "weibo", "instapaper"]
+},
+"fontsettings": {
+"theme": "white",
+"family": "sans",
+"size": 2
+},
+"edit": {
+"link": null,
+"text": null
+},
+"history": {
+"link": null,
+"text": null
+},
+"view": {
+"link": null,
+"text": null
+},
+"download": null,
+"search": {
+"engine": "fuse",
+"options": null
+},
+"toc": {
+"collapse": "subsection"
+}
+});
+});
+</script>
+
+<!-- dynamically load mathjax for compatibility with self-contained -->
+<script>
+  (function () {
+    var script = document.createElement("script");
+    script.type = "text/javascript";
+    var src = "true";
+    if (src === "" || src === "true") src = "https://cdnjs.cloudflare.com/ajax/libs/mathjax/2.7.9/latest.js?config=TeX-MML-AM_CHTML";
+    if (location.protocol !== "file:")
+      if (/^https?:/.test(src))
+        src = src.replace(/^https?:/, '');
+    script.src = src;
+    document.getElementsByTagName("head")[0].appendChild(script);
+  })();
+</script>
+</body>
+
+</html>

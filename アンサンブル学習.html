@@ -1,0 +1,984 @@
+<!DOCTYPE html>
+<html lang="" xml:lang="">
+<head>
+
+  <meta charset="utf-8" />
+  <meta http-equiv="X-UA-Compatible" content="IE=edge" />
+  <title>9 アンサンブル学習 | 金融データサイエンス</title>
+  <meta name="description" content="9 アンサンブル学習 | 金融データサイエンス" />
+  <meta name="generator" content="bookdown 0.40 and GitBook 2.6.7" />
+
+  <meta property="og:title" content="9 アンサンブル学習 | 金融データサイエンス" />
+  <meta property="og:type" content="book" />
+  
+  
+  
+
+  <meta name="twitter:card" content="summary" />
+  <meta name="twitter:title" content="9 アンサンブル学習 | 金融データサイエンス" />
+  
+  
+  
+
+<meta name="author" content="林 高樹" />
+
+
+
+  <meta name="viewport" content="width=device-width, initial-scale=1" />
+  <meta name="apple-mobile-web-app-capable" content="yes" />
+  <meta name="apple-mobile-web-app-status-bar-style" content="black" />
+  
+  
+<link rel="prev" href="決定木分析.html"/>
+<link rel="next" href="サポートベクターマシン-svm.html"/>
+<script src="libs/jquery-3.6.0/jquery-3.6.0.min.js"></script>
+<script src="https://cdn.jsdelivr.net/npm/fuse.js@6.4.6/dist/fuse.min.js"></script>
+<link href="libs/gitbook-2.6.7/css/style.css" rel="stylesheet" />
+<link href="libs/gitbook-2.6.7/css/plugin-table.css" rel="stylesheet" />
+<link href="libs/gitbook-2.6.7/css/plugin-bookdown.css" rel="stylesheet" />
+<link href="libs/gitbook-2.6.7/css/plugin-highlight.css" rel="stylesheet" />
+<link href="libs/gitbook-2.6.7/css/plugin-search.css" rel="stylesheet" />
+<link href="libs/gitbook-2.6.7/css/plugin-fontsettings.css" rel="stylesheet" />
+<link href="libs/gitbook-2.6.7/css/plugin-clipboard.css" rel="stylesheet" />
+
+
+
+
+
+
+
+
+<link href="libs/anchor-sections-1.1.0/anchor-sections.css" rel="stylesheet" />
+<link href="libs/anchor-sections-1.1.0/anchor-sections-hash.css" rel="stylesheet" />
+<script src="libs/anchor-sections-1.1.0/anchor-sections.js"></script>
+
+
+<style type="text/css">
+pre > code.sourceCode { white-space: pre; position: relative; }
+pre > code.sourceCode > span { line-height: 1.25; }
+pre > code.sourceCode > span:empty { height: 1.2em; }
+.sourceCode { overflow: visible; }
+code.sourceCode > span { color: inherit; text-decoration: inherit; }
+pre.sourceCode { margin: 0; }
+@media screen {
+div.sourceCode { overflow: auto; }
+}
+@media print {
+pre > code.sourceCode { white-space: pre-wrap; }
+pre > code.sourceCode > span { display: inline-block; text-indent: -5em; padding-left: 5em; }
+}
+pre.numberSource code
+  { counter-reset: source-line 0; }
+pre.numberSource code > span
+  { position: relative; left: -4em; counter-increment: source-line; }
+pre.numberSource code > span > a:first-child::before
+  { content: counter(source-line);
+    position: relative; left: -1em; text-align: right; vertical-align: baseline;
+    border: none; display: inline-block;
+    -webkit-touch-callout: none; -webkit-user-select: none;
+    -khtml-user-select: none; -moz-user-select: none;
+    -ms-user-select: none; user-select: none;
+    padding: 0 4px; width: 4em;
+    color: #aaaaaa;
+  }
+pre.numberSource { margin-left: 3em; border-left: 1px solid #aaaaaa;  padding-left: 4px; }
+div.sourceCode
+  {   }
+@media screen {
+pre > code.sourceCode > span > a:first-child::before { text-decoration: underline; }
+}
+code span.al { color: #ff0000; font-weight: bold; } /* Alert */
+code span.an { color: #60a0b0; font-weight: bold; font-style: italic; } /* Annotation */
+code span.at { color: #7d9029; } /* Attribute */
+code span.bn { color: #40a070; } /* BaseN */
+code span.bu { color: #008000; } /* BuiltIn */
+code span.cf { color: #007020; font-weight: bold; } /* ControlFlow */
+code span.ch { color: #4070a0; } /* Char */
+code span.cn { color: #880000; } /* Constant */
+code span.co { color: #60a0b0; font-style: italic; } /* Comment */
+code span.cv { color: #60a0b0; font-weight: bold; font-style: italic; } /* CommentVar */
+code span.do { color: #ba2121; font-style: italic; } /* Documentation */
+code span.dt { color: #902000; } /* DataType */
+code span.dv { color: #40a070; } /* DecVal */
+code span.er { color: #ff0000; font-weight: bold; } /* Error */
+code span.ex { } /* Extension */
+code span.fl { color: #40a070; } /* Float */
+code span.fu { color: #06287e; } /* Function */
+code span.im { color: #008000; font-weight: bold; } /* Import */
+code span.in { color: #60a0b0; font-weight: bold; font-style: italic; } /* Information */
+code span.kw { color: #007020; font-weight: bold; } /* Keyword */
+code span.op { color: #666666; } /* Operator */
+code span.ot { color: #007020; } /* Other */
+code span.pp { color: #bc7a00; } /* Preprocessor */
+code span.sc { color: #4070a0; } /* SpecialChar */
+code span.ss { color: #bb6688; } /* SpecialString */
+code span.st { color: #4070a0; } /* String */
+code span.va { color: #19177c; } /* Variable */
+code span.vs { color: #4070a0; } /* VerbatimString */
+code span.wa { color: #60a0b0; font-weight: bold; font-style: italic; } /* Warning */
+</style>
+
+<style type="text/css">
+  
+  div.hanging-indent{margin-left: 1.5em; text-indent: -1.5em;}
+</style>
+
+</head>
+
+<body>
+
+
+
+  <div class="book without-animation with-summary font-size-2 font-family-1" data-basepath=".">
+
+    <div class="book-summary">
+      <nav role="navigation">
+
+<ul class="summary">
+<li class="chapter" data-level="1" data-path="index.html"><a href="index.html"><i class="fa fa-check"></i><b>1</b> はじめに</a>
+<ul>
+<li class="chapter" data-level="1.1" data-path="index.html"><a href="index.html#コースの目的"><i class="fa fa-check"></i><b>1.1</b> コースの目的</a></li>
+<li class="chapter" data-level="1.2" data-path="index.html"><a href="index.html#統計学統計的手法の学習について"><i class="fa fa-check"></i><b>1.2</b> 統計学/統計的手法の学習について</a>
+<ul>
+<li class="chapter" data-level="" data-path="index.html"><a href="index.html#学習の目標"><i class="fa fa-check"></i>学習の目標</a></li>
+<li class="chapter" data-level="" data-path="index.html"><a href="index.html#統計学統計的手法の学習方法"><i class="fa fa-check"></i>統計学/統計的手法の学習方法</a></li>
+<li class="chapter" data-level="" data-path="index.html"><a href="index.html#統計学統計的手法の学習ステップ"><i class="fa fa-check"></i>統計学/統計的手法の学習ステップ</a></li>
+</ul></li>
+<li class="chapter" data-level="1.3" data-path="index.html"><a href="index.html#ビジネス応用における統計学の最近の趨勢"><i class="fa fa-check"></i><b>1.3</b> ビジネス応用における統計学の最近の趨勢</a></li>
+<li class="chapter" data-level="1.4" data-path="index.html"><a href="index.html#本書内の記載の注意点"><i class="fa fa-check"></i><b>1.4</b> 本書内の記載の注意点</a></li>
+</ul></li>
+<li class="chapter" data-level="2" data-path="r言語の基本.html"><a href="r言語の基本.html"><i class="fa fa-check"></i><b>2</b> R言語の基本</a>
+<ul>
+<li class="chapter" data-level="2.1" data-path="r言語の基本.html"><a href="r言語の基本.html#rの基本プログラミング"><i class="fa fa-check"></i><b>2.1</b> Rの基本プログラミング</a>
+<ul>
+<li class="chapter" data-level="2.1.1" data-path="r言語の基本.html"><a href="r言語の基本.html#基本操作"><i class="fa fa-check"></i><b>2.1.1</b> 基本操作</a></li>
+<li class="chapter" data-level="2.1.2" data-path="r言語の基本.html"><a href="r言語の基本.html#基本構文"><i class="fa fa-check"></i><b>2.1.2</b> 基本構文</a></li>
+<li class="chapter" data-level="2.1.3" data-path="r言語の基本.html"><a href="r言語の基本.html#自作関数"><i class="fa fa-check"></i><b>2.1.3</b> 自作関数</a></li>
+<li class="chapter" data-level="2.1.4" data-path="r言語の基本.html"><a href="r言語の基本.html#パッケージのインストール-読み込み"><i class="fa fa-check"></i><b>2.1.4</b> パッケージのインストール &amp; 読み込み</a></li>
+<li class="chapter" data-level="2.1.5" data-path="r言語の基本.html"><a href="r言語の基本.html#ヘルプ"><i class="fa fa-check"></i><b>2.1.5</b> ヘルプ</a></li>
+</ul></li>
+<li class="chapter" data-level="2.2" data-path="r言語の基本.html"><a href="r言語の基本.html#データの型や構造"><i class="fa fa-check"></i><b>2.2</b> データの型や構造</a>
+<ul>
+<li class="chapter" data-level="2.2.1" data-path="r言語の基本.html"><a href="r言語の基本.html#データの値の種類-データ型"><i class="fa fa-check"></i><b>2.2.1</b> データの値の種類 (“データ型”)</a></li>
+<li class="chapter" data-level="2.2.2" data-path="r言語の基本.html"><a href="r言語の基本.html#データの配列の仕方-データ構造"><i class="fa fa-check"></i><b>2.2.2</b> データの配列の仕方 (“データ構造”)</a></li>
+<li class="chapter" data-level="2.2.3" data-path="r言語の基本.html"><a href="r言語の基本.html#ベクトル"><i class="fa fa-check"></i><b>2.2.3</b> ベクトル</a></li>
+<li class="chapter" data-level="2.2.4" data-path="r言語の基本.html"><a href="r言語の基本.html#行列"><i class="fa fa-check"></i><b>2.2.4</b> 行列</a></li>
+<li class="chapter" data-level="2.2.5" data-path="r言語の基本.html"><a href="r言語の基本.html#リスト"><i class="fa fa-check"></i><b>2.2.5</b> リスト</a></li>
+<li class="chapter" data-level="2.2.6" data-path="r言語の基本.html"><a href="r言語の基本.html#データフレーム"><i class="fa fa-check"></i><b>2.2.6</b> データフレーム</a></li>
+</ul></li>
+<li class="chapter" data-level="2.3" data-path="r言語の基本.html"><a href="r言語の基本.html#データの操作演算"><i class="fa fa-check"></i><b>2.3</b> データの操作・演算</a>
+<ul>
+<li class="chapter" data-level="2.3.1" data-path="r言語の基本.html"><a href="r言語の基本.html#ベクトルの結合-ソート"><i class="fa fa-check"></i><b>2.3.1</b> ベクトルの結合, ソート</a></li>
+<li class="chapter" data-level="2.3.2" data-path="r言語の基本.html"><a href="r言語の基本.html#二項演算"><i class="fa fa-check"></i><b>2.3.2</b> 二項演算</a></li>
+<li class="chapter" data-level="2.3.3" data-path="r言語の基本.html"><a href="r言語の基本.html#論理演算"><i class="fa fa-check"></i><b>2.3.3</b> 論理演算</a></li>
+<li class="chapter" data-level="2.3.4" data-path="r言語の基本.html"><a href="r言語の基本.html#条件式"><i class="fa fa-check"></i><b>2.3.4</b> 条件式</a></li>
+<li class="chapter" data-level="2.3.5" data-path="r言語の基本.html"><a href="r言語の基本.html#行列演算"><i class="fa fa-check"></i><b>2.3.5</b> 行列演算</a></li>
+</ul></li>
+<li class="chapter" data-level="2.4" data-path="r言語の基本.html"><a href="r言語の基本.html#r関数"><i class="fa fa-check"></i><b>2.4</b> R関数</a>
+<ul>
+<li class="chapter" data-level="2.4.1" data-path="r言語の基本.html"><a href="r言語の基本.html#数学基本関数"><i class="fa fa-check"></i><b>2.4.1</b> 数学基本関数</a></li>
+<li class="chapter" data-level="2.4.2" data-path="r言語の基本.html"><a href="r言語の基本.html#基本統計量の計算"><i class="fa fa-check"></i><b>2.4.2</b> 基本統計量の計算</a></li>
+<li class="chapter" data-level="2.4.3" data-path="r言語の基本.html"><a href="r言語の基本.html#確率分布"><i class="fa fa-check"></i><b>2.4.3</b> 確率分布</a></li>
+<li class="chapter" data-level="2.4.4" data-path="r言語の基本.html"><a href="r言語の基本.html#その他便利な関数"><i class="fa fa-check"></i><b>2.4.4</b> その他便利な関数</a></li>
+</ul></li>
+<li class="chapter" data-level="2.5" data-path="r言語の基本.html"><a href="r言語の基本.html#データの可視化"><i class="fa fa-check"></i><b>2.5</b> データの可視化</a></li>
+<li class="chapter" data-level="2.6" data-path="r言語の基本.html"><a href="r言語の基本.html#ファイル入出力"><i class="fa fa-check"></i><b>2.6</b> ファイル入出力</a>
+<ul>
+<li class="chapter" data-level="2.6.1" data-path="r言語の基本.html"><a href="r言語の基本.html#テキストファイル読み込み"><i class="fa fa-check"></i><b>2.6.1</b> テキストファイル読み込み</a></li>
+<li class="chapter" data-level="2.6.2" data-path="r言語の基本.html"><a href="r言語の基本.html#テキストファイル書き出し"><i class="fa fa-check"></i><b>2.6.2</b> テキストファイル書き出し</a></li>
+</ul></li>
+<li class="chapter" data-level="2.7" data-path="r言語の基本.html"><a href="r言語の基本.html#パッケージtidyverse"><i class="fa fa-check"></i><b>2.7</b> パッケージ<code>tidyverse</code></a>
+<ul>
+<li class="chapter" data-level="2.7.1" data-path="r言語の基本.html"><a href="r言語の基本.html#q-rの初心者はtidyverseから勉強することは可能か"><i class="fa fa-check"></i><b>2.7.1</b> Q: Rの初心者は<code>tidyverse</code>から勉強することは可能か?</a></li>
+<li class="chapter" data-level="2.7.2" data-path="r言語の基本.html"><a href="r言語の基本.html#tidyverseの基本"><i class="fa fa-check"></i><b>2.7.2</b> <code>tidyverse</code>の基本</a></li>
+</ul></li>
+</ul></li>
+<li class="chapter" data-level="3" data-path="線形回帰分析.html"><a href="線形回帰分析.html"><i class="fa fa-check"></i><b>3</b> 線形回帰分析</a>
+<ul>
+<li class="chapter" data-level="3.1" data-path="線形回帰分析.html"><a href="線形回帰分析.html#重回帰分析の基本操作"><i class="fa fa-check"></i><b>3.1</b> 重回帰分析の基本操作</a>
+<ul>
+<li class="chapter" data-level="" data-path="線形回帰分析.html"><a href="線形回帰分析.html#データ1-1ルーム賃貸マンション"><i class="fa fa-check"></i>データ1: 1ルーム賃貸マンション</a></li>
+</ul></li>
+<li class="chapter" data-level="3.2" data-path="線形回帰分析.html"><a href="線形回帰分析.html#変数の選択"><i class="fa fa-check"></i><b>3.2</b> 変数の選択</a>
+<ul>
+<li class="chapter" data-level="" data-path="線形回帰分析.html"><a href="線形回帰分析.html#データ2-ボストン市内住宅物件価格データ"><i class="fa fa-check"></i>データ2: ボストン市内住宅物件価格データ</a></li>
+</ul></li>
+<li class="chapter" data-level="3.3" data-path="線形回帰分析.html"><a href="線形回帰分析.html#説明変数に質的変数を含む回帰"><i class="fa fa-check"></i><b>3.3</b> 説明変数に質的変数を含む回帰</a>
+<ul>
+<li class="chapter" data-level="" data-path="線形回帰分析.html"><a href="線形回帰分析.html#データセット3-高速道路事故データ"><i class="fa fa-check"></i>データセット#3: 高速道路事故データ</a></li>
+</ul></li>
+<li class="chapter" data-level="3.4" data-path="線形回帰分析.html"><a href="線形回帰分析.html#説明変数に質的変数を含む回帰-2"><i class="fa fa-check"></i><b>3.4</b> 説明変数に質的変数を含む回帰 (2)</a>
+<ul>
+<li class="chapter" data-level="" data-path="線形回帰分析.html"><a href="線形回帰分析.html#データセット5-収入データ-仮想"><i class="fa fa-check"></i>データセット#5: 収入データ (仮想)</a></li>
+</ul></li>
+<li class="chapter" data-level="3.5" data-path="線形回帰分析.html"><a href="線形回帰分析.html#多項式回帰"><i class="fa fa-check"></i><b>3.5</b> 多項式回帰</a>
+<ul>
+<li class="chapter" data-level="" data-path="線形回帰分析.html"><a href="線形回帰分析.html#データセット6-wage"><i class="fa fa-check"></i>データセット#6: <code>Wage</code></a></li>
+</ul></li>
+<li class="chapter" data-level="3.6" data-path="線形回帰分析.html"><a href="線形回帰分析.html#関数factorについて"><i class="fa fa-check"></i><b>3.6</b> 関数<code>factor()</code>について</a>
+<ul>
+<li class="chapter" data-level="" data-path="線形回帰分析.html"><a href="線形回帰分析.html#rでのfactor関数の使い方"><i class="fa fa-check"></i>Rでのfactor関数の使い方</a></li>
+</ul></li>
+</ul></li>
+<li class="chapter" data-level="4" data-path="ロジットブロビット回帰分析.html"><a href="ロジットブロビット回帰分析.html"><i class="fa fa-check"></i><b>4</b> ロジット/ブロビット回帰分析</a>
+<ul>
+<li class="chapter" data-level="4.1" data-path="ロジットブロビット回帰分析.html"><a href="ロジットブロビット回帰分析.html#ロジット回帰分析の基本操作"><i class="fa fa-check"></i><b>4.1</b> ロジット回帰分析の基本操作</a>
+<ul>
+<li class="chapter" data-level="" data-path="ロジットブロビット回帰分析.html"><a href="ロジットブロビット回帰分析.html#ロジットモデル-シミュレーションデータ"><i class="fa fa-check"></i>ロジットモデル: シミュレーションデータ</a></li>
+</ul></li>
+<li class="chapter" data-level="4.2" data-path="ロジットブロビット回帰分析.html"><a href="ロジットブロビット回帰分析.html#データ分析例"><i class="fa fa-check"></i><b>4.2</b> データ分析例</a>
+<ul>
+<li class="chapter" data-level="" data-path="ロジットブロビット回帰分析.html"><a href="ロジットブロビット回帰分析.html#データセット-1-企業パフォーマンスデータ-仮想"><i class="fa fa-check"></i>データセット (1): 企業パフォーマンス・データ (仮想)</a></li>
+<li class="chapter" data-level="" data-path="ロジットブロビット回帰分析.html"><a href="ロジットブロビット回帰分析.html#データセット-2-個人ローンデフォルトデータ-仮想"><i class="fa fa-check"></i>データセット (2): 個人ローン・デフォルト・データ (仮想)</a></li>
+</ul></li>
+<li class="chapter" data-level="4.3" data-path="ロジットブロビット回帰分析.html"><a href="ロジットブロビット回帰分析.html#疑似r2の計算"><i class="fa fa-check"></i><b>4.3</b> 疑似R2の計算</a>
+<ul>
+<li class="chapter" data-level="" data-path="ロジットブロビット回帰分析.html"><a href="ロジットブロビット回帰分析.html#パッケージdesctoolsの利用"><i class="fa fa-check"></i>パッケージ<code>DescTools</code>の利用</a></li>
+<li class="chapter" data-level="" data-path="ロジットブロビット回帰分析.html"><a href="ロジットブロビット回帰分析.html#パッケージpsclの利用"><i class="fa fa-check"></i>パッケージ<code>pscl</code>の利用</a></li>
+<li class="chapter" data-level="" data-path="ロジットブロビット回帰分析.html"><a href="ロジットブロビット回帰分析.html#パッケージperformanceの利用"><i class="fa fa-check"></i>パッケージ<code>performance</code>の利用</a></li>
+</ul></li>
+</ul></li>
+<li class="chapter" data-level="5" data-path="一般化加法モデル-gam.html"><a href="一般化加法モデル-gam.html"><i class="fa fa-check"></i><b>5</b> 一般化加法モデル (GAM)</a>
+<ul>
+<li class="chapter" data-level="5.1" data-path="一般化加法モデル-gam.html"><a href="一般化加法モデル-gam.html#パッケージgamの利用"><i class="fa fa-check"></i><b>5.1</b> パッケージ<code>gam</code>の利用</a>
+<ul>
+<li class="chapter" data-level="" data-path="一般化加法モデル-gam.html"><a href="一般化加法モデル-gam.html#多項式回帰-1"><i class="fa fa-check"></i>多項式回帰</a></li>
+<li class="chapter" data-level="" data-path="一般化加法モデル-gam.html"><a href="一般化加法モデル-gam.html#スプライン適合"><i class="fa fa-check"></i>スプライン適合</a></li>
+<li class="chapter" data-level="" data-path="一般化加法モデル-gam.html"><a href="一般化加法モデル-gam.html#gam"><i class="fa fa-check"></i>GAM</a></li>
+</ul></li>
+<li class="chapter" data-level="5.2" data-path="一般化加法モデル-gam.html"><a href="一般化加法モデル-gam.html#パッケージmgcvの利用"><i class="fa fa-check"></i><b>5.2</b> パッケージ<code>mgcv</code>の利用</a></li>
+<li class="chapter" data-level="5.3" data-path="一般化加法モデル-gam.html"><a href="一般化加法モデル-gam.html#パッケージprophetの利用"><i class="fa fa-check"></i><b>5.3</b> パッケージ<code>prophet</code>の利用</a></li>
+<li class="chapter" data-level="5.4" data-path="一般化加法モデル-gam.html"><a href="一般化加法モデル-gam.html#追加分析boston-housingデータセットの変数間の関係性"><i class="fa fa-check"></i><b>5.4</b> 【追加分析】Boston housingデータセットの変数間の関係性</a></li>
+</ul></li>
+<li class="chapter" data-level="6" data-path="正則化回帰-lasso-ridge回帰-elastic-net.html"><a href="正則化回帰-lasso-ridge回帰-elastic-net.html"><i class="fa fa-check"></i><b>6</b> 正則化回帰 (lasso, ridge回帰, elastic net)</a>
+<ul>
+<li class="chapter" data-level="6.1" data-path="正則化回帰-lasso-ridge回帰-elastic-net.html"><a href="正則化回帰-lasso-ridge回帰-elastic-net.html#検証用セット法による回帰モデルの予測精度評価"><i class="fa fa-check"></i><b>6.1</b> 検証用セット法による回帰モデルの予測精度評価</a>
+<ul>
+<li class="chapter" data-level="" data-path="正則化回帰-lasso-ridge回帰-elastic-net.html"><a href="正則化回帰-lasso-ridge回帰-elastic-net.html#データセット1-ワイン品質データ"><i class="fa fa-check"></i>データセット1: ワイン品質データ</a></li>
+</ul></li>
+<li class="chapter" data-level="6.2" data-path="正則化回帰-lasso-ridge回帰-elastic-net.html"><a href="正則化回帰-lasso-ridge回帰-elastic-net.html#lasso"><i class="fa fa-check"></i><b>6.2</b> lasso</a>
+<ul>
+<li class="chapter" data-level="" data-path="正則化回帰-lasso-ridge回帰-elastic-net.html"><a href="正則化回帰-lasso-ridge回帰-elastic-net.html#関数glmnetの基本操作"><i class="fa fa-check"></i>関数<code>glmnet()</code>の基本操作</a></li>
+<li class="chapter" data-level="" data-path="正則化回帰-lasso-ridge回帰-elastic-net.html"><a href="正則化回帰-lasso-ridge回帰-elastic-net.html#lambdaのグリッド指定によるglmnetの一括実行"><i class="fa fa-check"></i><code>lambda</code>のグリッド指定による<code>glmnet</code>の一括実行</a></li>
+<li class="chapter" data-level="" data-path="正則化回帰-lasso-ridge回帰-elastic-net.html"><a href="正則化回帰-lasso-ridge回帰-elastic-net.html#交差検証によるパラメータチューニング"><i class="fa fa-check"></i>交差検証によるパラメータ・チューニング</a></li>
+</ul></li>
+<li class="chapter" data-level="6.3" data-path="正則化回帰-lasso-ridge回帰-elastic-net.html"><a href="正則化回帰-lasso-ridge回帰-elastic-net.html#ridge回帰"><i class="fa fa-check"></i><b>6.3</b> ridge回帰</a></li>
+<li class="chapter" data-level="6.4" data-path="正則化回帰-lasso-ridge回帰-elastic-net.html"><a href="正則化回帰-lasso-ridge回帰-elastic-net.html#一般化線形モデル-glm-正則化"><i class="fa fa-check"></i><b>6.4</b> 一般化線形モデル (GLM) + 正則化</a>
+<ul>
+<li class="chapter" data-level="" data-path="正則化回帰-lasso-ridge回帰-elastic-net.html"><a href="正則化回帰-lasso-ridge回帰-elastic-net.html#データセット2-german-creditデータ"><i class="fa fa-check"></i>データセット2: german creditデータ</a></li>
+</ul></li>
+<li class="chapter" data-level="6.5" data-path="正則化回帰-lasso-ridge回帰-elastic-net.html"><a href="正則化回帰-lasso-ridge回帰-elastic-net.html#補足-glmに対する変数選択の代替的方法"><i class="fa fa-check"></i><b>6.5</b> 補足: GLMに対する変数選択の代替的方法</a></li>
+</ul></li>
+<li class="chapter" data-level="7" data-path="判別分析.html"><a href="判別分析.html"><i class="fa fa-check"></i><b>7</b> 判別分析</a>
+<ul>
+<li class="chapter" data-level="7.1" data-path="判別分析.html"><a href="判別分析.html#線形判別-2次判別-パッケージmassの利用"><i class="fa fa-check"></i><b>7.1</b> 線形判別 &amp; 2次判別: パッケージMASSの利用</a>
+<ul>
+<li class="chapter" data-level="" data-path="判別分析.html"><a href="判別分析.html#データセット1-米国sp500日次リターンデータ"><i class="fa fa-check"></i>データセット#1: 米国S&amp;P500日次リターンデータ</a></li>
+<li class="chapter" data-level="" data-path="判別分析.html"><a href="判別分析.html#線形判別-lda"><i class="fa fa-check"></i>線形判別 (LDA)</a></li>
+<li class="chapter" data-level="" data-path="判別分析.html"><a href="判別分析.html#次判別-qda"><i class="fa fa-check"></i>2次判別 (QDA)</a></li>
+</ul></li>
+<li class="chapter" data-level="7.2" data-path="判別分析.html"><a href="判別分析.html#knn法-パッケージclassの利用"><i class="fa fa-check"></i><b>7.2</b> kNN法: パッケージ<strong>class</strong>の利用</a></li>
+<li class="chapter" data-level="7.3" data-path="判別分析.html"><a href="判別分析.html#他パッケージの利用-パッケージklar"><i class="fa fa-check"></i><b>7.3</b> 他パッケージの利用: パッケージ<strong>klaR</strong></a>
+<ul>
+<li class="chapter" data-level="" data-path="判別分析.html"><a href="判別分析.html#データセット2-ビジネススクールの入学許可データ"><i class="fa fa-check"></i>データセット#2: ビジネススクールの入学許可データ</a></li>
+</ul></li>
+</ul></li>
+<li class="chapter" data-level="8" data-path="決定木分析.html"><a href="決定木分析.html"><i class="fa fa-check"></i><b>8</b> 決定木分析</a>
+<ul>
+<li class="chapter" data-level="8.1" data-path="決定木分析.html"><a href="決定木分析.html#導入-回帰木-vs-線形回帰"><i class="fa fa-check"></i><b>8.1</b> 導入: 回帰木 vs 線形回帰</a>
+<ul>
+<li class="chapter" data-level="" data-path="決定木分析.html"><a href="決定木分析.html#データセット1-自動車の制動距離"><i class="fa fa-check"></i>データセット1: 自動車の制動距離</a></li>
+<li class="chapter" data-level="8.1.1" data-path="決定木分析.html"><a href="決定木分析.html#基本操作-回帰木"><i class="fa fa-check"></i><b>8.1.1</b> 基本操作: 回帰木</a></li>
+</ul></li>
+<li class="chapter" data-level="8.2" data-path="決定木分析.html"><a href="決定木分析.html#回帰木"><i class="fa fa-check"></i><b>8.2</b> 回帰木</a>
+<ul>
+<li class="chapter" data-level="" data-path="決定木分析.html"><a href="決定木分析.html#データセット2-米國株価指数データ-再掲"><i class="fa fa-check"></i>データセット2: 米國株価指数データ (再掲)</a></li>
+</ul></li>
+<li class="chapter" data-level="8.3" data-path="決定木分析.html"><a href="決定木分析.html#分類木"><i class="fa fa-check"></i><b>8.3</b> 分類木</a></li>
+</ul></li>
+<li class="chapter" data-level="9" data-path="アンサンブル学習.html"><a href="アンサンブル学習.html"><i class="fa fa-check"></i><b>9</b> アンサンブル学習</a>
+<ul>
+<li class="chapter" data-level="9.1" data-path="アンサンブル学習.html"><a href="アンサンブル学習.html#決定木-分類木"><i class="fa fa-check"></i><b>9.1</b> 決定木 (分類木)</a>
+<ul>
+<li class="chapter" data-level="" data-path="アンサンブル学習.html"><a href="アンサンブル学習.html#データセット3-個人ローン信用データ-再掲"><i class="fa fa-check"></i>データセット3: 個人ローン信用データ (再掲)</a></li>
+</ul></li>
+<li class="chapter" data-level="9.2" data-path="アンサンブル学習.html"><a href="アンサンブル学習.html#ランダムフォレスト分類木"><i class="fa fa-check"></i><b>9.2</b> ランダムフォレスト分類木</a></li>
+<li class="chapter" data-level="9.3" data-path="アンサンブル学習.html"><a href="アンサンブル学習.html#一般化ブースト回帰"><i class="fa fa-check"></i><b>9.3</b> 一般化ブースト回帰</a></li>
+</ul></li>
+<li class="chapter" data-level="10" data-path="サポートベクターマシン-svm.html"><a href="サポートベクターマシン-svm.html"><i class="fa fa-check"></i><b>10</b> サポートベクターマシン (SVM)</a>
+<ul>
+<li class="chapter" data-level="10.1" data-path="サポートベクターマシン-svm.html"><a href="サポートベクターマシン-svm.html#svm-rbfカーネル-の動作の確認"><i class="fa fa-check"></i><b>10.1</b> SVM (RBFカーネル) の動作の確認</a>
+<ul>
+<li class="chapter" data-level="" data-path="サポートベクターマシン-svm.html"><a href="サポートベクターマシン-svm.html#データセット1-iris-あやめ-データ"><i class="fa fa-check"></i>データセット1: iris (あやめ) データ</a></li>
+<li class="chapter" data-level="" data-path="サポートベクターマシン-svm.html"><a href="サポートベクターマシン-svm.html#svmの実行"><i class="fa fa-check"></i>SVMの実行</a></li>
+</ul></li>
+<li class="chapter" data-level="10.2" data-path="サポートベクターマシン-svm.html"><a href="サポートベクターマシン-svm.html#値分類"><i class="fa fa-check"></i><b>10.2</b> 2値分類</a>
+<ul>
+<li class="chapter" data-level="" data-path="サポートベクターマシン-svm.html"><a href="サポートベクターマシン-svm.html#データセット2-spamデータ"><i class="fa fa-check"></i>データセット2: spamデータ</a></li>
+<li class="chapter" data-level="" data-path="サポートベクターマシン-svm.html"><a href="サポートベクターマシン-svm.html#svmの実行-1"><i class="fa fa-check"></i>SVMの実行</a></li>
+</ul></li>
+<li class="chapter" data-level="10.3" data-path="サポートベクターマシン-svm.html"><a href="サポートベクターマシン-svm.html#値分類-1"><i class="fa fa-check"></i><b>10.3</b> 3値分類</a>
+<ul>
+<li class="chapter" data-level="" data-path="サポートベクターマシン-svm.html"><a href="サポートベクターマシン-svm.html#svmの実行-2"><i class="fa fa-check"></i>SVMの実行</a></li>
+</ul></li>
+<li class="chapter" data-level="10.4" data-path="サポートベクターマシン-svm.html"><a href="サポートベクターマシン-svm.html#代替パッケージe1071の利用"><i class="fa fa-check"></i><b>10.4</b> 代替パッケージ<strong>e1071</strong>の利用</a>
+<ul>
+<li class="chapter" data-level="" data-path="サポートベクターマシン-svm.html"><a href="サポートベクターマシン-svm.html#svmの実行-3"><i class="fa fa-check"></i>SVMの実行</a></li>
+</ul></li>
+<li class="chapter" data-level="10.5" data-path="サポートベクターマシン-svm.html"><a href="サポートベクターマシン-svm.html#ハイパーパラメータのチューニング"><i class="fa fa-check"></i><b>10.5</b> ハイパーパラメータのチューニング</a>
+<ul>
+<li class="chapter" data-level="" data-path="サポートベクターマシン-svm.html"><a href="サポートベクターマシン-svm.html#線形カーネルの場合"><i class="fa fa-check"></i>線形カーネルの場合</a></li>
+<li class="chapter" data-level="" data-path="サポートベクターマシン-svm.html"><a href="サポートベクターマシン-svm.html#rbfカーネルの場合"><i class="fa fa-check"></i>RBFカーネルの場合</a></li>
+<li class="chapter" data-level="" data-path="サポートベクターマシン-svm.html"><a href="サポートベクターマシン-svm.html#e1071内にあるチューニング用の便利な関数群"><i class="fa fa-check"></i><strong>e1071</strong>内にあるチューニング用の便利な関数群</a></li>
+</ul></li>
+</ul></li>
+<li class="chapter" data-level="11" data-path="主成分分析-pca.html"><a href="主成分分析-pca.html"><i class="fa fa-check"></i><b>11</b> 主成分分析 (PCA)</a>
+<ul>
+<li class="chapter" data-level="11.1" data-path="主成分分析-pca.html"><a href="主成分分析-pca.html#基本操作-1"><i class="fa fa-check"></i><b>11.1</b> 基本操作</a>
+<ul>
+<li class="chapter" data-level="" data-path="主成分分析-pca.html"><a href="主成分分析-pca.html#データセット-従業員スキル評価データ仮想"><i class="fa fa-check"></i>データセット: 従業員スキル評価データ(仮想)</a></li>
+</ul></li>
+<li class="chapter" data-level="11.2" data-path="主成分分析-pca.html"><a href="主成分分析-pca.html#種類のpca-相関行列ベース-vs-分散共分散行列ベース"><i class="fa fa-check"></i><b>11.2</b> 2種類のPCA: 相関行列ベース vs 分散共分散行列ベース</a>
+<ul>
+<li class="chapter" data-level="" data-path="主成分分析-pca.html"><a href="主成分分析-pca.html#データセット3-usarrests-data"><i class="fa fa-check"></i>データセット3: USArrests data</a></li>
+</ul></li>
+</ul></li>
+<li class="chapter" data-level="12" data-path="探索的因子分析.html"><a href="探索的因子分析.html"><i class="fa fa-check"></i><b>12</b> 探索的因子分析</a>
+<ul>
+<li class="chapter" data-level="12.1" data-path="探索的因子分析.html"><a href="探索的因子分析.html#基本操作-2"><i class="fa fa-check"></i><b>12.1</b> 基本操作</a>
+<ul>
+<li class="chapter" data-level="" data-path="探索的因子分析.html"><a href="探索的因子分析.html#データセット1-従業員評価データ-仮想"><i class="fa fa-check"></i>データセット1: 従業員評価データ (仮想)</a></li>
+</ul></li>
+<li class="chapter" data-level="12.2" data-path="探索的因子分析.html"><a href="探索的因子分析.html#ライブラリpsychの利用"><i class="fa fa-check"></i><b>12.2</b> ライブラリ<strong>psych</strong>の利用</a></li>
+<li class="chapter" data-level="12.3" data-path="探索的因子分析.html"><a href="探索的因子分析.html#因子分析に有用なツール"><i class="fa fa-check"></i><b>12.3</b> 因子分析に有用なツール</a></li>
+</ul></li>
+<li class="chapter" data-level="13" data-path="クラスター分析.html"><a href="クラスター分析.html"><i class="fa fa-check"></i><b>13</b> クラスター分析</a>
+<ul>
+<li class="chapter" data-level="13.1" data-path="クラスター分析.html"><a href="クラスター分析.html#基本操作-3"><i class="fa fa-check"></i><b>13.1</b> 基本操作</a>
+<ul>
+<li class="chapter" data-level="" data-path="クラスター分析.html"><a href="クラスター分析.html#階層型クラスタリング"><i class="fa fa-check"></i>階層型クラスタリング</a></li>
+<li class="chapter" data-level="" data-path="クラスター分析.html"><a href="クラスター分析.html#k-means法"><i class="fa fa-check"></i>k-means法</a></li>
+<li class="chapter" data-level="" data-path="クラスター分析.html"><a href="クラスター分析.html#変数に対するクラスタリング"><i class="fa fa-check"></i>変数に対するクラスタリング</a></li>
+</ul></li>
+<li class="chapter" data-level="13.2" data-path="クラスター分析.html"><a href="クラスター分析.html#データ分析例-1"><i class="fa fa-check"></i><b>13.2</b> データ分析例</a>
+<ul>
+<li class="chapter" data-level="" data-path="クラスター分析.html"><a href="クラスター分析.html#データセット-1-ワイン品質データ-再掲"><i class="fa fa-check"></i>データセット (1): ワイン品質データ (再掲)</a></li>
+<li class="chapter" data-level="" data-path="クラスター分析.html"><a href="クラスター分析.html#データセット-2-id無し-posデータ"><i class="fa fa-check"></i>データセット (2): (ID無し) POSデータ</a></li>
+</ul></li>
+<li class="chapter" data-level="13.3" data-path="クラスター分析.html"><a href="クラスター分析.html#発展的なクラスター分析"><i class="fa fa-check"></i><b>13.3</b> 発展的なクラスター分析</a>
+<ul>
+<li class="chapter" data-level="" data-path="クラスター分析.html"><a href="クラスター分析.html#関数agnes"><i class="fa fa-check"></i>関数<code>agnes</code></a></li>
+<li class="chapter" data-level="" data-path="クラスター分析.html"><a href="クラスター分析.html#関数pheatmap"><i class="fa fa-check"></i>関数<code>pheatmap</code></a></li>
+<li class="chapter" data-level="" data-path="クラスター分析.html"><a href="クラスター分析.html#関数pam"><i class="fa fa-check"></i>関数<code>pam</code></a></li>
+</ul></li>
+</ul></li>
+<li class="chapter" data-level="14" data-path="xai-explainable-ai.html"><a href="xai-explainable-ai.html"><i class="fa fa-check"></i><b>14</b> XAI (Explainable AI)</a>
+<ul>
+<li class="chapter" data-level="" data-path="xai-explainable-ai.html"><a href="xai-explainable-ai.html#回帰問題のケース"><i class="fa fa-check"></i>回帰問題のケース</a></li>
+<li class="chapter" data-level="14.1" data-path="xai-explainable-ai.html"><a href="xai-explainable-ai.html#pfi"><i class="fa fa-check"></i><b>14.1</b> PFI</a></li>
+<li class="chapter" data-level="14.2" data-path="xai-explainable-ai.html"><a href="xai-explainable-ai.html#pdp"><i class="fa fa-check"></i><b>14.2</b> PDP</a></li>
+<li class="chapter" data-level="14.3" data-path="xai-explainable-ai.html"><a href="xai-explainable-ai.html#ice"><i class="fa fa-check"></i><b>14.3</b> ICE</a>
+<ul>
+<li class="chapter" data-level="" data-path="xai-explainable-ai.html"><a href="xai-explainable-ai.html#pdp-ice"><i class="fa fa-check"></i>PDP + ICE</a></li>
+</ul></li>
+<li class="chapter" data-level="14.4" data-path="xai-explainable-ai.html"><a href="xai-explainable-ai.html#lime"><i class="fa fa-check"></i><b>14.4</b> LIME</a></li>
+<li class="chapter" data-level="14.5" data-path="xai-explainable-ai.html"><a href="xai-explainable-ai.html#shap"><i class="fa fa-check"></i><b>14.5</b> SHAP</a>
+<ul>
+<li class="chapter" data-level="" data-path="xai-explainable-ai.html"><a href="xai-explainable-ai.html#分類問題のケース"><i class="fa fa-check"></i>分類問題のケース</a></li>
+<li class="chapter" data-level="" data-path="xai-explainable-ai.html"><a href="xai-explainable-ai.html#多値分類問題の例-iris"><i class="fa fa-check"></i>多値分類問題の例 (iris)</a></li>
+<li class="chapter" data-level="" data-path="xai-explainable-ai.html"><a href="xai-explainable-ai.html#値分類問題"><i class="fa fa-check"></i>2値分類問題</a></li>
+</ul></li>
+</ul></li>
+</ul>
+
+      </nav>
+    </div>
+
+    <div class="book-body">
+      <div class="body-inner">
+        <div class="book-header" role="navigation">
+          <h1>
+            <i class="fa fa-circle-o-notch fa-spin"></i><a href="./">金融データサイエンス</a>
+          </h1>
+        </div>
+
+        <div class="page-wrapper" tabindex="-1" role="main">
+          <div class="page-inner">
+
+            <section class="normal" id="section-">
+<div id="アンサンブル学習" class="section level1 hasAnchor" number="9">
+<h1><span class="header-section-number">9</span> アンサンブル学習<a href="アンサンブル学習.html#アンサンブル学習" class="anchor-section" aria-label="Anchor link to header"></a></h1>
+<p>個々には必ずしも精度の高くない予測モデル (“弱い学習器”) の結果を集約することで, より精度の高い予測モデル (“強い学習器”) を構築する手法を<strong>アンサンブル学習</strong>と呼ぶ.</p>
+<p>これは, “集団の叡智”を計算機内に実装したもので,</p>
+<ul>
+<li>分類問題 → 個々の回答の多数決</li>
+<li>回帰問題 → 個々の予測値の平均値
+によって, 個々の予測値を集約する.
+近年の計算機パワーの向上と伴に, 研究・実用化とも急拡大している.</li>
+</ul>
+<p>主な技法として, バギング (bagging), ブースティング (Boosting), スタッキング (Stacking) がある.</p>
+<p>本章では, 決定木を“弱い学習器”とするアンサンブル学習のアルゴリズムとして, 機械学習分野で多用されている, <strong>ランダムフォレスト (Random Forest)</strong> と <strong>勾配ブースティング木 (Gradient Boosting/Boosted Tree)</strong> について取り上げる.</p>
+<p>以下では, ランダムフォレスト, 勾配ブースティング木ともに分類問題のみを扱うが, これらはいずれも回帰問題にも対応することができる.</p>
+<div id="決定木-分類木" class="section level2 hasAnchor" number="9.1">
+<h2><span class="header-section-number">9.1</span> 決定木 (分類木)<a href="アンサンブル学習.html#決定木-分類木" class="anchor-section" aria-label="Anchor link to header"></a></h2>
+<p>前章では, パッケージ<strong>rpart</strong>の関数<code>rpart()</code>を使用したが,
+ここでは, 別のパッケージ<strong>tree</strong>の関数<code>tree()</code>を使用する.</p>
+<div id="データセット3-個人ローン信用データ-再掲" class="section level3 unnumbered hasAnchor">
+<h3>データセット3: 個人ローン信用データ (再掲)<a href="アンサンブル学習.html#データセット3-個人ローン信用データ-再掲" class="anchor-section" aria-label="Anchor link to header"></a></h3>
+<p>データセットは, german creditデータを使用する.
+目的変数としては, 個人の2水準 {Bad, Good} の信用状態を示す
+変数である<code>Customer</code>を選択し, これを予測するモデルを
+決定木により構築する.</p>
+<pre><code>データ入手先: https://archive.ics.uci.edu/dataset/144/statlog+german+credit+data
+※ 授業用に一部修正</code></pre>
+<div class="sourceCode" id="cb374"><pre class="sourceCode r"><code class="sourceCode r"><span id="cb374-1"><a href="アンサンブル学習.html#cb374-1" tabindex="-1"></a>credit_df <span class="ot">&lt;-</span> <span class="fu">read.csv</span>(<span class="st">&quot;german_credit_modified.csv&quot;</span>, <span class="at">header =</span> T, </span>
+<span id="cb374-2"><a href="アンサンブル学習.html#cb374-2" tabindex="-1"></a>                      <span class="at">skip =</span> <span class="dv">3</span>, <span class="at">quote =</span> <span class="st">&quot;&quot;</span>, <span class="at">stringsAsFactors =</span> T)   </span>
+<span id="cb374-3"><a href="アンサンブル学習.html#cb374-3" tabindex="-1"></a><span class="co"># 目的変数(Customer)はfactor型にしないとエラー発生: stringsAsFactors = Tを指定のこと</span></span>
+<span id="cb374-4"><a href="アンサンブル学習.html#cb374-4" tabindex="-1"></a><span class="fu">str</span>(credit_df)</span>
+<span id="cb374-5"><a href="アンサンブル学習.html#cb374-5" tabindex="-1"></a><span class="co">#&gt; &#39;data.frame&#39;:    1000 obs. of  21 variables:</span></span>
+<span id="cb374-6"><a href="アンサンブル学習.html#cb374-6" tabindex="-1"></a><span class="co">#&gt;  $ StatusAccount   : Factor w/ 4 levels &quot;ge_200DM&quot;,&quot;lt_0DM&quot;,..: 2 3 4 2 2 4 4 3 4 3 ...</span></span>
+<span id="cb374-7"><a href="アンサンブル学習.html#cb374-7" tabindex="-1"></a><span class="co">#&gt;  $ DurationMonth   : int  6 48 12 42 24 36 24 36 12 30 ...</span></span>
+<span id="cb374-8"><a href="アンサンブル学習.html#cb374-8" tabindex="-1"></a><span class="co">#&gt;  $ CreditHistory   : Factor w/ 5 levels &quot;A&quot;,&quot;B&quot;,&quot;C&quot;,&quot;D&quot;,..: 5 3 5 3 4 3 3 3 3 5 ...</span></span>
+<span id="cb374-9"><a href="アンサンブル学習.html#cb374-9" tabindex="-1"></a><span class="co">#&gt;  $ Purpose         : Factor w/ 6 levels &quot;TV_etc&quot;,&quot;business&quot;,..: 1 1 4 1 3 4 1 3 1 3 ...</span></span>
+<span id="cb374-10"><a href="アンサンブル学習.html#cb374-10" tabindex="-1"></a><span class="co">#&gt;  $ CreditAmount    : int  1169 5951 2096 7882 4870 9055 2835 6948 3059 5234 ...</span></span>
+<span id="cb374-11"><a href="アンサンブル学習.html#cb374-11" tabindex="-1"></a><span class="co">#&gt;  $ SavingsAccount  : Factor w/ 4 levels &quot;ge_1000DM&quot;,&quot;lt_1000DM&quot;,..: NA 3 3 3 3 NA 2 3 1 3 ...</span></span>
+<span id="cb374-12"><a href="アンサンブル学習.html#cb374-12" tabindex="-1"></a><span class="co">#&gt;  $ EmploymentSince : Factor w/ 5 levels &quot;ge_7yrs&quot;,&quot;lt_1yr&quot;,..: 1 3 4 4 3 3 1 3 4 5 ...</span></span>
+<span id="cb374-13"><a href="アンサンブル学習.html#cb374-13" tabindex="-1"></a><span class="co">#&gt;  $ InstallmentRate : int  4 2 2 2 3 2 3 2 2 4 ...</span></span>
+<span id="cb374-14"><a href="アンサンブル学習.html#cb374-14" tabindex="-1"></a><span class="co">#&gt;  $ StatusAndSex    : Factor w/ 4 levels &quot;F_divorced&quot;,&quot;M_divorced&quot;,..: 4 1 4 4 4 4 4 4 2 3 ...</span></span>
+<span id="cb374-15"><a href="アンサンブル学習.html#cb374-15" tabindex="-1"></a><span class="co">#&gt;  $ Guarantors      : Factor w/ 3 levels &quot;co-applicant&quot;,..: 3 3 3 2 3 3 3 3 3 3 ...</span></span>
+<span id="cb374-16"><a href="アンサンブル学習.html#cb374-16" tabindex="-1"></a><span class="co">#&gt;  $ ResidenceSince  : int  4 2 3 4 4 4 4 2 4 2 ...</span></span>
+<span id="cb374-17"><a href="アンサンブル学習.html#cb374-17" tabindex="-1"></a><span class="co">#&gt;  $ Property        : Factor w/ 3 levels &quot;car_etc&quot;,&quot;life_insurance&quot;,..: 3 3 3 2 NA NA 2 1 3 1 ...</span></span>
+<span id="cb374-18"><a href="アンサンブル学習.html#cb374-18" tabindex="-1"></a><span class="co">#&gt;  $ Age             : int  67 22 49 45 53 35 53 35 61 28 ...</span></span>
+<span id="cb374-19"><a href="アンサンブル学習.html#cb374-19" tabindex="-1"></a><span class="co">#&gt;  $ InstallmentPlans: Factor w/ 3 levels &quot;bank&quot;,&quot;none&quot;,..: 2 2 2 2 2 2 2 2 2 2 ...</span></span>
+<span id="cb374-20"><a href="アンサンブル学習.html#cb374-20" tabindex="-1"></a><span class="co">#&gt;  $ Housing         : Factor w/ 3 levels &quot;free&quot;,&quot;own&quot;,&quot;rent&quot;: 2 2 2 1 1 1 2 3 2 2 ...</span></span>
+<span id="cb374-21"><a href="アンサンブル学習.html#cb374-21" tabindex="-1"></a><span class="co">#&gt;  $ NCredits        : int  2 1 1 1 2 1 1 1 1 2 ...</span></span>
+<span id="cb374-22"><a href="アンサンブル学習.html#cb374-22" tabindex="-1"></a><span class="co">#&gt;  $ Job             : Factor w/ 4 levels &quot;management&quot;,&quot;skilled&quot;,..: 2 2 4 2 2 4 2 1 4 1 ...</span></span>
+<span id="cb374-23"><a href="アンサンブル学習.html#cb374-23" tabindex="-1"></a><span class="co">#&gt;  $ NPeopleMain     : int  1 1 2 2 2 2 1 1 1 1 ...</span></span>
+<span id="cb374-24"><a href="アンサンブル学習.html#cb374-24" tabindex="-1"></a><span class="co">#&gt;  $ Phone           : Factor w/ 2 levels &quot;no&quot;,&quot;yes&quot;: 2 1 1 1 1 2 1 2 1 1 ...</span></span>
+<span id="cb374-25"><a href="アンサンブル学習.html#cb374-25" tabindex="-1"></a><span class="co">#&gt;  $ ForeignWorker   : Factor w/ 2 levels &quot;no&quot;,&quot;yes&quot;: 2 2 2 2 2 2 2 2 2 2 ...</span></span>
+<span id="cb374-26"><a href="アンサンブル学習.html#cb374-26" tabindex="-1"></a><span class="co">#&gt;  $ Customer        : Factor w/ 2 levels &quot;bad&quot;,&quot;good&quot;: 2 1 2 2 1 2 2 2 2 1 ...</span></span></code></pre></div>
+<p>欠損値の有無を確認し, 必要な処理を行う.
+今回の分析では, 欠損値は補間せずにレコードごと除去することにする.</p>
+<div class="sourceCode" id="cb375"><pre class="sourceCode r"><code class="sourceCode r"><span id="cb375-1"><a href="アンサンブル学習.html#cb375-1" tabindex="-1"></a><span class="fu">library</span>(Amelia)</span>
+<span id="cb375-2"><a href="アンサンブル学習.html#cb375-2" tabindex="-1"></a><span class="fu">missmap</span>(credit_df, <span class="at">col =</span> <span class="fu">c</span>(<span class="st">&#39;yellow&#39;</span>, <span class="st">&#39;black&#39;</span>), <span class="at">y.at =</span> <span class="dv">1</span>, <span class="at">y.labels =</span> <span class="st">&#39;&#39;</span>, <span class="at">legend =</span> <span class="cn">TRUE</span>)   <span class="co"># Amelia</span></span></code></pre></div>
+<p><img src="092-ensemble_files/figure-html/unnamed-chunk-4-1.png" width="75%" /></p>
+<div class="sourceCode" id="cb376"><pre class="sourceCode r"><code class="sourceCode r"><span id="cb376-1"><a href="アンサンブル学習.html#cb376-1" tabindex="-1"></a></span>
+<span id="cb376-2"><a href="アンサンブル学習.html#cb376-2" tabindex="-1"></a><span class="co"># 欠損値処理 → 今回は除去</span></span>
+<span id="cb376-3"><a href="アンサンブル学習.html#cb376-3" tabindex="-1"></a>ok <span class="ot">&lt;-</span> <span class="fu">complete.cases</span>(credit_df)     <span class="co"># 欠損値を持つ項目のないcase (データ点)はT, さもなくばFを返す</span></span>
+<span id="cb376-4"><a href="アンサンブル学習.html#cb376-4" tabindex="-1"></a>credit_df_noNA <span class="ot">&lt;-</span> credit_df[ok, ]</span></code></pre></div>
+<p>なお, 以下で使用する<code>randomForest()</code>や<code>gbm()</code>に対しては不要であるが, 関数によっては, データフレーム内にある factor型を持つ質的変数はそのままでは受け付けずに,
+一旦ダミー変数に変換する必要のあるものもある.</p>
+<div class="sourceCode" id="cb377"><pre class="sourceCode r"><code class="sourceCode r"><span id="cb377-1"><a href="アンサンブル学習.html#cb377-1" tabindex="-1"></a><span class="co"># model.matrixは, 質的変数　→ ダミー化</span></span>
+<span id="cb377-2"><a href="アンサンブル学習.html#cb377-2" tabindex="-1"></a>x <span class="ot">&lt;-</span> <span class="fu">model.matrix</span>(Customer <span class="sc">~</span> ., credit_df_noNA)[, <span class="sc">-</span><span class="dv">1</span>]       <span class="co"># factorのdummy変数化 + (intercept)を除去</span></span>
+<span id="cb377-3"><a href="アンサンブル学習.html#cb377-3" tabindex="-1"></a>y <span class="ot">&lt;-</span> credit_df_noNA<span class="sc">$</span>Customer</span>
+<span id="cb377-4"><a href="アンサンブル学習.html#cb377-4" tabindex="-1"></a><span class="co"># 以下のtree関数, randomForest関数, gbm関数は, factor型変数の使用可 (ダミー化は不要)</span></span></code></pre></div>
+<ul>
+<li>学習データ/ テストデータの分割</li>
+</ul>
+<div class="sourceCode" id="cb378"><pre class="sourceCode r"><code class="sourceCode r"><span id="cb378-1"><a href="アンサンブル学習.html#cb378-1" tabindex="-1"></a><span class="fu">set.seed</span>(<span class="dv">1</span>)</span>
+<span id="cb378-2"><a href="アンサンブル学習.html#cb378-2" tabindex="-1"></a>train <span class="ot">&lt;-</span> <span class="fu">sample</span>(<span class="dv">1</span><span class="sc">:</span><span class="fu">nrow</span>(credit_df_noNA), <span class="dv">500</span>)</span>
+<span id="cb378-3"><a href="アンサンブル学習.html#cb378-3" tabindex="-1"></a><span class="co"># x.train &lt;- x[train, ]</span></span>
+<span id="cb378-4"><a href="アンサンブル学習.html#cb378-4" tabindex="-1"></a><span class="co"># y.train &lt;- y[train]</span></span></code></pre></div>
+<ul>
+<li>決定木の構築
+パッケージ<strong>tree</strong>を読み込み, 関数<code>tree()</code>を用いて分類木を構築する.</li>
+</ul>
+<div class="sourceCode" id="cb379"><pre class="sourceCode r"><code class="sourceCode r"><span id="cb379-1"><a href="アンサンブル学習.html#cb379-1" tabindex="-1"></a><span class="co"># パッケージtree, 関数tree()の使用</span></span>
+<span id="cb379-2"><a href="アンサンブル学習.html#cb379-2" tabindex="-1"></a><span class="fu">library</span>(tree)       <span class="co"># tree, cv.tree, prune.tree</span></span>
+<span id="cb379-3"><a href="アンサンブル学習.html#cb379-3" tabindex="-1"></a>fit_tree <span class="ot">&lt;-</span> <span class="fu">tree</span>(Customer <span class="sc">~</span> ., <span class="at">data =</span> credit_df_noNA, <span class="at">subset =</span> train) </span>
+<span id="cb379-4"><a href="アンサンブル学習.html#cb379-4" tabindex="-1"></a><span class="co"># split = &quot;gini&quot; (デフォルト&quot;deviance))</span></span>
+<span id="cb379-5"><a href="アンサンブル学習.html#cb379-5" tabindex="-1"></a><span class="fu">summary</span>(fit_tree)</span>
+<span id="cb379-6"><a href="アンサンブル学習.html#cb379-6" tabindex="-1"></a><span class="co">#&gt; </span></span>
+<span id="cb379-7"><a href="アンサンブル学習.html#cb379-7" tabindex="-1"></a><span class="co">#&gt; Classification tree:</span></span>
+<span id="cb379-8"><a href="アンサンブル学習.html#cb379-8" tabindex="-1"></a><span class="co">#&gt; tree(formula = Customer ~ ., data = credit_df_noNA, subset = train)</span></span>
+<span id="cb379-9"><a href="アンサンブル学習.html#cb379-9" tabindex="-1"></a><span class="co">#&gt; Variables actually used in tree construction:</span></span>
+<span id="cb379-10"><a href="アンサンブル学習.html#cb379-10" tabindex="-1"></a><span class="co">#&gt;  [1] &quot;StatusAccount&quot;    &quot;DurationMonth&quot;    &quot;Guarantors&quot;       &quot;Property&quot;        </span></span>
+<span id="cb379-11"><a href="アンサンブル学習.html#cb379-11" tabindex="-1"></a><span class="co">#&gt;  [5] &quot;Age&quot;              &quot;SavingsAccount&quot;   &quot;CreditHistory&quot;    &quot;EmploymentSince&quot; </span></span>
+<span id="cb379-12"><a href="アンサンブル学習.html#cb379-12" tabindex="-1"></a><span class="co">#&gt;  [9] &quot;Purpose&quot;          &quot;InstallmentPlans&quot; &quot;InstallmentRate&quot; </span></span>
+<span id="cb379-13"><a href="アンサンブル学習.html#cb379-13" tabindex="-1"></a><span class="co">#&gt; Number of terminal nodes:  14 </span></span>
+<span id="cb379-14"><a href="アンサンブル学習.html#cb379-14" tabindex="-1"></a><span class="co">#&gt; Residual mean deviance:  0.9171 = 445.7 / 486 </span></span>
+<span id="cb379-15"><a href="アンサンブル学習.html#cb379-15" tabindex="-1"></a><span class="co">#&gt; Misclassification error rate: 0.228 = 114 / 500</span></span>
+<span id="cb379-16"><a href="アンサンブル学習.html#cb379-16" tabindex="-1"></a>fit_tree</span>
+<span id="cb379-17"><a href="アンサンブル学習.html#cb379-17" tabindex="-1"></a><span class="co">#&gt; node), split, n, deviance, yval, (yprob)</span></span>
+<span id="cb379-18"><a href="アンサンブル学習.html#cb379-18" tabindex="-1"></a><span class="co">#&gt;       * denotes terminal node</span></span>
+<span id="cb379-19"><a href="アンサンブル学習.html#cb379-19" tabindex="-1"></a><span class="co">#&gt; </span></span>
+<span id="cb379-20"><a href="アンサンブル学習.html#cb379-20" tabindex="-1"></a><span class="co">#&gt;  1) root 500 619.100 good ( 0.31000 0.69000 )  </span></span>
+<span id="cb379-21"><a href="アンサンブル学習.html#cb379-21" tabindex="-1"></a><span class="co">#&gt;    2) StatusAccount: lt_0DM,lt_200DM 272 373.300 good ( 0.44118 0.55882 )  </span></span>
+<span id="cb379-22"><a href="アンサンブル学習.html#cb379-22" tabindex="-1"></a><span class="co">#&gt;      4) DurationMonth &lt; 15.5 120 146.600 good ( 0.30000 0.70000 )  </span></span>
+<span id="cb379-23"><a href="アンサンブル学習.html#cb379-23" tabindex="-1"></a><span class="co">#&gt;        8) Guarantors: co-applicant,none 104 134.200 good ( 0.34615 0.65385 )  </span></span>
+<span id="cb379-24"><a href="アンサンブル学習.html#cb379-24" tabindex="-1"></a><span class="co">#&gt;         16) Property: car_etc,life_insurance 61  84.150 good ( 0.45902 0.54098 ) *</span></span>
+<span id="cb379-25"><a href="アンサンブル学習.html#cb379-25" tabindex="-1"></a><span class="co">#&gt;         17) Property: real_estate 43  41.320 good ( 0.18605 0.81395 ) *</span></span>
+<span id="cb379-26"><a href="アンサンブル学習.html#cb379-26" tabindex="-1"></a><span class="co">#&gt;        9) Guarantors: guarantor 16   0.000 good ( 0.00000 1.00000 ) *</span></span>
+<span id="cb379-27"><a href="アンサンブル学習.html#cb379-27" tabindex="-1"></a><span class="co">#&gt;      5) DurationMonth &gt; 15.5 152 209.000 bad ( 0.55263 0.44737 )  </span></span>
+<span id="cb379-28"><a href="アンサンブル学習.html#cb379-28" tabindex="-1"></a><span class="co">#&gt;       10) Age &lt; 62 147 200.800 bad ( 0.57143 0.42857 )  </span></span>
+<span id="cb379-29"><a href="アンサンブル学習.html#cb379-29" tabindex="-1"></a><span class="co">#&gt;         20) SavingsAccount: lt_1000DM,lt_100DM 123 163.600 bad ( 0.61789 0.38211 ) *</span></span>
+<span id="cb379-30"><a href="アンサンブル学習.html#cb379-30" tabindex="-1"></a><span class="co">#&gt;         21) SavingsAccount: ge_1000DM,lt_500DM 24  30.550 good ( 0.33333 0.66667 )  </span></span>
+<span id="cb379-31"><a href="アンサンブル学習.html#cb379-31" tabindex="-1"></a><span class="co">#&gt;           42) CreditHistory: A,C 15  20.730 bad ( 0.53333 0.46667 )  </span></span>
+<span id="cb379-32"><a href="アンサンブル学習.html#cb379-32" tabindex="-1"></a><span class="co">#&gt;             84) Age &lt; 27 6   0.000 bad ( 1.00000 0.00000 ) *</span></span>
+<span id="cb379-33"><a href="アンサンブル学習.html#cb379-33" tabindex="-1"></a><span class="co">#&gt;             85) Age &gt; 27 9   9.535 good ( 0.22222 0.77778 ) *</span></span>
+<span id="cb379-34"><a href="アンサンブル学習.html#cb379-34" tabindex="-1"></a><span class="co">#&gt;           43) CreditHistory: B,D,E 9   0.000 good ( 0.00000 1.00000 ) *</span></span>
+<span id="cb379-35"><a href="アンサンブル学習.html#cb379-35" tabindex="-1"></a><span class="co">#&gt;       11) Age &gt; 62 5   0.000 good ( 0.00000 1.00000 ) *</span></span>
+<span id="cb379-36"><a href="アンサンブル学習.html#cb379-36" tabindex="-1"></a><span class="co">#&gt;    3) StatusAccount: ge_200DM,none 228 195.500 good ( 0.15351 0.84649 )  </span></span>
+<span id="cb379-37"><a href="アンサンブル学習.html#cb379-37" tabindex="-1"></a><span class="co">#&gt;      6) EmploymentSince: lt_1yr,unemployed 48  61.110 good ( 0.33333 0.66667 )  </span></span>
+<span id="cb379-38"><a href="アンサンブル学習.html#cb379-38" tabindex="-1"></a><span class="co">#&gt;       12) Purpose: business,repairs 8   6.028 bad ( 0.87500 0.12500 ) *</span></span>
+<span id="cb379-39"><a href="アンサンブル学習.html#cb379-39" tabindex="-1"></a><span class="co">#&gt;       13) Purpose: TV_etc,car,education 40  42.650 good ( 0.22500 0.77500 ) *</span></span>
+<span id="cb379-40"><a href="アンサンブル学習.html#cb379-40" tabindex="-1"></a><span class="co">#&gt;      7) EmploymentSince: ge_7yrs,lt_4yrs,lt_7yrs 180 121.400 good ( 0.10556 0.89444 )  </span></span>
+<span id="cb379-41"><a href="アンサンブル学習.html#cb379-41" tabindex="-1"></a><span class="co">#&gt;       14) InstallmentPlans: bank,store 33  38.670 good ( 0.27273 0.72727 ) *</span></span>
+<span id="cb379-42"><a href="アンサンブル学習.html#cb379-42" tabindex="-1"></a><span class="co">#&gt;       15) InstallmentPlans: none 147  73.060 good ( 0.06803 0.93197 )  </span></span>
+<span id="cb379-43"><a href="アンサンブル学習.html#cb379-43" tabindex="-1"></a><span class="co">#&gt;         30) CreditHistory: C,D 79  56.030 good ( 0.11392 0.88608 )  </span></span>
+<span id="cb379-44"><a href="アンサンブル学習.html#cb379-44" tabindex="-1"></a><span class="co">#&gt;           60) InstallmentRate &lt; 3.5 49  16.710 good ( 0.04082 0.95918 ) *</span></span>
+<span id="cb379-45"><a href="アンサンブル学習.html#cb379-45" tabindex="-1"></a><span class="co">#&gt;           61) InstallmentRate &gt; 3.5 30  32.600 good ( 0.23333 0.76667 ) *</span></span>
+<span id="cb379-46"><a href="アンサンブル学習.html#cb379-46" tabindex="-1"></a><span class="co">#&gt;         31) CreditHistory: A,B,E 68  10.420 good ( 0.01471 0.98529 ) *</span></span>
+<span id="cb379-47"><a href="アンサンブル学習.html#cb379-47" tabindex="-1"></a><span class="co"># 木の表示</span></span>
+<span id="cb379-48"><a href="アンサンブル学習.html#cb379-48" tabindex="-1"></a><span class="fu">plot</span>(fit_tree)</span>
+<span id="cb379-49"><a href="アンサンブル学習.html#cb379-49" tabindex="-1"></a><span class="fu">text</span>(fit_tree, <span class="at">pretty =</span> <span class="dv">0</span>)</span></code></pre></div>
+<p><img src="092-ensemble_files/figure-html/unnamed-chunk-7-1.png" width="75%" /></p>
+<ul>
+<li>木の成長のコントロール (停止条件の設定)
+<code>tree()</code>によって生成する木の大きさは, <code>tree.control()</code>によってコントロールすることが出来る.
+指定した条件に引っ掛かりそれ以上分割するノードが
+なくなった時点でアルゴリズムが終了する.</li>
+</ul>
+<pre><code>tree.control(): 木の成長をコントロールするパラメータ (特に, mincutとminsize) の設定
+- usage: tree.control(nobs, mincut = 5, minsize = 10, mindev = 0.01)
+- 主なパラメータ:
+  - nobs    学習セットの観測数
+  - mincut    各ノードを分割するために必要な最小観測数. 最大で minsize/2 まで. 値が小さいほど, より細かい分割が行われる (デフォルト=5)
+  - minsize   末端ノードのサイズの最小値. 値が大きいと, ツリーは浅くなる (デフォルト=10)
+  - mindev    各ノードのノード内逸脱度 (within-node deviance)が, ルートノードの逸脱度に対して少なくともこの値の割合以上である場合にのみ, そのノードが分割されることを示す. 例. mindev=0.01の場合, ノードが分割されるためにはそのノードの逸脱度がルートノードの逸脱度の1%以上である必要があある. これにより, すでに十分小さい逸脱度を持つノードが無駄に分割されるのを防ぐ.</code></pre>
+<div class="sourceCode" id="cb381"><pre class="sourceCode r"><code class="sourceCode r"><span id="cb381-1"><a href="アンサンブル学習.html#cb381-1" tabindex="-1"></a><span class="co"># 決定木のコントロールパラメータの設定</span></span>
+<span id="cb381-2"><a href="アンサンブル学習.html#cb381-2" tabindex="-1"></a>control_params <span class="ot">&lt;-</span> <span class="fu">tree.control</span>(<span class="at">nobs =</span> <span class="fu">nrow</span>(credit_df_noNA), <span class="at">mincut =</span> <span class="dv">3</span>, <span class="at">minsize =</span> <span class="dv">6</span>, <span class="at">mindev =</span> <span class="fl">0.01</span>)</span>
+<span id="cb381-3"><a href="アンサンブル学習.html#cb381-3" tabindex="-1"></a></span>
+<span id="cb381-4"><a href="アンサンブル学習.html#cb381-4" tabindex="-1"></a><span class="co"># 決定木の構築</span></span>
+<span id="cb381-5"><a href="アンサンブル学習.html#cb381-5" tabindex="-1"></a>fit_tree2 <span class="ot">&lt;-</span> <span class="fu">tree</span>(Customer <span class="sc">~</span> ., <span class="at">data =</span> credit_df_noNA, <span class="at">control =</span> control_params)</span>
+<span id="cb381-6"><a href="アンサンブル学習.html#cb381-6" tabindex="-1"></a></span>
+<span id="cb381-7"><a href="アンサンブル学習.html#cb381-7" tabindex="-1"></a><span class="co"># 決定木のプロット</span></span>
+<span id="cb381-8"><a href="アンサンブル学習.html#cb381-8" tabindex="-1"></a><span class="fu">plot</span>(fit_tree2)</span>
+<span id="cb381-9"><a href="アンサンブル学習.html#cb381-9" tabindex="-1"></a><span class="fu">text</span>(fit_tree2, <span class="at">pretty =</span> <span class="dv">0</span>)</span></code></pre></div>
+<p><img src="092-ensemble_files/figure-html/unnamed-chunk-8-1.png" width="75%" /></p>
+<div class="sourceCode" id="cb382"><pre class="sourceCode r"><code class="sourceCode r"><span id="cb382-1"><a href="アンサンブル学習.html#cb382-1" tabindex="-1"></a></span>
+<span id="cb382-2"><a href="アンサンブル学習.html#cb382-2" tabindex="-1"></a><span class="co"># 決定木の詳細を表示</span></span>
+<span id="cb382-3"><a href="アンサンブル学習.html#cb382-3" tabindex="-1"></a><span class="fu">summary</span>(fit_tree2)</span>
+<span id="cb382-4"><a href="アンサンブル学習.html#cb382-4" tabindex="-1"></a><span class="co">#&gt; </span></span>
+<span id="cb382-5"><a href="アンサンブル学習.html#cb382-5" tabindex="-1"></a><span class="co">#&gt; Classification tree:</span></span>
+<span id="cb382-6"><a href="アンサンブル学習.html#cb382-6" tabindex="-1"></a><span class="co">#&gt; tree(formula = Customer ~ ., data = credit_df_noNA, control = control_params)</span></span>
+<span id="cb382-7"><a href="アンサンブル学習.html#cb382-7" tabindex="-1"></a><span class="co">#&gt; Variables actually used in tree construction:</span></span>
+<span id="cb382-8"><a href="アンサンブル学習.html#cb382-8" tabindex="-1"></a><span class="co">#&gt; [1] &quot;StatusAccount&quot;   &quot;DurationMonth&quot;   &quot;CreditHistory&quot;   &quot;Purpose&quot;        </span></span>
+<span id="cb382-9"><a href="アンサンブル学習.html#cb382-9" tabindex="-1"></a><span class="co">#&gt; [5] &quot;EmploymentSince&quot; &quot;CreditAmount&quot;    &quot;Guarantors&quot;     </span></span>
+<span id="cb382-10"><a href="アンサンブル学習.html#cb382-10" tabindex="-1"></a><span class="co">#&gt; Number of terminal nodes:  10 </span></span>
+<span id="cb382-11"><a href="アンサンブル学習.html#cb382-11" tabindex="-1"></a><span class="co">#&gt; Residual mean deviance:  0.9739 = 667.1 / 685 </span></span>
+<span id="cb382-12"><a href="アンサンブル学習.html#cb382-12" tabindex="-1"></a><span class="co">#&gt; Misclassification error rate: 0.2245 = 156 / 695</span></span></code></pre></div>
+<ul>
+<li>木の剪定</li>
+</ul>
+<p>関数<code>cv.tree()</code>を使えば,
+交差検証 (CV) による最適な木の大きさを見つけることができる.</p>
+<div class="sourceCode" id="cb383"><pre class="sourceCode r"><code class="sourceCode r"><span id="cb383-1"><a href="アンサンブル学習.html#cb383-1" tabindex="-1"></a><span class="co"># 木の剪定がパフォーマンスを改善するか?</span></span>
+<span id="cb383-2"><a href="アンサンブル学習.html#cb383-2" tabindex="-1"></a><span class="co"># 交差検証により木 (の複雑度パラメータcp) を選択する場合 </span></span>
+<span id="cb383-3"><a href="アンサンブル学習.html#cb383-3" tabindex="-1"></a><span class="co"># (cv.treeから, prune.treeを呼び出して実行)</span></span>
+<span id="cb383-4"><a href="アンサンブル学習.html#cb383-4" tabindex="-1"></a><span class="fu">set.seed</span>(<span class="dv">1</span>)</span>
+<span id="cb383-5"><a href="アンサンブル学習.html#cb383-5" tabindex="-1"></a>cvfit_tree <span class="ot">&lt;-</span> <span class="fu">cv.tree</span>(fit_tree) <span class="co"># デフォルト: method = &quot;deviance&quot;, 10-folds CV</span></span>
+<span id="cb383-6"><a href="アンサンブル学習.html#cb383-6" tabindex="-1"></a><span class="fu">plot</span>(cvfit_tree<span class="sc">$</span>size, cvfit_tree<span class="sc">$</span>dev, <span class="at">type =</span> <span class="st">&#39;b&#39;</span>)   <span class="co"># index of tree with minimum error</span></span></code></pre></div>
+<p><img src="092-ensemble_files/figure-html/unnamed-chunk-9-1.png" width="75%" /></p>
+<div class="sourceCode" id="cb384"><pre class="sourceCode r"><code class="sourceCode r"><span id="cb384-1"><a href="アンサンブル学習.html#cb384-1" tabindex="-1"></a>cvfit_tree<span class="sc">$</span>size[<span class="fu">which.min</span>(cvfit_tree<span class="sc">$</span>dev)]      <span class="co"># 末端ノードの数</span></span>
+<span id="cb384-2"><a href="アンサンブル学習.html#cb384-2" tabindex="-1"></a><span class="co">#&gt; [1] 2</span></span></code></pre></div>
+<p>→ デフォルトのmethod = “deviance”では, size = 2が最良 (単純過ぎ?).</p>
+<div class="sourceCode" id="cb385"><pre class="sourceCode r"><code class="sourceCode r"><span id="cb385-1"><a href="アンサンブル学習.html#cb385-1" tabindex="-1"></a>cvfit_tree <span class="ot">&lt;-</span> <span class="fu">cv.tree</span>(fit_tree, <span class="at">method =</span> <span class="st">&quot;misclass&quot;</span>)        <span class="co"># </span></span>
+<span id="cb385-2"><a href="アンサンブル学習.html#cb385-2" tabindex="-1"></a>cvfit_tree<span class="sc">$</span>size[<span class="fu">which.min</span>(cvfit_tree<span class="sc">$</span>dev)]      <span class="co"># 末端ノードの数</span></span>
+<span id="cb385-3"><a href="アンサンブル学習.html#cb385-3" tabindex="-1"></a><span class="co">#&gt; [1] 5</span></span></code></pre></div>
+<p>→ method = “misclass”を選ぶと, size = 3が最良となる.</p>
+<p>関数<code>prune.tree()</code>を使い, 手動で木を剪定することもできる.</p>
+<pre><code>prune.tree()の主なパラメータ:
+- k   cp (cost-complexity parameter) パラメータ
+- best    (希望する) 木のサイズ (末端ノード数). (kを指定する代わりに指定可) 
+- method    ノードの非均一性の指標. デフォルト=&quot;deviance&quot;. 回帰木は&quot;deviance&quot;のみ. 分類木では&quot;misclass&quot; (誤分類の数) も選択可能</code></pre>
+<div class="sourceCode" id="cb387"><pre class="sourceCode r"><code class="sourceCode r"><span id="cb387-1"><a href="アンサンブル学習.html#cb387-1" tabindex="-1"></a><span class="co"># prune.tree関数による剪定</span></span>
+<span id="cb387-2"><a href="アンサンブル学習.html#cb387-2" tabindex="-1"></a><span class="co">#prn_tree &lt;- prune.tree(fit_tree, k = 11)           # k: cost-complexity parameter, または, bestの指定</span></span>
+<span id="cb387-3"><a href="アンサンブル学習.html#cb387-3" tabindex="-1"></a>prn_tree <span class="ot">&lt;-</span> <span class="fu">prune.tree</span>(fit_tree, <span class="at">method =</span> <span class="st">&quot;misclass&quot;</span>, <span class="at">best =</span> <span class="dv">8</span>)     <span class="co"># best: 末端ノード数</span></span>
+<span id="cb387-4"><a href="アンサンブル学習.html#cb387-4" tabindex="-1"></a><span class="fu">summary</span>(prn_tree)</span>
+<span id="cb387-5"><a href="アンサンブル学習.html#cb387-5" tabindex="-1"></a><span class="co">#&gt; </span></span>
+<span id="cb387-6"><a href="アンサンブル学習.html#cb387-6" tabindex="-1"></a><span class="co">#&gt; Classification tree:</span></span>
+<span id="cb387-7"><a href="アンサンブル学習.html#cb387-7" tabindex="-1"></a><span class="co">#&gt; snip.tree(tree = fit_tree, nodes = c(4L, 7L))</span></span>
+<span id="cb387-8"><a href="アンサンブル学習.html#cb387-8" tabindex="-1"></a><span class="co">#&gt; Variables actually used in tree construction:</span></span>
+<span id="cb387-9"><a href="アンサンブル学習.html#cb387-9" tabindex="-1"></a><span class="co">#&gt; [1] &quot;StatusAccount&quot;   &quot;DurationMonth&quot;   &quot;Age&quot;             &quot;SavingsAccount&quot; </span></span>
+<span id="cb387-10"><a href="アンサンブル学習.html#cb387-10" tabindex="-1"></a><span class="co">#&gt; [5] &quot;CreditHistory&quot;   &quot;EmploymentSince&quot; &quot;Purpose&quot;        </span></span>
+<span id="cb387-11"><a href="アンサンブル学習.html#cb387-11" tabindex="-1"></a><span class="co">#&gt; Number of terminal nodes:  9 </span></span>
+<span id="cb387-12"><a href="アンサンブル学習.html#cb387-12" tabindex="-1"></a><span class="co">#&gt; Residual mean deviance:  0.9976 = 489.8 / 491 </span></span>
+<span id="cb387-13"><a href="アンサンブル学習.html#cb387-13" tabindex="-1"></a><span class="co">#&gt; Misclassification error rate: 0.228 = 114 / 500</span></span>
+<span id="cb387-14"><a href="アンサンブル学習.html#cb387-14" tabindex="-1"></a><span class="fu">plot</span>(prn_tree)      <span class="co"># &quot;deviance&quot;/&quot;msiclass&quot;で結果が異なる. cvとも異なる</span></span>
+<span id="cb387-15"><a href="アンサンブル学習.html#cb387-15" tabindex="-1"></a><span class="fu">text</span>(prn_tree, <span class="at">pretty =</span> <span class="dv">0</span>)</span></code></pre></div>
+<p><img src="092-ensemble_files/figure-html/unnamed-chunk-11-1.png" width="75%" /></p>
+<ul>
+<li>テスト用データセットを用いて外挿予測</li>
+</ul>
+<p>ここでは, 適合された木 (剪定なし) を用いて, テスト用データに対する予測を行う.
+デフォルトでは<code>predict()</code>は確率を出力してしまうため,
+ここではを引数<code>type=class</code>を指定する.</p>
+<div class="sourceCode" id="cb388"><pre class="sourceCode r"><code class="sourceCode r"><span id="cb388-1"><a href="アンサンブル学習.html#cb388-1" tabindex="-1"></a><span class="co">#yhat_tree &lt;- predict(fit_tree, newdata = credit_df_noNA[-train, ])     # --&gt; 確率</span></span>
+<span id="cb388-2"><a href="アンサンブル学習.html#cb388-2" tabindex="-1"></a>yhat_tree <span class="ot">&lt;-</span> <span class="fu">predict</span>(fit_tree, <span class="at">newdata =</span> credit_df_noNA[<span class="sc">-</span>train, ], <span class="at">type =</span> <span class="st">&quot;class&quot;</span>)      <span class="co"># --&gt; good/bad</span></span></code></pre></div>
+<ul>
+<li>混同行列によるパフォーマンス評価</li>
+</ul>
+<p>混同行列を作成し, パッケージ<strong>caret</strong>に含まれる関数<code>confusionMatrix()</code>を使用して,
+各種パフォーマンス指標を計算する. この関数の出力オブジェクトから,
+accuracyや, F1 (“F尺度”) 等の特定の指標の値を取り出すことが出来る.</p>
+<div class="sourceCode" id="cb389"><pre class="sourceCode r"><code class="sourceCode r"><span id="cb389-1"><a href="アンサンブル学習.html#cb389-1" tabindex="-1"></a>(tbl_tree <span class="ot">&lt;-</span> <span class="fu">table</span>(yhat_tree, credit_df_noNA<span class="sc">$</span>Customer[<span class="sc">-</span>train]))</span>
+<span id="cb389-2"><a href="アンサンブル学習.html#cb389-2" tabindex="-1"></a><span class="co">#&gt;          </span></span>
+<span id="cb389-3"><a href="アンサンブル学習.html#cb389-3" tabindex="-1"></a><span class="co">#&gt; yhat_tree bad good</span></span>
+<span id="cb389-4"><a href="アンサンブル学習.html#cb389-4" tabindex="-1"></a><span class="co">#&gt;      bad   24   22</span></span>
+<span id="cb389-5"><a href="アンサンブル学習.html#cb389-5" tabindex="-1"></a><span class="co">#&gt;      good  29  120</span></span>
+<span id="cb389-6"><a href="アンサンブル学習.html#cb389-6" tabindex="-1"></a><span class="fu">library</span>(caret)      <span class="co"># confusionMatrix</span></span>
+<span id="cb389-7"><a href="アンサンブル学習.html#cb389-7" tabindex="-1"></a><span class="fu">confusionMatrix</span>(tbl_tree, <span class="at">mode =</span> <span class="st">&quot;prec_recall&quot;</span>)</span>
+<span id="cb389-8"><a href="アンサンブル学習.html#cb389-8" tabindex="-1"></a><span class="co">#&gt; Confusion Matrix and Statistics</span></span>
+<span id="cb389-9"><a href="アンサンブル学習.html#cb389-9" tabindex="-1"></a><span class="co">#&gt; </span></span>
+<span id="cb389-10"><a href="アンサンブル学習.html#cb389-10" tabindex="-1"></a><span class="co">#&gt;          </span></span>
+<span id="cb389-11"><a href="アンサンブル学習.html#cb389-11" tabindex="-1"></a><span class="co">#&gt; yhat_tree bad good</span></span>
+<span id="cb389-12"><a href="アンサンブル学習.html#cb389-12" tabindex="-1"></a><span class="co">#&gt;      bad   24   22</span></span>
+<span id="cb389-13"><a href="アンサンブル学習.html#cb389-13" tabindex="-1"></a><span class="co">#&gt;      good  29  120</span></span>
+<span id="cb389-14"><a href="アンサンブル学習.html#cb389-14" tabindex="-1"></a><span class="co">#&gt;                                           </span></span>
+<span id="cb389-15"><a href="アンサンブル学習.html#cb389-15" tabindex="-1"></a><span class="co">#&gt;                Accuracy : 0.7385          </span></span>
+<span id="cb389-16"><a href="アンサンブル学習.html#cb389-16" tabindex="-1"></a><span class="co">#&gt;                  95% CI : (0.6709, 0.7986)</span></span>
+<span id="cb389-17"><a href="アンサンブル学習.html#cb389-17" tabindex="-1"></a><span class="co">#&gt;     No Information Rate : 0.7282          </span></span>
+<span id="cb389-18"><a href="アンサンブル学習.html#cb389-18" tabindex="-1"></a><span class="co">#&gt;     P-Value [Acc &gt; NIR] : 0.4091          </span></span>
+<span id="cb389-19"><a href="アンサンブル学習.html#cb389-19" tabindex="-1"></a><span class="co">#&gt;                                           </span></span>
+<span id="cb389-20"><a href="アンサンブル学習.html#cb389-20" tabindex="-1"></a><span class="co">#&gt;                   Kappa : 0.3108          </span></span>
+<span id="cb389-21"><a href="アンサンブル学習.html#cb389-21" tabindex="-1"></a><span class="co">#&gt;                                           </span></span>
+<span id="cb389-22"><a href="アンサンブル学習.html#cb389-22" tabindex="-1"></a><span class="co">#&gt;  Mcnemar&#39;s Test P-Value : 0.4008          </span></span>
+<span id="cb389-23"><a href="アンサンブル学習.html#cb389-23" tabindex="-1"></a><span class="co">#&gt;                                           </span></span>
+<span id="cb389-24"><a href="アンサンブル学習.html#cb389-24" tabindex="-1"></a><span class="co">#&gt;               Precision : 0.5217          </span></span>
+<span id="cb389-25"><a href="アンサンブル学習.html#cb389-25" tabindex="-1"></a><span class="co">#&gt;                  Recall : 0.4528          </span></span>
+<span id="cb389-26"><a href="アンサンブル学習.html#cb389-26" tabindex="-1"></a><span class="co">#&gt;                      F1 : 0.4848          </span></span>
+<span id="cb389-27"><a href="アンサンブル学習.html#cb389-27" tabindex="-1"></a><span class="co">#&gt;              Prevalence : 0.2718          </span></span>
+<span id="cb389-28"><a href="アンサンブル学習.html#cb389-28" tabindex="-1"></a><span class="co">#&gt;          Detection Rate : 0.1231          </span></span>
+<span id="cb389-29"><a href="アンサンブル学習.html#cb389-29" tabindex="-1"></a><span class="co">#&gt;    Detection Prevalence : 0.2359          </span></span>
+<span id="cb389-30"><a href="アンサンブル学習.html#cb389-30" tabindex="-1"></a><span class="co">#&gt;       Balanced Accuracy : 0.6490          </span></span>
+<span id="cb389-31"><a href="アンサンブル学習.html#cb389-31" tabindex="-1"></a><span class="co">#&gt;                                           </span></span>
+<span id="cb389-32"><a href="アンサンブル学習.html#cb389-32" tabindex="-1"></a><span class="co">#&gt;        &#39;Positive&#39; Class : bad             </span></span>
+<span id="cb389-33"><a href="アンサンブル学習.html#cb389-33" tabindex="-1"></a><span class="co">#&gt; </span></span>
+<span id="cb389-34"><a href="アンサンブル学習.html#cb389-34" tabindex="-1"></a>(<span class="fu">confusionMatrix</span>(tbl_tree)<span class="sc">$</span>overall[<span class="st">&quot;Accuracy&quot;</span>])</span>
+<span id="cb389-35"><a href="アンサンブル学習.html#cb389-35" tabindex="-1"></a><span class="co">#&gt;  Accuracy </span></span>
+<span id="cb389-36"><a href="アンサンブル学習.html#cb389-36" tabindex="-1"></a><span class="co">#&gt; 0.7384615</span></span>
+<span id="cb389-37"><a href="アンサンブル学習.html#cb389-37" tabindex="-1"></a>(<span class="fu">confusionMatrix</span>(tbl_tree, <span class="at">mode =</span> <span class="st">&quot;prec_recall&quot;</span>)<span class="sc">$</span>byClass[<span class="st">&quot;F1&quot;</span>])</span>
+<span id="cb389-38"><a href="アンサンブル学習.html#cb389-38" tabindex="-1"></a><span class="co">#&gt;        F1 </span></span>
+<span id="cb389-39"><a href="アンサンブル学習.html#cb389-39" tabindex="-1"></a><span class="co">#&gt; 0.4848485</span></span></code></pre></div>
+<p>→ 木の大きさを変えることで, 改善の余地がある.</p>
+<p><strong>自主課題</strong>
+ハイパーパラメータを変えて, パフォーマンスを比較してみよう.</p>
+</div>
+</div>
+<div id="ランダムフォレスト分類木" class="section level2 hasAnchor" number="9.2">
+<h2><span class="header-section-number">9.2</span> ランダムフォレスト分類木<a href="アンサンブル学習.html#ランダムフォレスト分類木" class="anchor-section" aria-label="Anchor link to header"></a></h2>
+<p>パッケージ<strong>randomForest</strong>の関数<code>randomForest()</code>を使用する.</p>
+<pre><code>randomForest():
+重要なパラメータ
+- mtry: 各分割においてランダムに抽出される変数の数 (デフォルト: 分類はsqrt(p), 回帰はp/3)
+- nodesize: 末端ノードの最小サイズ (大 → 小さな木)
+- maxnodes: 末端ノードの最大個数
+- ntree: 生成する木の数 (各レコードが複数回学習に使われるように, 小さくし過ぎない)</code></pre>
+<ul>
+<li>ランダムフォレストの実行</li>
+</ul>
+<div class="sourceCode" id="cb391"><pre class="sourceCode r"><code class="sourceCode r"><span id="cb391-1"><a href="アンサンブル学習.html#cb391-1" tabindex="-1"></a><span class="fu">library</span>(randomForest)</span>
+<span id="cb391-2"><a href="アンサンブル学習.html#cb391-2" tabindex="-1"></a><span class="fu">set.seed</span>(<span class="dv">1</span>)</span>
+<span id="cb391-3"><a href="アンサンブル学習.html#cb391-3" tabindex="-1"></a>fit_rf <span class="ot">&lt;-</span> <span class="fu">randomForest</span>(Customer <span class="sc">~</span> ., <span class="at">data =</span> credit_df_noNA, </span>
+<span id="cb391-4"><a href="アンサンブル学習.html#cb391-4" tabindex="-1"></a>                       <span class="at">subset =</span> train, </span>
+<span id="cb391-5"><a href="アンサンブル学習.html#cb391-5" tabindex="-1"></a>                       <span class="at">mtry =</span> <span class="dv">6</span>, <span class="at">importance =</span> <span class="cn">TRUE</span>)</span></code></pre></div>
+<!--
+# mtryを指定しなければ, ランダムフォレストではなく, バギング (bagging)
+#fit_rf <- randomForest(Customer ~ ., data = credit, subset = train, importance = TRUE) # bagging (デフォルト)
+-->
+<ul>
+<li>テスト用データを用いて外挿予測</li>
+</ul>
+<div class="sourceCode" id="cb392"><pre class="sourceCode r"><code class="sourceCode r"><span id="cb392-1"><a href="アンサンブル学習.html#cb392-1" tabindex="-1"></a>yhat_rf <span class="ot">&lt;-</span> <span class="fu">predict</span>(fit_rf, <span class="at">newdata =</span> credit_df_noNA[<span class="sc">-</span>train, ])</span>
+<span id="cb392-2"><a href="アンサンブル学習.html#cb392-2" tabindex="-1"></a><span class="co"># </span></span>
+<span id="cb392-3"><a href="アンサンブル学習.html#cb392-3" tabindex="-1"></a><span class="fu">summary</span>(fit_rf)</span>
+<span id="cb392-4"><a href="アンサンブル学習.html#cb392-4" tabindex="-1"></a><span class="co">#&gt;                 Length Class  Mode     </span></span>
+<span id="cb392-5"><a href="アンサンブル学習.html#cb392-5" tabindex="-1"></a><span class="co">#&gt; call               6   -none- call     </span></span>
+<span id="cb392-6"><a href="アンサンブル学習.html#cb392-6" tabindex="-1"></a><span class="co">#&gt; type               1   -none- character</span></span>
+<span id="cb392-7"><a href="アンサンブル学習.html#cb392-7" tabindex="-1"></a><span class="co">#&gt; predicted        500   factor numeric  </span></span>
+<span id="cb392-8"><a href="アンサンブル学習.html#cb392-8" tabindex="-1"></a><span class="co">#&gt; err.rate        1500   -none- numeric  </span></span>
+<span id="cb392-9"><a href="アンサンブル学習.html#cb392-9" tabindex="-1"></a><span class="co">#&gt; confusion          6   -none- numeric  </span></span>
+<span id="cb392-10"><a href="アンサンブル学習.html#cb392-10" tabindex="-1"></a><span class="co">#&gt; votes           1000   matrix numeric  </span></span>
+<span id="cb392-11"><a href="アンサンブル学習.html#cb392-11" tabindex="-1"></a><span class="co">#&gt; oob.times        500   -none- numeric  </span></span>
+<span id="cb392-12"><a href="アンサンブル学習.html#cb392-12" tabindex="-1"></a><span class="co">#&gt; classes            2   -none- character</span></span>
+<span id="cb392-13"><a href="アンサンブル学習.html#cb392-13" tabindex="-1"></a><span class="co">#&gt; importance        80   -none- numeric  </span></span>
+<span id="cb392-14"><a href="アンサンブル学習.html#cb392-14" tabindex="-1"></a><span class="co">#&gt; importanceSD      60   -none- numeric  </span></span>
+<span id="cb392-15"><a href="アンサンブル学習.html#cb392-15" tabindex="-1"></a><span class="co">#&gt; localImportance    0   -none- NULL     </span></span>
+<span id="cb392-16"><a href="アンサンブル学習.html#cb392-16" tabindex="-1"></a><span class="co">#&gt; proximity          0   -none- NULL     </span></span>
+<span id="cb392-17"><a href="アンサンブル学習.html#cb392-17" tabindex="-1"></a><span class="co">#&gt; ntree              1   -none- numeric  </span></span>
+<span id="cb392-18"><a href="アンサンブル学習.html#cb392-18" tabindex="-1"></a><span class="co">#&gt; mtry               1   -none- numeric  </span></span>
+<span id="cb392-19"><a href="アンサンブル学習.html#cb392-19" tabindex="-1"></a><span class="co">#&gt; forest            14   -none- list     </span></span>
+<span id="cb392-20"><a href="アンサンブル学習.html#cb392-20" tabindex="-1"></a><span class="co">#&gt; y                500   factor numeric  </span></span>
+<span id="cb392-21"><a href="アンサンブル学習.html#cb392-21" tabindex="-1"></a><span class="co">#&gt; test               0   -none- NULL     </span></span>
+<span id="cb392-22"><a href="アンサンブル学習.html#cb392-22" tabindex="-1"></a><span class="co">#&gt; inbag              0   -none- NULL     </span></span>
+<span id="cb392-23"><a href="アンサンブル学習.html#cb392-23" tabindex="-1"></a><span class="co">#&gt; terms              3   terms  call</span></span></code></pre></div>
+<p>混同行列を作成し, accuracyや, F1 (“F尺度”) の数値を取り出す.</p>
+<div class="sourceCode" id="cb393"><pre class="sourceCode r"><code class="sourceCode r"><span id="cb393-1"><a href="アンサンブル学習.html#cb393-1" tabindex="-1"></a>(tbl_rf <span class="ot">&lt;-</span> <span class="fu">table</span>(yhat_rf, credit_df_noNA<span class="sc">$</span>Customer[<span class="sc">-</span>train]))</span>
+<span id="cb393-2"><a href="アンサンブル学習.html#cb393-2" tabindex="-1"></a><span class="co">#&gt;        </span></span>
+<span id="cb393-3"><a href="アンサンブル学習.html#cb393-3" tabindex="-1"></a><span class="co">#&gt; yhat_rf bad good</span></span>
+<span id="cb393-4"><a href="アンサンブル学習.html#cb393-4" tabindex="-1"></a><span class="co">#&gt;    bad   23   14</span></span>
+<span id="cb393-5"><a href="アンサンブル学習.html#cb393-5" tabindex="-1"></a><span class="co">#&gt;    good  30  128</span></span>
+<span id="cb393-6"><a href="アンサンブル学習.html#cb393-6" tabindex="-1"></a>(<span class="fu">confusionMatrix</span>(tbl_rf)<span class="sc">$</span>overall[<span class="st">&quot;Accuracy&quot;</span>])</span>
+<span id="cb393-7"><a href="アンサンブル学習.html#cb393-7" tabindex="-1"></a><span class="co">#&gt; Accuracy </span></span>
+<span id="cb393-8"><a href="アンサンブル学習.html#cb393-8" tabindex="-1"></a><span class="co">#&gt; 0.774359</span></span>
+<span id="cb393-9"><a href="アンサンブル学習.html#cb393-9" tabindex="-1"></a>(<span class="fu">confusionMatrix</span>(tbl_rf, <span class="at">mode =</span> <span class="st">&quot;prec_recall&quot;</span>)<span class="sc">$</span>byClass[<span class="st">&quot;F1&quot;</span>])</span>
+<span id="cb393-10"><a href="アンサンブル学習.html#cb393-10" tabindex="-1"></a><span class="co">#&gt;        F1 </span></span>
+<span id="cb393-11"><a href="アンサンブル学習.html#cb393-11" tabindex="-1"></a><span class="co">#&gt; 0.5111111</span></span></code></pre></div>
+<p>→ パラメータ・チューニング(mtry, nodesize/maxnodes等)より, 改善の余地有り</p>
+<p><strong>自主課題</strong>
+ハイパーパラメータを変えて, パフォーマンスを比較してみよう.</p>
+<ul>
+<li>各変数の重要度</li>
+</ul>
+<div class="sourceCode" id="cb394"><pre class="sourceCode r"><code class="sourceCode r"><span id="cb394-1"><a href="アンサンブル学習.html#cb394-1" tabindex="-1"></a><span class="co"># 各変数の重要度</span></span>
+<span id="cb394-2"><a href="アンサンブル学習.html#cb394-2" tabindex="-1"></a><span class="fu">importance</span>(fit_rf)</span>
+<span id="cb394-3"><a href="アンサンブル学習.html#cb394-3" tabindex="-1"></a><span class="co">#&gt;                         bad       good MeanDecreaseAccuracy MeanDecreaseGini</span></span>
+<span id="cb394-4"><a href="アンサンブル学習.html#cb394-4" tabindex="-1"></a><span class="co">#&gt; StatusAccount    18.2406750 16.4946426           23.4101092       22.7732973</span></span>
+<span id="cb394-5"><a href="アンサンブル学習.html#cb394-5" tabindex="-1"></a><span class="co">#&gt; DurationMonth     8.6191619 13.7539806           16.8054128       23.4872569</span></span>
+<span id="cb394-6"><a href="アンサンブル学習.html#cb394-6" tabindex="-1"></a><span class="co">#&gt; CreditHistory     2.5123173  4.9885214            5.6602350       11.4384420</span></span>
+<span id="cb394-7"><a href="アンサンブル学習.html#cb394-7" tabindex="-1"></a><span class="co">#&gt; Purpose           3.9812876  2.0171391            3.7749554       11.7082009</span></span>
+<span id="cb394-8"><a href="アンサンブル学習.html#cb394-8" tabindex="-1"></a><span class="co">#&gt; CreditAmount      2.3306101  8.7839987            9.0502101       30.1623368</span></span>
+<span id="cb394-9"><a href="アンサンブル学習.html#cb394-9" tabindex="-1"></a><span class="co">#&gt; SavingsAccount    5.9954796 -0.1269385            3.5280400        6.7990910</span></span>
+<span id="cb394-10"><a href="アンサンブル学習.html#cb394-10" tabindex="-1"></a><span class="co">#&gt; EmploymentSince   1.8684738  4.4793237            4.8717406       14.4204958</span></span>
+<span id="cb394-11"><a href="アンサンブル学習.html#cb394-11" tabindex="-1"></a><span class="co">#&gt; InstallmentRate   1.0644703  4.4672097            4.1244434        8.9624679</span></span>
+<span id="cb394-12"><a href="アンサンブル学習.html#cb394-12" tabindex="-1"></a><span class="co">#&gt; StatusAndSex      1.7758577  0.4215884            1.4385134        8.8589038</span></span>
+<span id="cb394-13"><a href="アンサンブル学習.html#cb394-13" tabindex="-1"></a><span class="co">#&gt; Guarantors        4.8469105  8.1675310            9.0020391        5.6785251</span></span>
+<span id="cb394-14"><a href="アンサンブル学習.html#cb394-14" tabindex="-1"></a><span class="co">#&gt; ResidenceSince    1.0304818  0.4797195            1.0480306        8.7191197</span></span>
+<span id="cb394-15"><a href="アンサンブル学習.html#cb394-15" tabindex="-1"></a><span class="co">#&gt; Property         -1.4386017  7.7430478            5.3764627        8.0519616</span></span>
+<span id="cb394-16"><a href="アンサンブル学習.html#cb394-16" tabindex="-1"></a><span class="co">#&gt; Age               4.9327720  5.0869132            7.2074345       24.1410112</span></span>
+<span id="cb394-17"><a href="アンサンブル学習.html#cb394-17" tabindex="-1"></a><span class="co">#&gt; InstallmentPlans  1.2617704  1.7176788            2.0252865        5.9231219</span></span>
+<span id="cb394-18"><a href="アンサンブル学習.html#cb394-18" tabindex="-1"></a><span class="co">#&gt; Housing          -0.3777576  2.1536104            1.4887341        3.6019637</span></span>
+<span id="cb394-19"><a href="アンサンブル学習.html#cb394-19" tabindex="-1"></a><span class="co">#&gt; NCredits         -0.1365011  3.8979401            3.3878630        4.7944978</span></span>
+<span id="cb394-20"><a href="アンサンブル学習.html#cb394-20" tabindex="-1"></a><span class="co">#&gt; Job               0.9970704  3.4870177            3.6369344        7.0219383</span></span>
+<span id="cb394-21"><a href="アンサンブル学習.html#cb394-21" tabindex="-1"></a><span class="co">#&gt; NPeopleMain      -1.3613446  0.5956468           -0.1577331        2.4535740</span></span>
+<span id="cb394-22"><a href="アンサンブル学習.html#cb394-22" tabindex="-1"></a><span class="co">#&gt; Phone             1.8034420 -0.3854100            0.7655450        3.2441279</span></span>
+<span id="cb394-23"><a href="アンサンブル学習.html#cb394-23" tabindex="-1"></a><span class="co">#&gt; ForeignWorker     0.2520411 -1.6396991           -1.1523368        0.7819814</span></span>
+<span id="cb394-24"><a href="アンサンブル学習.html#cb394-24" tabindex="-1"></a><span class="fu">varImpPlot</span>(fit_rf)</span></code></pre></div>
+<p><img src="092-ensemble_files/figure-html/unnamed-chunk-17-1.png" width="75%" /></p>
+<p>-&gt; 重要な変数として, Credit Amount, Age, DurationMonth, Status Account, EmploymentSince, …</p>
+<ul>
+<li>ROC曲線の可視化, およびAUC指標の計算</li>
+</ul>
+<div class="sourceCode" id="cb395"><pre class="sourceCode r"><code class="sourceCode r"><span id="cb395-1"><a href="アンサンブル学習.html#cb395-1" tabindex="-1"></a><span class="co"># ROC曲線, AUC</span></span>
+<span id="cb395-2"><a href="アンサンブル学習.html#cb395-2" tabindex="-1"></a><span class="fu">library</span>(ROCR)   <span class="co"># performance</span></span>
+<span id="cb395-3"><a href="アンサンブル学習.html#cb395-3" tabindex="-1"></a>yprob_rf <span class="ot">&lt;-</span> <span class="fu">predict</span>(fit_rf, <span class="at">newdata =</span> credit_df_noNA[<span class="sc">-</span>train, ], <span class="at">type =</span> <span class="st">&quot;prob&quot;</span>)</span>
+<span id="cb395-4"><a href="アンサンブル学習.html#cb395-4" tabindex="-1"></a>pred_rf <span class="ot">&lt;-</span> <span class="fu">prediction</span>(<span class="fu">apply</span>(yprob_rf, <span class="dv">1</span>, max), credit_df_noNA<span class="sc">$</span>Customer[<span class="sc">-</span>train])</span>
+<span id="cb395-5"><a href="アンサンブル学習.html#cb395-5" tabindex="-1"></a>perf_rf <span class="ot">&lt;-</span> <span class="fu">performance</span>(pred_rf, <span class="st">&quot;tpr&quot;</span>, <span class="st">&quot;fpr&quot;</span>)</span>
+<span id="cb395-6"><a href="アンサンブル学習.html#cb395-6" tabindex="-1"></a><span class="fu">plot</span>(perf_rf)</span></code></pre></div>
+<p><img src="092-ensemble_files/figure-html/unnamed-chunk-18-1.png" width="75%" /></p>
+<div class="sourceCode" id="cb396"><pre class="sourceCode r"><code class="sourceCode r"><span id="cb396-1"><a href="アンサンブル学習.html#cb396-1" tabindex="-1"></a>auc_rf <span class="ot">&lt;-</span> <span class="fu">performance</span>(pred_rf, <span class="st">&quot;auc&quot;</span>)</span>
+<span id="cb396-2"><a href="アンサンブル学習.html#cb396-2" tabindex="-1"></a>(auc <span class="ot">&lt;-</span> <span class="fu">as.numeric</span>(auc_rf<span class="sc">@</span>y.values))</span>
+<span id="cb396-3"><a href="アンサンブル学習.html#cb396-3" tabindex="-1"></a><span class="co">#&gt; [1] 0.7725884</span></span></code></pre></div>
+</div>
+<div id="一般化ブースト回帰" class="section level2 hasAnchor" number="9.3">
+<h2><span class="header-section-number">9.3</span> 一般化ブースト回帰<a href="アンサンブル学習.html#一般化ブースト回帰" class="anchor-section" aria-label="Anchor link to header"></a></h2>
+<p>パッケージ<strong>gbm</strong>, 関数<code>gbm()</code>を用いて,
+<strong>勾配ブースティング木 (gradient boosting/boosted tree)</strong> を実行する.</p>
+<pre><code>注: `gbm()`関数は, generalized boosted regression modelを適合する関数であるとマニュアルで説明されている. この関数では, 分布 (引数`distribution`) として, “gaussian”の他に, “bernoulli” (0/1), “possion” (カウント)等をカバーすることから,「一般化線形モデル (GLM)」における”generalized”の使い方をしていると思われる.
+なお, 標準的には, GBTの”G”は, 勾配 (Gradient) の”G”に対応し, “勾配ブースティング回帰 (”gradient boosting (または boosted) tree regression”) を表すと理解されるので,
+注意が必要である.</code></pre>
+<p><code>gbm()</code>にデータセットを与える際, 事前に目的変数の値は
+{0,1}に変換しておく必要がある.</p>
+<div class="sourceCode" id="cb398"><pre class="sourceCode r"><code class="sourceCode r"><span id="cb398-1"><a href="アンサンブル学習.html#cb398-1" tabindex="-1"></a><span class="co"># 予め反応変数を{0,1}に変換しておく</span></span>
+<span id="cb398-2"><a href="アンサンブル学習.html#cb398-2" tabindex="-1"></a>credit_df_01 <span class="ot">&lt;-</span> credit_df_noNA</span>
+<span id="cb398-3"><a href="アンサンブル学習.html#cb398-3" tabindex="-1"></a><span class="co"># credit_df_01$Customer2 &lt;- model.matrix( ~ Customer, data = credit_df_noNA)[, -1] # 0:bad, 1:good</span></span>
+<span id="cb398-4"><a href="アンサンブル学習.html#cb398-4" tabindex="-1"></a>credit_df_01<span class="sc">$</span>Customer2 <span class="ot">&lt;-</span> <span class="fu">model.matrix</span>( <span class="sc">~</span> Customer <span class="sc">-</span> <span class="dv">1</span>, <span class="at">data =</span> credit_df_noNA)[, <span class="sc">-</span><span class="dv">2</span>] <span class="co"># 0:good, 1:bad</span></span>
+<span id="cb398-5"><a href="アンサンブル学習.html#cb398-5" tabindex="-1"></a>credit_df_01<span class="sc">$</span>Customer <span class="ot">&lt;-</span> <span class="cn">NULL</span></span>
+<span id="cb398-6"><a href="アンサンブル学習.html#cb398-6" tabindex="-1"></a><span class="co"># good → 0, bad → 1</span></span></code></pre></div>
+<!--
+bookdownでエラー発生
+credit_df_01$Customer2 <- model.matrix( ~ Customer, data = credit_df_noNA)[, -1]
+→
+{0,1}でなく, 何故か{-1,1}が出力されてしまう!?
+→
+model.matrix()内, 何故かbookdown実行時, "contr.sum"になっていた!? 出力が{-1,1}
+-->
+<p>GBTにおいては, パラメータの選択がパフォーマンスに大きく左右する.</p>
+<pre><code>gbm():
+重要なパラメータ
+- n.trees   適合する木の総数=繰り返し計算回数
+- interaction.depth   各木の最大深さ
+- shrnkage    縮小パラメータ (学習レート/ステップサイズ減少幅) (デフォルト = 0.1)
+- bag.fraction   次の木生成のためランダムに抽出される学習セットの割合 (デフォルト = 0.5). 
+  モデル適合にランダムネスを導入</code></pre>
+<ul>
+<li>GBMの実行</li>
+</ul>
+<div class="sourceCode" id="cb400"><pre class="sourceCode r"><code class="sourceCode r"><span id="cb400-1"><a href="アンサンブル学習.html#cb400-1" tabindex="-1"></a><span class="co"># gbm関数を分類問題に適用 (distribution = &quot;bernoulli&quot;)</span></span>
+<span id="cb400-2"><a href="アンサンブル学習.html#cb400-2" tabindex="-1"></a><span class="fu">library</span>(gbm)</span>
+<span id="cb400-3"><a href="アンサンブル学習.html#cb400-3" tabindex="-1"></a><span class="fu">set.seed</span>(<span class="dv">1</span>)</span>
+<span id="cb400-4"><a href="アンサンブル学習.html#cb400-4" tabindex="-1"></a>fit_gbm <span class="ot">&lt;-</span> <span class="fu">gbm</span>(Customer2 <span class="sc">~</span> ., <span class="at">data =</span> credit_df_01[train, ],</span>
+<span id="cb400-5"><a href="アンサンブル学習.html#cb400-5" tabindex="-1"></a>               <span class="at">distribution =</span> <span class="st">&quot;bernoulli&quot;</span>, </span>
+<span id="cb400-6"><a href="アンサンブル学習.html#cb400-6" tabindex="-1"></a>               <span class="at">n.trees =</span> <span class="dv">5000</span>,</span>
+<span id="cb400-7"><a href="アンサンブル学習.html#cb400-7" tabindex="-1"></a>               <span class="at">interaction.depth =</span> <span class="dv">4</span>, </span>
+<span id="cb400-8"><a href="アンサンブル学習.html#cb400-8" tabindex="-1"></a>               <span class="at">shrinkage =</span> <span class="fl">0.001</span>)</span></code></pre></div>
+<div class="sourceCode" id="cb401"><pre class="sourceCode r"><code class="sourceCode r"><span id="cb401-1"><a href="アンサンブル学習.html#cb401-1" tabindex="-1"></a><span class="fu">summary</span>(fit_gbm) <span class="co"># プロットの出力: plotit = T (デフォルト)  </span></span></code></pre></div>
+<p><img src="092-ensemble_files/figure-html/unnamed-chunk-21-1.png" width="75%" /></p>
+<pre><code>#&gt;                               var    rel.inf
+#&gt; StatusAccount       StatusAccount 16.1322116
+#&gt; CreditAmount         CreditAmount 14.8832384
+#&gt; DurationMonth       DurationMonth 13.5681922
+#&gt; Age                           Age  9.2205182
+#&gt; EmploymentSince   EmploymentSince  7.8868283
+#&gt; Purpose                   Purpose  5.2379561
+#&gt; CreditHistory       CreditHistory  5.1830782
+#&gt; InstallmentRate   InstallmentRate  3.7427905
+#&gt; InstallmentPlans InstallmentPlans  3.7201558
+#&gt; SavingsAccount     SavingsAccount  3.3310716
+#&gt; Guarantors             Guarantors  3.1216665
+#&gt; StatusAndSex         StatusAndSex  2.9160491
+#&gt; Property                 Property  2.7019140
+#&gt; ResidenceSince     ResidenceSince  2.4379173
+#&gt; Job                           Job  2.3755654
+#&gt; Housing                   Housing  2.0459670
+#&gt; NCredits                 NCredits  0.5883543
+#&gt; Phone                       Phone  0.5773367
+#&gt; NPeopleMain           NPeopleMain  0.2193557
+#&gt; ForeignWorker       ForeignWorker  0.1098330
+# 各変数の相対的影響度 (relative influence): 損失関数 (二乗誤差) の減少幅</code></pre>
+<div class="sourceCode" id="cb403"><pre class="sourceCode r"><code class="sourceCode r"><span id="cb403-1"><a href="アンサンブル学習.html#cb403-1" tabindex="-1"></a><span class="fu">plot</span>(fit_gbm)</span></code></pre></div>
+<ul>
+<li>partial dependence plot (PDP)</li>
+</ul>
+<p>PDPは, (自分以外の変数について積分して除去することで) 1変数の反応変数に対する効果を可視化するXAI (Explainable AI) の一手法である.</p>
+<p>ここでは, 重要な2変数である<code>Age</code>, <code>CreditAmount</code>について PDPを作成する.</p>
+<div class="sourceCode" id="cb404"><pre class="sourceCode r"><code class="sourceCode r"><span id="cb404-1"><a href="アンサンブル学習.html#cb404-1" tabindex="-1"></a><span class="co"># partial dependence plot (PDP)</span></span>
+<span id="cb404-2"><a href="アンサンブル学習.html#cb404-2" tabindex="-1"></a><span class="co"># 最重要な2変数について</span></span>
+<span id="cb404-3"><a href="アンサンブル学習.html#cb404-3" tabindex="-1"></a><span class="fu">par</span>(<span class="at">mfrow =</span> <span class="fu">c</span>(<span class="dv">1</span>, <span class="dv">2</span>))</span>
+<span id="cb404-4"><a href="アンサンブル学習.html#cb404-4" tabindex="-1"></a><span class="fu">plot</span>(fit_gbm, <span class="at">i =</span> <span class="st">&quot;Age&quot;</span>)</span></code></pre></div>
+<p><img src="092-ensemble_files/figure-html/unnamed-chunk-23-1.png" width="75%" /></p>
+<div class="sourceCode" id="cb405"><pre class="sourceCode r"><code class="sourceCode r"><span id="cb405-1"><a href="アンサンブル学習.html#cb405-1" tabindex="-1"></a><span class="fu">plot</span>(fit_gbm, <span class="at">i =</span> <span class="st">&quot;CreditAmount&quot;</span>)</span></code></pre></div>
+<p><img src="092-ensemble_files/figure-html/unnamed-chunk-23-2.png" width="75%" /></p>
+<p><strong>自主課題</strong>
+他の変数についても, PDPを作図してみよう</p>
+<ul>
+<li>テストデータにより外挿予測
+<code>predict()</code>において引数<code>type = "response"</code>を指定すると,
+先の<code>gbm()</code>実行時に<code>distribution="bernoulli"</code>と指定していた場合には, 確率が返される.
+そこで, これを目的変数 ({0,1}) の予測に変換するために, 閾値を設定し大小での2値分類を行う.
+また, <code>predict()</code>では, 予測に用いるため <code>gbm()</code>で得られた木の数を<code>n.trees</code>で指定する.</li>
+</ul>
+<div class="sourceCode" id="cb406"><pre class="sourceCode r"><code class="sourceCode r"><span id="cb406-1"><a href="アンサンブル学習.html#cb406-1" tabindex="-1"></a>yprob_gbm <span class="ot">&lt;-</span> <span class="fu">predict</span>(fit_gbm, <span class="at">newdata =</span> credit_df_01[<span class="sc">-</span>train, ], </span>
+<span id="cb406-2"><a href="アンサンブル学習.html#cb406-2" tabindex="-1"></a>                     <span class="at">n.trees =</span> <span class="dv">5000</span>, <span class="at">type =</span> <span class="st">&quot;response&quot;</span>)     </span>
+<span id="cb406-3"><a href="アンサンブル学習.html#cb406-3" tabindex="-1"></a><span class="co"># (現状) type = &quot;response&quot;: &quot;bernoulli&quot;では, 確率を返す</span></span>
+<span id="cb406-4"><a href="アンサンブル学習.html#cb406-4" tabindex="-1"></a><span class="co"># → 2値{0,1}予測するには, 閾値を指定して変換(!)</span></span>
+<span id="cb406-5"><a href="アンサンブル学習.html#cb406-5" tabindex="-1"></a>thrshld <span class="ot">&lt;-</span> <span class="fl">0.5</span></span>
+<span id="cb406-6"><a href="アンサンブル学習.html#cb406-6" tabindex="-1"></a>yhat_gbm <span class="ot">&lt;-</span> <span class="fu">ifelse</span>(yprob_gbm <span class="sc">&gt;</span> thrshld, <span class="dv">1</span>, <span class="dv">0</span>)</span>
+<span id="cb406-7"><a href="アンサンブル学習.html#cb406-7" tabindex="-1"></a></span>
+<span id="cb406-8"><a href="アンサンブル学習.html#cb406-8" tabindex="-1"></a><span class="co"># yhat_gbm &lt;- predict(fit_gbm, newdata = credit_df_01[-train, ], n.trees = 5000)    </span></span>
+<span id="cb406-9"><a href="アンサンブル学習.html#cb406-9" tabindex="-1"></a><span class="co"># head(yhat_gbm)</span></span>
+<span id="cb406-10"><a href="アンサンブル学習.html#cb406-10" tabindex="-1"></a></span>
+<span id="cb406-11"><a href="アンサンブル学習.html#cb406-11" tabindex="-1"></a>y_test <span class="ot">&lt;-</span> credit_df_01[<span class="sc">-</span>train, <span class="st">&quot;Customer2&quot;</span>] <span class="co"># 0/1</span></span></code></pre></div>
+<p>上と同様に, 混同行列を作成し, accuracyや, F1 (“F尺度”) の数値を取り出す.</p>
+<div class="sourceCode" id="cb407"><pre class="sourceCode r"><code class="sourceCode r"><span id="cb407-1"><a href="アンサンブル学習.html#cb407-1" tabindex="-1"></a>(tbl_gbm <span class="ot">&lt;-</span> <span class="fu">table</span>(yhat_gbm, y_test))</span>
+<span id="cb407-2"><a href="アンサンブル学習.html#cb407-2" tabindex="-1"></a><span class="co">#&gt;         y_test</span></span>
+<span id="cb407-3"><a href="アンサンブル学習.html#cb407-3" tabindex="-1"></a><span class="co">#&gt; yhat_gbm   0   1</span></span>
+<span id="cb407-4"><a href="アンサンブル学習.html#cb407-4" tabindex="-1"></a><span class="co">#&gt;        0 129  35</span></span>
+<span id="cb407-5"><a href="アンサンブル学習.html#cb407-5" tabindex="-1"></a><span class="co">#&gt;        1  13  18</span></span>
+<span id="cb407-6"><a href="アンサンブル学習.html#cb407-6" tabindex="-1"></a>(<span class="fu">confusionMatrix</span>(tbl_gbm)<span class="sc">$</span>overall[<span class="st">&quot;Accuracy&quot;</span>])</span>
+<span id="cb407-7"><a href="アンサンブル学習.html#cb407-7" tabindex="-1"></a><span class="co">#&gt;  Accuracy </span></span>
+<span id="cb407-8"><a href="アンサンブル学習.html#cb407-8" tabindex="-1"></a><span class="co">#&gt; 0.7538462</span></span>
+<span id="cb407-9"><a href="アンサンブル学習.html#cb407-9" tabindex="-1"></a>(<span class="fu">confusionMatrix</span>(tbl_gbm, <span class="at">mode =</span> <span class="st">&quot;prec_recall&quot;</span>)<span class="sc">$</span>byClass[<span class="st">&quot;F1&quot;</span>])</span>
+<span id="cb407-10"><a href="アンサンブル学習.html#cb407-10" tabindex="-1"></a><span class="co">#&gt;        F1 </span></span>
+<span id="cb407-11"><a href="アンサンブル学習.html#cb407-11" tabindex="-1"></a><span class="co">#&gt; 0.8431373</span></span></code></pre></div>
+<p>→ <code>shrinkage</code>, <code>interaction.depth</code>等のパラメータ・チューニングにより, パフォーマンスを改善できる余地が有る.</p>
+<p><strong>自主課題</strong>
+ハイパーパラメータを変えて, パフォーマンスを比較してみよう.</p>
+<ul>
+<li>ROC曲線, AUC指標</li>
+</ul>
+<div class="sourceCode" id="cb408"><pre class="sourceCode r"><code class="sourceCode r"><span id="cb408-1"><a href="アンサンブル学習.html#cb408-1" tabindex="-1"></a><span class="co"># ROC曲線, AUC</span></span>
+<span id="cb408-2"><a href="アンサンブル学習.html#cb408-2" tabindex="-1"></a>pred_gbm <span class="ot">&lt;-</span> <span class="fu">prediction</span>(yprob_gbm, y_test)</span>
+<span id="cb408-3"><a href="アンサンブル学習.html#cb408-3" tabindex="-1"></a>perf_gbm <span class="ot">&lt;-</span> <span class="fu">performance</span>(pred_gbm, <span class="st">&quot;tpr&quot;</span>, <span class="st">&quot;fpr&quot;</span>)</span>
+<span id="cb408-4"><a href="アンサンブル学習.html#cb408-4" tabindex="-1"></a><span class="fu">plot</span>(perf_gbm)</span></code></pre></div>
+<p><img src="092-ensemble_files/figure-html/unnamed-chunk-26-1.png" width="75%" /></p>
+<div class="sourceCode" id="cb409"><pre class="sourceCode r"><code class="sourceCode r"><span id="cb409-1"><a href="アンサンブル学習.html#cb409-1" tabindex="-1"></a>auc_gbm <span class="ot">&lt;-</span> <span class="fu">performance</span>(pred_gbm, <span class="st">&quot;auc&quot;</span>)</span>
+<span id="cb409-2"><a href="アンサンブル学習.html#cb409-2" tabindex="-1"></a>(auc <span class="ot">&lt;-</span> <span class="fu">as.numeric</span>(auc_gbm<span class="sc">@</span>y.values))</span>
+<span id="cb409-3"><a href="アンサンブル学習.html#cb409-3" tabindex="-1"></a><span class="co">#&gt; [1] 0.8070688</span></span></code></pre></div>
+<p><strong>自主課題</strong>
+0/1予測の閾値を変えて, パフォーマンスを比較してみよう</p>
+<p><strong>自主課題</strong>
+bad/goodの符号化 (0/1) の際, 0/1を入れ替えるとどうなるか試してみよう</p>
+<div class="sourceCode" id="cb410"><pre class="sourceCode r"><code class="sourceCode r"><span id="cb410-1"><a href="アンサンブル学習.html#cb410-1" tabindex="-1"></a>credit_df_01<span class="sc">$</span>Customer2 <span class="ot">&lt;-</span> <span class="fu">model.matrix</span>( <span class="sc">~</span> Customer <span class="sc">-</span> <span class="dv">1</span>, <span class="at">data =</span> credit_df_noNA)[, <span class="sc">-</span><span class="dv">1</span>] <span class="co"># 0:bad, 1:good</span></span></code></pre></div>
+<p>注)上述の手法と合わせる為に, 予め学習データとテスト分割を分割 (固定) したが, <strong>gbm</strong>パッケージ内で, 分割→テストする機能有り</p>
+
+</div>
+</div>
+            </section>
+
+          </div>
+        </div>
+      </div>
+<a href="決定木分析.html" class="navigation navigation-prev " aria-label="Previous page"><i class="fa fa-angle-left"></i></a>
+<a href="サポートベクターマシン-svm.html" class="navigation navigation-next " aria-label="Next page"><i class="fa fa-angle-right"></i></a>
+    </div>
+  </div>
+<script src="libs/gitbook-2.6.7/js/app.min.js"></script>
+<script src="libs/gitbook-2.6.7/js/clipboard.min.js"></script>
+<script src="libs/gitbook-2.6.7/js/plugin-search.js"></script>
+<script src="libs/gitbook-2.6.7/js/plugin-sharing.js"></script>
+<script src="libs/gitbook-2.6.7/js/plugin-fontsettings.js"></script>
+<script src="libs/gitbook-2.6.7/js/plugin-bookdown.js"></script>
+<script src="libs/gitbook-2.6.7/js/jquery.highlight.js"></script>
+<script src="libs/gitbook-2.6.7/js/plugin-clipboard.js"></script>
+<script>
+gitbook.require(["gitbook"], function(gitbook) {
+gitbook.start({
+"sharing": {
+"github": false,
+"facebook": true,
+"twitter": true,
+"linkedin": false,
+"weibo": false,
+"instapaper": false,
+"vk": false,
+"whatsapp": false,
+"all": ["facebook", "twitter", "linkedin", "weibo", "instapaper"]
+},
+"fontsettings": {
+"theme": "white",
+"family": "sans",
+"size": 2
+},
+"edit": {
+"link": null,
+"text": null
+},
+"history": {
+"link": null,
+"text": null
+},
+"view": {
+"link": null,
+"text": null
+},
+"download": null,
+"search": {
+"engine": "fuse",
+"options": null
+},
+"toc": {
+"collapse": "subsection"
+}
+});
+});
+</script>
+
+<!-- dynamically load mathjax for compatibility with self-contained -->
+<script>
+  (function () {
+    var script = document.createElement("script");
+    script.type = "text/javascript";
+    var src = "true";
+    if (src === "" || src === "true") src = "https://cdnjs.cloudflare.com/ajax/libs/mathjax/2.7.9/latest.js?config=TeX-MML-AM_CHTML";
+    if (location.protocol !== "file:")
+      if (/^https?:/.test(src))
+        src = src.replace(/^https?:/, '');
+    script.src = src;
+    document.getElementsByTagName("head")[0].appendChild(script);
+  })();
+</script>
+</body>
+
+</html>

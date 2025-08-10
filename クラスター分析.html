@@ -1,0 +1,1089 @@
+<!DOCTYPE html>
+<html lang="" xml:lang="">
+<head>
+
+  <meta charset="utf-8" />
+  <meta http-equiv="X-UA-Compatible" content="IE=edge" />
+  <title>13 クラスター分析 | 金融データサイエンス</title>
+  <meta name="description" content="13 クラスター分析 | 金融データサイエンス" />
+  <meta name="generator" content="bookdown 0.40 and GitBook 2.6.7" />
+
+  <meta property="og:title" content="13 クラスター分析 | 金融データサイエンス" />
+  <meta property="og:type" content="book" />
+  
+  
+  
+
+  <meta name="twitter:card" content="summary" />
+  <meta name="twitter:title" content="13 クラスター分析 | 金融データサイエンス" />
+  
+  
+  
+
+<meta name="author" content="林 高樹" />
+
+
+
+  <meta name="viewport" content="width=device-width, initial-scale=1" />
+  <meta name="apple-mobile-web-app-capable" content="yes" />
+  <meta name="apple-mobile-web-app-status-bar-style" content="black" />
+  
+  
+<link rel="prev" href="探索的因子分析.html"/>
+<link rel="next" href="xai-explainable-ai.html"/>
+<script src="libs/jquery-3.6.0/jquery-3.6.0.min.js"></script>
+<script src="https://cdn.jsdelivr.net/npm/fuse.js@6.4.6/dist/fuse.min.js"></script>
+<link href="libs/gitbook-2.6.7/css/style.css" rel="stylesheet" />
+<link href="libs/gitbook-2.6.7/css/plugin-table.css" rel="stylesheet" />
+<link href="libs/gitbook-2.6.7/css/plugin-bookdown.css" rel="stylesheet" />
+<link href="libs/gitbook-2.6.7/css/plugin-highlight.css" rel="stylesheet" />
+<link href="libs/gitbook-2.6.7/css/plugin-search.css" rel="stylesheet" />
+<link href="libs/gitbook-2.6.7/css/plugin-fontsettings.css" rel="stylesheet" />
+<link href="libs/gitbook-2.6.7/css/plugin-clipboard.css" rel="stylesheet" />
+
+
+
+
+
+
+
+
+<link href="libs/anchor-sections-1.1.0/anchor-sections.css" rel="stylesheet" />
+<link href="libs/anchor-sections-1.1.0/anchor-sections-hash.css" rel="stylesheet" />
+<script src="libs/anchor-sections-1.1.0/anchor-sections.js"></script>
+
+
+<style type="text/css">
+pre > code.sourceCode { white-space: pre; position: relative; }
+pre > code.sourceCode > span { line-height: 1.25; }
+pre > code.sourceCode > span:empty { height: 1.2em; }
+.sourceCode { overflow: visible; }
+code.sourceCode > span { color: inherit; text-decoration: inherit; }
+pre.sourceCode { margin: 0; }
+@media screen {
+div.sourceCode { overflow: auto; }
+}
+@media print {
+pre > code.sourceCode { white-space: pre-wrap; }
+pre > code.sourceCode > span { display: inline-block; text-indent: -5em; padding-left: 5em; }
+}
+pre.numberSource code
+  { counter-reset: source-line 0; }
+pre.numberSource code > span
+  { position: relative; left: -4em; counter-increment: source-line; }
+pre.numberSource code > span > a:first-child::before
+  { content: counter(source-line);
+    position: relative; left: -1em; text-align: right; vertical-align: baseline;
+    border: none; display: inline-block;
+    -webkit-touch-callout: none; -webkit-user-select: none;
+    -khtml-user-select: none; -moz-user-select: none;
+    -ms-user-select: none; user-select: none;
+    padding: 0 4px; width: 4em;
+    color: #aaaaaa;
+  }
+pre.numberSource { margin-left: 3em; border-left: 1px solid #aaaaaa;  padding-left: 4px; }
+div.sourceCode
+  {   }
+@media screen {
+pre > code.sourceCode > span > a:first-child::before { text-decoration: underline; }
+}
+code span.al { color: #ff0000; font-weight: bold; } /* Alert */
+code span.an { color: #60a0b0; font-weight: bold; font-style: italic; } /* Annotation */
+code span.at { color: #7d9029; } /* Attribute */
+code span.bn { color: #40a070; } /* BaseN */
+code span.bu { color: #008000; } /* BuiltIn */
+code span.cf { color: #007020; font-weight: bold; } /* ControlFlow */
+code span.ch { color: #4070a0; } /* Char */
+code span.cn { color: #880000; } /* Constant */
+code span.co { color: #60a0b0; font-style: italic; } /* Comment */
+code span.cv { color: #60a0b0; font-weight: bold; font-style: italic; } /* CommentVar */
+code span.do { color: #ba2121; font-style: italic; } /* Documentation */
+code span.dt { color: #902000; } /* DataType */
+code span.dv { color: #40a070; } /* DecVal */
+code span.er { color: #ff0000; font-weight: bold; } /* Error */
+code span.ex { } /* Extension */
+code span.fl { color: #40a070; } /* Float */
+code span.fu { color: #06287e; } /* Function */
+code span.im { color: #008000; font-weight: bold; } /* Import */
+code span.in { color: #60a0b0; font-weight: bold; font-style: italic; } /* Information */
+code span.kw { color: #007020; font-weight: bold; } /* Keyword */
+code span.op { color: #666666; } /* Operator */
+code span.ot { color: #007020; } /* Other */
+code span.pp { color: #bc7a00; } /* Preprocessor */
+code span.sc { color: #4070a0; } /* SpecialChar */
+code span.ss { color: #bb6688; } /* SpecialString */
+code span.st { color: #4070a0; } /* String */
+code span.va { color: #19177c; } /* Variable */
+code span.vs { color: #4070a0; } /* VerbatimString */
+code span.wa { color: #60a0b0; font-weight: bold; font-style: italic; } /* Warning */
+</style>
+
+<style type="text/css">
+  
+  div.hanging-indent{margin-left: 1.5em; text-indent: -1.5em;}
+</style>
+
+</head>
+
+<body>
+
+
+
+  <div class="book without-animation with-summary font-size-2 font-family-1" data-basepath=".">
+
+    <div class="book-summary">
+      <nav role="navigation">
+
+<ul class="summary">
+<li class="chapter" data-level="1" data-path="index.html"><a href="index.html"><i class="fa fa-check"></i><b>1</b> はじめに</a>
+<ul>
+<li class="chapter" data-level="1.1" data-path="index.html"><a href="index.html#コースの目的"><i class="fa fa-check"></i><b>1.1</b> コースの目的</a></li>
+<li class="chapter" data-level="1.2" data-path="index.html"><a href="index.html#統計学統計的手法の学習について"><i class="fa fa-check"></i><b>1.2</b> 統計学/統計的手法の学習について</a>
+<ul>
+<li class="chapter" data-level="" data-path="index.html"><a href="index.html#学習の目標"><i class="fa fa-check"></i>学習の目標</a></li>
+<li class="chapter" data-level="" data-path="index.html"><a href="index.html#統計学統計的手法の学習方法"><i class="fa fa-check"></i>統計学/統計的手法の学習方法</a></li>
+<li class="chapter" data-level="" data-path="index.html"><a href="index.html#統計学統計的手法の学習ステップ"><i class="fa fa-check"></i>統計学/統計的手法の学習ステップ</a></li>
+</ul></li>
+<li class="chapter" data-level="1.3" data-path="index.html"><a href="index.html#ビジネス応用における統計学の最近の趨勢"><i class="fa fa-check"></i><b>1.3</b> ビジネス応用における統計学の最近の趨勢</a></li>
+<li class="chapter" data-level="1.4" data-path="index.html"><a href="index.html#本書内の記載の注意点"><i class="fa fa-check"></i><b>1.4</b> 本書内の記載の注意点</a></li>
+</ul></li>
+<li class="chapter" data-level="2" data-path="r言語の基本.html"><a href="r言語の基本.html"><i class="fa fa-check"></i><b>2</b> R言語の基本</a>
+<ul>
+<li class="chapter" data-level="2.1" data-path="r言語の基本.html"><a href="r言語の基本.html#rの基本プログラミング"><i class="fa fa-check"></i><b>2.1</b> Rの基本プログラミング</a>
+<ul>
+<li class="chapter" data-level="2.1.1" data-path="r言語の基本.html"><a href="r言語の基本.html#基本操作"><i class="fa fa-check"></i><b>2.1.1</b> 基本操作</a></li>
+<li class="chapter" data-level="2.1.2" data-path="r言語の基本.html"><a href="r言語の基本.html#基本構文"><i class="fa fa-check"></i><b>2.1.2</b> 基本構文</a></li>
+<li class="chapter" data-level="2.1.3" data-path="r言語の基本.html"><a href="r言語の基本.html#自作関数"><i class="fa fa-check"></i><b>2.1.3</b> 自作関数</a></li>
+<li class="chapter" data-level="2.1.4" data-path="r言語の基本.html"><a href="r言語の基本.html#パッケージのインストール-読み込み"><i class="fa fa-check"></i><b>2.1.4</b> パッケージのインストール &amp; 読み込み</a></li>
+<li class="chapter" data-level="2.1.5" data-path="r言語の基本.html"><a href="r言語の基本.html#ヘルプ"><i class="fa fa-check"></i><b>2.1.5</b> ヘルプ</a></li>
+</ul></li>
+<li class="chapter" data-level="2.2" data-path="r言語の基本.html"><a href="r言語の基本.html#データの型や構造"><i class="fa fa-check"></i><b>2.2</b> データの型や構造</a>
+<ul>
+<li class="chapter" data-level="2.2.1" data-path="r言語の基本.html"><a href="r言語の基本.html#データの値の種類-データ型"><i class="fa fa-check"></i><b>2.2.1</b> データの値の種類 (“データ型”)</a></li>
+<li class="chapter" data-level="2.2.2" data-path="r言語の基本.html"><a href="r言語の基本.html#データの配列の仕方-データ構造"><i class="fa fa-check"></i><b>2.2.2</b> データの配列の仕方 (“データ構造”)</a></li>
+<li class="chapter" data-level="2.2.3" data-path="r言語の基本.html"><a href="r言語の基本.html#ベクトル"><i class="fa fa-check"></i><b>2.2.3</b> ベクトル</a></li>
+<li class="chapter" data-level="2.2.4" data-path="r言語の基本.html"><a href="r言語の基本.html#行列"><i class="fa fa-check"></i><b>2.2.4</b> 行列</a></li>
+<li class="chapter" data-level="2.2.5" data-path="r言語の基本.html"><a href="r言語の基本.html#リスト"><i class="fa fa-check"></i><b>2.2.5</b> リスト</a></li>
+<li class="chapter" data-level="2.2.6" data-path="r言語の基本.html"><a href="r言語の基本.html#データフレーム"><i class="fa fa-check"></i><b>2.2.6</b> データフレーム</a></li>
+</ul></li>
+<li class="chapter" data-level="2.3" data-path="r言語の基本.html"><a href="r言語の基本.html#データの操作演算"><i class="fa fa-check"></i><b>2.3</b> データの操作・演算</a>
+<ul>
+<li class="chapter" data-level="2.3.1" data-path="r言語の基本.html"><a href="r言語の基本.html#ベクトルの結合-ソート"><i class="fa fa-check"></i><b>2.3.1</b> ベクトルの結合, ソート</a></li>
+<li class="chapter" data-level="2.3.2" data-path="r言語の基本.html"><a href="r言語の基本.html#二項演算"><i class="fa fa-check"></i><b>2.3.2</b> 二項演算</a></li>
+<li class="chapter" data-level="2.3.3" data-path="r言語の基本.html"><a href="r言語の基本.html#論理演算"><i class="fa fa-check"></i><b>2.3.3</b> 論理演算</a></li>
+<li class="chapter" data-level="2.3.4" data-path="r言語の基本.html"><a href="r言語の基本.html#条件式"><i class="fa fa-check"></i><b>2.3.4</b> 条件式</a></li>
+<li class="chapter" data-level="2.3.5" data-path="r言語の基本.html"><a href="r言語の基本.html#行列演算"><i class="fa fa-check"></i><b>2.3.5</b> 行列演算</a></li>
+</ul></li>
+<li class="chapter" data-level="2.4" data-path="r言語の基本.html"><a href="r言語の基本.html#r関数"><i class="fa fa-check"></i><b>2.4</b> R関数</a>
+<ul>
+<li class="chapter" data-level="2.4.1" data-path="r言語の基本.html"><a href="r言語の基本.html#数学基本関数"><i class="fa fa-check"></i><b>2.4.1</b> 数学基本関数</a></li>
+<li class="chapter" data-level="2.4.2" data-path="r言語の基本.html"><a href="r言語の基本.html#基本統計量の計算"><i class="fa fa-check"></i><b>2.4.2</b> 基本統計量の計算</a></li>
+<li class="chapter" data-level="2.4.3" data-path="r言語の基本.html"><a href="r言語の基本.html#確率分布"><i class="fa fa-check"></i><b>2.4.3</b> 確率分布</a></li>
+<li class="chapter" data-level="2.4.4" data-path="r言語の基本.html"><a href="r言語の基本.html#その他便利な関数"><i class="fa fa-check"></i><b>2.4.4</b> その他便利な関数</a></li>
+</ul></li>
+<li class="chapter" data-level="2.5" data-path="r言語の基本.html"><a href="r言語の基本.html#データの可視化"><i class="fa fa-check"></i><b>2.5</b> データの可視化</a></li>
+<li class="chapter" data-level="2.6" data-path="r言語の基本.html"><a href="r言語の基本.html#ファイル入出力"><i class="fa fa-check"></i><b>2.6</b> ファイル入出力</a>
+<ul>
+<li class="chapter" data-level="2.6.1" data-path="r言語の基本.html"><a href="r言語の基本.html#テキストファイル読み込み"><i class="fa fa-check"></i><b>2.6.1</b> テキストファイル読み込み</a></li>
+<li class="chapter" data-level="2.6.2" data-path="r言語の基本.html"><a href="r言語の基本.html#テキストファイル書き出し"><i class="fa fa-check"></i><b>2.6.2</b> テキストファイル書き出し</a></li>
+</ul></li>
+<li class="chapter" data-level="2.7" data-path="r言語の基本.html"><a href="r言語の基本.html#パッケージtidyverse"><i class="fa fa-check"></i><b>2.7</b> パッケージ<code>tidyverse</code></a>
+<ul>
+<li class="chapter" data-level="2.7.1" data-path="r言語の基本.html"><a href="r言語の基本.html#q-rの初心者はtidyverseから勉強することは可能か"><i class="fa fa-check"></i><b>2.7.1</b> Q: Rの初心者は<code>tidyverse</code>から勉強することは可能か?</a></li>
+<li class="chapter" data-level="2.7.2" data-path="r言語の基本.html"><a href="r言語の基本.html#tidyverseの基本"><i class="fa fa-check"></i><b>2.7.2</b> <code>tidyverse</code>の基本</a></li>
+</ul></li>
+</ul></li>
+<li class="chapter" data-level="3" data-path="線形回帰分析.html"><a href="線形回帰分析.html"><i class="fa fa-check"></i><b>3</b> 線形回帰分析</a>
+<ul>
+<li class="chapter" data-level="3.1" data-path="線形回帰分析.html"><a href="線形回帰分析.html#重回帰分析の基本操作"><i class="fa fa-check"></i><b>3.1</b> 重回帰分析の基本操作</a>
+<ul>
+<li class="chapter" data-level="" data-path="線形回帰分析.html"><a href="線形回帰分析.html#データ1-1ルーム賃貸マンション"><i class="fa fa-check"></i>データ1: 1ルーム賃貸マンション</a></li>
+</ul></li>
+<li class="chapter" data-level="3.2" data-path="線形回帰分析.html"><a href="線形回帰分析.html#変数の選択"><i class="fa fa-check"></i><b>3.2</b> 変数の選択</a>
+<ul>
+<li class="chapter" data-level="" data-path="線形回帰分析.html"><a href="線形回帰分析.html#データ2-ボストン市内住宅物件価格データ"><i class="fa fa-check"></i>データ2: ボストン市内住宅物件価格データ</a></li>
+</ul></li>
+<li class="chapter" data-level="3.3" data-path="線形回帰分析.html"><a href="線形回帰分析.html#説明変数に質的変数を含む回帰"><i class="fa fa-check"></i><b>3.3</b> 説明変数に質的変数を含む回帰</a>
+<ul>
+<li class="chapter" data-level="" data-path="線形回帰分析.html"><a href="線形回帰分析.html#データセット3-高速道路事故データ"><i class="fa fa-check"></i>データセット#3: 高速道路事故データ</a></li>
+</ul></li>
+<li class="chapter" data-level="3.4" data-path="線形回帰分析.html"><a href="線形回帰分析.html#説明変数に質的変数を含む回帰-2"><i class="fa fa-check"></i><b>3.4</b> 説明変数に質的変数を含む回帰 (2)</a>
+<ul>
+<li class="chapter" data-level="" data-path="線形回帰分析.html"><a href="線形回帰分析.html#データセット5-収入データ-仮想"><i class="fa fa-check"></i>データセット#5: 収入データ (仮想)</a></li>
+</ul></li>
+<li class="chapter" data-level="3.5" data-path="線形回帰分析.html"><a href="線形回帰分析.html#多項式回帰"><i class="fa fa-check"></i><b>3.5</b> 多項式回帰</a>
+<ul>
+<li class="chapter" data-level="" data-path="線形回帰分析.html"><a href="線形回帰分析.html#データセット6-wage"><i class="fa fa-check"></i>データセット#6: <code>Wage</code></a></li>
+</ul></li>
+<li class="chapter" data-level="3.6" data-path="線形回帰分析.html"><a href="線形回帰分析.html#関数factorについて"><i class="fa fa-check"></i><b>3.6</b> 関数<code>factor()</code>について</a>
+<ul>
+<li class="chapter" data-level="" data-path="線形回帰分析.html"><a href="線形回帰分析.html#rでのfactor関数の使い方"><i class="fa fa-check"></i>Rでのfactor関数の使い方</a></li>
+</ul></li>
+</ul></li>
+<li class="chapter" data-level="4" data-path="ロジットブロビット回帰分析.html"><a href="ロジットブロビット回帰分析.html"><i class="fa fa-check"></i><b>4</b> ロジット/ブロビット回帰分析</a>
+<ul>
+<li class="chapter" data-level="4.1" data-path="ロジットブロビット回帰分析.html"><a href="ロジットブロビット回帰分析.html#ロジット回帰分析の基本操作"><i class="fa fa-check"></i><b>4.1</b> ロジット回帰分析の基本操作</a>
+<ul>
+<li class="chapter" data-level="" data-path="ロジットブロビット回帰分析.html"><a href="ロジットブロビット回帰分析.html#ロジットモデル-シミュレーションデータ"><i class="fa fa-check"></i>ロジットモデル: シミュレーションデータ</a></li>
+</ul></li>
+<li class="chapter" data-level="4.2" data-path="ロジットブロビット回帰分析.html"><a href="ロジットブロビット回帰分析.html#データ分析例"><i class="fa fa-check"></i><b>4.2</b> データ分析例</a>
+<ul>
+<li class="chapter" data-level="" data-path="ロジットブロビット回帰分析.html"><a href="ロジットブロビット回帰分析.html#データセット-1-企業パフォーマンスデータ-仮想"><i class="fa fa-check"></i>データセット (1): 企業パフォーマンス・データ (仮想)</a></li>
+<li class="chapter" data-level="" data-path="ロジットブロビット回帰分析.html"><a href="ロジットブロビット回帰分析.html#データセット-2-個人ローンデフォルトデータ-仮想"><i class="fa fa-check"></i>データセット (2): 個人ローン・デフォルト・データ (仮想)</a></li>
+</ul></li>
+<li class="chapter" data-level="4.3" data-path="ロジットブロビット回帰分析.html"><a href="ロジットブロビット回帰分析.html#疑似r2の計算"><i class="fa fa-check"></i><b>4.3</b> 疑似R2の計算</a>
+<ul>
+<li class="chapter" data-level="" data-path="ロジットブロビット回帰分析.html"><a href="ロジットブロビット回帰分析.html#パッケージdesctoolsの利用"><i class="fa fa-check"></i>パッケージ<code>DescTools</code>の利用</a></li>
+<li class="chapter" data-level="" data-path="ロジットブロビット回帰分析.html"><a href="ロジットブロビット回帰分析.html#パッケージpsclの利用"><i class="fa fa-check"></i>パッケージ<code>pscl</code>の利用</a></li>
+<li class="chapter" data-level="" data-path="ロジットブロビット回帰分析.html"><a href="ロジットブロビット回帰分析.html#パッケージperformanceの利用"><i class="fa fa-check"></i>パッケージ<code>performance</code>の利用</a></li>
+</ul></li>
+</ul></li>
+<li class="chapter" data-level="5" data-path="一般化加法モデル-gam.html"><a href="一般化加法モデル-gam.html"><i class="fa fa-check"></i><b>5</b> 一般化加法モデル (GAM)</a>
+<ul>
+<li class="chapter" data-level="5.1" data-path="一般化加法モデル-gam.html"><a href="一般化加法モデル-gam.html#パッケージgamの利用"><i class="fa fa-check"></i><b>5.1</b> パッケージ<code>gam</code>の利用</a>
+<ul>
+<li class="chapter" data-level="" data-path="一般化加法モデル-gam.html"><a href="一般化加法モデル-gam.html#多項式回帰-1"><i class="fa fa-check"></i>多項式回帰</a></li>
+<li class="chapter" data-level="" data-path="一般化加法モデル-gam.html"><a href="一般化加法モデル-gam.html#スプライン適合"><i class="fa fa-check"></i>スプライン適合</a></li>
+<li class="chapter" data-level="" data-path="一般化加法モデル-gam.html"><a href="一般化加法モデル-gam.html#gam"><i class="fa fa-check"></i>GAM</a></li>
+</ul></li>
+<li class="chapter" data-level="5.2" data-path="一般化加法モデル-gam.html"><a href="一般化加法モデル-gam.html#パッケージmgcvの利用"><i class="fa fa-check"></i><b>5.2</b> パッケージ<code>mgcv</code>の利用</a></li>
+<li class="chapter" data-level="5.3" data-path="一般化加法モデル-gam.html"><a href="一般化加法モデル-gam.html#パッケージprophetの利用"><i class="fa fa-check"></i><b>5.3</b> パッケージ<code>prophet</code>の利用</a></li>
+<li class="chapter" data-level="5.4" data-path="一般化加法モデル-gam.html"><a href="一般化加法モデル-gam.html#追加分析boston-housingデータセットの変数間の関係性"><i class="fa fa-check"></i><b>5.4</b> 【追加分析】Boston housingデータセットの変数間の関係性</a></li>
+</ul></li>
+<li class="chapter" data-level="6" data-path="正則化回帰-lasso-ridge回帰-elastic-net.html"><a href="正則化回帰-lasso-ridge回帰-elastic-net.html"><i class="fa fa-check"></i><b>6</b> 正則化回帰 (lasso, ridge回帰, elastic net)</a>
+<ul>
+<li class="chapter" data-level="6.1" data-path="正則化回帰-lasso-ridge回帰-elastic-net.html"><a href="正則化回帰-lasso-ridge回帰-elastic-net.html#検証用セット法による回帰モデルの予測精度評価"><i class="fa fa-check"></i><b>6.1</b> 検証用セット法による回帰モデルの予測精度評価</a>
+<ul>
+<li class="chapter" data-level="" data-path="正則化回帰-lasso-ridge回帰-elastic-net.html"><a href="正則化回帰-lasso-ridge回帰-elastic-net.html#データセット1-ワイン品質データ"><i class="fa fa-check"></i>データセット1: ワイン品質データ</a></li>
+</ul></li>
+<li class="chapter" data-level="6.2" data-path="正則化回帰-lasso-ridge回帰-elastic-net.html"><a href="正則化回帰-lasso-ridge回帰-elastic-net.html#lasso"><i class="fa fa-check"></i><b>6.2</b> lasso</a>
+<ul>
+<li class="chapter" data-level="" data-path="正則化回帰-lasso-ridge回帰-elastic-net.html"><a href="正則化回帰-lasso-ridge回帰-elastic-net.html#関数glmnetの基本操作"><i class="fa fa-check"></i>関数<code>glmnet()</code>の基本操作</a></li>
+<li class="chapter" data-level="" data-path="正則化回帰-lasso-ridge回帰-elastic-net.html"><a href="正則化回帰-lasso-ridge回帰-elastic-net.html#lambdaのグリッド指定によるglmnetの一括実行"><i class="fa fa-check"></i><code>lambda</code>のグリッド指定による<code>glmnet</code>の一括実行</a></li>
+<li class="chapter" data-level="" data-path="正則化回帰-lasso-ridge回帰-elastic-net.html"><a href="正則化回帰-lasso-ridge回帰-elastic-net.html#交差検証によるパラメータチューニング"><i class="fa fa-check"></i>交差検証によるパラメータ・チューニング</a></li>
+</ul></li>
+<li class="chapter" data-level="6.3" data-path="正則化回帰-lasso-ridge回帰-elastic-net.html"><a href="正則化回帰-lasso-ridge回帰-elastic-net.html#ridge回帰"><i class="fa fa-check"></i><b>6.3</b> ridge回帰</a></li>
+<li class="chapter" data-level="6.4" data-path="正則化回帰-lasso-ridge回帰-elastic-net.html"><a href="正則化回帰-lasso-ridge回帰-elastic-net.html#一般化線形モデル-glm-正則化"><i class="fa fa-check"></i><b>6.4</b> 一般化線形モデル (GLM) + 正則化</a>
+<ul>
+<li class="chapter" data-level="" data-path="正則化回帰-lasso-ridge回帰-elastic-net.html"><a href="正則化回帰-lasso-ridge回帰-elastic-net.html#データセット2-german-creditデータ"><i class="fa fa-check"></i>データセット2: german creditデータ</a></li>
+</ul></li>
+<li class="chapter" data-level="6.5" data-path="正則化回帰-lasso-ridge回帰-elastic-net.html"><a href="正則化回帰-lasso-ridge回帰-elastic-net.html#補足-glmに対する変数選択の代替的方法"><i class="fa fa-check"></i><b>6.5</b> 補足: GLMに対する変数選択の代替的方法</a></li>
+</ul></li>
+<li class="chapter" data-level="7" data-path="判別分析.html"><a href="判別分析.html"><i class="fa fa-check"></i><b>7</b> 判別分析</a>
+<ul>
+<li class="chapter" data-level="7.1" data-path="判別分析.html"><a href="判別分析.html#線形判別-2次判別-パッケージmassの利用"><i class="fa fa-check"></i><b>7.1</b> 線形判別 &amp; 2次判別: パッケージMASSの利用</a>
+<ul>
+<li class="chapter" data-level="" data-path="判別分析.html"><a href="判別分析.html#データセット1-米国sp500日次リターンデータ"><i class="fa fa-check"></i>データセット#1: 米国S&amp;P500日次リターンデータ</a></li>
+<li class="chapter" data-level="" data-path="判別分析.html"><a href="判別分析.html#線形判別-lda"><i class="fa fa-check"></i>線形判別 (LDA)</a></li>
+<li class="chapter" data-level="" data-path="判別分析.html"><a href="判別分析.html#次判別-qda"><i class="fa fa-check"></i>2次判別 (QDA)</a></li>
+</ul></li>
+<li class="chapter" data-level="7.2" data-path="判別分析.html"><a href="判別分析.html#knn法-パッケージclassの利用"><i class="fa fa-check"></i><b>7.2</b> kNN法: パッケージ<strong>class</strong>の利用</a></li>
+<li class="chapter" data-level="7.3" data-path="判別分析.html"><a href="判別分析.html#他パッケージの利用-パッケージklar"><i class="fa fa-check"></i><b>7.3</b> 他パッケージの利用: パッケージ<strong>klaR</strong></a>
+<ul>
+<li class="chapter" data-level="" data-path="判別分析.html"><a href="判別分析.html#データセット2-ビジネススクールの入学許可データ"><i class="fa fa-check"></i>データセット#2: ビジネススクールの入学許可データ</a></li>
+</ul></li>
+</ul></li>
+<li class="chapter" data-level="8" data-path="決定木分析.html"><a href="決定木分析.html"><i class="fa fa-check"></i><b>8</b> 決定木分析</a>
+<ul>
+<li class="chapter" data-level="8.1" data-path="決定木分析.html"><a href="決定木分析.html#導入-回帰木-vs-線形回帰"><i class="fa fa-check"></i><b>8.1</b> 導入: 回帰木 vs 線形回帰</a>
+<ul>
+<li class="chapter" data-level="" data-path="決定木分析.html"><a href="決定木分析.html#データセット1-自動車の制動距離"><i class="fa fa-check"></i>データセット1: 自動車の制動距離</a></li>
+<li class="chapter" data-level="8.1.1" data-path="決定木分析.html"><a href="決定木分析.html#基本操作-回帰木"><i class="fa fa-check"></i><b>8.1.1</b> 基本操作: 回帰木</a></li>
+</ul></li>
+<li class="chapter" data-level="8.2" data-path="決定木分析.html"><a href="決定木分析.html#回帰木"><i class="fa fa-check"></i><b>8.2</b> 回帰木</a>
+<ul>
+<li class="chapter" data-level="" data-path="決定木分析.html"><a href="決定木分析.html#データセット2-米國株価指数データ-再掲"><i class="fa fa-check"></i>データセット2: 米國株価指数データ (再掲)</a></li>
+</ul></li>
+<li class="chapter" data-level="8.3" data-path="決定木分析.html"><a href="決定木分析.html#分類木"><i class="fa fa-check"></i><b>8.3</b> 分類木</a></li>
+</ul></li>
+<li class="chapter" data-level="9" data-path="アンサンブル学習.html"><a href="アンサンブル学習.html"><i class="fa fa-check"></i><b>9</b> アンサンブル学習</a>
+<ul>
+<li class="chapter" data-level="9.1" data-path="アンサンブル学習.html"><a href="アンサンブル学習.html#決定木-分類木"><i class="fa fa-check"></i><b>9.1</b> 決定木 (分類木)</a>
+<ul>
+<li class="chapter" data-level="" data-path="アンサンブル学習.html"><a href="アンサンブル学習.html#データセット3-個人ローン信用データ-再掲"><i class="fa fa-check"></i>データセット3: 個人ローン信用データ (再掲)</a></li>
+</ul></li>
+<li class="chapter" data-level="9.2" data-path="アンサンブル学習.html"><a href="アンサンブル学習.html#ランダムフォレスト分類木"><i class="fa fa-check"></i><b>9.2</b> ランダムフォレスト分類木</a></li>
+<li class="chapter" data-level="9.3" data-path="アンサンブル学習.html"><a href="アンサンブル学習.html#一般化ブースト回帰"><i class="fa fa-check"></i><b>9.3</b> 一般化ブースト回帰</a></li>
+</ul></li>
+<li class="chapter" data-level="10" data-path="サポートベクターマシン-svm.html"><a href="サポートベクターマシン-svm.html"><i class="fa fa-check"></i><b>10</b> サポートベクターマシン (SVM)</a>
+<ul>
+<li class="chapter" data-level="10.1" data-path="サポートベクターマシン-svm.html"><a href="サポートベクターマシン-svm.html#svm-rbfカーネル-の動作の確認"><i class="fa fa-check"></i><b>10.1</b> SVM (RBFカーネル) の動作の確認</a>
+<ul>
+<li class="chapter" data-level="" data-path="サポートベクターマシン-svm.html"><a href="サポートベクターマシン-svm.html#データセット1-iris-あやめ-データ"><i class="fa fa-check"></i>データセット1: iris (あやめ) データ</a></li>
+<li class="chapter" data-level="" data-path="サポートベクターマシン-svm.html"><a href="サポートベクターマシン-svm.html#svmの実行"><i class="fa fa-check"></i>SVMの実行</a></li>
+</ul></li>
+<li class="chapter" data-level="10.2" data-path="サポートベクターマシン-svm.html"><a href="サポートベクターマシン-svm.html#値分類"><i class="fa fa-check"></i><b>10.2</b> 2値分類</a>
+<ul>
+<li class="chapter" data-level="" data-path="サポートベクターマシン-svm.html"><a href="サポートベクターマシン-svm.html#データセット2-spamデータ"><i class="fa fa-check"></i>データセット2: spamデータ</a></li>
+<li class="chapter" data-level="" data-path="サポートベクターマシン-svm.html"><a href="サポートベクターマシン-svm.html#svmの実行-1"><i class="fa fa-check"></i>SVMの実行</a></li>
+</ul></li>
+<li class="chapter" data-level="10.3" data-path="サポートベクターマシン-svm.html"><a href="サポートベクターマシン-svm.html#値分類-1"><i class="fa fa-check"></i><b>10.3</b> 3値分類</a>
+<ul>
+<li class="chapter" data-level="" data-path="サポートベクターマシン-svm.html"><a href="サポートベクターマシン-svm.html#svmの実行-2"><i class="fa fa-check"></i>SVMの実行</a></li>
+</ul></li>
+<li class="chapter" data-level="10.4" data-path="サポートベクターマシン-svm.html"><a href="サポートベクターマシン-svm.html#代替パッケージe1071の利用"><i class="fa fa-check"></i><b>10.4</b> 代替パッケージ<strong>e1071</strong>の利用</a>
+<ul>
+<li class="chapter" data-level="" data-path="サポートベクターマシン-svm.html"><a href="サポートベクターマシン-svm.html#svmの実行-3"><i class="fa fa-check"></i>SVMの実行</a></li>
+</ul></li>
+<li class="chapter" data-level="10.5" data-path="サポートベクターマシン-svm.html"><a href="サポートベクターマシン-svm.html#ハイパーパラメータのチューニング"><i class="fa fa-check"></i><b>10.5</b> ハイパーパラメータのチューニング</a>
+<ul>
+<li class="chapter" data-level="" data-path="サポートベクターマシン-svm.html"><a href="サポートベクターマシン-svm.html#線形カーネルの場合"><i class="fa fa-check"></i>線形カーネルの場合</a></li>
+<li class="chapter" data-level="" data-path="サポートベクターマシン-svm.html"><a href="サポートベクターマシン-svm.html#rbfカーネルの場合"><i class="fa fa-check"></i>RBFカーネルの場合</a></li>
+<li class="chapter" data-level="" data-path="サポートベクターマシン-svm.html"><a href="サポートベクターマシン-svm.html#e1071内にあるチューニング用の便利な関数群"><i class="fa fa-check"></i><strong>e1071</strong>内にあるチューニング用の便利な関数群</a></li>
+</ul></li>
+</ul></li>
+<li class="chapter" data-level="11" data-path="主成分分析-pca.html"><a href="主成分分析-pca.html"><i class="fa fa-check"></i><b>11</b> 主成分分析 (PCA)</a>
+<ul>
+<li class="chapter" data-level="11.1" data-path="主成分分析-pca.html"><a href="主成分分析-pca.html#基本操作-1"><i class="fa fa-check"></i><b>11.1</b> 基本操作</a>
+<ul>
+<li class="chapter" data-level="" data-path="主成分分析-pca.html"><a href="主成分分析-pca.html#データセット-従業員スキル評価データ仮想"><i class="fa fa-check"></i>データセット: 従業員スキル評価データ(仮想)</a></li>
+</ul></li>
+<li class="chapter" data-level="11.2" data-path="主成分分析-pca.html"><a href="主成分分析-pca.html#種類のpca-相関行列ベース-vs-分散共分散行列ベース"><i class="fa fa-check"></i><b>11.2</b> 2種類のPCA: 相関行列ベース vs 分散共分散行列ベース</a>
+<ul>
+<li class="chapter" data-level="" data-path="主成分分析-pca.html"><a href="主成分分析-pca.html#データセット3-usarrests-data"><i class="fa fa-check"></i>データセット3: USArrests data</a></li>
+</ul></li>
+</ul></li>
+<li class="chapter" data-level="12" data-path="探索的因子分析.html"><a href="探索的因子分析.html"><i class="fa fa-check"></i><b>12</b> 探索的因子分析</a>
+<ul>
+<li class="chapter" data-level="12.1" data-path="探索的因子分析.html"><a href="探索的因子分析.html#基本操作-2"><i class="fa fa-check"></i><b>12.1</b> 基本操作</a>
+<ul>
+<li class="chapter" data-level="" data-path="探索的因子分析.html"><a href="探索的因子分析.html#データセット1-従業員評価データ-仮想"><i class="fa fa-check"></i>データセット1: 従業員評価データ (仮想)</a></li>
+</ul></li>
+<li class="chapter" data-level="12.2" data-path="探索的因子分析.html"><a href="探索的因子分析.html#ライブラリpsychの利用"><i class="fa fa-check"></i><b>12.2</b> ライブラリ<strong>psych</strong>の利用</a></li>
+<li class="chapter" data-level="12.3" data-path="探索的因子分析.html"><a href="探索的因子分析.html#因子分析に有用なツール"><i class="fa fa-check"></i><b>12.3</b> 因子分析に有用なツール</a></li>
+</ul></li>
+<li class="chapter" data-level="13" data-path="クラスター分析.html"><a href="クラスター分析.html"><i class="fa fa-check"></i><b>13</b> クラスター分析</a>
+<ul>
+<li class="chapter" data-level="13.1" data-path="クラスター分析.html"><a href="クラスター分析.html#基本操作-3"><i class="fa fa-check"></i><b>13.1</b> 基本操作</a>
+<ul>
+<li class="chapter" data-level="" data-path="クラスター分析.html"><a href="クラスター分析.html#階層型クラスタリング"><i class="fa fa-check"></i>階層型クラスタリング</a></li>
+<li class="chapter" data-level="" data-path="クラスター分析.html"><a href="クラスター分析.html#k-means法"><i class="fa fa-check"></i>k-means法</a></li>
+<li class="chapter" data-level="" data-path="クラスター分析.html"><a href="クラスター分析.html#変数に対するクラスタリング"><i class="fa fa-check"></i>変数に対するクラスタリング</a></li>
+</ul></li>
+<li class="chapter" data-level="13.2" data-path="クラスター分析.html"><a href="クラスター分析.html#データ分析例-1"><i class="fa fa-check"></i><b>13.2</b> データ分析例</a>
+<ul>
+<li class="chapter" data-level="" data-path="クラスター分析.html"><a href="クラスター分析.html#データセット-1-ワイン品質データ-再掲"><i class="fa fa-check"></i>データセット (1): ワイン品質データ (再掲)</a></li>
+<li class="chapter" data-level="" data-path="クラスター分析.html"><a href="クラスター分析.html#データセット-2-id無し-posデータ"><i class="fa fa-check"></i>データセット (2): (ID無し) POSデータ</a></li>
+</ul></li>
+<li class="chapter" data-level="13.3" data-path="クラスター分析.html"><a href="クラスター分析.html#発展的なクラスター分析"><i class="fa fa-check"></i><b>13.3</b> 発展的なクラスター分析</a>
+<ul>
+<li class="chapter" data-level="" data-path="クラスター分析.html"><a href="クラスター分析.html#関数agnes"><i class="fa fa-check"></i>関数<code>agnes</code></a></li>
+<li class="chapter" data-level="" data-path="クラスター分析.html"><a href="クラスター分析.html#関数pheatmap"><i class="fa fa-check"></i>関数<code>pheatmap</code></a></li>
+<li class="chapter" data-level="" data-path="クラスター分析.html"><a href="クラスター分析.html#関数pam"><i class="fa fa-check"></i>関数<code>pam</code></a></li>
+</ul></li>
+</ul></li>
+<li class="chapter" data-level="14" data-path="xai-explainable-ai.html"><a href="xai-explainable-ai.html"><i class="fa fa-check"></i><b>14</b> XAI (Explainable AI)</a>
+<ul>
+<li class="chapter" data-level="" data-path="xai-explainable-ai.html"><a href="xai-explainable-ai.html#回帰問題のケース"><i class="fa fa-check"></i>回帰問題のケース</a></li>
+<li class="chapter" data-level="14.1" data-path="xai-explainable-ai.html"><a href="xai-explainable-ai.html#pfi"><i class="fa fa-check"></i><b>14.1</b> PFI</a></li>
+<li class="chapter" data-level="14.2" data-path="xai-explainable-ai.html"><a href="xai-explainable-ai.html#pdp"><i class="fa fa-check"></i><b>14.2</b> PDP</a></li>
+<li class="chapter" data-level="14.3" data-path="xai-explainable-ai.html"><a href="xai-explainable-ai.html#ice"><i class="fa fa-check"></i><b>14.3</b> ICE</a>
+<ul>
+<li class="chapter" data-level="" data-path="xai-explainable-ai.html"><a href="xai-explainable-ai.html#pdp-ice"><i class="fa fa-check"></i>PDP + ICE</a></li>
+</ul></li>
+<li class="chapter" data-level="14.4" data-path="xai-explainable-ai.html"><a href="xai-explainable-ai.html#lime"><i class="fa fa-check"></i><b>14.4</b> LIME</a></li>
+<li class="chapter" data-level="14.5" data-path="xai-explainable-ai.html"><a href="xai-explainable-ai.html#shap"><i class="fa fa-check"></i><b>14.5</b> SHAP</a>
+<ul>
+<li class="chapter" data-level="" data-path="xai-explainable-ai.html"><a href="xai-explainable-ai.html#分類問題のケース"><i class="fa fa-check"></i>分類問題のケース</a></li>
+<li class="chapter" data-level="" data-path="xai-explainable-ai.html"><a href="xai-explainable-ai.html#多値分類問題の例-iris"><i class="fa fa-check"></i>多値分類問題の例 (iris)</a></li>
+<li class="chapter" data-level="" data-path="xai-explainable-ai.html"><a href="xai-explainable-ai.html#値分類問題"><i class="fa fa-check"></i>2値分類問題</a></li>
+</ul></li>
+</ul></li>
+</ul>
+
+      </nav>
+    </div>
+
+    <div class="book-body">
+      <div class="body-inner">
+        <div class="book-header" role="navigation">
+          <h1>
+            <i class="fa fa-circle-o-notch fa-spin"></i><a href="./">金融データサイエンス</a>
+          </h1>
+        </div>
+
+        <div class="page-wrapper" tabindex="-1" role="main">
+          <div class="page-inner">
+
+            <section class="normal" id="section-">
+<div id="クラスター分析" class="section level1 hasAnchor" number="13">
+<h1><span class="header-section-number">13</span> クラスター分析<a href="クラスター分析.html#クラスター分析" class="anchor-section" aria-label="Anchor link to header"></a></h1>
+<div id="基本操作-3" class="section level2 hasAnchor" number="13.1">
+<h2><span class="header-section-number">13.1</span> 基本操作<a href="クラスター分析.html#基本操作-3" class="anchor-section" aria-label="Anchor link to header"></a></h2>
+<p>クラスター分析の基本操作を学ぶため,
+主成分分析の章でも使用した,
+従業員スキル評価データ <span class="math inline">\((n=9,p=5)\)</span> をここでも使用する.</p>
+<div class="sourceCode" id="cb499"><pre class="sourceCode r"><code class="sourceCode r"><span id="cb499-1"><a href="クラスター分析.html#cb499-1" tabindex="-1"></a>tokuten <span class="ot">&lt;-</span> <span class="fu">read.csv</span>(<span class="st">&quot;testdat_eng.csv&quot;</span>, <span class="at">skip =</span> <span class="dv">1</span>, <span class="at">header =</span> T, <span class="at">row.names =</span> <span class="dv">1</span>)</span>
+<span id="cb499-2"><a href="クラスター分析.html#cb499-2" tabindex="-1"></a><span class="co"># tokuten &lt;- read.csv(&quot;testdat_jap.csv&quot;, skip = 1, header = T, row.names = 1)</span></span>
+<span id="cb499-3"><a href="クラスター分析.html#cb499-3" tabindex="-1"></a><span class="co"># tokuten &lt;- read.csv(&quot;testdat_30_eng.csv&quot;, skip = 1, header = T, row.names = 1)</span></span>
+<span id="cb499-4"><a href="クラスター分析.html#cb499-4" tabindex="-1"></a><span class="co"># tokuten &lt;- read.csv(&quot;testdat_30_jap.csv&quot;, skip = 1, header = T, row.names = 1)</span></span></code></pre></div>
+<div id="階層型クラスタリング" class="section level3 unnumbered hasAnchor">
+<h3>階層型クラスタリング<a href="クラスター分析.html#階層型クラスタリング" class="anchor-section" aria-label="Anchor link to header"></a></h3>
+<p>階層型クラスタリングは, Rの標準パッケージの一つ<strong>stats</strong>に含まれる
+関数<code>hclust()</code>を用いて実行することができる.</p>
+<p><code>hclust()</code>への入力として, クラスタリング対象間の距離行列を与える必要がある.
+もし入力データセット (<code>tokuten</code>) の個体間 (行) のクラスタリングを行うのであれば
+そのまま関数<code>dist()</code>を適用すれば良い. 一方, 変数間 (列) のクラスタリングであれば,
+一旦データセットを転置 (行と列の入れ替え) する必要がある.</p>
+<div class="sourceCode" id="cb500"><pre class="sourceCode r"><code class="sourceCode r"><span id="cb500-1"><a href="クラスター分析.html#cb500-1" tabindex="-1"></a>tokuten_dist <span class="ot">&lt;-</span> <span class="fu">dist</span>(tokuten)</span>
+<span id="cb500-2"><a href="クラスター分析.html#cb500-2" tabindex="-1"></a><span class="co"># method = &quot;binary&quot;, &quot;canberra&quot;, &quot;maximum&quot;, &quot;manhattan&quot;</span></span>
+<span id="cb500-3"><a href="クラスター分析.html#cb500-3" tabindex="-1"></a></span>
+<span id="cb500-4"><a href="クラスター分析.html#cb500-4" tabindex="-1"></a><span class="co"># 距離行列</span></span>
+<span id="cb500-5"><a href="クラスター分析.html#cb500-5" tabindex="-1"></a><span class="fu">round</span>(tokuten_dist, <span class="dv">2</span>)</span>
+<span id="cb500-6"><a href="クラスター分析.html#cb500-6" tabindex="-1"></a><span class="co">#&gt;          yamada suzuki tanaka nakamura  ohno Matsui takagi miura</span></span>
+<span id="cb500-7"><a href="クラスター分析.html#cb500-7" tabindex="-1"></a><span class="co">#&gt; suzuki     9.54                                                 </span></span>
+<span id="cb500-8"><a href="クラスター分析.html#cb500-8" tabindex="-1"></a><span class="co">#&gt; tanaka    25.96  27.55                                          </span></span>
+<span id="cb500-9"><a href="クラスター分析.html#cb500-9" tabindex="-1"></a><span class="co">#&gt; nakamura  31.91  35.03   9.27                                   </span></span>
+<span id="cb500-10"><a href="クラスター分析.html#cb500-10" tabindex="-1"></a><span class="co">#&gt; ohno      38.65  41.00  28.21    26.19                          </span></span>
+<span id="cb500-11"><a href="クラスター分析.html#cb500-11" tabindex="-1"></a><span class="co">#&gt; Matsui    27.50  29.98  11.22    10.10 20.00                    </span></span>
+<span id="cb500-12"><a href="クラスター分析.html#cb500-12" tabindex="-1"></a><span class="co">#&gt; takagi    18.52  21.73  13.82    18.14 23.13  12.04             </span></span>
+<span id="cb500-13"><a href="クラスター分析.html#cb500-13" tabindex="-1"></a><span class="co">#&gt; miura     30.66  32.70  12.57    13.93 18.92  13.04  14.39      </span></span>
+<span id="cb500-14"><a href="クラスター分析.html#cb500-14" tabindex="-1"></a><span class="co">#&gt; sato      19.72  26.34  17.18    18.30 30.90  16.76  12.41 21.66</span></span>
+<span id="cb500-15"><a href="クラスター分析.html#cb500-15" tabindex="-1"></a></span>
+<span id="cb500-16"><a href="クラスター分析.html#cb500-16" tabindex="-1"></a><span class="co"># 距離の近い人を集めて、クラスターを形成</span></span>
+<span id="cb500-17"><a href="クラスター分析.html#cb500-17" tabindex="-1"></a><span class="co"># 1:C1 = {tanaka, nakamura}</span></span>
+<span id="cb500-18"><a href="クラスター分析.html#cb500-18" tabindex="-1"></a><span class="co"># 2:C2 = {yamada, suzuki}, or C2 = {C1, matsui} or else??</span></span>
+<span id="cb500-19"><a href="クラスター分析.html#cb500-19" tabindex="-1"></a><span class="co"># --&gt; どちらが優先される?</span></span></code></pre></div>
+<p><code>hclust()</code>のデフォルト設定では, 距離尺度はユークリッド距離,
+クラスター結合方法は最遠隣法/完全連結法となっている.</p>
+<div class="sourceCode" id="cb501"><pre class="sourceCode r"><code class="sourceCode r"><span id="cb501-1"><a href="クラスター分析.html#cb501-1" tabindex="-1"></a><span class="co"># 最遠隣法/完全連結法</span></span>
+<span id="cb501-2"><a href="クラスター分析.html#cb501-2" tabindex="-1"></a>(tokuten_hc_1 <span class="ot">&lt;-</span> <span class="fu">hclust</span>(tokuten_dist))      <span class="co"># method = &quot;complete&quot;</span></span>
+<span id="cb501-3"><a href="クラスター分析.html#cb501-3" tabindex="-1"></a><span class="co">#&gt; </span></span>
+<span id="cb501-4"><a href="クラスター分析.html#cb501-4" tabindex="-1"></a><span class="co">#&gt; Call:</span></span>
+<span id="cb501-5"><a href="クラスター分析.html#cb501-5" tabindex="-1"></a><span class="co">#&gt; hclust(d = tokuten_dist)</span></span>
+<span id="cb501-6"><a href="クラスター分析.html#cb501-6" tabindex="-1"></a><span class="co">#&gt; </span></span>
+<span id="cb501-7"><a href="クラスター分析.html#cb501-7" tabindex="-1"></a><span class="co">#&gt; Cluster method   : complete </span></span>
+<span id="cb501-8"><a href="クラスター分析.html#cb501-8" tabindex="-1"></a><span class="co">#&gt; Distance         : euclidean </span></span>
+<span id="cb501-9"><a href="クラスター分析.html#cb501-9" tabindex="-1"></a><span class="co">#&gt; Number of objects: 9</span></span>
+<span id="cb501-10"><a href="クラスター分析.html#cb501-10" tabindex="-1"></a><span class="co">#summary(tokuten_hc_1)</span></span></code></pre></div>
+<p>出力オブジェクトの要素<code>$merge</code>にクラスター形成過程が格納されている.</p>
+<div class="sourceCode" id="cb502"><pre class="sourceCode r"><code class="sourceCode r"><span id="cb502-1"><a href="クラスター分析.html#cb502-1" tabindex="-1"></a><span class="co"># クラスター形成履歴</span></span>
+<span id="cb502-2"><a href="クラスター分析.html#cb502-2" tabindex="-1"></a><span class="co"># マイナス付き =&gt; 個体番号. マイナス無し =&gt; クラスター番号</span></span>
+<span id="cb502-3"><a href="クラスター分析.html#cb502-3" tabindex="-1"></a>tokuten_hc_1<span class="sc">$</span>merge</span>
+<span id="cb502-4"><a href="クラスター分析.html#cb502-4" tabindex="-1"></a><span class="co">#&gt;      [,1] [,2]</span></span>
+<span id="cb502-5"><a href="クラスター分析.html#cb502-5" tabindex="-1"></a><span class="co">#&gt; [1,]   -3   -4</span></span>
+<span id="cb502-6"><a href="クラスター分析.html#cb502-6" tabindex="-1"></a><span class="co">#&gt; [2,]   -1   -2</span></span>
+<span id="cb502-7"><a href="クラスター分析.html#cb502-7" tabindex="-1"></a><span class="co">#&gt; [3,]   -6    1</span></span>
+<span id="cb502-8"><a href="クラスター分析.html#cb502-8" tabindex="-1"></a><span class="co">#&gt; [4,]   -7   -9</span></span>
+<span id="cb502-9"><a href="クラスター分析.html#cb502-9" tabindex="-1"></a><span class="co">#&gt; [5,]   -8    3</span></span>
+<span id="cb502-10"><a href="クラスター分析.html#cb502-10" tabindex="-1"></a><span class="co">#&gt; [6,]    4    5</span></span>
+<span id="cb502-11"><a href="クラスター分析.html#cb502-11" tabindex="-1"></a><span class="co">#&gt; [7,]   -5    6</span></span>
+<span id="cb502-12"><a href="クラスター分析.html#cb502-12" tabindex="-1"></a><span class="co">#&gt; [8,]    2    7</span></span></code></pre></div>
+<p>また, 出力オブジェクトの要素<code>$height</code>には, クラスター間の結合が行われる際の距離が格納されている.</p>
+<div class="sourceCode" id="cb503"><pre class="sourceCode r"><code class="sourceCode r"><span id="cb503-1"><a href="クラスター分析.html#cb503-1" tabindex="-1"></a><span class="co"># デンドログラム (樹形図) の枝の高さ</span></span>
+<span id="cb503-2"><a href="クラスター分析.html#cb503-2" tabindex="-1"></a>tokuten_hc_1<span class="sc">$</span>height</span>
+<span id="cb503-3"><a href="クラスター分析.html#cb503-3" tabindex="-1"></a><span class="co">#&gt; [1]  9.273618  9.539392 11.224972 12.409674 13.928388 21.656408 30.903074</span></span>
+<span id="cb503-4"><a href="クラスター分析.html#cb503-4" tabindex="-1"></a><span class="co">#&gt; [8] 41.000000</span></span></code></pre></div>
+<p>このクラスター形成過程と結合距離を使うことでデンドログラムが作成される.
+デンドログラムは階層的クラスタリングの結果 (クラスターの形成過程) を視覚化するための有効なツールである.</p>
+<div class="sourceCode" id="cb504"><pre class="sourceCode r"><code class="sourceCode r"><span id="cb504-1"><a href="クラスター分析.html#cb504-1" tabindex="-1"></a><span class="co"># デンドログラム</span></span>
+<span id="cb504-2"><a href="クラスター分析.html#cb504-2" tabindex="-1"></a><span class="fu">par</span>(<span class="at">mfrow =</span> <span class="fu">c</span>(<span class="dv">1</span>, <span class="dv">2</span>))</span>
+<span id="cb504-3"><a href="クラスター分析.html#cb504-3" tabindex="-1"></a><span class="fu">plot</span>(tokuten_hc_1)</span>
+<span id="cb504-4"><a href="クラスター分析.html#cb504-4" tabindex="-1"></a><span class="fu">plot</span>(tokuten_hc_1, <span class="at">hang =</span> <span class="sc">-</span><span class="dv">1</span>)       <span class="co"># 葉の位置(高さ)を揃える</span></span></code></pre></div>
+<p><img src="130-clust_files/figure-html/unnamed-chunk-8-1.png" width="75%" /></p>
+<p>階層クラスタリングを実施しデンドログラムを作成したあと,
+<code>cutree</code>にクラスター数を指定することで,
+木を剪定し (細かい枝を切り落とし) て望ましい数のクラスターに絞り込んで,
+個体がそれぞれ所属するクラスターに分類することができる.</p>
+<div class="sourceCode" id="cb505"><pre class="sourceCode r"><code class="sourceCode r"><span id="cb505-1"><a href="クラスター分析.html#cb505-1" tabindex="-1"></a><span class="co"># 各個体の属するクラスター番号</span></span>
+<span id="cb505-2"><a href="クラスター分析.html#cb505-2" tabindex="-1"></a><span class="fu">cutree</span>(tokuten_hc_1, <span class="at">k =</span> <span class="dv">3</span>)         <span class="co"># k: クラスター数</span></span>
+<span id="cb505-3"><a href="クラスター分析.html#cb505-3" tabindex="-1"></a><span class="co">#&gt;   yamada   suzuki   tanaka nakamura     ohno   Matsui   takagi    miura </span></span>
+<span id="cb505-4"><a href="クラスター分析.html#cb505-4" tabindex="-1"></a><span class="co">#&gt;        1        1        2        2        3        2        2        2 </span></span>
+<span id="cb505-5"><a href="クラスター分析.html#cb505-5" tabindex="-1"></a><span class="co">#&gt;     sato </span></span>
+<span id="cb505-6"><a href="クラスター分析.html#cb505-6" tabindex="-1"></a><span class="co">#&gt;        2</span></span></code></pre></div>
+<p>次に, クラスター結合方法の相違によるデンドログラムの形状の違いをみてみよう.</p>
+<div class="sourceCode" id="cb506"><pre class="sourceCode r"><code class="sourceCode r"><span id="cb506-1"><a href="クラスター分析.html#cb506-1" tabindex="-1"></a><span class="co"># 代替的手法</span></span>
+<span id="cb506-2"><a href="クラスター分析.html#cb506-2" tabindex="-1"></a>(tokuten_hc_2 <span class="ot">&lt;-</span> <span class="fu">hclust</span>(tokuten_dist, <span class="at">method =</span> <span class="st">&quot;single&quot;</span>))   <span class="co"># 最近隣法</span></span>
+<span id="cb506-3"><a href="クラスター分析.html#cb506-3" tabindex="-1"></a><span class="co">#&gt; </span></span>
+<span id="cb506-4"><a href="クラスター分析.html#cb506-4" tabindex="-1"></a><span class="co">#&gt; Call:</span></span>
+<span id="cb506-5"><a href="クラスター分析.html#cb506-5" tabindex="-1"></a><span class="co">#&gt; hclust(d = tokuten_dist, method = &quot;single&quot;)</span></span>
+<span id="cb506-6"><a href="クラスター分析.html#cb506-6" tabindex="-1"></a><span class="co">#&gt; </span></span>
+<span id="cb506-7"><a href="クラスター分析.html#cb506-7" tabindex="-1"></a><span class="co">#&gt; Cluster method   : single </span></span>
+<span id="cb506-8"><a href="クラスター分析.html#cb506-8" tabindex="-1"></a><span class="co">#&gt; Distance         : euclidean </span></span>
+<span id="cb506-9"><a href="クラスター分析.html#cb506-9" tabindex="-1"></a><span class="co">#&gt; Number of objects: 9</span></span>
+<span id="cb506-10"><a href="クラスター分析.html#cb506-10" tabindex="-1"></a>(tokuten_hc_3 <span class="ot">&lt;-</span> <span class="fu">hclust</span>(tokuten_dist, <span class="at">method =</span> <span class="st">&quot;ward.D2&quot;</span>))  <span class="co"># ウォード法</span></span>
+<span id="cb506-11"><a href="クラスター分析.html#cb506-11" tabindex="-1"></a><span class="co">#&gt; </span></span>
+<span id="cb506-12"><a href="クラスター分析.html#cb506-12" tabindex="-1"></a><span class="co">#&gt; Call:</span></span>
+<span id="cb506-13"><a href="クラスター分析.html#cb506-13" tabindex="-1"></a><span class="co">#&gt; hclust(d = tokuten_dist, method = &quot;ward.D2&quot;)</span></span>
+<span id="cb506-14"><a href="クラスター分析.html#cb506-14" tabindex="-1"></a><span class="co">#&gt; </span></span>
+<span id="cb506-15"><a href="クラスター分析.html#cb506-15" tabindex="-1"></a><span class="co">#&gt; Cluster method   : ward.D2 </span></span>
+<span id="cb506-16"><a href="クラスター分析.html#cb506-16" tabindex="-1"></a><span class="co">#&gt; Distance         : euclidean </span></span>
+<span id="cb506-17"><a href="クラスター分析.html#cb506-17" tabindex="-1"></a><span class="co">#&gt; Number of objects: 9</span></span>
+<span id="cb506-18"><a href="クラスター分析.html#cb506-18" tabindex="-1"></a>(tokuten_hc_4 <span class="ot">&lt;-</span> <span class="fu">hclust</span>(tokuten_dist, <span class="at">method =</span> <span class="st">&quot;average&quot;</span>))  <span class="co"># 群平均法</span></span>
+<span id="cb506-19"><a href="クラスター分析.html#cb506-19" tabindex="-1"></a><span class="co">#&gt; </span></span>
+<span id="cb506-20"><a href="クラスター分析.html#cb506-20" tabindex="-1"></a><span class="co">#&gt; Call:</span></span>
+<span id="cb506-21"><a href="クラスター分析.html#cb506-21" tabindex="-1"></a><span class="co">#&gt; hclust(d = tokuten_dist, method = &quot;average&quot;)</span></span>
+<span id="cb506-22"><a href="クラスター分析.html#cb506-22" tabindex="-1"></a><span class="co">#&gt; </span></span>
+<span id="cb506-23"><a href="クラスター分析.html#cb506-23" tabindex="-1"></a><span class="co">#&gt; Cluster method   : average </span></span>
+<span id="cb506-24"><a href="クラスター分析.html#cb506-24" tabindex="-1"></a><span class="co">#&gt; Distance         : euclidean </span></span>
+<span id="cb506-25"><a href="クラスター分析.html#cb506-25" tabindex="-1"></a><span class="co">#&gt; Number of objects: 9</span></span>
+<span id="cb506-26"><a href="クラスター分析.html#cb506-26" tabindex="-1"></a>(tokuten_hc_5 <span class="ot">&lt;-</span> <span class="fu">hclust</span>(tokuten_dist, <span class="at">method =</span> <span class="st">&quot;centroid&quot;</span>)) <span class="co"># 中心点法/重心法</span></span>
+<span id="cb506-27"><a href="クラスター分析.html#cb506-27" tabindex="-1"></a><span class="co">#&gt; </span></span>
+<span id="cb506-28"><a href="クラスター分析.html#cb506-28" tabindex="-1"></a><span class="co">#&gt; Call:</span></span>
+<span id="cb506-29"><a href="クラスター分析.html#cb506-29" tabindex="-1"></a><span class="co">#&gt; hclust(d = tokuten_dist, method = &quot;centroid&quot;)</span></span>
+<span id="cb506-30"><a href="クラスター分析.html#cb506-30" tabindex="-1"></a><span class="co">#&gt; </span></span>
+<span id="cb506-31"><a href="クラスター分析.html#cb506-31" tabindex="-1"></a><span class="co">#&gt; Cluster method   : centroid </span></span>
+<span id="cb506-32"><a href="クラスター分析.html#cb506-32" tabindex="-1"></a><span class="co">#&gt; Distance         : euclidean </span></span>
+<span id="cb506-33"><a href="クラスター分析.html#cb506-33" tabindex="-1"></a><span class="co">#&gt; Number of objects: 9</span></span>
+<span id="cb506-34"><a href="クラスター分析.html#cb506-34" tabindex="-1"></a>(tokuten_hc_6 <span class="ot">&lt;-</span> <span class="fu">hclust</span>(tokuten_dist, <span class="at">method =</span> <span class="st">&quot;median&quot;</span>))   <span class="co"># メジアン法</span></span>
+<span id="cb506-35"><a href="クラスター分析.html#cb506-35" tabindex="-1"></a><span class="co">#&gt; </span></span>
+<span id="cb506-36"><a href="クラスター分析.html#cb506-36" tabindex="-1"></a><span class="co">#&gt; Call:</span></span>
+<span id="cb506-37"><a href="クラスター分析.html#cb506-37" tabindex="-1"></a><span class="co">#&gt; hclust(d = tokuten_dist, method = &quot;median&quot;)</span></span>
+<span id="cb506-38"><a href="クラスター分析.html#cb506-38" tabindex="-1"></a><span class="co">#&gt; </span></span>
+<span id="cb506-39"><a href="クラスター分析.html#cb506-39" tabindex="-1"></a><span class="co">#&gt; Cluster method   : median </span></span>
+<span id="cb506-40"><a href="クラスター分析.html#cb506-40" tabindex="-1"></a><span class="co">#&gt; Distance         : euclidean </span></span>
+<span id="cb506-41"><a href="クラスター分析.html#cb506-41" tabindex="-1"></a><span class="co">#&gt; Number of objects: 9</span></span></code></pre></div>
+<div class="sourceCode" id="cb507"><pre class="sourceCode r"><code class="sourceCode r"><span id="cb507-1"><a href="クラスター分析.html#cb507-1" tabindex="-1"></a><span class="fu">par</span>(<span class="at">mfrow =</span> <span class="fu">c</span>(<span class="dv">2</span>, <span class="dv">2</span>))</span>
+<span id="cb507-2"><a href="クラスター分析.html#cb507-2" tabindex="-1"></a><span class="fu">plot</span>(tokuten_hc_1); <span class="fu">plot</span>(tokuten_hc_2); <span class="fu">plot</span>(tokuten_hc_3)</span>
+<span id="cb507-3"><a href="クラスター分析.html#cb507-3" tabindex="-1"></a><span class="fu">plot</span>(tokuten_hc_4); </span></code></pre></div>
+<p><img src="130-clust_files/figure-html/unnamed-chunk-11-1.png" width="75%" /></p>
+<div class="sourceCode" id="cb508"><pre class="sourceCode r"><code class="sourceCode r"><span id="cb508-1"><a href="クラスター分析.html#cb508-1" tabindex="-1"></a></span>
+<span id="cb508-2"><a href="クラスター分析.html#cb508-2" tabindex="-1"></a><span class="fu">par</span>(<span class="at">mfrow =</span> <span class="fu">c</span>(<span class="dv">1</span>, <span class="dv">2</span>))</span>
+<span id="cb508-3"><a href="クラスター分析.html#cb508-3" tabindex="-1"></a><span class="fu">plot</span>(tokuten_hc_5); <span class="fu">plot</span>(tokuten_hc_6)</span></code></pre></div>
+<p><img src="130-clust_files/figure-html/unnamed-chunk-11-2.png" width="75%" /></p>
+<p>距離尺度として中心点法 (重心法) やメジアン法を選択した場合には,
+「inversion (逆転) 現象」 の発生が確認される.
+「inversion現象」とは、階層的クラスタリングのプロセスにおいて, 本来ならばステップが進むにつれてより”遠く”にあるクラスターと結合していくべきところ, 実際にはより”近く”のクラスターが後に統合されるという状況を指す. すなわち, 結合の順序が距離に関する単調性を失い, 距離の近い順に結合するという直感的な (本来あるべき) 順序に反する状態であり, クラスタリングがうまくいっていないことを示す.</p>
+<p>この現象が生じた場合には, 異なる距離尺度や統合方法を検討する必要がある.</p>
+</div>
+<div id="k-means法" class="section level3 unnumbered hasAnchor">
+<h3>k-means法<a href="クラスター分析.html#k-means法" class="anchor-section" aria-label="Anchor link to header"></a></h3>
+<p>非階層型クラスタリングの主要な方法であるk-means法は,
+Rの標準パッケージの一つ<strong>stats</strong>に含まれる
+関数<code>kmeans()</code>を用いて実行することができる.</p>
+<div class="sourceCode" id="cb509"><pre class="sourceCode r"><code class="sourceCode r"><span id="cb509-1"><a href="クラスター分析.html#cb509-1" tabindex="-1"></a><span class="co"># k-means法</span></span>
+<span id="cb509-2"><a href="クラスター分析.html#cb509-2" tabindex="-1"></a>(tokuten_hc_k <span class="ot">&lt;-</span> <span class="fu">kmeans</span>(tokuten, <span class="dv">3</span>))</span>
+<span id="cb509-3"><a href="クラスター分析.html#cb509-3" tabindex="-1"></a><span class="co">#&gt; K-means clustering with 3 clusters of sizes 2, 6, 1</span></span>
+<span id="cb509-4"><a href="クラスター分析.html#cb509-4" tabindex="-1"></a><span class="co">#&gt; </span></span>
+<span id="cb509-5"><a href="クラスター分析.html#cb509-5" tabindex="-1"></a><span class="co">#&gt; Cluster means:</span></span>
+<span id="cb509-6"><a href="クラスター分析.html#cb509-6" tabindex="-1"></a><span class="co">#&gt;   Expertise Analytics Leadership Presentation Communication</span></span>
+<span id="cb509-7"><a href="クラスター分析.html#cb509-7" tabindex="-1"></a><span class="co">#&gt; 1  82.50000  85.00000   67.50000     66.50000          65.0</span></span>
+<span id="cb509-8"><a href="クラスター分析.html#cb509-8" tabindex="-1"></a><span class="co">#&gt; 2  75.33333  75.66667   80.16667     78.66667          79.5</span></span>
+<span id="cb509-9"><a href="クラスター分析.html#cb509-9" tabindex="-1"></a><span class="co">#&gt; 3  88.00000  85.00000   85.00000     90.00000          91.0</span></span>
+<span id="cb509-10"><a href="クラスター分析.html#cb509-10" tabindex="-1"></a><span class="co">#&gt; </span></span>
+<span id="cb509-11"><a href="クラスター分析.html#cb509-11" tabindex="-1"></a><span class="co">#&gt; Clustering vector:</span></span>
+<span id="cb509-12"><a href="クラスター分析.html#cb509-12" tabindex="-1"></a><span class="co">#&gt;   yamada   suzuki   tanaka nakamura     ohno   Matsui   takagi    miura </span></span>
+<span id="cb509-13"><a href="クラスター分析.html#cb509-13" tabindex="-1"></a><span class="co">#&gt;        1        1        2        2        3        2        2        2 </span></span>
+<span id="cb509-14"><a href="クラスター分析.html#cb509-14" tabindex="-1"></a><span class="co">#&gt;     sato </span></span>
+<span id="cb509-15"><a href="クラスター分析.html#cb509-15" tabindex="-1"></a><span class="co">#&gt;        2 </span></span>
+<span id="cb509-16"><a href="クラスター分析.html#cb509-16" tabindex="-1"></a><span class="co">#&gt; </span></span>
+<span id="cb509-17"><a href="クラスター分析.html#cb509-17" tabindex="-1"></a><span class="co">#&gt; Within cluster sum of squares by cluster:</span></span>
+<span id="cb509-18"><a href="クラスター分析.html#cb509-18" tabindex="-1"></a><span class="co">#&gt; [1]  45.5000 540.3333   0.0000</span></span>
+<span id="cb509-19"><a href="クラスター分析.html#cb509-19" tabindex="-1"></a><span class="co">#&gt;  (between_SS / total_SS =  72.9 %)</span></span>
+<span id="cb509-20"><a href="クラスター分析.html#cb509-20" tabindex="-1"></a><span class="co">#&gt; </span></span>
+<span id="cb509-21"><a href="クラスター分析.html#cb509-21" tabindex="-1"></a><span class="co">#&gt; Available components:</span></span>
+<span id="cb509-22"><a href="クラスター分析.html#cb509-22" tabindex="-1"></a><span class="co">#&gt; </span></span>
+<span id="cb509-23"><a href="クラスター分析.html#cb509-23" tabindex="-1"></a><span class="co">#&gt; [1] &quot;cluster&quot;      &quot;centers&quot;      &quot;totss&quot;        &quot;withinss&quot;     &quot;tot.withinss&quot;</span></span>
+<span id="cb509-24"><a href="クラスター分析.html#cb509-24" tabindex="-1"></a><span class="co">#&gt; [6] &quot;betweenss&quot;    &quot;size&quot;         &quot;iter&quot;         &quot;ifault&quot;</span></span>
+<span id="cb509-25"><a href="クラスター分析.html#cb509-25" tabindex="-1"></a>tokuten_hc_k<span class="sc">$</span>cluster</span>
+<span id="cb509-26"><a href="クラスター分析.html#cb509-26" tabindex="-1"></a><span class="co">#&gt;   yamada   suzuki   tanaka nakamura     ohno   Matsui   takagi    miura </span></span>
+<span id="cb509-27"><a href="クラスター分析.html#cb509-27" tabindex="-1"></a><span class="co">#&gt;        1        1        2        2        3        2        2        2 </span></span>
+<span id="cb509-28"><a href="クラスター分析.html#cb509-28" tabindex="-1"></a><span class="co">#&gt;     sato </span></span>
+<span id="cb509-29"><a href="クラスター分析.html#cb509-29" tabindex="-1"></a><span class="co">#&gt;        2</span></span>
+<span id="cb509-30"><a href="クラスター分析.html#cb509-30" tabindex="-1"></a></span>
+<span id="cb509-31"><a href="クラスター分析.html#cb509-31" tabindex="-1"></a>(tokuten_hc_k <span class="ot">&lt;-</span> <span class="fu">kmeans</span>(tokuten, <span class="dv">2</span>))</span>
+<span id="cb509-32"><a href="クラスター分析.html#cb509-32" tabindex="-1"></a><span class="co">#&gt; K-means clustering with 2 clusters of sizes 7, 2</span></span>
+<span id="cb509-33"><a href="クラスター分析.html#cb509-33" tabindex="-1"></a><span class="co">#&gt; </span></span>
+<span id="cb509-34"><a href="クラスター分析.html#cb509-34" tabindex="-1"></a><span class="co">#&gt; Cluster means:</span></span>
+<span id="cb509-35"><a href="クラスター分析.html#cb509-35" tabindex="-1"></a><span class="co">#&gt;   Expertise Analytics Leadership Presentation Communication</span></span>
+<span id="cb509-36"><a href="クラスター分析.html#cb509-36" tabindex="-1"></a><span class="co">#&gt; 1  77.14286        77   80.85714     80.28571      81.14286</span></span>
+<span id="cb509-37"><a href="クラスター分析.html#cb509-37" tabindex="-1"></a><span class="co">#&gt; 2  82.50000        85   67.50000     66.50000      65.00000</span></span>
+<span id="cb509-38"><a href="クラスター分析.html#cb509-38" tabindex="-1"></a><span class="co">#&gt; </span></span>
+<span id="cb509-39"><a href="クラスター分析.html#cb509-39" tabindex="-1"></a><span class="co">#&gt; Clustering vector:</span></span>
+<span id="cb509-40"><a href="クラスター分析.html#cb509-40" tabindex="-1"></a><span class="co">#&gt;   yamada   suzuki   tanaka nakamura     ohno   Matsui   takagi    miura </span></span>
+<span id="cb509-41"><a href="クラスター分析.html#cb509-41" tabindex="-1"></a><span class="co">#&gt;        2        2        1        1        1        1        1        1 </span></span>
+<span id="cb509-42"><a href="クラスター分析.html#cb509-42" tabindex="-1"></a><span class="co">#&gt;     sato </span></span>
+<span id="cb509-43"><a href="クラスター分析.html#cb509-43" tabindex="-1"></a><span class="co">#&gt;        1 </span></span>
+<span id="cb509-44"><a href="クラスター分析.html#cb509-44" tabindex="-1"></a><span class="co">#&gt; </span></span>
+<span id="cb509-45"><a href="クラスター分析.html#cb509-45" tabindex="-1"></a><span class="co">#&gt; Within cluster sum of squares by cluster:</span></span>
+<span id="cb509-46"><a href="クラスター分析.html#cb509-46" tabindex="-1"></a><span class="co">#&gt; [1] 996.0  45.5</span></span>
+<span id="cb509-47"><a href="クラスター分析.html#cb509-47" tabindex="-1"></a><span class="co">#&gt;  (between_SS / total_SS =  51.9 %)</span></span>
+<span id="cb509-48"><a href="クラスター分析.html#cb509-48" tabindex="-1"></a><span class="co">#&gt; </span></span>
+<span id="cb509-49"><a href="クラスター分析.html#cb509-49" tabindex="-1"></a><span class="co">#&gt; Available components:</span></span>
+<span id="cb509-50"><a href="クラスター分析.html#cb509-50" tabindex="-1"></a><span class="co">#&gt; </span></span>
+<span id="cb509-51"><a href="クラスター分析.html#cb509-51" tabindex="-1"></a><span class="co">#&gt; [1] &quot;cluster&quot;      &quot;centers&quot;      &quot;totss&quot;        &quot;withinss&quot;     &quot;tot.withinss&quot;</span></span>
+<span id="cb509-52"><a href="クラスター分析.html#cb509-52" tabindex="-1"></a><span class="co">#&gt; [6] &quot;betweenss&quot;    &quot;size&quot;         &quot;iter&quot;         &quot;ifault&quot;</span></span>
+<span id="cb509-53"><a href="クラスター分析.html#cb509-53" tabindex="-1"></a>tokuten_hc_k<span class="sc">$</span>cluster</span>
+<span id="cb509-54"><a href="クラスター分析.html#cb509-54" tabindex="-1"></a><span class="co">#&gt;   yamada   suzuki   tanaka nakamura     ohno   Matsui   takagi    miura </span></span>
+<span id="cb509-55"><a href="クラスター分析.html#cb509-55" tabindex="-1"></a><span class="co">#&gt;        2        2        1        1        1        1        1        1 </span></span>
+<span id="cb509-56"><a href="クラスター分析.html#cb509-56" tabindex="-1"></a><span class="co">#&gt;     sato </span></span>
+<span id="cb509-57"><a href="クラスター分析.html#cb509-57" tabindex="-1"></a><span class="co">#&gt;        1</span></span></code></pre></div>
+</div>
+<div id="変数に対するクラスタリング" class="section level3 unnumbered hasAnchor">
+<h3>変数に対するクラスタリング<a href="クラスター分析.html#変数に対するクラスタリング" class="anchor-section" aria-label="Anchor link to header"></a></h3>
+<div class="sourceCode" id="cb510"><pre class="sourceCode r"><code class="sourceCode r"><span id="cb510-1"><a href="クラスター分析.html#cb510-1" tabindex="-1"></a>tokuten_dist3 <span class="ot">&lt;-</span> <span class="fu">dist</span>(<span class="fu">t</span>(tokuten))</span>
+<span id="cb510-2"><a href="クラスター分析.html#cb510-2" tabindex="-1"></a>tokuten_hc3 <span class="ot">&lt;-</span> <span class="fu">hclust</span>(tokuten_dist3, <span class="at">method =</span> <span class="st">&quot;ward.D2&quot;</span>)    </span>
+<span id="cb510-3"><a href="クラスター分析.html#cb510-3" tabindex="-1"></a>tokuten_hc3<span class="sc">$</span>merge               <span class="co"># クラスター形成履歴</span></span>
+<span id="cb510-4"><a href="クラスター分析.html#cb510-4" tabindex="-1"></a><span class="co">#&gt;      [,1] [,2]</span></span>
+<span id="cb510-5"><a href="クラスター分析.html#cb510-5" tabindex="-1"></a><span class="co">#&gt; [1,]   -3   -5</span></span>
+<span id="cb510-6"><a href="クラスター分析.html#cb510-6" tabindex="-1"></a><span class="co">#&gt; [2,]   -4    1</span></span>
+<span id="cb510-7"><a href="クラスター分析.html#cb510-7" tabindex="-1"></a><span class="co">#&gt; [3,]   -1   -2</span></span>
+<span id="cb510-8"><a href="クラスター分析.html#cb510-8" tabindex="-1"></a><span class="co">#&gt; [4,]    2    3</span></span>
+<span id="cb510-9"><a href="クラスター分析.html#cb510-9" tabindex="-1"></a>tokuten_hc3<span class="sc">$</span>height              <span class="co"># デンドログラム(樹形図)の枝の高さ</span></span>
+<span id="cb510-10"><a href="クラスター分析.html#cb510-10" tabindex="-1"></a><span class="co">#&gt; [1] 12.20656 14.61734 19.74842 44.74967</span></span>
+<span id="cb510-11"><a href="クラスター分析.html#cb510-11" tabindex="-1"></a><span class="fu">par</span>(<span class="at">mfrow =</span> <span class="fu">c</span>(<span class="dv">1</span>, <span class="dv">2</span>)); <span class="fu">plot</span>(tokuten_hc3); <span class="fu">plot</span>(tokuten_hc3, <span class="at">hang =</span> <span class="sc">-</span><span class="dv">1</span>)   <span class="co"># デンドログラム</span></span></code></pre></div>
+<p><img src="130-clust_files/figure-html/unnamed-chunk-14-1.png" width="75%" /></p>
+<div class="sourceCode" id="cb511"><pre class="sourceCode r"><code class="sourceCode r"><span id="cb511-1"><a href="クラスター分析.html#cb511-1" tabindex="-1"></a></span>
+<span id="cb511-2"><a href="クラスター分析.html#cb511-2" tabindex="-1"></a><span class="fu">cutree</span>(tokuten_hc3, <span class="at">k =</span> <span class="dv">3</span>)          <span class="co"># 各個体の属するクラスター番号 (k: クラスター数)</span></span>
+<span id="cb511-3"><a href="クラスター分析.html#cb511-3" tabindex="-1"></a><span class="co">#&gt;     Expertise     Analytics    Leadership  Presentation Communication </span></span>
+<span id="cb511-4"><a href="クラスター分析.html#cb511-4" tabindex="-1"></a><span class="co">#&gt;             1             2             3             3             3</span></span>
+<span id="cb511-5"><a href="クラスター分析.html#cb511-5" tabindex="-1"></a><span class="fu">par</span>(<span class="at">mfrow =</span> <span class="fu">c</span>(<span class="dv">1</span>, <span class="dv">1</span>))</span></code></pre></div>
+</div>
+</div>
+<div id="データ分析例-1" class="section level2 hasAnchor" number="13.2">
+<h2><span class="header-section-number">13.2</span> データ分析例<a href="クラスター分析.html#データ分析例-1" class="anchor-section" aria-label="Anchor link to header"></a></h2>
+<div id="データセット-1-ワイン品質データ-再掲" class="section level3 unnumbered hasAnchor">
+<h3>データセット (1): ワイン品質データ (再掲)<a href="クラスター分析.html#データセット-1-ワイン品質データ-再掲" class="anchor-section" aria-label="Anchor link to header"></a></h3>
+<p>回帰木で使用したワイン品質データを使用する.
+ここでは, 回帰問題において目的変数であったワイン品質<code>quality</code>
+は除き, ワインの化学的特性を表す11の変数のみを用いて,
+白ワインのデータセットをクラスター分類することを試みる.</p>
+<pre><code>- winequality-white.csv
+   - fixed acidity: 酢酸濃度
+   - volitle acidity: 揮発酸濃度
+   - citric acidity: クエン酸濃度
+   - chlorides: 塩化物
+   - sulfur dioxide: 二酸化硫黄
+   - sulphate: 硫酸塩
+   - fixed acidity: 酒石酸含有量（g/dm3)
+   - volatile acidity: 酢酸含有量（g/dm3)
+   - citric acid: クエン酸含有量（g/dm3)
+   - residual sugar: 残留糖分含有量（g/dm3）
+   - chlorides: 塩化ナトリウム含有量（g/dm3)
+   - free sulfur dioxide: 遊離亜硫酸含有量（mg/dm3）
+   - total sulfur dioxide: 総亜硫酸含有量（mg/dm3）
+   - density: 密度（g/dm3)
+   - pH:    pH
+   - sulphates: 硫酸カリウム含有量（g/dm3）
+   - alcohol: アルコール度数（% vol.）
+   - quality: ワインの品質 (0 (very bad) -- 10 (excellent))</code></pre>
+<div class="sourceCode" id="cb513"><pre class="sourceCode r"><code class="sourceCode r"><span id="cb513-1"><a href="クラスター分析.html#cb513-1" tabindex="-1"></a>winedat <span class="ot">&lt;-</span> <span class="fu">read.csv</span>(<span class="st">&quot;winequality-white.csv&quot;</span>, <span class="at">sep =</span> <span class="st">&quot;;&quot;</span>, <span class="at">skip =</span> <span class="dv">1</span>, <span class="at">header =</span> T)</span>
+<span id="cb513-2"><a href="クラスター分析.html#cb513-2" tabindex="-1"></a>wine <span class="ot">&lt;-</span> winedat[, <span class="sc">-</span><span class="dv">12</span>]      <span class="co"># qualityを除く</span></span>
+<span id="cb513-3"><a href="クラスター分析.html#cb513-3" tabindex="-1"></a>wine_s <span class="ot">&lt;-</span> <span class="fu">scale</span>(wine)           <span class="co"># 標準化</span></span></code></pre></div>
+<div id="レコードのクラスタリング" class="section level4 unnumbered hasAnchor">
+<h4>レコードのクラスタリング<a href="クラスター分析.html#レコードのクラスタリング" class="anchor-section" aria-label="Anchor link to header"></a></h4>
+<p>個別のワイン (行) を, 11個の化学的特性 (列) に関する類似性によりクラスタリングする.</p>
+<div class="sourceCode" id="cb514"><pre class="sourceCode r"><code class="sourceCode r"><span id="cb514-1"><a href="クラスター分析.html#cb514-1" tabindex="-1"></a><span class="co">#wine_dist &lt;- dist(wine)</span></span>
+<span id="cb514-2"><a href="クラスター分析.html#cb514-2" tabindex="-1"></a>wine_dist <span class="ot">&lt;-</span> <span class="fu">dist</span>(wine_s)</span>
+<span id="cb514-3"><a href="クラスター分析.html#cb514-3" tabindex="-1"></a></span>
+<span id="cb514-4"><a href="クラスター分析.html#cb514-4" tabindex="-1"></a><span class="co"># method = &quot;binary&quot;, &quot;canberra&quot;, &quot;maximum&quot;, &quot;manhattan&quot;</span></span>
+<span id="cb514-5"><a href="クラスター分析.html#cb514-5" tabindex="-1"></a>(wine_hc <span class="ot">&lt;-</span> <span class="fu">hclust</span>(wine_dist, <span class="at">method =</span> <span class="st">&quot;ward.D2&quot;</span>))      <span class="co"># ウォード法</span></span>
+<span id="cb514-6"><a href="クラスター分析.html#cb514-6" tabindex="-1"></a><span class="co">#&gt; </span></span>
+<span id="cb514-7"><a href="クラスター分析.html#cb514-7" tabindex="-1"></a><span class="co">#&gt; Call:</span></span>
+<span id="cb514-8"><a href="クラスター分析.html#cb514-8" tabindex="-1"></a><span class="co">#&gt; hclust(d = wine_dist, method = &quot;ward.D2&quot;)</span></span>
+<span id="cb514-9"><a href="クラスター分析.html#cb514-9" tabindex="-1"></a><span class="co">#&gt; </span></span>
+<span id="cb514-10"><a href="クラスター分析.html#cb514-10" tabindex="-1"></a><span class="co">#&gt; Cluster method   : ward.D2 </span></span>
+<span id="cb514-11"><a href="クラスター分析.html#cb514-11" tabindex="-1"></a><span class="co">#&gt; Distance         : euclidean </span></span>
+<span id="cb514-12"><a href="クラスター分析.html#cb514-12" tabindex="-1"></a><span class="co">#&gt; Number of objects: 4898</span></span>
+<span id="cb514-13"><a href="クラスター分析.html#cb514-13" tabindex="-1"></a><span class="fu">plot</span>(wine_hc, <span class="at">labels =</span> F, <span class="at">main =</span> <span class="st">&quot;wineデータ (標準化後): レコードのクラスタリング</span><span class="sc">\n</span><span class="st">Euclidean + Ward&quot;</span>, </span>
+<span id="cb514-14"><a href="クラスター分析.html#cb514-14" tabindex="-1"></a>     <span class="at">family =</span> <span class="st">&quot;HiraKakuProN-W3&quot;</span>); </span>
+<span id="cb514-15"><a href="クラスター分析.html#cb514-15" tabindex="-1"></a><span class="co">#plot(wine_hc, labels=F, main=&quot;wineデータ (標準化前): レコードのクラスタリング\nEuclidean + Ward&quot;)</span></span>
+<span id="cb514-16"><a href="クラスター分析.html#cb514-16" tabindex="-1"></a></span>
+<span id="cb514-17"><a href="クラスター分析.html#cb514-17" tabindex="-1"></a><span class="co"># 指定したクラスター数kで, デンドログラムを切断</span></span>
+<span id="cb514-18"><a href="クラスター分析.html#cb514-18" tabindex="-1"></a><span class="fu">rect.hclust</span>(wine_hc, <span class="at">k =</span> <span class="dv">5</span>, <span class="at">border =</span> <span class="st">&quot;red&quot;</span>)</span>
+<span id="cb514-19"><a href="クラスター分析.html#cb514-19" tabindex="-1"></a><span class="fu">rect.hclust</span>(wine_hc, <span class="at">k =</span> <span class="dv">9</span>, <span class="at">border =</span> <span class="st">&quot;blue&quot;</span>)</span></code></pre></div>
+<p><img src="130-clust_files/figure-html/wine_2-1.png" width="75%" /></p>
+</div>
+<div id="変数のクラスタリング" class="section level4 unnumbered hasAnchor">
+<h4>変数のクラスタリング<a href="クラスター分析.html#変数のクラスタリング" class="anchor-section" aria-label="Anchor link to header"></a></h4>
+<p>11個の化学的特性 (列) を, ワインに関する類似性によりクラスタリングする.</p>
+<div class="sourceCode" id="cb515"><pre class="sourceCode r"><code class="sourceCode r"><span id="cb515-1"><a href="クラスター分析.html#cb515-1" tabindex="-1"></a><span class="co">#wine_dist &lt;- dist(t(wine))</span></span>
+<span id="cb515-2"><a href="クラスター分析.html#cb515-2" tabindex="-1"></a>wine_dist <span class="ot">&lt;-</span> <span class="fu">dist</span>(<span class="fu">t</span>(wine_s))</span>
+<span id="cb515-3"><a href="クラスター分析.html#cb515-3" tabindex="-1"></a>(wine_hc <span class="ot">&lt;-</span> <span class="fu">hclust</span>(wine_dist, <span class="at">method =</span> <span class="st">&quot;ward.D2&quot;</span>))      <span class="co"># ウォード法</span></span>
+<span id="cb515-4"><a href="クラスター分析.html#cb515-4" tabindex="-1"></a><span class="co">#&gt; </span></span>
+<span id="cb515-5"><a href="クラスター分析.html#cb515-5" tabindex="-1"></a><span class="co">#&gt; Call:</span></span>
+<span id="cb515-6"><a href="クラスター分析.html#cb515-6" tabindex="-1"></a><span class="co">#&gt; hclust(d = wine_dist, method = &quot;ward.D2&quot;)</span></span>
+<span id="cb515-7"><a href="クラスター分析.html#cb515-7" tabindex="-1"></a><span class="co">#&gt; </span></span>
+<span id="cb515-8"><a href="クラスター分析.html#cb515-8" tabindex="-1"></a><span class="co">#&gt; Cluster method   : ward.D2 </span></span>
+<span id="cb515-9"><a href="クラスター分析.html#cb515-9" tabindex="-1"></a><span class="co">#&gt; Distance         : euclidean </span></span>
+<span id="cb515-10"><a href="クラスター分析.html#cb515-10" tabindex="-1"></a><span class="co">#&gt; Number of objects: 11</span></span>
+<span id="cb515-11"><a href="クラスター分析.html#cb515-11" tabindex="-1"></a><span class="fu">plot</span>(wine_hc, <span class="at">main =</span> <span class="st">&quot;wineデータ (標準化後): 変数のクラスタリング</span><span class="sc">\n</span><span class="st">Euclidean + Ward&quot;</span>, </span>
+<span id="cb515-12"><a href="クラスター分析.html#cb515-12" tabindex="-1"></a>     <span class="at">family =</span> <span class="st">&quot;HiraKakuProN-W3&quot;</span>)</span></code></pre></div>
+<p><img src="130-clust_files/figure-html/wine_3-1.png" width="75%" /></p>
+<div class="sourceCode" id="cb516"><pre class="sourceCode r"><code class="sourceCode r"><span id="cb516-1"><a href="クラスター分析.html#cb516-1" tabindex="-1"></a><span class="co">#plot(wine_hc, main=&quot;wineデータ (標準化前): 変数のクラスタリング\nEuclidean + Ward&quot;)</span></span></code></pre></div>
+<ul>
+<li>クラスター間距離による結果の相違</li>
+</ul>
+<div class="sourceCode" id="cb517"><pre class="sourceCode r"><code class="sourceCode r"><span id="cb517-1"><a href="クラスター分析.html#cb517-1" tabindex="-1"></a>(wine_hc <span class="ot">&lt;-</span> <span class="fu">hclust</span>(wine_dist, <span class="at">method =</span> <span class="st">&quot;complete&quot;</span>)) </span>
+<span id="cb517-2"><a href="クラスター分析.html#cb517-2" tabindex="-1"></a><span class="co">#&gt; </span></span>
+<span id="cb517-3"><a href="クラスター分析.html#cb517-3" tabindex="-1"></a><span class="co">#&gt; Call:</span></span>
+<span id="cb517-4"><a href="クラスター分析.html#cb517-4" tabindex="-1"></a><span class="co">#&gt; hclust(d = wine_dist, method = &quot;complete&quot;)</span></span>
+<span id="cb517-5"><a href="クラスター分析.html#cb517-5" tabindex="-1"></a><span class="co">#&gt; </span></span>
+<span id="cb517-6"><a href="クラスター分析.html#cb517-6" tabindex="-1"></a><span class="co">#&gt; Cluster method   : complete </span></span>
+<span id="cb517-7"><a href="クラスター分析.html#cb517-7" tabindex="-1"></a><span class="co">#&gt; Distance         : euclidean </span></span>
+<span id="cb517-8"><a href="クラスター分析.html#cb517-8" tabindex="-1"></a><span class="co">#&gt; Number of objects: 11</span></span>
+<span id="cb517-9"><a href="クラスター分析.html#cb517-9" tabindex="-1"></a><span class="fu">plot</span>(wine_hc, </span>
+<span id="cb517-10"><a href="クラスター分析.html#cb517-10" tabindex="-1"></a>     <span class="at">main =</span> <span class="st">&quot;wineデータ (標準化後): レコードのクラスタリング</span><span class="sc">\n</span><span class="st">Euclidean + complete&quot;</span>, </span>
+<span id="cb517-11"><a href="クラスター分析.html#cb517-11" tabindex="-1"></a>     <span class="at">family =</span> <span class="st">&quot;HiraKakuProN-W3&quot;</span>)</span></code></pre></div>
+<p><img src="130-clust_files/figure-html/wine_4-1.png" width="75%" /></p>
+<div class="sourceCode" id="cb518"><pre class="sourceCode r"><code class="sourceCode r"><span id="cb518-1"><a href="クラスター分析.html#cb518-1" tabindex="-1"></a>(wine_hc <span class="ot">&lt;-</span> <span class="fu">hclust</span>(wine_dist, <span class="at">method =</span> <span class="st">&quot;single&quot;</span>))   </span>
+<span id="cb518-2"><a href="クラスター分析.html#cb518-2" tabindex="-1"></a><span class="co">#&gt; </span></span>
+<span id="cb518-3"><a href="クラスター分析.html#cb518-3" tabindex="-1"></a><span class="co">#&gt; Call:</span></span>
+<span id="cb518-4"><a href="クラスター分析.html#cb518-4" tabindex="-1"></a><span class="co">#&gt; hclust(d = wine_dist, method = &quot;single&quot;)</span></span>
+<span id="cb518-5"><a href="クラスター分析.html#cb518-5" tabindex="-1"></a><span class="co">#&gt; </span></span>
+<span id="cb518-6"><a href="クラスター分析.html#cb518-6" tabindex="-1"></a><span class="co">#&gt; Cluster method   : single </span></span>
+<span id="cb518-7"><a href="クラスター分析.html#cb518-7" tabindex="-1"></a><span class="co">#&gt; Distance         : euclidean </span></span>
+<span id="cb518-8"><a href="クラスター分析.html#cb518-8" tabindex="-1"></a><span class="co">#&gt; Number of objects: 11</span></span>
+<span id="cb518-9"><a href="クラスター分析.html#cb518-9" tabindex="-1"></a><span class="fu">plot</span>(wine_hc, </span>
+<span id="cb518-10"><a href="クラスター分析.html#cb518-10" tabindex="-1"></a>     <span class="at">main =</span> <span class="st">&quot;wineデータ (標準化後): レコードのクラスタリング</span><span class="sc">\n</span><span class="st">Euclidean + single&quot;</span>, </span>
+<span id="cb518-11"><a href="クラスター分析.html#cb518-11" tabindex="-1"></a>     <span class="at">family =</span> <span class="st">&quot;HiraKakuProN-W3&quot;</span>)</span></code></pre></div>
+<p><img src="130-clust_files/figure-html/wine_4-2.png" width="75%" /></p>
+<div class="sourceCode" id="cb519"><pre class="sourceCode r"><code class="sourceCode r"><span id="cb519-1"><a href="クラスター分析.html#cb519-1" tabindex="-1"></a>(wine_hc <span class="ot">&lt;-</span> <span class="fu">hclust</span>(wine_dist, <span class="at">method =</span> <span class="st">&quot;average&quot;</span>))  </span>
+<span id="cb519-2"><a href="クラスター分析.html#cb519-2" tabindex="-1"></a><span class="co">#&gt; </span></span>
+<span id="cb519-3"><a href="クラスター分析.html#cb519-3" tabindex="-1"></a><span class="co">#&gt; Call:</span></span>
+<span id="cb519-4"><a href="クラスター分析.html#cb519-4" tabindex="-1"></a><span class="co">#&gt; hclust(d = wine_dist, method = &quot;average&quot;)</span></span>
+<span id="cb519-5"><a href="クラスター分析.html#cb519-5" tabindex="-1"></a><span class="co">#&gt; </span></span>
+<span id="cb519-6"><a href="クラスター分析.html#cb519-6" tabindex="-1"></a><span class="co">#&gt; Cluster method   : average </span></span>
+<span id="cb519-7"><a href="クラスター分析.html#cb519-7" tabindex="-1"></a><span class="co">#&gt; Distance         : euclidean </span></span>
+<span id="cb519-8"><a href="クラスター分析.html#cb519-8" tabindex="-1"></a><span class="co">#&gt; Number of objects: 11</span></span>
+<span id="cb519-9"><a href="クラスター分析.html#cb519-9" tabindex="-1"></a><span class="fu">plot</span>(wine_hc, </span>
+<span id="cb519-10"><a href="クラスター分析.html#cb519-10" tabindex="-1"></a>     <span class="at">main =</span> <span class="st">&quot;wineデータ (標準化後): レコードのクラスタリング</span><span class="sc">\n</span><span class="st">Euclidean + average&quot;</span>, </span>
+<span id="cb519-11"><a href="クラスター分析.html#cb519-11" tabindex="-1"></a>     <span class="at">family =</span> <span class="st">&quot;HiraKakuProN-W3&quot;</span>)</span></code></pre></div>
+<p><img src="130-clust_files/figure-html/wine_4-3.png" width="75%" /></p>
+<div class="sourceCode" id="cb520"><pre class="sourceCode r"><code class="sourceCode r"><span id="cb520-1"><a href="クラスター分析.html#cb520-1" tabindex="-1"></a>(wine_hc <span class="ot">&lt;-</span> <span class="fu">hclust</span>(wine_dist, <span class="at">method =</span> <span class="st">&quot;centroid&quot;</span>)) </span>
+<span id="cb520-2"><a href="クラスター分析.html#cb520-2" tabindex="-1"></a><span class="co">#&gt; </span></span>
+<span id="cb520-3"><a href="クラスター分析.html#cb520-3" tabindex="-1"></a><span class="co">#&gt; Call:</span></span>
+<span id="cb520-4"><a href="クラスター分析.html#cb520-4" tabindex="-1"></a><span class="co">#&gt; hclust(d = wine_dist, method = &quot;centroid&quot;)</span></span>
+<span id="cb520-5"><a href="クラスター分析.html#cb520-5" tabindex="-1"></a><span class="co">#&gt; </span></span>
+<span id="cb520-6"><a href="クラスター分析.html#cb520-6" tabindex="-1"></a><span class="co">#&gt; Cluster method   : centroid </span></span>
+<span id="cb520-7"><a href="クラスター分析.html#cb520-7" tabindex="-1"></a><span class="co">#&gt; Distance         : euclidean </span></span>
+<span id="cb520-8"><a href="クラスター分析.html#cb520-8" tabindex="-1"></a><span class="co">#&gt; Number of objects: 11</span></span>
+<span id="cb520-9"><a href="クラスター分析.html#cb520-9" tabindex="-1"></a><span class="fu">plot</span>(wine_hc, </span>
+<span id="cb520-10"><a href="クラスター分析.html#cb520-10" tabindex="-1"></a>     <span class="at">main =</span> <span class="st">&quot;wineデータ (標準化後): レコードのクラスタリング</span><span class="sc">\n</span><span class="st">Euclidean + centroid&quot;</span>, </span>
+<span id="cb520-11"><a href="クラスター分析.html#cb520-11" tabindex="-1"></a>     <span class="at">family =</span> <span class="st">&quot;HiraKakuProN-W3&quot;</span>)</span></code></pre></div>
+<p><img src="130-clust_files/figure-html/wine_4-4.png" width="75%" /></p>
+<p>重心法 (中心点法)において,
+inversion現象の発生が確認される.</p>
+</div>
+</div>
+<div id="データセット-2-id無し-posデータ" class="section level3 unnumbered hasAnchor">
+<h3>データセット (2): (ID無し) POSデータ<a href="クラスター分析.html#データセット-2-id無し-posデータ" class="anchor-section" aria-label="Anchor link to header"></a></h3>
+<p>地方のサービスエリアの売店のレシートデータ500件 (実際のデータに加工を加えた上でランダムにサブセット化. オリジナルの地域・店舗が特定されないように工夫).</p>
+<pre><code>&quot;pos_sample500_dist.csv&quot;
+- n = 500, p = 16
+- 行: レシート (顧客の一回当り購入バスケット)
+- 列: &quot;洋菓子土産&quot;〜&quot;デザート類&quot;までの16分類の商品群
+- 値: 対応するレシートに含まれる対応する商品の売上個数 (0,1,2,...)</code></pre>
+<div id="データ読み込み-距離行列の計算" class="section level4 unnumbered hasAnchor">
+<h4>データ読み込み &amp; 距離行列の計算<a href="クラスター分析.html#データ読み込み-距離行列の計算" class="anchor-section" aria-label="Anchor link to header"></a></h4>
+<div class="sourceCode" id="cb522"><pre class="sourceCode r"><code class="sourceCode r"><span id="cb522-1"><a href="クラスター分析.html#cb522-1" tabindex="-1"></a><span class="co"># posデータの読み込み</span></span>
+<span id="cb522-2"><a href="クラスター分析.html#cb522-2" tabindex="-1"></a>posdat <span class="ot">&lt;-</span> <span class="fu">read.csv</span>(<span class="fu">file</span>(<span class="st">&quot;pos_sample500_dist.csv&quot;</span>, <span class="at">encoding =</span> <span class="st">&#39;Shift_JIS&#39;</span>))  <span class="co"># 500件</span></span></code></pre></div>
+</div>
+<div id="階層クラスタリング" class="section level4 unnumbered hasAnchor">
+<h4>階層クラスタリング<a href="クラスター分析.html#階層クラスタリング" class="anchor-section" aria-label="Anchor link to header"></a></h4>
+<p>16個の商品分類 (列) を, それらの買われ方 (レシートへの反映のされ方) の類似性によって, クラスタリングする.</p>
+<div class="sourceCode" id="cb523"><pre class="sourceCode r"><code class="sourceCode r"><span id="cb523-1"><a href="クラスター分析.html#cb523-1" tabindex="-1"></a><span class="co"># 商品分類間の距離行列</span></span>
+<span id="cb523-2"><a href="クラスター分析.html#cb523-2" tabindex="-1"></a>pos_dist <span class="ot">&lt;-</span> <span class="fu">dist</span>(<span class="fu">t</span>(posdat))     <span class="co"># カテゴリー間の距離</span></span>
+<span id="cb523-3"><a href="クラスター分析.html#cb523-3" tabindex="-1"></a><span class="co">#pos_dist &lt;- dist(posdat)           # 顧客間の距離</span></span></code></pre></div>
+<div class="sourceCode" id="cb524"><pre class="sourceCode r"><code class="sourceCode r"><span id="cb524-1"><a href="クラスター分析.html#cb524-1" tabindex="-1"></a>pos_hc <span class="ot">&lt;-</span> <span class="fu">hclust</span>(pos_dist, <span class="at">method =</span> <span class="st">&quot;ward.D2&quot;</span>)  </span>
+<span id="cb524-2"><a href="クラスター分析.html#cb524-2" tabindex="-1"></a>pos_hc<span class="sc">$</span>merge                <span class="co"># クラスター形成履歴</span></span>
+<span id="cb524-3"><a href="クラスター分析.html#cb524-3" tabindex="-1"></a><span class="co">#&gt;       [,1] [,2]</span></span>
+<span id="cb524-4"><a href="クラスター分析.html#cb524-4" tabindex="-1"></a><span class="co">#&gt;  [1,]   -9  -10</span></span>
+<span id="cb524-5"><a href="クラスター分析.html#cb524-5" tabindex="-1"></a><span class="co">#&gt;  [2,]   -6  -13</span></span>
+<span id="cb524-6"><a href="クラスター分析.html#cb524-6" tabindex="-1"></a><span class="co">#&gt;  [3,]   -7    1</span></span>
+<span id="cb524-7"><a href="クラスター分析.html#cb524-7" tabindex="-1"></a><span class="co">#&gt;  [4,]    2    3</span></span>
+<span id="cb524-8"><a href="クラスター分析.html#cb524-8" tabindex="-1"></a><span class="co">#&gt;  [5,]   -8    4</span></span>
+<span id="cb524-9"><a href="クラスター分析.html#cb524-9" tabindex="-1"></a><span class="co">#&gt;  [6,]   -3    5</span></span>
+<span id="cb524-10"><a href="クラスター分析.html#cb524-10" tabindex="-1"></a><span class="co">#&gt;  [7,]  -16    6</span></span>
+<span id="cb524-11"><a href="クラスター分析.html#cb524-11" tabindex="-1"></a><span class="co">#&gt;  [8,]  -11    7</span></span>
+<span id="cb524-12"><a href="クラスター分析.html#cb524-12" tabindex="-1"></a><span class="co">#&gt;  [9,]   -5    8</span></span>
+<span id="cb524-13"><a href="クラスター分析.html#cb524-13" tabindex="-1"></a><span class="co">#&gt; [10,]  -12    9</span></span>
+<span id="cb524-14"><a href="クラスター分析.html#cb524-14" tabindex="-1"></a><span class="co">#&gt; [11,]  -14   10</span></span>
+<span id="cb524-15"><a href="クラスター分析.html#cb524-15" tabindex="-1"></a><span class="co">#&gt; [12,]   -4   11</span></span>
+<span id="cb524-16"><a href="クラスター分析.html#cb524-16" tabindex="-1"></a><span class="co">#&gt; [13,]  -15   12</span></span>
+<span id="cb524-17"><a href="クラスター分析.html#cb524-17" tabindex="-1"></a><span class="co">#&gt; [14,]   -1   13</span></span>
+<span id="cb524-18"><a href="クラスター分析.html#cb524-18" tabindex="-1"></a><span class="co">#&gt; [15,]   -2   14</span></span>
+<span id="cb524-19"><a href="クラスター分析.html#cb524-19" tabindex="-1"></a>pos_hc<span class="sc">$</span>height               <span class="co"># デンドログラム(樹形図)の高さ</span></span>
+<span id="cb524-20"><a href="クラスター分析.html#cb524-20" tabindex="-1"></a><span class="co">#&gt;  [1]  7.280110  8.062258  8.103497  8.644844  9.014803  9.549370  9.702724</span></span>
+<span id="cb524-21"><a href="クラスター分析.html#cb524-21" tabindex="-1"></a><span class="co">#&gt;  [8] 10.785793 12.548572 13.754999 15.099669 18.753461 30.374223 41.487118</span></span>
+<span id="cb524-22"><a href="クラスター分析.html#cb524-22" tabindex="-1"></a><span class="co">#&gt; [15] 65.724108</span></span>
+<span id="cb524-23"><a href="クラスター分析.html#cb524-23" tabindex="-1"></a><span class="fu">plot</span>(pos_hc, <span class="at">hang =</span> <span class="sc">-</span><span class="dv">1</span>, <span class="at">family =</span> <span class="st">&quot;HiraKakuProN-W3&quot;</span>)</span></code></pre></div>
+<p><img src="130-clust_files/figure-html/clust_pos_2-1.png" width="75%" /></p>
+<div class="sourceCode" id="cb525"><pre class="sourceCode r"><code class="sourceCode r"><span id="cb525-1"><a href="クラスター分析.html#cb525-1" tabindex="-1"></a><span class="co"># 問題点?</span></span></code></pre></div>
+<p>デンドログラム内に「chaining現象」が発生していることが分かる.</p>
+<p>「chaining現象」は, クラスターが連鎖的に長く伸びる形で形成される現象を指す.
+この現象は, 階層クラスタリングの過程で, 一つのクラスターが次々に近くのデータ点を吸収して成長していくことで生する.</p>
+<p>chaining現象は, 特に, 単連結法で生じやすいと考えられる. 本来異なるクラスターに属すべきデータポイントが, 同一のクラスターに統合されてしまうことで, データの真の構造を見落としてしまう可能性がある.
+対処法として, クラスター間の結合方法を変える (単連結法から他の方法) ことでchaining現象の影響を軽減できる場合がある. また, 距離尺度を変更することで軽減できる場合がある.</p>
+<p>このposデータの取る値は, 各レシートごとの商品群の購買個数を表している.
+同時購買されやすい・されにくいが商品群間の距離に反映されてしまっている.
+ここでは, データに加工を施し, 値が購買個数 (頻度) → 購買有無 (0/1)に変換してみる.</p>
+<div class="sourceCode" id="cb526"><pre class="sourceCode r"><code class="sourceCode r"><span id="cb526-1"><a href="クラスター分析.html#cb526-1" tabindex="-1"></a>posdat2 <span class="ot">&lt;-</span> posdat</span>
+<span id="cb526-2"><a href="クラスター分析.html#cb526-2" tabindex="-1"></a>posdat2[posdat2<span class="sc">&gt;=</span> <span class="dv">2</span>] <span class="ot">&lt;-</span> <span class="dv">1</span></span>
+<span id="cb526-3"><a href="クラスター分析.html#cb526-3" tabindex="-1"></a>pos_dist2 <span class="ot">&lt;-</span> <span class="fu">dist</span>(<span class="fu">t</span>(posdat2))</span>
+<span id="cb526-4"><a href="クラスター分析.html#cb526-4" tabindex="-1"></a><span class="co"># </span></span>
+<span id="cb526-5"><a href="クラスター分析.html#cb526-5" tabindex="-1"></a>pos_hc2 <span class="ot">&lt;-</span> <span class="fu">hclust</span>(pos_dist2, <span class="at">method =</span> <span class="st">&quot;ward.D2&quot;</span>)    </span>
+<span id="cb526-6"><a href="クラスター分析.html#cb526-6" tabindex="-1"></a>pos_hc2<span class="sc">$</span>merge               <span class="co"># クラスター形成履歴</span></span>
+<span id="cb526-7"><a href="クラスター分析.html#cb526-7" tabindex="-1"></a><span class="co">#&gt;       [,1] [,2]</span></span>
+<span id="cb526-8"><a href="クラスター分析.html#cb526-8" tabindex="-1"></a><span class="co">#&gt;  [1,]   -7   -9</span></span>
+<span id="cb526-9"><a href="クラスター分析.html#cb526-9" tabindex="-1"></a><span class="co">#&gt;  [2,]  -10    1</span></span>
+<span id="cb526-10"><a href="クラスター分析.html#cb526-10" tabindex="-1"></a><span class="co">#&gt;  [3,]  -16    2</span></span>
+<span id="cb526-11"><a href="クラスター分析.html#cb526-11" tabindex="-1"></a><span class="co">#&gt;  [4,]   -3  -13</span></span>
+<span id="cb526-12"><a href="クラスター分析.html#cb526-12" tabindex="-1"></a><span class="co">#&gt;  [5,]    3    4</span></span>
+<span id="cb526-13"><a href="クラスター分析.html#cb526-13" tabindex="-1"></a><span class="co">#&gt;  [6,]   -6    5</span></span>
+<span id="cb526-14"><a href="クラスター分析.html#cb526-14" tabindex="-1"></a><span class="co">#&gt;  [7,]   -5    6</span></span>
+<span id="cb526-15"><a href="クラスター分析.html#cb526-15" tabindex="-1"></a><span class="co">#&gt;  [8,]  -11  -14</span></span>
+<span id="cb526-16"><a href="クラスター分析.html#cb526-16" tabindex="-1"></a><span class="co">#&gt;  [9,]   -8    7</span></span>
+<span id="cb526-17"><a href="クラスター分析.html#cb526-17" tabindex="-1"></a><span class="co">#&gt; [10,]    8    9</span></span>
+<span id="cb526-18"><a href="クラスター分析.html#cb526-18" tabindex="-1"></a><span class="co">#&gt; [11,]  -12   10</span></span>
+<span id="cb526-19"><a href="クラスター分析.html#cb526-19" tabindex="-1"></a><span class="co">#&gt; [12,]   -4   11</span></span>
+<span id="cb526-20"><a href="クラスター分析.html#cb526-20" tabindex="-1"></a><span class="co">#&gt; [13,]   -1   -2</span></span>
+<span id="cb526-21"><a href="クラスター分析.html#cb526-21" tabindex="-1"></a><span class="co">#&gt; [14,]  -15   12</span></span>
+<span id="cb526-22"><a href="クラスター分析.html#cb526-22" tabindex="-1"></a><span class="co">#&gt; [15,]   13   14</span></span>
+<span id="cb526-23"><a href="クラスター分析.html#cb526-23" tabindex="-1"></a>pos_hc2<span class="sc">$</span>height              <span class="co"># デンドログラム(樹形図)の高さ</span></span>
+<span id="cb526-24"><a href="クラスター分析.html#cb526-24" tabindex="-1"></a><span class="co">#&gt;  [1]  4.472136  4.760952  4.983305  5.099020  5.369668  5.550633  6.989788</span></span>
+<span id="cb526-25"><a href="クラスター分析.html#cb526-25" tabindex="-1"></a><span class="co">#&gt;  [8]  7.348469  7.348469  8.011356  9.468448  9.536032 15.874508 16.016132</span></span>
+<span id="cb526-26"><a href="クラスター分析.html#cb526-26" tabindex="-1"></a><span class="co">#&gt; [15] 20.502178</span></span>
+<span id="cb526-27"><a href="クラスター分析.html#cb526-27" tabindex="-1"></a><span class="fu">plot</span>(pos_hc2, <span class="at">hang =</span> <span class="sc">-</span><span class="dv">1</span>, <span class="at">family =</span> <span class="st">&quot;HiraKakuProN-W3&quot;</span>)</span></code></pre></div>
+<p><img src="130-clust_files/figure-html/clust_pos_3-1.png" width="75%" /></p>
+<p>更新されたデンドログラムより, chainingが緩和されたのが確認される.</p>
+<p>次に, 距離尺度およびクラスター結合方法の変更を試みる. ここでは, 距離尺度としてコサイン距離を,
+クラスター結合方法としてウォード法を採用する.</p>
+<div class="sourceCode" id="cb527"><pre class="sourceCode r"><code class="sourceCode r"><span id="cb527-1"><a href="クラスター分析.html#cb527-1" tabindex="-1"></a><span class="co"># マンハッタン距離</span></span>
+<span id="cb527-2"><a href="クラスター分析.html#cb527-2" tabindex="-1"></a><span class="co">#pos_dist &lt;- dist(t(posdat), method = &quot;manhattan&quot;)      </span></span>
+<span id="cb527-3"><a href="クラスター分析.html#cb527-3" tabindex="-1"></a></span>
+<span id="cb527-4"><a href="クラスター分析.html#cb527-4" tabindex="-1"></a><span class="co"># cosine距離の使用</span></span>
+<span id="cb527-5"><a href="クラスター分析.html#cb527-5" tabindex="-1"></a><span class="fu">library</span>(proxy)</span>
+<span id="cb527-6"><a href="クラスター分析.html#cb527-6" tabindex="-1"></a>pos_dist <span class="ot">&lt;-</span> proxy<span class="sc">::</span><span class="fu">dist</span>(<span class="fu">t</span>(posdat), <span class="at">method =</span> <span class="st">&quot;cosine&quot;</span>)       <span class="co"># cosine距離</span></span>
+<span id="cb527-7"><a href="クラスター分析.html#cb527-7" tabindex="-1"></a>pos_hc <span class="ot">&lt;-</span> <span class="fu">hclust</span>(pos_dist, <span class="at">method =</span> <span class="st">&quot;ward.D2&quot;</span>)</span>
+<span id="cb527-8"><a href="クラスター分析.html#cb527-8" tabindex="-1"></a><span class="fu">plot</span>(pos_hc, <span class="at">hang =</span> <span class="sc">-</span><span class="dv">1</span>, <span class="at">family =</span> <span class="st">&quot;HiraKakuProN-W3&quot;</span>)</span></code></pre></div>
+<p><img src="130-clust_files/figure-html/clust_pos_4-1.png" width="75%" /></p>
+<div class="sourceCode" id="cb528"><pre class="sourceCode r"><code class="sourceCode r"><span id="cb528-1"><a href="クラスター分析.html#cb528-1" tabindex="-1"></a>pos_dist2 <span class="ot">&lt;-</span> proxy<span class="sc">::</span><span class="fu">dist</span>(<span class="fu">t</span>(posdat2), <span class="at">method =</span> <span class="st">&quot;cosine&quot;</span>)     <span class="co"># cosine距離</span></span>
+<span id="cb528-2"><a href="クラスター分析.html#cb528-2" tabindex="-1"></a>pos_hc2 <span class="ot">&lt;-</span> <span class="fu">hclust</span>(pos_dist2, <span class="at">method =</span> <span class="st">&quot;ward.D2&quot;</span>)</span>
+<span id="cb528-3"><a href="クラスター分析.html#cb528-3" tabindex="-1"></a><span class="fu">plot</span>(pos_hc2, <span class="at">hang =</span> <span class="sc">-</span><span class="dv">1</span>, <span class="at">family =</span> <span class="st">&quot;HiraKakuProN-W3&quot;</span>)</span></code></pre></div>
+<p><img src="130-clust_files/figure-html/clust_pos_4-2.png" width="75%" /></p>
+<p>以上, データ間の距離やクラスター結合方法の選択が結果に大きく影響することが確認される.</p>
+</div>
+<div id="hartiganルールによるクラスター数kの決定" class="section level4 unnumbered hasAnchor">
+<h4>Hartiganルールによるクラスター数Kの決定<a href="クラスター分析.html#hartiganルールによるクラスター数kの決定" class="anchor-section" aria-label="Anchor link to header"></a></h4>
+<p>Hartiganルールでは, (k+1)番目のクラスターを加えるか否かの判定を逐次行い,
+最適なクラスター数<span class="math inline">\(K\)</span>を決定する.</p>
+<div class="sourceCode" id="cb529"><pre class="sourceCode r"><code class="sourceCode r"><span id="cb529-1"><a href="クラスター分析.html#cb529-1" tabindex="-1"></a><span class="fu">library</span>(useful)</span>
+<span id="cb529-2"><a href="クラスター分析.html#cb529-2" tabindex="-1"></a><span class="do">## pos_km &lt;- FitKMeans(posdat, max.cluster = 20, seed = 1)  # 客</span></span>
+<span id="cb529-3"><a href="クラスター分析.html#cb529-3" tabindex="-1"></a>pos_km_item <span class="ot">&lt;-</span> <span class="fu">FitKMeans</span>(<span class="fu">t</span>(posdat), <span class="at">seed =</span> <span class="dv">1</span>)   <span class="co"># 商品</span></span>
+<span id="cb529-4"><a href="クラスター分析.html#cb529-4" tabindex="-1"></a>pos_km_item</span>
+<span id="cb529-5"><a href="クラスター分析.html#cb529-5" tabindex="-1"></a><span class="co">#&gt;    Clusters  Hartigan AddCluster</span></span>
+<span id="cb529-6"><a href="クラスター分析.html#cb529-6" tabindex="-1"></a><span class="co">#&gt; 1         2 14.359657       TRUE</span></span>
+<span id="cb529-7"><a href="クラスター分析.html#cb529-7" tabindex="-1"></a><span class="co">#&gt; 2         3  8.985054      FALSE</span></span>
+<span id="cb529-8"><a href="クラスター分析.html#cb529-8" tabindex="-1"></a><span class="co">#&gt; 3         4  7.062050      FALSE</span></span>
+<span id="cb529-9"><a href="クラスター分析.html#cb529-9" tabindex="-1"></a><span class="co">#&gt; 4         5  3.181427      FALSE</span></span>
+<span id="cb529-10"><a href="クラスター分析.html#cb529-10" tabindex="-1"></a><span class="co">#&gt; 5         6  2.307692      FALSE</span></span>
+<span id="cb529-11"><a href="クラスター分析.html#cb529-11" tabindex="-1"></a><span class="co">#&gt; 6         7  2.131698      FALSE</span></span>
+<span id="cb529-12"><a href="クラスター分析.html#cb529-12" tabindex="-1"></a><span class="co">#&gt; 7         8  1.964241      FALSE</span></span>
+<span id="cb529-13"><a href="クラスター分析.html#cb529-13" tabindex="-1"></a><span class="co">#&gt; 8         9  1.112276      FALSE</span></span>
+<span id="cb529-14"><a href="クラスター分析.html#cb529-14" tabindex="-1"></a><span class="co">#&gt; 9        10  1.706499      FALSE</span></span>
+<span id="cb529-15"><a href="クラスター分析.html#cb529-15" tabindex="-1"></a><span class="co">#&gt; 10       11  1.190476      FALSE</span></span>
+<span id="cb529-16"><a href="クラスター分析.html#cb529-16" tabindex="-1"></a><span class="co">#&gt; 11       12  1.142857      FALSE</span></span>
+<span id="cb529-17"><a href="クラスター分析.html#cb529-17" tabindex="-1"></a><span class="co"># (クラスター数, Hartigan数, クラスターを追加するべきか否か)</span></span>
+<span id="cb529-18"><a href="クラスター分析.html#cb529-18" tabindex="-1"></a><span class="fu">PlotHartigan</span>(pos_km_item) <span class="co"># 閾値=10(デフォルト)</span></span></code></pre></div>
+<p><img src="130-clust_files/figure-html/clust_pos_5-1.png" width="75%" /></p>
+<p>上記出力より, クラスター数<span class="math inline">\(K=2\)</span>が選択される.</p>
+</div>
+<div id="次元縮約-顧客-レシート-のクラスタリング" class="section level4 unnumbered hasAnchor">
+<h4>次元縮約 → 顧客 (レシート) のクラスタリング<a href="クラスター分析.html#次元縮約-顧客-レシート-のクラスタリング" class="anchor-section" aria-label="Anchor link to header"></a></h4>
+<p>つぎに, 顧客 (レシート) のクラスタリングを行う.
+変数の次元が大きい場合には, クラスタリングの実行に先立って,
+類似性を測る変数の次元を落とすのが効果的なことが多い.
+本データセットの商品分類数 (16) は大きいとは言えないが,
+手順例を紹介する. ここでは, PCAによる次元縮約によって
+事前に5つに絞り込んでおく.
+(なお, “超高次元”の場合には, 通常のPCAはうまく機能しないことが
+理論的に示されているため, 別途対応が必要となる.)</p>
+<div class="sourceCode" id="cb530"><pre class="sourceCode r"><code class="sourceCode r"><span id="cb530-1"><a href="クラスター分析.html#cb530-1" tabindex="-1"></a><span class="co"># 変数(商品)に関して次元縮約pca実行</span></span>
+<span id="cb530-2"><a href="クラスター分析.html#cb530-2" tabindex="-1"></a><span class="co">#posdat_pc &lt;- prcomp(posdat)</span></span>
+<span id="cb530-3"><a href="クラスター分析.html#cb530-3" tabindex="-1"></a>posdat_pc <span class="ot">&lt;-</span> <span class="fu">prcomp</span>(posdat, <span class="at">scale. =</span> T) <span class="co"># 標準化</span></span>
+<span id="cb530-4"><a href="クラスター分析.html#cb530-4" tabindex="-1"></a><span class="fu">summary</span>(posdat_pc)</span>
+<span id="cb530-5"><a href="クラスター分析.html#cb530-5" tabindex="-1"></a><span class="co">#&gt; Importance of components:</span></span>
+<span id="cb530-6"><a href="クラスター分析.html#cb530-6" tabindex="-1"></a><span class="co">#&gt;                            PC1     PC2     PC3     PC4     PC5    PC6     PC7</span></span>
+<span id="cb530-7"><a href="クラスター分析.html#cb530-7" tabindex="-1"></a><span class="co">#&gt; Standard deviation     1.26384 1.22037 1.10340 1.07873 1.03901 1.0245 0.99523</span></span>
+<span id="cb530-8"><a href="クラスター分析.html#cb530-8" tabindex="-1"></a><span class="co">#&gt; Proportion of Variance 0.09983 0.09308 0.07609 0.07273 0.06747 0.0656 0.06191</span></span>
+<span id="cb530-9"><a href="クラスター分析.html#cb530-9" tabindex="-1"></a><span class="co">#&gt; Cumulative Proportion  0.09983 0.19291 0.26901 0.34174 0.40921 0.4748 0.53672</span></span>
+<span id="cb530-10"><a href="クラスター分析.html#cb530-10" tabindex="-1"></a><span class="co">#&gt;                           PC8    PC9    PC10    PC11    PC12    PC13   PC14</span></span>
+<span id="cb530-11"><a href="クラスター分析.html#cb530-11" tabindex="-1"></a><span class="co">#&gt; Standard deviation     0.9911 0.9847 0.96511 0.93339 0.91726 0.89735 0.8772</span></span>
+<span id="cb530-12"><a href="クラスター分析.html#cb530-12" tabindex="-1"></a><span class="co">#&gt; Proportion of Variance 0.0614 0.0606 0.05821 0.05445 0.05259 0.05033 0.0481</span></span>
+<span id="cb530-13"><a href="クラスター分析.html#cb530-13" tabindex="-1"></a><span class="co">#&gt; Cumulative Proportion  0.5981 0.6587 0.71693 0.77138 0.82397 0.87430 0.9224</span></span>
+<span id="cb530-14"><a href="クラスター分析.html#cb530-14" tabindex="-1"></a><span class="co">#&gt;                          PC15    PC16</span></span>
+<span id="cb530-15"><a href="クラスター分析.html#cb530-15" tabindex="-1"></a><span class="co">#&gt; Standard deviation     0.8070 0.76844</span></span>
+<span id="cb530-16"><a href="クラスター分析.html#cb530-16" tabindex="-1"></a><span class="co">#&gt; Proportion of Variance 0.0407 0.03691</span></span>
+<span id="cb530-17"><a href="クラスター分析.html#cb530-17" tabindex="-1"></a><span class="co">#&gt; Cumulative Proportion  0.9631 1.00000</span></span>
+<span id="cb530-18"><a href="クラスター分析.html#cb530-18" tabindex="-1"></a><span class="fu">plot</span>(posdat_pc, <span class="at">family =</span> <span class="st">&quot;HiraKakuProN-W3&quot;</span>)</span></code></pre></div>
+<p><img src="130-clust_files/figure-html/clust_pos_6-1.png" width="75%" /></p>
+<div class="sourceCode" id="cb531"><pre class="sourceCode r"><code class="sourceCode r"><span id="cb531-1"><a href="クラスター分析.html#cb531-1" tabindex="-1"></a></span>
+<span id="cb531-2"><a href="クラスター分析.html#cb531-2" tabindex="-1"></a>posdat_score5 <span class="ot">&lt;-</span> posdat_pc<span class="sc">$</span>x[, <span class="dv">1</span><span class="sc">:</span><span class="dv">5</span>] </span>
+<span id="cb531-3"><a href="クラスター分析.html#cb531-3" tabindex="-1"></a>posdat_pc<span class="sc">$</span>rotation[, <span class="dv">1</span><span class="sc">:</span><span class="dv">5</span>]</span>
+<span id="cb531-4"><a href="クラスター分析.html#cb531-4" tabindex="-1"></a><span class="co">#&gt;                            PC1         PC2         PC3          PC4         PC5</span></span>
+<span id="cb531-5"><a href="クラスター分析.html#cb531-5" tabindex="-1"></a><span class="co">#&gt; 洋菓子土産          0.19801045 -0.41680964  0.07830286  0.204893941 -0.15189427</span></span>
+<span id="cb531-6"><a href="クラスター分析.html#cb531-6" tabindex="-1"></a><span class="co">#&gt; 和菓子土産          0.31926545 -0.17429488  0.29451622  0.024368667  0.06823826</span></span>
+<span id="cb531-7"><a href="クラスター分析.html#cb531-7" tabindex="-1"></a><span class="co">#&gt; 地域限定菓子        0.11093983 -0.21464500  0.08853735  0.122379290 -0.51464240</span></span>
+<span id="cb531-8"><a href="クラスター分析.html#cb531-8" tabindex="-1"></a><span class="co">#&gt; 水産加工品          0.38402139  0.47345139  0.12406842 -0.018704524  0.05301032</span></span>
+<span id="cb531-9"><a href="クラスター分析.html#cb531-9" tabindex="-1"></a><span class="co">#&gt; 地元名産品          0.28312609  0.25920695  0.07566671 -0.432182990 -0.21885500</span></span>
+<span id="cb531-10"><a href="クラスター分析.html#cb531-10" tabindex="-1"></a><span class="co">#&gt; 畜産加工品          0.31510689  0.36152933  0.04970947  0.404289871 -0.10659114</span></span>
+<span id="cb531-11"><a href="クラスター分析.html#cb531-11" tabindex="-1"></a><span class="co">#&gt; 農産加工品          0.14914158 -0.03604771  0.16126513 -0.142280575  0.30221851</span></span>
+<span id="cb531-12"><a href="クラスター分析.html#cb531-12" tabindex="-1"></a><span class="co">#&gt; ご当地グロッサリー  0.20348286  0.20049364  0.03892426  0.150258935  0.38320847</span></span>
+<span id="cb531-13"><a href="クラスター分析.html#cb531-13" tabindex="-1"></a><span class="co">#&gt; 玩具土産           -0.18783969  0.06869904  0.48245433  0.205983425 -0.07184299</span></span>
+<span id="cb531-14"><a href="クラスター分析.html#cb531-14" tabindex="-1"></a><span class="co">#&gt; 雑貨土産           -0.08771897  0.09893981  0.46577309  0.185847154  0.18455564</span></span>
+<span id="cb531-15"><a href="クラスター分析.html#cb531-15" tabindex="-1"></a><span class="co">#&gt; 雑貨類             -0.13980819  0.13804035 -0.38617293  0.166604346  0.17361526</span></span>
+<span id="cb531-16"><a href="クラスター分析.html#cb531-16" tabindex="-1"></a><span class="co">#&gt; 菓子類             -0.33688987  0.10484451  0.32900498  0.001601135 -0.21715666</span></span>
+<span id="cb531-17"><a href="クラスター分析.html#cb531-17" tabindex="-1"></a><span class="co">#&gt; 麺類                0.21239584  0.14992291 -0.10107137  0.106430151 -0.49276377</span></span>
+<span id="cb531-18"><a href="クラスター分析.html#cb531-18" tabindex="-1"></a><span class="co">#&gt; パン.弁当類        -0.14576690  0.29113765 -0.32482427  0.311169546 -0.14077896</span></span>
+<span id="cb531-19"><a href="クラスター分析.html#cb531-19" tabindex="-1"></a><span class="co">#&gt; 飲料               -0.46157964  0.32927414  0.15896997 -0.041046373 -0.11399644</span></span>
+<span id="cb531-20"><a href="クラスター分析.html#cb531-20" tabindex="-1"></a><span class="co">#&gt; デザート等         -0.02334359  0.16142448  0.01003826 -0.578340358 -0.12251255</span></span>
+<span id="cb531-21"><a href="クラスター分析.html#cb531-21" tabindex="-1"></a></span>
+<span id="cb531-22"><a href="クラスター分析.html#cb531-22" tabindex="-1"></a>posdat_dist5 <span class="ot">&lt;-</span> <span class="fu">dist</span>(posdat_score5) <span class="co"># レコード間</span></span>
+<span id="cb531-23"><a href="クラスター分析.html#cb531-23" tabindex="-1"></a><span class="co">#posdat_dist5 &lt;- dist(t(posdat_score5)) # 合成変数間</span></span>
+<span id="cb531-24"><a href="クラスター分析.html#cb531-24" tabindex="-1"></a>posdat_hc5 <span class="ot">&lt;-</span> <span class="fu">hclust</span>(posdat_dist5, <span class="at">method =</span> <span class="st">&quot;ward.D2&quot;</span>)  </span>
+<span id="cb531-25"><a href="クラスター分析.html#cb531-25" tabindex="-1"></a><span class="fu">plot</span>(posdat_hc5, <span class="at">family =</span> <span class="st">&quot;HiraKakuProN-W3&quot;</span>)</span>
+<span id="cb531-26"><a href="クラスター分析.html#cb531-26" tabindex="-1"></a></span>
+<span id="cb531-27"><a href="クラスター分析.html#cb531-27" tabindex="-1"></a><span class="fu">rect.hclust</span>(posdat_hc5, <span class="at">k =</span> <span class="dv">8</span>, <span class="at">border =</span> <span class="st">&quot;blue&quot;</span>)</span></code></pre></div>
+<p><img src="130-clust_files/figure-html/clust_pos_6-2.png" width="75%" /></p>
+<div class="sourceCode" id="cb532"><pre class="sourceCode r"><code class="sourceCode r"><span id="cb532-1"><a href="クラスター分析.html#cb532-1" tabindex="-1"></a></span>
+<span id="cb532-2"><a href="クラスター分析.html#cb532-2" tabindex="-1"></a><span class="co"># pos_km5 &lt;- FitKMeans(posdat_score5, max.cluster = 20, seed = 1)</span></span>
+<span id="cb532-3"><a href="クラスター分析.html#cb532-3" tabindex="-1"></a><span class="co"># PlotHartigan(pos_km5)</span></span></code></pre></div>
+<p>上では, 顧客 (レシート) に対して階層クラスタリングを実施したが,
+件数の多い場合には, 注意が必要である.
+主な問題点は計算コストと可視化の困難さである. 階層的クラスタリングにおいて, データ点の数が非常に多い場合, 計算時間やメモリ消費が膨大になる可能性がある (全てのデータ点間で距離を計算し, これらの距離に基づいて段階的にクラスターを形成する必要性) .
+また, データポイントの数が多い場合、デンドログラムは非常に密集してしまい、個々のクラスターやクラスタリングの構造を解釈することが困難で, 有益な情報を得られにくくなる.</p>
+</div>
+</div>
+</div>
+<div id="発展的なクラスター分析" class="section level2 hasAnchor" number="13.3">
+<h2><span class="header-section-number">13.3</span> 発展的なクラスター分析<a href="クラスター分析.html#発展的なクラスター分析" class="anchor-section" aria-label="Anchor link to header"></a></h2>
+<p>先に使用した従業員評価データ (拡張版) をここでも使用する.
+距離としては, 相関係数 (類似度) をベースにしたcosine距離 (=1-相関係数) を使用する.</p>
+<div class="sourceCode" id="cb533"><pre class="sourceCode r"><code class="sourceCode r"><span id="cb533-1"><a href="クラスター分析.html#cb533-1" tabindex="-1"></a>tokuten <span class="ot">&lt;-</span> <span class="fu">read.csv</span>(<span class="st">&quot;testdat_30_jap.csv&quot;</span>, <span class="at">skip =</span> <span class="dv">1</span>, <span class="at">header =</span> T, <span class="at">row.names =</span> <span class="dv">1</span>)</span></code></pre></div>
+<div id="関数agnes" class="section level3 unnumbered hasAnchor">
+<h3>関数<code>agnes</code><a href="クラスター分析.html#関数agnes" class="anchor-section" aria-label="Anchor link to header"></a></h3>
+<p>パッケージ<strong>cluster</strong>内にある関数<code>agnes</code> (AGglomerative NESting) を使うことで, 階層型クラスタリングをより高度に制御しながら実行することが可能.</p>
+<div class="sourceCode" id="cb534"><pre class="sourceCode r"><code class="sourceCode r"><span id="cb534-1"><a href="クラスター分析.html#cb534-1" tabindex="-1"></a><span class="fu">library</span>(cluster)</span>
+<span id="cb534-2"><a href="クラスター分析.html#cb534-2" tabindex="-1"></a>dist_matrix <span class="ot">&lt;-</span> <span class="fu">as.dist</span>(<span class="dv">1</span> <span class="sc">-</span> <span class="fu">cor</span>(tokuten))</span>
+<span id="cb534-3"><a href="クラスター分析.html#cb534-3" tabindex="-1"></a>res_agnes <span class="ot">&lt;-</span> <span class="fu">agnes</span>(dist_matrix, <span class="at">method =</span> <span class="st">&quot;average&quot;</span>)</span>
+<span id="cb534-4"><a href="クラスター分析.html#cb534-4" tabindex="-1"></a><span class="fu">plot</span>(res_agnes)</span></code></pre></div>
+<p><img src="130-clust_files/figure-html/unnamed-chunk-18-1.png" width="75%" /><img src="130-clust_files/figure-html/unnamed-chunk-18-2.png" width="75%" /></p>
+<div class="sourceCode" id="cb535"><pre class="sourceCode r"><code class="sourceCode r"><span id="cb535-1"><a href="クラスター分析.html#cb535-1" tabindex="-1"></a>dist_matrix <span class="ot">&lt;-</span> <span class="fu">as.dist</span>(<span class="dv">1</span> <span class="sc">-</span> <span class="fu">cor</span>(<span class="fu">t</span>(tokuten)))</span>
+<span id="cb535-2"><a href="クラスター分析.html#cb535-2" tabindex="-1"></a>res_agnes <span class="ot">&lt;-</span> <span class="fu">agnes</span>(dist_matrix, <span class="at">method =</span> <span class="st">&quot;average&quot;</span>)</span>
+<span id="cb535-3"><a href="クラスター分析.html#cb535-3" tabindex="-1"></a><span class="fu">plot</span>(res_agnes)</span></code></pre></div>
+<p><img src="130-clust_files/figure-html/unnamed-chunk-19-1.png" width="75%" /><img src="130-clust_files/figure-html/unnamed-chunk-19-2.png" width="75%" /></p>
+</div>
+<div id="関数pheatmap" class="section level3 unnumbered hasAnchor">
+<h3>関数<code>pheatmap</code><a href="クラスター分析.html#関数pheatmap" class="anchor-section" aria-label="Anchor link to header"></a></h3>
+<p>パッケージ<strong>pheatmap</strong>は, 主にヒートマップの作成に使用されるが, 相関に基づく階層型クラスタリングを行い, ヒートマップとして可視化する機能もあり.
+遺伝子発現データなどのbioinformatics分野で活用.</p>
+<div class="sourceCode" id="cb536"><pre class="sourceCode r"><code class="sourceCode r"><span id="cb536-1"><a href="クラスター分析.html#cb536-1" tabindex="-1"></a><span class="fu">library</span>(pheatmap)</span>
+<span id="cb536-2"><a href="クラスター分析.html#cb536-2" tabindex="-1"></a><span class="fu">pheatmap</span>(tokuten, </span>
+<span id="cb536-3"><a href="クラスター分析.html#cb536-3" tabindex="-1"></a>         <span class="at">clustering_distance_rows =</span> <span class="fu">as.dist</span>(<span class="dv">1</span> <span class="sc">-</span> <span class="fu">cor</span>(<span class="fu">t</span>(tokuten))), </span>
+<span id="cb536-4"><a href="クラスター分析.html#cb536-4" tabindex="-1"></a>         <span class="at">clustering_distance_cols =</span> <span class="fu">as.dist</span>(<span class="dv">1</span> <span class="sc">-</span> <span class="fu">cor</span>(tokuten)))</span></code></pre></div>
+<p><img src="130-clust_files/figure-html/unnamed-chunk-20-1.png" width="75%" /></p>
+</div>
+<div id="関数pam" class="section level3 unnumbered hasAnchor">
+<h3>関数<code>pam</code><a href="クラスター分析.html#関数pam" class="anchor-section" aria-label="Anchor link to header"></a></h3>
+<p>メドイド (medoid) は, クラスタ内の全ての点に対する距離の合計が最小となるような, クラスタ内に存在するデータ点であり, K-medoids法は, メドイドを中心としてクラスタリングを行う手法である. PAM (Partitioning Around Medoids) は, K-medoids法の考え方を実装した具体的アルゴリズムの一種である.
+Rでは, パッケージ<strong>cluster</strong>内の関数<code>pam</code>を使用することができる.</p>
+<p>一方, K-medoids法に類似したクラスタリング手法として,
+K-median法がある. K-median法は, 各クラスタ内のデータポイントの中央値に基づいて「中央点」決定し, クラスタ内の全データポイントと「中央点」との距離の合計を最小化するようにクラスタリングを行う.</p>
+<p>これらの手法を使うことで, 外れ値に強い, ロバストなクラスタリング結果が得られる.</p>
+<div class="sourceCode" id="cb537"><pre class="sourceCode r"><code class="sourceCode r"><span id="cb537-1"><a href="クラスター分析.html#cb537-1" tabindex="-1"></a><span class="co"># pam関数によるK-medoids法の実行</span></span>
+<span id="cb537-2"><a href="クラスター分析.html#cb537-2" tabindex="-1"></a>k <span class="ot">&lt;-</span> <span class="dv">3</span> <span class="co"># クラスタの数</span></span>
+<span id="cb537-3"><a href="クラスター分析.html#cb537-3" tabindex="-1"></a>res_pam <span class="ot">&lt;-</span> <span class="fu">pam</span>(tokuten, k)</span>
+<span id="cb537-4"><a href="クラスター分析.html#cb537-4" tabindex="-1"></a><span class="fu">print</span>(res_pam)</span>
+<span id="cb537-5"><a href="クラスター分析.html#cb537-5" tabindex="-1"></a><span class="co">#&gt; Medoids:</span></span>
+<span id="cb537-6"><a href="クラスター分析.html#cb537-6" tabindex="-1"></a><span class="co">#&gt;      ID 専門性 分析力 リーダーシップ プレゼン力 コミュ力</span></span>
+<span id="cb537-7"><a href="クラスター分析.html#cb537-7" tabindex="-1"></a><span class="co">#&gt; 山口 15     77     87             71         68       66</span></span>
+<span id="cb537-8"><a href="クラスター分析.html#cb537-8" tabindex="-1"></a><span class="co">#&gt; 伊藤  7     80     80             75         75       80</span></span>
+<span id="cb537-9"><a href="クラスター分析.html#cb537-9" tabindex="-1"></a><span class="co">#&gt; 石川 20     80     80             83         86       86</span></span>
+<span id="cb537-10"><a href="クラスター分析.html#cb537-10" tabindex="-1"></a><span class="co">#&gt; Clustering vector:</span></span>
+<span id="cb537-11"><a href="クラスター分析.html#cb537-11" tabindex="-1"></a><span class="co">#&gt;   山田   鈴木   田中   中村   大野   小林   伊藤   高橋   渡辺   佐藤   山下 </span></span>
+<span id="cb537-12"><a href="クラスター分析.html#cb537-12" tabindex="-1"></a><span class="co">#&gt;      1      1      2      3      3      3      2      3      2      2      3 </span></span>
+<span id="cb537-13"><a href="クラスター分析.html#cb537-13" tabindex="-1"></a><span class="co">#&gt;   木村   山本   宮崎   山口   阿部   斎藤   吉田 佐々木   石川   山崎   中山 </span></span>
+<span id="cb537-14"><a href="クラスター分析.html#cb537-14" tabindex="-1"></a><span class="co">#&gt;      3      2      3      1      3      2      1      1      3      1      3 </span></span>
+<span id="cb537-15"><a href="クラスター分析.html#cb537-15" tabindex="-1"></a><span class="co">#&gt;   藤田   加藤   清水   池田   井上     林   中島     森 </span></span>
+<span id="cb537-16"><a href="クラスター分析.html#cb537-16" tabindex="-1"></a><span class="co">#&gt;      2      1      3      3      2      1      2      3 </span></span>
+<span id="cb537-17"><a href="クラスター分析.html#cb537-17" tabindex="-1"></a><span class="co">#&gt; Objective function:</span></span>
+<span id="cb537-18"><a href="クラスター分析.html#cb537-18" tabindex="-1"></a><span class="co">#&gt;    build     swap </span></span>
+<span id="cb537-19"><a href="クラスター分析.html#cb537-19" tabindex="-1"></a><span class="co">#&gt; 10.01806 10.01806 </span></span>
+<span id="cb537-20"><a href="クラスター分析.html#cb537-20" tabindex="-1"></a><span class="co">#&gt; </span></span>
+<span id="cb537-21"><a href="クラスター分析.html#cb537-21" tabindex="-1"></a><span class="co">#&gt; Available components:</span></span>
+<span id="cb537-22"><a href="クラスター分析.html#cb537-22" tabindex="-1"></a><span class="co">#&gt;  [1] &quot;medoids&quot;    &quot;id.med&quot;     &quot;clustering&quot; &quot;objective&quot;  &quot;isolation&quot; </span></span>
+<span id="cb537-23"><a href="クラスター分析.html#cb537-23" tabindex="-1"></a><span class="co">#&gt;  [6] &quot;clusinfo&quot;   &quot;silinfo&quot;    &quot;diss&quot;       &quot;call&quot;       &quot;data&quot;</span></span>
+<span id="cb537-24"><a href="クラスター分析.html#cb537-24" tabindex="-1"></a><span class="fu">plot</span>(res_pam)</span></code></pre></div>
+<p><img src="130-clust_files/figure-html/unnamed-chunk-21-1.png" width="75%" /><img src="130-clust_files/figure-html/unnamed-chunk-21-2.png" width="75%" /></p>
+
+</div>
+</div>
+</div>
+            </section>
+
+          </div>
+        </div>
+      </div>
+<a href="探索的因子分析.html" class="navigation navigation-prev " aria-label="Previous page"><i class="fa fa-angle-left"></i></a>
+<a href="xai-explainable-ai.html" class="navigation navigation-next " aria-label="Next page"><i class="fa fa-angle-right"></i></a>
+    </div>
+  </div>
+<script src="libs/gitbook-2.6.7/js/app.min.js"></script>
+<script src="libs/gitbook-2.6.7/js/clipboard.min.js"></script>
+<script src="libs/gitbook-2.6.7/js/plugin-search.js"></script>
+<script src="libs/gitbook-2.6.7/js/plugin-sharing.js"></script>
+<script src="libs/gitbook-2.6.7/js/plugin-fontsettings.js"></script>
+<script src="libs/gitbook-2.6.7/js/plugin-bookdown.js"></script>
+<script src="libs/gitbook-2.6.7/js/jquery.highlight.js"></script>
+<script src="libs/gitbook-2.6.7/js/plugin-clipboard.js"></script>
+<script>
+gitbook.require(["gitbook"], function(gitbook) {
+gitbook.start({
+"sharing": {
+"github": false,
+"facebook": true,
+"twitter": true,
+"linkedin": false,
+"weibo": false,
+"instapaper": false,
+"vk": false,
+"whatsapp": false,
+"all": ["facebook", "twitter", "linkedin", "weibo", "instapaper"]
+},
+"fontsettings": {
+"theme": "white",
+"family": "sans",
+"size": 2
+},
+"edit": {
+"link": null,
+"text": null
+},
+"history": {
+"link": null,
+"text": null
+},
+"view": {
+"link": null,
+"text": null
+},
+"download": null,
+"search": {
+"engine": "fuse",
+"options": null
+},
+"toc": {
+"collapse": "subsection"
+}
+});
+});
+</script>
+
+<!-- dynamically load mathjax for compatibility with self-contained -->
+<script>
+  (function () {
+    var script = document.createElement("script");
+    script.type = "text/javascript";
+    var src = "true";
+    if (src === "" || src === "true") src = "https://cdnjs.cloudflare.com/ajax/libs/mathjax/2.7.9/latest.js?config=TeX-MML-AM_CHTML";
+    if (location.protocol !== "file:")
+      if (/^https?:/.test(src))
+        src = src.replace(/^https?:/, '');
+    script.src = src;
+    document.getElementsByTagName("head")[0].appendChild(script);
+  })();
+</script>
+</body>
+
+</html>

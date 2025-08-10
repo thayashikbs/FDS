@@ -1,0 +1,1112 @@
+<!DOCTYPE html>
+<html lang="" xml:lang="">
+<head>
+
+  <meta charset="utf-8" />
+  <meta http-equiv="X-UA-Compatible" content="IE=edge" />
+  <title>14 XAI (Explainable AI) | 金融データサイエンス</title>
+  <meta name="description" content="14 XAI (Explainable AI) | 金融データサイエンス" />
+  <meta name="generator" content="bookdown 0.40 and GitBook 2.6.7" />
+
+  <meta property="og:title" content="14 XAI (Explainable AI) | 金融データサイエンス" />
+  <meta property="og:type" content="book" />
+  
+  
+  
+
+  <meta name="twitter:card" content="summary" />
+  <meta name="twitter:title" content="14 XAI (Explainable AI) | 金融データサイエンス" />
+  
+  
+  
+
+<meta name="author" content="林 高樹" />
+
+
+
+  <meta name="viewport" content="width=device-width, initial-scale=1" />
+  <meta name="apple-mobile-web-app-capable" content="yes" />
+  <meta name="apple-mobile-web-app-status-bar-style" content="black" />
+  
+  
+<link rel="prev" href="クラスター分析.html"/>
+
+<script src="libs/jquery-3.6.0/jquery-3.6.0.min.js"></script>
+<script src="https://cdn.jsdelivr.net/npm/fuse.js@6.4.6/dist/fuse.min.js"></script>
+<link href="libs/gitbook-2.6.7/css/style.css" rel="stylesheet" />
+<link href="libs/gitbook-2.6.7/css/plugin-table.css" rel="stylesheet" />
+<link href="libs/gitbook-2.6.7/css/plugin-bookdown.css" rel="stylesheet" />
+<link href="libs/gitbook-2.6.7/css/plugin-highlight.css" rel="stylesheet" />
+<link href="libs/gitbook-2.6.7/css/plugin-search.css" rel="stylesheet" />
+<link href="libs/gitbook-2.6.7/css/plugin-fontsettings.css" rel="stylesheet" />
+<link href="libs/gitbook-2.6.7/css/plugin-clipboard.css" rel="stylesheet" />
+
+
+
+
+
+
+
+
+<link href="libs/anchor-sections-1.1.0/anchor-sections.css" rel="stylesheet" />
+<link href="libs/anchor-sections-1.1.0/anchor-sections-hash.css" rel="stylesheet" />
+<script src="libs/anchor-sections-1.1.0/anchor-sections.js"></script>
+
+
+<style type="text/css">
+pre > code.sourceCode { white-space: pre; position: relative; }
+pre > code.sourceCode > span { line-height: 1.25; }
+pre > code.sourceCode > span:empty { height: 1.2em; }
+.sourceCode { overflow: visible; }
+code.sourceCode > span { color: inherit; text-decoration: inherit; }
+pre.sourceCode { margin: 0; }
+@media screen {
+div.sourceCode { overflow: auto; }
+}
+@media print {
+pre > code.sourceCode { white-space: pre-wrap; }
+pre > code.sourceCode > span { display: inline-block; text-indent: -5em; padding-left: 5em; }
+}
+pre.numberSource code
+  { counter-reset: source-line 0; }
+pre.numberSource code > span
+  { position: relative; left: -4em; counter-increment: source-line; }
+pre.numberSource code > span > a:first-child::before
+  { content: counter(source-line);
+    position: relative; left: -1em; text-align: right; vertical-align: baseline;
+    border: none; display: inline-block;
+    -webkit-touch-callout: none; -webkit-user-select: none;
+    -khtml-user-select: none; -moz-user-select: none;
+    -ms-user-select: none; user-select: none;
+    padding: 0 4px; width: 4em;
+    color: #aaaaaa;
+  }
+pre.numberSource { margin-left: 3em; border-left: 1px solid #aaaaaa;  padding-left: 4px; }
+div.sourceCode
+  {   }
+@media screen {
+pre > code.sourceCode > span > a:first-child::before { text-decoration: underline; }
+}
+code span.al { color: #ff0000; font-weight: bold; } /* Alert */
+code span.an { color: #60a0b0; font-weight: bold; font-style: italic; } /* Annotation */
+code span.at { color: #7d9029; } /* Attribute */
+code span.bn { color: #40a070; } /* BaseN */
+code span.bu { color: #008000; } /* BuiltIn */
+code span.cf { color: #007020; font-weight: bold; } /* ControlFlow */
+code span.ch { color: #4070a0; } /* Char */
+code span.cn { color: #880000; } /* Constant */
+code span.co { color: #60a0b0; font-style: italic; } /* Comment */
+code span.cv { color: #60a0b0; font-weight: bold; font-style: italic; } /* CommentVar */
+code span.do { color: #ba2121; font-style: italic; } /* Documentation */
+code span.dt { color: #902000; } /* DataType */
+code span.dv { color: #40a070; } /* DecVal */
+code span.er { color: #ff0000; font-weight: bold; } /* Error */
+code span.ex { } /* Extension */
+code span.fl { color: #40a070; } /* Float */
+code span.fu { color: #06287e; } /* Function */
+code span.im { color: #008000; font-weight: bold; } /* Import */
+code span.in { color: #60a0b0; font-weight: bold; font-style: italic; } /* Information */
+code span.kw { color: #007020; font-weight: bold; } /* Keyword */
+code span.op { color: #666666; } /* Operator */
+code span.ot { color: #007020; } /* Other */
+code span.pp { color: #bc7a00; } /* Preprocessor */
+code span.sc { color: #4070a0; } /* SpecialChar */
+code span.ss { color: #bb6688; } /* SpecialString */
+code span.st { color: #4070a0; } /* String */
+code span.va { color: #19177c; } /* Variable */
+code span.vs { color: #4070a0; } /* VerbatimString */
+code span.wa { color: #60a0b0; font-weight: bold; font-style: italic; } /* Warning */
+</style>
+
+<style type="text/css">
+  
+  div.hanging-indent{margin-left: 1.5em; text-indent: -1.5em;}
+</style>
+
+</head>
+
+<body>
+
+
+
+  <div class="book without-animation with-summary font-size-2 font-family-1" data-basepath=".">
+
+    <div class="book-summary">
+      <nav role="navigation">
+
+<ul class="summary">
+<li class="chapter" data-level="1" data-path="index.html"><a href="index.html"><i class="fa fa-check"></i><b>1</b> はじめに</a>
+<ul>
+<li class="chapter" data-level="1.1" data-path="index.html"><a href="index.html#コースの目的"><i class="fa fa-check"></i><b>1.1</b> コースの目的</a></li>
+<li class="chapter" data-level="1.2" data-path="index.html"><a href="index.html#統計学統計的手法の学習について"><i class="fa fa-check"></i><b>1.2</b> 統計学/統計的手法の学習について</a>
+<ul>
+<li class="chapter" data-level="" data-path="index.html"><a href="index.html#学習の目標"><i class="fa fa-check"></i>学習の目標</a></li>
+<li class="chapter" data-level="" data-path="index.html"><a href="index.html#統計学統計的手法の学習方法"><i class="fa fa-check"></i>統計学/統計的手法の学習方法</a></li>
+<li class="chapter" data-level="" data-path="index.html"><a href="index.html#統計学統計的手法の学習ステップ"><i class="fa fa-check"></i>統計学/統計的手法の学習ステップ</a></li>
+</ul></li>
+<li class="chapter" data-level="1.3" data-path="index.html"><a href="index.html#ビジネス応用における統計学の最近の趨勢"><i class="fa fa-check"></i><b>1.3</b> ビジネス応用における統計学の最近の趨勢</a></li>
+<li class="chapter" data-level="1.4" data-path="index.html"><a href="index.html#本書内の記載の注意点"><i class="fa fa-check"></i><b>1.4</b> 本書内の記載の注意点</a></li>
+</ul></li>
+<li class="chapter" data-level="2" data-path="r言語の基本.html"><a href="r言語の基本.html"><i class="fa fa-check"></i><b>2</b> R言語の基本</a>
+<ul>
+<li class="chapter" data-level="2.1" data-path="r言語の基本.html"><a href="r言語の基本.html#rの基本プログラミング"><i class="fa fa-check"></i><b>2.1</b> Rの基本プログラミング</a>
+<ul>
+<li class="chapter" data-level="2.1.1" data-path="r言語の基本.html"><a href="r言語の基本.html#基本操作"><i class="fa fa-check"></i><b>2.1.1</b> 基本操作</a></li>
+<li class="chapter" data-level="2.1.2" data-path="r言語の基本.html"><a href="r言語の基本.html#基本構文"><i class="fa fa-check"></i><b>2.1.2</b> 基本構文</a></li>
+<li class="chapter" data-level="2.1.3" data-path="r言語の基本.html"><a href="r言語の基本.html#自作関数"><i class="fa fa-check"></i><b>2.1.3</b> 自作関数</a></li>
+<li class="chapter" data-level="2.1.4" data-path="r言語の基本.html"><a href="r言語の基本.html#パッケージのインストール-読み込み"><i class="fa fa-check"></i><b>2.1.4</b> パッケージのインストール &amp; 読み込み</a></li>
+<li class="chapter" data-level="2.1.5" data-path="r言語の基本.html"><a href="r言語の基本.html#ヘルプ"><i class="fa fa-check"></i><b>2.1.5</b> ヘルプ</a></li>
+</ul></li>
+<li class="chapter" data-level="2.2" data-path="r言語の基本.html"><a href="r言語の基本.html#データの型や構造"><i class="fa fa-check"></i><b>2.2</b> データの型や構造</a>
+<ul>
+<li class="chapter" data-level="2.2.1" data-path="r言語の基本.html"><a href="r言語の基本.html#データの値の種類-データ型"><i class="fa fa-check"></i><b>2.2.1</b> データの値の種類 (“データ型”)</a></li>
+<li class="chapter" data-level="2.2.2" data-path="r言語の基本.html"><a href="r言語の基本.html#データの配列の仕方-データ構造"><i class="fa fa-check"></i><b>2.2.2</b> データの配列の仕方 (“データ構造”)</a></li>
+<li class="chapter" data-level="2.2.3" data-path="r言語の基本.html"><a href="r言語の基本.html#ベクトル"><i class="fa fa-check"></i><b>2.2.3</b> ベクトル</a></li>
+<li class="chapter" data-level="2.2.4" data-path="r言語の基本.html"><a href="r言語の基本.html#行列"><i class="fa fa-check"></i><b>2.2.4</b> 行列</a></li>
+<li class="chapter" data-level="2.2.5" data-path="r言語の基本.html"><a href="r言語の基本.html#リスト"><i class="fa fa-check"></i><b>2.2.5</b> リスト</a></li>
+<li class="chapter" data-level="2.2.6" data-path="r言語の基本.html"><a href="r言語の基本.html#データフレーム"><i class="fa fa-check"></i><b>2.2.6</b> データフレーム</a></li>
+</ul></li>
+<li class="chapter" data-level="2.3" data-path="r言語の基本.html"><a href="r言語の基本.html#データの操作演算"><i class="fa fa-check"></i><b>2.3</b> データの操作・演算</a>
+<ul>
+<li class="chapter" data-level="2.3.1" data-path="r言語の基本.html"><a href="r言語の基本.html#ベクトルの結合-ソート"><i class="fa fa-check"></i><b>2.3.1</b> ベクトルの結合, ソート</a></li>
+<li class="chapter" data-level="2.3.2" data-path="r言語の基本.html"><a href="r言語の基本.html#二項演算"><i class="fa fa-check"></i><b>2.3.2</b> 二項演算</a></li>
+<li class="chapter" data-level="2.3.3" data-path="r言語の基本.html"><a href="r言語の基本.html#論理演算"><i class="fa fa-check"></i><b>2.3.3</b> 論理演算</a></li>
+<li class="chapter" data-level="2.3.4" data-path="r言語の基本.html"><a href="r言語の基本.html#条件式"><i class="fa fa-check"></i><b>2.3.4</b> 条件式</a></li>
+<li class="chapter" data-level="2.3.5" data-path="r言語の基本.html"><a href="r言語の基本.html#行列演算"><i class="fa fa-check"></i><b>2.3.5</b> 行列演算</a></li>
+</ul></li>
+<li class="chapter" data-level="2.4" data-path="r言語の基本.html"><a href="r言語の基本.html#r関数"><i class="fa fa-check"></i><b>2.4</b> R関数</a>
+<ul>
+<li class="chapter" data-level="2.4.1" data-path="r言語の基本.html"><a href="r言語の基本.html#数学基本関数"><i class="fa fa-check"></i><b>2.4.1</b> 数学基本関数</a></li>
+<li class="chapter" data-level="2.4.2" data-path="r言語の基本.html"><a href="r言語の基本.html#基本統計量の計算"><i class="fa fa-check"></i><b>2.4.2</b> 基本統計量の計算</a></li>
+<li class="chapter" data-level="2.4.3" data-path="r言語の基本.html"><a href="r言語の基本.html#確率分布"><i class="fa fa-check"></i><b>2.4.3</b> 確率分布</a></li>
+<li class="chapter" data-level="2.4.4" data-path="r言語の基本.html"><a href="r言語の基本.html#その他便利な関数"><i class="fa fa-check"></i><b>2.4.4</b> その他便利な関数</a></li>
+</ul></li>
+<li class="chapter" data-level="2.5" data-path="r言語の基本.html"><a href="r言語の基本.html#データの可視化"><i class="fa fa-check"></i><b>2.5</b> データの可視化</a></li>
+<li class="chapter" data-level="2.6" data-path="r言語の基本.html"><a href="r言語の基本.html#ファイル入出力"><i class="fa fa-check"></i><b>2.6</b> ファイル入出力</a>
+<ul>
+<li class="chapter" data-level="2.6.1" data-path="r言語の基本.html"><a href="r言語の基本.html#テキストファイル読み込み"><i class="fa fa-check"></i><b>2.6.1</b> テキストファイル読み込み</a></li>
+<li class="chapter" data-level="2.6.2" data-path="r言語の基本.html"><a href="r言語の基本.html#テキストファイル書き出し"><i class="fa fa-check"></i><b>2.6.2</b> テキストファイル書き出し</a></li>
+</ul></li>
+<li class="chapter" data-level="2.7" data-path="r言語の基本.html"><a href="r言語の基本.html#パッケージtidyverse"><i class="fa fa-check"></i><b>2.7</b> パッケージ<code>tidyverse</code></a>
+<ul>
+<li class="chapter" data-level="2.7.1" data-path="r言語の基本.html"><a href="r言語の基本.html#q-rの初心者はtidyverseから勉強することは可能か"><i class="fa fa-check"></i><b>2.7.1</b> Q: Rの初心者は<code>tidyverse</code>から勉強することは可能か?</a></li>
+<li class="chapter" data-level="2.7.2" data-path="r言語の基本.html"><a href="r言語の基本.html#tidyverseの基本"><i class="fa fa-check"></i><b>2.7.2</b> <code>tidyverse</code>の基本</a></li>
+</ul></li>
+</ul></li>
+<li class="chapter" data-level="3" data-path="線形回帰分析.html"><a href="線形回帰分析.html"><i class="fa fa-check"></i><b>3</b> 線形回帰分析</a>
+<ul>
+<li class="chapter" data-level="3.1" data-path="線形回帰分析.html"><a href="線形回帰分析.html#重回帰分析の基本操作"><i class="fa fa-check"></i><b>3.1</b> 重回帰分析の基本操作</a>
+<ul>
+<li class="chapter" data-level="" data-path="線形回帰分析.html"><a href="線形回帰分析.html#データ1-1ルーム賃貸マンション"><i class="fa fa-check"></i>データ1: 1ルーム賃貸マンション</a></li>
+</ul></li>
+<li class="chapter" data-level="3.2" data-path="線形回帰分析.html"><a href="線形回帰分析.html#変数の選択"><i class="fa fa-check"></i><b>3.2</b> 変数の選択</a>
+<ul>
+<li class="chapter" data-level="" data-path="線形回帰分析.html"><a href="線形回帰分析.html#データ2-ボストン市内住宅物件価格データ"><i class="fa fa-check"></i>データ2: ボストン市内住宅物件価格データ</a></li>
+</ul></li>
+<li class="chapter" data-level="3.3" data-path="線形回帰分析.html"><a href="線形回帰分析.html#説明変数に質的変数を含む回帰"><i class="fa fa-check"></i><b>3.3</b> 説明変数に質的変数を含む回帰</a>
+<ul>
+<li class="chapter" data-level="" data-path="線形回帰分析.html"><a href="線形回帰分析.html#データセット3-高速道路事故データ"><i class="fa fa-check"></i>データセット#3: 高速道路事故データ</a></li>
+</ul></li>
+<li class="chapter" data-level="3.4" data-path="線形回帰分析.html"><a href="線形回帰分析.html#説明変数に質的変数を含む回帰-2"><i class="fa fa-check"></i><b>3.4</b> 説明変数に質的変数を含む回帰 (2)</a>
+<ul>
+<li class="chapter" data-level="" data-path="線形回帰分析.html"><a href="線形回帰分析.html#データセット5-収入データ-仮想"><i class="fa fa-check"></i>データセット#5: 収入データ (仮想)</a></li>
+</ul></li>
+<li class="chapter" data-level="3.5" data-path="線形回帰分析.html"><a href="線形回帰分析.html#多項式回帰"><i class="fa fa-check"></i><b>3.5</b> 多項式回帰</a>
+<ul>
+<li class="chapter" data-level="" data-path="線形回帰分析.html"><a href="線形回帰分析.html#データセット6-wage"><i class="fa fa-check"></i>データセット#6: <code>Wage</code></a></li>
+</ul></li>
+<li class="chapter" data-level="3.6" data-path="線形回帰分析.html"><a href="線形回帰分析.html#関数factorについて"><i class="fa fa-check"></i><b>3.6</b> 関数<code>factor()</code>について</a>
+<ul>
+<li class="chapter" data-level="" data-path="線形回帰分析.html"><a href="線形回帰分析.html#rでのfactor関数の使い方"><i class="fa fa-check"></i>Rでのfactor関数の使い方</a></li>
+</ul></li>
+</ul></li>
+<li class="chapter" data-level="4" data-path="ロジットブロビット回帰分析.html"><a href="ロジットブロビット回帰分析.html"><i class="fa fa-check"></i><b>4</b> ロジット/ブロビット回帰分析</a>
+<ul>
+<li class="chapter" data-level="4.1" data-path="ロジットブロビット回帰分析.html"><a href="ロジットブロビット回帰分析.html#ロジット回帰分析の基本操作"><i class="fa fa-check"></i><b>4.1</b> ロジット回帰分析の基本操作</a>
+<ul>
+<li class="chapter" data-level="" data-path="ロジットブロビット回帰分析.html"><a href="ロジットブロビット回帰分析.html#ロジットモデル-シミュレーションデータ"><i class="fa fa-check"></i>ロジットモデル: シミュレーションデータ</a></li>
+</ul></li>
+<li class="chapter" data-level="4.2" data-path="ロジットブロビット回帰分析.html"><a href="ロジットブロビット回帰分析.html#データ分析例"><i class="fa fa-check"></i><b>4.2</b> データ分析例</a>
+<ul>
+<li class="chapter" data-level="" data-path="ロジットブロビット回帰分析.html"><a href="ロジットブロビット回帰分析.html#データセット-1-企業パフォーマンスデータ-仮想"><i class="fa fa-check"></i>データセット (1): 企業パフォーマンス・データ (仮想)</a></li>
+<li class="chapter" data-level="" data-path="ロジットブロビット回帰分析.html"><a href="ロジットブロビット回帰分析.html#データセット-2-個人ローンデフォルトデータ-仮想"><i class="fa fa-check"></i>データセット (2): 個人ローン・デフォルト・データ (仮想)</a></li>
+</ul></li>
+<li class="chapter" data-level="4.3" data-path="ロジットブロビット回帰分析.html"><a href="ロジットブロビット回帰分析.html#疑似r2の計算"><i class="fa fa-check"></i><b>4.3</b> 疑似R2の計算</a>
+<ul>
+<li class="chapter" data-level="" data-path="ロジットブロビット回帰分析.html"><a href="ロジットブロビット回帰分析.html#パッケージdesctoolsの利用"><i class="fa fa-check"></i>パッケージ<code>DescTools</code>の利用</a></li>
+<li class="chapter" data-level="" data-path="ロジットブロビット回帰分析.html"><a href="ロジットブロビット回帰分析.html#パッケージpsclの利用"><i class="fa fa-check"></i>パッケージ<code>pscl</code>の利用</a></li>
+<li class="chapter" data-level="" data-path="ロジットブロビット回帰分析.html"><a href="ロジットブロビット回帰分析.html#パッケージperformanceの利用"><i class="fa fa-check"></i>パッケージ<code>performance</code>の利用</a></li>
+</ul></li>
+</ul></li>
+<li class="chapter" data-level="5" data-path="一般化加法モデル-gam.html"><a href="一般化加法モデル-gam.html"><i class="fa fa-check"></i><b>5</b> 一般化加法モデル (GAM)</a>
+<ul>
+<li class="chapter" data-level="5.1" data-path="一般化加法モデル-gam.html"><a href="一般化加法モデル-gam.html#パッケージgamの利用"><i class="fa fa-check"></i><b>5.1</b> パッケージ<code>gam</code>の利用</a>
+<ul>
+<li class="chapter" data-level="" data-path="一般化加法モデル-gam.html"><a href="一般化加法モデル-gam.html#多項式回帰-1"><i class="fa fa-check"></i>多項式回帰</a></li>
+<li class="chapter" data-level="" data-path="一般化加法モデル-gam.html"><a href="一般化加法モデル-gam.html#スプライン適合"><i class="fa fa-check"></i>スプライン適合</a></li>
+<li class="chapter" data-level="" data-path="一般化加法モデル-gam.html"><a href="一般化加法モデル-gam.html#gam"><i class="fa fa-check"></i>GAM</a></li>
+</ul></li>
+<li class="chapter" data-level="5.2" data-path="一般化加法モデル-gam.html"><a href="一般化加法モデル-gam.html#パッケージmgcvの利用"><i class="fa fa-check"></i><b>5.2</b> パッケージ<code>mgcv</code>の利用</a></li>
+<li class="chapter" data-level="5.3" data-path="一般化加法モデル-gam.html"><a href="一般化加法モデル-gam.html#パッケージprophetの利用"><i class="fa fa-check"></i><b>5.3</b> パッケージ<code>prophet</code>の利用</a></li>
+<li class="chapter" data-level="5.4" data-path="一般化加法モデル-gam.html"><a href="一般化加法モデル-gam.html#追加分析boston-housingデータセットの変数間の関係性"><i class="fa fa-check"></i><b>5.4</b> 【追加分析】Boston housingデータセットの変数間の関係性</a></li>
+</ul></li>
+<li class="chapter" data-level="6" data-path="正則化回帰-lasso-ridge回帰-elastic-net.html"><a href="正則化回帰-lasso-ridge回帰-elastic-net.html"><i class="fa fa-check"></i><b>6</b> 正則化回帰 (lasso, ridge回帰, elastic net)</a>
+<ul>
+<li class="chapter" data-level="6.1" data-path="正則化回帰-lasso-ridge回帰-elastic-net.html"><a href="正則化回帰-lasso-ridge回帰-elastic-net.html#検証用セット法による回帰モデルの予測精度評価"><i class="fa fa-check"></i><b>6.1</b> 検証用セット法による回帰モデルの予測精度評価</a>
+<ul>
+<li class="chapter" data-level="" data-path="正則化回帰-lasso-ridge回帰-elastic-net.html"><a href="正則化回帰-lasso-ridge回帰-elastic-net.html#データセット1-ワイン品質データ"><i class="fa fa-check"></i>データセット1: ワイン品質データ</a></li>
+</ul></li>
+<li class="chapter" data-level="6.2" data-path="正則化回帰-lasso-ridge回帰-elastic-net.html"><a href="正則化回帰-lasso-ridge回帰-elastic-net.html#lasso"><i class="fa fa-check"></i><b>6.2</b> lasso</a>
+<ul>
+<li class="chapter" data-level="" data-path="正則化回帰-lasso-ridge回帰-elastic-net.html"><a href="正則化回帰-lasso-ridge回帰-elastic-net.html#関数glmnetの基本操作"><i class="fa fa-check"></i>関数<code>glmnet()</code>の基本操作</a></li>
+<li class="chapter" data-level="" data-path="正則化回帰-lasso-ridge回帰-elastic-net.html"><a href="正則化回帰-lasso-ridge回帰-elastic-net.html#lambdaのグリッド指定によるglmnetの一括実行"><i class="fa fa-check"></i><code>lambda</code>のグリッド指定による<code>glmnet</code>の一括実行</a></li>
+<li class="chapter" data-level="" data-path="正則化回帰-lasso-ridge回帰-elastic-net.html"><a href="正則化回帰-lasso-ridge回帰-elastic-net.html#交差検証によるパラメータチューニング"><i class="fa fa-check"></i>交差検証によるパラメータ・チューニング</a></li>
+</ul></li>
+<li class="chapter" data-level="6.3" data-path="正則化回帰-lasso-ridge回帰-elastic-net.html"><a href="正則化回帰-lasso-ridge回帰-elastic-net.html#ridge回帰"><i class="fa fa-check"></i><b>6.3</b> ridge回帰</a></li>
+<li class="chapter" data-level="6.4" data-path="正則化回帰-lasso-ridge回帰-elastic-net.html"><a href="正則化回帰-lasso-ridge回帰-elastic-net.html#一般化線形モデル-glm-正則化"><i class="fa fa-check"></i><b>6.4</b> 一般化線形モデル (GLM) + 正則化</a>
+<ul>
+<li class="chapter" data-level="" data-path="正則化回帰-lasso-ridge回帰-elastic-net.html"><a href="正則化回帰-lasso-ridge回帰-elastic-net.html#データセット2-german-creditデータ"><i class="fa fa-check"></i>データセット2: german creditデータ</a></li>
+</ul></li>
+<li class="chapter" data-level="6.5" data-path="正則化回帰-lasso-ridge回帰-elastic-net.html"><a href="正則化回帰-lasso-ridge回帰-elastic-net.html#補足-glmに対する変数選択の代替的方法"><i class="fa fa-check"></i><b>6.5</b> 補足: GLMに対する変数選択の代替的方法</a></li>
+</ul></li>
+<li class="chapter" data-level="7" data-path="判別分析.html"><a href="判別分析.html"><i class="fa fa-check"></i><b>7</b> 判別分析</a>
+<ul>
+<li class="chapter" data-level="7.1" data-path="判別分析.html"><a href="判別分析.html#線形判別-2次判別-パッケージmassの利用"><i class="fa fa-check"></i><b>7.1</b> 線形判別 &amp; 2次判別: パッケージMASSの利用</a>
+<ul>
+<li class="chapter" data-level="" data-path="判別分析.html"><a href="判別分析.html#データセット1-米国sp500日次リターンデータ"><i class="fa fa-check"></i>データセット#1: 米国S&amp;P500日次リターンデータ</a></li>
+<li class="chapter" data-level="" data-path="判別分析.html"><a href="判別分析.html#線形判別-lda"><i class="fa fa-check"></i>線形判別 (LDA)</a></li>
+<li class="chapter" data-level="" data-path="判別分析.html"><a href="判別分析.html#次判別-qda"><i class="fa fa-check"></i>2次判別 (QDA)</a></li>
+</ul></li>
+<li class="chapter" data-level="7.2" data-path="判別分析.html"><a href="判別分析.html#knn法-パッケージclassの利用"><i class="fa fa-check"></i><b>7.2</b> kNN法: パッケージ<strong>class</strong>の利用</a></li>
+<li class="chapter" data-level="7.3" data-path="判別分析.html"><a href="判別分析.html#他パッケージの利用-パッケージklar"><i class="fa fa-check"></i><b>7.3</b> 他パッケージの利用: パッケージ<strong>klaR</strong></a>
+<ul>
+<li class="chapter" data-level="" data-path="判別分析.html"><a href="判別分析.html#データセット2-ビジネススクールの入学許可データ"><i class="fa fa-check"></i>データセット#2: ビジネススクールの入学許可データ</a></li>
+</ul></li>
+</ul></li>
+<li class="chapter" data-level="8" data-path="決定木分析.html"><a href="決定木分析.html"><i class="fa fa-check"></i><b>8</b> 決定木分析</a>
+<ul>
+<li class="chapter" data-level="8.1" data-path="決定木分析.html"><a href="決定木分析.html#導入-回帰木-vs-線形回帰"><i class="fa fa-check"></i><b>8.1</b> 導入: 回帰木 vs 線形回帰</a>
+<ul>
+<li class="chapter" data-level="" data-path="決定木分析.html"><a href="決定木分析.html#データセット1-自動車の制動距離"><i class="fa fa-check"></i>データセット1: 自動車の制動距離</a></li>
+<li class="chapter" data-level="8.1.1" data-path="決定木分析.html"><a href="決定木分析.html#基本操作-回帰木"><i class="fa fa-check"></i><b>8.1.1</b> 基本操作: 回帰木</a></li>
+</ul></li>
+<li class="chapter" data-level="8.2" data-path="決定木分析.html"><a href="決定木分析.html#回帰木"><i class="fa fa-check"></i><b>8.2</b> 回帰木</a>
+<ul>
+<li class="chapter" data-level="" data-path="決定木分析.html"><a href="決定木分析.html#データセット2-米國株価指数データ-再掲"><i class="fa fa-check"></i>データセット2: 米國株価指数データ (再掲)</a></li>
+</ul></li>
+<li class="chapter" data-level="8.3" data-path="決定木分析.html"><a href="決定木分析.html#分類木"><i class="fa fa-check"></i><b>8.3</b> 分類木</a></li>
+</ul></li>
+<li class="chapter" data-level="9" data-path="アンサンブル学習.html"><a href="アンサンブル学習.html"><i class="fa fa-check"></i><b>9</b> アンサンブル学習</a>
+<ul>
+<li class="chapter" data-level="9.1" data-path="アンサンブル学習.html"><a href="アンサンブル学習.html#決定木-分類木"><i class="fa fa-check"></i><b>9.1</b> 決定木 (分類木)</a>
+<ul>
+<li class="chapter" data-level="" data-path="アンサンブル学習.html"><a href="アンサンブル学習.html#データセット3-個人ローン信用データ-再掲"><i class="fa fa-check"></i>データセット3: 個人ローン信用データ (再掲)</a></li>
+</ul></li>
+<li class="chapter" data-level="9.2" data-path="アンサンブル学習.html"><a href="アンサンブル学習.html#ランダムフォレスト分類木"><i class="fa fa-check"></i><b>9.2</b> ランダムフォレスト分類木</a></li>
+<li class="chapter" data-level="9.3" data-path="アンサンブル学習.html"><a href="アンサンブル学習.html#一般化ブースト回帰"><i class="fa fa-check"></i><b>9.3</b> 一般化ブースト回帰</a></li>
+</ul></li>
+<li class="chapter" data-level="10" data-path="サポートベクターマシン-svm.html"><a href="サポートベクターマシン-svm.html"><i class="fa fa-check"></i><b>10</b> サポートベクターマシン (SVM)</a>
+<ul>
+<li class="chapter" data-level="10.1" data-path="サポートベクターマシン-svm.html"><a href="サポートベクターマシン-svm.html#svm-rbfカーネル-の動作の確認"><i class="fa fa-check"></i><b>10.1</b> SVM (RBFカーネル) の動作の確認</a>
+<ul>
+<li class="chapter" data-level="" data-path="サポートベクターマシン-svm.html"><a href="サポートベクターマシン-svm.html#データセット1-iris-あやめ-データ"><i class="fa fa-check"></i>データセット1: iris (あやめ) データ</a></li>
+<li class="chapter" data-level="" data-path="サポートベクターマシン-svm.html"><a href="サポートベクターマシン-svm.html#svmの実行"><i class="fa fa-check"></i>SVMの実行</a></li>
+</ul></li>
+<li class="chapter" data-level="10.2" data-path="サポートベクターマシン-svm.html"><a href="サポートベクターマシン-svm.html#値分類"><i class="fa fa-check"></i><b>10.2</b> 2値分類</a>
+<ul>
+<li class="chapter" data-level="" data-path="サポートベクターマシン-svm.html"><a href="サポートベクターマシン-svm.html#データセット2-spamデータ"><i class="fa fa-check"></i>データセット2: spamデータ</a></li>
+<li class="chapter" data-level="" data-path="サポートベクターマシン-svm.html"><a href="サポートベクターマシン-svm.html#svmの実行-1"><i class="fa fa-check"></i>SVMの実行</a></li>
+</ul></li>
+<li class="chapter" data-level="10.3" data-path="サポートベクターマシン-svm.html"><a href="サポートベクターマシン-svm.html#値分類-1"><i class="fa fa-check"></i><b>10.3</b> 3値分類</a>
+<ul>
+<li class="chapter" data-level="" data-path="サポートベクターマシン-svm.html"><a href="サポートベクターマシン-svm.html#svmの実行-2"><i class="fa fa-check"></i>SVMの実行</a></li>
+</ul></li>
+<li class="chapter" data-level="10.4" data-path="サポートベクターマシン-svm.html"><a href="サポートベクターマシン-svm.html#代替パッケージe1071の利用"><i class="fa fa-check"></i><b>10.4</b> 代替パッケージ<strong>e1071</strong>の利用</a>
+<ul>
+<li class="chapter" data-level="" data-path="サポートベクターマシン-svm.html"><a href="サポートベクターマシン-svm.html#svmの実行-3"><i class="fa fa-check"></i>SVMの実行</a></li>
+</ul></li>
+<li class="chapter" data-level="10.5" data-path="サポートベクターマシン-svm.html"><a href="サポートベクターマシン-svm.html#ハイパーパラメータのチューニング"><i class="fa fa-check"></i><b>10.5</b> ハイパーパラメータのチューニング</a>
+<ul>
+<li class="chapter" data-level="" data-path="サポートベクターマシン-svm.html"><a href="サポートベクターマシン-svm.html#線形カーネルの場合"><i class="fa fa-check"></i>線形カーネルの場合</a></li>
+<li class="chapter" data-level="" data-path="サポートベクターマシン-svm.html"><a href="サポートベクターマシン-svm.html#rbfカーネルの場合"><i class="fa fa-check"></i>RBFカーネルの場合</a></li>
+<li class="chapter" data-level="" data-path="サポートベクターマシン-svm.html"><a href="サポートベクターマシン-svm.html#e1071内にあるチューニング用の便利な関数群"><i class="fa fa-check"></i><strong>e1071</strong>内にあるチューニング用の便利な関数群</a></li>
+</ul></li>
+</ul></li>
+<li class="chapter" data-level="11" data-path="主成分分析-pca.html"><a href="主成分分析-pca.html"><i class="fa fa-check"></i><b>11</b> 主成分分析 (PCA)</a>
+<ul>
+<li class="chapter" data-level="11.1" data-path="主成分分析-pca.html"><a href="主成分分析-pca.html#基本操作-1"><i class="fa fa-check"></i><b>11.1</b> 基本操作</a>
+<ul>
+<li class="chapter" data-level="" data-path="主成分分析-pca.html"><a href="主成分分析-pca.html#データセット-従業員スキル評価データ仮想"><i class="fa fa-check"></i>データセット: 従業員スキル評価データ(仮想)</a></li>
+</ul></li>
+<li class="chapter" data-level="11.2" data-path="主成分分析-pca.html"><a href="主成分分析-pca.html#種類のpca-相関行列ベース-vs-分散共分散行列ベース"><i class="fa fa-check"></i><b>11.2</b> 2種類のPCA: 相関行列ベース vs 分散共分散行列ベース</a>
+<ul>
+<li class="chapter" data-level="" data-path="主成分分析-pca.html"><a href="主成分分析-pca.html#データセット3-usarrests-data"><i class="fa fa-check"></i>データセット3: USArrests data</a></li>
+</ul></li>
+</ul></li>
+<li class="chapter" data-level="12" data-path="探索的因子分析.html"><a href="探索的因子分析.html"><i class="fa fa-check"></i><b>12</b> 探索的因子分析</a>
+<ul>
+<li class="chapter" data-level="12.1" data-path="探索的因子分析.html"><a href="探索的因子分析.html#基本操作-2"><i class="fa fa-check"></i><b>12.1</b> 基本操作</a>
+<ul>
+<li class="chapter" data-level="" data-path="探索的因子分析.html"><a href="探索的因子分析.html#データセット1-従業員評価データ-仮想"><i class="fa fa-check"></i>データセット1: 従業員評価データ (仮想)</a></li>
+</ul></li>
+<li class="chapter" data-level="12.2" data-path="探索的因子分析.html"><a href="探索的因子分析.html#ライブラリpsychの利用"><i class="fa fa-check"></i><b>12.2</b> ライブラリ<strong>psych</strong>の利用</a></li>
+<li class="chapter" data-level="12.3" data-path="探索的因子分析.html"><a href="探索的因子分析.html#因子分析に有用なツール"><i class="fa fa-check"></i><b>12.3</b> 因子分析に有用なツール</a></li>
+</ul></li>
+<li class="chapter" data-level="13" data-path="クラスター分析.html"><a href="クラスター分析.html"><i class="fa fa-check"></i><b>13</b> クラスター分析</a>
+<ul>
+<li class="chapter" data-level="13.1" data-path="クラスター分析.html"><a href="クラスター分析.html#基本操作-3"><i class="fa fa-check"></i><b>13.1</b> 基本操作</a>
+<ul>
+<li class="chapter" data-level="" data-path="クラスター分析.html"><a href="クラスター分析.html#階層型クラスタリング"><i class="fa fa-check"></i>階層型クラスタリング</a></li>
+<li class="chapter" data-level="" data-path="クラスター分析.html"><a href="クラスター分析.html#k-means法"><i class="fa fa-check"></i>k-means法</a></li>
+<li class="chapter" data-level="" data-path="クラスター分析.html"><a href="クラスター分析.html#変数に対するクラスタリング"><i class="fa fa-check"></i>変数に対するクラスタリング</a></li>
+</ul></li>
+<li class="chapter" data-level="13.2" data-path="クラスター分析.html"><a href="クラスター分析.html#データ分析例-1"><i class="fa fa-check"></i><b>13.2</b> データ分析例</a>
+<ul>
+<li class="chapter" data-level="" data-path="クラスター分析.html"><a href="クラスター分析.html#データセット-1-ワイン品質データ-再掲"><i class="fa fa-check"></i>データセット (1): ワイン品質データ (再掲)</a></li>
+<li class="chapter" data-level="" data-path="クラスター分析.html"><a href="クラスター分析.html#データセット-2-id無し-posデータ"><i class="fa fa-check"></i>データセット (2): (ID無し) POSデータ</a></li>
+</ul></li>
+<li class="chapter" data-level="13.3" data-path="クラスター分析.html"><a href="クラスター分析.html#発展的なクラスター分析"><i class="fa fa-check"></i><b>13.3</b> 発展的なクラスター分析</a>
+<ul>
+<li class="chapter" data-level="" data-path="クラスター分析.html"><a href="クラスター分析.html#関数agnes"><i class="fa fa-check"></i>関数<code>agnes</code></a></li>
+<li class="chapter" data-level="" data-path="クラスター分析.html"><a href="クラスター分析.html#関数pheatmap"><i class="fa fa-check"></i>関数<code>pheatmap</code></a></li>
+<li class="chapter" data-level="" data-path="クラスター分析.html"><a href="クラスター分析.html#関数pam"><i class="fa fa-check"></i>関数<code>pam</code></a></li>
+</ul></li>
+</ul></li>
+<li class="chapter" data-level="14" data-path="xai-explainable-ai.html"><a href="xai-explainable-ai.html"><i class="fa fa-check"></i><b>14</b> XAI (Explainable AI)</a>
+<ul>
+<li class="chapter" data-level="" data-path="xai-explainable-ai.html"><a href="xai-explainable-ai.html#回帰問題のケース"><i class="fa fa-check"></i>回帰問題のケース</a></li>
+<li class="chapter" data-level="14.1" data-path="xai-explainable-ai.html"><a href="xai-explainable-ai.html#pfi"><i class="fa fa-check"></i><b>14.1</b> PFI</a></li>
+<li class="chapter" data-level="14.2" data-path="xai-explainable-ai.html"><a href="xai-explainable-ai.html#pdp"><i class="fa fa-check"></i><b>14.2</b> PDP</a></li>
+<li class="chapter" data-level="14.3" data-path="xai-explainable-ai.html"><a href="xai-explainable-ai.html#ice"><i class="fa fa-check"></i><b>14.3</b> ICE</a>
+<ul>
+<li class="chapter" data-level="" data-path="xai-explainable-ai.html"><a href="xai-explainable-ai.html#pdp-ice"><i class="fa fa-check"></i>PDP + ICE</a></li>
+</ul></li>
+<li class="chapter" data-level="14.4" data-path="xai-explainable-ai.html"><a href="xai-explainable-ai.html#lime"><i class="fa fa-check"></i><b>14.4</b> LIME</a></li>
+<li class="chapter" data-level="14.5" data-path="xai-explainable-ai.html"><a href="xai-explainable-ai.html#shap"><i class="fa fa-check"></i><b>14.5</b> SHAP</a>
+<ul>
+<li class="chapter" data-level="" data-path="xai-explainable-ai.html"><a href="xai-explainable-ai.html#分類問題のケース"><i class="fa fa-check"></i>分類問題のケース</a></li>
+<li class="chapter" data-level="" data-path="xai-explainable-ai.html"><a href="xai-explainable-ai.html#多値分類問題の例-iris"><i class="fa fa-check"></i>多値分類問題の例 (iris)</a></li>
+<li class="chapter" data-level="" data-path="xai-explainable-ai.html"><a href="xai-explainable-ai.html#値分類問題"><i class="fa fa-check"></i>2値分類問題</a></li>
+</ul></li>
+</ul></li>
+</ul>
+
+      </nav>
+    </div>
+
+    <div class="book-body">
+      <div class="body-inner">
+        <div class="book-header" role="navigation">
+          <h1>
+            <i class="fa fa-circle-o-notch fa-spin"></i><a href="./">金融データサイエンス</a>
+          </h1>
+        </div>
+
+        <div class="page-wrapper" tabindex="-1" role="main">
+          <div class="page-inner">
+
+            <section class="normal" id="section-">
+<div id="xai-explainable-ai" class="section level1 hasAnchor" number="14">
+<h1><span class="header-section-number">14</span> XAI (Explainable AI)<a href="xai-explainable-ai.html#xai-explainable-ai" class="anchor-section" aria-label="Anchor link to header"></a></h1>
+<p>深層学習に代表される“予測精度”を追求する (機械学習を含む) AIのモデルは,「高精度」な一方「ブラックボックス」なものが多い.
+しかし, これらのモデル・アルゴリズムの実用化に際して, 特に, 医療・金融・司法など人のいのちや財産, 社会秩序に関する領域などにおいては,「説明責任」「透明性」が強く求められる.
+<!--
+このような問題意識の中, -->
+XAI（Explainable AI）は, AI研究の一領域として
+登場し, AIの予測力の向上に伴い,
+2010年代後半頃から活発に研究が行われるようになってきている.</p>
+<p>XAIの進展の裏にある社会的・倫理的な背景として, 欧州を中心に, AIの開発・利用に対して, 意思決定の過程がわかること (透明性), 人間がモデルの判断に責任を持てること (説明責任), 差別やバイアスがないこと (公正性), 利用者が安心して使えること (信頼性) などを求める機運の高まりがある. (国際・国内のガイドラインとして, EU: Art. 22 GDPR, OECD: AI原則 (2019), 内閣府: 人間中心のAI原則 (2019), 等)</p>
+<p>このようなAI技術を取り巻く世界的な潮流の中,
+XAIは,「ブラックボックス」であるAIを「解釈可能」にすることを目的とする方法(論) の総称を指す.</p>
+<!--
+AIが抱える「ブラックボックス」の問題, すなわち, モデルの予測根拠が人間に不明あるいは, トラブル時に原因究明が困難なことがAI実用化の障害となる中, XAI技術によって,
+モデルの誤作動を検出・修正する, 学習の過程や予測の根拠を可視化する, また, バイアスや過学習の検出にも有効である等の点で,-->
+<!--
+代表的アプローチとして,
+- 局所説明: LIME, SHAP
+- 特徴量重要度・可視化: PDP, saliency map
+- モデル内因性 vs 後付け説明
+-->
+<!-- #### パッケージ**iml** {-} -->
+<p>本章では, XAIの以下の4つの手法を取り上げ,
+パッケージ<strong>iml</strong>を用いて実際に動かしてみる.</p>
+<ul>
+<li>PDP (Partial Dependence Plot</li>
+<li>ICE (Individual Conditional Expectaion
+<!--  - 局所代理モデル --></li>
+<li>LIME (Local Interpretable Model-agnostic Explanations)</li>
+<li>SHAP (SHapley Additive exPlanations)</li>
+</ul>
+<p><strong>本章の主要な参考資料:</strong></p>
+<ul>
+<li>(<a href="https://cran.r-project.org/web/packages/iml/vignettes/intro.html" class="uri">https://cran.r-project.org/web/packages/iml/vignettes/intro.html</a>)[<a href="https://cran.r-project.org/web/packages/iml/vignettes/intro.html" class="uri">https://cran.r-project.org/web/packages/iml/vignettes/intro.html</a>]</li>
+<li>(<a href="https://christophm.github.io/interpretable-ml-book/" class="uri">https://christophm.github.io/interpretable-ml-book/</a>)[<a href="https://christophm.github.io/interpretable-ml-book/" class="uri">https://christophm.github.io/interpretable-ml-book/</a>]</li>
+</ul>
+<div class="sourceCode" id="cb538"><pre class="sourceCode r"><code class="sourceCode r"><span id="cb538-1"><a href="xai-explainable-ai.html#cb538-1" tabindex="-1"></a><span class="co"># install.packages(&quot;iml&quot;)</span></span>
+<span id="cb538-2"><a href="xai-explainable-ai.html#cb538-2" tabindex="-1"></a><span class="fu">library</span>(iml)</span></code></pre></div>
+<div id="回帰問題のケース" class="section level3 unnumbered hasAnchor">
+<h3>回帰問題のケース<a href="xai-explainable-ai.html#回帰問題のケース" class="anchor-section" aria-label="Anchor link to header"></a></h3>
+<div id="データセット-1-ボストン市内住宅物件価格データ" class="section level4 unnumbered hasAnchor">
+<h4>データセット (1): ボストン市内住宅物件価格データ<a href="xai-explainable-ai.html#データセット-1-ボストン市内住宅物件価格データ" class="anchor-section" aria-label="Anchor link to header"></a></h4>
+<p>ここでは, すでに馴染みのあるデータセットBoston Housingを利用する.</p>
+<pre><code>- Boston Housingデータ
+  - crim: 地域の一人当たり犯罪率
+  - zn: 25,000平方フィート以上の住宅用地の割合
+  - indus: 地域の非小売業の土地の割合
+  - chas: チャールズ川のダミー変数 (1: 川沿い, 0: それ以外)
+  - nox: 窒素酸化物濃度（1000万ppm）
+  - rm: 住宅の平均部屋数
+  - age: 1940年以前に建設された持ち家の割合
+  - dis: ボストンの5つの雇用中心地 (employment centers) までの距離の加重平均
+  - rad: 放射状高速道路へのアクセス指数
+  - tax: 10,000米ドル当たりの固定資産税率
+  - ptratio: 地域の生徒数・教師数比率
+  - b: 人種的指標, 1000(B - 0.63)^2, (Bは地域の黒人の割合)
+  - lstat: 低所得者層の割合
+  - medv: 持ち家住宅の中央値（1000ドル単位）
+
+- 506件 x 14変数 (オリジナル版)
+- source: http://lib.stat.cmu.edu/datasets/boston</code></pre>
+<div class="sourceCode" id="cb540"><pre class="sourceCode r"><code class="sourceCode r"><span id="cb540-1"><a href="xai-explainable-ai.html#cb540-1" tabindex="-1"></a><span class="fu">data</span>(<span class="st">&quot;Boston&quot;</span>, <span class="at">package =</span> <span class="st">&quot;MASS&quot;</span>)</span>
+<span id="cb540-2"><a href="xai-explainable-ai.html#cb540-2" tabindex="-1"></a>housing <span class="ot">&lt;-</span> Boston</span>
+<span id="cb540-3"><a href="xai-explainable-ai.html#cb540-3" tabindex="-1"></a><span class="fu">head</span>(housing, <span class="dv">10</span>)</span>
+<span id="cb540-4"><a href="xai-explainable-ai.html#cb540-4" tabindex="-1"></a><span class="co">#&gt;       crim   zn indus chas   nox    rm   age    dis rad tax ptratio  black</span></span>
+<span id="cb540-5"><a href="xai-explainable-ai.html#cb540-5" tabindex="-1"></a><span class="co">#&gt; 1  0.00632 18.0  2.31    0 0.538 6.575  65.2 4.0900   1 296    15.3 396.90</span></span>
+<span id="cb540-6"><a href="xai-explainable-ai.html#cb540-6" tabindex="-1"></a><span class="co">#&gt; 2  0.02731  0.0  7.07    0 0.469 6.421  78.9 4.9671   2 242    17.8 396.90</span></span>
+<span id="cb540-7"><a href="xai-explainable-ai.html#cb540-7" tabindex="-1"></a><span class="co">#&gt; 3  0.02729  0.0  7.07    0 0.469 7.185  61.1 4.9671   2 242    17.8 392.83</span></span>
+<span id="cb540-8"><a href="xai-explainable-ai.html#cb540-8" tabindex="-1"></a><span class="co">#&gt; 4  0.03237  0.0  2.18    0 0.458 6.998  45.8 6.0622   3 222    18.7 394.63</span></span>
+<span id="cb540-9"><a href="xai-explainable-ai.html#cb540-9" tabindex="-1"></a><span class="co">#&gt; 5  0.06905  0.0  2.18    0 0.458 7.147  54.2 6.0622   3 222    18.7 396.90</span></span>
+<span id="cb540-10"><a href="xai-explainable-ai.html#cb540-10" tabindex="-1"></a><span class="co">#&gt; 6  0.02985  0.0  2.18    0 0.458 6.430  58.7 6.0622   3 222    18.7 394.12</span></span>
+<span id="cb540-11"><a href="xai-explainable-ai.html#cb540-11" tabindex="-1"></a><span class="co">#&gt; 7  0.08829 12.5  7.87    0 0.524 6.012  66.6 5.5605   5 311    15.2 395.60</span></span>
+<span id="cb540-12"><a href="xai-explainable-ai.html#cb540-12" tabindex="-1"></a><span class="co">#&gt; 8  0.14455 12.5  7.87    0 0.524 6.172  96.1 5.9505   5 311    15.2 396.90</span></span>
+<span id="cb540-13"><a href="xai-explainable-ai.html#cb540-13" tabindex="-1"></a><span class="co">#&gt; 9  0.21124 12.5  7.87    0 0.524 5.631 100.0 6.0821   5 311    15.2 386.63</span></span>
+<span id="cb540-14"><a href="xai-explainable-ai.html#cb540-14" tabindex="-1"></a><span class="co">#&gt; 10 0.17004 12.5  7.87    0 0.524 6.004  85.9 6.5921   5 311    15.2 386.71</span></span>
+<span id="cb540-15"><a href="xai-explainable-ai.html#cb540-15" tabindex="-1"></a><span class="co">#&gt;    lstat medv</span></span>
+<span id="cb540-16"><a href="xai-explainable-ai.html#cb540-16" tabindex="-1"></a><span class="co">#&gt; 1   4.98 24.0</span></span>
+<span id="cb540-17"><a href="xai-explainable-ai.html#cb540-17" tabindex="-1"></a><span class="co">#&gt; 2   9.14 21.6</span></span>
+<span id="cb540-18"><a href="xai-explainable-ai.html#cb540-18" tabindex="-1"></a><span class="co">#&gt; 3   4.03 34.7</span></span>
+<span id="cb540-19"><a href="xai-explainable-ai.html#cb540-19" tabindex="-1"></a><span class="co">#&gt; 4   2.94 33.4</span></span>
+<span id="cb540-20"><a href="xai-explainable-ai.html#cb540-20" tabindex="-1"></a><span class="co">#&gt; 5   5.33 36.2</span></span>
+<span id="cb540-21"><a href="xai-explainable-ai.html#cb540-21" tabindex="-1"></a><span class="co">#&gt; 6   5.21 28.7</span></span>
+<span id="cb540-22"><a href="xai-explainable-ai.html#cb540-22" tabindex="-1"></a><span class="co">#&gt; 7  12.43 22.9</span></span>
+<span id="cb540-23"><a href="xai-explainable-ai.html#cb540-23" tabindex="-1"></a><span class="co">#&gt; 8  19.15 27.1</span></span>
+<span id="cb540-24"><a href="xai-explainable-ai.html#cb540-24" tabindex="-1"></a><span class="co">#&gt; 9  29.93 16.5</span></span>
+<span id="cb540-25"><a href="xai-explainable-ai.html#cb540-25" tabindex="-1"></a><span class="co">#&gt; 10 17.10 18.9</span></span>
+<span id="cb540-26"><a href="xai-explainable-ai.html#cb540-26" tabindex="-1"></a><span class="co"># 目的変数の全体平均</span></span>
+<span id="cb540-27"><a href="xai-explainable-ai.html#cb540-27" tabindex="-1"></a><span class="fu">mean</span>(housing<span class="sc">$</span>medv)</span>
+<span id="cb540-28"><a href="xai-explainable-ai.html#cb540-28" tabindex="-1"></a><span class="co">#&gt; [1] 22.53281</span></span></code></pre></div>
+<p>はじめに, 次に行うAIモデルによる予測およびそれに対するXAIとの比較のためのベースラインとして, 線形回帰を実行しておく.</p>
+<div class="sourceCode" id="cb541"><pre class="sourceCode r"><code class="sourceCode r"><span id="cb541-1"><a href="xai-explainable-ai.html#cb541-1" tabindex="-1"></a>fit_lm <span class="ot">&lt;-</span> <span class="fu">lm</span>(medv <span class="sc">~</span> ., <span class="at">data =</span> housing)</span>
+<span id="cb541-2"><a href="xai-explainable-ai.html#cb541-2" tabindex="-1"></a><span class="fu">summary</span>(fit_lm)</span>
+<span id="cb541-3"><a href="xai-explainable-ai.html#cb541-3" tabindex="-1"></a><span class="co">#&gt; </span></span>
+<span id="cb541-4"><a href="xai-explainable-ai.html#cb541-4" tabindex="-1"></a><span class="co">#&gt; Call:</span></span>
+<span id="cb541-5"><a href="xai-explainable-ai.html#cb541-5" tabindex="-1"></a><span class="co">#&gt; lm(formula = medv ~ ., data = housing)</span></span>
+<span id="cb541-6"><a href="xai-explainable-ai.html#cb541-6" tabindex="-1"></a><span class="co">#&gt; </span></span>
+<span id="cb541-7"><a href="xai-explainable-ai.html#cb541-7" tabindex="-1"></a><span class="co">#&gt; Residuals:</span></span>
+<span id="cb541-8"><a href="xai-explainable-ai.html#cb541-8" tabindex="-1"></a><span class="co">#&gt;     Min      1Q  Median      3Q     Max </span></span>
+<span id="cb541-9"><a href="xai-explainable-ai.html#cb541-9" tabindex="-1"></a><span class="co">#&gt; -15.595  -2.730  -0.518   1.777  26.199 </span></span>
+<span id="cb541-10"><a href="xai-explainable-ai.html#cb541-10" tabindex="-1"></a><span class="co">#&gt; </span></span>
+<span id="cb541-11"><a href="xai-explainable-ai.html#cb541-11" tabindex="-1"></a><span class="co">#&gt; Coefficients:</span></span>
+<span id="cb541-12"><a href="xai-explainable-ai.html#cb541-12" tabindex="-1"></a><span class="co">#&gt;               Estimate Std. Error t value Pr(&gt;|t|)    </span></span>
+<span id="cb541-13"><a href="xai-explainable-ai.html#cb541-13" tabindex="-1"></a><span class="co">#&gt; (Intercept)  3.646e+01  5.103e+00   7.144 3.28e-12 ***</span></span>
+<span id="cb541-14"><a href="xai-explainable-ai.html#cb541-14" tabindex="-1"></a><span class="co">#&gt; crim        -1.080e-01  3.286e-02  -3.287 0.001087 ** </span></span>
+<span id="cb541-15"><a href="xai-explainable-ai.html#cb541-15" tabindex="-1"></a><span class="co">#&gt; zn           4.642e-02  1.373e-02   3.382 0.000778 ***</span></span>
+<span id="cb541-16"><a href="xai-explainable-ai.html#cb541-16" tabindex="-1"></a><span class="co">#&gt; indus        2.056e-02  6.150e-02   0.334 0.738288    </span></span>
+<span id="cb541-17"><a href="xai-explainable-ai.html#cb541-17" tabindex="-1"></a><span class="co">#&gt; chas         2.687e+00  8.616e-01   3.118 0.001925 ** </span></span>
+<span id="cb541-18"><a href="xai-explainable-ai.html#cb541-18" tabindex="-1"></a><span class="co">#&gt; nox         -1.777e+01  3.820e+00  -4.651 4.25e-06 ***</span></span>
+<span id="cb541-19"><a href="xai-explainable-ai.html#cb541-19" tabindex="-1"></a><span class="co">#&gt; rm           3.810e+00  4.179e-01   9.116  &lt; 2e-16 ***</span></span>
+<span id="cb541-20"><a href="xai-explainable-ai.html#cb541-20" tabindex="-1"></a><span class="co">#&gt; age          6.922e-04  1.321e-02   0.052 0.958229    </span></span>
+<span id="cb541-21"><a href="xai-explainable-ai.html#cb541-21" tabindex="-1"></a><span class="co">#&gt; dis         -1.476e+00  1.995e-01  -7.398 6.01e-13 ***</span></span>
+<span id="cb541-22"><a href="xai-explainable-ai.html#cb541-22" tabindex="-1"></a><span class="co">#&gt; rad          3.060e-01  6.635e-02   4.613 5.07e-06 ***</span></span>
+<span id="cb541-23"><a href="xai-explainable-ai.html#cb541-23" tabindex="-1"></a><span class="co">#&gt; tax         -1.233e-02  3.760e-03  -3.280 0.001112 ** </span></span>
+<span id="cb541-24"><a href="xai-explainable-ai.html#cb541-24" tabindex="-1"></a><span class="co">#&gt; ptratio     -9.527e-01  1.308e-01  -7.283 1.31e-12 ***</span></span>
+<span id="cb541-25"><a href="xai-explainable-ai.html#cb541-25" tabindex="-1"></a><span class="co">#&gt; black        9.312e-03  2.686e-03   3.467 0.000573 ***</span></span>
+<span id="cb541-26"><a href="xai-explainable-ai.html#cb541-26" tabindex="-1"></a><span class="co">#&gt; lstat       -5.248e-01  5.072e-02 -10.347  &lt; 2e-16 ***</span></span>
+<span id="cb541-27"><a href="xai-explainable-ai.html#cb541-27" tabindex="-1"></a><span class="co">#&gt; ---</span></span>
+<span id="cb541-28"><a href="xai-explainable-ai.html#cb541-28" tabindex="-1"></a><span class="co">#&gt; Signif. codes:  0 &#39;***&#39; 0.001 &#39;**&#39; 0.01 &#39;*&#39; 0.05 &#39;.&#39; 0.1 &#39; &#39; 1</span></span>
+<span id="cb541-29"><a href="xai-explainable-ai.html#cb541-29" tabindex="-1"></a><span class="co">#&gt; </span></span>
+<span id="cb541-30"><a href="xai-explainable-ai.html#cb541-30" tabindex="-1"></a><span class="co">#&gt; Residual standard error: 4.745 on 492 degrees of freedom</span></span>
+<span id="cb541-31"><a href="xai-explainable-ai.html#cb541-31" tabindex="-1"></a><span class="co">#&gt; Multiple R-squared:  0.7406, Adjusted R-squared:  0.7338 </span></span>
+<span id="cb541-32"><a href="xai-explainable-ai.html#cb541-32" tabindex="-1"></a><span class="co">#&gt; F-statistic: 108.1 on 13 and 492 DF,  p-value: &lt; 2.2e-16</span></span>
+<span id="cb541-33"><a href="xai-explainable-ai.html#cb541-33" tabindex="-1"></a><span class="fu">head</span>(<span class="fu">predict</span>(fit_lm), <span class="dv">10</span>)</span>
+<span id="cb541-34"><a href="xai-explainable-ai.html#cb541-34" tabindex="-1"></a><span class="co">#&gt;        1        2        3        4        5        6        7        8 </span></span>
+<span id="cb541-35"><a href="xai-explainable-ai.html#cb541-35" tabindex="-1"></a><span class="co">#&gt; 30.00384 25.02556 30.56760 28.60704 27.94352 25.25628 23.00181 19.53599 </span></span>
+<span id="cb541-36"><a href="xai-explainable-ai.html#cb541-36" tabindex="-1"></a><span class="co">#&gt;        9       10 </span></span>
+<span id="cb541-37"><a href="xai-explainable-ai.html#cb541-37" tabindex="-1"></a><span class="co">#&gt; 11.52364 18.92026</span></span></code></pre></div>
+<p>本セクションでは, XAIを適用するターゲットの”ブラックボックス”のAIモデルとして, ランダムフォレストを使って学習したモデルを採用することにする.</p>
+<div class="sourceCode" id="cb542"><pre class="sourceCode r"><code class="sourceCode r"><span id="cb542-1"><a href="xai-explainable-ai.html#cb542-1" tabindex="-1"></a><span class="co"># ランダムフォレストを予測モデルとして用いる例</span></span>
+<span id="cb542-2"><a href="xai-explainable-ai.html#cb542-2" tabindex="-1"></a><span class="fu">library</span>(randomForest)</span>
+<span id="cb542-3"><a href="xai-explainable-ai.html#cb542-3" tabindex="-1"></a><span class="fu">set.seed</span>(<span class="dv">123</span>)</span>
+<span id="cb542-4"><a href="xai-explainable-ai.html#cb542-4" tabindex="-1"></a>fit_rf <span class="ot">&lt;-</span> <span class="fu">randomForest</span>(medv <span class="sc">~</span> ., <span class="at">data =</span> housing, <span class="at">importance =</span> T)</span></code></pre></div>
+<p>注) set.seed() は, ランダム性が導入される関数の直前で使うのが良い.</p>
+<div class="sourceCode" id="cb543"><pre class="sourceCode r"><code class="sourceCode r"><span id="cb543-1"><a href="xai-explainable-ai.html#cb543-1" tabindex="-1"></a><span class="co"># 予測値</span></span>
+<span id="cb543-2"><a href="xai-explainable-ai.html#cb543-2" tabindex="-1"></a><span class="fu">head</span>(<span class="fu">predict</span>(fit_rf), <span class="dv">10</span>)</span>
+<span id="cb543-3"><a href="xai-explainable-ai.html#cb543-3" tabindex="-1"></a><span class="co">#&gt;        1        2        3        4        5        6        7        8 </span></span>
+<span id="cb543-4"><a href="xai-explainable-ai.html#cb543-4" tabindex="-1"></a><span class="co">#&gt; 28.13112 23.10451 35.59140 35.84795 33.27872 26.74190 20.59782 17.69223 </span></span>
+<span id="cb543-5"><a href="xai-explainable-ai.html#cb543-5" tabindex="-1"></a><span class="co">#&gt;        9       10 </span></span>
+<span id="cb543-6"><a href="xai-explainable-ai.html#cb543-6" tabindex="-1"></a><span class="co">#&gt; 18.12466 19.24212</span></span>
+<span id="cb543-7"><a href="xai-explainable-ai.html#cb543-7" tabindex="-1"></a><span class="co"># 予測値の全体平均</span></span>
+<span id="cb543-8"><a href="xai-explainable-ai.html#cb543-8" tabindex="-1"></a><span class="fu">mean</span>(<span class="fu">predict</span>(fit_rf), <span class="dv">10</span>)</span>
+<span id="cb543-9"><a href="xai-explainable-ai.html#cb543-9" tabindex="-1"></a><span class="co">#&gt; [1] 20.99478</span></span></code></pre></div>
+<p>ちなみに, パッケージ<strong>iml</strong>を使わずとも,
+パッケージ<strong>randomForest</strong>の関数<code>randomForest()</code>の出力オブジェクトに対して
+関数<code>varImpPlot()</code>, <code>importance()</code>を適用することで, 予測の精度に大きく影響を与える重要な変数を調べることができる
+(変数重要度, variable importance, または,
+特徴量重要度, feature importance).</p>
+<div class="sourceCode" id="cb544"><pre class="sourceCode r"><code class="sourceCode r"><span id="cb544-1"><a href="xai-explainable-ai.html#cb544-1" tabindex="-1"></a><span class="fu">varImpPlot</span>(fit_rf)</span></code></pre></div>
+<p><img src="140-xai_files/figure-html/unnamed-chunk-8-1.png" width="75%" /></p>
+<div class="sourceCode" id="cb545"><pre class="sourceCode r"><code class="sourceCode r"><span id="cb545-1"><a href="xai-explainable-ai.html#cb545-1" tabindex="-1"></a><span class="fu">importance</span>(fit_rf) <span class="co"># variable importance measuresの計算</span></span>
+<span id="cb545-2"><a href="xai-explainable-ai.html#cb545-2" tabindex="-1"></a><span class="co">#&gt;           %IncMSE IncNodePurity</span></span>
+<span id="cb545-3"><a href="xai-explainable-ai.html#cb545-3" tabindex="-1"></a><span class="co">#&gt; crim    16.791858     2466.9292</span></span>
+<span id="cb545-4"><a href="xai-explainable-ai.html#cb545-4" tabindex="-1"></a><span class="co">#&gt; zn       3.963144      339.2476</span></span>
+<span id="cb545-5"><a href="xai-explainable-ai.html#cb545-5" tabindex="-1"></a><span class="co">#&gt; indus   11.099242     2623.0736</span></span>
+<span id="cb545-6"><a href="xai-explainable-ai.html#cb545-6" tabindex="-1"></a><span class="co">#&gt; chas     4.552989      233.0437</span></span>
+<span id="cb545-7"><a href="xai-explainable-ai.html#cb545-7" tabindex="-1"></a><span class="co">#&gt; nox     17.347112     2798.0707</span></span>
+<span id="cb545-8"><a href="xai-explainable-ai.html#cb545-8" tabindex="-1"></a><span class="co">#&gt; rm      38.544414    12418.5753</span></span>
+<span id="cb545-9"><a href="xai-explainable-ai.html#cb545-9" tabindex="-1"></a><span class="co">#&gt; age     13.912714     1150.8200</span></span>
+<span id="cb545-10"><a href="xai-explainable-ai.html#cb545-10" tabindex="-1"></a><span class="co">#&gt; dis     19.502610     2548.5988</span></span>
+<span id="cb545-11"><a href="xai-explainable-ai.html#cb545-11" tabindex="-1"></a><span class="co">#&gt; rad      6.766537      373.6200</span></span>
+<span id="cb545-12"><a href="xai-explainable-ai.html#cb545-12" tabindex="-1"></a><span class="co">#&gt; tax     12.182840     1234.9363</span></span>
+<span id="cb545-13"><a href="xai-explainable-ai.html#cb545-13" tabindex="-1"></a><span class="co">#&gt; ptratio 16.404295     2613.0837</span></span>
+<span id="cb545-14"><a href="xai-explainable-ai.html#cb545-14" tabindex="-1"></a><span class="co">#&gt; black   10.020137      768.5835</span></span>
+<span id="cb545-15"><a href="xai-explainable-ai.html#cb545-15" tabindex="-1"></a><span class="co">#&gt; lstat   31.462441    12225.0302</span></span></code></pre></div>
+<p><code>importance()</code>の出力として,
+1つ目の指標は, 分類問題においては, 誤差率, 回帰問題においては, MSEを
+予測誤差として採用し, OOB (Out-Of-Bounce) データを使用し, 学習モデルで計算される予測誤差と, 各予測変数につきpermutationしたモデルで計算される予測誤差の差
+の大きさを全ての木にわたって標準化した値である.
+2つ目の指標は, 分類問題においてはGini係数, 回帰問題においてはRSSを
+各ノードの”不純度”として採用し, その予測変数での木の分割による不純度の減少の合計を
+全ての木にわたって平均したものである.</p>
+<pre><code>メモ
+- パッケージimlは, &quot;R6クラス&quot;と呼ばれる (オブジェクト指向型プログラミングのための) 
+Rのオブジェクト・クラスを使用
+- → 例えば, Predict$new()により, 新しいオブジェクトを生成 (なお, set.seed()は不要)</code></pre>
+<div class="sourceCode" id="cb547"><pre class="sourceCode r"><code class="sourceCode r"><span id="cb547-1"><a href="xai-explainable-ai.html#cb547-1" tabindex="-1"></a>X <span class="ot">&lt;-</span> housing[, <span class="sc">-</span><span class="dv">14</span>] <span class="co"># medvを除く</span></span>
+<span id="cb547-2"><a href="xai-explainable-ai.html#cb547-2" tabindex="-1"></a>predictor <span class="ot">&lt;-</span> Predictor<span class="sc">$</span><span class="fu">new</span>(fit_rf, <span class="at">data =</span> X, <span class="at">y =</span> housing<span class="sc">$</span>medv)</span></code></pre></div>
+<p>以下では, ランダムフォレストの適合をもとに生成されたオブジェクト
+<code>predictor</code>に対して, 各手法の関数を適用する.</p>
+</div>
+</div>
+<div id="pfi" class="section level2 hasAnchor" number="14.1">
+<h2><span class="header-section-number">14.1</span> PFI<a href="xai-explainable-ai.html#pfi" class="anchor-section" aria-label="Anchor link to header"></a></h2>
+<p>特徴量<code>lstat</code>に対する<strong>PFI (Permuation Feature Importance)</strong> を見たい場合には, 以下のコマンドを実行する.</p>
+<div class="sourceCode" id="cb548"><pre class="sourceCode r"><code class="sourceCode r"><span id="cb548-1"><a href="xai-explainable-ai.html#cb548-1" tabindex="-1"></a><span class="co"># imp &lt;- FeatureImp$new(predictor, loss = &quot;mse&quot;) # 損失関数=MSE</span></span>
+<span id="cb548-2"><a href="xai-explainable-ai.html#cb548-2" tabindex="-1"></a><span class="fu">set.seed</span>(<span class="dv">111</span>)</span>
+<span id="cb548-3"><a href="xai-explainable-ai.html#cb548-3" tabindex="-1"></a>imp <span class="ot">&lt;-</span> FeatureImp<span class="sc">$</span><span class="fu">new</span>(predictor, <span class="at">loss =</span> <span class="st">&quot;mae&quot;</span>) <span class="co"># 同MAE</span></span>
+<span id="cb548-4"><a href="xai-explainable-ai.html#cb548-4" tabindex="-1"></a><span class="fu">library</span>(<span class="st">&quot;ggplot2&quot;</span>)</span>
+<span id="cb548-5"><a href="xai-explainable-ai.html#cb548-5" tabindex="-1"></a>imp<span class="sc">$</span><span class="fu">plot</span>()</span></code></pre></div>
+<p><img src="140-xai_files/figure-html/unnamed-chunk-10-1.png" width="75%" /></p>
+<div class="sourceCode" id="cb549"><pre class="sourceCode r"><code class="sourceCode r"><span id="cb549-1"><a href="xai-explainable-ai.html#cb549-1" tabindex="-1"></a><span class="co"># plot(imp)</span></span>
+<span id="cb549-2"><a href="xai-explainable-ai.html#cb549-2" tabindex="-1"></a>imp<span class="sc">$</span>results</span>
+<span id="cb549-3"><a href="xai-explainable-ai.html#cb549-3" tabindex="-1"></a><span class="co">#&gt;    feature importance.05 importance importance.95 permutation.error</span></span>
+<span id="cb549-4"><a href="xai-explainable-ai.html#cb549-4" tabindex="-1"></a><span class="co">#&gt; 1    lstat      4.405448   4.542547      4.738602         4.2729783</span></span>
+<span id="cb549-5"><a href="xai-explainable-ai.html#cb549-5" tabindex="-1"></a><span class="co">#&gt; 2       rm      3.583264   3.673631      3.808067         3.4556260</span></span>
+<span id="cb549-6"><a href="xai-explainable-ai.html#cb549-6" tabindex="-1"></a><span class="co">#&gt; 3      nox      1.788788   1.804862      1.815528         1.6977554</span></span>
+<span id="cb549-7"><a href="xai-explainable-ai.html#cb549-7" tabindex="-1"></a><span class="co">#&gt; 4      dis      1.667062   1.699978      1.730544         1.5990959</span></span>
+<span id="cb549-8"><a href="xai-explainable-ai.html#cb549-8" tabindex="-1"></a><span class="co">#&gt; 5     crim      1.687770   1.698387      1.727456         1.5975997</span></span>
+<span id="cb549-9"><a href="xai-explainable-ai.html#cb549-9" tabindex="-1"></a><span class="co">#&gt; 6  ptratio      1.626979   1.673878      1.725824         1.5745446</span></span>
+<span id="cb549-10"><a href="xai-explainable-ai.html#cb549-10" tabindex="-1"></a><span class="co">#&gt; 7    indus      1.492030   1.509591      1.534473         1.4200074</span></span>
+<span id="cb549-11"><a href="xai-explainable-ai.html#cb549-11" tabindex="-1"></a><span class="co">#&gt; 8      age      1.398376   1.424283      1.428581         1.3397619</span></span>
+<span id="cb549-12"><a href="xai-explainable-ai.html#cb549-12" tabindex="-1"></a><span class="co">#&gt; 9      tax      1.347987   1.369031      1.401911         1.2877886</span></span>
+<span id="cb549-13"><a href="xai-explainable-ai.html#cb549-13" tabindex="-1"></a><span class="co">#&gt; 10   black      1.240707   1.259959      1.276161         1.1851890</span></span>
+<span id="cb549-14"><a href="xai-explainable-ai.html#cb549-14" tabindex="-1"></a><span class="co">#&gt; 11     rad      1.113053   1.124778      1.127646         1.0580301</span></span>
+<span id="cb549-15"><a href="xai-explainable-ai.html#cb549-15" tabindex="-1"></a><span class="co">#&gt; 12      zn      1.051388   1.058540      1.061038         0.9957227</span></span>
+<span id="cb549-16"><a href="xai-explainable-ai.html#cb549-16" tabindex="-1"></a><span class="co">#&gt; 13    chas      1.029757   1.037440      1.047849         0.9758753</span></span></code></pre></div>
+<p>これより, <code>lstat</code>, 次に<code>rm</code>の重要度が特に大きいことが分かる.</p>
+</div>
+<div id="pdp" class="section level2 hasAnchor" number="14.2">
+<h2><span class="header-section-number">14.2</span> PDP<a href="xai-explainable-ai.html#pdp" class="anchor-section" aria-label="Anchor link to header"></a></h2>
+<p>特徴量<code>lstat</code>に対するPDP (Partial Dependence Plot) を見たい場合には, 以下のコマンドを実行する.</p>
+<div class="sourceCode" id="cb550"><pre class="sourceCode r"><code class="sourceCode r"><span id="cb550-1"><a href="xai-explainable-ai.html#cb550-1" tabindex="-1"></a><span class="co"># 特徴量lstatに対するPDP</span></span>
+<span id="cb550-2"><a href="xai-explainable-ai.html#cb550-2" tabindex="-1"></a>pdp <span class="ot">&lt;-</span> FeatureEffect<span class="sc">$</span><span class="fu">new</span>(predictor, <span class="at">feature =</span> <span class="st">&quot;lstat&quot;</span>,</span>
+<span id="cb550-3"><a href="xai-explainable-ai.html#cb550-3" tabindex="-1"></a>                         <span class="at">method =</span> <span class="st">&quot;pdp&quot;</span>, <span class="at">grid.size =</span> <span class="dv">10</span>)</span>
+<span id="cb550-4"><a href="xai-explainable-ai.html#cb550-4" tabindex="-1"></a>pdp<span class="sc">$</span><span class="fu">plot</span>()</span></code></pre></div>
+<p><img src="140-xai_files/figure-html/unnamed-chunk-11-1.png" width="75%" /></p>
+<p>変数<code>lstat</code>が増えれば目的変数<code>medv</code>が減少すること,
+しかも非線形であること (下に凸) が観察される.</p>
+<p>他の特徴量, たとえば, <code>lstat</code>についで重要度の次に大きい<code>rm</code>や, <code>ptratio</code>に対するICEは, 上の出力を再利用することで作成できる.</p>
+<div class="sourceCode" id="cb551"><pre class="sourceCode r"><code class="sourceCode r"><span id="cb551-1"><a href="xai-explainable-ai.html#cb551-1" tabindex="-1"></a><span class="co"># 他の特徴量に対するPDP</span></span>
+<span id="cb551-2"><a href="xai-explainable-ai.html#cb551-2" tabindex="-1"></a><span class="co"># set.featureで指定</span></span>
+<span id="cb551-3"><a href="xai-explainable-ai.html#cb551-3" tabindex="-1"></a>pdp<span class="sc">$</span><span class="fu">set.feature</span>(<span class="st">&quot;rm&quot;</span>)</span>
+<span id="cb551-4"><a href="xai-explainable-ai.html#cb551-4" tabindex="-1"></a>pdp<span class="sc">$</span><span class="fu">plot</span>()</span></code></pre></div>
+<p><img src="140-xai_files/figure-html/unnamed-chunk-12-1.png" width="75%" /></p>
+<div class="sourceCode" id="cb552"><pre class="sourceCode r"><code class="sourceCode r"><span id="cb552-1"><a href="xai-explainable-ai.html#cb552-1" tabindex="-1"></a><span class="co">#</span></span>
+<span id="cb552-2"><a href="xai-explainable-ai.html#cb552-2" tabindex="-1"></a>pdp<span class="sc">$</span><span class="fu">set.feature</span>(<span class="st">&quot;ptratio&quot;</span>)</span>
+<span id="cb552-3"><a href="xai-explainable-ai.html#cb552-3" tabindex="-1"></a>pdp<span class="sc">$</span><span class="fu">plot</span>()</span></code></pre></div>
+<p><img src="140-xai_files/figure-html/unnamed-chunk-12-2.png" width="75%" /></p>
+</div>
+<div id="ice" class="section level2 hasAnchor" number="14.3">
+<h2><span class="header-section-number">14.3</span> ICE<a href="xai-explainable-ai.html#ice" class="anchor-section" aria-label="Anchor link to header"></a></h2>
+<p>データ点ごとの, 特徴量に対する予測値の変化は<strong>ICE (Individual Conditional Expectaion)</strong> で知ることができる.
+<!-- 必要に応じて, (特異な動きをする) 特定のデータ点についてさらに
+分析を進めればよい.-->
+特徴量<code>lstat</code>に対するICEを見たい場合には, 以下のコマンドを実行する.</p>
+<div class="sourceCode" id="cb553"><pre class="sourceCode r"><code class="sourceCode r"><span id="cb553-1"><a href="xai-explainable-ai.html#cb553-1" tabindex="-1"></a>ice <span class="ot">&lt;-</span> FeatureEffect<span class="sc">$</span><span class="fu">new</span>(predictor, <span class="at">feature =</span> <span class="st">&quot;lstat&quot;</span>,</span>
+<span id="cb553-2"><a href="xai-explainable-ai.html#cb553-2" tabindex="-1"></a>                         <span class="at">method =</span> <span class="st">&quot;ice&quot;</span>, <span class="at">grid.size =</span> <span class="dv">10</span>)</span>
+<span id="cb553-3"><a href="xai-explainable-ai.html#cb553-3" tabindex="-1"></a>ice<span class="sc">$</span><span class="fu">plot</span>()</span></code></pre></div>
+<p><img src="140-xai_files/figure-html/unnamed-chunk-13-1.png" width="75%" /></p>
+<p>特徴量<code>rm</code>や<code>ptration</code>に対するICEは, 上の出力を再利用することで作成できる.</p>
+<div class="sourceCode" id="cb554"><pre class="sourceCode r"><code class="sourceCode r"><span id="cb554-1"><a href="xai-explainable-ai.html#cb554-1" tabindex="-1"></a>ice<span class="sc">$</span><span class="fu">set.feature</span>(<span class="st">&quot;rm&quot;</span>)</span>
+<span id="cb554-2"><a href="xai-explainable-ai.html#cb554-2" tabindex="-1"></a>ice<span class="sc">$</span><span class="fu">plot</span>()</span></code></pre></div>
+<p><img src="140-xai_files/figure-html/unnamed-chunk-14-1.png" width="75%" /></p>
+<div class="sourceCode" id="cb555"><pre class="sourceCode r"><code class="sourceCode r"><span id="cb555-1"><a href="xai-explainable-ai.html#cb555-1" tabindex="-1"></a><span class="co">#</span></span>
+<span id="cb555-2"><a href="xai-explainable-ai.html#cb555-2" tabindex="-1"></a>ice<span class="sc">$</span><span class="fu">set.feature</span>(<span class="st">&quot;ptratio&quot;</span>)</span>
+<span id="cb555-3"><a href="xai-explainable-ai.html#cb555-3" tabindex="-1"></a>ice<span class="sc">$</span><span class="fu">plot</span>()</span></code></pre></div>
+<p><img src="140-xai_files/figure-html/unnamed-chunk-14-2.png" width="75%" /></p>
+<div id="pdp-ice" class="section level3 unnumbered hasAnchor">
+<h3>PDP + ICE<a href="xai-explainable-ai.html#pdp-ice" class="anchor-section" aria-label="Anchor link to header"></a></h3>
+<p>また, PDPとICEを同様にプロットにすることができる.</p>
+<div class="sourceCode" id="cb556"><pre class="sourceCode r"><code class="sourceCode r"><span id="cb556-1"><a href="xai-explainable-ai.html#cb556-1" tabindex="-1"></a>pdp_ice <span class="ot">&lt;-</span> FeatureEffect<span class="sc">$</span><span class="fu">new</span>(predictor, <span class="at">feature =</span> <span class="st">&quot;ptratio&quot;</span>,</span>
+<span id="cb556-2"><a href="xai-explainable-ai.html#cb556-2" tabindex="-1"></a>                         <span class="at">method =</span> <span class="st">&quot;pdp+ice&quot;</span>, <span class="at">grid.size =</span> <span class="dv">10</span>)</span>
+<span id="cb556-3"><a href="xai-explainable-ai.html#cb556-3" tabindex="-1"></a>pdp_ice<span class="sc">$</span><span class="fu">plot</span>()</span></code></pre></div>
+<p><img src="140-xai_files/figure-html/unnamed-chunk-15-1.png" width="75%" /></p>
+</div>
+</div>
+<div id="lime" class="section level2 hasAnchor" number="14.4">
+<h2><span class="header-section-number">14.4</span> LIME<a href="xai-explainable-ai.html#lime" class="anchor-section" aria-label="Anchor link to header"></a></h2>
+<!-- 局所代理モデル -->
+<p>局所代理モデルの一手法である<strong>LIME (Local Interpretable Model-agnostic Explanations)</strong>, そのバリエーションを実行する.</p>
+<pre><code>LocalModel():
+- LIMEの一種. 局所的重み付け回帰モデルによる適合
+   - ターゲットのデータ点からの距離で重み付け
+   - 回帰問題は線形回帰, 分析問題はロジスティック回帰
+   - L1-正則化によりスパース性に対応
+   - 内部では, 関数glmmet() 使用
+- LIMEとの相違
+   - 近傍として, 乱数ではなく, オリジナルデータを使用する
+   - ユークリッド距離に基づいたカーネルではなく, gower距離によって近さを評価</code></pre>
+<!--
+(正規分布からの) 乱数
+- weighted GLMにより局所的にターゲットに適合 
+-->
+<p>1番目のデータ点の予測値 (25.61) に対するLIMEは以下のように実行する.</p>
+<div class="sourceCode" id="cb558"><pre class="sourceCode r"><code class="sourceCode r"><span id="cb558-1"><a href="xai-explainable-ai.html#cb558-1" tabindex="-1"></a>lime_explain <span class="ot">&lt;-</span> LocalModel<span class="sc">$</span><span class="fu">new</span>(predictor, <span class="at">x.interest =</span> X[<span class="dv">1</span>, ])</span>
+<span id="cb558-2"><a href="xai-explainable-ai.html#cb558-2" tabindex="-1"></a><span class="co"># 線形近似 (LocalModel()) による予測値</span></span>
+<span id="cb558-3"><a href="xai-explainable-ai.html#cb558-3" tabindex="-1"></a><span class="fu">predict</span>(lime_explain)</span>
+<span id="cb558-4"><a href="xai-explainable-ai.html#cb558-4" tabindex="-1"></a><span class="co">#&gt;   prediction</span></span>
+<span id="cb558-5"><a href="xai-explainable-ai.html#cb558-5" tabindex="-1"></a><span class="co">#&gt; 1   28.83728</span></span>
+<span id="cb558-6"><a href="xai-explainable-ai.html#cb558-6" tabindex="-1"></a>lime_explain<span class="sc">$</span>results</span>
+<span id="cb558-7"><a href="xai-explainable-ai.html#cb558-7" tabindex="-1"></a><span class="co">#&gt;               beta x.recoded    effect x.original feature feature.value</span></span>
+<span id="cb558-8"><a href="xai-explainable-ai.html#cb558-8" tabindex="-1"></a><span class="co">#&gt; rm       4.2921777     6.575 28.221068      6.575      rm      rm=6.575</span></span>
+<span id="cb558-9"><a href="xai-explainable-ai.html#cb558-9" tabindex="-1"></a><span class="co">#&gt; ptratio -0.5211485    15.300 -7.973572       15.3 ptratio  ptratio=15.3</span></span>
+<span id="cb558-10"><a href="xai-explainable-ai.html#cb558-10" tabindex="-1"></a><span class="co">#&gt; lstat   -0.4304489     4.980 -2.143635       4.98   lstat    lstat=4.98</span></span>
+<span id="cb558-11"><a href="xai-explainable-ai.html#cb558-11" tabindex="-1"></a>lime_explain<span class="sc">$</span><span class="fu">plot</span>()</span></code></pre></div>
+<p><img src="140-xai_files/figure-html/unnamed-chunk-16-1.png" width="75%" /></p>
+<div class="sourceCode" id="cb559"><pre class="sourceCode r"><code class="sourceCode r"><span id="cb559-1"><a href="xai-explainable-ai.html#cb559-1" tabindex="-1"></a><span class="co"># plot(lime_explain)</span></span></code></pre></div>
+<p>注) 標準のLIMEと異なり, LocalModel()は近傍データ生成に乱数は非使用 (∴<code>set.seed()</code>は不要. 但し, 不確かな場合には常に実行するのが安全)</p>
+<p>得られた結果は, 1番目のデータ点の予測に対する判断の根拠を
+線形回帰の結果を解釈しながら与えることができる.
+すなわち, (LASSOにより選択された) 変数の回帰係数の推定値が <span class="math inline">\(\beta_{rm}=4.29\)</span>, <span class="math inline">\(\beta_{ptratio}=-0.52\)</span>, <span class="math inline">\(\beta_{lstat}=-0.43\)</span>
+であることから, 1番目の予測に対しては, 変数<code>rm</code>は (他の
+全ての変数を固定した状態で) 1単位増えれば, <span class="math inline">\(4,29\)</span>増加する要因と
+なっているが, 一方, <code>lstat</code>, <code>ptratio</code>はそれぞれ, <span class="math inline">\(-0.52, -0.43\)</span>減少
+させていることを示す.
+また, 各変数が1番目の予測にもたらしている貢献度の大きさは,
+各変数の値を対応する係数と掛け合せることで,
+<span class="math inline">\((4.29) \cdot 6.58 \approx 28.22\)</span>, <span class="math inline">\((-0.52) \cdot 15.3 \approx -7.97\)</span>,
+<span class="math inline">\((-0.43) \cdot 4.98 \approx -2.14\)</span> と (近似的に) 見積もることができ, これが横棒グラフで示されている.
+<!--
+3つの項を足す意味はあるのか? 切片項の扱いは??
+予測値$25.72$に対して, 局所線形モデルの予測値$29.01$は,
+\[
+(4.34) \dot 6.58 + (-0.56) \dot 15.3 + (-0.44) \dot 4.98 = 17.798 (!?)
+\]
+--></p>
+<p>同様に, 2番目のデータ点の予測値 (22.27) に対するLIMEは以下の通りである.</p>
+<div class="sourceCode" id="cb560"><pre class="sourceCode r"><code class="sourceCode r"><span id="cb560-1"><a href="xai-explainable-ai.html#cb560-1" tabindex="-1"></a>lime_explain<span class="sc">$</span><span class="fu">explain</span>(X[<span class="dv">2</span>, ])</span>
+<span id="cb560-2"><a href="xai-explainable-ai.html#cb560-2" tabindex="-1"></a>lime_explain<span class="sc">$</span>results</span>
+<span id="cb560-3"><a href="xai-explainable-ai.html#cb560-3" tabindex="-1"></a><span class="co">#&gt;               beta x.recoded    effect x.original feature feature.value</span></span>
+<span id="cb560-4"><a href="xai-explainable-ai.html#cb560-4" tabindex="-1"></a><span class="co">#&gt; rm       4.1213297     6.421 26.463058      6.421      rm      rm=6.421</span></span>
+<span id="cb560-5"><a href="xai-explainable-ai.html#cb560-5" tabindex="-1"></a><span class="co">#&gt; ptratio -0.5276824    17.800 -9.392746       17.8 ptratio  ptratio=17.8</span></span>
+<span id="cb560-6"><a href="xai-explainable-ai.html#cb560-6" tabindex="-1"></a><span class="co">#&gt; lstat   -0.4368639     9.140 -3.992936       9.14   lstat    lstat=9.14</span></span>
+<span id="cb560-7"><a href="xai-explainable-ai.html#cb560-7" tabindex="-1"></a>lime_explain<span class="sc">$</span><span class="fu">plot</span>()</span></code></pre></div>
+<p><img src="140-xai_files/figure-html/unnamed-chunk-17-1.png" width="75%" /></p>
+<div class="sourceCode" id="cb561"><pre class="sourceCode r"><code class="sourceCode r"><span id="cb561-1"><a href="xai-explainable-ai.html#cb561-1" tabindex="-1"></a><span class="co"># plot(lime_explain)</span></span></code></pre></div>
+<!--
+1番目データ点と比較して, 2番目は
+予測値が約3.3 (千ドル) 減少している. 
+-->
+<p>1番目と比較して, 各変数の値ばかりでなく, 回帰係数の大きさも多少ではあるが異なっている. すなわち,
+貢献度の大きさとしては, <code>rm</code>は1.7程度減少し, 一方, <code>ptratio</code>, <code>lstat</code>はそれぞれ-1.4, -1.8程度マイナス方向に大きくなっており,
+これらが, 予測値を相対的に小さくすることに
+つながっている可能性が考えられる.</p>
+<p>ただし, LIMEでは, 各データ点ことに異なる
+代理モデルによる説明がなされることから,
+異なるデータ点間の結果を直接比較することは元来想定しておらず,
+上のような推察の妥当性はただちに保証されるものではない.
+<!-- 正当化するものではない. 保証するものではないことに注意が必要である
+適切ではない.--></p>
+<p>異なるデータ点直接比較したい場合には, 例えば, 先のICEや, 次のSHAP等が有効である.</p>
+</div>
+<div id="shap" class="section level2 hasAnchor" number="14.5">
+<h2><span class="header-section-number">14.5</span> SHAP<a href="xai-explainable-ai.html#shap" class="anchor-section" aria-label="Anchor link to header"></a></h2>
+<p>SHAP (SHapley Additive exPlanations) は, 協力ゲーム理論に基づいて,
+データ点に対するモデル予測値を, 平均的なモデル予測値と各特徴量の“貢献度”の和で表現する方法で,
+各データ点の予測値に対して解釈性を与える一手法である.</p>
+<div class="sourceCode" id="cb562"><pre class="sourceCode r"><code class="sourceCode r"><span id="cb562-1"><a href="xai-explainable-ai.html#cb562-1" tabindex="-1"></a><span class="fu">set.seed</span>(<span class="dv">123</span>)</span>
+<span id="cb562-2"><a href="xai-explainable-ai.html#cb562-2" tabindex="-1"></a><span class="co"># 1番目のデータ点での予測に対する分解 (局所的説明)</span></span>
+<span id="cb562-3"><a href="xai-explainable-ai.html#cb562-3" tabindex="-1"></a>shapley <span class="ot">&lt;-</span> Shapley<span class="sc">$</span><span class="fu">new</span>(predictor,</span>
+<span id="cb562-4"><a href="xai-explainable-ai.html#cb562-4" tabindex="-1"></a>                       <span class="at">x.interest =</span> X[<span class="dv">1</span>, ], <span class="at">sample.size =</span> <span class="dv">50</span>)</span>
+<span id="cb562-5"><a href="xai-explainable-ai.html#cb562-5" tabindex="-1"></a>shapley<span class="sc">$</span><span class="fu">plot</span>()</span></code></pre></div>
+<p><img src="140-xai_files/figure-html/unnamed-chunk-18-1.png" width="75%" /></p>
+<div class="sourceCode" id="cb563"><pre class="sourceCode r"><code class="sourceCode r"><span id="cb563-1"><a href="xai-explainable-ai.html#cb563-1" tabindex="-1"></a><span class="co"># plot(shapley)</span></span></code></pre></div>
+<p>アウトプットの中で, SHAP 値（Shapley 値）は <code>phi</code>を読めばよい.
+<code>phi.var</code> はモンテカルロ標本から計算される当該特徴量の寄与の分散の大きさである (小さいほど信頼性が高い).
+<code>sample.size</code>を大きくすることで, 推定の精度を高めることができる.
+<code>feature.value</code>は指定したデータ点における各特徴量の大きさを示す.</p>
+<!--
+_注)テクジカルには,  各特徴量について モンテカルロ で生成した「周辺寄与（marginal contribution）」の標本平均と標本分散に対応._
+-->
+<p>上記コードは実行時間がかかる.
+引数<code>sample.size</code>の大きさで計算スピードとSHAP値計算の近似精度を
+コントロールできる. ここでは, 50に設定する.</p>
+<p><em>注) Shapley 値の厳密計算は全特徴の順列 (coalitions) に対して計算する必要があるが, 特徴数が多い場合は計算量が爆発する. そこで, <strong>iml</strong> の Shapley クラスは, <code>sample.size</code>で指定した回数だけランダムに順列を生成し, 近似値を計算する. 結果の再現性を得るためには, <code>Shapley$new()</code> の直前に <code>set.seed()</code> を 呼び出すことで, 乱数を固定する必要がある.</em></p>
+<pre><code>Shapley()
+- 引数sample.size: Monte Carlo samples for estimating the Shapley value.
+   The number of times coalitions/marginals are sampled from data X. 
+   The higher the more accurate the explanations become.</code></pre>
+<div class="sourceCode" id="cb565"><pre class="sourceCode r"><code class="sourceCode r"><span id="cb565-1"><a href="xai-explainable-ai.html#cb565-1" tabindex="-1"></a><span class="co"># 結果の取り出し</span></span>
+<span id="cb565-2"><a href="xai-explainable-ai.html#cb565-2" tabindex="-1"></a>shapley<span class="sc">$</span>results</span>
+<span id="cb565-3"><a href="xai-explainable-ai.html#cb565-3" tabindex="-1"></a><span class="co">#&gt;    feature         phi     phi.var feature.value</span></span>
+<span id="cb565-4"><a href="xai-explainable-ai.html#cb565-4" tabindex="-1"></a><span class="co">#&gt; 1     crim -0.08912329  1.01012316  crim=0.00632</span></span>
+<span id="cb565-5"><a href="xai-explainable-ai.html#cb565-5" tabindex="-1"></a><span class="co">#&gt; 2       zn  0.03006019  0.01803672         zn=18</span></span>
+<span id="cb565-6"><a href="xai-explainable-ai.html#cb565-6" tabindex="-1"></a><span class="co">#&gt; 3    indus  0.73077923  0.93525970    indus=2.31</span></span>
+<span id="cb565-7"><a href="xai-explainable-ai.html#cb565-7" tabindex="-1"></a><span class="co">#&gt; 4     chas -0.04483238  0.03785947        chas=0</span></span>
+<span id="cb565-8"><a href="xai-explainable-ai.html#cb565-8" tabindex="-1"></a><span class="co">#&gt; 5      nox -0.10584816  0.46886359     nox=0.538</span></span>
+<span id="cb565-9"><a href="xai-explainable-ai.html#cb565-9" tabindex="-1"></a><span class="co">#&gt; 6       rm -0.53912733 17.44803543      rm=6.575</span></span>
+<span id="cb565-10"><a href="xai-explainable-ai.html#cb565-10" tabindex="-1"></a><span class="co">#&gt; 7      age  0.01470670  0.41226685      age=65.2</span></span>
+<span id="cb565-11"><a href="xai-explainable-ai.html#cb565-11" tabindex="-1"></a><span class="co">#&gt; 8      dis -0.09587154  1.21952939      dis=4.09</span></span>
+<span id="cb565-12"><a href="xai-explainable-ai.html#cb565-12" tabindex="-1"></a><span class="co">#&gt; 9      rad -0.28381549  0.04738203         rad=1</span></span>
+<span id="cb565-13"><a href="xai-explainable-ai.html#cb565-13" tabindex="-1"></a><span class="co">#&gt; 10     tax -0.05629366  0.27861079       tax=296</span></span>
+<span id="cb565-14"><a href="xai-explainable-ai.html#cb565-14" tabindex="-1"></a><span class="co">#&gt; 11 ptratio  0.82536628  1.28844605  ptratio=15.3</span></span>
+<span id="cb565-15"><a href="xai-explainable-ai.html#cb565-15" tabindex="-1"></a><span class="co">#&gt; 12   black -0.04250537  0.16910755   black=396.9</span></span>
+<span id="cb565-16"><a href="xai-explainable-ai.html#cb565-16" tabindex="-1"></a><span class="co">#&gt; 13   lstat  2.95122635 13.04978775    lstat=4.98</span></span></code></pre></div>
+<p>SHAPの方法論によれば, 1番目のデータ点に対する予測値 (25.49) は,
+全体平均 (22.54) にプラスして, 各予測変数からの貢献に分解できる (乱数の発生具合で結果が変わる).</p>
+<p><span class="math display">\[
+\hat{f}({\bf x}_1) = E[\hat{f}({\bf X})] + \phi_{crim} + \phi_{zn}  + \cdots + \phi_{black} + \phi_{lstat}
+\]</span>
+<span class="math display">\[
+25.72 = 22.52 - 0.09 + 0.03  + \cdots - 0.04 + 2.95
+\]</span>
+<!--
+ 図示された順に従い, 貢献の大きい項を具体的に書き出すと,
+\[
+\hat{f}({\bf x}_1) \approx E[\hat{f}({\bf X})] + \phi_{lstat} + \phi_{indust}  + \phi_{ptratio} + \phi_{nox} + \phi_{rm} + \phi_{rad} + \phi_{dis}
+\] 
+\[
+25.40 \approx 22.53 + 3.36 + 0.87 + 0.82 - 0.13 - 0.25 - 0.35 - 0.40
+\]
+--></p>
+<!--
+\[
+\hat{f}({\bf x}_1) (25.40) \approx E[\hat{f}({\bf X})] (22.53) + \phi_{lstat} (3.36) + \phi_{indust} (0.87) + \phi_{ptratio} (0.82) 
++ \phi_{nox} (-0.13) + \phi_{rm} (-0.25) + \phi_{rad} (-0.35) + \phi_{dis} (-0.40)
+\] 
+-->
+<p>中でも, 貢献度の大きな項 (変数と値 (単位は千ドル)) は,
+<span class="math display">\[
+\phi_{lstat} = 2.95, \phi_{ptratio} = 0.83,\phi_{indus} = 0.73,
+\phi_{rm} = - 0.54, \phi_{rad} = - 0.28,\phi_{nox} = - 0.11,
+\]</span>
+等となっている.</p>
+<p>注) SHAPでは, <em>全体平均を除いた部分について</em>,
+各変数の貢献度を線形に分解する.
+ここでの結果は, <code>lstat</code>, <code>ptrati</code>は大きくプラスに貢献,
+一方, <code>rm</code>はマイナスに貢献となっており, 最初に行った
+線形回帰はもとより, 上の局所線形モデルによる
+解釈と符号が異なっていることに注意したい.</p>
+<!--
+注) 各自のPC環境, 乱数の発生の仕方により, 各自の実行結果が
+ここで示している実行結果と異なるものとなる可能性がある.
+-->
+<div class="sourceCode" id="cb566"><pre class="sourceCode r"><code class="sourceCode r"><span id="cb566-1"><a href="xai-explainable-ai.html#cb566-1" tabindex="-1"></a><span class="co"># 同2番目のデータ点 (上で得られたオブジェクトの再利用)</span></span>
+<span id="cb566-2"><a href="xai-explainable-ai.html#cb566-2" tabindex="-1"></a>shapley<span class="sc">$</span><span class="fu">explain</span>(<span class="at">x.interest =</span> X[<span class="dv">2</span>, ])</span>
+<span id="cb566-3"><a href="xai-explainable-ai.html#cb566-3" tabindex="-1"></a>shapley<span class="sc">$</span><span class="fu">plot</span>()</span></code></pre></div>
+<p><img src="140-xai_files/figure-html/unnamed-chunk-20-1.png" width="75%" /></p>
+<p><em>注) x.interest をコンストラクタ<code>Shapley$new()</code>に渡した場合、その時点で当該インスタンスの Shapley 値が計算され, <code>shapley$results</code> に格納される. 一方, <code>$explain()</code> は, 別のデータ点 (インスタンス) を後から説明したいときに使うメソッドである.</em></p>
+<div class="sourceCode" id="cb567"><pre class="sourceCode r"><code class="sourceCode r"><span id="cb567-1"><a href="xai-explainable-ai.html#cb567-1" tabindex="-1"></a><span class="co"># 結果の取り出し</span></span>
+<span id="cb567-2"><a href="xai-explainable-ai.html#cb567-2" tabindex="-1"></a>shapley<span class="sc">$</span>results</span>
+<span id="cb567-3"><a href="xai-explainable-ai.html#cb567-3" tabindex="-1"></a><span class="co">#&gt;    feature          phi     phi.var feature.value</span></span>
+<span id="cb567-4"><a href="xai-explainable-ai.html#cb567-4" tabindex="-1"></a><span class="co">#&gt; 1     crim -0.055606769  1.01576757  crim=0.02731</span></span>
+<span id="cb567-5"><a href="xai-explainable-ai.html#cb567-5" tabindex="-1"></a><span class="co">#&gt; 2       zn -0.038531200  0.01179324          zn=0</span></span>
+<span id="cb567-6"><a href="xai-explainable-ai.html#cb567-6" tabindex="-1"></a><span class="co">#&gt; 3    indus -0.260136695  0.47798871    indus=7.07</span></span>
+<span id="cb567-7"><a href="xai-explainable-ai.html#cb567-7" tabindex="-1"></a><span class="co">#&gt; 4     chas  0.000000000  0.00000000        chas=0</span></span>
+<span id="cb567-8"><a href="xai-explainable-ai.html#cb567-8" tabindex="-1"></a><span class="co">#&gt; 5      nox  0.382234296  1.01537087     nox=0.469</span></span>
+<span id="cb567-9"><a href="xai-explainable-ai.html#cb567-9" tabindex="-1"></a><span class="co">#&gt; 6       rm -1.422404701 19.08075359      rm=6.421</span></span>
+<span id="cb567-10"><a href="xai-explainable-ai.html#cb567-10" tabindex="-1"></a><span class="co">#&gt; 7      age -0.231572537  0.20677965      age=78.9</span></span>
+<span id="cb567-11"><a href="xai-explainable-ai.html#cb567-11" tabindex="-1"></a><span class="co">#&gt; 8      dis -0.179151233  0.34188332    dis=4.9671</span></span>
+<span id="cb567-12"><a href="xai-explainable-ai.html#cb567-12" tabindex="-1"></a><span class="co">#&gt; 9      rad -0.158878084  0.03891879         rad=2</span></span>
+<span id="cb567-13"><a href="xai-explainable-ai.html#cb567-13" tabindex="-1"></a><span class="co">#&gt; 10     tax  0.171894830  0.54395722       tax=242</span></span>
+<span id="cb567-14"><a href="xai-explainable-ai.html#cb567-14" tabindex="-1"></a><span class="co">#&gt; 11 ptratio  0.201743110  0.82863870  ptratio=17.8</span></span>
+<span id="cb567-15"><a href="xai-explainable-ai.html#cb567-15" tabindex="-1"></a><span class="co">#&gt; 12   black -0.007767299  0.04527014   black=396.9</span></span>
+<span id="cb567-16"><a href="xai-explainable-ai.html#cb567-16" tabindex="-1"></a><span class="co">#&gt; 13   lstat  0.455681606 12.42825560    lstat=9.14</span></span></code></pre></div>
+<!-- 080324: マニュアルにないので, 取り敢えず外しておく -->
+<p><font color="red"> 注) 授業内配布済Rコード内では, 以下のブロックが記載されていましたが, マニュアルに記載されていない用法であったため, 訂正の上, 削除いたします</font></p>
+<div class="sourceCode" id="cb568"><pre class="sourceCode r"><code class="sourceCode r"><span id="cb568-1"><a href="xai-explainable-ai.html#cb568-1" tabindex="-1"></a><span class="co"># 以下のブロックは削除のこと</span></span>
+<span id="cb568-2"><a href="xai-explainable-ai.html#cb568-2" tabindex="-1"></a><span class="co"># 全データセットの平均 (大局的説明)</span></span>
+<span id="cb568-3"><a href="xai-explainable-ai.html#cb568-3" tabindex="-1"></a>shapley<span class="sc">$</span><span class="fu">explain</span>(<span class="at">x.interest =</span> X)</span>
+<span id="cb568-4"><a href="xai-explainable-ai.html#cb568-4" tabindex="-1"></a>shapley<span class="sc">$</span><span class="fu">plot</span>()</span>
+<span id="cb568-5"><a href="xai-explainable-ai.html#cb568-5" tabindex="-1"></a><span class="co"># plot(shapley) # average</span></span></code></pre></div>
+<div id="分類問題のケース" class="section level3 unnumbered hasAnchor">
+<h3>分類問題のケース<a href="xai-explainable-ai.html#分類問題のケース" class="anchor-section" aria-label="Anchor link to header"></a></h3>
+<p>次に, 分類問題のケースについて扱う.
+#### データセット (2): irisデータ {-}
+データセットとしては, (レコード数も変数も少なく出力結果を理解しやすい) <code>iris</code>を使用する.</p>
+</div>
+<div id="多値分類問題の例-iris" class="section level3 unnumbered hasAnchor">
+<h3>多値分類問題の例 (iris)<a href="xai-explainable-ai.html#多値分類問題の例-iris" class="anchor-section" aria-label="Anchor link to header"></a></h3>
+<p>ここでは, <code>Shapley()</code>の動作確認に主眼におき,
+平易な設定を扱う.</p>
+<p>まず, <code>iris</code>のターゲットの変数<code>Species</code>は, 3水準のカテゴリー変数 (因子型)で,
+<code>setosa</code> (1〜50行), <code>versicolor</code> (51〜100行), <code>virginica</code> (101〜150行)
+の値を持つ.</p>
+<div class="sourceCode" id="cb569"><pre class="sourceCode r"><code class="sourceCode r"><span id="cb569-1"><a href="xai-explainable-ai.html#cb569-1" tabindex="-1"></a>iris[<span class="dv">1</span><span class="sc">:</span><span class="dv">3</span>, ]</span>
+<span id="cb569-2"><a href="xai-explainable-ai.html#cb569-2" tabindex="-1"></a><span class="co">#&gt;   Sepal.Length Sepal.Width Petal.Length Petal.Width Species</span></span>
+<span id="cb569-3"><a href="xai-explainable-ai.html#cb569-3" tabindex="-1"></a><span class="co">#&gt; 1          5.1         3.5          1.4         0.2  setosa</span></span>
+<span id="cb569-4"><a href="xai-explainable-ai.html#cb569-4" tabindex="-1"></a><span class="co">#&gt; 2          4.9         3.0          1.4         0.2  setosa</span></span>
+<span id="cb569-5"><a href="xai-explainable-ai.html#cb569-5" tabindex="-1"></a><span class="co">#&gt; 3          4.7         3.2          1.3         0.2  setosa</span></span>
+<span id="cb569-6"><a href="xai-explainable-ai.html#cb569-6" tabindex="-1"></a>iris[<span class="dv">51</span><span class="sc">:</span><span class="dv">53</span>, ]</span>
+<span id="cb569-7"><a href="xai-explainable-ai.html#cb569-7" tabindex="-1"></a><span class="co">#&gt;    Sepal.Length Sepal.Width Petal.Length Petal.Width    Species</span></span>
+<span id="cb569-8"><a href="xai-explainable-ai.html#cb569-8" tabindex="-1"></a><span class="co">#&gt; 51          7.0         3.2          4.7         1.4 versicolor</span></span>
+<span id="cb569-9"><a href="xai-explainable-ai.html#cb569-9" tabindex="-1"></a><span class="co">#&gt; 52          6.4         3.2          4.5         1.5 versicolor</span></span>
+<span id="cb569-10"><a href="xai-explainable-ai.html#cb569-10" tabindex="-1"></a><span class="co">#&gt; 53          6.9         3.1          4.9         1.5 versicolor</span></span>
+<span id="cb569-11"><a href="xai-explainable-ai.html#cb569-11" tabindex="-1"></a>iris[<span class="dv">101</span><span class="sc">:</span><span class="dv">103</span>, ]</span>
+<span id="cb569-12"><a href="xai-explainable-ai.html#cb569-12" tabindex="-1"></a><span class="co">#&gt;     Sepal.Length Sepal.Width Petal.Length Petal.Width   Species</span></span>
+<span id="cb569-13"><a href="xai-explainable-ai.html#cb569-13" tabindex="-1"></a><span class="co">#&gt; 101          6.3         3.3          6.0         2.5 virginica</span></span>
+<span id="cb569-14"><a href="xai-explainable-ai.html#cb569-14" tabindex="-1"></a><span class="co">#&gt; 102          5.8         2.7          5.1         1.9 virginica</span></span>
+<span id="cb569-15"><a href="xai-explainable-ai.html#cb569-15" tabindex="-1"></a><span class="co">#&gt; 103          7.1         3.0          5.9         2.1 virginica</span></span></code></pre></div>
+<p>また, “ホワイトボックス”モデルである決定木をターゲットモデルに採用し,
+SHAPの出力がどのようなものになるかを確認する.</p>
+<div class="sourceCode" id="cb570"><pre class="sourceCode r"><code class="sourceCode r"><span id="cb570-1"><a href="xai-explainable-ai.html#cb570-1" tabindex="-1"></a><span class="co"># Species: setosa (1〜50), versicolor (51〜100), virginica (101〜150)</span></span>
+<span id="cb570-2"><a href="xai-explainable-ai.html#cb570-2" tabindex="-1"></a><span class="fu">library</span>(rpart)</span>
+<span id="cb570-3"><a href="xai-explainable-ai.html#cb570-3" tabindex="-1"></a><span class="fu">set.seed</span>(<span class="dv">123</span>)</span>
+<span id="cb570-4"><a href="xai-explainable-ai.html#cb570-4" tabindex="-1"></a>fit_rpart <span class="ot">&lt;-</span> <span class="fu">rpart</span>(Species <span class="sc">~</span> ., <span class="at">data =</span> iris)</span></code></pre></div>
+<div class="sourceCode" id="cb571"><pre class="sourceCode r"><code class="sourceCode r"><span id="cb571-1"><a href="xai-explainable-ai.html#cb571-1" tabindex="-1"></a><span class="fu">library</span>(rpart.plot)</span>
+<span id="cb571-2"><a href="xai-explainable-ai.html#cb571-2" tabindex="-1"></a><span class="fu">rpart.plot</span>(fit_rpart, <span class="at">digit =</span> <span class="dv">3</span>)</span></code></pre></div>
+<p><img src="140-xai_files/figure-html/unnamed-chunk-25-1.png" width="75%" /></p>
+<p>ローカルな分析を行うことから, 比較のために,
+ターゲット変数<code>Species</code>の3水準の各値に対応するデータ点 (インスタンス)
+として, 1,2 (setosa), 51 (versicolor), 101 (virginica) をピックアップする.</p>
+<div class="sourceCode" id="cb572"><pre class="sourceCode r"><code class="sourceCode r"><span id="cb572-1"><a href="xai-explainable-ai.html#cb572-1" tabindex="-1"></a><span class="co"># 決定木による確率予測値</span></span>
+<span id="cb572-2"><a href="xai-explainable-ai.html#cb572-2" tabindex="-1"></a><span class="fu">predict</span>(fit_rpart)[<span class="fu">c</span>(<span class="dv">1</span>, <span class="dv">2</span>, <span class="dv">51</span>, <span class="dv">101</span>), ]</span>
+<span id="cb572-3"><a href="xai-explainable-ai.html#cb572-3" tabindex="-1"></a><span class="co">#&gt;     setosa versicolor  virginica</span></span>
+<span id="cb572-4"><a href="xai-explainable-ai.html#cb572-4" tabindex="-1"></a><span class="co">#&gt; 1        1 0.00000000 0.00000000</span></span>
+<span id="cb572-5"><a href="xai-explainable-ai.html#cb572-5" tabindex="-1"></a><span class="co">#&gt; 2        1 0.00000000 0.00000000</span></span>
+<span id="cb572-6"><a href="xai-explainable-ai.html#cb572-6" tabindex="-1"></a><span class="co">#&gt; 51       0 0.90740741 0.09259259</span></span>
+<span id="cb572-7"><a href="xai-explainable-ai.html#cb572-7" tabindex="-1"></a><span class="co">#&gt; 101      0 0.02173913 0.97826087</span></span></code></pre></div>
+<p>個々のデータ点における, モデルの出力である確率予測に対する
+各特徴量の貢献度の評価を行いたい ($type = “prob”).</p>
+<div class="sourceCode" id="cb573"><pre class="sourceCode r"><code class="sourceCode r"><span id="cb573-1"><a href="xai-explainable-ai.html#cb573-1" tabindex="-1"></a>X <span class="ot">&lt;-</span> iris[, <span class="sc">-</span><span class="dv">5</span>]</span>
+<span id="cb573-2"><a href="xai-explainable-ai.html#cb573-2" tabindex="-1"></a>mod <span class="ot">&lt;-</span> Predictor<span class="sc">$</span><span class="fu">new</span>(fit_rpart, <span class="at">data =</span> X, <span class="at">type =</span> <span class="st">&quot;prob&quot;</span>)</span></code></pre></div>
+<div class="sourceCode" id="cb574"><pre class="sourceCode r"><code class="sourceCode r"><span id="cb574-1"><a href="xai-explainable-ai.html#cb574-1" tabindex="-1"></a><span class="co"># 1番目のデータ点 (setosa) に対する説明</span></span>
+<span id="cb574-2"><a href="xai-explainable-ai.html#cb574-2" tabindex="-1"></a><span class="fu">set.seed</span>(<span class="dv">123</span>)</span>
+<span id="cb574-3"><a href="xai-explainable-ai.html#cb574-3" tabindex="-1"></a>shapley <span class="ot">&lt;-</span> Shapley<span class="sc">$</span><span class="fu">new</span>(mod, <span class="at">x.interest =</span> X[<span class="dv">1</span>, ])</span>
+<span id="cb574-4"><a href="xai-explainable-ai.html#cb574-4" tabindex="-1"></a>shapley<span class="sc">$</span>results</span>
+<span id="cb574-5"><a href="xai-explainable-ai.html#cb574-5" tabindex="-1"></a><span class="co">#&gt;         feature      class        phi    phi.var    feature.value</span></span>
+<span id="cb574-6"><a href="xai-explainable-ai.html#cb574-6" tabindex="-1"></a><span class="co">#&gt; 1  Sepal.Length     setosa  0.0000000 0.00000000 Sepal.Length=5.1</span></span>
+<span id="cb574-7"><a href="xai-explainable-ai.html#cb574-7" tabindex="-1"></a><span class="co">#&gt; 2   Sepal.Width     setosa  0.0000000 0.00000000  Sepal.Width=3.5</span></span>
+<span id="cb574-8"><a href="xai-explainable-ai.html#cb574-8" tabindex="-1"></a><span class="co">#&gt; 3  Petal.Length     setosa  0.7200000 0.20363636 Petal.Length=1.4</span></span>
+<span id="cb574-9"><a href="xai-explainable-ai.html#cb574-9" tabindex="-1"></a><span class="co">#&gt; 4   Petal.Width     setosa  0.0000000 0.00000000  Petal.Width=0.2</span></span>
+<span id="cb574-10"><a href="xai-explainable-ai.html#cb574-10" tabindex="-1"></a><span class="co">#&gt; 5  Sepal.Length versicolor  0.0000000 0.00000000 Sepal.Length=5.1</span></span>
+<span id="cb574-11"><a href="xai-explainable-ai.html#cb574-11" tabindex="-1"></a><span class="co">#&gt; 6   Sepal.Width versicolor  0.0000000 0.00000000  Sepal.Width=3.5</span></span>
+<span id="cb574-12"><a href="xai-explainable-ai.html#cb574-12" tabindex="-1"></a><span class="co">#&gt; 7  Petal.Length versicolor -0.5647665 0.19352196 Petal.Length=1.4</span></span>
+<span id="cb574-13"><a href="xai-explainable-ai.html#cb574-13" tabindex="-1"></a><span class="co">#&gt; 8   Petal.Width versicolor  0.1682770 0.12193984  Petal.Width=0.2</span></span>
+<span id="cb574-14"><a href="xai-explainable-ai.html#cb574-14" tabindex="-1"></a><span class="co">#&gt; 9  Sepal.Length  virginica  0.0000000 0.00000000 Sepal.Length=5.1</span></span>
+<span id="cb574-15"><a href="xai-explainable-ai.html#cb574-15" tabindex="-1"></a><span class="co">#&gt; 10  Sepal.Width  virginica  0.0000000 0.00000000  Sepal.Width=3.5</span></span>
+<span id="cb574-16"><a href="xai-explainable-ai.html#cb574-16" tabindex="-1"></a><span class="co">#&gt; 11 Petal.Length  virginica -0.1552335 0.07769444 Petal.Length=1.4</span></span>
+<span id="cb574-17"><a href="xai-explainable-ai.html#cb574-17" tabindex="-1"></a><span class="co">#&gt; 12  Petal.Width  virginica -0.1682770 0.12193984  Petal.Width=0.2</span></span>
+<span id="cb574-18"><a href="xai-explainable-ai.html#cb574-18" tabindex="-1"></a><span class="fu">plot</span>(shapley)</span></code></pre></div>
+<p><img src="140-xai_files/figure-html/unnamed-chunk-28-1.png" width="75%" /></p>
+<p>1番目のデータ点は, <span class="math inline">\(\phi_{Petal.Length}=0.70\)</span> であり,
+予測モデルが<code>Species==setosa</code>の確率<span class="math inline">\(\approx1\)</span>と予測した
+最大の理由となっていることを示している.</p>
+<div class="sourceCode" id="cb575"><pre class="sourceCode r"><code class="sourceCode r"><span id="cb575-1"><a href="xai-explainable-ai.html#cb575-1" tabindex="-1"></a><span class="co"># 2番目 (setosa)</span></span>
+<span id="cb575-2"><a href="xai-explainable-ai.html#cb575-2" tabindex="-1"></a>shapley<span class="sc">$</span><span class="fu">explain</span>(<span class="at">x.interest =</span> X[<span class="dv">2</span>, ])</span>
+<span id="cb575-3"><a href="xai-explainable-ai.html#cb575-3" tabindex="-1"></a>shapley<span class="sc">$</span>results</span>
+<span id="cb575-4"><a href="xai-explainable-ai.html#cb575-4" tabindex="-1"></a><span class="co">#&gt;         feature      class        phi   phi.var    feature.value</span></span>
+<span id="cb575-5"><a href="xai-explainable-ai.html#cb575-5" tabindex="-1"></a><span class="co">#&gt; 1  Sepal.Length     setosa  0.0000000 0.0000000 Sepal.Length=4.9</span></span>
+<span id="cb575-6"><a href="xai-explainable-ai.html#cb575-6" tabindex="-1"></a><span class="co">#&gt; 2   Sepal.Width     setosa  0.0000000 0.0000000    Sepal.Width=3</span></span>
+<span id="cb575-7"><a href="xai-explainable-ai.html#cb575-7" tabindex="-1"></a><span class="co">#&gt; 3  Petal.Length     setosa  0.6800000 0.2197980 Petal.Length=1.4</span></span>
+<span id="cb575-8"><a href="xai-explainable-ai.html#cb575-8" tabindex="-1"></a><span class="co">#&gt; 4   Petal.Width     setosa  0.0000000 0.0000000  Petal.Width=0.2</span></span>
+<span id="cb575-9"><a href="xai-explainable-ai.html#cb575-9" tabindex="-1"></a><span class="co">#&gt; 5  Sepal.Length versicolor  0.0000000 0.0000000 Sepal.Length=4.9</span></span>
+<span id="cb575-10"><a href="xai-explainable-ai.html#cb575-10" tabindex="-1"></a><span class="co">#&gt; 6   Sepal.Width versicolor  0.0000000 0.0000000    Sepal.Width=3</span></span>
+<span id="cb575-11"><a href="xai-explainable-ai.html#cb575-11" tabindex="-1"></a><span class="co">#&gt; 7  Petal.Length versicolor -0.4664734 0.2044554 Petal.Length=1.4</span></span>
+<span id="cb575-12"><a href="xai-explainable-ai.html#cb575-12" tabindex="-1"></a><span class="co">#&gt; 8   Petal.Width versicolor  0.1417069 0.1064894  Petal.Width=0.2</span></span>
+<span id="cb575-13"><a href="xai-explainable-ai.html#cb575-13" tabindex="-1"></a><span class="co">#&gt; 9  Sepal.Length  virginica  0.0000000 0.0000000 Sepal.Length=4.9</span></span>
+<span id="cb575-14"><a href="xai-explainable-ai.html#cb575-14" tabindex="-1"></a><span class="co">#&gt; 10  Sepal.Width  virginica  0.0000000 0.0000000    Sepal.Width=3</span></span>
+<span id="cb575-15"><a href="xai-explainable-ai.html#cb575-15" tabindex="-1"></a><span class="co">#&gt; 11 Petal.Length  virginica -0.2135266 0.1226948 Petal.Length=1.4</span></span>
+<span id="cb575-16"><a href="xai-explainable-ai.html#cb575-16" tabindex="-1"></a><span class="co">#&gt; 12  Petal.Width  virginica -0.1417069 0.1064894  Petal.Width=0.2</span></span>
+<span id="cb575-17"><a href="xai-explainable-ai.html#cb575-17" tabindex="-1"></a><span class="fu">plot</span>(shapley)</span></code></pre></div>
+<p><img src="140-xai_files/figure-html/unnamed-chunk-29-1.png" width="75%" /></p>
+<div class="sourceCode" id="cb576"><pre class="sourceCode r"><code class="sourceCode r"><span id="cb576-1"><a href="xai-explainable-ai.html#cb576-1" tabindex="-1"></a><span class="co"># 51番目 (versicolor)</span></span>
+<span id="cb576-2"><a href="xai-explainable-ai.html#cb576-2" tabindex="-1"></a>shapley<span class="sc">$</span><span class="fu">explain</span>(<span class="at">x.interest =</span> X[<span class="dv">51</span>, ])</span>
+<span id="cb576-3"><a href="xai-explainable-ai.html#cb576-3" tabindex="-1"></a>shapley<span class="sc">$</span>results</span>
+<span id="cb576-4"><a href="xai-explainable-ai.html#cb576-4" tabindex="-1"></a><span class="co">#&gt;         feature      class         phi     phi.var    feature.value</span></span>
+<span id="cb576-5"><a href="xai-explainable-ai.html#cb576-5" tabindex="-1"></a><span class="co">#&gt; 1  Sepal.Length     setosa  0.00000000 0.000000000   Sepal.Length=7</span></span>
+<span id="cb576-6"><a href="xai-explainable-ai.html#cb576-6" tabindex="-1"></a><span class="co">#&gt; 2   Sepal.Width     setosa  0.00000000 0.000000000  Sepal.Width=3.2</span></span>
+<span id="cb576-7"><a href="xai-explainable-ai.html#cb576-7" tabindex="-1"></a><span class="co">#&gt; 3  Petal.Length     setosa -0.38000000 0.237979798 Petal.Length=4.7</span></span>
+<span id="cb576-8"><a href="xai-explainable-ai.html#cb576-8" tabindex="-1"></a><span class="co">#&gt; 4   Petal.Width     setosa  0.00000000 0.000000000  Petal.Width=1.4</span></span>
+<span id="cb576-9"><a href="xai-explainable-ai.html#cb576-9" tabindex="-1"></a><span class="co">#&gt; 5  Sepal.Length versicolor  0.00000000 0.000000000   Sepal.Length=7</span></span>
+<span id="cb576-10"><a href="xai-explainable-ai.html#cb576-10" tabindex="-1"></a><span class="co">#&gt; 6   Sepal.Width versicolor  0.00000000 0.000000000  Sepal.Width=3.2</span></span>
+<span id="cb576-11"><a href="xai-explainable-ai.html#cb576-11" tabindex="-1"></a><span class="co">#&gt; 7  Petal.Length versicolor  0.34481481 0.195949758 Petal.Length=4.7</span></span>
+<span id="cb576-12"><a href="xai-explainable-ai.html#cb576-12" tabindex="-1"></a><span class="co">#&gt; 8   Petal.Width versicolor  0.32769726 0.184692499  Petal.Width=1.4</span></span>
+<span id="cb576-13"><a href="xai-explainable-ai.html#cb576-13" tabindex="-1"></a><span class="co">#&gt; 9  Sepal.Length  virginica  0.00000000 0.000000000   Sepal.Length=7</span></span>
+<span id="cb576-14"><a href="xai-explainable-ai.html#cb576-14" tabindex="-1"></a><span class="co">#&gt; 10  Sepal.Width  virginica  0.00000000 0.000000000  Sepal.Width=3.2</span></span>
+<span id="cb576-15"><a href="xai-explainable-ai.html#cb576-15" tabindex="-1"></a><span class="co">#&gt; 11 Petal.Length  virginica  0.03518519 0.002040293 Petal.Length=4.7</span></span>
+<span id="cb576-16"><a href="xai-explainable-ai.html#cb576-16" tabindex="-1"></a><span class="co">#&gt; 12  Petal.Width  virginica -0.32769726 0.184692499  Petal.Width=1.4</span></span>
+<span id="cb576-17"><a href="xai-explainable-ai.html#cb576-17" tabindex="-1"></a><span class="fu">plot</span>(shapley)</span></code></pre></div>
+<p><img src="140-xai_files/figure-html/unnamed-chunk-30-1.png" width="75%" /></p>
+<div class="sourceCode" id="cb577"><pre class="sourceCode r"><code class="sourceCode r"><span id="cb577-1"><a href="xai-explainable-ai.html#cb577-1" tabindex="-1"></a><span class="co"># 101番目 (verginica)</span></span>
+<span id="cb577-2"><a href="xai-explainable-ai.html#cb577-2" tabindex="-1"></a>shapley<span class="sc">$</span><span class="fu">explain</span>(<span class="at">x.interest =</span> X[<span class="dv">101</span>, ])</span>
+<span id="cb577-3"><a href="xai-explainable-ai.html#cb577-3" tabindex="-1"></a>shapley<span class="sc">$</span>results</span>
+<span id="cb577-4"><a href="xai-explainable-ai.html#cb577-4" tabindex="-1"></a><span class="co">#&gt;         feature      class        phi    phi.var    feature.value</span></span>
+<span id="cb577-5"><a href="xai-explainable-ai.html#cb577-5" tabindex="-1"></a><span class="co">#&gt; 1  Sepal.Length     setosa  0.0000000 0.00000000 Sepal.Length=6.3</span></span>
+<span id="cb577-6"><a href="xai-explainable-ai.html#cb577-6" tabindex="-1"></a><span class="co">#&gt; 2   Sepal.Width     setosa  0.0000000 0.00000000  Sepal.Width=3.3</span></span>
+<span id="cb577-7"><a href="xai-explainable-ai.html#cb577-7" tabindex="-1"></a><span class="co">#&gt; 3  Petal.Length     setosa -0.3100000 0.21606061   Petal.Length=6</span></span>
+<span id="cb577-8"><a href="xai-explainable-ai.html#cb577-8" tabindex="-1"></a><span class="co">#&gt; 4   Petal.Width     setosa  0.0000000 0.00000000  Petal.Width=2.5</span></span>
+<span id="cb577-9"><a href="xai-explainable-ai.html#cb577-9" tabindex="-1"></a><span class="co">#&gt; 5  Sepal.Length versicolor  0.0000000 0.00000000 Sepal.Length=6.3</span></span>
+<span id="cb577-10"><a href="xai-explainable-ai.html#cb577-10" tabindex="-1"></a><span class="co">#&gt; 6   Sepal.Width versicolor  0.0000000 0.00000000  Sepal.Width=3.3</span></span>
+<span id="cb577-11"><a href="xai-explainable-ai.html#cb577-11" tabindex="-1"></a><span class="co">#&gt; 7  Petal.Length versicolor  0.1307327 0.09925621   Petal.Length=6</span></span>
+<span id="cb577-12"><a href="xai-explainable-ai.html#cb577-12" tabindex="-1"></a><span class="co">#&gt; 8   Petal.Width versicolor -0.4782609 0.19681517  Petal.Width=2.5</span></span>
+<span id="cb577-13"><a href="xai-explainable-ai.html#cb577-13" tabindex="-1"></a><span class="co">#&gt; 9  Sepal.Length  virginica  0.0000000 0.00000000 Sepal.Length=6.3</span></span>
+<span id="cb577-14"><a href="xai-explainable-ai.html#cb577-14" tabindex="-1"></a><span class="co">#&gt; 10  Sepal.Width  virginica  0.0000000 0.00000000  Sepal.Width=3.3</span></span>
+<span id="cb577-15"><a href="xai-explainable-ai.html#cb577-15" tabindex="-1"></a><span class="co">#&gt; 11 Petal.Length  virginica  0.1792673 0.13308338   Petal.Length=6</span></span>
+<span id="cb577-16"><a href="xai-explainable-ai.html#cb577-16" tabindex="-1"></a><span class="co">#&gt; 12  Petal.Width  virginica  0.4782609 0.19681517  Petal.Width=2.5</span></span>
+<span id="cb577-17"><a href="xai-explainable-ai.html#cb577-17" tabindex="-1"></a><span class="fu">plot</span>(shapley)</span></code></pre></div>
+<p><img src="140-xai_files/figure-html/unnamed-chunk-31-1.png" width="75%" /></p>
+<!-- 080324: マニュアルにないので, 取り敢えず外しておく -->
+<div class="sourceCode" id="cb578"><pre class="sourceCode r"><code class="sourceCode r"><span id="cb578-1"><a href="xai-explainable-ai.html#cb578-1" tabindex="-1"></a><span class="co"># 上と同じ理由により, 以下のブロックは削除のこと</span></span>
+<span id="cb578-2"><a href="xai-explainable-ai.html#cb578-2" tabindex="-1"></a><span class="co"># 全データセットの平均 (大局的説明)</span></span>
+<span id="cb578-3"><a href="xai-explainable-ai.html#cb578-3" tabindex="-1"></a>shapley<span class="sc">$</span><span class="fu">explain</span>(<span class="at">x.interest =</span> X)</span>
+<span id="cb578-4"><a href="xai-explainable-ai.html#cb578-4" tabindex="-1"></a>shapley<span class="sc">$</span>results</span>
+<span id="cb578-5"><a href="xai-explainable-ai.html#cb578-5" tabindex="-1"></a><span class="fu">plot</span>(shapley)</span></code></pre></div>
+</div>
+<div id="値分類問題" class="section level3 unnumbered hasAnchor">
+<h3>2値分類問題<a href="xai-explainable-ai.html#値分類問題" class="anchor-section" aria-label="Anchor link to header"></a></h3>
+<p>最後に, (<code>setosa</code>か否か) に限定して動作を確認する.</p>
+<div class="sourceCode" id="cb579"><pre class="sourceCode r"><code class="sourceCode r"><span id="cb579-1"><a href="xai-explainable-ai.html#cb579-1" tabindex="-1"></a><span class="co"># 一つのクラス (setosa) にフォーカスする場合</span></span>
+<span id="cb579-2"><a href="xai-explainable-ai.html#cb579-2" tabindex="-1"></a><span class="co"># setosaか否か</span></span>
+<span id="cb579-3"><a href="xai-explainable-ai.html#cb579-3" tabindex="-1"></a>mod <span class="ot">&lt;-</span> Predictor<span class="sc">$</span><span class="fu">new</span>(fit_rpart, <span class="at">data =</span> X, <span class="at">type =</span> <span class="st">&quot;prob&quot;</span>, <span class="at">class =</span> <span class="st">&quot;setosa&quot;</span>)</span></code></pre></div>
+<div class="sourceCode" id="cb580"><pre class="sourceCode r"><code class="sourceCode r"><span id="cb580-1"><a href="xai-explainable-ai.html#cb580-1" tabindex="-1"></a><span class="fu">set.seed</span>(<span class="dv">123</span>)</span>
+<span id="cb580-2"><a href="xai-explainable-ai.html#cb580-2" tabindex="-1"></a>shapley <span class="ot">&lt;-</span> Shapley<span class="sc">$</span><span class="fu">new</span>(mod, <span class="at">x.interest =</span> X[<span class="dv">1</span>, ])</span>
+<span id="cb580-3"><a href="xai-explainable-ai.html#cb580-3" tabindex="-1"></a>shapley<span class="sc">$</span>results</span>
+<span id="cb580-4"><a href="xai-explainable-ai.html#cb580-4" tabindex="-1"></a><span class="co">#&gt;        feature  phi   phi.var    feature.value</span></span>
+<span id="cb580-5"><a href="xai-explainable-ai.html#cb580-5" tabindex="-1"></a><span class="co">#&gt; 1 Sepal.Length 0.00 0.0000000 Sepal.Length=5.1</span></span>
+<span id="cb580-6"><a href="xai-explainable-ai.html#cb580-6" tabindex="-1"></a><span class="co">#&gt; 2  Sepal.Width 0.00 0.0000000  Sepal.Width=3.5</span></span>
+<span id="cb580-7"><a href="xai-explainable-ai.html#cb580-7" tabindex="-1"></a><span class="co">#&gt; 3 Petal.Length 0.72 0.2036364 Petal.Length=1.4</span></span>
+<span id="cb580-8"><a href="xai-explainable-ai.html#cb580-8" tabindex="-1"></a><span class="co">#&gt; 4  Petal.Width 0.00 0.0000000  Petal.Width=0.2</span></span>
+<span id="cb580-9"><a href="xai-explainable-ai.html#cb580-9" tabindex="-1"></a><span class="fu">plot</span>(shapley)</span></code></pre></div>
+<p><img src="140-xai_files/figure-html/unnamed-chunk-34-1.png" width="75%" /></p>
+<div class="sourceCode" id="cb581"><pre class="sourceCode r"><code class="sourceCode r"><span id="cb581-1"><a href="xai-explainable-ai.html#cb581-1" tabindex="-1"></a>shapley<span class="sc">$</span><span class="fu">explain</span>(<span class="at">x.interest =</span> X[<span class="dv">2</span>, ])</span>
+<span id="cb581-2"><a href="xai-explainable-ai.html#cb581-2" tabindex="-1"></a>shapley<span class="sc">$</span><span class="fu">plot</span>()</span></code></pre></div>
+<p><img src="140-xai_files/figure-html/unnamed-chunk-35-1.png" width="75%" /></p>
+<div class="sourceCode" id="cb582"><pre class="sourceCode r"><code class="sourceCode r"><span id="cb582-1"><a href="xai-explainable-ai.html#cb582-1" tabindex="-1"></a>shapley<span class="sc">$</span>results</span>
+<span id="cb582-2"><a href="xai-explainable-ai.html#cb582-2" tabindex="-1"></a><span class="co">#&gt;        feature  phi  phi.var    feature.value</span></span>
+<span id="cb582-3"><a href="xai-explainable-ai.html#cb582-3" tabindex="-1"></a><span class="co">#&gt; 1 Sepal.Length 0.00 0.000000 Sepal.Length=4.9</span></span>
+<span id="cb582-4"><a href="xai-explainable-ai.html#cb582-4" tabindex="-1"></a><span class="co">#&gt; 2  Sepal.Width 0.00 0.000000    Sepal.Width=3</span></span>
+<span id="cb582-5"><a href="xai-explainable-ai.html#cb582-5" tabindex="-1"></a><span class="co">#&gt; 3 Petal.Length 0.68 0.219798 Petal.Length=1.4</span></span>
+<span id="cb582-6"><a href="xai-explainable-ai.html#cb582-6" tabindex="-1"></a><span class="co">#&gt; 4  Petal.Width 0.00 0.000000  Petal.Width=0.2</span></span></code></pre></div>
+<div class="sourceCode" id="cb583"><pre class="sourceCode r"><code class="sourceCode r"><span id="cb583-1"><a href="xai-explainable-ai.html#cb583-1" tabindex="-1"></a>shapley<span class="sc">$</span><span class="fu">explain</span>(<span class="at">x.interest =</span> X[<span class="dv">51</span>, ])</span>
+<span id="cb583-2"><a href="xai-explainable-ai.html#cb583-2" tabindex="-1"></a>shapley<span class="sc">$</span><span class="fu">plot</span>()</span></code></pre></div>
+<p><img src="140-xai_files/figure-html/unnamed-chunk-36-1.png" width="75%" /></p>
+<div class="sourceCode" id="cb584"><pre class="sourceCode r"><code class="sourceCode r"><span id="cb584-1"><a href="xai-explainable-ai.html#cb584-1" tabindex="-1"></a>shapley<span class="sc">$</span>results</span>
+<span id="cb584-2"><a href="xai-explainable-ai.html#cb584-2" tabindex="-1"></a><span class="co">#&gt;        feature   phi   phi.var    feature.value</span></span>
+<span id="cb584-3"><a href="xai-explainable-ai.html#cb584-3" tabindex="-1"></a><span class="co">#&gt; 1 Sepal.Length  0.00 0.0000000   Sepal.Length=7</span></span>
+<span id="cb584-4"><a href="xai-explainable-ai.html#cb584-4" tabindex="-1"></a><span class="co">#&gt; 2  Sepal.Width  0.00 0.0000000  Sepal.Width=3.2</span></span>
+<span id="cb584-5"><a href="xai-explainable-ai.html#cb584-5" tabindex="-1"></a><span class="co">#&gt; 3 Petal.Length -0.38 0.2379798 Petal.Length=4.7</span></span>
+<span id="cb584-6"><a href="xai-explainable-ai.html#cb584-6" tabindex="-1"></a><span class="co">#&gt; 4  Petal.Width  0.00 0.0000000  Petal.Width=1.4</span></span></code></pre></div>
+<!--
+**データ点を指定しない場合には, SHAP値の全データ点の平均が出力される**
+_いまの分類問題において, 有用な操作とは言えない_
+マニュアルにないので, 外しておく
+
+``` r
+# 上と同じ理由により, 以下のブロックは削除のこと
+# 全データセットの平均 (大局的説明)
+shapley$explain(x.interest = X)
+shapley$results
+plot(shapley)
+```
+-->
+
+</div>
+</div>
+</div>
+            </section>
+
+          </div>
+        </div>
+      </div>
+<a href="クラスター分析.html" class="navigation navigation-prev navigation-unique" aria-label="Previous page"><i class="fa fa-angle-left"></i></a>
+
+    </div>
+  </div>
+<script src="libs/gitbook-2.6.7/js/app.min.js"></script>
+<script src="libs/gitbook-2.6.7/js/clipboard.min.js"></script>
+<script src="libs/gitbook-2.6.7/js/plugin-search.js"></script>
+<script src="libs/gitbook-2.6.7/js/plugin-sharing.js"></script>
+<script src="libs/gitbook-2.6.7/js/plugin-fontsettings.js"></script>
+<script src="libs/gitbook-2.6.7/js/plugin-bookdown.js"></script>
+<script src="libs/gitbook-2.6.7/js/jquery.highlight.js"></script>
+<script src="libs/gitbook-2.6.7/js/plugin-clipboard.js"></script>
+<script>
+gitbook.require(["gitbook"], function(gitbook) {
+gitbook.start({
+"sharing": {
+"github": false,
+"facebook": true,
+"twitter": true,
+"linkedin": false,
+"weibo": false,
+"instapaper": false,
+"vk": false,
+"whatsapp": false,
+"all": ["facebook", "twitter", "linkedin", "weibo", "instapaper"]
+},
+"fontsettings": {
+"theme": "white",
+"family": "sans",
+"size": 2
+},
+"edit": {
+"link": null,
+"text": null
+},
+"history": {
+"link": null,
+"text": null
+},
+"view": {
+"link": null,
+"text": null
+},
+"download": null,
+"search": {
+"engine": "fuse",
+"options": null
+},
+"toc": {
+"collapse": "subsection"
+}
+});
+});
+</script>
+
+<!-- dynamically load mathjax for compatibility with self-contained -->
+<script>
+  (function () {
+    var script = document.createElement("script");
+    script.type = "text/javascript";
+    var src = "true";
+    if (src === "" || src === "true") src = "https://cdnjs.cloudflare.com/ajax/libs/mathjax/2.7.9/latest.js?config=TeX-MML-AM_CHTML";
+    if (location.protocol !== "file:")
+      if (/^https?:/.test(src))
+        src = src.replace(/^https?:/, '');
+    script.src = src;
+    document.getElementsByTagName("head")[0].appendChild(script);
+  })();
+</script>
+</body>
+
+</html>

@@ -1,0 +1,893 @@
+<!DOCTYPE html>
+<html lang="" xml:lang="">
+<head>
+
+  <meta charset="utf-8" />
+  <meta http-equiv="X-UA-Compatible" content="IE=edge" />
+  <title>12 探索的因子分析 | 金融データサイエンス</title>
+  <meta name="description" content="12 探索的因子分析 | 金融データサイエンス" />
+  <meta name="generator" content="bookdown 0.40 and GitBook 2.6.7" />
+
+  <meta property="og:title" content="12 探索的因子分析 | 金融データサイエンス" />
+  <meta property="og:type" content="book" />
+  
+  
+  
+
+  <meta name="twitter:card" content="summary" />
+  <meta name="twitter:title" content="12 探索的因子分析 | 金融データサイエンス" />
+  
+  
+  
+
+<meta name="author" content="林 高樹" />
+
+
+
+  <meta name="viewport" content="width=device-width, initial-scale=1" />
+  <meta name="apple-mobile-web-app-capable" content="yes" />
+  <meta name="apple-mobile-web-app-status-bar-style" content="black" />
+  
+  
+<link rel="prev" href="主成分分析-pca.html"/>
+<link rel="next" href="クラスター分析.html"/>
+<script src="libs/jquery-3.6.0/jquery-3.6.0.min.js"></script>
+<script src="https://cdn.jsdelivr.net/npm/fuse.js@6.4.6/dist/fuse.min.js"></script>
+<link href="libs/gitbook-2.6.7/css/style.css" rel="stylesheet" />
+<link href="libs/gitbook-2.6.7/css/plugin-table.css" rel="stylesheet" />
+<link href="libs/gitbook-2.6.7/css/plugin-bookdown.css" rel="stylesheet" />
+<link href="libs/gitbook-2.6.7/css/plugin-highlight.css" rel="stylesheet" />
+<link href="libs/gitbook-2.6.7/css/plugin-search.css" rel="stylesheet" />
+<link href="libs/gitbook-2.6.7/css/plugin-fontsettings.css" rel="stylesheet" />
+<link href="libs/gitbook-2.6.7/css/plugin-clipboard.css" rel="stylesheet" />
+
+
+
+
+
+
+
+
+<link href="libs/anchor-sections-1.1.0/anchor-sections.css" rel="stylesheet" />
+<link href="libs/anchor-sections-1.1.0/anchor-sections-hash.css" rel="stylesheet" />
+<script src="libs/anchor-sections-1.1.0/anchor-sections.js"></script>
+
+
+<style type="text/css">
+pre > code.sourceCode { white-space: pre; position: relative; }
+pre > code.sourceCode > span { line-height: 1.25; }
+pre > code.sourceCode > span:empty { height: 1.2em; }
+.sourceCode { overflow: visible; }
+code.sourceCode > span { color: inherit; text-decoration: inherit; }
+pre.sourceCode { margin: 0; }
+@media screen {
+div.sourceCode { overflow: auto; }
+}
+@media print {
+pre > code.sourceCode { white-space: pre-wrap; }
+pre > code.sourceCode > span { display: inline-block; text-indent: -5em; padding-left: 5em; }
+}
+pre.numberSource code
+  { counter-reset: source-line 0; }
+pre.numberSource code > span
+  { position: relative; left: -4em; counter-increment: source-line; }
+pre.numberSource code > span > a:first-child::before
+  { content: counter(source-line);
+    position: relative; left: -1em; text-align: right; vertical-align: baseline;
+    border: none; display: inline-block;
+    -webkit-touch-callout: none; -webkit-user-select: none;
+    -khtml-user-select: none; -moz-user-select: none;
+    -ms-user-select: none; user-select: none;
+    padding: 0 4px; width: 4em;
+    color: #aaaaaa;
+  }
+pre.numberSource { margin-left: 3em; border-left: 1px solid #aaaaaa;  padding-left: 4px; }
+div.sourceCode
+  {   }
+@media screen {
+pre > code.sourceCode > span > a:first-child::before { text-decoration: underline; }
+}
+code span.al { color: #ff0000; font-weight: bold; } /* Alert */
+code span.an { color: #60a0b0; font-weight: bold; font-style: italic; } /* Annotation */
+code span.at { color: #7d9029; } /* Attribute */
+code span.bn { color: #40a070; } /* BaseN */
+code span.bu { color: #008000; } /* BuiltIn */
+code span.cf { color: #007020; font-weight: bold; } /* ControlFlow */
+code span.ch { color: #4070a0; } /* Char */
+code span.cn { color: #880000; } /* Constant */
+code span.co { color: #60a0b0; font-style: italic; } /* Comment */
+code span.cv { color: #60a0b0; font-weight: bold; font-style: italic; } /* CommentVar */
+code span.do { color: #ba2121; font-style: italic; } /* Documentation */
+code span.dt { color: #902000; } /* DataType */
+code span.dv { color: #40a070; } /* DecVal */
+code span.er { color: #ff0000; font-weight: bold; } /* Error */
+code span.ex { } /* Extension */
+code span.fl { color: #40a070; } /* Float */
+code span.fu { color: #06287e; } /* Function */
+code span.im { color: #008000; font-weight: bold; } /* Import */
+code span.in { color: #60a0b0; font-weight: bold; font-style: italic; } /* Information */
+code span.kw { color: #007020; font-weight: bold; } /* Keyword */
+code span.op { color: #666666; } /* Operator */
+code span.ot { color: #007020; } /* Other */
+code span.pp { color: #bc7a00; } /* Preprocessor */
+code span.sc { color: #4070a0; } /* SpecialChar */
+code span.ss { color: #bb6688; } /* SpecialString */
+code span.st { color: #4070a0; } /* String */
+code span.va { color: #19177c; } /* Variable */
+code span.vs { color: #4070a0; } /* VerbatimString */
+code span.wa { color: #60a0b0; font-weight: bold; font-style: italic; } /* Warning */
+</style>
+
+<style type="text/css">
+  
+  div.hanging-indent{margin-left: 1.5em; text-indent: -1.5em;}
+</style>
+
+</head>
+
+<body>
+
+
+
+  <div class="book without-animation with-summary font-size-2 font-family-1" data-basepath=".">
+
+    <div class="book-summary">
+      <nav role="navigation">
+
+<ul class="summary">
+<li class="chapter" data-level="1" data-path="index.html"><a href="index.html"><i class="fa fa-check"></i><b>1</b> はじめに</a>
+<ul>
+<li class="chapter" data-level="1.1" data-path="index.html"><a href="index.html#コースの目的"><i class="fa fa-check"></i><b>1.1</b> コースの目的</a></li>
+<li class="chapter" data-level="1.2" data-path="index.html"><a href="index.html#統計学統計的手法の学習について"><i class="fa fa-check"></i><b>1.2</b> 統計学/統計的手法の学習について</a>
+<ul>
+<li class="chapter" data-level="" data-path="index.html"><a href="index.html#学習の目標"><i class="fa fa-check"></i>学習の目標</a></li>
+<li class="chapter" data-level="" data-path="index.html"><a href="index.html#統計学統計的手法の学習方法"><i class="fa fa-check"></i>統計学/統計的手法の学習方法</a></li>
+<li class="chapter" data-level="" data-path="index.html"><a href="index.html#統計学統計的手法の学習ステップ"><i class="fa fa-check"></i>統計学/統計的手法の学習ステップ</a></li>
+</ul></li>
+<li class="chapter" data-level="1.3" data-path="index.html"><a href="index.html#ビジネス応用における統計学の最近の趨勢"><i class="fa fa-check"></i><b>1.3</b> ビジネス応用における統計学の最近の趨勢</a></li>
+<li class="chapter" data-level="1.4" data-path="index.html"><a href="index.html#本書内の記載の注意点"><i class="fa fa-check"></i><b>1.4</b> 本書内の記載の注意点</a></li>
+</ul></li>
+<li class="chapter" data-level="2" data-path="r言語の基本.html"><a href="r言語の基本.html"><i class="fa fa-check"></i><b>2</b> R言語の基本</a>
+<ul>
+<li class="chapter" data-level="2.1" data-path="r言語の基本.html"><a href="r言語の基本.html#rの基本プログラミング"><i class="fa fa-check"></i><b>2.1</b> Rの基本プログラミング</a>
+<ul>
+<li class="chapter" data-level="2.1.1" data-path="r言語の基本.html"><a href="r言語の基本.html#基本操作"><i class="fa fa-check"></i><b>2.1.1</b> 基本操作</a></li>
+<li class="chapter" data-level="2.1.2" data-path="r言語の基本.html"><a href="r言語の基本.html#基本構文"><i class="fa fa-check"></i><b>2.1.2</b> 基本構文</a></li>
+<li class="chapter" data-level="2.1.3" data-path="r言語の基本.html"><a href="r言語の基本.html#自作関数"><i class="fa fa-check"></i><b>2.1.3</b> 自作関数</a></li>
+<li class="chapter" data-level="2.1.4" data-path="r言語の基本.html"><a href="r言語の基本.html#パッケージのインストール-読み込み"><i class="fa fa-check"></i><b>2.1.4</b> パッケージのインストール &amp; 読み込み</a></li>
+<li class="chapter" data-level="2.1.5" data-path="r言語の基本.html"><a href="r言語の基本.html#ヘルプ"><i class="fa fa-check"></i><b>2.1.5</b> ヘルプ</a></li>
+</ul></li>
+<li class="chapter" data-level="2.2" data-path="r言語の基本.html"><a href="r言語の基本.html#データの型や構造"><i class="fa fa-check"></i><b>2.2</b> データの型や構造</a>
+<ul>
+<li class="chapter" data-level="2.2.1" data-path="r言語の基本.html"><a href="r言語の基本.html#データの値の種類-データ型"><i class="fa fa-check"></i><b>2.2.1</b> データの値の種類 (“データ型”)</a></li>
+<li class="chapter" data-level="2.2.2" data-path="r言語の基本.html"><a href="r言語の基本.html#データの配列の仕方-データ構造"><i class="fa fa-check"></i><b>2.2.2</b> データの配列の仕方 (“データ構造”)</a></li>
+<li class="chapter" data-level="2.2.3" data-path="r言語の基本.html"><a href="r言語の基本.html#ベクトル"><i class="fa fa-check"></i><b>2.2.3</b> ベクトル</a></li>
+<li class="chapter" data-level="2.2.4" data-path="r言語の基本.html"><a href="r言語の基本.html#行列"><i class="fa fa-check"></i><b>2.2.4</b> 行列</a></li>
+<li class="chapter" data-level="2.2.5" data-path="r言語の基本.html"><a href="r言語の基本.html#リスト"><i class="fa fa-check"></i><b>2.2.5</b> リスト</a></li>
+<li class="chapter" data-level="2.2.6" data-path="r言語の基本.html"><a href="r言語の基本.html#データフレーム"><i class="fa fa-check"></i><b>2.2.6</b> データフレーム</a></li>
+</ul></li>
+<li class="chapter" data-level="2.3" data-path="r言語の基本.html"><a href="r言語の基本.html#データの操作演算"><i class="fa fa-check"></i><b>2.3</b> データの操作・演算</a>
+<ul>
+<li class="chapter" data-level="2.3.1" data-path="r言語の基本.html"><a href="r言語の基本.html#ベクトルの結合-ソート"><i class="fa fa-check"></i><b>2.3.1</b> ベクトルの結合, ソート</a></li>
+<li class="chapter" data-level="2.3.2" data-path="r言語の基本.html"><a href="r言語の基本.html#二項演算"><i class="fa fa-check"></i><b>2.3.2</b> 二項演算</a></li>
+<li class="chapter" data-level="2.3.3" data-path="r言語の基本.html"><a href="r言語の基本.html#論理演算"><i class="fa fa-check"></i><b>2.3.3</b> 論理演算</a></li>
+<li class="chapter" data-level="2.3.4" data-path="r言語の基本.html"><a href="r言語の基本.html#条件式"><i class="fa fa-check"></i><b>2.3.4</b> 条件式</a></li>
+<li class="chapter" data-level="2.3.5" data-path="r言語の基本.html"><a href="r言語の基本.html#行列演算"><i class="fa fa-check"></i><b>2.3.5</b> 行列演算</a></li>
+</ul></li>
+<li class="chapter" data-level="2.4" data-path="r言語の基本.html"><a href="r言語の基本.html#r関数"><i class="fa fa-check"></i><b>2.4</b> R関数</a>
+<ul>
+<li class="chapter" data-level="2.4.1" data-path="r言語の基本.html"><a href="r言語の基本.html#数学基本関数"><i class="fa fa-check"></i><b>2.4.1</b> 数学基本関数</a></li>
+<li class="chapter" data-level="2.4.2" data-path="r言語の基本.html"><a href="r言語の基本.html#基本統計量の計算"><i class="fa fa-check"></i><b>2.4.2</b> 基本統計量の計算</a></li>
+<li class="chapter" data-level="2.4.3" data-path="r言語の基本.html"><a href="r言語の基本.html#確率分布"><i class="fa fa-check"></i><b>2.4.3</b> 確率分布</a></li>
+<li class="chapter" data-level="2.4.4" data-path="r言語の基本.html"><a href="r言語の基本.html#その他便利な関数"><i class="fa fa-check"></i><b>2.4.4</b> その他便利な関数</a></li>
+</ul></li>
+<li class="chapter" data-level="2.5" data-path="r言語の基本.html"><a href="r言語の基本.html#データの可視化"><i class="fa fa-check"></i><b>2.5</b> データの可視化</a></li>
+<li class="chapter" data-level="2.6" data-path="r言語の基本.html"><a href="r言語の基本.html#ファイル入出力"><i class="fa fa-check"></i><b>2.6</b> ファイル入出力</a>
+<ul>
+<li class="chapter" data-level="2.6.1" data-path="r言語の基本.html"><a href="r言語の基本.html#テキストファイル読み込み"><i class="fa fa-check"></i><b>2.6.1</b> テキストファイル読み込み</a></li>
+<li class="chapter" data-level="2.6.2" data-path="r言語の基本.html"><a href="r言語の基本.html#テキストファイル書き出し"><i class="fa fa-check"></i><b>2.6.2</b> テキストファイル書き出し</a></li>
+</ul></li>
+<li class="chapter" data-level="2.7" data-path="r言語の基本.html"><a href="r言語の基本.html#パッケージtidyverse"><i class="fa fa-check"></i><b>2.7</b> パッケージ<code>tidyverse</code></a>
+<ul>
+<li class="chapter" data-level="2.7.1" data-path="r言語の基本.html"><a href="r言語の基本.html#q-rの初心者はtidyverseから勉強することは可能か"><i class="fa fa-check"></i><b>2.7.1</b> Q: Rの初心者は<code>tidyverse</code>から勉強することは可能か?</a></li>
+<li class="chapter" data-level="2.7.2" data-path="r言語の基本.html"><a href="r言語の基本.html#tidyverseの基本"><i class="fa fa-check"></i><b>2.7.2</b> <code>tidyverse</code>の基本</a></li>
+</ul></li>
+</ul></li>
+<li class="chapter" data-level="3" data-path="線形回帰分析.html"><a href="線形回帰分析.html"><i class="fa fa-check"></i><b>3</b> 線形回帰分析</a>
+<ul>
+<li class="chapter" data-level="3.1" data-path="線形回帰分析.html"><a href="線形回帰分析.html#重回帰分析の基本操作"><i class="fa fa-check"></i><b>3.1</b> 重回帰分析の基本操作</a>
+<ul>
+<li class="chapter" data-level="" data-path="線形回帰分析.html"><a href="線形回帰分析.html#データ1-1ルーム賃貸マンション"><i class="fa fa-check"></i>データ1: 1ルーム賃貸マンション</a></li>
+</ul></li>
+<li class="chapter" data-level="3.2" data-path="線形回帰分析.html"><a href="線形回帰分析.html#変数の選択"><i class="fa fa-check"></i><b>3.2</b> 変数の選択</a>
+<ul>
+<li class="chapter" data-level="" data-path="線形回帰分析.html"><a href="線形回帰分析.html#データ2-ボストン市内住宅物件価格データ"><i class="fa fa-check"></i>データ2: ボストン市内住宅物件価格データ</a></li>
+</ul></li>
+<li class="chapter" data-level="3.3" data-path="線形回帰分析.html"><a href="線形回帰分析.html#説明変数に質的変数を含む回帰"><i class="fa fa-check"></i><b>3.3</b> 説明変数に質的変数を含む回帰</a>
+<ul>
+<li class="chapter" data-level="" data-path="線形回帰分析.html"><a href="線形回帰分析.html#データセット3-高速道路事故データ"><i class="fa fa-check"></i>データセット#3: 高速道路事故データ</a></li>
+</ul></li>
+<li class="chapter" data-level="3.4" data-path="線形回帰分析.html"><a href="線形回帰分析.html#説明変数に質的変数を含む回帰-2"><i class="fa fa-check"></i><b>3.4</b> 説明変数に質的変数を含む回帰 (2)</a>
+<ul>
+<li class="chapter" data-level="" data-path="線形回帰分析.html"><a href="線形回帰分析.html#データセット5-収入データ-仮想"><i class="fa fa-check"></i>データセット#5: 収入データ (仮想)</a></li>
+</ul></li>
+<li class="chapter" data-level="3.5" data-path="線形回帰分析.html"><a href="線形回帰分析.html#多項式回帰"><i class="fa fa-check"></i><b>3.5</b> 多項式回帰</a>
+<ul>
+<li class="chapter" data-level="" data-path="線形回帰分析.html"><a href="線形回帰分析.html#データセット6-wage"><i class="fa fa-check"></i>データセット#6: <code>Wage</code></a></li>
+</ul></li>
+<li class="chapter" data-level="3.6" data-path="線形回帰分析.html"><a href="線形回帰分析.html#関数factorについて"><i class="fa fa-check"></i><b>3.6</b> 関数<code>factor()</code>について</a>
+<ul>
+<li class="chapter" data-level="" data-path="線形回帰分析.html"><a href="線形回帰分析.html#rでのfactor関数の使い方"><i class="fa fa-check"></i>Rでのfactor関数の使い方</a></li>
+</ul></li>
+</ul></li>
+<li class="chapter" data-level="4" data-path="ロジットブロビット回帰分析.html"><a href="ロジットブロビット回帰分析.html"><i class="fa fa-check"></i><b>4</b> ロジット/ブロビット回帰分析</a>
+<ul>
+<li class="chapter" data-level="4.1" data-path="ロジットブロビット回帰分析.html"><a href="ロジットブロビット回帰分析.html#ロジット回帰分析の基本操作"><i class="fa fa-check"></i><b>4.1</b> ロジット回帰分析の基本操作</a>
+<ul>
+<li class="chapter" data-level="" data-path="ロジットブロビット回帰分析.html"><a href="ロジットブロビット回帰分析.html#ロジットモデル-シミュレーションデータ"><i class="fa fa-check"></i>ロジットモデル: シミュレーションデータ</a></li>
+</ul></li>
+<li class="chapter" data-level="4.2" data-path="ロジットブロビット回帰分析.html"><a href="ロジットブロビット回帰分析.html#データ分析例"><i class="fa fa-check"></i><b>4.2</b> データ分析例</a>
+<ul>
+<li class="chapter" data-level="" data-path="ロジットブロビット回帰分析.html"><a href="ロジットブロビット回帰分析.html#データセット-1-企業パフォーマンスデータ-仮想"><i class="fa fa-check"></i>データセット (1): 企業パフォーマンス・データ (仮想)</a></li>
+<li class="chapter" data-level="" data-path="ロジットブロビット回帰分析.html"><a href="ロジットブロビット回帰分析.html#データセット-2-個人ローンデフォルトデータ-仮想"><i class="fa fa-check"></i>データセット (2): 個人ローン・デフォルト・データ (仮想)</a></li>
+</ul></li>
+<li class="chapter" data-level="4.3" data-path="ロジットブロビット回帰分析.html"><a href="ロジットブロビット回帰分析.html#疑似r2の計算"><i class="fa fa-check"></i><b>4.3</b> 疑似R2の計算</a>
+<ul>
+<li class="chapter" data-level="" data-path="ロジットブロビット回帰分析.html"><a href="ロジットブロビット回帰分析.html#パッケージdesctoolsの利用"><i class="fa fa-check"></i>パッケージ<code>DescTools</code>の利用</a></li>
+<li class="chapter" data-level="" data-path="ロジットブロビット回帰分析.html"><a href="ロジットブロビット回帰分析.html#パッケージpsclの利用"><i class="fa fa-check"></i>パッケージ<code>pscl</code>の利用</a></li>
+<li class="chapter" data-level="" data-path="ロジットブロビット回帰分析.html"><a href="ロジットブロビット回帰分析.html#パッケージperformanceの利用"><i class="fa fa-check"></i>パッケージ<code>performance</code>の利用</a></li>
+</ul></li>
+</ul></li>
+<li class="chapter" data-level="5" data-path="一般化加法モデル-gam.html"><a href="一般化加法モデル-gam.html"><i class="fa fa-check"></i><b>5</b> 一般化加法モデル (GAM)</a>
+<ul>
+<li class="chapter" data-level="5.1" data-path="一般化加法モデル-gam.html"><a href="一般化加法モデル-gam.html#パッケージgamの利用"><i class="fa fa-check"></i><b>5.1</b> パッケージ<code>gam</code>の利用</a>
+<ul>
+<li class="chapter" data-level="" data-path="一般化加法モデル-gam.html"><a href="一般化加法モデル-gam.html#多項式回帰-1"><i class="fa fa-check"></i>多項式回帰</a></li>
+<li class="chapter" data-level="" data-path="一般化加法モデル-gam.html"><a href="一般化加法モデル-gam.html#スプライン適合"><i class="fa fa-check"></i>スプライン適合</a></li>
+<li class="chapter" data-level="" data-path="一般化加法モデル-gam.html"><a href="一般化加法モデル-gam.html#gam"><i class="fa fa-check"></i>GAM</a></li>
+</ul></li>
+<li class="chapter" data-level="5.2" data-path="一般化加法モデル-gam.html"><a href="一般化加法モデル-gam.html#パッケージmgcvの利用"><i class="fa fa-check"></i><b>5.2</b> パッケージ<code>mgcv</code>の利用</a></li>
+<li class="chapter" data-level="5.3" data-path="一般化加法モデル-gam.html"><a href="一般化加法モデル-gam.html#パッケージprophetの利用"><i class="fa fa-check"></i><b>5.3</b> パッケージ<code>prophet</code>の利用</a></li>
+<li class="chapter" data-level="5.4" data-path="一般化加法モデル-gam.html"><a href="一般化加法モデル-gam.html#追加分析boston-housingデータセットの変数間の関係性"><i class="fa fa-check"></i><b>5.4</b> 【追加分析】Boston housingデータセットの変数間の関係性</a></li>
+</ul></li>
+<li class="chapter" data-level="6" data-path="正則化回帰-lasso-ridge回帰-elastic-net.html"><a href="正則化回帰-lasso-ridge回帰-elastic-net.html"><i class="fa fa-check"></i><b>6</b> 正則化回帰 (lasso, ridge回帰, elastic net)</a>
+<ul>
+<li class="chapter" data-level="6.1" data-path="正則化回帰-lasso-ridge回帰-elastic-net.html"><a href="正則化回帰-lasso-ridge回帰-elastic-net.html#検証用セット法による回帰モデルの予測精度評価"><i class="fa fa-check"></i><b>6.1</b> 検証用セット法による回帰モデルの予測精度評価</a>
+<ul>
+<li class="chapter" data-level="" data-path="正則化回帰-lasso-ridge回帰-elastic-net.html"><a href="正則化回帰-lasso-ridge回帰-elastic-net.html#データセット1-ワイン品質データ"><i class="fa fa-check"></i>データセット1: ワイン品質データ</a></li>
+</ul></li>
+<li class="chapter" data-level="6.2" data-path="正則化回帰-lasso-ridge回帰-elastic-net.html"><a href="正則化回帰-lasso-ridge回帰-elastic-net.html#lasso"><i class="fa fa-check"></i><b>6.2</b> lasso</a>
+<ul>
+<li class="chapter" data-level="" data-path="正則化回帰-lasso-ridge回帰-elastic-net.html"><a href="正則化回帰-lasso-ridge回帰-elastic-net.html#関数glmnetの基本操作"><i class="fa fa-check"></i>関数<code>glmnet()</code>の基本操作</a></li>
+<li class="chapter" data-level="" data-path="正則化回帰-lasso-ridge回帰-elastic-net.html"><a href="正則化回帰-lasso-ridge回帰-elastic-net.html#lambdaのグリッド指定によるglmnetの一括実行"><i class="fa fa-check"></i><code>lambda</code>のグリッド指定による<code>glmnet</code>の一括実行</a></li>
+<li class="chapter" data-level="" data-path="正則化回帰-lasso-ridge回帰-elastic-net.html"><a href="正則化回帰-lasso-ridge回帰-elastic-net.html#交差検証によるパラメータチューニング"><i class="fa fa-check"></i>交差検証によるパラメータ・チューニング</a></li>
+</ul></li>
+<li class="chapter" data-level="6.3" data-path="正則化回帰-lasso-ridge回帰-elastic-net.html"><a href="正則化回帰-lasso-ridge回帰-elastic-net.html#ridge回帰"><i class="fa fa-check"></i><b>6.3</b> ridge回帰</a></li>
+<li class="chapter" data-level="6.4" data-path="正則化回帰-lasso-ridge回帰-elastic-net.html"><a href="正則化回帰-lasso-ridge回帰-elastic-net.html#一般化線形モデル-glm-正則化"><i class="fa fa-check"></i><b>6.4</b> 一般化線形モデル (GLM) + 正則化</a>
+<ul>
+<li class="chapter" data-level="" data-path="正則化回帰-lasso-ridge回帰-elastic-net.html"><a href="正則化回帰-lasso-ridge回帰-elastic-net.html#データセット2-german-creditデータ"><i class="fa fa-check"></i>データセット2: german creditデータ</a></li>
+</ul></li>
+<li class="chapter" data-level="6.5" data-path="正則化回帰-lasso-ridge回帰-elastic-net.html"><a href="正則化回帰-lasso-ridge回帰-elastic-net.html#補足-glmに対する変数選択の代替的方法"><i class="fa fa-check"></i><b>6.5</b> 補足: GLMに対する変数選択の代替的方法</a></li>
+</ul></li>
+<li class="chapter" data-level="7" data-path="判別分析.html"><a href="判別分析.html"><i class="fa fa-check"></i><b>7</b> 判別分析</a>
+<ul>
+<li class="chapter" data-level="7.1" data-path="判別分析.html"><a href="判別分析.html#線形判別-2次判別-パッケージmassの利用"><i class="fa fa-check"></i><b>7.1</b> 線形判別 &amp; 2次判別: パッケージMASSの利用</a>
+<ul>
+<li class="chapter" data-level="" data-path="判別分析.html"><a href="判別分析.html#データセット1-米国sp500日次リターンデータ"><i class="fa fa-check"></i>データセット#1: 米国S&amp;P500日次リターンデータ</a></li>
+<li class="chapter" data-level="" data-path="判別分析.html"><a href="判別分析.html#線形判別-lda"><i class="fa fa-check"></i>線形判別 (LDA)</a></li>
+<li class="chapter" data-level="" data-path="判別分析.html"><a href="判別分析.html#次判別-qda"><i class="fa fa-check"></i>2次判別 (QDA)</a></li>
+</ul></li>
+<li class="chapter" data-level="7.2" data-path="判別分析.html"><a href="判別分析.html#knn法-パッケージclassの利用"><i class="fa fa-check"></i><b>7.2</b> kNN法: パッケージ<strong>class</strong>の利用</a></li>
+<li class="chapter" data-level="7.3" data-path="判別分析.html"><a href="判別分析.html#他パッケージの利用-パッケージklar"><i class="fa fa-check"></i><b>7.3</b> 他パッケージの利用: パッケージ<strong>klaR</strong></a>
+<ul>
+<li class="chapter" data-level="" data-path="判別分析.html"><a href="判別分析.html#データセット2-ビジネススクールの入学許可データ"><i class="fa fa-check"></i>データセット#2: ビジネススクールの入学許可データ</a></li>
+</ul></li>
+</ul></li>
+<li class="chapter" data-level="8" data-path="決定木分析.html"><a href="決定木分析.html"><i class="fa fa-check"></i><b>8</b> 決定木分析</a>
+<ul>
+<li class="chapter" data-level="8.1" data-path="決定木分析.html"><a href="決定木分析.html#導入-回帰木-vs-線形回帰"><i class="fa fa-check"></i><b>8.1</b> 導入: 回帰木 vs 線形回帰</a>
+<ul>
+<li class="chapter" data-level="" data-path="決定木分析.html"><a href="決定木分析.html#データセット1-自動車の制動距離"><i class="fa fa-check"></i>データセット1: 自動車の制動距離</a></li>
+<li class="chapter" data-level="8.1.1" data-path="決定木分析.html"><a href="決定木分析.html#基本操作-回帰木"><i class="fa fa-check"></i><b>8.1.1</b> 基本操作: 回帰木</a></li>
+</ul></li>
+<li class="chapter" data-level="8.2" data-path="決定木分析.html"><a href="決定木分析.html#回帰木"><i class="fa fa-check"></i><b>8.2</b> 回帰木</a>
+<ul>
+<li class="chapter" data-level="" data-path="決定木分析.html"><a href="決定木分析.html#データセット2-米國株価指数データ-再掲"><i class="fa fa-check"></i>データセット2: 米國株価指数データ (再掲)</a></li>
+</ul></li>
+<li class="chapter" data-level="8.3" data-path="決定木分析.html"><a href="決定木分析.html#分類木"><i class="fa fa-check"></i><b>8.3</b> 分類木</a></li>
+</ul></li>
+<li class="chapter" data-level="9" data-path="アンサンブル学習.html"><a href="アンサンブル学習.html"><i class="fa fa-check"></i><b>9</b> アンサンブル学習</a>
+<ul>
+<li class="chapter" data-level="9.1" data-path="アンサンブル学習.html"><a href="アンサンブル学習.html#決定木-分類木"><i class="fa fa-check"></i><b>9.1</b> 決定木 (分類木)</a>
+<ul>
+<li class="chapter" data-level="" data-path="アンサンブル学習.html"><a href="アンサンブル学習.html#データセット3-個人ローン信用データ-再掲"><i class="fa fa-check"></i>データセット3: 個人ローン信用データ (再掲)</a></li>
+</ul></li>
+<li class="chapter" data-level="9.2" data-path="アンサンブル学習.html"><a href="アンサンブル学習.html#ランダムフォレスト分類木"><i class="fa fa-check"></i><b>9.2</b> ランダムフォレスト分類木</a></li>
+<li class="chapter" data-level="9.3" data-path="アンサンブル学習.html"><a href="アンサンブル学習.html#一般化ブースト回帰"><i class="fa fa-check"></i><b>9.3</b> 一般化ブースト回帰</a></li>
+</ul></li>
+<li class="chapter" data-level="10" data-path="サポートベクターマシン-svm.html"><a href="サポートベクターマシン-svm.html"><i class="fa fa-check"></i><b>10</b> サポートベクターマシン (SVM)</a>
+<ul>
+<li class="chapter" data-level="10.1" data-path="サポートベクターマシン-svm.html"><a href="サポートベクターマシン-svm.html#svm-rbfカーネル-の動作の確認"><i class="fa fa-check"></i><b>10.1</b> SVM (RBFカーネル) の動作の確認</a>
+<ul>
+<li class="chapter" data-level="" data-path="サポートベクターマシン-svm.html"><a href="サポートベクターマシン-svm.html#データセット1-iris-あやめ-データ"><i class="fa fa-check"></i>データセット1: iris (あやめ) データ</a></li>
+<li class="chapter" data-level="" data-path="サポートベクターマシン-svm.html"><a href="サポートベクターマシン-svm.html#svmの実行"><i class="fa fa-check"></i>SVMの実行</a></li>
+</ul></li>
+<li class="chapter" data-level="10.2" data-path="サポートベクターマシン-svm.html"><a href="サポートベクターマシン-svm.html#値分類"><i class="fa fa-check"></i><b>10.2</b> 2値分類</a>
+<ul>
+<li class="chapter" data-level="" data-path="サポートベクターマシン-svm.html"><a href="サポートベクターマシン-svm.html#データセット2-spamデータ"><i class="fa fa-check"></i>データセット2: spamデータ</a></li>
+<li class="chapter" data-level="" data-path="サポートベクターマシン-svm.html"><a href="サポートベクターマシン-svm.html#svmの実行-1"><i class="fa fa-check"></i>SVMの実行</a></li>
+</ul></li>
+<li class="chapter" data-level="10.3" data-path="サポートベクターマシン-svm.html"><a href="サポートベクターマシン-svm.html#値分類-1"><i class="fa fa-check"></i><b>10.3</b> 3値分類</a>
+<ul>
+<li class="chapter" data-level="" data-path="サポートベクターマシン-svm.html"><a href="サポートベクターマシン-svm.html#svmの実行-2"><i class="fa fa-check"></i>SVMの実行</a></li>
+</ul></li>
+<li class="chapter" data-level="10.4" data-path="サポートベクターマシン-svm.html"><a href="サポートベクターマシン-svm.html#代替パッケージe1071の利用"><i class="fa fa-check"></i><b>10.4</b> 代替パッケージ<strong>e1071</strong>の利用</a>
+<ul>
+<li class="chapter" data-level="" data-path="サポートベクターマシン-svm.html"><a href="サポートベクターマシン-svm.html#svmの実行-3"><i class="fa fa-check"></i>SVMの実行</a></li>
+</ul></li>
+<li class="chapter" data-level="10.5" data-path="サポートベクターマシン-svm.html"><a href="サポートベクターマシン-svm.html#ハイパーパラメータのチューニング"><i class="fa fa-check"></i><b>10.5</b> ハイパーパラメータのチューニング</a>
+<ul>
+<li class="chapter" data-level="" data-path="サポートベクターマシン-svm.html"><a href="サポートベクターマシン-svm.html#線形カーネルの場合"><i class="fa fa-check"></i>線形カーネルの場合</a></li>
+<li class="chapter" data-level="" data-path="サポートベクターマシン-svm.html"><a href="サポートベクターマシン-svm.html#rbfカーネルの場合"><i class="fa fa-check"></i>RBFカーネルの場合</a></li>
+<li class="chapter" data-level="" data-path="サポートベクターマシン-svm.html"><a href="サポートベクターマシン-svm.html#e1071内にあるチューニング用の便利な関数群"><i class="fa fa-check"></i><strong>e1071</strong>内にあるチューニング用の便利な関数群</a></li>
+</ul></li>
+</ul></li>
+<li class="chapter" data-level="11" data-path="主成分分析-pca.html"><a href="主成分分析-pca.html"><i class="fa fa-check"></i><b>11</b> 主成分分析 (PCA)</a>
+<ul>
+<li class="chapter" data-level="11.1" data-path="主成分分析-pca.html"><a href="主成分分析-pca.html#基本操作-1"><i class="fa fa-check"></i><b>11.1</b> 基本操作</a>
+<ul>
+<li class="chapter" data-level="" data-path="主成分分析-pca.html"><a href="主成分分析-pca.html#データセット-従業員スキル評価データ仮想"><i class="fa fa-check"></i>データセット: 従業員スキル評価データ(仮想)</a></li>
+</ul></li>
+<li class="chapter" data-level="11.2" data-path="主成分分析-pca.html"><a href="主成分分析-pca.html#種類のpca-相関行列ベース-vs-分散共分散行列ベース"><i class="fa fa-check"></i><b>11.2</b> 2種類のPCA: 相関行列ベース vs 分散共分散行列ベース</a>
+<ul>
+<li class="chapter" data-level="" data-path="主成分分析-pca.html"><a href="主成分分析-pca.html#データセット3-usarrests-data"><i class="fa fa-check"></i>データセット3: USArrests data</a></li>
+</ul></li>
+</ul></li>
+<li class="chapter" data-level="12" data-path="探索的因子分析.html"><a href="探索的因子分析.html"><i class="fa fa-check"></i><b>12</b> 探索的因子分析</a>
+<ul>
+<li class="chapter" data-level="12.1" data-path="探索的因子分析.html"><a href="探索的因子分析.html#基本操作-2"><i class="fa fa-check"></i><b>12.1</b> 基本操作</a>
+<ul>
+<li class="chapter" data-level="" data-path="探索的因子分析.html"><a href="探索的因子分析.html#データセット1-従業員評価データ-仮想"><i class="fa fa-check"></i>データセット1: 従業員評価データ (仮想)</a></li>
+</ul></li>
+<li class="chapter" data-level="12.2" data-path="探索的因子分析.html"><a href="探索的因子分析.html#ライブラリpsychの利用"><i class="fa fa-check"></i><b>12.2</b> ライブラリ<strong>psych</strong>の利用</a></li>
+<li class="chapter" data-level="12.3" data-path="探索的因子分析.html"><a href="探索的因子分析.html#因子分析に有用なツール"><i class="fa fa-check"></i><b>12.3</b> 因子分析に有用なツール</a></li>
+</ul></li>
+<li class="chapter" data-level="13" data-path="クラスター分析.html"><a href="クラスター分析.html"><i class="fa fa-check"></i><b>13</b> クラスター分析</a>
+<ul>
+<li class="chapter" data-level="13.1" data-path="クラスター分析.html"><a href="クラスター分析.html#基本操作-3"><i class="fa fa-check"></i><b>13.1</b> 基本操作</a>
+<ul>
+<li class="chapter" data-level="" data-path="クラスター分析.html"><a href="クラスター分析.html#階層型クラスタリング"><i class="fa fa-check"></i>階層型クラスタリング</a></li>
+<li class="chapter" data-level="" data-path="クラスター分析.html"><a href="クラスター分析.html#k-means法"><i class="fa fa-check"></i>k-means法</a></li>
+<li class="chapter" data-level="" data-path="クラスター分析.html"><a href="クラスター分析.html#変数に対するクラスタリング"><i class="fa fa-check"></i>変数に対するクラスタリング</a></li>
+</ul></li>
+<li class="chapter" data-level="13.2" data-path="クラスター分析.html"><a href="クラスター分析.html#データ分析例-1"><i class="fa fa-check"></i><b>13.2</b> データ分析例</a>
+<ul>
+<li class="chapter" data-level="" data-path="クラスター分析.html"><a href="クラスター分析.html#データセット-1-ワイン品質データ-再掲"><i class="fa fa-check"></i>データセット (1): ワイン品質データ (再掲)</a></li>
+<li class="chapter" data-level="" data-path="クラスター分析.html"><a href="クラスター分析.html#データセット-2-id無し-posデータ"><i class="fa fa-check"></i>データセット (2): (ID無し) POSデータ</a></li>
+</ul></li>
+<li class="chapter" data-level="13.3" data-path="クラスター分析.html"><a href="クラスター分析.html#発展的なクラスター分析"><i class="fa fa-check"></i><b>13.3</b> 発展的なクラスター分析</a>
+<ul>
+<li class="chapter" data-level="" data-path="クラスター分析.html"><a href="クラスター分析.html#関数agnes"><i class="fa fa-check"></i>関数<code>agnes</code></a></li>
+<li class="chapter" data-level="" data-path="クラスター分析.html"><a href="クラスター分析.html#関数pheatmap"><i class="fa fa-check"></i>関数<code>pheatmap</code></a></li>
+<li class="chapter" data-level="" data-path="クラスター分析.html"><a href="クラスター分析.html#関数pam"><i class="fa fa-check"></i>関数<code>pam</code></a></li>
+</ul></li>
+</ul></li>
+<li class="chapter" data-level="14" data-path="xai-explainable-ai.html"><a href="xai-explainable-ai.html"><i class="fa fa-check"></i><b>14</b> XAI (Explainable AI)</a>
+<ul>
+<li class="chapter" data-level="" data-path="xai-explainable-ai.html"><a href="xai-explainable-ai.html#回帰問題のケース"><i class="fa fa-check"></i>回帰問題のケース</a></li>
+<li class="chapter" data-level="14.1" data-path="xai-explainable-ai.html"><a href="xai-explainable-ai.html#pfi"><i class="fa fa-check"></i><b>14.1</b> PFI</a></li>
+<li class="chapter" data-level="14.2" data-path="xai-explainable-ai.html"><a href="xai-explainable-ai.html#pdp"><i class="fa fa-check"></i><b>14.2</b> PDP</a></li>
+<li class="chapter" data-level="14.3" data-path="xai-explainable-ai.html"><a href="xai-explainable-ai.html#ice"><i class="fa fa-check"></i><b>14.3</b> ICE</a>
+<ul>
+<li class="chapter" data-level="" data-path="xai-explainable-ai.html"><a href="xai-explainable-ai.html#pdp-ice"><i class="fa fa-check"></i>PDP + ICE</a></li>
+</ul></li>
+<li class="chapter" data-level="14.4" data-path="xai-explainable-ai.html"><a href="xai-explainable-ai.html#lime"><i class="fa fa-check"></i><b>14.4</b> LIME</a></li>
+<li class="chapter" data-level="14.5" data-path="xai-explainable-ai.html"><a href="xai-explainable-ai.html#shap"><i class="fa fa-check"></i><b>14.5</b> SHAP</a>
+<ul>
+<li class="chapter" data-level="" data-path="xai-explainable-ai.html"><a href="xai-explainable-ai.html#分類問題のケース"><i class="fa fa-check"></i>分類問題のケース</a></li>
+<li class="chapter" data-level="" data-path="xai-explainable-ai.html"><a href="xai-explainable-ai.html#多値分類問題の例-iris"><i class="fa fa-check"></i>多値分類問題の例 (iris)</a></li>
+<li class="chapter" data-level="" data-path="xai-explainable-ai.html"><a href="xai-explainable-ai.html#値分類問題"><i class="fa fa-check"></i>2値分類問題</a></li>
+</ul></li>
+</ul></li>
+</ul>
+
+      </nav>
+    </div>
+
+    <div class="book-body">
+      <div class="body-inner">
+        <div class="book-header" role="navigation">
+          <h1>
+            <i class="fa fa-circle-o-notch fa-spin"></i><a href="./">金融データサイエンス</a>
+          </h1>
+        </div>
+
+        <div class="page-wrapper" tabindex="-1" role="main">
+          <div class="page-inner">
+
+            <section class="normal" id="section-">
+<div id="探索的因子分析" class="section level1 hasAnchor" number="12">
+<h1><span class="header-section-number">12</span> 探索的因子分析<a href="探索的因子分析.html#探索的因子分析" class="anchor-section" aria-label="Anchor link to header"></a></h1>
+<div id="基本操作-2" class="section level2 hasAnchor" number="12.1">
+<h2><span class="header-section-number">12.1</span> 基本操作<a href="探索的因子分析.html#基本操作-2" class="anchor-section" aria-label="Anchor link to header"></a></h2>
+<div id="データセット1-従業員評価データ-仮想" class="section level3 unnumbered hasAnchor">
+<h3>データセット1: 従業員評価データ (仮想)<a href="探索的因子分析.html#データセット1-従業員評価データ-仮想" class="anchor-section" aria-label="Anchor link to header"></a></h3>
+<p>ここでは, 上のPCAで使用した”testdat3_jap.csv”の拡大版を使用する.
+(文字化けする場合には, 英語版”testdat_eng.csv”を使用しても良い.)</p>
+<pre><code>&quot;testdat_30_jap.csv&quot; (日本語版/英語版)
+  - 氏名/Name
+  - 専門性/Expertise (0-100)
+  - 分析力/Analytics (同)
+  - リーダーシップ/Leadership (同)
+  - プレゼン力/Presentation (同)
+  - コミュ力/Communication (同)
+- n = 30, p = 5</code></pre>
+<p>Rで標準的に用意されている関数<code>factanal()</code>を使用する.</p>
+<div class="sourceCode" id="cb478"><pre class="sourceCode r"><code class="sourceCode r"><span id="cb478-1"><a href="探索的因子分析.html#cb478-1" tabindex="-1"></a><span class="co"># (1) factanal: 最尤法only</span></span>
+<span id="cb478-2"><a href="探索的因子分析.html#cb478-2" tabindex="-1"></a>tokuten <span class="ot">&lt;-</span> <span class="fu">read.csv</span>(<span class="st">&quot;testdat_30_jap.csv&quot;</span>, <span class="at">header =</span> T, </span>
+<span id="cb478-3"><a href="探索的因子分析.html#cb478-3" tabindex="-1"></a>                    <span class="at">row.names =</span> <span class="dv">1</span>, <span class="at">skip =</span> <span class="dv">1</span>)</span>
+<span id="cb478-4"><a href="探索的因子分析.html#cb478-4" tabindex="-1"></a><span class="co"># tokuten &lt;- read.csv(&quot;testdat_30_eng.csv&quot;, header = T, row.names = 1, skip = 1)</span></span>
+<span id="cb478-5"><a href="探索的因子分析.html#cb478-5" tabindex="-1"></a><span class="co"># tokuten &lt;- read.csv(&quot;testdat_jap.csv&quot;, header = T, row.names = 1, skip = 1)</span></span>
+<span id="cb478-6"><a href="探索的因子分析.html#cb478-6" tabindex="-1"></a>tokuten_fac <span class="ot">&lt;-</span> <span class="fu">factanal</span>(tokuten, <span class="at">factors =</span> <span class="dv">2</span>)   <span class="co"># default varimax回転</span></span>
+<span id="cb478-7"><a href="探索的因子分析.html#cb478-7" tabindex="-1"></a>tokuten_fac</span>
+<span id="cb478-8"><a href="探索的因子分析.html#cb478-8" tabindex="-1"></a></span>
+<span id="cb478-9"><a href="探索的因子分析.html#cb478-9" tabindex="-1"></a>tokuten_fac<span class="sc">$</span>loading</span>
+<span id="cb478-10"><a href="探索的因子分析.html#cb478-10" tabindex="-1"></a><span class="co"># 確認(各因子のloadingsベクトルの2乗和--&gt; SS loadings))</span></span>
+<span id="cb478-11"><a href="探索的因子分析.html#cb478-11" tabindex="-1"></a><span class="fu">sum</span>(tokuten_fac<span class="sc">$</span>loading[, <span class="dv">1</span>]<span class="sc">^</span><span class="dv">2</span>)</span>
+<span id="cb478-12"><a href="探索的因子分析.html#cb478-12" tabindex="-1"></a><span class="co">#&gt; </span></span>
+<span id="cb478-13"><a href="探索的因子分析.html#cb478-13" tabindex="-1"></a><span class="co">#&gt; Call:</span></span>
+<span id="cb478-14"><a href="探索的因子分析.html#cb478-14" tabindex="-1"></a><span class="co">#&gt; factanal(x = tokuten, factors = 2)</span></span>
+<span id="cb478-15"><a href="探索的因子分析.html#cb478-15" tabindex="-1"></a><span class="co">#&gt; </span></span>
+<span id="cb478-16"><a href="探索的因子分析.html#cb478-16" tabindex="-1"></a><span class="co">#&gt; Uniquenesses:</span></span>
+<span id="cb478-17"><a href="探索的因子分析.html#cb478-17" tabindex="-1"></a><span class="co">#&gt;         専門性         分析力 リーダーシップ     プレゼン力       コミュ力 </span></span>
+<span id="cb478-18"><a href="探索的因子分析.html#cb478-18" tabindex="-1"></a><span class="co">#&gt;          0.849          0.238          0.005          0.208          0.100 </span></span>
+<span id="cb478-19"><a href="探索的因子分析.html#cb478-19" tabindex="-1"></a><span class="co">#&gt; </span></span>
+<span id="cb478-20"><a href="探索的因子分析.html#cb478-20" tabindex="-1"></a><span class="co">#&gt; Loadings:</span></span>
+<span id="cb478-21"><a href="探索的因子分析.html#cb478-21" tabindex="-1"></a><span class="co">#&gt;                Factor1 Factor2</span></span>
+<span id="cb478-22"><a href="探索的因子分析.html#cb478-22" tabindex="-1"></a><span class="co">#&gt; 専門性          0.172   0.349 </span></span>
+<span id="cb478-23"><a href="探索的因子分析.html#cb478-23" tabindex="-1"></a><span class="co">#&gt; 分析力         -0.368   0.792 </span></span>
+<span id="cb478-24"><a href="探索的因子分析.html#cb478-24" tabindex="-1"></a><span class="co">#&gt; リーダーシップ  0.980  -0.186 </span></span>
+<span id="cb478-25"><a href="探索的因子分析.html#cb478-25" tabindex="-1"></a><span class="co">#&gt; プレゼン力      0.890         </span></span>
+<span id="cb478-26"><a href="探索的因子分析.html#cb478-26" tabindex="-1"></a><span class="co">#&gt; コミュ力        0.936   0.153 </span></span>
+<span id="cb478-27"><a href="探索的因子分析.html#cb478-27" tabindex="-1"></a><span class="co">#&gt; </span></span>
+<span id="cb478-28"><a href="探索的因子分析.html#cb478-28" tabindex="-1"></a><span class="co">#&gt;                Factor1 Factor2</span></span>
+<span id="cb478-29"><a href="探索的因子分析.html#cb478-29" tabindex="-1"></a><span class="co">#&gt; SS loadings      2.794   0.807</span></span>
+<span id="cb478-30"><a href="探索的因子分析.html#cb478-30" tabindex="-1"></a><span class="co">#&gt; Proportion Var   0.559   0.161</span></span>
+<span id="cb478-31"><a href="探索的因子分析.html#cb478-31" tabindex="-1"></a><span class="co">#&gt; Cumulative Var   0.559   0.720</span></span>
+<span id="cb478-32"><a href="探索的因子分析.html#cb478-32" tabindex="-1"></a><span class="co">#&gt; </span></span>
+<span id="cb478-33"><a href="探索的因子分析.html#cb478-33" tabindex="-1"></a><span class="co">#&gt; Test of the hypothesis that 2 factors are sufficient.</span></span>
+<span id="cb478-34"><a href="探索的因子分析.html#cb478-34" tabindex="-1"></a><span class="co">#&gt; The chi square statistic is 4.44 on 1 degree of freedom.</span></span>
+<span id="cb478-35"><a href="探索的因子分析.html#cb478-35" tabindex="-1"></a><span class="co">#&gt; The p-value is 0.0351 </span></span>
+<span id="cb478-36"><a href="探索的因子分析.html#cb478-36" tabindex="-1"></a><span class="co">#&gt; </span></span>
+<span id="cb478-37"><a href="探索的因子分析.html#cb478-37" tabindex="-1"></a><span class="co">#&gt; Loadings:</span></span>
+<span id="cb478-38"><a href="探索的因子分析.html#cb478-38" tabindex="-1"></a><span class="co">#&gt;                Factor1 Factor2</span></span>
+<span id="cb478-39"><a href="探索的因子分析.html#cb478-39" tabindex="-1"></a><span class="co">#&gt; 専門性          0.172   0.349 </span></span>
+<span id="cb478-40"><a href="探索的因子分析.html#cb478-40" tabindex="-1"></a><span class="co">#&gt; 分析力         -0.368   0.792 </span></span>
+<span id="cb478-41"><a href="探索的因子分析.html#cb478-41" tabindex="-1"></a><span class="co">#&gt; リーダーシップ  0.980  -0.186 </span></span>
+<span id="cb478-42"><a href="探索的因子分析.html#cb478-42" tabindex="-1"></a><span class="co">#&gt; プレゼン力      0.890         </span></span>
+<span id="cb478-43"><a href="探索的因子分析.html#cb478-43" tabindex="-1"></a><span class="co">#&gt; コミュ力        0.936   0.153 </span></span>
+<span id="cb478-44"><a href="探索的因子分析.html#cb478-44" tabindex="-1"></a><span class="co">#&gt; </span></span>
+<span id="cb478-45"><a href="探索的因子分析.html#cb478-45" tabindex="-1"></a><span class="co">#&gt;                Factor1 Factor2</span></span>
+<span id="cb478-46"><a href="探索的因子分析.html#cb478-46" tabindex="-1"></a><span class="co">#&gt; SS loadings      2.794   0.807</span></span>
+<span id="cb478-47"><a href="探索的因子分析.html#cb478-47" tabindex="-1"></a><span class="co">#&gt; Proportion Var   0.559   0.161</span></span>
+<span id="cb478-48"><a href="探索的因子分析.html#cb478-48" tabindex="-1"></a><span class="co">#&gt; Cumulative Var   0.559   0.720</span></span>
+<span id="cb478-49"><a href="探索的因子分析.html#cb478-49" tabindex="-1"></a><span class="co">#&gt; [1] 2.794063</span></span></code></pre></div>
+<div class="sourceCode" id="cb479"><pre class="sourceCode r"><code class="sourceCode r"><span id="cb479-1"><a href="探索的因子分析.html#cb479-1" tabindex="-1"></a><span class="co"># 因子負荷量barplot(factor loadings)</span></span>
+<span id="cb479-2"><a href="探索的因子分析.html#cb479-2" tabindex="-1"></a><span class="fu">par</span>(<span class="at">mfrow =</span> <span class="fu">c</span>(<span class="dv">1</span>, <span class="dv">2</span>))</span>
+<span id="cb479-3"><a href="探索的因子分析.html#cb479-3" tabindex="-1"></a><span class="fu">barplot</span>(tokuten_fac<span class="sc">$</span>loading[, <span class="dv">1</span>], <span class="at">col =</span> <span class="st">&quot;red&quot;</span>)</span>
+<span id="cb479-4"><a href="探索的因子分析.html#cb479-4" tabindex="-1"></a><span class="fu">barplot</span>(tokuten_fac<span class="sc">$</span>loading[, <span class="dv">2</span>], <span class="at">col =</span> <span class="st">&quot;blue&quot;</span>)</span></code></pre></div>
+<p><img src="120-fa_files/figure-html/unnamed-chunk-5-1.png" width="75%" /></p>
+<pre><code>Tips: プロット時, 日本語が文字化けする場合の対応 (特に, macユーザー):
+&gt; par(family = &quot;HiraKakuProN-W3&quot;)
+または,
+&gt; par(family = &quot;HG明朝E&quot;)</code></pre>
+<div class="sourceCode" id="cb481"><pre class="sourceCode r"><code class="sourceCode r"><span id="cb481-1"><a href="探索的因子分析.html#cb481-1" tabindex="-1"></a><span class="co"># 因子（負荷量）行列の回転</span></span>
+<span id="cb481-2"><a href="探索的因子分析.html#cb481-2" tabindex="-1"></a><span class="co"># scores = &quot;regression&quot; ==&gt; Thomson&#39;s score返す （デフォルト, 戻り値無)</span></span>
+<span id="cb481-3"><a href="探索的因子分析.html#cb481-3" tabindex="-1"></a>tokuten_fac2 <span class="ot">&lt;-</span> <span class="fu">factanal</span>(tokuten, <span class="at">factors =</span> <span class="dv">2</span>, </span>
+<span id="cb481-4"><a href="探索的因子分析.html#cb481-4" tabindex="-1"></a>                         <span class="at">rotation =</span> <span class="st">&quot;none&quot;</span>, </span>
+<span id="cb481-5"><a href="探索的因子分析.html#cb481-5" tabindex="-1"></a>                         <span class="at">scores =</span> <span class="st">&quot;regression&quot;</span>) <span class="co"># 回転なし</span></span>
+<span id="cb481-6"><a href="探索的因子分析.html#cb481-6" tabindex="-1"></a>tokuten_fac3 <span class="ot">&lt;-</span> <span class="fu">factanal</span>(tokuten, <span class="at">factors =</span> <span class="dv">2</span>, </span>
+<span id="cb481-7"><a href="探索的因子分析.html#cb481-7" tabindex="-1"></a>                         <span class="at">rotation =</span> <span class="st">&quot;promax&quot;</span>, </span>
+<span id="cb481-8"><a href="探索的因子分析.html#cb481-8" tabindex="-1"></a>                         <span class="at">scores =</span> <span class="st">&quot;regression&quot;</span>) <span class="co"># promax回転（斜交回転)</span></span>
+<span id="cb481-9"><a href="探索的因子分析.html#cb481-9" tabindex="-1"></a>tokuten_fac4 <span class="ot">&lt;-</span> <span class="fu">factanal</span>(tokuten, <span class="at">factors =</span> <span class="dv">2</span>, </span>
+<span id="cb481-10"><a href="探索的因子分析.html#cb481-10" tabindex="-1"></a>                         <span class="at">scores =</span> <span class="st">&quot;regression&quot;</span>) <span class="co"># varimax回転（直交回転)</span></span></code></pre></div>
+<div class="sourceCode" id="cb482"><pre class="sourceCode r"><code class="sourceCode r"><span id="cb482-1"><a href="探索的因子分析.html#cb482-1" tabindex="-1"></a><span class="co"># 因子得点(factor scores)</span></span>
+<span id="cb482-2"><a href="探索的因子分析.html#cb482-2" tabindex="-1"></a>tokuten_fac2<span class="sc">$</span>scores</span>
+<span id="cb482-3"><a href="探索的因子分析.html#cb482-3" tabindex="-1"></a><span class="co">#&gt;            Factor1     Factor2</span></span>
+<span id="cb482-4"><a href="探索的因子分析.html#cb482-4" tabindex="-1"></a><span class="co">#&gt; 山田   -1.26800407  0.38570292</span></span>
+<span id="cb482-5"><a href="探索的因子分析.html#cb482-5" tabindex="-1"></a><span class="co">#&gt; 鈴木   -1.95989876  0.01060196</span></span>
+<span id="cb482-6"><a href="探索的因子分析.html#cb482-6" tabindex="-1"></a><span class="co">#&gt; 田中    0.20645006 -1.63631682</span></span>
+<span id="cb482-7"><a href="探索的因子分析.html#cb482-7" tabindex="-1"></a><span class="co">#&gt; 中村    0.91696834 -1.38312209</span></span>
+<span id="cb482-8"><a href="探索的因子分析.html#cb482-8" tabindex="-1"></a><span class="co">#&gt; 大野    0.96895473  1.74205043</span></span>
+<span id="cb482-9"><a href="探索的因子分析.html#cb482-9" tabindex="-1"></a><span class="co">#&gt; 小林    0.09169331  0.01065859</span></span>
+<span id="cb482-10"><a href="探索的因子分析.html#cb482-10" tabindex="-1"></a><span class="co">#&gt; 伊藤   -0.48179366  0.42756367</span></span>
+<span id="cb482-11"><a href="探索的因子分析.html#cb482-11" tabindex="-1"></a><span class="co">#&gt; 高橋    0.93201465 -0.89712752</span></span>
+<span id="cb482-12"><a href="探索的因子分析.html#cb482-12" tabindex="-1"></a><span class="co">#&gt; 渡辺   -0.22275387  0.27605947</span></span>
+<span id="cb482-13"><a href="探索的因子分析.html#cb482-13" tabindex="-1"></a><span class="co">#&gt; 佐藤   -0.35296159 -0.25515430</span></span>
+<span id="cb482-14"><a href="探索的因子分析.html#cb482-14" tabindex="-1"></a><span class="co">#&gt; 山下    1.22524580 -0.78746751</span></span>
+<span id="cb482-15"><a href="探索的因子分析.html#cb482-15" tabindex="-1"></a><span class="co">#&gt; 木村    0.80403959 -0.04966399</span></span>
+<span id="cb482-16"><a href="探索的因子分析.html#cb482-16" tabindex="-1"></a><span class="co">#&gt; 山本   -0.22649622  0.19899511</span></span>
+<span id="cb482-17"><a href="探索的因子分析.html#cb482-17" tabindex="-1"></a><span class="co">#&gt; 宮崎    1.67523625 -0.20442665</span></span>
+<span id="cb482-18"><a href="探索的因子分析.html#cb482-18" tabindex="-1"></a><span class="co">#&gt; 山口   -1.12973504  0.24392701</span></span>
+<span id="cb482-19"><a href="探索的因子分析.html#cb482-19" tabindex="-1"></a><span class="co">#&gt; 阿部    1.54630529 -0.22549756</span></span>
+<span id="cb482-20"><a href="探索的因子分析.html#cb482-20" tabindex="-1"></a><span class="co">#&gt; 斎藤   -0.75968450  1.72490202</span></span>
+<span id="cb482-21"><a href="探索的因子分析.html#cb482-21" tabindex="-1"></a><span class="co">#&gt; 吉田   -1.68984987 -1.46995307</span></span>
+<span id="cb482-22"><a href="探索的因子分析.html#cb482-22" tabindex="-1"></a><span class="co">#&gt; 佐々木 -0.80152021 -0.47761662</span></span>
+<span id="cb482-23"><a href="探索的因子分析.html#cb482-23" tabindex="-1"></a><span class="co">#&gt; 石川    0.66965259  0.60177580</span></span>
+<span id="cb482-24"><a href="探索的因子分析.html#cb482-24" tabindex="-1"></a><span class="co">#&gt; 山崎   -0.66802546 -0.35549465</span></span>
+<span id="cb482-25"><a href="探索的因子分析.html#cb482-25" tabindex="-1"></a><span class="co">#&gt; 中山    0.78533445  0.67322981</span></span>
+<span id="cb482-26"><a href="探索的因子分析.html#cb482-26" tabindex="-1"></a><span class="co">#&gt; 藤田   -0.77928205  0.88172247</span></span>
+<span id="cb482-27"><a href="探索的因子分析.html#cb482-27" tabindex="-1"></a><span class="co">#&gt; 加藤   -0.83886445 -0.82003132</span></span>
+<span id="cb482-28"><a href="探索的因子分析.html#cb482-28" tabindex="-1"></a><span class="co">#&gt; 清水    0.53238028  1.91115337</span></span>
+<span id="cb482-29"><a href="探索的因子分析.html#cb482-29" tabindex="-1"></a><span class="co">#&gt; 池田    0.49224657 -0.22365300</span></span>
+<span id="cb482-30"><a href="探索的因子分析.html#cb482-30" tabindex="-1"></a><span class="co">#&gt; 井上   -0.63623615 -0.04435814</span></span>
+<span id="cb482-31"><a href="探索的因子分析.html#cb482-31" tabindex="-1"></a><span class="co">#&gt; 林     -0.94437205  0.48040513</span></span>
+<span id="cb482-32"><a href="探索的因子分析.html#cb482-32" tabindex="-1"></a><span class="co">#&gt; 中島    0.21941624 -1.01764392</span></span>
+<span id="cb482-33"><a href="探索的因子分析.html#cb482-33" tabindex="-1"></a><span class="co">#&gt; 森      1.69353978  0.27877943</span></span>
+<span id="cb482-34"><a href="探索的因子分析.html#cb482-34" tabindex="-1"></a>tokuten_fac3<span class="sc">$</span>scores</span>
+<span id="cb482-35"><a href="探索的因子分析.html#cb482-35" tabindex="-1"></a><span class="co">#&gt;            Factor1     Factor2</span></span>
+<span id="cb482-36"><a href="探索的因子分析.html#cb482-36" tabindex="-1"></a><span class="co">#&gt; 山田   -1.03462508  0.66053651</span></span>
+<span id="cb482-37"><a href="探索的因子分析.html#cb482-37" tabindex="-1"></a><span class="co">#&gt; 鈴木   -1.83144475  0.43930549</span></span>
+<span id="cb482-38"><a href="探索的因子分析.html#cb482-38" tabindex="-1"></a><span class="co">#&gt; 田中   -0.45570109 -1.67056983</span></span>
+<span id="cb482-39"><a href="探索的因子分析.html#cb482-39" tabindex="-1"></a><span class="co">#&gt; 中村    0.31020607 -1.57450638</span></span>
+<span id="cb482-40"><a href="探索的因子分析.html#cb482-40" tabindex="-1"></a><span class="co">#&gt; 大野    1.59853100  1.51845067</span></span>
+<span id="cb482-41"><a href="探索的因子分析.html#cb482-41" tabindex="-1"></a><span class="co">#&gt; 小林    0.09010822 -0.00947258</span></span>
+<span id="cb482-42"><a href="探索的因子分析.html#cb482-42" tabindex="-1"></a><span class="co">#&gt; 伊藤   -0.28165229  0.53011595</span></span>
+<span id="cb482-43"><a href="探索的因子分析.html#cb482-43" tabindex="-1"></a><span class="co">#&gt; 高橋    0.51707362 -1.09504471</span></span>
+<span id="cb482-44"><a href="探索的因子分析.html#cb482-44" tabindex="-1"></a><span class="co">#&gt; 渡辺   -0.09913025  0.32295107</span></span>
+<span id="cb482-45"><a href="探索的因子分析.html#cb482-45" tabindex="-1"></a><span class="co">#&gt; 佐藤   -0.43179522 -0.17623394</span></span>
+<span id="cb482-46"><a href="探索的因子分析.html#cb482-46" tabindex="-1"></a><span class="co">#&gt; 山下    0.83521312 -1.05026730</span></span>
+<span id="cb482-47"><a href="探索的因子分析.html#cb482-47" tabindex="-1"></a><span class="co">#&gt; 木村    0.73336738 -0.22523546</span></span>
+<span id="cb482-48"><a href="探索的因子分析.html#cb482-48" tabindex="-1"></a><span class="co">#&gt; 山本   -0.13320378  0.24721940</span></span>
+<span id="cb482-49"><a href="探索的因子分析.html#cb482-49" tabindex="-1"></a><span class="co">#&gt; 宮崎    1.48794583 -0.56956087</span></span>
+<span id="cb482-50"><a href="探索的因子分析.html#cb482-50" tabindex="-1"></a><span class="co">#&gt; 山口   -0.96135865  0.48945650</span></span>
+<span id="cb482-51"><a href="探索的因子分析.html#cb482-51" tabindex="-1"></a><span class="co">#&gt; 阿部    1.35883050 -0.56228456</span></span>
+<span id="cb482-52"><a href="探索的因子分析.html#cb482-52" tabindex="-1"></a><span class="co">#&gt; 斎藤   -0.02732251  1.87959737</span></span>
+<span id="cb482-53"><a href="探索的因子分析.html#cb482-53" tabindex="-1"></a><span class="co">#&gt; 吉田   -2.16579425 -1.09045510</span></span>
+<span id="cb482-54"><a href="探索的因子分析.html#cb482-54" tabindex="-1"></a><span class="co">#&gt; 佐々木 -0.94015940 -0.29907982</span></span>
+<span id="cb482-55"><a href="探索的因子分析.html#cb482-55" tabindex="-1"></a><span class="co">#&gt; 石川    0.86590070  0.45126013</span></span>
+<span id="cb482-56"><a href="探索的因子分析.html#cb482-56" tabindex="-1"></a><span class="co">#&gt; 山崎   -0.76668658 -0.20697743</span></span>
+<span id="cb482-57"><a href="探索的因子分析.html#cb482-57" tabindex="-1"></a><span class="co">#&gt; 中山    1.00259189  0.49692945</span></span>
+<span id="cb482-58"><a href="探索的因子分析.html#cb482-58" tabindex="-1"></a><span class="co">#&gt; 藤田   -0.38013416  1.04632852</span></span>
+<span id="cb482-59"><a href="探索的因子分析.html#cb482-59" tabindex="-1"></a><span class="co">#&gt; 加藤   -1.11095876 -0.63104097</span></span>
+<span id="cb482-60"><a href="探索的因子分析.html#cb482-60" tabindex="-1"></a><span class="co">#&gt; 清水    1.25670992  1.78193683</span></span>
+<span id="cb482-61"><a href="探索的因子分析.html#cb482-61" tabindex="-1"></a><span class="co">#&gt; 池田    0.37232594 -0.32985202</span></span>
+<span id="cb482-62"><a href="探索的因子分析.html#cb482-62" tabindex="-1"></a><span class="co">#&gt; 井上   -0.61349683  0.09512940</span></span>
+<span id="cb482-63"><a href="探索的因子分析.html#cb482-63" tabindex="-1"></a><span class="co">#&gt; 林     -0.69394517  0.68380497</span></span>
+<span id="cb482-64"><a href="探索的因子分析.html#cb482-64" tabindex="-1"></a><span class="co">#&gt; 中島   -0.19815346 -1.05885961</span></span>
+<span id="cb482-65"><a href="探索的因子分析.html#cb482-65" tabindex="-1"></a><span class="co">#&gt; 森      1.69675803 -0.09358169</span></span>
+<span id="cb482-66"><a href="探索的因子分析.html#cb482-66" tabindex="-1"></a>tokuten_fac4<span class="sc">$</span>scores</span>
+<span id="cb482-67"><a href="探索的因子分析.html#cb482-67" tabindex="-1"></a><span class="co">#&gt;            Factor1      Factor2</span></span>
+<span id="cb482-68"><a href="探索的因子分析.html#cb482-68" tabindex="-1"></a><span class="co">#&gt; 山田   -1.18038461  0.602738127</span></span>
+<span id="cb482-69"><a href="探索的因子分析.html#cb482-69" tabindex="-1"></a><span class="co">#&gt; 鈴木   -1.92747306  0.355194538</span></span>
+<span id="cb482-70"><a href="探索的因子分析.html#cb482-70" tabindex="-1"></a><span class="co">#&gt; 田中   -0.08460701 -1.647117489</span></span>
+<span id="cb482-71"><a href="探索的因子分析.html#cb482-71" tabindex="-1"></a><span class="co">#&gt; 中村    0.65937060 -1.522855235</span></span>
+<span id="cb482-72"><a href="探索的因子分析.html#cb482-72" tabindex="-1"></a><span class="co">#&gt; 大野    1.26028286  1.544441669</span></span>
+<span id="cb482-73"><a href="探索的因子分析.html#cb482-73" tabindex="-1"></a><span class="co">#&gt; 小林    0.09213844 -0.005637015</span></span>
+<span id="cb482-74"><a href="探索的因子分析.html#cb482-74" tabindex="-1"></a><span class="co">#&gt; 伊藤   -0.39907004  0.505647037</span></span>
+<span id="cb482-75"><a href="探索的因子分析.html#cb482-75" tabindex="-1"></a><span class="co">#&gt; 高橋    0.75967163 -1.047085528</span></span>
+<span id="cb482-76"><a href="探索的因子分析.html#cb482-76" tabindex="-1"></a><span class="co">#&gt; 渡辺   -0.17071995  0.310938604</span></span>
+<span id="cb482-77"><a href="探索的因子分析.html#cb482-77" tabindex="-1"></a><span class="co">#&gt; 佐藤   -0.39234102 -0.189087623</span></span>
+<span id="cb482-78"><a href="探索的因子分析.html#cb482-78" tabindex="-1"></a><span class="co">#&gt; 山下    1.06762028 -0.990716564</span></span>
+<span id="cb482-79"><a href="探索的因子分析.html#cb482-79" tabindex="-1"></a><span class="co">#&gt; 木村    0.78276599 -0.190324936</span></span>
+<span id="cb482-80"><a href="探索的因子分析.html#cb482-80" tabindex="-1"></a><span class="co">#&gt; 山本   -0.18796003  0.235734215</span></span>
+<span id="cb482-81"><a href="探索的因子分析.html#cb482-81" tabindex="-1"></a><span class="co">#&gt; 宮崎    1.61315438 -0.495923070</span></span>
+<span id="cb482-82"><a href="探索的因子分析.html#cb482-82" tabindex="-1"></a><span class="co">#&gt; 山口   -1.06921083  0.438850587</span></span>
+<span id="cb482-83"><a href="探索的因子分析.html#cb482-83" tabindex="-1"></a><span class="co">#&gt; 阿部    1.48252735 -0.493985703</span></span>
+<span id="cb482-84"><a href="探索的因子分析.html#cb482-84" tabindex="-1"></a><span class="co">#&gt; 斎藤   -0.44441816  1.831638615</span></span>
+<span id="cb482-85"><a href="探索的因子分析.html#cb482-85" tabindex="-1"></a><span class="co">#&gt; 吉田   -1.92207351 -1.149777378</span></span>
+<span id="cb482-86"><a href="探索的因子分析.html#cb482-86" tabindex="-1"></a><span class="co">#&gt; 佐々木 -0.87303770 -0.329176947</span></span>
+<span id="cb482-87"><a href="探索的因子分析.html#cb482-87" tabindex="-1"></a><span class="co">#&gt; 石川    0.76506664  0.474596410</span></span>
+<span id="cb482-88"><a href="探索的因子分析.html#cb482-88" tabindex="-1"></a><span class="co">#&gt; 山崎   -0.72014255 -0.232441752</span></span>
+<span id="cb482-89"><a href="探索的因子分析.html#cb482-89" tabindex="-1"></a><span class="co">#&gt; 中山    0.89151385  0.524587102</span></span>
+<span id="cb482-90"><a href="探索的因子分析.html#cb482-90" tabindex="-1"></a><span class="co">#&gt; 藤田   -0.61203044  1.005054108</span></span>
+<span id="cb482-91"><a href="探索的因子分析.html#cb482-91" tabindex="-1"></a><span class="co">#&gt; 加藤   -0.97003241 -0.659683285</span></span>
+<span id="cb482-92"><a href="探索的因子分析.html#cb482-92" tabindex="-1"></a><span class="co">#&gt; 清水    0.86026215  1.787703833</span></span>
+<span id="cb482-93"><a href="探索的因子分析.html#cb482-93" tabindex="-1"></a><span class="co">#&gt; 池田    0.44522905 -0.306754687</span></span>
+<span id="cb482-94"><a href="探索的因子分析.html#cb482-94" tabindex="-1"></a><span class="co">#&gt; 井上   -0.63411816  0.068251272</span></span>
+<span id="cb482-95"><a href="探索的因子分析.html#cb482-95" tabindex="-1"></a><span class="co">#&gt; 林     -0.84514031  0.639034836</span></span>
+<span id="cb482-96"><a href="探索的因子分析.html#cb482-96" tabindex="-1"></a><span class="co">#&gt; 中島    0.03698524 -1.040372398</span></span>
+<span id="cb482-97"><a href="探索的因子分析.html#cb482-97" tabindex="-1"></a><span class="co">#&gt; 森      1.71617133 -0.023471343</span></span></code></pre></div>
+<div class="sourceCode" id="cb483"><pre class="sourceCode r"><code class="sourceCode r"><span id="cb483-1"><a href="探索的因子分析.html#cb483-1" tabindex="-1"></a><span class="co"># 因子負荷量(factor loadings)</span></span>
+<span id="cb483-2"><a href="探索的因子分析.html#cb483-2" tabindex="-1"></a>tokuten_fac2<span class="sc">$</span>loading</span>
+<span id="cb483-3"><a href="探索的因子分析.html#cb483-3" tabindex="-1"></a><span class="co">#&gt; </span></span>
+<span id="cb483-4"><a href="探索的因子分析.html#cb483-4" tabindex="-1"></a><span class="co">#&gt; Loadings:</span></span>
+<span id="cb483-5"><a href="探索的因子分析.html#cb483-5" tabindex="-1"></a><span class="co">#&gt;                Factor1 Factor2</span></span>
+<span id="cb483-6"><a href="探索的因子分析.html#cb483-6" tabindex="-1"></a><span class="co">#&gt; 専門性          0.108   0.374 </span></span>
+<span id="cb483-7"><a href="探索的因子分析.html#cb483-7" tabindex="-1"></a><span class="co">#&gt; 分析力         -0.502   0.715 </span></span>
+<span id="cb483-8"><a href="探索的因子分析.html#cb483-8" tabindex="-1"></a><span class="co">#&gt; リーダーシップ  0.997         </span></span>
+<span id="cb483-9"><a href="探索的因子分析.html#cb483-9" tabindex="-1"></a><span class="co">#&gt; プレゼン力      0.873   0.171 </span></span>
+<span id="cb483-10"><a href="探索的因子分析.html#cb483-10" tabindex="-1"></a><span class="co">#&gt; コミュ力        0.895   0.316 </span></span>
+<span id="cb483-11"><a href="探索的因子分析.html#cb483-11" tabindex="-1"></a><span class="co">#&gt; </span></span>
+<span id="cb483-12"><a href="探索的因子分析.html#cb483-12" tabindex="-1"></a><span class="co">#&gt;                Factor1 Factor2</span></span>
+<span id="cb483-13"><a href="探索的因子分析.html#cb483-13" tabindex="-1"></a><span class="co">#&gt; SS loadings      2.821   0.780</span></span>
+<span id="cb483-14"><a href="探索的因子分析.html#cb483-14" tabindex="-1"></a><span class="co">#&gt; Proportion Var   0.564   0.156</span></span>
+<span id="cb483-15"><a href="探索的因子分析.html#cb483-15" tabindex="-1"></a><span class="co">#&gt; Cumulative Var   0.564   0.720</span></span>
+<span id="cb483-16"><a href="探索的因子分析.html#cb483-16" tabindex="-1"></a>tokuten_fac3<span class="sc">$</span>loading</span>
+<span id="cb483-17"><a href="探索的因子分析.html#cb483-17" tabindex="-1"></a><span class="co">#&gt; </span></span>
+<span id="cb483-18"><a href="探索的因子分析.html#cb483-18" tabindex="-1"></a><span class="co">#&gt; Loadings:</span></span>
+<span id="cb483-19"><a href="探索的因子分析.html#cb483-19" tabindex="-1"></a><span class="co">#&gt;                Factor1 Factor2</span></span>
+<span id="cb483-20"><a href="探索的因子分析.html#cb483-20" tabindex="-1"></a><span class="co">#&gt; 専門性          0.249   0.348 </span></span>
+<span id="cb483-21"><a href="探索的因子分析.html#cb483-21" tabindex="-1"></a><span class="co">#&gt; 分析力         -0.186   0.820 </span></span>
+<span id="cb483-22"><a href="探索的因子分析.html#cb483-22" tabindex="-1"></a><span class="co">#&gt; リーダーシップ  0.930  -0.229 </span></span>
+<span id="cb483-23"><a href="探索的因子分析.html#cb483-23" tabindex="-1"></a><span class="co">#&gt; プレゼン力      0.886         </span></span>
+<span id="cb483-24"><a href="探索的因子分析.html#cb483-24" tabindex="-1"></a><span class="co">#&gt; コミュ力        0.963   0.118 </span></span>
+<span id="cb483-25"><a href="探索的因子分析.html#cb483-25" tabindex="-1"></a><span class="co">#&gt; </span></span>
+<span id="cb483-26"><a href="探索的因子分析.html#cb483-26" tabindex="-1"></a><span class="co">#&gt;                Factor1 Factor2</span></span>
+<span id="cb483-27"><a href="探索的因子分析.html#cb483-27" tabindex="-1"></a><span class="co">#&gt; SS loadings      2.675   0.859</span></span>
+<span id="cb483-28"><a href="探索的因子分析.html#cb483-28" tabindex="-1"></a><span class="co">#&gt; Proportion Var   0.535   0.172</span></span>
+<span id="cb483-29"><a href="探索的因子分析.html#cb483-29" tabindex="-1"></a><span class="co">#&gt; Cumulative Var   0.535   0.707</span></span>
+<span id="cb483-30"><a href="探索的因子分析.html#cb483-30" tabindex="-1"></a>tokuten_fac4<span class="sc">$</span>loading</span>
+<span id="cb483-31"><a href="探索的因子分析.html#cb483-31" tabindex="-1"></a><span class="co">#&gt; </span></span>
+<span id="cb483-32"><a href="探索的因子分析.html#cb483-32" tabindex="-1"></a><span class="co">#&gt; Loadings:</span></span>
+<span id="cb483-33"><a href="探索的因子分析.html#cb483-33" tabindex="-1"></a><span class="co">#&gt;                Factor1 Factor2</span></span>
+<span id="cb483-34"><a href="探索的因子分析.html#cb483-34" tabindex="-1"></a><span class="co">#&gt; 専門性          0.172   0.349 </span></span>
+<span id="cb483-35"><a href="探索的因子分析.html#cb483-35" tabindex="-1"></a><span class="co">#&gt; 分析力         -0.368   0.792 </span></span>
+<span id="cb483-36"><a href="探索的因子分析.html#cb483-36" tabindex="-1"></a><span class="co">#&gt; リーダーシップ  0.980  -0.186 </span></span>
+<span id="cb483-37"><a href="探索的因子分析.html#cb483-37" tabindex="-1"></a><span class="co">#&gt; プレゼン力      0.890         </span></span>
+<span id="cb483-38"><a href="探索的因子分析.html#cb483-38" tabindex="-1"></a><span class="co">#&gt; コミュ力        0.936   0.153 </span></span>
+<span id="cb483-39"><a href="探索的因子分析.html#cb483-39" tabindex="-1"></a><span class="co">#&gt; </span></span>
+<span id="cb483-40"><a href="探索的因子分析.html#cb483-40" tabindex="-1"></a><span class="co">#&gt;                Factor1 Factor2</span></span>
+<span id="cb483-41"><a href="探索的因子分析.html#cb483-41" tabindex="-1"></a><span class="co">#&gt; SS loadings      2.794   0.807</span></span>
+<span id="cb483-42"><a href="探索的因子分析.html#cb483-42" tabindex="-1"></a><span class="co">#&gt; Proportion Var   0.559   0.161</span></span>
+<span id="cb483-43"><a href="探索的因子分析.html#cb483-43" tabindex="-1"></a><span class="co">#&gt; Cumulative Var   0.559   0.720</span></span>
+<span id="cb483-44"><a href="探索的因子分析.html#cb483-44" tabindex="-1"></a><span class="co"># tokuten_fac$loading</span></span></code></pre></div>
+<div class="sourceCode" id="cb484"><pre class="sourceCode r"><code class="sourceCode r"><span id="cb484-1"><a href="探索的因子分析.html#cb484-1" tabindex="-1"></a><span class="co"># 因子得点と因子負荷量のbiplot</span></span>
+<span id="cb484-2"><a href="探索的因子分析.html#cb484-2" tabindex="-1"></a><span class="co"># biplot(tokuten_fac2$scores, tokuten_fac2$loading)</span></span>
+<span id="cb484-3"><a href="探索的因子分析.html#cb484-3" tabindex="-1"></a><span class="co"># biplot(tokuten_fac3$scores, tokuten_fac3$loading)</span></span>
+<span id="cb484-4"><a href="探索的因子分析.html#cb484-4" tabindex="-1"></a><span class="co"># biplot(tokuten_fac4$scores, tokuten_fac4$loading)</span></span>
+<span id="cb484-5"><a href="探索的因子分析.html#cb484-5" tabindex="-1"></a><span class="fu">biplot</span>(tokuten_fac2<span class="sc">$</span>scores, tokuten_fac2<span class="sc">$</span>loading, </span>
+<span id="cb484-6"><a href="探索的因子分析.html#cb484-6" tabindex="-1"></a>       <span class="at">family =</span> <span class="st">&quot;HiraKakuProN-W3&quot;</span>, <span class="at">main =</span> <span class="st">&quot;無回転&quot;</span>)  <span class="co"># 日本語文字化け対応 (mac)</span></span></code></pre></div>
+<p><img src="120-fa_files/figure-html/unnamed-chunk-9-1.png" width="75%" /></p>
+<div class="sourceCode" id="cb485"><pre class="sourceCode r"><code class="sourceCode r"><span id="cb485-1"><a href="探索的因子分析.html#cb485-1" tabindex="-1"></a><span class="fu">biplot</span>(tokuten_fac3<span class="sc">$</span>scores, tokuten_fac3<span class="sc">$</span>loading, </span>
+<span id="cb485-2"><a href="探索的因子分析.html#cb485-2" tabindex="-1"></a>       <span class="at">family =</span> <span class="st">&quot;HiraKakuProN-W3&quot;</span>, <span class="at">main =</span> <span class="st">&quot;promax回転&quot;</span>)  <span class="co"># 日本語文字化け対応 (mac)</span></span></code></pre></div>
+<p><img src="120-fa_files/figure-html/unnamed-chunk-9-2.png" width="75%" /></p>
+<div class="sourceCode" id="cb486"><pre class="sourceCode r"><code class="sourceCode r"><span id="cb486-1"><a href="探索的因子分析.html#cb486-1" tabindex="-1"></a><span class="fu">biplot</span>(tokuten_fac4<span class="sc">$</span>scores, tokuten_fac4<span class="sc">$</span>loading, </span>
+<span id="cb486-2"><a href="探索的因子分析.html#cb486-2" tabindex="-1"></a>       <span class="at">family =</span> <span class="st">&quot;HiraKakuProN-W3&quot;</span>, <span class="at">main =</span> <span class="st">&quot;varimax回転&quot;</span>)  <span class="co"># 日本語文字化け対応 (mac)</span></span></code></pre></div>
+<p><img src="120-fa_files/figure-html/unnamed-chunk-9-3.png" width="75%" /></p>
+<div class="sourceCode" id="cb487"><pre class="sourceCode r"><code class="sourceCode r"><span id="cb487-1"><a href="探索的因子分析.html#cb487-1" tabindex="-1"></a><span class="co"># 独自因子（共通因子で説明出来なかった変動の割合)</span></span>
+<span id="cb487-2"><a href="探索的因子分析.html#cb487-2" tabindex="-1"></a>tokuten_fac<span class="sc">$</span>uniquenesses    <span class="co"># specific variance</span></span>
+<span id="cb487-3"><a href="探索的因子分析.html#cb487-3" tabindex="-1"></a><span class="co">#&gt;         専門性         分析力 リーダーシップ     プレゼン力       コミュ力 </span></span>
+<span id="cb487-4"><a href="探索的因子分析.html#cb487-4" tabindex="-1"></a><span class="co">#&gt;     0.84871769     0.23762850     0.00500000     0.20796645     0.09970145</span></span></code></pre></div>
+</div>
+</div>
+<div id="ライブラリpsychの利用" class="section level2 hasAnchor" number="12.2">
+<h2><span class="header-section-number">12.2</span> ライブラリ<strong>psych</strong>の利用<a href="探索的因子分析.html#ライブラリpsychの利用" class="anchor-section" aria-label="Anchor link to header"></a></h2>
+<ul>
+<li>関数<code>psych()</code>では, モデル推定方法や因子負荷行列の回転方法等に選択肢がある.</li>
+</ul>
+<pre><code>- モデル推定方法 (引数fm=): 最尤法 (&quot;ml&quot;), 一般化最小2乗法 (&quot;gls&quot;), 重み付き最小2乗法 (&quot;gls&quot;), 最小残差法 (&quot;mires&quot;). デフォルトは&quot;mires&quot;
+- 回転方法 (引数rotate=): オブリミン (&quot;oblimin&quot;), バリマックス(&quot;varimax&quot;)など.</code></pre>
+<div class="sourceCode" id="cb489"><pre class="sourceCode r"><code class="sourceCode r"><span id="cb489-1"><a href="探索的因子分析.html#cb489-1" tabindex="-1"></a><span class="fu">library</span>(psych)</span>
+<span id="cb489-2"><a href="探索的因子分析.html#cb489-2" tabindex="-1"></a><span class="co"># 主因子法</span></span>
+<span id="cb489-3"><a href="探索的因子分析.html#cb489-3" tabindex="-1"></a>tokuten_fa <span class="ot">&lt;-</span> <span class="fu">fa</span>(<span class="at">r =</span> tokuten, <span class="at">nfactors =</span> <span class="dv">2</span> , </span>
+<span id="cb489-4"><a href="探索的因子分析.html#cb489-4" tabindex="-1"></a>                 <span class="at">rotate =</span> <span class="st">&quot;none&quot;</span>, <span class="at">fm =</span> <span class="st">&quot;pa&quot;</span>, <span class="at">scores =</span> T)    <span class="co"># 回転なし</span></span>
+<span id="cb489-5"><a href="探索的因子分析.html#cb489-5" tabindex="-1"></a>tokuten_fa2 <span class="ot">&lt;-</span> <span class="fu">fa</span>(<span class="at">r =</span> tokuten, <span class="at">nfactors =</span> <span class="dv">2</span> , </span>
+<span id="cb489-6"><a href="探索的因子分析.html#cb489-6" tabindex="-1"></a>                  <span class="at">rotate =</span> <span class="st">&quot;oblimin&quot;</span>, <span class="at">fm =</span> <span class="st">&quot;pa&quot;</span>, <span class="at">scores =</span> T)    <span class="co">#</span></span>
+<span id="cb489-7"><a href="探索的因子分析.html#cb489-7" tabindex="-1"></a><span class="co"># tokuten_fa &lt;- fa(r = tokuten, nfactors = 2 , rotate = &quot;none&quot;, fm = &quot;ml&quot;, scores = T)</span></span>
+<span id="cb489-8"><a href="探索的因子分析.html#cb489-8" tabindex="-1"></a><span class="co"># デフォルト: rotate = &quot;oblimin&quot;, fm = &quot;minres&quot;</span></span>
+<span id="cb489-9"><a href="探索的因子分析.html#cb489-9" tabindex="-1"></a><span class="co"># 最尤法, fm = &quot;ml&quot;, 一般化最小2乗法, &quot;gls&quot;, 重み付き最小2乗法&quot;gls&quot;, 最小残差法&quot;mires&quot;</span></span>
+<span id="cb489-10"><a href="探索的因子分析.html#cb489-10" tabindex="-1"></a></span>
+<span id="cb489-11"><a href="探索的因子分析.html#cb489-11" tabindex="-1"></a><span class="co"># PCAとの比較</span></span>
+<span id="cb489-12"><a href="探索的因子分析.html#cb489-12" tabindex="-1"></a><span class="co"># tokuten_fa        # standardized loadings (pattern matrix)表示</span></span>
+<span id="cb489-13"><a href="探索的因子分析.html#cb489-13" tabindex="-1"></a></span>
+<span id="cb489-14"><a href="探索的因子分析.html#cb489-14" tabindex="-1"></a><span class="fu">summary</span>(tokuten_fa)</span>
+<span id="cb489-15"><a href="探索的因子分析.html#cb489-15" tabindex="-1"></a>tokuten_fa2<span class="sc">$</span>loadings</span>
+<span id="cb489-16"><a href="探索的因子分析.html#cb489-16" tabindex="-1"></a>tokuten_fa<span class="sc">$</span>scores</span>
+<span id="cb489-17"><a href="探索的因子分析.html#cb489-17" tabindex="-1"></a></span>
+<span id="cb489-18"><a href="探索的因子分析.html#cb489-18" tabindex="-1"></a><span class="fu">par</span>(<span class="at">mfrow =</span> <span class="fu">c</span>(<span class="dv">1</span>, <span class="dv">2</span>))</span>
+<span id="cb489-19"><a href="探索的因子分析.html#cb489-19" tabindex="-1"></a><span class="co"># plot(tokuten_fa)</span></span>
+<span id="cb489-20"><a href="探索的因子分析.html#cb489-20" tabindex="-1"></a><span class="co"># plot(tokuten_fa2)</span></span>
+<span id="cb489-21"><a href="探索的因子分析.html#cb489-21" tabindex="-1"></a><span class="fu">biplot</span>(tokuten_fa, <span class="at">main =</span> <span class="st">&quot;無回転&quot;</span>)</span>
+<span id="cb489-22"><a href="探索的因子分析.html#cb489-22" tabindex="-1"></a><span class="fu">biplot</span>(tokuten_fa2, <span class="at">main =</span> <span class="st">&quot;oblimin回転&quot;</span>)</span></code></pre></div>
+<p><img src="120-fa_files/figure-html/unnamed-chunk-11-1.png" width="75%" /></p>
+<div class="sourceCode" id="cb490"><pre class="sourceCode r"><code class="sourceCode r"><span id="cb490-1"><a href="探索的因子分析.html#cb490-1" tabindex="-1"></a></span>
+<span id="cb490-2"><a href="探索的因子分析.html#cb490-2" tabindex="-1"></a><span class="fu">par</span>(<span class="at">mfrow =</span> <span class="fu">c</span>(<span class="dv">1</span>, <span class="dv">1</span>))</span>
+<span id="cb490-3"><a href="探索的因子分析.html#cb490-3" tabindex="-1"></a><span class="co">#&gt; </span></span>
+<span id="cb490-4"><a href="探索的因子分析.html#cb490-4" tabindex="-1"></a><span class="co">#&gt; Factor analysis with Call: fa(r = tokuten, nfactors = 2, rotate = &quot;none&quot;, scores = T, fm = &quot;pa&quot;)</span></span>
+<span id="cb490-5"><a href="探索的因子分析.html#cb490-5" tabindex="-1"></a><span class="co">#&gt; </span></span>
+<span id="cb490-6"><a href="探索的因子分析.html#cb490-6" tabindex="-1"></a><span class="co">#&gt; Test of the hypothesis that 2 factors are sufficient.</span></span>
+<span id="cb490-7"><a href="探索的因子分析.html#cb490-7" tabindex="-1"></a><span class="co">#&gt; The degrees of freedom for the model is 1  and the objective function was  0.35 </span></span>
+<span id="cb490-8"><a href="探索的因子分析.html#cb490-8" tabindex="-1"></a><span class="co">#&gt; The number of observations was  30  with Chi Square =  8.79  with prob &lt;  0.003 </span></span>
+<span id="cb490-9"><a href="探索的因子分析.html#cb490-9" tabindex="-1"></a><span class="co">#&gt; </span></span>
+<span id="cb490-10"><a href="探索的因子分析.html#cb490-10" tabindex="-1"></a><span class="co">#&gt; The root mean square of the residuals (RMSA) is  0.04 </span></span>
+<span id="cb490-11"><a href="探索的因子分析.html#cb490-11" tabindex="-1"></a><span class="co">#&gt; The df corrected root mean square of the residuals is  0.12 </span></span>
+<span id="cb490-12"><a href="探索的因子分析.html#cb490-12" tabindex="-1"></a><span class="co">#&gt; </span></span>
+<span id="cb490-13"><a href="探索的因子分析.html#cb490-13" tabindex="-1"></a><span class="co">#&gt; Tucker Lewis Index of factoring reliability =  0.163</span></span>
+<span id="cb490-14"><a href="探索的因子分析.html#cb490-14" tabindex="-1"></a><span class="co">#&gt; RMSEA index =  0.508  and the 10 % confidence intervals are  0.245 0.856</span></span>
+<span id="cb490-15"><a href="探索的因子分析.html#cb490-15" tabindex="-1"></a><span class="co">#&gt; BIC =  5.39</span></span>
+<span id="cb490-16"><a href="探索的因子分析.html#cb490-16" tabindex="-1"></a><span class="co">#&gt; Loadings:</span></span>
+<span id="cb490-17"><a href="探索的因子分析.html#cb490-17" tabindex="-1"></a><span class="co">#&gt;                PA1    PA2   </span></span>
+<span id="cb490-18"><a href="探索的因子分析.html#cb490-18" tabindex="-1"></a><span class="co">#&gt; 専門性          0.355  0.470</span></span>
+<span id="cb490-19"><a href="探索的因子分析.html#cb490-19" tabindex="-1"></a><span class="co">#&gt; 分析力         -0.184  0.660</span></span>
+<span id="cb490-20"><a href="探索的因子分析.html#cb490-20" tabindex="-1"></a><span class="co">#&gt; リーダーシップ  0.911 -0.255</span></span>
+<span id="cb490-21"><a href="探索的因子分析.html#cb490-21" tabindex="-1"></a><span class="co">#&gt; プレゼン力      0.958       </span></span>
+<span id="cb490-22"><a href="探索的因子分析.html#cb490-22" tabindex="-1"></a><span class="co">#&gt; コミュ力        0.914       </span></span>
+<span id="cb490-23"><a href="探索的因子分析.html#cb490-23" tabindex="-1"></a><span class="co">#&gt; </span></span>
+<span id="cb490-24"><a href="探索的因子分析.html#cb490-24" tabindex="-1"></a><span class="co">#&gt;                  PA1   PA2</span></span>
+<span id="cb490-25"><a href="探索的因子分析.html#cb490-25" tabindex="-1"></a><span class="co">#&gt; SS loadings    2.744 0.738</span></span>
+<span id="cb490-26"><a href="探索的因子分析.html#cb490-26" tabindex="-1"></a><span class="co">#&gt; Proportion Var 0.549 0.148</span></span>
+<span id="cb490-27"><a href="探索的因子分析.html#cb490-27" tabindex="-1"></a><span class="co">#&gt; Cumulative Var 0.549 0.696</span></span>
+<span id="cb490-28"><a href="探索的因子分析.html#cb490-28" tabindex="-1"></a><span class="co">#&gt;                PA1          PA2</span></span>
+<span id="cb490-29"><a href="探索的因子分析.html#cb490-29" tabindex="-1"></a><span class="co">#&gt; 山田   -1.02034162  0.019100487</span></span>
+<span id="cb490-30"><a href="探索的因子分析.html#cb490-30" tabindex="-1"></a><span class="co">#&gt; 鈴木   -1.81609325  0.890601637</span></span>
+<span id="cb490-31"><a href="探索的因子分析.html#cb490-31" tabindex="-1"></a><span class="co">#&gt; 田中    0.11710274 -1.131035071</span></span>
+<span id="cb490-32"><a href="探索的因子分析.html#cb490-32" tabindex="-1"></a><span class="co">#&gt; 中村    0.97786615 -1.497888977</span></span>
+<span id="cb490-33"><a href="探索的因子分析.html#cb490-33" tabindex="-1"></a><span class="co">#&gt; 大野    1.18686813  1.448453889</span></span>
+<span id="cb490-34"><a href="探索的因子分析.html#cb490-34" tabindex="-1"></a><span class="co">#&gt; 小林    0.14568067  0.518419196</span></span>
+<span id="cb490-35"><a href="探索的因子分析.html#cb490-35" tabindex="-1"></a><span class="co">#&gt; 伊藤   -0.66256206  0.755510959</span></span>
+<span id="cb490-36"><a href="探索的因子分析.html#cb490-36" tabindex="-1"></a><span class="co">#&gt; 高橋    0.82501884 -1.016144138</span></span>
+<span id="cb490-37"><a href="探索的因子分析.html#cb490-37" tabindex="-1"></a><span class="co">#&gt; 渡辺   -0.37950698 -0.296849891</span></span>
+<span id="cb490-38"><a href="探索的因子分析.html#cb490-38" tabindex="-1"></a><span class="co">#&gt; 佐藤   -0.35540858  0.222170566</span></span>
+<span id="cb490-39"><a href="探索的因子分析.html#cb490-39" tabindex="-1"></a><span class="co">#&gt; 山下    1.38305140 -0.665023036</span></span>
+<span id="cb490-40"><a href="探索的因子分析.html#cb490-40" tabindex="-1"></a><span class="co">#&gt; 木村    0.62270049 -0.476316678</span></span>
+<span id="cb490-41"><a href="探索的因子分析.html#cb490-41" tabindex="-1"></a><span class="co">#&gt; 山本   -0.44361495 -0.426060496</span></span>
+<span id="cb490-42"><a href="探索的因子分析.html#cb490-42" tabindex="-1"></a><span class="co">#&gt; 宮崎    1.64994564 -0.484538347</span></span>
+<span id="cb490-43"><a href="探索的因子分析.html#cb490-43" tabindex="-1"></a><span class="co">#&gt; 山口   -0.76190378 -0.118039940</span></span>
+<span id="cb490-44"><a href="探索的因子分析.html#cb490-44" tabindex="-1"></a><span class="co">#&gt; 阿部    1.56078515  0.162024351</span></span>
+<span id="cb490-45"><a href="探索的因子分析.html#cb490-45" tabindex="-1"></a><span class="co">#&gt; 斎藤   -0.74336529  2.028239692</span></span>
+<span id="cb490-46"><a href="探索的因子分析.html#cb490-46" tabindex="-1"></a><span class="co">#&gt; 吉田   -1.93942159 -0.937774682</span></span>
+<span id="cb490-47"><a href="探索的因子分析.html#cb490-47" tabindex="-1"></a><span class="co">#&gt; 佐々木 -0.94328316 -0.363190871</span></span>
+<span id="cb490-48"><a href="探索的因子分析.html#cb490-48" tabindex="-1"></a><span class="co">#&gt; 石川    0.73867734  0.571203066</span></span>
+<span id="cb490-49"><a href="探索的因子分析.html#cb490-49" tabindex="-1"></a><span class="co">#&gt; 山崎   -0.93450472 -0.725912234</span></span>
+<span id="cb490-50"><a href="探索的因子分析.html#cb490-50" tabindex="-1"></a><span class="co">#&gt; 中山    1.01147500  0.113093275</span></span>
+<span id="cb490-51"><a href="探索的因子分析.html#cb490-51" tabindex="-1"></a><span class="co">#&gt; 藤田   -0.67086121  1.318200214</span></span>
+<span id="cb490-52"><a href="探索的因子分析.html#cb490-52" tabindex="-1"></a><span class="co">#&gt; 加藤   -0.80985800 -1.173736127</span></span>
+<span id="cb490-53"><a href="探索的因子分析.html#cb490-53" tabindex="-1"></a><span class="co">#&gt; 清水    0.62804134  1.271351417</span></span>
+<span id="cb490-54"><a href="探索的因子分析.html#cb490-54" tabindex="-1"></a><span class="co">#&gt; 池田    0.76781783 -0.165605242</span></span>
+<span id="cb490-55"><a href="探索的因子分析.html#cb490-55" tabindex="-1"></a><span class="co">#&gt; 井上   -0.64479954  0.598812374</span></span>
+<span id="cb490-56"><a href="探索的因子分析.html#cb490-56" tabindex="-1"></a><span class="co">#&gt; 林     -0.96156230  0.407994217</span></span>
+<span id="cb490-57"><a href="探索的因子分析.html#cb490-57" tabindex="-1"></a><span class="co">#&gt; 中島   -0.06969367 -0.843983587</span></span>
+<span id="cb490-58"><a href="探索的因子分析.html#cb490-58" tabindex="-1"></a><span class="co">#&gt; 森      1.54175000 -0.003076023</span></span></code></pre></div>
+</div>
+<div id="因子分析に有用なツール" class="section level2 hasAnchor" number="12.3">
+<h2><span class="header-section-number">12.3</span> 因子分析に有用なツール<a href="探索的因子分析.html#因子分析に有用なツール" class="anchor-section" aria-label="Anchor link to header"></a></h2>
+<p>ライブラリ<strong>psych</strong>の関数<code>fa.parallel()</code>, <code>vss()</code>は, 因子数の決定に有用である.</p>
+<div class="sourceCode" id="cb491"><pre class="sourceCode r"><code class="sourceCode r"><span id="cb491-1"><a href="探索的因子分析.html#cb491-1" tabindex="-1"></a><span class="co"># library(psych)</span></span>
+<span id="cb491-2"><a href="探索的因子分析.html#cb491-2" tabindex="-1"></a><span class="co"># 平行分析(parallel analysis)</span></span>
+<span id="cb491-3"><a href="探索的因子分析.html#cb491-3" tabindex="-1"></a><span class="co"># デフォルト: fm = &quot;minres&quot;</span></span>
+<span id="cb491-4"><a href="探索的因子分析.html#cb491-4" tabindex="-1"></a>(res_parallel <span class="ot">&lt;-</span> <span class="fu">fa.parallel</span>(tokuten))      <span class="co"># minres法(デフォルト), PCA &amp; 因子分析</span></span></code></pre></div>
+<p><img src="120-fa_files/figure-html/unnamed-chunk-12-1.png" width="75%" /></p>
+<div class="sourceCode" id="cb492"><pre class="sourceCode r"><code class="sourceCode r"><span id="cb492-1"><a href="探索的因子分析.html#cb492-1" tabindex="-1"></a><span class="co"># fa.parallel(tokuten, fm = &quot;wls&quot;)</span></span>
+<span id="cb492-2"><a href="探索的因子分析.html#cb492-2" tabindex="-1"></a><span class="co"># fa.parallel(tokuten, fm = &quot;ml&quot;, fa = &quot;fa&quot;)    # 最尤法+因子分析(のみ)実行</span></span>
+<span id="cb492-3"><a href="探索的因子分析.html#cb492-3" tabindex="-1"></a><span class="co"># サンプルデータから作られるscreeプロットと, シミュレーションデータの行列(サンプルと同じサイズ)のscreeプロットとを比較</span></span>
+<span id="cb492-4"><a href="探索的因子分析.html#cb492-4" tabindex="-1"></a><span class="co"># → 因子数をsuggest</span></span>
+<span id="cb492-5"><a href="探索的因子分析.html#cb492-5" tabindex="-1"></a><span class="co"># fa = &quot;both&quot; (デフォルト):      # PCA, 主因子法の固有値を同時に表示</span></span>
+<span id="cb492-6"><a href="探索的因子分析.html#cb492-6" tabindex="-1"></a></span>
+<span id="cb492-7"><a href="探索的因子分析.html#cb492-7" tabindex="-1"></a><span class="co"># VSS (Very Simple Structure) 規準</span></span>
+<span id="cb492-8"><a href="探索的因子分析.html#cb492-8" tabindex="-1"></a><span class="co"># Very Simple Structure criterion ( VSS) for estimating the optimal number of factors</span></span>
+<span id="cb492-9"><a href="探索的因子分析.html#cb492-9" tabindex="-1"></a><span class="co"># 最大となる因子数を探す</span></span>
+<span id="cb492-10"><a href="探索的因子分析.html#cb492-10" tabindex="-1"></a><span class="co"># (tokuten_vss &lt;- vss(tokuten, n = 5, rotate = &quot;oblimin&quot;, fm = &quot;wls&quot;)   )   # n: Number of factors to extract (&gt; (初期仮説の)因子数)</span></span>
+<span id="cb492-11"><a href="探索的因子分析.html#cb492-11" tabindex="-1"></a><span class="co"># デフォルト: # 因子数 n = 8, 回転 rotate = &quot;varimax&quot;</span></span>
+<span id="cb492-12"><a href="探索的因子分析.html#cb492-12" tabindex="-1"></a><span class="co"># → VSS, MAP, その他の因子数決定基準の数値を表示</span></span>
+<span id="cb492-13"><a href="探索的因子分析.html#cb492-13" tabindex="-1"></a>tmp_vss <span class="ot">&lt;-</span> <span class="fu">vss</span>(tokuten, <span class="at">n =</span> <span class="dv">4</span>, <span class="at">fm =</span> <span class="st">&quot;ml&quot;</span>)</span></code></pre></div>
+<p><img src="120-fa_files/figure-html/unnamed-chunk-12-2.png" width="75%" /></p>
+<div class="sourceCode" id="cb493"><pre class="sourceCode r"><code class="sourceCode r"><span id="cb493-1"><a href="探索的因子分析.html#cb493-1" tabindex="-1"></a><span class="co"># VSS.plot(tmp_vss)</span></span>
+<span id="cb493-2"><a href="探索的因子分析.html#cb493-2" tabindex="-1"></a><span class="fu">print</span>(tmp_vss)</span>
+<span id="cb493-3"><a href="探索的因子分析.html#cb493-3" tabindex="-1"></a><span class="co">#&gt; Parallel analysis suggests that the number of factors =  2  and the number of components =  1 </span></span>
+<span id="cb493-4"><a href="探索的因子分析.html#cb493-4" tabindex="-1"></a><span class="co">#&gt; Call: fa.parallel(x = tokuten)</span></span>
+<span id="cb493-5"><a href="探索的因子分析.html#cb493-5" tabindex="-1"></a><span class="co">#&gt; Parallel analysis suggests that the number of factors =  2  and the number of components =  1 </span></span>
+<span id="cb493-6"><a href="探索的因子分析.html#cb493-6" tabindex="-1"></a><span class="co">#&gt; </span></span>
+<span id="cb493-7"><a href="探索的因子分析.html#cb493-7" tabindex="-1"></a><span class="co">#&gt;  Eigen Values of </span></span>
+<span id="cb493-8"><a href="探索的因子分析.html#cb493-8" tabindex="-1"></a><span class="co">#&gt;   Original factors Resampled data Simulated data Original components</span></span>
+<span id="cb493-9"><a href="探索的因子分析.html#cb493-9" tabindex="-1"></a><span class="co">#&gt; 1             2.78           1.07           1.05                2.96</span></span>
+<span id="cb493-10"><a href="探索的因子分析.html#cb493-10" tabindex="-1"></a><span class="co">#&gt; 2             0.39           0.28           0.26                1.23</span></span>
+<span id="cb493-11"><a href="探索的因子分析.html#cb493-11" tabindex="-1"></a><span class="co">#&gt;   Resampled components Simulated components</span></span>
+<span id="cb493-12"><a href="探索的因子分析.html#cb493-12" tabindex="-1"></a><span class="co">#&gt; 1                  1.6                 1.58</span></span>
+<span id="cb493-13"><a href="探索的因子分析.html#cb493-13" tabindex="-1"></a><span class="co">#&gt; 2                  1.2                 1.17</span></span>
+<span id="cb493-14"><a href="探索的因子分析.html#cb493-14" tabindex="-1"></a><span class="co">#&gt; </span></span>
+<span id="cb493-15"><a href="探索的因子分析.html#cb493-15" tabindex="-1"></a><span class="co">#&gt; Very Simple Structure</span></span>
+<span id="cb493-16"><a href="探索的因子分析.html#cb493-16" tabindex="-1"></a><span class="co">#&gt; Call: vss(x = tokuten, n = 4, fm = &quot;ml&quot;)</span></span>
+<span id="cb493-17"><a href="探索的因子分析.html#cb493-17" tabindex="-1"></a><span class="co">#&gt; VSS complexity 1 achieves a maximimum of 0.81  with  1  factors</span></span>
+<span id="cb493-18"><a href="探索的因子分析.html#cb493-18" tabindex="-1"></a><span class="co">#&gt; VSS complexity 2 achieves a maximimum of 0.92  with  3  factors</span></span>
+<span id="cb493-19"><a href="探索的因子分析.html#cb493-19" tabindex="-1"></a><span class="co">#&gt; </span></span>
+<span id="cb493-20"><a href="探索的因子分析.html#cb493-20" tabindex="-1"></a><span class="co">#&gt; The Velicer MAP achieves a minimum of 0.15  with  1  factors </span></span>
+<span id="cb493-21"><a href="探索的因子分析.html#cb493-21" tabindex="-1"></a><span class="co">#&gt; BIC achieves a minimum of  1.04  with  2  factors</span></span>
+<span id="cb493-22"><a href="探索的因子分析.html#cb493-22" tabindex="-1"></a><span class="co">#&gt; Sample Size adjusted BIC achieves a minimum of  4.15  with  2  factors</span></span>
+<span id="cb493-23"><a href="探索的因子分析.html#cb493-23" tabindex="-1"></a><span class="co">#&gt; </span></span>
+<span id="cb493-24"><a href="探索的因子分析.html#cb493-24" tabindex="-1"></a><span class="co">#&gt; Statistics by number of factors </span></span>
+<span id="cb493-25"><a href="探索的因子分析.html#cb493-25" tabindex="-1"></a><span class="co">#&gt;   vss1 vss2  map dof   chisq    prob sqresid  fit RMSEA BIC SABIC complex</span></span>
+<span id="cb493-26"><a href="探索的因子分析.html#cb493-26" tabindex="-1"></a><span class="co">#&gt; 1 0.81 0.00 0.15   5 2.1e+01 0.00083    2.01 0.81  0.32 3.9  19.5     1.0</span></span>
+<span id="cb493-27"><a href="探索的因子分析.html#cb493-27" tabindex="-1"></a><span class="co">#&gt; 2 0.80 0.92 0.27   1 4.4e+00 0.03506    0.88 0.92  0.34 1.0   4.2     1.2</span></span>
+<span id="cb493-28"><a href="探索的因子分析.html#cb493-28" tabindex="-1"></a><span class="co">#&gt; 3 0.79 0.92 0.45  -2 0.0e+00      NA    0.52 0.95    NA  NA    NA     1.5</span></span>
+<span id="cb493-29"><a href="探索的因子分析.html#cb493-29" tabindex="-1"></a><span class="co">#&gt; 4 0.79 0.92 1.00  -4 2.1e-14      NA    0.54 0.95    NA  NA    NA     1.5</span></span>
+<span id="cb493-30"><a href="探索的因子分析.html#cb493-30" tabindex="-1"></a><span class="co">#&gt;    eChisq    SRMR eCRMS eBIC</span></span>
+<span id="cb493-31"><a href="探索的因子分析.html#cb493-31" tabindex="-1"></a><span class="co">#&gt; 1 1.1e+01 1.4e-01  0.19 -5.7</span></span>
+<span id="cb493-32"><a href="探索的因子分析.html#cb493-32" tabindex="-1"></a><span class="co">#&gt; 2 1.6e+00 5.2e-02  0.16 -1.8</span></span>
+<span id="cb493-33"><a href="探索的因子分析.html#cb493-33" tabindex="-1"></a><span class="co">#&gt; 3 7.8e-17 3.6e-10    NA   NA</span></span>
+<span id="cb493-34"><a href="探索的因子分析.html#cb493-34" tabindex="-1"></a><span class="co">#&gt; 4 1.7e-14 5.3e-09    NA   NA</span></span></code></pre></div>
+<p>ライブラリ<strong>psych</strong>内の関数<code>fa.plot()</code>や<code>fa.diagram()</code>は, 因子間の関係性 (相関構造や階層構造) を調べるのに有用である.</p>
+<div class="sourceCode" id="cb494"><pre class="sourceCode r"><code class="sourceCode r"><span id="cb494-1"><a href="探索的因子分析.html#cb494-1" tabindex="-1"></a><span class="fu">fa.plot</span>(tokuten_fa, <span class="at">cut =</span> <span class="fl">0.5</span>)</span></code></pre></div>
+<p><img src="120-fa_files/figure-html/unnamed-chunk-13-1.png" width="75%" /></p>
+<div class="sourceCode" id="cb495"><pre class="sourceCode r"><code class="sourceCode r"><span id="cb495-1"><a href="探索的因子分析.html#cb495-1" tabindex="-1"></a><span class="co"># fa.plot(tokuten_fa2, cut = 0.5)</span></span>
+<span id="cb495-2"><a href="探索的因子分析.html#cb495-2" tabindex="-1"></a><span class="fu">fa.diagram</span>(tokuten_fa)</span></code></pre></div>
+<p><img src="120-fa_files/figure-html/unnamed-chunk-13-2.png" width="75%" /></p>
+<div class="sourceCode" id="cb496"><pre class="sourceCode r"><code class="sourceCode r"><span id="cb496-1"><a href="探索的因子分析.html#cb496-1" tabindex="-1"></a><span class="co"># fa.diagram(tokuten_fa2)</span></span></code></pre></div>
+<p>また, ライブラリ<strong>qgraph</strong>の関数<code>qgraph()</code>も同様な目的で有用である.</p>
+<div class="sourceCode" id="cb497"><pre class="sourceCode r"><code class="sourceCode r"><span id="cb497-1"><a href="探索的因子分析.html#cb497-1" tabindex="-1"></a><span class="co"># 相関ネットワーク(参考)</span></span>
+<span id="cb497-2"><a href="探索的因子分析.html#cb497-2" tabindex="-1"></a><span class="fu">library</span>(qgraph)</span>
+<span id="cb497-3"><a href="探索的因子分析.html#cb497-3" tabindex="-1"></a><span class="fu">qgraph</span>(<span class="fu">cor</span>(tokuten), <span class="at">edge.labels =</span> T, <span class="at">minimum =</span> .<span class="dv">2</span>, <span class="at">edge.color =</span> <span class="st">&quot;black&quot;</span>)</span></code></pre></div>
+<p><img src="120-fa_files/figure-html/unnamed-chunk-14-1.png" width="75%" /></p>
+<div class="sourceCode" id="cb498"><pre class="sourceCode r"><code class="sourceCode r"><span id="cb498-1"><a href="探索的因子分析.html#cb498-1" tabindex="-1"></a><span class="co"># 確証的因子分析</span></span>
+<span id="cb498-2"><a href="探索的因子分析.html#cb498-2" tabindex="-1"></a><span class="co"># library(lavaan)</span></span>
+<span id="cb498-3"><a href="探索的因子分析.html#cb498-3" tabindex="-1"></a><span class="co"># cfa()関数</span></span></code></pre></div>
+
+</div>
+</div>
+            </section>
+
+          </div>
+        </div>
+      </div>
+<a href="主成分分析-pca.html" class="navigation navigation-prev " aria-label="Previous page"><i class="fa fa-angle-left"></i></a>
+<a href="クラスター分析.html" class="navigation navigation-next " aria-label="Next page"><i class="fa fa-angle-right"></i></a>
+    </div>
+  </div>
+<script src="libs/gitbook-2.6.7/js/app.min.js"></script>
+<script src="libs/gitbook-2.6.7/js/clipboard.min.js"></script>
+<script src="libs/gitbook-2.6.7/js/plugin-search.js"></script>
+<script src="libs/gitbook-2.6.7/js/plugin-sharing.js"></script>
+<script src="libs/gitbook-2.6.7/js/plugin-fontsettings.js"></script>
+<script src="libs/gitbook-2.6.7/js/plugin-bookdown.js"></script>
+<script src="libs/gitbook-2.6.7/js/jquery.highlight.js"></script>
+<script src="libs/gitbook-2.6.7/js/plugin-clipboard.js"></script>
+<script>
+gitbook.require(["gitbook"], function(gitbook) {
+gitbook.start({
+"sharing": {
+"github": false,
+"facebook": true,
+"twitter": true,
+"linkedin": false,
+"weibo": false,
+"instapaper": false,
+"vk": false,
+"whatsapp": false,
+"all": ["facebook", "twitter", "linkedin", "weibo", "instapaper"]
+},
+"fontsettings": {
+"theme": "white",
+"family": "sans",
+"size": 2
+},
+"edit": {
+"link": null,
+"text": null
+},
+"history": {
+"link": null,
+"text": null
+},
+"view": {
+"link": null,
+"text": null
+},
+"download": null,
+"search": {
+"engine": "fuse",
+"options": null
+},
+"toc": {
+"collapse": "subsection"
+}
+});
+});
+</script>
+
+<!-- dynamically load mathjax for compatibility with self-contained -->
+<script>
+  (function () {
+    var script = document.createElement("script");
+    script.type = "text/javascript";
+    var src = "true";
+    if (src === "" || src === "true") src = "https://cdnjs.cloudflare.com/ajax/libs/mathjax/2.7.9/latest.js?config=TeX-MML-AM_CHTML";
+    if (location.protocol !== "file:")
+      if (/^https?:/.test(src))
+        src = src.replace(/^https?:/, '');
+    script.src = src;
+    document.getElementsByTagName("head")[0].appendChild(script);
+  })();
+</script>
+</body>
+
+</html>

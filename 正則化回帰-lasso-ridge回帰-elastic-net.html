@@ -1,0 +1,1123 @@
+<!DOCTYPE html>
+<html lang="" xml:lang="">
+<head>
+
+  <meta charset="utf-8" />
+  <meta http-equiv="X-UA-Compatible" content="IE=edge" />
+  <title>6 正則化回帰 (lasso, ridge回帰, elastic net) | 金融データサイエンス</title>
+  <meta name="description" content="6 正則化回帰 (lasso, ridge回帰, elastic net) | 金融データサイエンス" />
+  <meta name="generator" content="bookdown 0.40 and GitBook 2.6.7" />
+
+  <meta property="og:title" content="6 正則化回帰 (lasso, ridge回帰, elastic net) | 金融データサイエンス" />
+  <meta property="og:type" content="book" />
+  
+  
+  
+
+  <meta name="twitter:card" content="summary" />
+  <meta name="twitter:title" content="6 正則化回帰 (lasso, ridge回帰, elastic net) | 金融データサイエンス" />
+  
+  
+  
+
+<meta name="author" content="林 高樹" />
+
+
+
+  <meta name="viewport" content="width=device-width, initial-scale=1" />
+  <meta name="apple-mobile-web-app-capable" content="yes" />
+  <meta name="apple-mobile-web-app-status-bar-style" content="black" />
+  
+  
+<link rel="prev" href="一般化加法モデル-gam.html"/>
+<link rel="next" href="判別分析.html"/>
+<script src="libs/jquery-3.6.0/jquery-3.6.0.min.js"></script>
+<script src="https://cdn.jsdelivr.net/npm/fuse.js@6.4.6/dist/fuse.min.js"></script>
+<link href="libs/gitbook-2.6.7/css/style.css" rel="stylesheet" />
+<link href="libs/gitbook-2.6.7/css/plugin-table.css" rel="stylesheet" />
+<link href="libs/gitbook-2.6.7/css/plugin-bookdown.css" rel="stylesheet" />
+<link href="libs/gitbook-2.6.7/css/plugin-highlight.css" rel="stylesheet" />
+<link href="libs/gitbook-2.6.7/css/plugin-search.css" rel="stylesheet" />
+<link href="libs/gitbook-2.6.7/css/plugin-fontsettings.css" rel="stylesheet" />
+<link href="libs/gitbook-2.6.7/css/plugin-clipboard.css" rel="stylesheet" />
+
+
+
+
+
+
+
+
+<link href="libs/anchor-sections-1.1.0/anchor-sections.css" rel="stylesheet" />
+<link href="libs/anchor-sections-1.1.0/anchor-sections-hash.css" rel="stylesheet" />
+<script src="libs/anchor-sections-1.1.0/anchor-sections.js"></script>
+
+
+<style type="text/css">
+pre > code.sourceCode { white-space: pre; position: relative; }
+pre > code.sourceCode > span { line-height: 1.25; }
+pre > code.sourceCode > span:empty { height: 1.2em; }
+.sourceCode { overflow: visible; }
+code.sourceCode > span { color: inherit; text-decoration: inherit; }
+pre.sourceCode { margin: 0; }
+@media screen {
+div.sourceCode { overflow: auto; }
+}
+@media print {
+pre > code.sourceCode { white-space: pre-wrap; }
+pre > code.sourceCode > span { display: inline-block; text-indent: -5em; padding-left: 5em; }
+}
+pre.numberSource code
+  { counter-reset: source-line 0; }
+pre.numberSource code > span
+  { position: relative; left: -4em; counter-increment: source-line; }
+pre.numberSource code > span > a:first-child::before
+  { content: counter(source-line);
+    position: relative; left: -1em; text-align: right; vertical-align: baseline;
+    border: none; display: inline-block;
+    -webkit-touch-callout: none; -webkit-user-select: none;
+    -khtml-user-select: none; -moz-user-select: none;
+    -ms-user-select: none; user-select: none;
+    padding: 0 4px; width: 4em;
+    color: #aaaaaa;
+  }
+pre.numberSource { margin-left: 3em; border-left: 1px solid #aaaaaa;  padding-left: 4px; }
+div.sourceCode
+  {   }
+@media screen {
+pre > code.sourceCode > span > a:first-child::before { text-decoration: underline; }
+}
+code span.al { color: #ff0000; font-weight: bold; } /* Alert */
+code span.an { color: #60a0b0; font-weight: bold; font-style: italic; } /* Annotation */
+code span.at { color: #7d9029; } /* Attribute */
+code span.bn { color: #40a070; } /* BaseN */
+code span.bu { color: #008000; } /* BuiltIn */
+code span.cf { color: #007020; font-weight: bold; } /* ControlFlow */
+code span.ch { color: #4070a0; } /* Char */
+code span.cn { color: #880000; } /* Constant */
+code span.co { color: #60a0b0; font-style: italic; } /* Comment */
+code span.cv { color: #60a0b0; font-weight: bold; font-style: italic; } /* CommentVar */
+code span.do { color: #ba2121; font-style: italic; } /* Documentation */
+code span.dt { color: #902000; } /* DataType */
+code span.dv { color: #40a070; } /* DecVal */
+code span.er { color: #ff0000; font-weight: bold; } /* Error */
+code span.ex { } /* Extension */
+code span.fl { color: #40a070; } /* Float */
+code span.fu { color: #06287e; } /* Function */
+code span.im { color: #008000; font-weight: bold; } /* Import */
+code span.in { color: #60a0b0; font-weight: bold; font-style: italic; } /* Information */
+code span.kw { color: #007020; font-weight: bold; } /* Keyword */
+code span.op { color: #666666; } /* Operator */
+code span.ot { color: #007020; } /* Other */
+code span.pp { color: #bc7a00; } /* Preprocessor */
+code span.sc { color: #4070a0; } /* SpecialChar */
+code span.ss { color: #bb6688; } /* SpecialString */
+code span.st { color: #4070a0; } /* String */
+code span.va { color: #19177c; } /* Variable */
+code span.vs { color: #4070a0; } /* VerbatimString */
+code span.wa { color: #60a0b0; font-weight: bold; font-style: italic; } /* Warning */
+</style>
+
+<style type="text/css">
+  
+  div.hanging-indent{margin-left: 1.5em; text-indent: -1.5em;}
+</style>
+
+</head>
+
+<body>
+
+
+
+  <div class="book without-animation with-summary font-size-2 font-family-1" data-basepath=".">
+
+    <div class="book-summary">
+      <nav role="navigation">
+
+<ul class="summary">
+<li class="chapter" data-level="1" data-path="index.html"><a href="index.html"><i class="fa fa-check"></i><b>1</b> はじめに</a>
+<ul>
+<li class="chapter" data-level="1.1" data-path="index.html"><a href="index.html#コースの目的"><i class="fa fa-check"></i><b>1.1</b> コースの目的</a></li>
+<li class="chapter" data-level="1.2" data-path="index.html"><a href="index.html#統計学統計的手法の学習について"><i class="fa fa-check"></i><b>1.2</b> 統計学/統計的手法の学習について</a>
+<ul>
+<li class="chapter" data-level="" data-path="index.html"><a href="index.html#学習の目標"><i class="fa fa-check"></i>学習の目標</a></li>
+<li class="chapter" data-level="" data-path="index.html"><a href="index.html#統計学統計的手法の学習方法"><i class="fa fa-check"></i>統計学/統計的手法の学習方法</a></li>
+<li class="chapter" data-level="" data-path="index.html"><a href="index.html#統計学統計的手法の学習ステップ"><i class="fa fa-check"></i>統計学/統計的手法の学習ステップ</a></li>
+</ul></li>
+<li class="chapter" data-level="1.3" data-path="index.html"><a href="index.html#ビジネス応用における統計学の最近の趨勢"><i class="fa fa-check"></i><b>1.3</b> ビジネス応用における統計学の最近の趨勢</a></li>
+<li class="chapter" data-level="1.4" data-path="index.html"><a href="index.html#本書内の記載の注意点"><i class="fa fa-check"></i><b>1.4</b> 本書内の記載の注意点</a></li>
+</ul></li>
+<li class="chapter" data-level="2" data-path="r言語の基本.html"><a href="r言語の基本.html"><i class="fa fa-check"></i><b>2</b> R言語の基本</a>
+<ul>
+<li class="chapter" data-level="2.1" data-path="r言語の基本.html"><a href="r言語の基本.html#rの基本プログラミング"><i class="fa fa-check"></i><b>2.1</b> Rの基本プログラミング</a>
+<ul>
+<li class="chapter" data-level="2.1.1" data-path="r言語の基本.html"><a href="r言語の基本.html#基本操作"><i class="fa fa-check"></i><b>2.1.1</b> 基本操作</a></li>
+<li class="chapter" data-level="2.1.2" data-path="r言語の基本.html"><a href="r言語の基本.html#基本構文"><i class="fa fa-check"></i><b>2.1.2</b> 基本構文</a></li>
+<li class="chapter" data-level="2.1.3" data-path="r言語の基本.html"><a href="r言語の基本.html#自作関数"><i class="fa fa-check"></i><b>2.1.3</b> 自作関数</a></li>
+<li class="chapter" data-level="2.1.4" data-path="r言語の基本.html"><a href="r言語の基本.html#パッケージのインストール-読み込み"><i class="fa fa-check"></i><b>2.1.4</b> パッケージのインストール &amp; 読み込み</a></li>
+<li class="chapter" data-level="2.1.5" data-path="r言語の基本.html"><a href="r言語の基本.html#ヘルプ"><i class="fa fa-check"></i><b>2.1.5</b> ヘルプ</a></li>
+</ul></li>
+<li class="chapter" data-level="2.2" data-path="r言語の基本.html"><a href="r言語の基本.html#データの型や構造"><i class="fa fa-check"></i><b>2.2</b> データの型や構造</a>
+<ul>
+<li class="chapter" data-level="2.2.1" data-path="r言語の基本.html"><a href="r言語の基本.html#データの値の種類-データ型"><i class="fa fa-check"></i><b>2.2.1</b> データの値の種類 (“データ型”)</a></li>
+<li class="chapter" data-level="2.2.2" data-path="r言語の基本.html"><a href="r言語の基本.html#データの配列の仕方-データ構造"><i class="fa fa-check"></i><b>2.2.2</b> データの配列の仕方 (“データ構造”)</a></li>
+<li class="chapter" data-level="2.2.3" data-path="r言語の基本.html"><a href="r言語の基本.html#ベクトル"><i class="fa fa-check"></i><b>2.2.3</b> ベクトル</a></li>
+<li class="chapter" data-level="2.2.4" data-path="r言語の基本.html"><a href="r言語の基本.html#行列"><i class="fa fa-check"></i><b>2.2.4</b> 行列</a></li>
+<li class="chapter" data-level="2.2.5" data-path="r言語の基本.html"><a href="r言語の基本.html#リスト"><i class="fa fa-check"></i><b>2.2.5</b> リスト</a></li>
+<li class="chapter" data-level="2.2.6" data-path="r言語の基本.html"><a href="r言語の基本.html#データフレーム"><i class="fa fa-check"></i><b>2.2.6</b> データフレーム</a></li>
+</ul></li>
+<li class="chapter" data-level="2.3" data-path="r言語の基本.html"><a href="r言語の基本.html#データの操作演算"><i class="fa fa-check"></i><b>2.3</b> データの操作・演算</a>
+<ul>
+<li class="chapter" data-level="2.3.1" data-path="r言語の基本.html"><a href="r言語の基本.html#ベクトルの結合-ソート"><i class="fa fa-check"></i><b>2.3.1</b> ベクトルの結合, ソート</a></li>
+<li class="chapter" data-level="2.3.2" data-path="r言語の基本.html"><a href="r言語の基本.html#二項演算"><i class="fa fa-check"></i><b>2.3.2</b> 二項演算</a></li>
+<li class="chapter" data-level="2.3.3" data-path="r言語の基本.html"><a href="r言語の基本.html#論理演算"><i class="fa fa-check"></i><b>2.3.3</b> 論理演算</a></li>
+<li class="chapter" data-level="2.3.4" data-path="r言語の基本.html"><a href="r言語の基本.html#条件式"><i class="fa fa-check"></i><b>2.3.4</b> 条件式</a></li>
+<li class="chapter" data-level="2.3.5" data-path="r言語の基本.html"><a href="r言語の基本.html#行列演算"><i class="fa fa-check"></i><b>2.3.5</b> 行列演算</a></li>
+</ul></li>
+<li class="chapter" data-level="2.4" data-path="r言語の基本.html"><a href="r言語の基本.html#r関数"><i class="fa fa-check"></i><b>2.4</b> R関数</a>
+<ul>
+<li class="chapter" data-level="2.4.1" data-path="r言語の基本.html"><a href="r言語の基本.html#数学基本関数"><i class="fa fa-check"></i><b>2.4.1</b> 数学基本関数</a></li>
+<li class="chapter" data-level="2.4.2" data-path="r言語の基本.html"><a href="r言語の基本.html#基本統計量の計算"><i class="fa fa-check"></i><b>2.4.2</b> 基本統計量の計算</a></li>
+<li class="chapter" data-level="2.4.3" data-path="r言語の基本.html"><a href="r言語の基本.html#確率分布"><i class="fa fa-check"></i><b>2.4.3</b> 確率分布</a></li>
+<li class="chapter" data-level="2.4.4" data-path="r言語の基本.html"><a href="r言語の基本.html#その他便利な関数"><i class="fa fa-check"></i><b>2.4.4</b> その他便利な関数</a></li>
+</ul></li>
+<li class="chapter" data-level="2.5" data-path="r言語の基本.html"><a href="r言語の基本.html#データの可視化"><i class="fa fa-check"></i><b>2.5</b> データの可視化</a></li>
+<li class="chapter" data-level="2.6" data-path="r言語の基本.html"><a href="r言語の基本.html#ファイル入出力"><i class="fa fa-check"></i><b>2.6</b> ファイル入出力</a>
+<ul>
+<li class="chapter" data-level="2.6.1" data-path="r言語の基本.html"><a href="r言語の基本.html#テキストファイル読み込み"><i class="fa fa-check"></i><b>2.6.1</b> テキストファイル読み込み</a></li>
+<li class="chapter" data-level="2.6.2" data-path="r言語の基本.html"><a href="r言語の基本.html#テキストファイル書き出し"><i class="fa fa-check"></i><b>2.6.2</b> テキストファイル書き出し</a></li>
+</ul></li>
+<li class="chapter" data-level="2.7" data-path="r言語の基本.html"><a href="r言語の基本.html#パッケージtidyverse"><i class="fa fa-check"></i><b>2.7</b> パッケージ<code>tidyverse</code></a>
+<ul>
+<li class="chapter" data-level="2.7.1" data-path="r言語の基本.html"><a href="r言語の基本.html#q-rの初心者はtidyverseから勉強することは可能か"><i class="fa fa-check"></i><b>2.7.1</b> Q: Rの初心者は<code>tidyverse</code>から勉強することは可能か?</a></li>
+<li class="chapter" data-level="2.7.2" data-path="r言語の基本.html"><a href="r言語の基本.html#tidyverseの基本"><i class="fa fa-check"></i><b>2.7.2</b> <code>tidyverse</code>の基本</a></li>
+</ul></li>
+</ul></li>
+<li class="chapter" data-level="3" data-path="線形回帰分析.html"><a href="線形回帰分析.html"><i class="fa fa-check"></i><b>3</b> 線形回帰分析</a>
+<ul>
+<li class="chapter" data-level="3.1" data-path="線形回帰分析.html"><a href="線形回帰分析.html#重回帰分析の基本操作"><i class="fa fa-check"></i><b>3.1</b> 重回帰分析の基本操作</a>
+<ul>
+<li class="chapter" data-level="" data-path="線形回帰分析.html"><a href="線形回帰分析.html#データ1-1ルーム賃貸マンション"><i class="fa fa-check"></i>データ1: 1ルーム賃貸マンション</a></li>
+</ul></li>
+<li class="chapter" data-level="3.2" data-path="線形回帰分析.html"><a href="線形回帰分析.html#変数の選択"><i class="fa fa-check"></i><b>3.2</b> 変数の選択</a>
+<ul>
+<li class="chapter" data-level="" data-path="線形回帰分析.html"><a href="線形回帰分析.html#データ2-ボストン市内住宅物件価格データ"><i class="fa fa-check"></i>データ2: ボストン市内住宅物件価格データ</a></li>
+</ul></li>
+<li class="chapter" data-level="3.3" data-path="線形回帰分析.html"><a href="線形回帰分析.html#説明変数に質的変数を含む回帰"><i class="fa fa-check"></i><b>3.3</b> 説明変数に質的変数を含む回帰</a>
+<ul>
+<li class="chapter" data-level="" data-path="線形回帰分析.html"><a href="線形回帰分析.html#データセット3-高速道路事故データ"><i class="fa fa-check"></i>データセット#3: 高速道路事故データ</a></li>
+</ul></li>
+<li class="chapter" data-level="3.4" data-path="線形回帰分析.html"><a href="線形回帰分析.html#説明変数に質的変数を含む回帰-2"><i class="fa fa-check"></i><b>3.4</b> 説明変数に質的変数を含む回帰 (2)</a>
+<ul>
+<li class="chapter" data-level="" data-path="線形回帰分析.html"><a href="線形回帰分析.html#データセット5-収入データ-仮想"><i class="fa fa-check"></i>データセット#5: 収入データ (仮想)</a></li>
+</ul></li>
+<li class="chapter" data-level="3.5" data-path="線形回帰分析.html"><a href="線形回帰分析.html#多項式回帰"><i class="fa fa-check"></i><b>3.5</b> 多項式回帰</a>
+<ul>
+<li class="chapter" data-level="" data-path="線形回帰分析.html"><a href="線形回帰分析.html#データセット6-wage"><i class="fa fa-check"></i>データセット#6: <code>Wage</code></a></li>
+</ul></li>
+<li class="chapter" data-level="3.6" data-path="線形回帰分析.html"><a href="線形回帰分析.html#関数factorについて"><i class="fa fa-check"></i><b>3.6</b> 関数<code>factor()</code>について</a>
+<ul>
+<li class="chapter" data-level="" data-path="線形回帰分析.html"><a href="線形回帰分析.html#rでのfactor関数の使い方"><i class="fa fa-check"></i>Rでのfactor関数の使い方</a></li>
+</ul></li>
+</ul></li>
+<li class="chapter" data-level="4" data-path="ロジットブロビット回帰分析.html"><a href="ロジットブロビット回帰分析.html"><i class="fa fa-check"></i><b>4</b> ロジット/ブロビット回帰分析</a>
+<ul>
+<li class="chapter" data-level="4.1" data-path="ロジットブロビット回帰分析.html"><a href="ロジットブロビット回帰分析.html#ロジット回帰分析の基本操作"><i class="fa fa-check"></i><b>4.1</b> ロジット回帰分析の基本操作</a>
+<ul>
+<li class="chapter" data-level="" data-path="ロジットブロビット回帰分析.html"><a href="ロジットブロビット回帰分析.html#ロジットモデル-シミュレーションデータ"><i class="fa fa-check"></i>ロジットモデル: シミュレーションデータ</a></li>
+</ul></li>
+<li class="chapter" data-level="4.2" data-path="ロジットブロビット回帰分析.html"><a href="ロジットブロビット回帰分析.html#データ分析例"><i class="fa fa-check"></i><b>4.2</b> データ分析例</a>
+<ul>
+<li class="chapter" data-level="" data-path="ロジットブロビット回帰分析.html"><a href="ロジットブロビット回帰分析.html#データセット-1-企業パフォーマンスデータ-仮想"><i class="fa fa-check"></i>データセット (1): 企業パフォーマンス・データ (仮想)</a></li>
+<li class="chapter" data-level="" data-path="ロジットブロビット回帰分析.html"><a href="ロジットブロビット回帰分析.html#データセット-2-個人ローンデフォルトデータ-仮想"><i class="fa fa-check"></i>データセット (2): 個人ローン・デフォルト・データ (仮想)</a></li>
+</ul></li>
+<li class="chapter" data-level="4.3" data-path="ロジットブロビット回帰分析.html"><a href="ロジットブロビット回帰分析.html#疑似r2の計算"><i class="fa fa-check"></i><b>4.3</b> 疑似R2の計算</a>
+<ul>
+<li class="chapter" data-level="" data-path="ロジットブロビット回帰分析.html"><a href="ロジットブロビット回帰分析.html#パッケージdesctoolsの利用"><i class="fa fa-check"></i>パッケージ<code>DescTools</code>の利用</a></li>
+<li class="chapter" data-level="" data-path="ロジットブロビット回帰分析.html"><a href="ロジットブロビット回帰分析.html#パッケージpsclの利用"><i class="fa fa-check"></i>パッケージ<code>pscl</code>の利用</a></li>
+<li class="chapter" data-level="" data-path="ロジットブロビット回帰分析.html"><a href="ロジットブロビット回帰分析.html#パッケージperformanceの利用"><i class="fa fa-check"></i>パッケージ<code>performance</code>の利用</a></li>
+</ul></li>
+</ul></li>
+<li class="chapter" data-level="5" data-path="一般化加法モデル-gam.html"><a href="一般化加法モデル-gam.html"><i class="fa fa-check"></i><b>5</b> 一般化加法モデル (GAM)</a>
+<ul>
+<li class="chapter" data-level="5.1" data-path="一般化加法モデル-gam.html"><a href="一般化加法モデル-gam.html#パッケージgamの利用"><i class="fa fa-check"></i><b>5.1</b> パッケージ<code>gam</code>の利用</a>
+<ul>
+<li class="chapter" data-level="" data-path="一般化加法モデル-gam.html"><a href="一般化加法モデル-gam.html#多項式回帰-1"><i class="fa fa-check"></i>多項式回帰</a></li>
+<li class="chapter" data-level="" data-path="一般化加法モデル-gam.html"><a href="一般化加法モデル-gam.html#スプライン適合"><i class="fa fa-check"></i>スプライン適合</a></li>
+<li class="chapter" data-level="" data-path="一般化加法モデル-gam.html"><a href="一般化加法モデル-gam.html#gam"><i class="fa fa-check"></i>GAM</a></li>
+</ul></li>
+<li class="chapter" data-level="5.2" data-path="一般化加法モデル-gam.html"><a href="一般化加法モデル-gam.html#パッケージmgcvの利用"><i class="fa fa-check"></i><b>5.2</b> パッケージ<code>mgcv</code>の利用</a></li>
+<li class="chapter" data-level="5.3" data-path="一般化加法モデル-gam.html"><a href="一般化加法モデル-gam.html#パッケージprophetの利用"><i class="fa fa-check"></i><b>5.3</b> パッケージ<code>prophet</code>の利用</a></li>
+<li class="chapter" data-level="5.4" data-path="一般化加法モデル-gam.html"><a href="一般化加法モデル-gam.html#追加分析boston-housingデータセットの変数間の関係性"><i class="fa fa-check"></i><b>5.4</b> 【追加分析】Boston housingデータセットの変数間の関係性</a></li>
+</ul></li>
+<li class="chapter" data-level="6" data-path="正則化回帰-lasso-ridge回帰-elastic-net.html"><a href="正則化回帰-lasso-ridge回帰-elastic-net.html"><i class="fa fa-check"></i><b>6</b> 正則化回帰 (lasso, ridge回帰, elastic net)</a>
+<ul>
+<li class="chapter" data-level="6.1" data-path="正則化回帰-lasso-ridge回帰-elastic-net.html"><a href="正則化回帰-lasso-ridge回帰-elastic-net.html#検証用セット法による回帰モデルの予測精度評価"><i class="fa fa-check"></i><b>6.1</b> 検証用セット法による回帰モデルの予測精度評価</a>
+<ul>
+<li class="chapter" data-level="" data-path="正則化回帰-lasso-ridge回帰-elastic-net.html"><a href="正則化回帰-lasso-ridge回帰-elastic-net.html#データセット1-ワイン品質データ"><i class="fa fa-check"></i>データセット1: ワイン品質データ</a></li>
+</ul></li>
+<li class="chapter" data-level="6.2" data-path="正則化回帰-lasso-ridge回帰-elastic-net.html"><a href="正則化回帰-lasso-ridge回帰-elastic-net.html#lasso"><i class="fa fa-check"></i><b>6.2</b> lasso</a>
+<ul>
+<li class="chapter" data-level="" data-path="正則化回帰-lasso-ridge回帰-elastic-net.html"><a href="正則化回帰-lasso-ridge回帰-elastic-net.html#関数glmnetの基本操作"><i class="fa fa-check"></i>関数<code>glmnet()</code>の基本操作</a></li>
+<li class="chapter" data-level="" data-path="正則化回帰-lasso-ridge回帰-elastic-net.html"><a href="正則化回帰-lasso-ridge回帰-elastic-net.html#lambdaのグリッド指定によるglmnetの一括実行"><i class="fa fa-check"></i><code>lambda</code>のグリッド指定による<code>glmnet</code>の一括実行</a></li>
+<li class="chapter" data-level="" data-path="正則化回帰-lasso-ridge回帰-elastic-net.html"><a href="正則化回帰-lasso-ridge回帰-elastic-net.html#交差検証によるパラメータチューニング"><i class="fa fa-check"></i>交差検証によるパラメータ・チューニング</a></li>
+</ul></li>
+<li class="chapter" data-level="6.3" data-path="正則化回帰-lasso-ridge回帰-elastic-net.html"><a href="正則化回帰-lasso-ridge回帰-elastic-net.html#ridge回帰"><i class="fa fa-check"></i><b>6.3</b> ridge回帰</a></li>
+<li class="chapter" data-level="6.4" data-path="正則化回帰-lasso-ridge回帰-elastic-net.html"><a href="正則化回帰-lasso-ridge回帰-elastic-net.html#一般化線形モデル-glm-正則化"><i class="fa fa-check"></i><b>6.4</b> 一般化線形モデル (GLM) + 正則化</a>
+<ul>
+<li class="chapter" data-level="" data-path="正則化回帰-lasso-ridge回帰-elastic-net.html"><a href="正則化回帰-lasso-ridge回帰-elastic-net.html#データセット2-german-creditデータ"><i class="fa fa-check"></i>データセット2: german creditデータ</a></li>
+</ul></li>
+<li class="chapter" data-level="6.5" data-path="正則化回帰-lasso-ridge回帰-elastic-net.html"><a href="正則化回帰-lasso-ridge回帰-elastic-net.html#補足-glmに対する変数選択の代替的方法"><i class="fa fa-check"></i><b>6.5</b> 補足: GLMに対する変数選択の代替的方法</a></li>
+</ul></li>
+<li class="chapter" data-level="7" data-path="判別分析.html"><a href="判別分析.html"><i class="fa fa-check"></i><b>7</b> 判別分析</a>
+<ul>
+<li class="chapter" data-level="7.1" data-path="判別分析.html"><a href="判別分析.html#線形判別-2次判別-パッケージmassの利用"><i class="fa fa-check"></i><b>7.1</b> 線形判別 &amp; 2次判別: パッケージMASSの利用</a>
+<ul>
+<li class="chapter" data-level="" data-path="判別分析.html"><a href="判別分析.html#データセット1-米国sp500日次リターンデータ"><i class="fa fa-check"></i>データセット#1: 米国S&amp;P500日次リターンデータ</a></li>
+<li class="chapter" data-level="" data-path="判別分析.html"><a href="判別分析.html#線形判別-lda"><i class="fa fa-check"></i>線形判別 (LDA)</a></li>
+<li class="chapter" data-level="" data-path="判別分析.html"><a href="判別分析.html#次判別-qda"><i class="fa fa-check"></i>2次判別 (QDA)</a></li>
+</ul></li>
+<li class="chapter" data-level="7.2" data-path="判別分析.html"><a href="判別分析.html#knn法-パッケージclassの利用"><i class="fa fa-check"></i><b>7.2</b> kNN法: パッケージ<strong>class</strong>の利用</a></li>
+<li class="chapter" data-level="7.3" data-path="判別分析.html"><a href="判別分析.html#他パッケージの利用-パッケージklar"><i class="fa fa-check"></i><b>7.3</b> 他パッケージの利用: パッケージ<strong>klaR</strong></a>
+<ul>
+<li class="chapter" data-level="" data-path="判別分析.html"><a href="判別分析.html#データセット2-ビジネススクールの入学許可データ"><i class="fa fa-check"></i>データセット#2: ビジネススクールの入学許可データ</a></li>
+</ul></li>
+</ul></li>
+<li class="chapter" data-level="8" data-path="決定木分析.html"><a href="決定木分析.html"><i class="fa fa-check"></i><b>8</b> 決定木分析</a>
+<ul>
+<li class="chapter" data-level="8.1" data-path="決定木分析.html"><a href="決定木分析.html#導入-回帰木-vs-線形回帰"><i class="fa fa-check"></i><b>8.1</b> 導入: 回帰木 vs 線形回帰</a>
+<ul>
+<li class="chapter" data-level="" data-path="決定木分析.html"><a href="決定木分析.html#データセット1-自動車の制動距離"><i class="fa fa-check"></i>データセット1: 自動車の制動距離</a></li>
+<li class="chapter" data-level="8.1.1" data-path="決定木分析.html"><a href="決定木分析.html#基本操作-回帰木"><i class="fa fa-check"></i><b>8.1.1</b> 基本操作: 回帰木</a></li>
+</ul></li>
+<li class="chapter" data-level="8.2" data-path="決定木分析.html"><a href="決定木分析.html#回帰木"><i class="fa fa-check"></i><b>8.2</b> 回帰木</a>
+<ul>
+<li class="chapter" data-level="" data-path="決定木分析.html"><a href="決定木分析.html#データセット2-米國株価指数データ-再掲"><i class="fa fa-check"></i>データセット2: 米國株価指数データ (再掲)</a></li>
+</ul></li>
+<li class="chapter" data-level="8.3" data-path="決定木分析.html"><a href="決定木分析.html#分類木"><i class="fa fa-check"></i><b>8.3</b> 分類木</a></li>
+</ul></li>
+<li class="chapter" data-level="9" data-path="アンサンブル学習.html"><a href="アンサンブル学習.html"><i class="fa fa-check"></i><b>9</b> アンサンブル学習</a>
+<ul>
+<li class="chapter" data-level="9.1" data-path="アンサンブル学習.html"><a href="アンサンブル学習.html#決定木-分類木"><i class="fa fa-check"></i><b>9.1</b> 決定木 (分類木)</a>
+<ul>
+<li class="chapter" data-level="" data-path="アンサンブル学習.html"><a href="アンサンブル学習.html#データセット3-個人ローン信用データ-再掲"><i class="fa fa-check"></i>データセット3: 個人ローン信用データ (再掲)</a></li>
+</ul></li>
+<li class="chapter" data-level="9.2" data-path="アンサンブル学習.html"><a href="アンサンブル学習.html#ランダムフォレスト分類木"><i class="fa fa-check"></i><b>9.2</b> ランダムフォレスト分類木</a></li>
+<li class="chapter" data-level="9.3" data-path="アンサンブル学習.html"><a href="アンサンブル学習.html#一般化ブースト回帰"><i class="fa fa-check"></i><b>9.3</b> 一般化ブースト回帰</a></li>
+</ul></li>
+<li class="chapter" data-level="10" data-path="サポートベクターマシン-svm.html"><a href="サポートベクターマシン-svm.html"><i class="fa fa-check"></i><b>10</b> サポートベクターマシン (SVM)</a>
+<ul>
+<li class="chapter" data-level="10.1" data-path="サポートベクターマシン-svm.html"><a href="サポートベクターマシン-svm.html#svm-rbfカーネル-の動作の確認"><i class="fa fa-check"></i><b>10.1</b> SVM (RBFカーネル) の動作の確認</a>
+<ul>
+<li class="chapter" data-level="" data-path="サポートベクターマシン-svm.html"><a href="サポートベクターマシン-svm.html#データセット1-iris-あやめ-データ"><i class="fa fa-check"></i>データセット1: iris (あやめ) データ</a></li>
+<li class="chapter" data-level="" data-path="サポートベクターマシン-svm.html"><a href="サポートベクターマシン-svm.html#svmの実行"><i class="fa fa-check"></i>SVMの実行</a></li>
+</ul></li>
+<li class="chapter" data-level="10.2" data-path="サポートベクターマシン-svm.html"><a href="サポートベクターマシン-svm.html#値分類"><i class="fa fa-check"></i><b>10.2</b> 2値分類</a>
+<ul>
+<li class="chapter" data-level="" data-path="サポートベクターマシン-svm.html"><a href="サポートベクターマシン-svm.html#データセット2-spamデータ"><i class="fa fa-check"></i>データセット2: spamデータ</a></li>
+<li class="chapter" data-level="" data-path="サポートベクターマシン-svm.html"><a href="サポートベクターマシン-svm.html#svmの実行-1"><i class="fa fa-check"></i>SVMの実行</a></li>
+</ul></li>
+<li class="chapter" data-level="10.3" data-path="サポートベクターマシン-svm.html"><a href="サポートベクターマシン-svm.html#値分類-1"><i class="fa fa-check"></i><b>10.3</b> 3値分類</a>
+<ul>
+<li class="chapter" data-level="" data-path="サポートベクターマシン-svm.html"><a href="サポートベクターマシン-svm.html#svmの実行-2"><i class="fa fa-check"></i>SVMの実行</a></li>
+</ul></li>
+<li class="chapter" data-level="10.4" data-path="サポートベクターマシン-svm.html"><a href="サポートベクターマシン-svm.html#代替パッケージe1071の利用"><i class="fa fa-check"></i><b>10.4</b> 代替パッケージ<strong>e1071</strong>の利用</a>
+<ul>
+<li class="chapter" data-level="" data-path="サポートベクターマシン-svm.html"><a href="サポートベクターマシン-svm.html#svmの実行-3"><i class="fa fa-check"></i>SVMの実行</a></li>
+</ul></li>
+<li class="chapter" data-level="10.5" data-path="サポートベクターマシン-svm.html"><a href="サポートベクターマシン-svm.html#ハイパーパラメータのチューニング"><i class="fa fa-check"></i><b>10.5</b> ハイパーパラメータのチューニング</a>
+<ul>
+<li class="chapter" data-level="" data-path="サポートベクターマシン-svm.html"><a href="サポートベクターマシン-svm.html#線形カーネルの場合"><i class="fa fa-check"></i>線形カーネルの場合</a></li>
+<li class="chapter" data-level="" data-path="サポートベクターマシン-svm.html"><a href="サポートベクターマシン-svm.html#rbfカーネルの場合"><i class="fa fa-check"></i>RBFカーネルの場合</a></li>
+<li class="chapter" data-level="" data-path="サポートベクターマシン-svm.html"><a href="サポートベクターマシン-svm.html#e1071内にあるチューニング用の便利な関数群"><i class="fa fa-check"></i><strong>e1071</strong>内にあるチューニング用の便利な関数群</a></li>
+</ul></li>
+</ul></li>
+<li class="chapter" data-level="11" data-path="主成分分析-pca.html"><a href="主成分分析-pca.html"><i class="fa fa-check"></i><b>11</b> 主成分分析 (PCA)</a>
+<ul>
+<li class="chapter" data-level="11.1" data-path="主成分分析-pca.html"><a href="主成分分析-pca.html#基本操作-1"><i class="fa fa-check"></i><b>11.1</b> 基本操作</a>
+<ul>
+<li class="chapter" data-level="" data-path="主成分分析-pca.html"><a href="主成分分析-pca.html#データセット-従業員スキル評価データ仮想"><i class="fa fa-check"></i>データセット: 従業員スキル評価データ(仮想)</a></li>
+</ul></li>
+<li class="chapter" data-level="11.2" data-path="主成分分析-pca.html"><a href="主成分分析-pca.html#種類のpca-相関行列ベース-vs-分散共分散行列ベース"><i class="fa fa-check"></i><b>11.2</b> 2種類のPCA: 相関行列ベース vs 分散共分散行列ベース</a>
+<ul>
+<li class="chapter" data-level="" data-path="主成分分析-pca.html"><a href="主成分分析-pca.html#データセット3-usarrests-data"><i class="fa fa-check"></i>データセット3: USArrests data</a></li>
+</ul></li>
+</ul></li>
+<li class="chapter" data-level="12" data-path="探索的因子分析.html"><a href="探索的因子分析.html"><i class="fa fa-check"></i><b>12</b> 探索的因子分析</a>
+<ul>
+<li class="chapter" data-level="12.1" data-path="探索的因子分析.html"><a href="探索的因子分析.html#基本操作-2"><i class="fa fa-check"></i><b>12.1</b> 基本操作</a>
+<ul>
+<li class="chapter" data-level="" data-path="探索的因子分析.html"><a href="探索的因子分析.html#データセット1-従業員評価データ-仮想"><i class="fa fa-check"></i>データセット1: 従業員評価データ (仮想)</a></li>
+</ul></li>
+<li class="chapter" data-level="12.2" data-path="探索的因子分析.html"><a href="探索的因子分析.html#ライブラリpsychの利用"><i class="fa fa-check"></i><b>12.2</b> ライブラリ<strong>psych</strong>の利用</a></li>
+<li class="chapter" data-level="12.3" data-path="探索的因子分析.html"><a href="探索的因子分析.html#因子分析に有用なツール"><i class="fa fa-check"></i><b>12.3</b> 因子分析に有用なツール</a></li>
+</ul></li>
+<li class="chapter" data-level="13" data-path="クラスター分析.html"><a href="クラスター分析.html"><i class="fa fa-check"></i><b>13</b> クラスター分析</a>
+<ul>
+<li class="chapter" data-level="13.1" data-path="クラスター分析.html"><a href="クラスター分析.html#基本操作-3"><i class="fa fa-check"></i><b>13.1</b> 基本操作</a>
+<ul>
+<li class="chapter" data-level="" data-path="クラスター分析.html"><a href="クラスター分析.html#階層型クラスタリング"><i class="fa fa-check"></i>階層型クラスタリング</a></li>
+<li class="chapter" data-level="" data-path="クラスター分析.html"><a href="クラスター分析.html#k-means法"><i class="fa fa-check"></i>k-means法</a></li>
+<li class="chapter" data-level="" data-path="クラスター分析.html"><a href="クラスター分析.html#変数に対するクラスタリング"><i class="fa fa-check"></i>変数に対するクラスタリング</a></li>
+</ul></li>
+<li class="chapter" data-level="13.2" data-path="クラスター分析.html"><a href="クラスター分析.html#データ分析例-1"><i class="fa fa-check"></i><b>13.2</b> データ分析例</a>
+<ul>
+<li class="chapter" data-level="" data-path="クラスター分析.html"><a href="クラスター分析.html#データセット-1-ワイン品質データ-再掲"><i class="fa fa-check"></i>データセット (1): ワイン品質データ (再掲)</a></li>
+<li class="chapter" data-level="" data-path="クラスター分析.html"><a href="クラスター分析.html#データセット-2-id無し-posデータ"><i class="fa fa-check"></i>データセット (2): (ID無し) POSデータ</a></li>
+</ul></li>
+<li class="chapter" data-level="13.3" data-path="クラスター分析.html"><a href="クラスター分析.html#発展的なクラスター分析"><i class="fa fa-check"></i><b>13.3</b> 発展的なクラスター分析</a>
+<ul>
+<li class="chapter" data-level="" data-path="クラスター分析.html"><a href="クラスター分析.html#関数agnes"><i class="fa fa-check"></i>関数<code>agnes</code></a></li>
+<li class="chapter" data-level="" data-path="クラスター分析.html"><a href="クラスター分析.html#関数pheatmap"><i class="fa fa-check"></i>関数<code>pheatmap</code></a></li>
+<li class="chapter" data-level="" data-path="クラスター分析.html"><a href="クラスター分析.html#関数pam"><i class="fa fa-check"></i>関数<code>pam</code></a></li>
+</ul></li>
+</ul></li>
+<li class="chapter" data-level="14" data-path="xai-explainable-ai.html"><a href="xai-explainable-ai.html"><i class="fa fa-check"></i><b>14</b> XAI (Explainable AI)</a>
+<ul>
+<li class="chapter" data-level="" data-path="xai-explainable-ai.html"><a href="xai-explainable-ai.html#回帰問題のケース"><i class="fa fa-check"></i>回帰問題のケース</a></li>
+<li class="chapter" data-level="14.1" data-path="xai-explainable-ai.html"><a href="xai-explainable-ai.html#pfi"><i class="fa fa-check"></i><b>14.1</b> PFI</a></li>
+<li class="chapter" data-level="14.2" data-path="xai-explainable-ai.html"><a href="xai-explainable-ai.html#pdp"><i class="fa fa-check"></i><b>14.2</b> PDP</a></li>
+<li class="chapter" data-level="14.3" data-path="xai-explainable-ai.html"><a href="xai-explainable-ai.html#ice"><i class="fa fa-check"></i><b>14.3</b> ICE</a>
+<ul>
+<li class="chapter" data-level="" data-path="xai-explainable-ai.html"><a href="xai-explainable-ai.html#pdp-ice"><i class="fa fa-check"></i>PDP + ICE</a></li>
+</ul></li>
+<li class="chapter" data-level="14.4" data-path="xai-explainable-ai.html"><a href="xai-explainable-ai.html#lime"><i class="fa fa-check"></i><b>14.4</b> LIME</a></li>
+<li class="chapter" data-level="14.5" data-path="xai-explainable-ai.html"><a href="xai-explainable-ai.html#shap"><i class="fa fa-check"></i><b>14.5</b> SHAP</a>
+<ul>
+<li class="chapter" data-level="" data-path="xai-explainable-ai.html"><a href="xai-explainable-ai.html#分類問題のケース"><i class="fa fa-check"></i>分類問題のケース</a></li>
+<li class="chapter" data-level="" data-path="xai-explainable-ai.html"><a href="xai-explainable-ai.html#多値分類問題の例-iris"><i class="fa fa-check"></i>多値分類問題の例 (iris)</a></li>
+<li class="chapter" data-level="" data-path="xai-explainable-ai.html"><a href="xai-explainable-ai.html#値分類問題"><i class="fa fa-check"></i>2値分類問題</a></li>
+</ul></li>
+</ul></li>
+</ul>
+
+      </nav>
+    </div>
+
+    <div class="book-body">
+      <div class="body-inner">
+        <div class="book-header" role="navigation">
+          <h1>
+            <i class="fa fa-circle-o-notch fa-spin"></i><a href="./">金融データサイエンス</a>
+          </h1>
+        </div>
+
+        <div class="page-wrapper" tabindex="-1" role="main">
+          <div class="page-inner">
+
+            <section class="normal" id="section-">
+<div id="正則化回帰-lasso-ridge回帰-elastic-net" class="section level1 hasAnchor" number="6">
+<h1><span class="header-section-number">6</span> 正則化回帰 (lasso, ridge回帰, elastic net)<a href="正則化回帰-lasso-ridge回帰-elastic-net.html#正則化回帰-lasso-ridge回帰-elastic-net" class="anchor-section" aria-label="Anchor link to header"></a></h1>
+<p>本章では, Rパッケージ<strong>glmnet</strong>を使用する.
+同パッケージは,
+Lasso（Least Absolute Shrinkage and Selection Operator）
+やその拡張 (Elastic Net等) の理論研究や応用を推進した
+Jerome Friedman, Trevor Hastie, Robert Tibshirani
+らによって開発され, 維持されている.</p>
+<p><strong>glmnet</strong>に関する有用情報マニュアル, 解説ページ:
+- <a href="https://glmnet.stanford.edu/articles/glmnet.html">https://glmnet.stanford.edu/articles/glmnet.html</a>.
+- <a href="https://cran.r-project.org/web/packages/glmnet/vignettes/glmnet.pdf">https://cran.r-project.org/web/packages/glmnet/vignettes/glmnet.pdf</a></p>
+<!--
+- [https://cran.r-project.org/web/packages/glmnet/vignettes/glmnetFamily.pdf](https://cran.r-project.org/web/packages/glmnet/vignettes/glmnetFamily.pdf)
+- [https://cran.r-project.org/web/packages/glmnet/vignettes/relax.pdf](https://cran.r-project.org/web/packages/glmnet/vignettes/relax.pdf)]
+- [https://cran.r-project.org/web/packages/glmnet/vignettes/Coxnet.pdf](https://cran.r-project.org/web/packages/glmnet/vignettes/Coxnet.pdf)
+-->
+<p>※ 本セクションにおける分析フローは, 主としてISLR, Ch.6を参考にした.</p>
+<div id="検証用セット法による回帰モデルの予測精度評価" class="section level2 hasAnchor" number="6.1">
+<h2><span class="header-section-number">6.1</span> 検証用セット法による回帰モデルの予測精度評価<a href="正則化回帰-lasso-ridge回帰-elastic-net.html#検証用セット法による回帰モデルの予測精度評価" class="anchor-section" aria-label="Anchor link to header"></a></h2>
+<div id="データセット1-ワイン品質データ" class="section level3 unnumbered hasAnchor">
+<h3>データセット1: ワイン品質データ<a href="正則化回帰-lasso-ridge回帰-elastic-net.html#データセット1-ワイン品質データ" class="anchor-section" aria-label="Anchor link to header"></a></h3>
+<pre><code>- winequality-white.csv
+   - fixed acidity: 酢酸濃度
+   - volitle acidity: 揮発酸濃度
+   - citric acidity: クエン酸濃度
+   - chlorides: 塩化物
+   - sulfur dioxide: 二酸化硫黄
+   - sulphate: 硫酸塩
+   - fixed acidity: 酒石酸含有量（g/dm3)
+   - volatile acidity: 酢酸含有量（g/dm3)
+   - citric acid: クエン酸含有量（g/dm3)
+   - residual sugar: 残留糖分含有量（g/dm3）
+   - chlorides: 塩化ナトリウム含有量（g/dm3)
+   - free sulfur dioxide: 遊離亜硫酸含有量（mg/dm3）
+   - total sulfur dioxide: 総亜硫酸含有量（mg/dm3）
+   - density: 密度（g/dm3)
+   - pH:    pH
+   - sulphates: 硫酸カリウム含有量（g/dm3）
+   - alcohol: アルコール度数（% vol.）
+   - quality: ワインの品質 (0 (very bad) -- 10 (excellent))</code></pre>
+<div class="sourceCode" id="cb286"><pre class="sourceCode r"><code class="sourceCode r"><span id="cb286-1"><a href="正則化回帰-lasso-ridge回帰-elastic-net.html#cb286-1" tabindex="-1"></a>wine <span class="ot">&lt;-</span> <span class="fu">read.csv</span>(<span class="st">&quot;winequality-white.csv&quot;</span>, <span class="at">sep =</span> <span class="st">&quot;;&quot;</span>, <span class="at">skip =</span> <span class="dv">1</span>, <span class="at">header =</span> T)</span>
+<span id="cb286-2"><a href="正則化回帰-lasso-ridge回帰-elastic-net.html#cb286-2" tabindex="-1"></a><span class="fu">head</span>(wine)</span>
+<span id="cb286-3"><a href="正則化回帰-lasso-ridge回帰-elastic-net.html#cb286-3" tabindex="-1"></a><span class="co">#&gt;   fixed.acidity volatile.acidity citric.acid residual.sugar chlorides</span></span>
+<span id="cb286-4"><a href="正則化回帰-lasso-ridge回帰-elastic-net.html#cb286-4" tabindex="-1"></a><span class="co">#&gt; 1           7.0             0.27        0.36           20.7     0.045</span></span>
+<span id="cb286-5"><a href="正則化回帰-lasso-ridge回帰-elastic-net.html#cb286-5" tabindex="-1"></a><span class="co">#&gt; 2           6.3             0.30        0.34            1.6     0.049</span></span>
+<span id="cb286-6"><a href="正則化回帰-lasso-ridge回帰-elastic-net.html#cb286-6" tabindex="-1"></a><span class="co">#&gt; 3           8.1             0.28        0.40            6.9     0.050</span></span>
+<span id="cb286-7"><a href="正則化回帰-lasso-ridge回帰-elastic-net.html#cb286-7" tabindex="-1"></a><span class="co">#&gt; 4           7.2             0.23        0.32            8.5     0.058</span></span>
+<span id="cb286-8"><a href="正則化回帰-lasso-ridge回帰-elastic-net.html#cb286-8" tabindex="-1"></a><span class="co">#&gt; 5           7.2             0.23        0.32            8.5     0.058</span></span>
+<span id="cb286-9"><a href="正則化回帰-lasso-ridge回帰-elastic-net.html#cb286-9" tabindex="-1"></a><span class="co">#&gt; 6           8.1             0.28        0.40            6.9     0.050</span></span>
+<span id="cb286-10"><a href="正則化回帰-lasso-ridge回帰-elastic-net.html#cb286-10" tabindex="-1"></a><span class="co">#&gt;   free.sulfur.dioxide total.sulfur.dioxide density   pH sulphates alcohol</span></span>
+<span id="cb286-11"><a href="正則化回帰-lasso-ridge回帰-elastic-net.html#cb286-11" tabindex="-1"></a><span class="co">#&gt; 1                  45                  170  1.0010 3.00      0.45     8.8</span></span>
+<span id="cb286-12"><a href="正則化回帰-lasso-ridge回帰-elastic-net.html#cb286-12" tabindex="-1"></a><span class="co">#&gt; 2                  14                  132  0.9940 3.30      0.49     9.5</span></span>
+<span id="cb286-13"><a href="正則化回帰-lasso-ridge回帰-elastic-net.html#cb286-13" tabindex="-1"></a><span class="co">#&gt; 3                  30                   97  0.9951 3.26      0.44    10.1</span></span>
+<span id="cb286-14"><a href="正則化回帰-lasso-ridge回帰-elastic-net.html#cb286-14" tabindex="-1"></a><span class="co">#&gt; 4                  47                  186  0.9956 3.19      0.40     9.9</span></span>
+<span id="cb286-15"><a href="正則化回帰-lasso-ridge回帰-elastic-net.html#cb286-15" tabindex="-1"></a><span class="co">#&gt; 5                  47                  186  0.9956 3.19      0.40     9.9</span></span>
+<span id="cb286-16"><a href="正則化回帰-lasso-ridge回帰-elastic-net.html#cb286-16" tabindex="-1"></a><span class="co">#&gt; 6                  30                   97  0.9951 3.26      0.44    10.1</span></span>
+<span id="cb286-17"><a href="正則化回帰-lasso-ridge回帰-elastic-net.html#cb286-17" tabindex="-1"></a><span class="co">#&gt;   quality</span></span>
+<span id="cb286-18"><a href="正則化回帰-lasso-ridge回帰-elastic-net.html#cb286-18" tabindex="-1"></a><span class="co">#&gt; 1       6</span></span>
+<span id="cb286-19"><a href="正則化回帰-lasso-ridge回帰-elastic-net.html#cb286-19" tabindex="-1"></a><span class="co">#&gt; 2       6</span></span>
+<span id="cb286-20"><a href="正則化回帰-lasso-ridge回帰-elastic-net.html#cb286-20" tabindex="-1"></a><span class="co">#&gt; 3       6</span></span>
+<span id="cb286-21"><a href="正則化回帰-lasso-ridge回帰-elastic-net.html#cb286-21" tabindex="-1"></a><span class="co">#&gt; 4       6</span></span>
+<span id="cb286-22"><a href="正則化回帰-lasso-ridge回帰-elastic-net.html#cb286-22" tabindex="-1"></a><span class="co">#&gt; 5       6</span></span>
+<span id="cb286-23"><a href="正則化回帰-lasso-ridge回帰-elastic-net.html#cb286-23" tabindex="-1"></a><span class="co">#&gt; 6       6</span></span></code></pre></div>
+<ul>
+<li>検証用セット法 (validation set approach)
+<ul>
+<li>データセットを学習用と検証用にランダムに分割</li>
+<li>学習用データセットで学習 (線形回帰モデルへの適合)</li>
+<li>検証用データセットで予測</li>
+<li>予測MSE (平均2乗誤差) を計算</li>
+</ul></li>
+</ul>
+<div class="sourceCode" id="cb287"><pre class="sourceCode r"><code class="sourceCode r"><span id="cb287-1"><a href="正則化回帰-lasso-ridge回帰-elastic-net.html#cb287-1" tabindex="-1"></a><span class="co"># データセットを学習用と検証用にランダムに分割</span></span>
+<span id="cb287-2"><a href="正則化回帰-lasso-ridge回帰-elastic-net.html#cb287-2" tabindex="-1"></a><span class="fu">set.seed</span>(<span class="dv">1</span>)</span>
+<span id="cb287-3"><a href="正則化回帰-lasso-ridge回帰-elastic-net.html#cb287-3" tabindex="-1"></a>train <span class="ot">&lt;-</span> <span class="fu">sample</span>(<span class="dv">1</span><span class="sc">:</span><span class="fu">nrow</span>(wine), <span class="dv">3000</span>)</span>
+<span id="cb287-4"><a href="正則化回帰-lasso-ridge回帰-elastic-net.html#cb287-4" tabindex="-1"></a><span class="co"># wine_train &lt;- wine[train,]        # 学習用データセット, 3000</span></span>
+<span id="cb287-5"><a href="正則化回帰-lasso-ridge回帰-elastic-net.html#cb287-5" tabindex="-1"></a><span class="co"># wine_test &lt;- wine[-train,]        # テスト用データセット, 1898</span></span>
+<span id="cb287-6"><a href="正則化回帰-lasso-ridge回帰-elastic-net.html#cb287-6" tabindex="-1"></a></span>
+<span id="cb287-7"><a href="正則化回帰-lasso-ridge回帰-elastic-net.html#cb287-7" tabindex="-1"></a><span class="co"># 学習用データセットで学習 (線形回帰モデルへの適合)</span></span>
+<span id="cb287-8"><a href="正則化回帰-lasso-ridge回帰-elastic-net.html#cb287-8" tabindex="-1"></a>lm_mod <span class="ot">&lt;-</span> <span class="fu">lm</span>(quality <span class="sc">~</span> ., <span class="at">data =</span> wine[train, ])</span>
+<span id="cb287-9"><a href="正則化回帰-lasso-ridge回帰-elastic-net.html#cb287-9" tabindex="-1"></a></span>
+<span id="cb287-10"><a href="正則化回帰-lasso-ridge回帰-elastic-net.html#cb287-10" tabindex="-1"></a><span class="co"># 検証用データセットで予測</span></span>
+<span id="cb287-11"><a href="正則化回帰-lasso-ridge回帰-elastic-net.html#cb287-11" tabindex="-1"></a>lm_pred <span class="ot">&lt;-</span> <span class="fu">predict</span>(lm_mod, <span class="at">newdata =</span> wine[<span class="sc">-</span>train, <span class="sc">-</span><span class="dv">12</span>])</span>
+<span id="cb287-12"><a href="正則化回帰-lasso-ridge回帰-elastic-net.html#cb287-12" tabindex="-1"></a></span>
+<span id="cb287-13"><a href="正則化回帰-lasso-ridge回帰-elastic-net.html#cb287-13" tabindex="-1"></a><span class="co"># 予測MSE (平均2乗誤差) の計算</span></span>
+<span id="cb287-14"><a href="正則化回帰-lasso-ridge回帰-elastic-net.html#cb287-14" tabindex="-1"></a><span class="fu">mean</span>((lm_pred <span class="sc">-</span> wine[<span class="sc">-</span>train, <span class="dv">12</span>])<span class="sc">^</span><span class="dv">2</span>)</span>
+<span id="cb287-15"><a href="正則化回帰-lasso-ridge回帰-elastic-net.html#cb287-15" tabindex="-1"></a><span class="co">#&gt; [1] 0.5657141</span></span>
+<span id="cb287-16"><a href="正則化回帰-lasso-ridge回帰-elastic-net.html#cb287-16" tabindex="-1"></a></span>
+<span id="cb287-17"><a href="正則化回帰-lasso-ridge回帰-elastic-net.html#cb287-17" tabindex="-1"></a><span class="co"># 回帰結果</span></span>
+<span id="cb287-18"><a href="正則化回帰-lasso-ridge回帰-elastic-net.html#cb287-18" tabindex="-1"></a><span class="fu">summary</span>(lm_mod)</span>
+<span id="cb287-19"><a href="正則化回帰-lasso-ridge回帰-elastic-net.html#cb287-19" tabindex="-1"></a><span class="co">#&gt; </span></span>
+<span id="cb287-20"><a href="正則化回帰-lasso-ridge回帰-elastic-net.html#cb287-20" tabindex="-1"></a><span class="co">#&gt; Call:</span></span>
+<span id="cb287-21"><a href="正則化回帰-lasso-ridge回帰-elastic-net.html#cb287-21" tabindex="-1"></a><span class="co">#&gt; lm(formula = quality ~ ., data = wine[train, ])</span></span>
+<span id="cb287-22"><a href="正則化回帰-lasso-ridge回帰-elastic-net.html#cb287-22" tabindex="-1"></a><span class="co">#&gt; </span></span>
+<span id="cb287-23"><a href="正則化回帰-lasso-ridge回帰-elastic-net.html#cb287-23" tabindex="-1"></a><span class="co">#&gt; Residuals:</span></span>
+<span id="cb287-24"><a href="正則化回帰-lasso-ridge回帰-elastic-net.html#cb287-24" tabindex="-1"></a><span class="co">#&gt;     Min      1Q  Median      3Q     Max </span></span>
+<span id="cb287-25"><a href="正則化回帰-lasso-ridge回帰-elastic-net.html#cb287-25" tabindex="-1"></a><span class="co">#&gt; -3.2676 -0.4885 -0.0412  0.4639  2.9119 </span></span>
+<span id="cb287-26"><a href="正則化回帰-lasso-ridge回帰-elastic-net.html#cb287-26" tabindex="-1"></a><span class="co">#&gt; </span></span>
+<span id="cb287-27"><a href="正則化回帰-lasso-ridge回帰-elastic-net.html#cb287-27" tabindex="-1"></a><span class="co">#&gt; Coefficients:</span></span>
+<span id="cb287-28"><a href="正則化回帰-lasso-ridge回帰-elastic-net.html#cb287-28" tabindex="-1"></a><span class="co">#&gt;                        Estimate Std. Error t value Pr(&gt;|t|)    </span></span>
+<span id="cb287-29"><a href="正則化回帰-lasso-ridge回帰-elastic-net.html#cb287-29" tabindex="-1"></a><span class="co">#&gt; (Intercept)           1.594e+02  2.202e+01   7.236 5.84e-13 ***</span></span>
+<span id="cb287-30"><a href="正則化回帰-lasso-ridge回帰-elastic-net.html#cb287-30" tabindex="-1"></a><span class="co">#&gt; fixed.acidity         6.054e-02  2.524e-02   2.399   0.0165 *  </span></span>
+<span id="cb287-31"><a href="正則化回帰-lasso-ridge回帰-elastic-net.html#cb287-31" tabindex="-1"></a><span class="co">#&gt; volatile.acidity     -1.834e+00  1.446e-01 -12.684  &lt; 2e-16 ***</span></span>
+<span id="cb287-32"><a href="正則化回帰-lasso-ridge回帰-elastic-net.html#cb287-32" tabindex="-1"></a><span class="co">#&gt; citric.acid          -2.951e-02  1.208e-01  -0.244   0.8070    </span></span>
+<span id="cb287-33"><a href="正則化回帰-lasso-ridge回帰-elastic-net.html#cb287-33" tabindex="-1"></a><span class="co">#&gt; residual.sugar        8.795e-02  9.123e-03   9.640  &lt; 2e-16 ***</span></span>
+<span id="cb287-34"><a href="正則化回帰-lasso-ridge回帰-elastic-net.html#cb287-34" tabindex="-1"></a><span class="co">#&gt; chlorides            -1.260e-01  6.522e-01  -0.193   0.8468    </span></span>
+<span id="cb287-35"><a href="正則化回帰-lasso-ridge回帰-elastic-net.html#cb287-35" tabindex="-1"></a><span class="co">#&gt; free.sulfur.dioxide   4.523e-03  1.082e-03   4.181 2.98e-05 ***</span></span>
+<span id="cb287-36"><a href="正則化回帰-lasso-ridge回帰-elastic-net.html#cb287-36" tabindex="-1"></a><span class="co">#&gt; total.sulfur.dioxide -1.199e-04  4.791e-04  -0.250   0.8024    </span></span>
+<span id="cb287-37"><a href="正則化回帰-lasso-ridge回帰-elastic-net.html#cb287-37" tabindex="-1"></a><span class="co">#&gt; density              -1.596e+02  2.235e+01  -7.141 1.16e-12 ***</span></span>
+<span id="cb287-38"><a href="正則化回帰-lasso-ridge回帰-elastic-net.html#cb287-38" tabindex="-1"></a><span class="co">#&gt; pH                    6.627e-01  1.303e-01   5.085 3.90e-07 ***</span></span>
+<span id="cb287-39"><a href="正則化回帰-lasso-ridge回帰-elastic-net.html#cb287-39" tabindex="-1"></a><span class="co">#&gt; sulphates             6.331e-01  1.285e-01   4.925 8.90e-07 ***</span></span>
+<span id="cb287-40"><a href="正則化回帰-lasso-ridge回帰-elastic-net.html#cb287-40" tabindex="-1"></a><span class="co">#&gt; alcohol               2.002e-01  2.858e-02   7.006 3.03e-12 ***</span></span>
+<span id="cb287-41"><a href="正則化回帰-lasso-ridge回帰-elastic-net.html#cb287-41" tabindex="-1"></a><span class="co">#&gt; ---</span></span>
+<span id="cb287-42"><a href="正則化回帰-lasso-ridge回帰-elastic-net.html#cb287-42" tabindex="-1"></a><span class="co">#&gt; Signif. codes:  0 &#39;***&#39; 0.001 &#39;**&#39; 0.01 &#39;*&#39; 0.05 &#39;.&#39; 0.1 &#39; &#39; 1</span></span>
+<span id="cb287-43"><a href="正則化回帰-lasso-ridge回帰-elastic-net.html#cb287-43" tabindex="-1"></a><span class="co">#&gt; </span></span>
+<span id="cb287-44"><a href="正則化回帰-lasso-ridge回帰-elastic-net.html#cb287-44" tabindex="-1"></a><span class="co">#&gt; Residual standard error: 0.7518 on 2988 degrees of freedom</span></span>
+<span id="cb287-45"><a href="正則化回帰-lasso-ridge回帰-elastic-net.html#cb287-45" tabindex="-1"></a><span class="co">#&gt; Multiple R-squared:  0.2953, Adjusted R-squared:  0.2927 </span></span>
+<span id="cb287-46"><a href="正則化回帰-lasso-ridge回帰-elastic-net.html#cb287-46" tabindex="-1"></a><span class="co">#&gt; F-statistic: 113.8 on 11 and 2988 DF,  p-value: &lt; 2.2e-16</span></span></code></pre></div>
+</div>
+</div>
+<div id="lasso" class="section level2 hasAnchor" number="6.2">
+<h2><span class="header-section-number">6.2</span> lasso<a href="正則化回帰-lasso-ridge回帰-elastic-net.html#lasso" class="anchor-section" aria-label="Anchor link to header"></a></h2>
+<div id="関数glmnetの基本操作" class="section level3 unnumbered hasAnchor">
+<h3>関数<code>glmnet()</code>の基本操作<a href="正則化回帰-lasso-ridge回帰-elastic-net.html#関数glmnetの基本操作" class="anchor-section" aria-label="Anchor link to header"></a></h3>
+<pre><code>glmnet(): 罰則付き最尤法: GLM推定 + elastic netによる正則化
+- usage: glmnet(x, y, family = c(&quot;gaussian&quot;, &quot;binomial&quot;, &quot;poisson&quot;, &quot;multinomial&quot;, &quot;cox&quot;, &quot;mgaussian&quot;), ...)
+- 最重要パラメータ
+  - alpha: elastic net混合パラメータ (デフォルト=1)
+  - lambda: 正則化パラメータ (デフォルトは自動的に100個設定)</code></pre>
+<div class="sourceCode" id="cb289"><pre class="sourceCode r"><code class="sourceCode r"><span id="cb289-1"><a href="正則化回帰-lasso-ridge回帰-elastic-net.html#cb289-1" tabindex="-1"></a><span class="fu">library</span>(glmnet)</span></code></pre></div>
+<p>簡便のため, glmnetに入力するため, 一旦, 特徴量行列 <code>x</code> と 目的変数ベクトル <code>y</code> を別々のオブジェクトとして用意しておく.</p>
+<div class="sourceCode" id="cb290"><pre class="sourceCode r"><code class="sourceCode r"><span id="cb290-1"><a href="正則化回帰-lasso-ridge回帰-elastic-net.html#cb290-1" tabindex="-1"></a>x <span class="ot">&lt;-</span> <span class="fu">as.matrix</span>(wine[, <span class="dv">1</span><span class="sc">:</span><span class="dv">11</span>])</span>
+<span id="cb290-2"><a href="正則化回帰-lasso-ridge回帰-elastic-net.html#cb290-2" tabindex="-1"></a>y <span class="ot">&lt;-</span> <span class="fu">as.matrix</span>(wine[, <span class="dv">12</span>])</span></code></pre></div>
+<p>lassoを実行するには, <code>glmnet()</code>において, 引数<code>alpha = 1</code>と設定する.
+<span class="math inline">\(\alpha\)</span>は, lasso, ridge回帰 (後述) を包括するクラスである
+elastic netのパラメータであり, 両者の正規化項の結合ウェイトを示す
+(<span class="math inline">\(\alpha=1\)</span>がlasso, <span class="math inline">\(\alpha=0\)</span>がridge回帰に対応).
+特定の<code>lambda</code>の値二つに対して実行し, 結果を比較してみる.</p>
+<div class="sourceCode" id="cb291"><pre class="sourceCode r"><code class="sourceCode r"><span id="cb291-1"><a href="正則化回帰-lasso-ridge回帰-elastic-net.html#cb291-1" tabindex="-1"></a><span class="co"># LASSO (alpha = 1)</span></span>
+<span id="cb291-2"><a href="正則化回帰-lasso-ridge回帰-elastic-net.html#cb291-2" tabindex="-1"></a><span class="co"># lambda = L1-penalty項</span></span>
+<span id="cb291-3"><a href="正則化回帰-lasso-ridge回帰-elastic-net.html#cb291-3" tabindex="-1"></a>lasso_mod <span class="ot">&lt;-</span> <span class="fu">glmnet</span>(x[train, ], y[train], <span class="at">alpha =</span> <span class="dv">1</span>, <span class="at">lambda =</span> <span class="fl">0.1</span>)</span>
+<span id="cb291-4"><a href="正則化回帰-lasso-ridge回帰-elastic-net.html#cb291-4" tabindex="-1"></a><span class="fu">coef</span>(lasso_mod)</span>
+<span id="cb291-5"><a href="正則化回帰-lasso-ridge回帰-elastic-net.html#cb291-5" tabindex="-1"></a><span class="co">#&gt; 12 x 1 sparse Matrix of class &quot;dgCMatrix&quot;</span></span>
+<span id="cb291-6"><a href="正則化回帰-lasso-ridge回帰-elastic-net.html#cb291-6" tabindex="-1"></a><span class="co">#&gt;                              s0</span></span>
+<span id="cb291-7"><a href="正則化回帰-lasso-ridge回帰-elastic-net.html#cb291-7" tabindex="-1"></a><span class="co">#&gt; (Intercept)           3.5648570</span></span>
+<span id="cb291-8"><a href="正則化回帰-lasso-ridge回帰-elastic-net.html#cb291-8" tabindex="-1"></a><span class="co">#&gt; fixed.acidity         .        </span></span>
+<span id="cb291-9"><a href="正則化回帰-lasso-ridge回帰-elastic-net.html#cb291-9" tabindex="-1"></a><span class="co">#&gt; volatile.acidity     -0.9333891</span></span>
+<span id="cb291-10"><a href="正則化回帰-lasso-ridge回帰-elastic-net.html#cb291-10" tabindex="-1"></a><span class="co">#&gt; citric.acid           .        </span></span>
+<span id="cb291-11"><a href="正則化回帰-lasso-ridge回帰-elastic-net.html#cb291-11" tabindex="-1"></a><span class="co">#&gt; residual.sugar        .        </span></span>
+<span id="cb291-12"><a href="正則化回帰-lasso-ridge回帰-elastic-net.html#cb291-12" tabindex="-1"></a><span class="co">#&gt; chlorides             .        </span></span>
+<span id="cb291-13"><a href="正則化回帰-lasso-ridge回帰-elastic-net.html#cb291-13" tabindex="-1"></a><span class="co">#&gt; free.sulfur.dioxide   .        </span></span>
+<span id="cb291-14"><a href="正則化回帰-lasso-ridge回帰-elastic-net.html#cb291-14" tabindex="-1"></a><span class="co">#&gt; total.sulfur.dioxide  .        </span></span>
+<span id="cb291-15"><a href="正則化回帰-lasso-ridge回帰-elastic-net.html#cb291-15" tabindex="-1"></a><span class="co">#&gt; density               .        </span></span>
+<span id="cb291-16"><a href="正則化回帰-lasso-ridge回帰-elastic-net.html#cb291-16" tabindex="-1"></a><span class="co">#&gt; pH                    .        </span></span>
+<span id="cb291-17"><a href="正則化回帰-lasso-ridge回帰-elastic-net.html#cb291-17" tabindex="-1"></a><span class="co">#&gt; sulphates             .        </span></span>
+<span id="cb291-18"><a href="正則化回帰-lasso-ridge回帰-elastic-net.html#cb291-18" tabindex="-1"></a><span class="co">#&gt; alcohol               0.2443784</span></span>
+<span id="cb291-19"><a href="正則化回帰-lasso-ridge回帰-elastic-net.html#cb291-19" tabindex="-1"></a><span class="co">#lasso_mod$beta # y切片無し</span></span>
+<span id="cb291-20"><a href="正則化回帰-lasso-ridge回帰-elastic-net.html#cb291-20" tabindex="-1"></a>lasso_mod <span class="ot">&lt;-</span> <span class="fu">glmnet</span>(x[train, ], y[train], <span class="at">alpha =</span> <span class="dv">1</span>, <span class="at">lambda =</span> <span class="fl">0.01</span>) <span class="co"># lambda小(penalty小) --&gt; 係数 = 0少</span></span>
+<span id="cb291-21"><a href="正則化回帰-lasso-ridge回帰-elastic-net.html#cb291-21" tabindex="-1"></a><span class="fu">coef</span>(lasso_mod)</span>
+<span id="cb291-22"><a href="正則化回帰-lasso-ridge回帰-elastic-net.html#cb291-22" tabindex="-1"></a><span class="co">#&gt; 12 x 1 sparse Matrix of class &quot;dgCMatrix&quot;</span></span>
+<span id="cb291-23"><a href="正則化回帰-lasso-ridge回帰-elastic-net.html#cb291-23" tabindex="-1"></a><span class="co">#&gt;                                 s0</span></span>
+<span id="cb291-24"><a href="正則化回帰-lasso-ridge回帰-elastic-net.html#cb291-24" tabindex="-1"></a><span class="co">#&gt; (Intercept)           74.381719017</span></span>
+<span id="cb291-25"><a href="正則化回帰-lasso-ridge回帰-elastic-net.html#cb291-25" tabindex="-1"></a><span class="co">#&gt; fixed.acidity         -0.002299923</span></span>
+<span id="cb291-26"><a href="正則化回帰-lasso-ridge回帰-elastic-net.html#cb291-26" tabindex="-1"></a><span class="co">#&gt; volatile.acidity      -1.812108243</span></span>
+<span id="cb291-27"><a href="正則化回帰-lasso-ridge回帰-elastic-net.html#cb291-27" tabindex="-1"></a><span class="co">#&gt; citric.acid            .          </span></span>
+<span id="cb291-28"><a href="正則化回帰-lasso-ridge回帰-elastic-net.html#cb291-28" tabindex="-1"></a><span class="co">#&gt; residual.sugar         0.050598423</span></span>
+<span id="cb291-29"><a href="正則化回帰-lasso-ridge回帰-elastic-net.html#cb291-29" tabindex="-1"></a><span class="co">#&gt; chlorides             -0.386260201</span></span>
+<span id="cb291-30"><a href="正則化回帰-lasso-ridge回帰-elastic-net.html#cb291-30" tabindex="-1"></a><span class="co">#&gt; free.sulfur.dioxide    0.004109954</span></span>
+<span id="cb291-31"><a href="正則化回帰-lasso-ridge回帰-elastic-net.html#cb291-31" tabindex="-1"></a><span class="co">#&gt; total.sulfur.dioxide   .          </span></span>
+<span id="cb291-32"><a href="正則化回帰-lasso-ridge回帰-elastic-net.html#cb291-32" tabindex="-1"></a><span class="co">#&gt; density              -73.059537698</span></span>
+<span id="cb291-33"><a href="正則化回帰-lasso-ridge回帰-elastic-net.html#cb291-33" tabindex="-1"></a><span class="co">#&gt; pH                     0.311903370</span></span>
+<span id="cb291-34"><a href="正則化回帰-lasso-ridge回帰-elastic-net.html#cb291-34" tabindex="-1"></a><span class="co">#&gt; sulphates              0.412510523</span></span>
+<span id="cb291-35"><a href="正則化回帰-lasso-ridge回帰-elastic-net.html#cb291-35" tabindex="-1"></a><span class="co">#&gt; alcohol                0.284548889</span></span></code></pre></div>
+<p>最初の例 (<code>lambda=0.1</code>), すなわち, 正則化項の係数が相対的に大きい (罰則大) 時, 回帰係数の殆どの値がゼロ (変数選択されない).
+他方, 二番目の例 (<code>lambda=0.01</code>), すなわち, 正則化項の係数が相対的に小さい時,
+多くの回帰係数の値が非ゼロとなっている.</p>
+</div>
+<div id="lambdaのグリッド指定によるglmnetの一括実行" class="section level3 unnumbered hasAnchor">
+<h3><code>lambda</code>のグリッド指定による<code>glmnet</code>の一括実行<a href="正則化回帰-lasso-ridge回帰-elastic-net.html#lambdaのグリッド指定によるglmnetの一括実行" class="anchor-section" aria-label="Anchor link to header"></a></h3>
+<p>正則化パラメータ<span class="math inline">\(\lambda\)</span>は, 数値ベクトル として関数<code>glmnet()</code>に与えることもできる.
+すると, 各<code>lambda</code>の値に対して<code>glmnet()</code>が個別に実行され, それらが一括して戻ってくる.
+以下では, <span class="math inline">\(10^1\)</span>から<span class="math inline">\(10^{-3}\)</span>まで100個の点からなるグリッドを取り, 関数<code>glmnet()</code>に与える例である.</p>
+<div class="sourceCode" id="cb292"><pre class="sourceCode r"><code class="sourceCode r"><span id="cb292-1"><a href="正則化回帰-lasso-ridge回帰-elastic-net.html#cb292-1" tabindex="-1"></a><span class="co"># lambdaのグリッド指定</span></span>
+<span id="cb292-2"><a href="正則化回帰-lasso-ridge回帰-elastic-net.html#cb292-2" tabindex="-1"></a><span class="co"># grid &lt;- 10^seq(10, -2, length = 100)      # lambda = 10^10 -- 10^(-2)</span></span>
+<span id="cb292-3"><a href="正則化回帰-lasso-ridge回帰-elastic-net.html#cb292-3" tabindex="-1"></a>grid <span class="ot">&lt;-</span> <span class="dv">10</span><span class="sc">^</span><span class="fu">seq</span>(<span class="dv">1</span>, <span class="sc">-</span><span class="dv">3</span>, <span class="at">length =</span> <span class="dv">100</span>)     <span class="co"># lambda = 10^1 -- 10^(-3)</span></span>
+<span id="cb292-4"><a href="正則化回帰-lasso-ridge回帰-elastic-net.html#cb292-4" tabindex="-1"></a><span class="co"># 範囲設定されたlambaの各値に対してglmnetを実行</span></span>
+<span id="cb292-5"><a href="正則化回帰-lasso-ridge回帰-elastic-net.html#cb292-5" tabindex="-1"></a>lasso_mod <span class="ot">&lt;-</span> <span class="fu">glmnet</span>(x[train, ], y[train], <span class="at">alpha =</span> <span class="dv">1</span>, <span class="at">lambda =</span> grid)</span>
+<span id="cb292-6"><a href="正則化回帰-lasso-ridge回帰-elastic-net.html#cb292-6" tabindex="-1"></a><span class="co"># 結果オブジェクトの大きさ (次元)</span></span>
+<span id="cb292-7"><a href="正則化回帰-lasso-ridge回帰-elastic-net.html#cb292-7" tabindex="-1"></a><span class="fu">dim</span>(<span class="fu">coef</span>(lasso_mod))        <span class="co"># 12 rows --&gt; 説明変数+y切片, 100 columns --&gt; lambdaの値</span></span>
+<span id="cb292-8"><a href="正則化回帰-lasso-ridge回帰-elastic-net.html#cb292-8" tabindex="-1"></a><span class="co">#&gt; [1]  12 100</span></span>
+<span id="cb292-9"><a href="正則化回帰-lasso-ridge回帰-elastic-net.html#cb292-9" tabindex="-1"></a><span class="fu">dim</span>(lasso_mod<span class="sc">$</span>beta)     <span class="co"># 11 rows --&gt; interceptがない</span></span>
+<span id="cb292-10"><a href="正則化回帰-lasso-ridge回帰-elastic-net.html#cb292-10" tabindex="-1"></a><span class="co">#&gt; [1]  11 100</span></span></code></pre></div>
+<p>戻ってきたオブジェクトから, 個々のlambda値に対する実行結果を取り出すことができる.
+以下, 50番目. 90番目のグリッド点における結果を取り出す例を示す.</p>
+<div class="sourceCode" id="cb293"><pre class="sourceCode r"><code class="sourceCode r"><span id="cb293-1"><a href="正則化回帰-lasso-ridge回帰-elastic-net.html#cb293-1" tabindex="-1"></a><span class="co"># 50番目のlambdaの値</span></span>
+<span id="cb293-2"><a href="正則化回帰-lasso-ridge回帰-elastic-net.html#cb293-2" tabindex="-1"></a>lasso_mod<span class="sc">$</span>lambda[<span class="dv">50</span>]    <span class="co"># --&gt; 0.1047616</span></span>
+<span id="cb293-3"><a href="正則化回帰-lasso-ridge回帰-elastic-net.html#cb293-3" tabindex="-1"></a><span class="co">#&gt; [1] 0.1047616</span></span>
+<span id="cb293-4"><a href="正則化回帰-lasso-ridge回帰-elastic-net.html#cb293-4" tabindex="-1"></a><span class="co"># 回帰係数推定値</span></span>
+<span id="cb293-5"><a href="正則化回帰-lasso-ridge回帰-elastic-net.html#cb293-5" tabindex="-1"></a><span class="fu">coef</span>(lasso_mod)[, <span class="dv">50</span>]</span>
+<span id="cb293-6"><a href="正則化回帰-lasso-ridge回帰-elastic-net.html#cb293-6" tabindex="-1"></a><span class="co">#&gt;          (Intercept)        fixed.acidity     volatile.acidity </span></span>
+<span id="cb293-7"><a href="正則化回帰-lasso-ridge回帰-elastic-net.html#cb293-7" tabindex="-1"></a><span class="co">#&gt;            3.5943708            0.0000000           -0.8843771 </span></span>
+<span id="cb293-8"><a href="正則化回帰-lasso-ridge回帰-elastic-net.html#cb293-8" tabindex="-1"></a><span class="co">#&gt;          citric.acid       residual.sugar            chlorides </span></span>
+<span id="cb293-9"><a href="正則化回帰-lasso-ridge回帰-elastic-net.html#cb293-9" tabindex="-1"></a><span class="co">#&gt;            0.0000000            0.0000000            0.0000000 </span></span>
+<span id="cb293-10"><a href="正則化回帰-lasso-ridge回帰-elastic-net.html#cb293-10" tabindex="-1"></a><span class="co">#&gt;  free.sulfur.dioxide total.sulfur.dioxide              density </span></span>
+<span id="cb293-11"><a href="正則化回帰-lasso-ridge回帰-elastic-net.html#cb293-11" tabindex="-1"></a><span class="co">#&gt;            0.0000000            0.0000000            0.0000000 </span></span>
+<span id="cb293-12"><a href="正則化回帰-lasso-ridge回帰-elastic-net.html#cb293-12" tabindex="-1"></a><span class="co">#&gt;                   pH            sulphates              alcohol </span></span>
+<span id="cb293-13"><a href="正則化回帰-lasso-ridge回帰-elastic-net.html#cb293-13" tabindex="-1"></a><span class="co">#&gt;            0.0000000            0.0000000            0.2402657</span></span>
+<span id="cb293-14"><a href="正則化回帰-lasso-ridge回帰-elastic-net.html#cb293-14" tabindex="-1"></a>lasso_mod<span class="sc">$</span>beta[, <span class="dv">50</span>]        <span class="co"># 代替的方法</span></span>
+<span id="cb293-15"><a href="正則化回帰-lasso-ridge回帰-elastic-net.html#cb293-15" tabindex="-1"></a><span class="co">#&gt;        fixed.acidity     volatile.acidity          citric.acid </span></span>
+<span id="cb293-16"><a href="正則化回帰-lasso-ridge回帰-elastic-net.html#cb293-16" tabindex="-1"></a><span class="co">#&gt;            0.0000000           -0.8843771            0.0000000 </span></span>
+<span id="cb293-17"><a href="正則化回帰-lasso-ridge回帰-elastic-net.html#cb293-17" tabindex="-1"></a><span class="co">#&gt;       residual.sugar            chlorides  free.sulfur.dioxide </span></span>
+<span id="cb293-18"><a href="正則化回帰-lasso-ridge回帰-elastic-net.html#cb293-18" tabindex="-1"></a><span class="co">#&gt;            0.0000000            0.0000000            0.0000000 </span></span>
+<span id="cb293-19"><a href="正則化回帰-lasso-ridge回帰-elastic-net.html#cb293-19" tabindex="-1"></a><span class="co">#&gt; total.sulfur.dioxide              density                   pH </span></span>
+<span id="cb293-20"><a href="正則化回帰-lasso-ridge回帰-elastic-net.html#cb293-20" tabindex="-1"></a><span class="co">#&gt;            0.0000000            0.0000000            0.0000000 </span></span>
+<span id="cb293-21"><a href="正則化回帰-lasso-ridge回帰-elastic-net.html#cb293-21" tabindex="-1"></a><span class="co">#&gt;            sulphates              alcohol </span></span>
+<span id="cb293-22"><a href="正則化回帰-lasso-ridge回帰-elastic-net.html#cb293-22" tabindex="-1"></a><span class="co">#&gt;            0.0000000            0.2402657</span></span>
+<span id="cb293-23"><a href="正則化回帰-lasso-ridge回帰-elastic-net.html#cb293-23" tabindex="-1"></a><span class="co"># 回帰係数推定値のノルムの大きさ</span></span>
+<span id="cb293-24"><a href="正則化回帰-lasso-ridge回帰-elastic-net.html#cb293-24" tabindex="-1"></a><span class="co"># sqrt(sum(coef(lasso_mod)[-1, 50]^2))  # --&gt; L2-norm</span></span>
+<span id="cb293-25"><a href="正則化回帰-lasso-ridge回帰-elastic-net.html#cb293-25" tabindex="-1"></a><span class="fu">sum</span>(<span class="fu">abs</span>(<span class="fu">coef</span>(lasso_mod)[<span class="sc">-</span><span class="dv">1</span>, <span class="dv">50</span>]))   <span class="co"># --&gt; L1-norm</span></span>
+<span id="cb293-26"><a href="正則化回帰-lasso-ridge回帰-elastic-net.html#cb293-26" tabindex="-1"></a><span class="co">#&gt; [1] 1.124643</span></span></code></pre></div>
+<div class="sourceCode" id="cb294"><pre class="sourceCode r"><code class="sourceCode r"><span id="cb294-1"><a href="正則化回帰-lasso-ridge回帰-elastic-net.html#cb294-1" tabindex="-1"></a><span class="co"># 90番目のlambdaの値の例</span></span>
+<span id="cb294-2"><a href="正則化回帰-lasso-ridge回帰-elastic-net.html#cb294-2" tabindex="-1"></a>lasso_mod<span class="sc">$</span>lambda[<span class="dv">90</span>]    <span class="co"># --&gt; 0.002535364</span></span>
+<span id="cb294-3"><a href="正則化回帰-lasso-ridge回帰-elastic-net.html#cb294-3" tabindex="-1"></a><span class="co">#&gt; [1] 0.002535364</span></span>
+<span id="cb294-4"><a href="正則化回帰-lasso-ridge回帰-elastic-net.html#cb294-4" tabindex="-1"></a><span class="co"># 回帰係数推定値</span></span>
+<span id="cb294-5"><a href="正則化回帰-lasso-ridge回帰-elastic-net.html#cb294-5" tabindex="-1"></a><span class="fu">coef</span>(lasso_mod)[, <span class="dv">90</span>]</span>
+<span id="cb294-6"><a href="正則化回帰-lasso-ridge回帰-elastic-net.html#cb294-6" tabindex="-1"></a><span class="co">#&gt;          (Intercept)        fixed.acidity     volatile.acidity </span></span>
+<span id="cb294-7"><a href="正則化回帰-lasso-ridge回帰-elastic-net.html#cb294-7" tabindex="-1"></a><span class="co">#&gt;         1.285160e+02         2.870680e-02        -1.839954e+00 </span></span>
+<span id="cb294-8"><a href="正則化回帰-lasso-ridge回帰-elastic-net.html#cb294-8" tabindex="-1"></a><span class="co">#&gt;          citric.acid       residual.sugar            chlorides </span></span>
+<span id="cb294-9"><a href="正則化回帰-lasso-ridge回帰-elastic-net.html#cb294-9" tabindex="-1"></a><span class="co">#&gt;        -8.511098e-03         7.470412e-02        -2.656102e-01 </span></span>
+<span id="cb294-10"><a href="正則化回帰-lasso-ridge回帰-elastic-net.html#cb294-10" tabindex="-1"></a><span class="co">#&gt;  free.sulfur.dioxide total.sulfur.dioxide              density </span></span>
+<span id="cb294-11"><a href="正則化回帰-lasso-ridge回帰-elastic-net.html#cb294-11" tabindex="-1"></a><span class="co">#&gt;         4.331940e-03        -3.401243e-05        -1.280749e+02 </span></span>
+<span id="cb294-12"><a href="正則化回帰-lasso-ridge回帰-elastic-net.html#cb294-12" tabindex="-1"></a><span class="co">#&gt;                   pH            sulphates              alcohol </span></span>
+<span id="cb294-13"><a href="正則化回帰-lasso-ridge回帰-elastic-net.html#cb294-13" tabindex="-1"></a><span class="co">#&gt;         5.201851e-01         5.621013e-01         2.323178e-01</span></span>
+<span id="cb294-14"><a href="正則化回帰-lasso-ridge回帰-elastic-net.html#cb294-14" tabindex="-1"></a><span class="co"># 回帰係数推定値のノルムの大きさ</span></span>
+<span id="cb294-15"><a href="正則化回帰-lasso-ridge回帰-elastic-net.html#cb294-15" tabindex="-1"></a><span class="co">#sqrt(sum(coef(lasso_mod)[-1, 90]^2))   # --&gt; L2-norm</span></span>
+<span id="cb294-16"><a href="正則化回帰-lasso-ridge回帰-elastic-net.html#cb294-16" tabindex="-1"></a><span class="fu">sum</span>(<span class="fu">abs</span>(<span class="fu">coef</span>(lasso_mod)[<span class="sc">-</span><span class="dv">1</span>, <span class="dv">90</span>]))   <span class="co"># --&gt; L1-norm</span></span>
+<span id="cb294-17"><a href="正則化回帰-lasso-ridge回帰-elastic-net.html#cb294-17" tabindex="-1"></a><span class="co">#&gt; [1] 131.6114</span></span></code></pre></div>
+<p>lambda値大 (罰則大) → 回帰係数推定値の大きさ (L1ノルムで評価) 小,
+となっている</p>
+<p>学習結果を使い, グリッド上にない新しいlambda値 (例, 0.05)
+に対する回帰係数の予測をすることもできる.</p>
+<div class="sourceCode" id="cb295"><pre class="sourceCode r"><code class="sourceCode r"><span id="cb295-1"><a href="正則化回帰-lasso-ridge回帰-elastic-net.html#cb295-1" tabindex="-1"></a><span class="co"># 新しいlambda値 (例, 0.05) に対する回帰係数の予測</span></span>
+<span id="cb295-2"><a href="正則化回帰-lasso-ridge回帰-elastic-net.html#cb295-2" tabindex="-1"></a><span class="fu">predict</span>(lasso_mod, <span class="at">s =</span> <span class="fl">0.05</span>, <span class="at">type =</span> <span class="st">&quot;coefficients&quot;</span>)</span>
+<span id="cb295-3"><a href="正則化回帰-lasso-ridge回帰-elastic-net.html#cb295-3" tabindex="-1"></a><span class="co">#&gt; 12 x 1 sparse Matrix of class &quot;dgCMatrix&quot;</span></span>
+<span id="cb295-4"><a href="正則化回帰-lasso-ridge回帰-elastic-net.html#cb295-4" tabindex="-1"></a><span class="co">#&gt;                                s0</span></span>
+<span id="cb295-5"><a href="正則化回帰-lasso-ridge回帰-elastic-net.html#cb295-5" tabindex="-1"></a><span class="co">#&gt; (Intercept)           3.037559871</span></span>
+<span id="cb295-6"><a href="正則化回帰-lasso-ridge回帰-elastic-net.html#cb295-6" tabindex="-1"></a><span class="co">#&gt; fixed.acidity        -0.021059990</span></span>
+<span id="cb295-7"><a href="正則化回帰-lasso-ridge回帰-elastic-net.html#cb295-7" tabindex="-1"></a><span class="co">#&gt; volatile.acidity     -1.453951512</span></span>
+<span id="cb295-8"><a href="正則化回帰-lasso-ridge回帰-elastic-net.html#cb295-8" tabindex="-1"></a><span class="co">#&gt; citric.acid           .          </span></span>
+<span id="cb295-9"><a href="正則化回帰-lasso-ridge回帰-elastic-net.html#cb295-9" tabindex="-1"></a><span class="co">#&gt; residual.sugar        0.007980186</span></span>
+<span id="cb295-10"><a href="正則化回帰-lasso-ridge回帰-elastic-net.html#cb295-10" tabindex="-1"></a><span class="co">#&gt; chlorides             .          </span></span>
+<span id="cb295-11"><a href="正則化回帰-lasso-ridge回帰-elastic-net.html#cb295-11" tabindex="-1"></a><span class="co">#&gt; free.sulfur.dioxide   0.002465338</span></span>
+<span id="cb295-12"><a href="正則化回帰-lasso-ridge回帰-elastic-net.html#cb295-12" tabindex="-1"></a><span class="co">#&gt; total.sulfur.dioxide  .          </span></span>
+<span id="cb295-13"><a href="正則化回帰-lasso-ridge回帰-elastic-net.html#cb295-13" tabindex="-1"></a><span class="co">#&gt; density               .          </span></span>
+<span id="cb295-14"><a href="正則化回帰-lasso-ridge回帰-elastic-net.html#cb295-14" tabindex="-1"></a><span class="co">#&gt; pH                    .          </span></span>
+<span id="cb295-15"><a href="正則化回帰-lasso-ridge回帰-elastic-net.html#cb295-15" tabindex="-1"></a><span class="co">#&gt; sulphates             .          </span></span>
+<span id="cb295-16"><a href="正則化回帰-lasso-ridge回帰-elastic-net.html#cb295-16" tabindex="-1"></a><span class="co">#&gt; alcohol               0.309041958</span></span></code></pre></div>
+<p>指定したグリッド範囲において, 回帰係数推定値の変化を示す
+正則化パス (回帰係数推定値 vs log(lambda), vs L1ノルム) は<code>plot()</code>により描くことができる.</p>
+<div class="sourceCode" id="cb296"><pre class="sourceCode r"><code class="sourceCode r"><span id="cb296-1"><a href="正則化回帰-lasso-ridge回帰-elastic-net.html#cb296-1" tabindex="-1"></a><span class="fu">plot</span>(lasso_mod)     <span class="co"># (デフォルト) 回帰係数推定値 vs log(lambda)</span></span></code></pre></div>
+<p><img src="070-lasso_files/figure-html/unnamed-chunk-12-1.png" width="75%" /></p>
+<div class="sourceCode" id="cb297"><pre class="sourceCode r"><code class="sourceCode r"><span id="cb297-1"><a href="正則化回帰-lasso-ridge回帰-elastic-net.html#cb297-1" tabindex="-1"></a><span class="fu">plot</span>(lasso_mod, <span class="at">xvar =</span> <span class="st">&quot;norm&quot;</span>)      <span class="co"># 回帰係数推定値 vs L1ノルム</span></span></code></pre></div>
+<p><img src="070-lasso_files/figure-html/unnamed-chunk-13-1.png" width="75%" /></p>
+<div class="sourceCode" id="cb298"><pre class="sourceCode r"><code class="sourceCode r"><span id="cb298-1"><a href="正則化回帰-lasso-ridge回帰-elastic-net.html#cb298-1" tabindex="-1"></a><span class="co"># テストデータを使った予測, および予測MSEの計算</span></span>
+<span id="cb298-2"><a href="正則化回帰-lasso-ridge回帰-elastic-net.html#cb298-2" tabindex="-1"></a>lasso_pred <span class="ot">&lt;-</span> <span class="fu">predict</span>(lasso_mod, <span class="at">s =</span> <span class="fl">0.05</span>, <span class="at">newx =</span> x[<span class="sc">-</span>train, ])      <span class="co"># lambda = 0.05</span></span>
+<span id="cb298-3"><a href="正則化回帰-lasso-ridge回帰-elastic-net.html#cb298-3" tabindex="-1"></a><span class="fu">mean</span>((lasso_pred <span class="sc">-</span> y[<span class="sc">-</span>train])<span class="sc">^</span><span class="dv">2</span>)    <span class="co"># test MSE</span></span>
+<span id="cb298-4"><a href="正則化回帰-lasso-ridge回帰-elastic-net.html#cb298-4" tabindex="-1"></a><span class="co">#&gt; [1] 0.5771119</span></span></code></pre></div>
+</div>
+<div id="交差検証によるパラメータチューニング" class="section level3 unnumbered hasAnchor">
+<h3>交差検証によるパラメータ・チューニング<a href="正則化回帰-lasso-ridge回帰-elastic-net.html#交差検証によるパラメータチューニング" class="anchor-section" aria-label="Anchor link to header"></a></h3>
+<p>以上のような<code>lambda</code>のグリッドに対して実行した<code>glmnet</code>の結果より,
+関数<code>cv.glmnet()</code>は, 交差検証 (cross-validation) を使って,
+正則化パラメータ<span class="math inline">\(\lambda\)</span>の”最適な”値を見つけることができる.</p>
+<pre><code>- cv.glmnet(): k-重交差検証を実行. 最適なλの値を返す. </code></pre>
+<div class="sourceCode" id="cb300"><pre class="sourceCode r"><code class="sourceCode r"><span id="cb300-1"><a href="正則化回帰-lasso-ridge回帰-elastic-net.html#cb300-1" tabindex="-1"></a><span class="co"># 交差検証 (Cross-validation) によるlambda値のチューニング</span></span>
+<span id="cb300-2"><a href="正則化回帰-lasso-ridge回帰-elastic-net.html#cb300-2" tabindex="-1"></a><span class="fu">set.seed</span>(<span class="dv">2</span>)</span>
+<span id="cb300-3"><a href="正則化回帰-lasso-ridge回帰-elastic-net.html#cb300-3" tabindex="-1"></a>cv_out <span class="ot">&lt;-</span> <span class="fu">cv.glmnet</span>(x[train, ], y[train], <span class="at">alpha =</span> <span class="dv">1</span>)        <span class="co"># デフォルト: 10-fold CV (nfoldsで指定)</span></span>
+<span id="cb300-4"><a href="正則化回帰-lasso-ridge回帰-elastic-net.html#cb300-4" tabindex="-1"></a>cv_out <span class="ot">&lt;-</span> <span class="fu">cv.glmnet</span>(x[train, ], y[train], <span class="at">lambda =</span> grid, <span class="at">nfolds =</span> <span class="dv">5</span>, <span class="at">alpha =</span> <span class="dv">1</span>)     <span class="co"># lambdaは上のgrid使用, 5-fold CV</span></span>
+<span id="cb300-5"><a href="正則化回帰-lasso-ridge回帰-elastic-net.html#cb300-5" tabindex="-1"></a></span>
+<span id="cb300-6"><a href="正則化回帰-lasso-ridge回帰-elastic-net.html#cb300-6" tabindex="-1"></a><span class="co"># オプション</span></span>
+<span id="cb300-7"><a href="正則化回帰-lasso-ridge回帰-elastic-net.html#cb300-7" tabindex="-1"></a><span class="co"># lambda: Optional user - supplied lambda sequence; default is NULL, and glmnet chooses its own sequence</span></span>
+<span id="cb300-8"><a href="正則化回帰-lasso-ridge回帰-elastic-net.html#cb300-8" tabindex="-1"></a><span class="fu">plot</span>(cv_out)</span></code></pre></div>
+<p><img src="070-lasso_files/figure-html/unnamed-chunk-15-1.png" width="75%" /></p>
+<p>“最適な”<span class="math inline">\(\lambda\)</span>の決め方の一つは, CV誤差 (予測MSE推定値) が最小となる
+<span class="math inline">\(\lambda\)</span>値であり, これは<code>cv.glmnet()</code>の出力オブジェクト内の
+要素<code>$lambda.min</code>に格納されている.
+この<code>$lambda.min</code>を<code>predict()</code>の引数<code>s</code>に与えることで,
+対応するlassoのモデルを使った外挿予測をすることができる.</p>
+<div class="sourceCode" id="cb301"><pre class="sourceCode r"><code class="sourceCode r"><span id="cb301-1"><a href="正則化回帰-lasso-ridge回帰-elastic-net.html#cb301-1" tabindex="-1"></a><span class="co"># CV誤差 (予測MSE推定値) が最小 (CV_min) となるlambda</span></span>
+<span id="cb301-2"><a href="正則化回帰-lasso-ridge回帰-elastic-net.html#cb301-2" tabindex="-1"></a>(lmbd_min <span class="ot">&lt;-</span> cv_out<span class="sc">$</span>lambda.min)</span>
+<span id="cb301-3"><a href="正則化回帰-lasso-ridge回帰-elastic-net.html#cb301-3" tabindex="-1"></a><span class="co">#&gt; [1] 0.007054802</span></span>
+<span id="cb301-4"><a href="正則化回帰-lasso-ridge回帰-elastic-net.html#cb301-4" tabindex="-1"></a><span class="co"># このlambdaを持つモデルによる予測, 予測MSE</span></span>
+<span id="cb301-5"><a href="正則化回帰-lasso-ridge回帰-elastic-net.html#cb301-5" tabindex="-1"></a>lasso_pred <span class="ot">&lt;-</span> <span class="fu">predict</span>(lasso_mod, <span class="at">s =</span> lmbd_min, <span class="at">newx =</span> x[<span class="sc">-</span>train, ])</span>
+<span id="cb301-6"><a href="正則化回帰-lasso-ridge回帰-elastic-net.html#cb301-6" tabindex="-1"></a><span class="fu">mean</span>((lasso_pred <span class="sc">-</span> y[<span class="sc">-</span>train])<span class="sc">^</span><span class="dv">2</span>)    <span class="co"># 予測MSE</span></span>
+<span id="cb301-7"><a href="正則化回帰-lasso-ridge回帰-elastic-net.html#cb301-7" tabindex="-1"></a><span class="co">#&gt; [1] 0.5647419</span></span></code></pre></div>
+<p>代替的な<span class="math inline">\(\lambda\)</span>の決め方として慣用的によく用いられる方法に,
+<strong>“1標準誤差ルール (1 standard error rule)”</strong>がある.
+これは, CV誤差 (予測MSE推定値) の最小値 (<span class="math inline">\(CV_{min}\)</span>),
+その時の標準誤差<span class="math inline">\(se_{min}\)</span>に対して,
+<span class="math inline">\(\lambda\)</span>における予測MSE <span class="math inline">\(CV_{\lambda}\)</span>が
+<span class="math inline">\(CV_{\lambda} \le CV_{min} + se_{min}\)</span> となる<span class="math inline">\(\lambda\)</span>値の中で
+最大の<span class="math inline">\(\lambda\)</span>を選択するものである.
+CV誤差最小となる<span class="math inline">\(\lambda\)</span>よりも大きな<span class="math inline">\(\lambda\)</span>を
+取ることで, 選択される変数の数が減り,
+よりシンプルなモデルが最終モデルとして選ばれるようになる.</p>
+<div class="sourceCode" id="cb302"><pre class="sourceCode r"><code class="sourceCode r"><span id="cb302-1"><a href="正則化回帰-lasso-ridge回帰-elastic-net.html#cb302-1" tabindex="-1"></a><span class="co"># 1標準誤差ルール (1 standard error rule) によるlambda: </span></span>
+<span id="cb302-2"><a href="正則化回帰-lasso-ridge回帰-elastic-net.html#cb302-2" tabindex="-1"></a><span class="co"># CV誤差が CV &lt;= CV_min + se_min となる最大のlambda</span></span>
+<span id="cb302-3"><a href="正則化回帰-lasso-ridge回帰-elastic-net.html#cb302-3" tabindex="-1"></a>(lmbd_1se <span class="ot">&lt;-</span> cv_out<span class="sc">$</span>lambda<span class="fl">.1</span>se)</span>
+<span id="cb302-4"><a href="正則化回帰-lasso-ridge回帰-elastic-net.html#cb302-4" tabindex="-1"></a><span class="co">#&gt; [1] 0.03125716</span></span>
+<span id="cb302-5"><a href="正則化回帰-lasso-ridge回帰-elastic-net.html#cb302-5" tabindex="-1"></a><span class="co"># このlambdaを持つモデルによる予測, 予測MSE</span></span>
+<span id="cb302-6"><a href="正則化回帰-lasso-ridge回帰-elastic-net.html#cb302-6" tabindex="-1"></a>lasso_pred2 <span class="ot">&lt;-</span> <span class="fu">predict</span>(lasso_mod, <span class="at">s =</span> lmbd_1se, <span class="at">newx =</span> x[<span class="sc">-</span>train, ])</span>
+<span id="cb302-7"><a href="正則化回帰-lasso-ridge回帰-elastic-net.html#cb302-7" tabindex="-1"></a><span class="fu">mean</span>((lasso_pred2 <span class="sc">-</span> y[<span class="sc">-</span>train])<span class="sc">^</span><span class="dv">2</span>)</span>
+<span id="cb302-8"><a href="正則化回帰-lasso-ridge回帰-elastic-net.html#cb302-8" tabindex="-1"></a><span class="co">#&gt; [1] 0.5702662</span></span></code></pre></div>
+<ul>
+<li>以上の, <code>cv.glmnet()</code>による出力の確認.</li>
+</ul>
+<div class="sourceCode" id="cb303"><pre class="sourceCode r"><code class="sourceCode r"><span id="cb303-1"><a href="正則化回帰-lasso-ridge回帰-elastic-net.html#cb303-1" tabindex="-1"></a><span class="co"># 上記2つの&quot;最適な&quot;lambdaのインデックス</span></span>
+<span id="cb303-2"><a href="正則化回帰-lasso-ridge回帰-elastic-net.html#cb303-2" tabindex="-1"></a>cv_out<span class="sc">$</span>index <span class="co"># min, 1seの順</span></span>
+<span id="cb303-3"><a href="正則化回帰-lasso-ridge回帰-elastic-net.html#cb303-3" tabindex="-1"></a><span class="co">#&gt;     Lambda</span></span>
+<span id="cb303-4"><a href="正則化回帰-lasso-ridge回帰-elastic-net.html#cb303-4" tabindex="-1"></a><span class="co">#&gt; min     79</span></span>
+<span id="cb303-5"><a href="正則化回帰-lasso-ridge回帰-elastic-net.html#cb303-5" tabindex="-1"></a><span class="co">#&gt; 1se     63</span></span>
+<span id="cb303-6"><a href="正則化回帰-lasso-ridge回帰-elastic-net.html#cb303-6" tabindex="-1"></a></span>
+<span id="cb303-7"><a href="正則化回帰-lasso-ridge回帰-elastic-net.html#cb303-7" tabindex="-1"></a><span class="co"># cv_out$cvm    # (予測MSEの) CV推定値</span></span>
+<span id="cb303-8"><a href="正則化回帰-lasso-ridge回帰-elastic-net.html#cb303-8" tabindex="-1"></a><span class="co"># cv_out$cvsd   # cvmの標準誤差</span></span>
+<span id="cb303-9"><a href="正則化回帰-lasso-ridge回帰-elastic-net.html#cb303-9" tabindex="-1"></a>(cvmse_1se <span class="ot">&lt;-</span> cv_out<span class="sc">$</span>cvm[cv_out<span class="sc">$</span>index[<span class="st">&quot;min&quot;</span>, ]] </span>
+<span id="cb303-10"><a href="正則化回帰-lasso-ridge回帰-elastic-net.html#cb303-10" tabindex="-1"></a>  <span class="sc">+</span> cv_out<span class="sc">$</span>cvsd[cv_out<span class="sc">$</span>index[<span class="st">&quot;min&quot;</span>, ]])</span>
+<span id="cb303-11"><a href="正則化回帰-lasso-ridge回帰-elastic-net.html#cb303-11" tabindex="-1"></a><span class="co">#&gt; [1] 0.5872448</span></span>
+<span id="cb303-12"><a href="正則化回帰-lasso-ridge回帰-elastic-net.html#cb303-12" tabindex="-1"></a><span class="fu">which.max</span>(cv_out<span class="sc">$</span>cvm <span class="sc">&lt;=</span> cvmse_1se)</span>
+<span id="cb303-13"><a href="正則化回帰-lasso-ridge回帰-elastic-net.html#cb303-13" tabindex="-1"></a><span class="co">#&gt; [1] 63</span></span>
+<span id="cb303-14"><a href="正則化回帰-lasso-ridge回帰-elastic-net.html#cb303-14" tabindex="-1"></a></span>
+<span id="cb303-15"><a href="正則化回帰-lasso-ridge回帰-elastic-net.html#cb303-15" tabindex="-1"></a><span class="co"># 最適なlambda値の対数 → CV誤差曲線 (上図) 内の2本の点線の位置</span></span>
+<span id="cb303-16"><a href="正則化回帰-lasso-ridge回帰-elastic-net.html#cb303-16" tabindex="-1"></a><span class="fu">log</span>(cv_out<span class="sc">$</span>lambda.min)</span>
+<span id="cb303-17"><a href="正則化回帰-lasso-ridge回帰-elastic-net.html#cb303-17" tabindex="-1"></a><span class="co">#&gt; [1] -4.954047</span></span>
+<span id="cb303-18"><a href="正則化回帰-lasso-ridge回帰-elastic-net.html#cb303-18" tabindex="-1"></a><span class="fu">log</span>(cv_out<span class="sc">$</span>lambda<span class="fl">.1</span>se)</span>
+<span id="cb303-19"><a href="正則化回帰-lasso-ridge回帰-elastic-net.html#cb303-19" tabindex="-1"></a><span class="co">#&gt; [1] -3.465507</span></span></code></pre></div>
+<!--
+# cv_out$cvm    # (予測MSEの) CV推定値 (nfolds個の平均値)
+# cv_out$cvsd   # cvmの標準誤差 (予測MSEの標準偏差)
+-->
+<p>CV誤差曲線 (上図) において, 2本の縦線が引かれているが,
+左側の線はCV誤差最小点の位置<code>log(cv_out$lambda.min)</code>,
+右側の線は”1標準誤差ルール”による点の位置
+<code>log(cv_out$lambda.1se)</code>を表している.</p>
+</div>
+</div>
+<div id="ridge回帰" class="section level2 hasAnchor" number="6.3">
+<h2><span class="header-section-number">6.3</span> ridge回帰<a href="正則化回帰-lasso-ridge回帰-elastic-net.html#ridge回帰" class="anchor-section" aria-label="Anchor link to header"></a></h2>
+<p>ridge回帰は, 関数<code>glmnet()</code>において, 引数<code>alpha=0</code>を指定すれば良い.
+その他の実行方法や結果の見方等は, 上記lassoのケースと全く同様である.</p>
+<div class="sourceCode" id="cb304"><pre class="sourceCode r"><code class="sourceCode r"><span id="cb304-1"><a href="正則化回帰-lasso-ridge回帰-elastic-net.html#cb304-1" tabindex="-1"></a><span class="co"># Ridge regression (alpha = 0)</span></span>
+<span id="cb304-2"><a href="正則化回帰-lasso-ridge回帰-elastic-net.html#cb304-2" tabindex="-1"></a>ridge_mod <span class="ot">&lt;-</span> <span class="fu">glmnet</span>(x[train, ], y[train], <span class="at">alpha =</span> <span class="dv">0</span>, <span class="at">lambda =</span> <span class="fl">0.1</span>)</span>
+<span id="cb304-3"><a href="正則化回帰-lasso-ridge回帰-elastic-net.html#cb304-3" tabindex="-1"></a>ridge_mod<span class="sc">$</span>beta</span>
+<span id="cb304-4"><a href="正則化回帰-lasso-ridge回帰-elastic-net.html#cb304-4" tabindex="-1"></a><span class="co">#&gt; 11 x 1 sparse Matrix of class &quot;dgCMatrix&quot;</span></span>
+<span id="cb304-5"><a href="正則化回帰-lasso-ridge回帰-elastic-net.html#cb304-5" tabindex="-1"></a><span class="co">#&gt;                                 s0</span></span>
+<span id="cb304-6"><a href="正則化回帰-lasso-ridge回帰-elastic-net.html#cb304-6" tabindex="-1"></a><span class="co">#&gt; fixed.acidity        -2.633821e-02</span></span>
+<span id="cb304-7"><a href="正則化回帰-lasso-ridge回帰-elastic-net.html#cb304-7" tabindex="-1"></a><span class="co">#&gt; volatile.acidity     -1.639141e+00</span></span>
+<span id="cb304-8"><a href="正則化回帰-lasso-ridge回帰-elastic-net.html#cb304-8" tabindex="-1"></a><span class="co">#&gt; citric.acid          -5.476896e-03</span></span>
+<span id="cb304-9"><a href="正則化回帰-lasso-ridge回帰-elastic-net.html#cb304-9" tabindex="-1"></a><span class="co">#&gt; residual.sugar        3.694013e-02</span></span>
+<span id="cb304-10"><a href="正則化回帰-lasso-ridge回帰-elastic-net.html#cb304-10" tabindex="-1"></a><span class="co">#&gt; chlorides            -1.399251e+00</span></span>
+<span id="cb304-11"><a href="正則化回帰-lasso-ridge回帰-elastic-net.html#cb304-11" tabindex="-1"></a><span class="co">#&gt; free.sulfur.dioxide   4.920892e-03</span></span>
+<span id="cb304-12"><a href="正則化回帰-lasso-ridge回帰-elastic-net.html#cb304-12" tabindex="-1"></a><span class="co">#&gt; total.sulfur.dioxide -5.358797e-04</span></span>
+<span id="cb304-13"><a href="正則化回帰-lasso-ridge回帰-elastic-net.html#cb304-13" tabindex="-1"></a><span class="co">#&gt; density              -5.165966e+01</span></span>
+<span id="cb304-14"><a href="正則化回帰-lasso-ridge回帰-elastic-net.html#cb304-14" tabindex="-1"></a><span class="co">#&gt; pH                    2.494285e-01</span></span>
+<span id="cb304-15"><a href="正則化回帰-lasso-ridge回帰-elastic-net.html#cb304-15" tabindex="-1"></a><span class="co">#&gt; sulphates             4.307148e-01</span></span>
+<span id="cb304-16"><a href="正則化回帰-lasso-ridge回帰-elastic-net.html#cb304-16" tabindex="-1"></a><span class="co">#&gt; alcohol               2.645255e-01</span></span>
+<span id="cb304-17"><a href="正則化回帰-lasso-ridge回帰-elastic-net.html#cb304-17" tabindex="-1"></a>ridge_mod <span class="ot">&lt;-</span> <span class="fu">glmnet</span>(x[train, ], y[train], <span class="at">alpha =</span> <span class="dv">0</span>, <span class="at">lambda =</span> <span class="fl">0.01</span>)</span>
+<span id="cb304-18"><a href="正則化回帰-lasso-ridge回帰-elastic-net.html#cb304-18" tabindex="-1"></a>ridge_mod<span class="sc">$</span>beta</span>
+<span id="cb304-19"><a href="正則化回帰-lasso-ridge回帰-elastic-net.html#cb304-19" tabindex="-1"></a><span class="co">#&gt; 11 x 1 sparse Matrix of class &quot;dgCMatrix&quot;</span></span>
+<span id="cb304-20"><a href="正則化回帰-lasso-ridge回帰-elastic-net.html#cb304-20" tabindex="-1"></a><span class="co">#&gt;                                 s0</span></span>
+<span id="cb304-21"><a href="正則化回帰-lasso-ridge回帰-elastic-net.html#cb304-21" tabindex="-1"></a><span class="co">#&gt; fixed.acidity         2.667047e-02</span></span>
+<span id="cb304-22"><a href="正則化回帰-lasso-ridge回帰-elastic-net.html#cb304-22" tabindex="-1"></a><span class="co">#&gt; volatile.acidity     -1.834882e+00</span></span>
+<span id="cb304-23"><a href="正則化回帰-lasso-ridge回帰-elastic-net.html#cb304-23" tabindex="-1"></a><span class="co">#&gt; citric.acid          -3.723824e-02</span></span>
+<span id="cb304-24"><a href="正則化回帰-lasso-ridge回帰-elastic-net.html#cb304-24" tabindex="-1"></a><span class="co">#&gt; residual.sugar        7.023424e-02</span></span>
+<span id="cb304-25"><a href="正則化回帰-lasso-ridge回帰-elastic-net.html#cb304-25" tabindex="-1"></a><span class="co">#&gt; chlorides            -4.222285e-01</span></span>
+<span id="cb304-26"><a href="正則化回帰-lasso-ridge回帰-elastic-net.html#cb304-26" tabindex="-1"></a><span class="co">#&gt; free.sulfur.dioxide   4.800634e-03</span></span>
+<span id="cb304-27"><a href="正則化回帰-lasso-ridge回帰-elastic-net.html#cb304-27" tabindex="-1"></a><span class="co">#&gt; total.sulfur.dioxide -2.510749e-04</span></span>
+<span id="cb304-28"><a href="正則化回帰-lasso-ridge回帰-elastic-net.html#cb304-28" tabindex="-1"></a><span class="co">#&gt; density              -1.172285e+02</span></span>
+<span id="cb304-29"><a href="正則化回帰-lasso-ridge回帰-elastic-net.html#cb304-29" tabindex="-1"></a><span class="co">#&gt; pH                    5.021875e-01</span></span>
+<span id="cb304-30"><a href="正則化回帰-lasso-ridge回帰-elastic-net.html#cb304-30" tabindex="-1"></a><span class="co">#&gt; sulphates             5.659802e-01</span></span>
+<span id="cb304-31"><a href="正則化回帰-lasso-ridge回帰-elastic-net.html#cb304-31" tabindex="-1"></a><span class="co">#&gt; alcohol               2.410154e-01</span></span></code></pre></div>
+<p>先のlassoの時と異なり, 明らかに,
+どの回帰係数も非ゼロの値にとどまっている.
+また, 理論が示す通り, <span class="math inline">\(\lambda=0.1\)</span>の時の方が,
+各係数の絶対値がゼロに近付いことが確認される</p>
+<p>最後に, 上と同様, lambdaの範囲を指定し, 正則化パスを描いてみよう.</p>
+<div class="sourceCode" id="cb305"><pre class="sourceCode r"><code class="sourceCode r"><span id="cb305-1"><a href="正則化回帰-lasso-ridge回帰-elastic-net.html#cb305-1" tabindex="-1"></a><span class="co"># lambdaのグリッド指定</span></span>
+<span id="cb305-2"><a href="正則化回帰-lasso-ridge回帰-elastic-net.html#cb305-2" tabindex="-1"></a>grid <span class="ot">&lt;-</span> <span class="dv">10</span><span class="sc">^</span><span class="fu">seq</span>(<span class="dv">1</span>, <span class="sc">-</span><span class="dv">3</span>, <span class="at">length =</span> <span class="dv">100</span>)     <span class="co"># lambda = 10^1 -- 10^(-3)</span></span>
+<span id="cb305-3"><a href="正則化回帰-lasso-ridge回帰-elastic-net.html#cb305-3" tabindex="-1"></a><span class="co"># 範囲設定されたlambaの各値に対してglmnetを実行</span></span>
+<span id="cb305-4"><a href="正則化回帰-lasso-ridge回帰-elastic-net.html#cb305-4" tabindex="-1"></a>ridge_mod <span class="ot">&lt;-</span> <span class="fu">glmnet</span>(x[train, ], y[train], <span class="at">alpha =</span> <span class="dv">0</span>, <span class="at">lambda =</span> grid)</span>
+<span id="cb305-5"><a href="正則化回帰-lasso-ridge回帰-elastic-net.html#cb305-5" tabindex="-1"></a><span class="fu">plot</span>(ridge_mod)     <span class="co"># (デフォルト) 回帰係数推定値 vs log(lambda)</span></span></code></pre></div>
+<p><img src="070-lasso_files/figure-html/unnamed-chunk-20-1.png" width="75%" /></p>
+<div class="sourceCode" id="cb306"><pre class="sourceCode r"><code class="sourceCode r"><span id="cb306-1"><a href="正則化回帰-lasso-ridge回帰-elastic-net.html#cb306-1" tabindex="-1"></a><span class="co"># plot(ridge_mod, xvar = &quot;norm&quot;)        # 回帰係数推定値 vs L1ノルム (注: L2ノルムでない)</span></span></code></pre></div>
+<!--
+plot.glmnet()のマニュアル:
+xvar    
+What is on the X-axis. "lambda" plots against the log-lambda sequence, "norm" against the L1-norm of the coefficients, and "dev" against the percent deviance explained. Warning: "norm" is the L1 norm of the coefficients on the glmnet object. There are many reasons why this might not be appropriate, such as automatic standardization, penalty factors, and values of alpha less than 1, which can lead to unusual looking plots.
+-->
+</div>
+<div id="一般化線形モデル-glm-正則化" class="section level2 hasAnchor" number="6.4">
+<h2><span class="header-section-number">6.4</span> 一般化線形モデル (GLM) + 正則化<a href="正則化回帰-lasso-ridge回帰-elastic-net.html#一般化線形モデル-glm-正則化" class="anchor-section" aria-label="Anchor link to header"></a></h2>
+<p>関数<code>glment()</code>はその名が示すように,
+線形回帰にとどまらず, 一般化線形モデル (GLM)
+に対しても, elastic net (lasso, ridge回帰)
+を実行することができる.
+引数<code>family</code>をデフォルト (<code>gaussian</code>) 以外の
+適切な確率分布を指定する.
+選択可能なクラスとして,</p>
+<pre><code>family = c(&quot;gaussian&quot;, &quot;binomial&quot;, &quot;poisson&quot;, &quot;multinomial&quot;, &quot;cox&quot;, &quot;mgaussian&quot;)</code></pre>
+<p>また. <code>glmnet()</code>は使用上, 通常の統計解析実行用のR関数, 例えば<code>lm()</code>や<code>glm()</code>等とは異なるクセのあることに注意が必要である.</p>
+<pre><code>glmnet()実行上の注意点
+ - 欠損値(NA)の事前処理が必要; 除去 or 補間
+ - 通常のy~x モデル式の入力ではなく, matrixクラス x, vectorクラス yを引数に取る 
+ - 説明変数は数値変数のみ (xは行列) → 質的変数/factorの数量化が必要 (ダミー変数導入)</code></pre>
+<div id="データセット2-german-creditデータ" class="section level3 unnumbered hasAnchor">
+<h3>データセット2: german creditデータ<a href="正則化回帰-lasso-ridge回帰-elastic-net.html#データセット2-german-creditデータ" class="anchor-section" aria-label="Anchor link to header"></a></h3>
+<pre><code>german_credit_modified.csv
+- 予測変数 (20変数): StatusAccount, DurationMonth, CreditHistory, Purpose,
+  CreditAmount, SavingsAccount, EmploymentSince, InstallmentRate, 
+  StatusAndSex, Guarantors, ResidenceSince, Property, Age, InstallmentPlans, 
+  Housing, NCredits, Job, NPeopleMain, Phone, ForeignWorker
+- 目的変数: Customer [good/bad]
+- オリジナルデータの出所: (http://archive.ics.uci.edu/ml/machine-learning-databases/statlog/german/)[http://archive.ics.uci.edu/ml/machine-learning-databases/statlog/german/] </code></pre>
+<div class="sourceCode" id="cb310"><pre class="sourceCode r"><code class="sourceCode r"><span id="cb310-1"><a href="正則化回帰-lasso-ridge回帰-elastic-net.html#cb310-1" tabindex="-1"></a><span class="co"># 例. </span></span>
+<span id="cb310-2"><a href="正則化回帰-lasso-ridge回帰-elastic-net.html#cb310-2" tabindex="-1"></a>credit_dat <span class="ot">&lt;-</span> <span class="fu">read.csv</span>(<span class="st">&quot;german_credit_modified.csv&quot;</span>, <span class="at">skip =</span> <span class="dv">3</span>, <span class="at">header =</span> T)</span>
+<span id="cb310-3"><a href="正則化回帰-lasso-ridge回帰-elastic-net.html#cb310-3" tabindex="-1"></a><span class="fu">str</span>(credit_dat)</span>
+<span id="cb310-4"><a href="正則化回帰-lasso-ridge回帰-elastic-net.html#cb310-4" tabindex="-1"></a><span class="co">#&gt; &#39;data.frame&#39;:    1000 obs. of  21 variables:</span></span>
+<span id="cb310-5"><a href="正則化回帰-lasso-ridge回帰-elastic-net.html#cb310-5" tabindex="-1"></a><span class="co">#&gt;  $ StatusAccount   : chr  &quot;lt_0DM&quot; &quot;lt_200DM&quot; &quot;none&quot; &quot;lt_0DM&quot; ...</span></span>
+<span id="cb310-6"><a href="正則化回帰-lasso-ridge回帰-elastic-net.html#cb310-6" tabindex="-1"></a><span class="co">#&gt;  $ DurationMonth   : int  6 48 12 42 24 36 24 36 12 30 ...</span></span>
+<span id="cb310-7"><a href="正則化回帰-lasso-ridge回帰-elastic-net.html#cb310-7" tabindex="-1"></a><span class="co">#&gt;  $ CreditHistory   : chr  &quot;E&quot; &quot;C&quot; &quot;E&quot; &quot;C&quot; ...</span></span>
+<span id="cb310-8"><a href="正則化回帰-lasso-ridge回帰-elastic-net.html#cb310-8" tabindex="-1"></a><span class="co">#&gt;  $ Purpose         : chr  &quot;TV_etc&quot; &quot;TV_etc&quot; &quot;education&quot; &quot;TV_etc&quot; ...</span></span>
+<span id="cb310-9"><a href="正則化回帰-lasso-ridge回帰-elastic-net.html#cb310-9" tabindex="-1"></a><span class="co">#&gt;  $ CreditAmount    : int  1169 5951 2096 7882 4870 9055 2835 6948 3059 5234 ...</span></span>
+<span id="cb310-10"><a href="正則化回帰-lasso-ridge回帰-elastic-net.html#cb310-10" tabindex="-1"></a><span class="co">#&gt;  $ SavingsAccount  : chr  NA &quot;lt_100DM&quot; &quot;lt_100DM&quot; &quot;lt_100DM&quot; ...</span></span>
+<span id="cb310-11"><a href="正則化回帰-lasso-ridge回帰-elastic-net.html#cb310-11" tabindex="-1"></a><span class="co">#&gt;  $ EmploymentSince : chr  &quot;ge_7yrs&quot; &quot;lt_4yrs&quot; &quot;lt_7yrs&quot; &quot;lt_7yrs&quot; ...</span></span>
+<span id="cb310-12"><a href="正則化回帰-lasso-ridge回帰-elastic-net.html#cb310-12" tabindex="-1"></a><span class="co">#&gt;  $ InstallmentRate : int  4 2 2 2 3 2 3 2 2 4 ...</span></span>
+<span id="cb310-13"><a href="正則化回帰-lasso-ridge回帰-elastic-net.html#cb310-13" tabindex="-1"></a><span class="co">#&gt;  $ StatusAndSex    : chr  &quot;M_single&quot; &quot;F_divorced&quot; &quot;M_single&quot; &quot;M_single&quot; ...</span></span>
+<span id="cb310-14"><a href="正則化回帰-lasso-ridge回帰-elastic-net.html#cb310-14" tabindex="-1"></a><span class="co">#&gt;  $ Guarantors      : chr  &quot;none&quot; &quot;none&quot; &quot;none&quot; &quot;guarantor&quot; ...</span></span>
+<span id="cb310-15"><a href="正則化回帰-lasso-ridge回帰-elastic-net.html#cb310-15" tabindex="-1"></a><span class="co">#&gt;  $ ResidenceSince  : int  4 2 3 4 4 4 4 2 4 2 ...</span></span>
+<span id="cb310-16"><a href="正則化回帰-lasso-ridge回帰-elastic-net.html#cb310-16" tabindex="-1"></a><span class="co">#&gt;  $ Property        : chr  &quot;real_estate&quot; &quot;real_estate&quot; &quot;real_estate&quot; &quot;life_insurance&quot; ...</span></span>
+<span id="cb310-17"><a href="正則化回帰-lasso-ridge回帰-elastic-net.html#cb310-17" tabindex="-1"></a><span class="co">#&gt;  $ Age             : int  67 22 49 45 53 35 53 35 61 28 ...</span></span>
+<span id="cb310-18"><a href="正則化回帰-lasso-ridge回帰-elastic-net.html#cb310-18" tabindex="-1"></a><span class="co">#&gt;  $ InstallmentPlans: chr  &quot;none&quot; &quot;none&quot; &quot;none&quot; &quot;none&quot; ...</span></span>
+<span id="cb310-19"><a href="正則化回帰-lasso-ridge回帰-elastic-net.html#cb310-19" tabindex="-1"></a><span class="co">#&gt;  $ Housing         : chr  &quot;own&quot; &quot;own&quot; &quot;own&quot; &quot;free&quot; ...</span></span>
+<span id="cb310-20"><a href="正則化回帰-lasso-ridge回帰-elastic-net.html#cb310-20" tabindex="-1"></a><span class="co">#&gt;  $ NCredits        : int  2 1 1 1 2 1 1 1 1 2 ...</span></span>
+<span id="cb310-21"><a href="正則化回帰-lasso-ridge回帰-elastic-net.html#cb310-21" tabindex="-1"></a><span class="co">#&gt;  $ Job             : chr  &quot;skilled&quot; &quot;skilled&quot; &quot;unskilled&quot; &quot;skilled&quot; ...</span></span>
+<span id="cb310-22"><a href="正則化回帰-lasso-ridge回帰-elastic-net.html#cb310-22" tabindex="-1"></a><span class="co">#&gt;  $ NPeopleMain     : int  1 1 2 2 2 2 1 1 1 1 ...</span></span>
+<span id="cb310-23"><a href="正則化回帰-lasso-ridge回帰-elastic-net.html#cb310-23" tabindex="-1"></a><span class="co">#&gt;  $ Phone           : chr  &quot;yes&quot; &quot;no&quot; &quot;no&quot; &quot;no&quot; ...</span></span>
+<span id="cb310-24"><a href="正則化回帰-lasso-ridge回帰-elastic-net.html#cb310-24" tabindex="-1"></a><span class="co">#&gt;  $ ForeignWorker   : chr  &quot;yes&quot; &quot;yes&quot; &quot;yes&quot; &quot;yes&quot; ...</span></span>
+<span id="cb310-25"><a href="正則化回帰-lasso-ridge回帰-elastic-net.html#cb310-25" tabindex="-1"></a><span class="co">#&gt;  $ Customer        : chr  &quot;good&quot; &quot;bad&quot; &quot;good&quot; &quot;good&quot; ...</span></span></code></pre></div>
+<p>上記のように<code>glmnet()</code>を実行する前に, 必要なデータ前処理を行う.</p>
+<ul>
+<li>欠損値の確認および欠損値の処理</li>
+</ul>
+<p>例えば, パッケージ<code>Amelia</code>にある関数<code>missmap()</code>を使うと, 欠損値のある変数やレコードを可視化することができる.
+ここでは, 欠損値は補完せずに, 欠損値を持つレコード自体を除去することにする.
+パッケージ<code>tidyverse</code> (より正確には, その中に含まれるパッケージ<code>dplyr</code>) 内にある <code>filter()</code>関数を使用した例を示すが, 代替的に,
+<code>complete.cases()</code>を使用しても良い.</p>
+<div class="sourceCode" id="cb311"><pre class="sourceCode r"><code class="sourceCode r"><span id="cb311-1"><a href="正則化回帰-lasso-ridge回帰-elastic-net.html#cb311-1" tabindex="-1"></a><span class="co"># 欠損値の可視化</span></span>
+<span id="cb311-2"><a href="正則化回帰-lasso-ridge回帰-elastic-net.html#cb311-2" tabindex="-1"></a><span class="fu">library</span>(Amelia)</span>
+<span id="cb311-3"><a href="正則化回帰-lasso-ridge回帰-elastic-net.html#cb311-3" tabindex="-1"></a><span class="fu">missmap</span>(credit_dat, <span class="at">col =</span> <span class="fu">c</span>(<span class="st">&#39;black&#39;</span>, <span class="st">&#39;lightblue&#39;</span>), <span class="at">y.at =</span> <span class="dv">1</span>, <span class="at">y.labels =</span> <span class="st">&#39;&#39;</span>, <span class="at">legend =</span> <span class="cn">TRUE</span>)   <span class="co"># Amelia</span></span></code></pre></div>
+<p><img src="070-lasso_files/figure-html/unnamed-chunk-22-1.png" width="75%" /></p>
+<div class="sourceCode" id="cb312"><pre class="sourceCode r"><code class="sourceCode r"><span id="cb312-1"><a href="正則化回帰-lasso-ridge回帰-elastic-net.html#cb312-1" tabindex="-1"></a><span class="co"># 欠損値除去</span></span>
+<span id="cb312-2"><a href="正則化回帰-lasso-ridge回帰-elastic-net.html#cb312-2" tabindex="-1"></a><span class="fu">library</span>(tidyverse)</span>
+<span id="cb312-3"><a href="正則化回帰-lasso-ridge回帰-elastic-net.html#cb312-3" tabindex="-1"></a>credit_dat2 <span class="ot">&lt;-</span> credit_dat <span class="sc">%&gt;%</span> </span>
+<span id="cb312-4"><a href="正則化回帰-lasso-ridge回帰-elastic-net.html#cb312-4" tabindex="-1"></a>  <span class="fu">filter</span>(<span class="sc">!</span><span class="fu">is.na</span>(SavingsAccount) <span class="sc">&amp;</span> <span class="sc">!</span><span class="fu">is.na</span>(Property))</span>
+<span id="cb312-5"><a href="正則化回帰-lasso-ridge回帰-elastic-net.html#cb312-5" tabindex="-1"></a><span class="co"># 欠損値除去 (代替的方法)</span></span>
+<span id="cb312-6"><a href="正則化回帰-lasso-ridge回帰-elastic-net.html#cb312-6" tabindex="-1"></a><span class="co"># idx_comp &lt;- complete.cases(credit_dat)</span></span>
+<span id="cb312-7"><a href="正則化回帰-lasso-ridge回帰-elastic-net.html#cb312-7" tabindex="-1"></a><span class="co"># credit_dat2 &lt;- credit_dat[idx_comp, ]</span></span></code></pre></div>
+<ul>
+<li>質的変数の数値化 (ダミー変数化)</li>
+</ul>
+<div class="sourceCode" id="cb313"><pre class="sourceCode r"><code class="sourceCode r"><span id="cb313-1"><a href="正則化回帰-lasso-ridge回帰-elastic-net.html#cb313-1" tabindex="-1"></a><span class="co"># model.matrix()により, 説明変数行列 (design matrix) の生成, かつ</span></span>
+<span id="cb313-2"><a href="正則化回帰-lasso-ridge回帰-elastic-net.html#cb313-2" tabindex="-1"></a><span class="co"># 質的変数 → ダミー変数化</span></span>
+<span id="cb313-3"><a href="正則化回帰-lasso-ridge回帰-elastic-net.html#cb313-3" tabindex="-1"></a>x <span class="ot">&lt;-</span> <span class="fu">model.matrix</span>(Customer <span class="sc">~</span> ., credit_dat2)[, <span class="sc">-</span><span class="dv">1</span>]  <span class="co"># (intercept) を除去 (&amp; NAを含む行は除かれる)</span></span>
+<span id="cb313-4"><a href="正則化回帰-lasso-ridge回帰-elastic-net.html#cb313-4" tabindex="-1"></a>y <span class="ot">&lt;-</span> credit_dat2<span class="sc">$</span>Customer</span></code></pre></div>
+<ul>
+<li>lasso + ロジット回帰の実行</li>
+</ul>
+<div class="sourceCode" id="cb314"><pre class="sourceCode r"><code class="sourceCode r"><span id="cb314-1"><a href="正則化回帰-lasso-ridge回帰-elastic-net.html#cb314-1" tabindex="-1"></a><span class="fu">library</span>(glmnet)</span>
+<span id="cb314-2"><a href="正則化回帰-lasso-ridge回帰-elastic-net.html#cb314-2" tabindex="-1"></a>res_glmnet <span class="ot">&lt;-</span> <span class="fu">glmnet</span>(x, y, <span class="at">family =</span> <span class="st">&quot;binomial&quot;</span>, <span class="at">alpha =</span> <span class="dv">1</span>, <span class="at">lambda =</span> <span class="fl">0.01</span>)</span>
+<span id="cb314-3"><a href="正則化回帰-lasso-ridge回帰-elastic-net.html#cb314-3" tabindex="-1"></a>res_glmnet<span class="sc">$</span>beta <span class="co"># 推定回帰係数</span></span>
+<span id="cb314-4"><a href="正則化回帰-lasso-ridge回帰-elastic-net.html#cb314-4" tabindex="-1"></a><span class="co">#&gt; 42 x 1 sparse Matrix of class &quot;dgCMatrix&quot;</span></span>
+<span id="cb314-5"><a href="正則化回帰-lasso-ridge回帰-elastic-net.html#cb314-5" tabindex="-1"></a><span class="co">#&gt;                                     s0</span></span>
+<span id="cb314-6"><a href="正則化回帰-lasso-ridge回帰-elastic-net.html#cb314-6" tabindex="-1"></a><span class="co">#&gt; StatusAccountlt_0DM       -0.685602433</span></span>
+<span id="cb314-7"><a href="正則化回帰-lasso-ridge回帰-elastic-net.html#cb314-7" tabindex="-1"></a><span class="co">#&gt; StatusAccountlt_200DM     -0.412434306</span></span>
+<span id="cb314-8"><a href="正則化回帰-lasso-ridge回帰-elastic-net.html#cb314-8" tabindex="-1"></a><span class="co">#&gt; StatusAccountnone          0.782355735</span></span>
+<span id="cb314-9"><a href="正則化回帰-lasso-ridge回帰-elastic-net.html#cb314-9" tabindex="-1"></a><span class="co">#&gt; DurationMonth             -0.042679931</span></span>
+<span id="cb314-10"><a href="正則化回帰-lasso-ridge回帰-elastic-net.html#cb314-10" tabindex="-1"></a><span class="co">#&gt; CreditHistoryB            -0.095412680</span></span>
+<span id="cb314-11"><a href="正則化回帰-lasso-ridge回帰-elastic-net.html#cb314-11" tabindex="-1"></a><span class="co">#&gt; CreditHistoryC             .          </span></span>
+<span id="cb314-12"><a href="正則化回帰-lasso-ridge回帰-elastic-net.html#cb314-12" tabindex="-1"></a><span class="co">#&gt; CreditHistoryD             .          </span></span>
+<span id="cb314-13"><a href="正則化回帰-lasso-ridge回帰-elastic-net.html#cb314-13" tabindex="-1"></a><span class="co">#&gt; CreditHistoryE             0.501848921</span></span>
+<span id="cb314-14"><a href="正則化回帰-lasso-ridge回帰-elastic-net.html#cb314-14" tabindex="-1"></a><span class="co">#&gt; Purposebusiness            .          </span></span>
+<span id="cb314-15"><a href="正則化回帰-lasso-ridge回帰-elastic-net.html#cb314-15" tabindex="-1"></a><span class="co">#&gt; Purposecar                -0.154132447</span></span>
+<span id="cb314-16"><a href="正則化回帰-lasso-ridge回帰-elastic-net.html#cb314-16" tabindex="-1"></a><span class="co">#&gt; Purposeeducation          -0.811628841</span></span>
+<span id="cb314-17"><a href="正則化回帰-lasso-ridge回帰-elastic-net.html#cb314-17" tabindex="-1"></a><span class="co">#&gt; Purposeothers              .          </span></span>
+<span id="cb314-18"><a href="正則化回帰-lasso-ridge回帰-elastic-net.html#cb314-18" tabindex="-1"></a><span class="co">#&gt; Purposerepairs             .          </span></span>
+<span id="cb314-19"><a href="正則化回帰-lasso-ridge回帰-elastic-net.html#cb314-19" tabindex="-1"></a><span class="co">#&gt; CreditAmount               .          </span></span>
+<span id="cb314-20"><a href="正則化回帰-lasso-ridge回帰-elastic-net.html#cb314-20" tabindex="-1"></a><span class="co">#&gt; SavingsAccountlt_1000DM    .          </span></span>
+<span id="cb314-21"><a href="正則化回帰-lasso-ridge回帰-elastic-net.html#cb314-21" tabindex="-1"></a><span class="co">#&gt; SavingsAccountlt_100DM    -0.479910279</span></span>
+<span id="cb314-22"><a href="正則化回帰-lasso-ridge回帰-elastic-net.html#cb314-22" tabindex="-1"></a><span class="co">#&gt; SavingsAccountlt_500DM     .          </span></span>
+<span id="cb314-23"><a href="正則化回帰-lasso-ridge回帰-elastic-net.html#cb314-23" tabindex="-1"></a><span class="co">#&gt; EmploymentSincelt_1yr     -0.303152940</span></span>
+<span id="cb314-24"><a href="正則化回帰-lasso-ridge回帰-elastic-net.html#cb314-24" tabindex="-1"></a><span class="co">#&gt; EmploymentSincelt_4yrs     .          </span></span>
+<span id="cb314-25"><a href="正則化回帰-lasso-ridge回帰-elastic-net.html#cb314-25" tabindex="-1"></a><span class="co">#&gt; EmploymentSincelt_7yrs     0.298352171</span></span>
+<span id="cb314-26"><a href="正則化回帰-lasso-ridge回帰-elastic-net.html#cb314-26" tabindex="-1"></a><span class="co">#&gt; EmploymentSinceunemployed -0.542343752</span></span>
+<span id="cb314-27"><a href="正則化回帰-lasso-ridge回帰-elastic-net.html#cb314-27" tabindex="-1"></a><span class="co">#&gt; InstallmentRate           -0.096852163</span></span>
+<span id="cb314-28"><a href="正則化回帰-lasso-ridge回帰-elastic-net.html#cb314-28" tabindex="-1"></a><span class="co">#&gt; StatusAndSexM_divorced    -0.191933913</span></span>
+<span id="cb314-29"><a href="正則化回帰-lasso-ridge回帰-elastic-net.html#cb314-29" tabindex="-1"></a><span class="co">#&gt; StatusAndSexM_married      0.075476637</span></span>
+<span id="cb314-30"><a href="正則化回帰-lasso-ridge回帰-elastic-net.html#cb314-30" tabindex="-1"></a><span class="co">#&gt; StatusAndSexM_single       0.095810739</span></span>
+<span id="cb314-31"><a href="正則化回帰-lasso-ridge回帰-elastic-net.html#cb314-31" tabindex="-1"></a><span class="co">#&gt; Guarantorsguarantor        0.819400005</span></span>
+<span id="cb314-32"><a href="正則化回帰-lasso-ridge回帰-elastic-net.html#cb314-32" tabindex="-1"></a><span class="co">#&gt; Guarantorsnone             0.005573323</span></span>
+<span id="cb314-33"><a href="正則化回帰-lasso-ridge回帰-elastic-net.html#cb314-33" tabindex="-1"></a><span class="co">#&gt; ResidenceSince             .          </span></span>
+<span id="cb314-34"><a href="正則化回帰-lasso-ridge回帰-elastic-net.html#cb314-34" tabindex="-1"></a><span class="co">#&gt; Propertylife_insurance     .          </span></span>
+<span id="cb314-35"><a href="正則化回帰-lasso-ridge回帰-elastic-net.html#cb314-35" tabindex="-1"></a><span class="co">#&gt; Propertyreal_estate        0.076516039</span></span>
+<span id="cb314-36"><a href="正則化回帰-lasso-ridge回帰-elastic-net.html#cb314-36" tabindex="-1"></a><span class="co">#&gt; Age                        0.015995247</span></span>
+<span id="cb314-37"><a href="正則化回帰-lasso-ridge回帰-elastic-net.html#cb314-37" tabindex="-1"></a><span class="co">#&gt; InstallmentPlansnone       0.525251308</span></span>
+<span id="cb314-38"><a href="正則化回帰-lasso-ridge回帰-elastic-net.html#cb314-38" tabindex="-1"></a><span class="co">#&gt; InstallmentPlansstore      .          </span></span>
+<span id="cb314-39"><a href="正則化回帰-lasso-ridge回帰-elastic-net.html#cb314-39" tabindex="-1"></a><span class="co">#&gt; Housingown                 .          </span></span>
+<span id="cb314-40"><a href="正則化回帰-lasso-ridge回帰-elastic-net.html#cb314-40" tabindex="-1"></a><span class="co">#&gt; Housingrent               -0.430797835</span></span>
+<span id="cb314-41"><a href="正則化回帰-lasso-ridge回帰-elastic-net.html#cb314-41" tabindex="-1"></a><span class="co">#&gt; NCredits                  -0.102761386</span></span>
+<span id="cb314-42"><a href="正則化回帰-lasso-ridge回帰-elastic-net.html#cb314-42" tabindex="-1"></a><span class="co">#&gt; Jobskilled                 .          </span></span>
+<span id="cb314-43"><a href="正則化回帰-lasso-ridge回帰-elastic-net.html#cb314-43" tabindex="-1"></a><span class="co">#&gt; Jobunemployed              .          </span></span>
+<span id="cb314-44"><a href="正則化回帰-lasso-ridge回帰-elastic-net.html#cb314-44" tabindex="-1"></a><span class="co">#&gt; Jobunskilled               .          </span></span>
+<span id="cb314-45"><a href="正則化回帰-lasso-ridge回帰-elastic-net.html#cb314-45" tabindex="-1"></a><span class="co">#&gt; NPeopleMain                .          </span></span>
+<span id="cb314-46"><a href="正則化回帰-lasso-ridge回帰-elastic-net.html#cb314-46" tabindex="-1"></a><span class="co">#&gt; Phoneyes                   0.083489661</span></span>
+<span id="cb314-47"><a href="正則化回帰-lasso-ridge回帰-elastic-net.html#cb314-47" tabindex="-1"></a><span class="co">#&gt; ForeignWorkeryes          -0.303151094</span></span></code></pre></div>
+</div>
+</div>
+<div id="補足-glmに対する変数選択の代替的方法" class="section level2 hasAnchor" number="6.5">
+<h2><span class="header-section-number">6.5</span> 補足: GLMに対する変数選択の代替的方法<a href="正則化回帰-lasso-ridge回帰-elastic-net.html#補足-glmに対する変数選択の代替的方法" class="anchor-section" aria-label="Anchor link to header"></a></h2>
+<p>最後に, 正則化回帰ではないが, Rを使った,
+一般化線形モデル (GLM) に対する変数選択の代替的方法について紹介する.
+ここでは, 上でも使用した白ワインデータを使い, ワインの品質を目的変数として
+デフォルトである線形回帰 (family = “gaussian”) をそのまま使用する.</p>
+<pre><code>- glm() + step()の利用
+- step(): Choose a model by AIC in a Stepwise Algorithm
+- ← AIC基準を使い, ステップワイズによりモデル選択
+- glm()では, NAはデフォルトで除去されるが, step()では行数が変化したとしてエラー
+- → 欠損値(NA)の事前処理が必要; 除去 or 補間</code></pre>
+<div class="sourceCode" id="cb316"><pre class="sourceCode r"><code class="sourceCode r"><span id="cb316-1"><a href="正則化回帰-lasso-ridge回帰-elastic-net.html#cb316-1" tabindex="-1"></a><span class="co"># 例. ワインデータ</span></span>
+<span id="cb316-2"><a href="正則化回帰-lasso-ridge回帰-elastic-net.html#cb316-2" tabindex="-1"></a><span class="co"># wine &lt;- read.csv(&quot;winequality-white.csv&quot;, sep = &quot;;&quot;, skip = 1, header = T)</span></span>
+<span id="cb316-3"><a href="正則化回帰-lasso-ridge回帰-elastic-net.html#cb316-3" tabindex="-1"></a>res_glm <span class="ot">&lt;-</span> <span class="fu">glm</span>(quality <span class="sc">~</span> ., <span class="at">data =</span> wine[train, ])</span>
+<span id="cb316-4"><a href="正則化回帰-lasso-ridge回帰-elastic-net.html#cb316-4" tabindex="-1"></a>res_step <span class="ot">&lt;-</span> <span class="fu">step</span>(res_glm)</span>
+<span id="cb316-5"><a href="正則化回帰-lasso-ridge回帰-elastic-net.html#cb316-5" tabindex="-1"></a><span class="co">#&gt; Start:  AIC=6816.15</span></span>
+<span id="cb316-6"><a href="正則化回帰-lasso-ridge回帰-elastic-net.html#cb316-6" tabindex="-1"></a><span class="co">#&gt; quality ~ fixed.acidity + volatile.acidity + citric.acid + residual.sugar + </span></span>
+<span id="cb316-7"><a href="正則化回帰-lasso-ridge回帰-elastic-net.html#cb316-7" tabindex="-1"></a><span class="co">#&gt;     chlorides + free.sulfur.dioxide + total.sulfur.dioxide + </span></span>
+<span id="cb316-8"><a href="正則化回帰-lasso-ridge回帰-elastic-net.html#cb316-8" tabindex="-1"></a><span class="co">#&gt;     density + pH + sulphates + alcohol</span></span>
+<span id="cb316-9"><a href="正則化回帰-lasso-ridge回帰-elastic-net.html#cb316-9" tabindex="-1"></a><span class="co">#&gt; </span></span>
+<span id="cb316-10"><a href="正則化回帰-lasso-ridge回帰-elastic-net.html#cb316-10" tabindex="-1"></a><span class="co">#&gt;                        Df Deviance    AIC</span></span>
+<span id="cb316-11"><a href="正則化回帰-lasso-ridge回帰-elastic-net.html#cb316-11" tabindex="-1"></a><span class="co">#&gt; - chlorides             1   1689.0 6814.2</span></span>
+<span id="cb316-12"><a href="正則化回帰-lasso-ridge回帰-elastic-net.html#cb316-12" tabindex="-1"></a><span class="co">#&gt; - citric.acid           1   1689.0 6814.2</span></span>
+<span id="cb316-13"><a href="正則化回帰-lasso-ridge回帰-elastic-net.html#cb316-13" tabindex="-1"></a><span class="co">#&gt; - total.sulfur.dioxide  1   1689.0 6814.2</span></span>
+<span id="cb316-14"><a href="正則化回帰-lasso-ridge回帰-elastic-net.html#cb316-14" tabindex="-1"></a><span class="co">#&gt; &lt;none&gt;                      1689.0 6816.1</span></span>
+<span id="cb316-15"><a href="正則化回帰-lasso-ridge回帰-elastic-net.html#cb316-15" tabindex="-1"></a><span class="co">#&gt; - fixed.acidity         1   1692.2 6819.9</span></span>
+<span id="cb316-16"><a href="正則化回帰-lasso-ridge回帰-elastic-net.html#cb316-16" tabindex="-1"></a><span class="co">#&gt; - free.sulfur.dioxide   1   1698.8 6831.6</span></span>
+<span id="cb316-17"><a href="正則化回帰-lasso-ridge回帰-elastic-net.html#cb316-17" tabindex="-1"></a><span class="co">#&gt; - sulphates             1   1702.7 6838.4</span></span>
+<span id="cb316-18"><a href="正則化回帰-lasso-ridge回帰-elastic-net.html#cb316-18" tabindex="-1"></a><span class="co">#&gt; - pH                    1   1703.6 6840.0</span></span>
+<span id="cb316-19"><a href="正則化回帰-lasso-ridge回帰-elastic-net.html#cb316-19" tabindex="-1"></a><span class="co">#&gt; - alcohol               1   1716.7 6863.0</span></span>
+<span id="cb316-20"><a href="正則化回帰-lasso-ridge回帰-elastic-net.html#cb316-20" tabindex="-1"></a><span class="co">#&gt; - density               1   1717.8 6864.9</span></span>
+<span id="cb316-21"><a href="正則化回帰-lasso-ridge回帰-elastic-net.html#cb316-21" tabindex="-1"></a><span class="co">#&gt; - residual.sugar        1   1741.5 6906.0</span></span>
+<span id="cb316-22"><a href="正則化回帰-lasso-ridge回帰-elastic-net.html#cb316-22" tabindex="-1"></a><span class="co">#&gt; - volatile.acidity      1   1779.9 6971.5</span></span>
+<span id="cb316-23"><a href="正則化回帰-lasso-ridge回帰-elastic-net.html#cb316-23" tabindex="-1"></a><span class="co">#&gt; </span></span>
+<span id="cb316-24"><a href="正則化回帰-lasso-ridge回帰-elastic-net.html#cb316-24" tabindex="-1"></a><span class="co">#&gt; Step:  AIC=6814.19</span></span>
+<span id="cb316-25"><a href="正則化回帰-lasso-ridge回帰-elastic-net.html#cb316-25" tabindex="-1"></a><span class="co">#&gt; quality ~ fixed.acidity + volatile.acidity + citric.acid + residual.sugar + </span></span>
+<span id="cb316-26"><a href="正則化回帰-lasso-ridge回帰-elastic-net.html#cb316-26" tabindex="-1"></a><span class="co">#&gt;     free.sulfur.dioxide + total.sulfur.dioxide + density + pH + </span></span>
+<span id="cb316-27"><a href="正則化回帰-lasso-ridge回帰-elastic-net.html#cb316-27" tabindex="-1"></a><span class="co">#&gt;     sulphates + alcohol</span></span>
+<span id="cb316-28"><a href="正則化回帰-lasso-ridge回帰-elastic-net.html#cb316-28" tabindex="-1"></a><span class="co">#&gt; </span></span>
+<span id="cb316-29"><a href="正則化回帰-lasso-ridge回帰-elastic-net.html#cb316-29" tabindex="-1"></a><span class="co">#&gt;                        Df Deviance    AIC</span></span>
+<span id="cb316-30"><a href="正則化回帰-lasso-ridge回帰-elastic-net.html#cb316-30" tabindex="-1"></a><span class="co">#&gt; - total.sulfur.dioxide  1   1689.0 6812.2</span></span>
+<span id="cb316-31"><a href="正則化回帰-lasso-ridge回帰-elastic-net.html#cb316-31" tabindex="-1"></a><span class="co">#&gt; - citric.acid           1   1689.0 6812.3</span></span>
+<span id="cb316-32"><a href="正則化回帰-lasso-ridge回帰-elastic-net.html#cb316-32" tabindex="-1"></a><span class="co">#&gt; &lt;none&gt;                      1689.0 6814.2</span></span>
+<span id="cb316-33"><a href="正則化回帰-lasso-ridge回帰-elastic-net.html#cb316-33" tabindex="-1"></a><span class="co">#&gt; - fixed.acidity         1   1692.4 6818.3</span></span>
+<span id="cb316-34"><a href="正則化回帰-lasso-ridge回帰-elastic-net.html#cb316-34" tabindex="-1"></a><span class="co">#&gt; - free.sulfur.dioxide   1   1698.8 6829.7</span></span>
+<span id="cb316-35"><a href="正則化回帰-lasso-ridge回帰-elastic-net.html#cb316-35" tabindex="-1"></a><span class="co">#&gt; - sulphates             1   1702.8 6836.5</span></span>
+<span id="cb316-36"><a href="正則化回帰-lasso-ridge回帰-elastic-net.html#cb316-36" tabindex="-1"></a><span class="co">#&gt; - pH                    1   1704.2 6839.0</span></span>
+<span id="cb316-37"><a href="正則化回帰-lasso-ridge回帰-elastic-net.html#cb316-37" tabindex="-1"></a><span class="co">#&gt; - alcohol               1   1716.8 6861.2</span></span>
+<span id="cb316-38"><a href="正則化回帰-lasso-ridge回帰-elastic-net.html#cb316-38" tabindex="-1"></a><span class="co">#&gt; - density               1   1718.7 6864.6</span></span>
+<span id="cb316-39"><a href="正則化回帰-lasso-ridge回帰-elastic-net.html#cb316-39" tabindex="-1"></a><span class="co">#&gt; - residual.sugar        1   1743.8 6908.0</span></span>
+<span id="cb316-40"><a href="正則化回帰-lasso-ridge回帰-elastic-net.html#cb316-40" tabindex="-1"></a><span class="co">#&gt; - volatile.acidity      1   1781.7 6972.5</span></span>
+<span id="cb316-41"><a href="正則化回帰-lasso-ridge回帰-elastic-net.html#cb316-41" tabindex="-1"></a><span class="co">#&gt; </span></span>
+<span id="cb316-42"><a href="正則化回帰-lasso-ridge回帰-elastic-net.html#cb316-42" tabindex="-1"></a><span class="co">#&gt; Step:  AIC=6812.25</span></span>
+<span id="cb316-43"><a href="正則化回帰-lasso-ridge回帰-elastic-net.html#cb316-43" tabindex="-1"></a><span class="co">#&gt; quality ~ fixed.acidity + volatile.acidity + citric.acid + residual.sugar + </span></span>
+<span id="cb316-44"><a href="正則化回帰-lasso-ridge回帰-elastic-net.html#cb316-44" tabindex="-1"></a><span class="co">#&gt;     free.sulfur.dioxide + density + pH + sulphates + alcohol</span></span>
+<span id="cb316-45"><a href="正則化回帰-lasso-ridge回帰-elastic-net.html#cb316-45" tabindex="-1"></a><span class="co">#&gt; </span></span>
+<span id="cb316-46"><a href="正則化回帰-lasso-ridge回帰-elastic-net.html#cb316-46" tabindex="-1"></a><span class="co">#&gt;                       Df Deviance    AIC</span></span>
+<span id="cb316-47"><a href="正則化回帰-lasso-ridge回帰-elastic-net.html#cb316-47" tabindex="-1"></a><span class="co">#&gt; - citric.acid          1   1689.1 6810.3</span></span>
+<span id="cb316-48"><a href="正則化回帰-lasso-ridge回帰-elastic-net.html#cb316-48" tabindex="-1"></a><span class="co">#&gt; &lt;none&gt;                     1689.0 6812.2</span></span>
+<span id="cb316-49"><a href="正則化回帰-lasso-ridge回帰-elastic-net.html#cb316-49" tabindex="-1"></a><span class="co">#&gt; - fixed.acidity        1   1692.5 6816.3</span></span>
+<span id="cb316-50"><a href="正則化回帰-lasso-ridge回帰-elastic-net.html#cb316-50" tabindex="-1"></a><span class="co">#&gt; - sulphates            1   1702.8 6834.6</span></span>
+<span id="cb316-51"><a href="正則化回帰-lasso-ridge回帰-elastic-net.html#cb316-51" tabindex="-1"></a><span class="co">#&gt; - free.sulfur.dioxide  1   1702.8 6834.6</span></span>
+<span id="cb316-52"><a href="正則化回帰-lasso-ridge回帰-elastic-net.html#cb316-52" tabindex="-1"></a><span class="co">#&gt; - pH                   1   1704.2 6837.1</span></span>
+<span id="cb316-53"><a href="正則化回帰-lasso-ridge回帰-elastic-net.html#cb316-53" tabindex="-1"></a><span class="co">#&gt; - alcohol              1   1716.8 6859.3</span></span>
+<span id="cb316-54"><a href="正則化回帰-lasso-ridge回帰-elastic-net.html#cb316-54" tabindex="-1"></a><span class="co">#&gt; - density              1   1719.8 6864.5</span></span>
+<span id="cb316-55"><a href="正則化回帰-lasso-ridge回帰-elastic-net.html#cb316-55" tabindex="-1"></a><span class="co">#&gt; - residual.sugar       1   1744.5 6907.2</span></span>
+<span id="cb316-56"><a href="正則化回帰-lasso-ridge回帰-elastic-net.html#cb316-56" tabindex="-1"></a><span class="co">#&gt; - volatile.acidity     1   1786.9 6979.3</span></span>
+<span id="cb316-57"><a href="正則化回帰-lasso-ridge回帰-elastic-net.html#cb316-57" tabindex="-1"></a><span class="co">#&gt; </span></span>
+<span id="cb316-58"><a href="正則化回帰-lasso-ridge回帰-elastic-net.html#cb316-58" tabindex="-1"></a><span class="co">#&gt; Step:  AIC=6810.33</span></span>
+<span id="cb316-59"><a href="正則化回帰-lasso-ridge回帰-elastic-net.html#cb316-59" tabindex="-1"></a><span class="co">#&gt; quality ~ fixed.acidity + volatile.acidity + residual.sugar + </span></span>
+<span id="cb316-60"><a href="正則化回帰-lasso-ridge回帰-elastic-net.html#cb316-60" tabindex="-1"></a><span class="co">#&gt;     free.sulfur.dioxide + density + pH + sulphates + alcohol</span></span>
+<span id="cb316-61"><a href="正則化回帰-lasso-ridge回帰-elastic-net.html#cb316-61" tabindex="-1"></a><span class="co">#&gt; </span></span>
+<span id="cb316-62"><a href="正則化回帰-lasso-ridge回帰-elastic-net.html#cb316-62" tabindex="-1"></a><span class="co">#&gt;                       Df Deviance    AIC</span></span>
+<span id="cb316-63"><a href="正則化回帰-lasso-ridge回帰-elastic-net.html#cb316-63" tabindex="-1"></a><span class="co">#&gt; &lt;none&gt;                     1689.1 6810.3</span></span>
+<span id="cb316-64"><a href="正則化回帰-lasso-ridge回帰-elastic-net.html#cb316-64" tabindex="-1"></a><span class="co">#&gt; - fixed.acidity        1   1692.5 6814.3</span></span>
+<span id="cb316-65"><a href="正則化回帰-lasso-ridge回帰-elastic-net.html#cb316-65" tabindex="-1"></a><span class="co">#&gt; - sulphates            1   1702.8 6832.6</span></span>
+<span id="cb316-66"><a href="正則化回帰-lasso-ridge回帰-elastic-net.html#cb316-66" tabindex="-1"></a><span class="co">#&gt; - free.sulfur.dioxide  1   1702.8 6832.7</span></span>
+<span id="cb316-67"><a href="正則化回帰-lasso-ridge回帰-elastic-net.html#cb316-67" tabindex="-1"></a><span class="co">#&gt; - pH                   1   1704.6 6835.8</span></span>
+<span id="cb316-68"><a href="正則化回帰-lasso-ridge回帰-elastic-net.html#cb316-68" tabindex="-1"></a><span class="co">#&gt; - alcohol              1   1717.0 6857.5</span></span>
+<span id="cb316-69"><a href="正則化回帰-lasso-ridge回帰-elastic-net.html#cb316-69" tabindex="-1"></a><span class="co">#&gt; - density              1   1720.5 6863.6</span></span>
+<span id="cb316-70"><a href="正則化回帰-lasso-ridge回帰-elastic-net.html#cb316-70" tabindex="-1"></a><span class="co">#&gt; - residual.sugar       1   1745.2 6906.4</span></span>
+<span id="cb316-71"><a href="正則化回帰-lasso-ridge回帰-elastic-net.html#cb316-71" tabindex="-1"></a><span class="co">#&gt; - volatile.acidity     1   1789.3 6981.3</span></span>
+<span id="cb316-72"><a href="正則化回帰-lasso-ridge回帰-elastic-net.html#cb316-72" tabindex="-1"></a><span class="fu">summary</span>(res_step)</span>
+<span id="cb316-73"><a href="正則化回帰-lasso-ridge回帰-elastic-net.html#cb316-73" tabindex="-1"></a><span class="co">#&gt; </span></span>
+<span id="cb316-74"><a href="正則化回帰-lasso-ridge回帰-elastic-net.html#cb316-74" tabindex="-1"></a><span class="co">#&gt; Call:</span></span>
+<span id="cb316-75"><a href="正則化回帰-lasso-ridge回帰-elastic-net.html#cb316-75" tabindex="-1"></a><span class="co">#&gt; glm(formula = quality ~ fixed.acidity + volatile.acidity + residual.sugar + </span></span>
+<span id="cb316-76"><a href="正則化回帰-lasso-ridge回帰-elastic-net.html#cb316-76" tabindex="-1"></a><span class="co">#&gt;     free.sulfur.dioxide + density + pH + sulphates + alcohol, </span></span>
+<span id="cb316-77"><a href="正則化回帰-lasso-ridge回帰-elastic-net.html#cb316-77" tabindex="-1"></a><span class="co">#&gt;     data = wine[train, ])</span></span>
+<span id="cb316-78"><a href="正則化回帰-lasso-ridge回帰-elastic-net.html#cb316-78" tabindex="-1"></a><span class="co">#&gt; </span></span>
+<span id="cb316-79"><a href="正則化回帰-lasso-ridge回帰-elastic-net.html#cb316-79" tabindex="-1"></a><span class="co">#&gt; Coefficients:</span></span>
+<span id="cb316-80"><a href="正則化回帰-lasso-ridge回帰-elastic-net.html#cb316-80" tabindex="-1"></a><span class="co">#&gt;                       Estimate Std. Error t value Pr(&gt;|t|)    </span></span>
+<span id="cb316-81"><a href="正則化回帰-lasso-ridge回帰-elastic-net.html#cb316-81" tabindex="-1"></a><span class="co">#&gt; (Intercept)          1.615e+02  2.139e+01   7.549 5.77e-14 ***</span></span>
+<span id="cb316-82"><a href="正則化回帰-lasso-ridge回帰-elastic-net.html#cb316-82" tabindex="-1"></a><span class="co">#&gt; fixed.acidity        6.060e-02  2.473e-02   2.450   0.0143 *  </span></span>
+<span id="cb316-83"><a href="正則化回帰-lasso-ridge回帰-elastic-net.html#cb316-83" tabindex="-1"></a><span class="co">#&gt; volatile.acidity    -1.839e+00  1.380e-01 -13.323  &lt; 2e-16 ***</span></span>
+<span id="cb316-84"><a href="正則化回帰-lasso-ridge回帰-elastic-net.html#cb316-84" tabindex="-1"></a><span class="co">#&gt; residual.sugar       8.868e-02  8.897e-03   9.968  &lt; 2e-16 ***</span></span>
+<span id="cb316-85"><a href="正則化回帰-lasso-ridge回帰-elastic-net.html#cb316-85" tabindex="-1"></a><span class="co">#&gt; free.sulfur.dioxide  4.336e-03  8.785e-04   4.936 8.42e-07 ***</span></span>
+<span id="cb316-86"><a href="正則化回帰-lasso-ridge回帰-elastic-net.html#cb316-86" tabindex="-1"></a><span class="co">#&gt; density             -1.617e+02  2.168e+01  -7.459 1.14e-13 ***</span></span>
+<span id="cb316-87"><a href="正則化回帰-lasso-ridge回帰-elastic-net.html#cb316-87" tabindex="-1"></a><span class="co">#&gt; pH                   6.706e-01  1.279e-01   5.242 1.69e-07 ***</span></span>
+<span id="cb316-88"><a href="正則化回帰-lasso-ridge回帰-elastic-net.html#cb316-88" tabindex="-1"></a><span class="co">#&gt; sulphates            6.297e-01  1.278e-01   4.926 8.83e-07 ***</span></span>
+<span id="cb316-89"><a href="正則化回帰-lasso-ridge回帰-elastic-net.html#cb316-89" tabindex="-1"></a><span class="co">#&gt; alcohol              1.996e-01  2.839e-02   7.030 2.54e-12 ***</span></span>
+<span id="cb316-90"><a href="正則化回帰-lasso-ridge回帰-elastic-net.html#cb316-90" tabindex="-1"></a><span class="co">#&gt; ---</span></span>
+<span id="cb316-91"><a href="正則化回帰-lasso-ridge回帰-elastic-net.html#cb316-91" tabindex="-1"></a><span class="co">#&gt; Signif. codes:  0 &#39;***&#39; 0.001 &#39;**&#39; 0.01 &#39;*&#39; 0.05 &#39;.&#39; 0.1 &#39; &#39; 1</span></span>
+<span id="cb316-92"><a href="正則化回帰-lasso-ridge回帰-elastic-net.html#cb316-92" tabindex="-1"></a><span class="co">#&gt; </span></span>
+<span id="cb316-93"><a href="正則化回帰-lasso-ridge回帰-elastic-net.html#cb316-93" tabindex="-1"></a><span class="co">#&gt; (Dispersion parameter for gaussian family taken to be 0.5647177)</span></span>
+<span id="cb316-94"><a href="正則化回帰-lasso-ridge回帰-elastic-net.html#cb316-94" tabindex="-1"></a><span class="co">#&gt; </span></span>
+<span id="cb316-95"><a href="正則化回帰-lasso-ridge回帰-elastic-net.html#cb316-95" tabindex="-1"></a><span class="co">#&gt;     Null deviance: 2396.8  on 2999  degrees of freedom</span></span>
+<span id="cb316-96"><a href="正則化回帰-lasso-ridge回帰-elastic-net.html#cb316-96" tabindex="-1"></a><span class="co">#&gt; Residual deviance: 1689.1  on 2991  degrees of freedom</span></span>
+<span id="cb316-97"><a href="正則化回帰-lasso-ridge回帰-elastic-net.html#cb316-97" tabindex="-1"></a><span class="co">#&gt; AIC: 6810.3</span></span>
+<span id="cb316-98"><a href="正則化回帰-lasso-ridge回帰-elastic-net.html#cb316-98" tabindex="-1"></a><span class="co">#&gt; </span></span>
+<span id="cb316-99"><a href="正則化回帰-lasso-ridge回帰-elastic-net.html#cb316-99" tabindex="-1"></a><span class="co">#&gt; Number of Fisher Scoring iterations: 2</span></span></code></pre></div>
+
+</div>
+</div>
+            </section>
+
+          </div>
+        </div>
+      </div>
+<a href="一般化加法モデル-gam.html" class="navigation navigation-prev " aria-label="Previous page"><i class="fa fa-angle-left"></i></a>
+<a href="判別分析.html" class="navigation navigation-next " aria-label="Next page"><i class="fa fa-angle-right"></i></a>
+    </div>
+  </div>
+<script src="libs/gitbook-2.6.7/js/app.min.js"></script>
+<script src="libs/gitbook-2.6.7/js/clipboard.min.js"></script>
+<script src="libs/gitbook-2.6.7/js/plugin-search.js"></script>
+<script src="libs/gitbook-2.6.7/js/plugin-sharing.js"></script>
+<script src="libs/gitbook-2.6.7/js/plugin-fontsettings.js"></script>
+<script src="libs/gitbook-2.6.7/js/plugin-bookdown.js"></script>
+<script src="libs/gitbook-2.6.7/js/jquery.highlight.js"></script>
+<script src="libs/gitbook-2.6.7/js/plugin-clipboard.js"></script>
+<script>
+gitbook.require(["gitbook"], function(gitbook) {
+gitbook.start({
+"sharing": {
+"github": false,
+"facebook": true,
+"twitter": true,
+"linkedin": false,
+"weibo": false,
+"instapaper": false,
+"vk": false,
+"whatsapp": false,
+"all": ["facebook", "twitter", "linkedin", "weibo", "instapaper"]
+},
+"fontsettings": {
+"theme": "white",
+"family": "sans",
+"size": 2
+},
+"edit": {
+"link": null,
+"text": null
+},
+"history": {
+"link": null,
+"text": null
+},
+"view": {
+"link": null,
+"text": null
+},
+"download": null,
+"search": {
+"engine": "fuse",
+"options": null
+},
+"toc": {
+"collapse": "subsection"
+}
+});
+});
+</script>
+
+<!-- dynamically load mathjax for compatibility with self-contained -->
+<script>
+  (function () {
+    var script = document.createElement("script");
+    script.type = "text/javascript";
+    var src = "true";
+    if (src === "" || src === "true") src = "https://cdnjs.cloudflare.com/ajax/libs/mathjax/2.7.9/latest.js?config=TeX-MML-AM_CHTML";
+    if (location.protocol !== "file:")
+      if (/^https?:/.test(src))
+        src = src.replace(/^https?:/, '');
+    script.src = src;
+    document.getElementsByTagName("head")[0].appendChild(script);
+  })();
+</script>
+</body>
+
+</html>
