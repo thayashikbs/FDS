@@ -1,0 +1,461 @@
+<!DOCTYPE html>
+<html lang="" xml:lang="">
+<head>
+
+  <meta charset="utf-8" />
+  <meta http-equiv="X-UA-Compatible" content="IE=edge" />
+  <title>金融データサイエンス</title>
+  <meta name="description" content="金融データサイエンス" />
+  <meta name="generator" content="bookdown 0.37 and GitBook 2.6.7" />
+
+  <meta property="og:title" content="金融データサイエンス" />
+  <meta property="og:type" content="book" />
+  
+  
+  
+
+  <meta name="twitter:card" content="summary" />
+  <meta name="twitter:title" content="金融データサイエンス" />
+  
+  
+  
+
+<meta name="author" content="林 高樹" />
+
+
+
+  <meta name="viewport" content="width=device-width, initial-scale=1" />
+  <meta name="apple-mobile-web-app-capable" content="yes" />
+  <meta name="apple-mobile-web-app-status-bar-style" content="black" />
+  
+  
+
+<link rel="next" href="r言語の基本.html"/>
+<script src="libs/jquery-3.6.1/jquery-3.6.1.min.js"></script>
+<script src="https://cdn.jsdelivr.net/npm/fuse.js@6.4.6/dist/fuse.min.js"></script>
+<link href="libs/gitbook-2.6.7/css/style.css" rel="stylesheet" />
+<link href="libs/gitbook-2.6.7/css/plugin-table.css" rel="stylesheet" />
+<link href="libs/gitbook-2.6.7/css/plugin-bookdown.css" rel="stylesheet" />
+<link href="libs/gitbook-2.6.7/css/plugin-highlight.css" rel="stylesheet" />
+<link href="libs/gitbook-2.6.7/css/plugin-search.css" rel="stylesheet" />
+<link href="libs/gitbook-2.6.7/css/plugin-fontsettings.css" rel="stylesheet" />
+<link href="libs/gitbook-2.6.7/css/plugin-clipboard.css" rel="stylesheet" />
+
+
+
+
+
+
+
+
+<link href="libs/anchor-sections-1.1.0/anchor-sections.css" rel="stylesheet" />
+<link href="libs/anchor-sections-1.1.0/anchor-sections-hash.css" rel="stylesheet" />
+<script src="libs/anchor-sections-1.1.0/anchor-sections.js"></script>
+
+
+<style type="text/css">
+pre > code.sourceCode { white-space: pre; position: relative; }
+pre > code.sourceCode > span { line-height: 1.25; }
+pre > code.sourceCode > span:empty { height: 1.2em; }
+.sourceCode { overflow: visible; }
+code.sourceCode > span { color: inherit; text-decoration: inherit; }
+pre.sourceCode { margin: 0; }
+@media screen {
+div.sourceCode { overflow: auto; }
+}
+@media print {
+pre > code.sourceCode { white-space: pre-wrap; }
+pre > code.sourceCode > span { text-indent: -5em; padding-left: 5em; }
+}
+pre.numberSource code
+  { counter-reset: source-line 0; }
+pre.numberSource code > span
+  { position: relative; left: -4em; counter-increment: source-line; }
+pre.numberSource code > span > a:first-child::before
+  { content: counter(source-line);
+    position: relative; left: -1em; text-align: right; vertical-align: baseline;
+    border: none; display: inline-block;
+    -webkit-touch-callout: none; -webkit-user-select: none;
+    -khtml-user-select: none; -moz-user-select: none;
+    -ms-user-select: none; user-select: none;
+    padding: 0 4px; width: 4em;
+    color: #aaaaaa;
+  }
+pre.numberSource { margin-left: 3em; border-left: 1px solid #aaaaaa;  padding-left: 4px; }
+div.sourceCode
+  {   }
+@media screen {
+pre > code.sourceCode > span > a:first-child::before { text-decoration: underline; }
+}
+code span.al { color: #ff0000; font-weight: bold; } /* Alert */
+code span.an { color: #60a0b0; font-weight: bold; font-style: italic; } /* Annotation */
+code span.at { color: #7d9029; } /* Attribute */
+code span.bn { color: #40a070; } /* BaseN */
+code span.bu { color: #008000; } /* BuiltIn */
+code span.cf { color: #007020; font-weight: bold; } /* ControlFlow */
+code span.ch { color: #4070a0; } /* Char */
+code span.cn { color: #880000; } /* Constant */
+code span.co { color: #60a0b0; font-style: italic; } /* Comment */
+code span.cv { color: #60a0b0; font-weight: bold; font-style: italic; } /* CommentVar */
+code span.do { color: #ba2121; font-style: italic; } /* Documentation */
+code span.dt { color: #902000; } /* DataType */
+code span.dv { color: #40a070; } /* DecVal */
+code span.er { color: #ff0000; font-weight: bold; } /* Error */
+code span.ex { } /* Extension */
+code span.fl { color: #40a070; } /* Float */
+code span.fu { color: #06287e; } /* Function */
+code span.im { color: #008000; font-weight: bold; } /* Import */
+code span.in { color: #60a0b0; font-weight: bold; font-style: italic; } /* Information */
+code span.kw { color: #007020; font-weight: bold; } /* Keyword */
+code span.op { color: #666666; } /* Operator */
+code span.ot { color: #007020; } /* Other */
+code span.pp { color: #bc7a00; } /* Preprocessor */
+code span.sc { color: #4070a0; } /* SpecialChar */
+code span.ss { color: #bb6688; } /* SpecialString */
+code span.st { color: #4070a0; } /* String */
+code span.va { color: #19177c; } /* Variable */
+code span.vs { color: #4070a0; } /* VerbatimString */
+code span.wa { color: #60a0b0; font-weight: bold; font-style: italic; } /* Warning */
+</style>
+
+<style type="text/css">
+  
+  div.hanging-indent{margin-left: 1.5em; text-indent: -1.5em;}
+</style>
+
+</head>
+
+<body>
+
+
+
+  <div class="book without-animation with-summary font-size-2 font-family-1" data-basepath=".">
+
+    <div class="book-summary">
+      <nav role="navigation">
+
+<ul class="summary">
+<li class="chapter" data-level="1" data-path="index.html"><a href="index.html"><i class="fa fa-check"></i><b>1</b> はじめに</a>
+<ul>
+<li class="chapter" data-level="1.1" data-path="index.html"><a href="index.html#コースの目的"><i class="fa fa-check"></i><b>1.1</b> コースの目的</a></li>
+<li class="chapter" data-level="1.2" data-path="index.html"><a href="index.html#統計学統計的手法の学習について"><i class="fa fa-check"></i><b>1.2</b> 統計学/統計的手法の学習について</a>
+<ul>
+<li class="chapter" data-level="" data-path="index.html"><a href="index.html#学習の目標"><i class="fa fa-check"></i>学習の目標</a></li>
+<li class="chapter" data-level="" data-path="index.html"><a href="index.html#統計学統計的手法の学習方法"><i class="fa fa-check"></i>統計学/統計的手法の学習方法</a></li>
+<li class="chapter" data-level="" data-path="index.html"><a href="index.html#統計学統計的手法の学習ステップ"><i class="fa fa-check"></i>統計学/統計的手法の学習ステップ</a></li>
+</ul></li>
+<li class="chapter" data-level="1.3" data-path="index.html"><a href="index.html#金融ビジネス応用における統計学の最近の趨勢"><i class="fa fa-check"></i><b>1.3</b> 金融・ビジネス応用における統計学の最近の趨勢</a></li>
+<li class="chapter" data-level="1.4" data-path="index.html"><a href="index.html#本書内の記載の注意点"><i class="fa fa-check"></i><b>1.4</b> 本書内の記載の注意点</a></li>
+</ul></li>
+<li class="chapter" data-level="2" data-path="r言語の基本.html"><a href="r言語の基本.html"><i class="fa fa-check"></i><b>2</b> R言語の基本</a>
+<ul>
+<li class="chapter" data-level="2.1" data-path="r言語の基本.html"><a href="r言語の基本.html#rの基本プログラミング"><i class="fa fa-check"></i><b>2.1</b> Rの基本プログラミング</a>
+<ul>
+<li class="chapter" data-level="" data-path="r言語の基本.html"><a href="r言語の基本.html#生成ai利用に関する注意事項"><i class="fa fa-check"></i>生成AI利用に関する注意事項</a></li>
+<li class="chapter" data-level="2.1.1" data-path="r言語の基本.html"><a href="r言語の基本.html#基本操作"><i class="fa fa-check"></i><b>2.1.1</b> 基本操作</a></li>
+<li class="chapter" data-level="2.1.2" data-path="r言語の基本.html"><a href="r言語の基本.html#基本構文"><i class="fa fa-check"></i><b>2.1.2</b> 基本構文</a></li>
+<li class="chapter" data-level="2.1.3" data-path="r言語の基本.html"><a href="r言語の基本.html#自作関数"><i class="fa fa-check"></i><b>2.1.3</b> 自作関数</a></li>
+<li class="chapter" data-level="2.1.4" data-path="r言語の基本.html"><a href="r言語の基本.html#パッケージのインストール-読み込み"><i class="fa fa-check"></i><b>2.1.4</b> パッケージのインストール &amp; 読み込み</a></li>
+<li class="chapter" data-level="2.1.5" data-path="r言語の基本.html"><a href="r言語の基本.html#ヘルプ"><i class="fa fa-check"></i><b>2.1.5</b> ヘルプ</a></li>
+</ul></li>
+<li class="chapter" data-level="2.2" data-path="r言語の基本.html"><a href="r言語の基本.html#データの型や構造"><i class="fa fa-check"></i><b>2.2</b> データの型や構造</a>
+<ul>
+<li class="chapter" data-level="2.2.1" data-path="r言語の基本.html"><a href="r言語の基本.html#データの値の種類-データ型"><i class="fa fa-check"></i><b>2.2.1</b> データの値の種類 (“データ型”)</a></li>
+<li class="chapter" data-level="2.2.2" data-path="r言語の基本.html"><a href="r言語の基本.html#データの配列の仕方-データ構造"><i class="fa fa-check"></i><b>2.2.2</b> データの配列の仕方 (“データ構造”)</a></li>
+<li class="chapter" data-level="2.2.3" data-path="r言語の基本.html"><a href="r言語の基本.html#ベクトル"><i class="fa fa-check"></i><b>2.2.3</b> ベクトル</a></li>
+<li class="chapter" data-level="2.2.4" data-path="r言語の基本.html"><a href="r言語の基本.html#行列"><i class="fa fa-check"></i><b>2.2.4</b> 行列</a></li>
+<li class="chapter" data-level="2.2.5" data-path="r言語の基本.html"><a href="r言語の基本.html#リスト"><i class="fa fa-check"></i><b>2.2.5</b> リスト</a></li>
+<li class="chapter" data-level="2.2.6" data-path="r言語の基本.html"><a href="r言語の基本.html#データフレーム"><i class="fa fa-check"></i><b>2.2.6</b> データフレーム</a></li>
+</ul></li>
+<li class="chapter" data-level="2.3" data-path="r言語の基本.html"><a href="r言語の基本.html#データの操作演算"><i class="fa fa-check"></i><b>2.3</b> データの操作・演算</a>
+<ul>
+<li class="chapter" data-level="2.3.1" data-path="r言語の基本.html"><a href="r言語の基本.html#ベクトルの結合-ソート"><i class="fa fa-check"></i><b>2.3.1</b> ベクトルの結合, ソート</a></li>
+<li class="chapter" data-level="2.3.2" data-path="r言語の基本.html"><a href="r言語の基本.html#二項演算"><i class="fa fa-check"></i><b>2.3.2</b> 二項演算</a></li>
+<li class="chapter" data-level="2.3.3" data-path="r言語の基本.html"><a href="r言語の基本.html#論理演算"><i class="fa fa-check"></i><b>2.3.3</b> 論理演算</a></li>
+<li class="chapter" data-level="2.3.4" data-path="r言語の基本.html"><a href="r言語の基本.html#条件式"><i class="fa fa-check"></i><b>2.3.4</b> 条件式</a></li>
+<li class="chapter" data-level="2.3.5" data-path="r言語の基本.html"><a href="r言語の基本.html#行列演算"><i class="fa fa-check"></i><b>2.3.5</b> 行列演算</a></li>
+</ul></li>
+<li class="chapter" data-level="2.4" data-path="r言語の基本.html"><a href="r言語の基本.html#r関数"><i class="fa fa-check"></i><b>2.4</b> R関数</a>
+<ul>
+<li class="chapter" data-level="2.4.1" data-path="r言語の基本.html"><a href="r言語の基本.html#数学基本関数"><i class="fa fa-check"></i><b>2.4.1</b> 数学基本関数</a></li>
+<li class="chapter" data-level="2.4.2" data-path="r言語の基本.html"><a href="r言語の基本.html#基本統計量の計算"><i class="fa fa-check"></i><b>2.4.2</b> 基本統計量の計算</a></li>
+<li class="chapter" data-level="2.4.3" data-path="r言語の基本.html"><a href="r言語の基本.html#確率分布"><i class="fa fa-check"></i><b>2.4.3</b> 確率分布</a></li>
+<li class="chapter" data-level="2.4.4" data-path="r言語の基本.html"><a href="r言語の基本.html#その他便利な関数"><i class="fa fa-check"></i><b>2.4.4</b> その他便利な関数</a></li>
+</ul></li>
+<li class="chapter" data-level="2.5" data-path="r言語の基本.html"><a href="r言語の基本.html#データの可視化"><i class="fa fa-check"></i><b>2.5</b> データの可視化</a></li>
+<li class="chapter" data-level="2.6" data-path="r言語の基本.html"><a href="r言語の基本.html#ファイル入出力"><i class="fa fa-check"></i><b>2.6</b> ファイル入出力</a>
+<ul>
+<li class="chapter" data-level="2.6.1" data-path="r言語の基本.html"><a href="r言語の基本.html#テキストファイル読み込み"><i class="fa fa-check"></i><b>2.6.1</b> テキストファイル読み込み</a></li>
+<li class="chapter" data-level="2.6.2" data-path="r言語の基本.html"><a href="r言語の基本.html#テキストファイル書き出し"><i class="fa fa-check"></i><b>2.6.2</b> テキストファイル書き出し</a></li>
+</ul></li>
+<li class="chapter" data-level="2.7" data-path="r言語の基本.html"><a href="r言語の基本.html#パッケージtidyverse"><i class="fa fa-check"></i><b>2.7</b> パッケージ<code>tidyverse</code></a>
+<ul>
+<li class="chapter" data-level="2.7.1" data-path="r言語の基本.html"><a href="r言語の基本.html#q-rの初心者はtidyverseから勉強することは可能か"><i class="fa fa-check"></i><b>2.7.1</b> Q: Rの初心者は<code>tidyverse</code>から勉強することは可能か?</a></li>
+<li class="chapter" data-level="2.7.2" data-path="r言語の基本.html"><a href="r言語の基本.html#tidyverseの基本"><i class="fa fa-check"></i><b>2.7.2</b> <code>tidyverse</code>の基本</a></li>
+</ul></li>
+</ul></li>
+<li class="chapter" data-level="3" data-path="線形回帰分析.html"><a href="線形回帰分析.html"><i class="fa fa-check"></i><b>3</b> 線形回帰分析</a>
+<ul>
+<li class="chapter" data-level="3.1" data-path="線形回帰分析.html"><a href="線形回帰分析.html#重回帰分析の基本操作"><i class="fa fa-check"></i><b>3.1</b> 重回帰分析の基本操作</a>
+<ul>
+<li class="chapter" data-level="" data-path="線形回帰分析.html"><a href="線形回帰分析.html#データ1-1ルーム賃貸マンション"><i class="fa fa-check"></i>データ1: 1ルーム賃貸マンション</a></li>
+</ul></li>
+<li class="chapter" data-level="3.2" data-path="線形回帰分析.html"><a href="線形回帰分析.html#回帰分析の結果の見方と変数の選択"><i class="fa fa-check"></i><b>3.2</b> 回帰分析の結果の見方と変数の選択</a>
+<ul>
+<li class="chapter" data-level="" data-path="線形回帰分析.html"><a href="線形回帰分析.html#データ2-上場企業のpbrデータ-仮想データ"><i class="fa fa-check"></i>データ2: 上場企業のPBRデータ (仮想データ)</a></li>
+</ul></li>
+<li class="chapter" data-level="3.3" data-path="線形回帰分析.html"><a href="線形回帰分析.html#説明変数に質的変数を含む回帰"><i class="fa fa-check"></i><b>3.3</b> 説明変数に質的変数を含む回帰</a>
+<ul>
+<li class="chapter" data-level="" data-path="線形回帰分析.html"><a href="線形回帰分析.html#データセット3-高速道路事故データ"><i class="fa fa-check"></i>データセット#3: 高速道路事故データ</a></li>
+</ul></li>
+</ul></li>
+</ul>
+
+      </nav>
+    </div>
+
+    <div class="book-body">
+      <div class="body-inner">
+        <div class="book-header" role="navigation">
+          <h1>
+            <i class="fa fa-circle-o-notch fa-spin"></i><a href="./">金融データサイエンス</a>
+          </h1>
+        </div>
+
+        <div class="page-wrapper" tabindex="-1" role="main">
+          <div class="page-inner">
+
+            <section class="normal" id="section-">
+<div id="header">
+<h1 class="title">金融データサイエンス</h1>
+<p class="author"><em>林 高樹</em></p>
+<p class="date"><em>2026-10-02 (内容は随時更新されます)</em></p>
+</div>
+<div id="はじめに" class="section level1 hasAnchor" number="1">
+<h1><span class="header-section-number">1</span> はじめに<a href="index.html#はじめに" class="anchor-section" aria-label="Anchor link to header"></a></h1>
+<div id="コースの目的" class="section level2 hasAnchor" number="1.1">
+<h2><span class="header-section-number">1.1</span> コースの目的<a href="index.html#コースの目的" class="anchor-section" aria-label="Anchor link to header"></a></h2>
+<p>金融の現場では, データに基づく意思決定の重要性がかつてないほど高まっている. 株価・金利・為替といった市場データ, 企業の財務諸表や開示資料, 顧客の取引履歴, さらにはニュースや決算短信などのテキストまで, 分析の対象となるデータは量・種類ともに急速に拡大している. 資産運用, リスク管理, 与信審査, コーポレート・ファイナンスなど, 金融関連業務のあらゆる場面で, データを適切に分析し, その結果を業務や意思決定に結び付ける力が求められている.</p>
+<p>ところで, 金融データには他分野のデータにはない難しさがある. 市場データはノイズが大きく (シグナルに比べてノイズが大きい), 分布の裾が厚く, 市場環境の変化によってデータの性質そのものが時間とともに変わりうる. また, 財務指標どうしは会計上の恒等式 (例えば, ROEのデュポン分解) で結び付いていることが多く, 市場で観測される変数どうしも, 背後にある共通の潜在的な要因 (市場全体の動きや景気など) によって連動していることが少なくない. そのため, 変数を機械的に投入すると, 定義上当然の関係をなぞるだけの (洞察の得られない) 分析に終わったり, そうでなくとも, 多重共線性や見かけ上の関係を生んだりしやすい. したがって, 予測精度だけを追う「ブラックボックス」的な分析ではなく, ファイナンス理論や業務知識に照らして結果を解釈し, 手法の前提と限界を理解したうえで使いこなすことが重要となる.</p>
+<p>いまや, 簡単なデータ分析であれば, ChatGPTなどの生成AIが, 人間に代わって分析を行ったり, 分析のためのプログラムを書いたりしてくれる時代となった.
+しかしながら, 少なくとも現状の技術水準では生成AIの出力の
+正確性は保証されておらず, 生成AIの出力の正しさを確認できるのは人間である.
+当面は, 人間の手による分析, 人間の頭による分析方法論の正しい理解や結果の解釈が求められるだろう.</p>
+<p>“千里の行 (こう) も足下 (そっか) より始まる” (老子) との言葉にもある通り, 統計学やデータサイエンスの一人の初学者としては, いきなり高度なITスキルを前提とする最新の機械学習系手法を駆使した“ビッグデータ”解析を行おうとするのでなく, まずは, 古典的な統計的方法論を正しく“スモール・データセット”に応用できるようになることが重要である.</p>
+<p>本コースは, 統計学と機械学習の主要なデータ分析手法 (回帰, 分類, 次元縮約・クラスタリング等の教師なし学習) の基礎と実装を, 金融データを題材として学ぶ. 講義による理論・考え方の理解と, 統計ソフトウェアRによる演習を並行して進め, 目的に応じて適切な手法を選び, データを自ら加工・分析し, その結果を的確に説明できるようになることを目指す. なお, 時系列データを対象とするモデル化・推定・予測は, 後続の「金融時系列解析」で体系的に扱う.</p>
+</div>
+<div id="統計学統計的手法の学習について" class="section level2 hasAnchor" number="1.2">
+<h2><span class="header-section-number">1.2</span> 統計学/統計的手法の学習について<a href="index.html#統計学統計的手法の学習について" class="anchor-section" aria-label="Anchor link to header"></a></h2>
+<div id="学習の目標" class="section level3 unnumbered hasAnchor">
+<h3>学習の目標<a href="index.html#学習の目標" class="anchor-section" aria-label="Anchor link to header"></a></h3>
+<p>統計学/統計的手法は, サイエンスとアートの二つの側面があることから, 的確な応用を行うためには, 両面を同時に, バランスよく学ぶ必要がある.</p>
+<ol style="list-style-type: decimal">
+<li>統計理論を正確に理解する</li>
+</ol>
+<ul>
+<li>数学的に正しい概念や手続きの理解</li>
+</ul>
+<ol start="2" style="list-style-type: decimal">
+<li>統計手法の実践 (運用法) を学ぶ</li>
+</ol>
+<ul>
+<li>業務経験や知識, 統計的手法の経験則, 費用対効果等の判断</li>
+</ul>
+<p>※ 統計学は数学(の一分野)ではない (数学を道具として学問体系が作られいる)</p>
+<p>一方の理解が不十分であると, 妥当な分析が行えず, 不正確あるいは間違った分析結果や解釈につながるリスクがある.</p>
+</div>
+<div id="統計学統計的手法の学習方法" class="section level3 unnumbered hasAnchor">
+<h3>統計学/統計的手法の学習方法<a href="index.html#統計学統計的手法の学習方法" class="anchor-section" aria-label="Anchor link to header"></a></h3>
+<p>3つの要素・ルート, それに対応した教科書・参考書がある. すなわち,</p>
+<ul>
+<li>入門 (文章&amp;図表主体): 手法の概念, 用途, 特徴の大雑把な理解を図る</li>
+<li>理論 (数式主体): 手法の理論的・技術的側面, 詳細の正確な理解を図る</li>
+<li>実習 (コード主体): 手を動かすことで手法を経験, 実践力をつける</li>
+</ul>
+<p>統計学を学習するにあたっては, 理解の段階に応じて, これらの要素を, 少しずつ万遍なく学びながら, “スパイラル”状に次の段階に進んでいくのが最も効果的であると筆者は考える.</p>
+<p>すなわち, 理論の学習を全くやらず, 入門と実習のみを学習するようなアプローチは, 理論的理解のないまま統計的分析を実践することになるため危険である. 筆者の経験上, プログラミングの得意な”エンジニア系”のデータサイエンティストにはそのような傾向を持つ人が少なからずいると感じている.</p>
+<p>書籍ごとに目的や想定する読者層は異なり, それに対応するようにこれらの要素の割合が異なる.
+したがって, 学習者は自身の学習目的に照らして適切な本を選択する必要がある.</p>
+<p>本書では, Rを用いながら代表的な統計手法を学んでいく.</p>
+<p><strong>統計学の教科書例</strong>
+Rコードによる分析例を示しながら, 各手法や理論の解説を行っている書籍は
+多数存在するが, バランス良くこれらを配置していると筆者が感じる教科書のタイトルを幾つか紹介する.</p>
+<ul>
+<li><p>【統計学/R】
+山田剛史, 杉澤武俊, 村井潤一郎 (2008), Rによるやさしい統計学, オーム社</p></li>
+<li><p>【データ分析/R】
+Kosuke Imai (2017), Quantitative Social Science: An Introduction, Princeton University Press (今井耕介(著), 粕谷祐子, 原田勝孝, 久保浩樹 (訳) (2018), 社会科学のためのデータ分析入門(上)(下), 岩波書店)</p></li>
+<li><p>【機械学習/R】
+James, G., Witten, D., Hastie, T., Tibshirani, R. (2021), An Introduction to Statistical Learning: with Applications in R, 2nd ed., Springer. (初版 (2013) の邦訳: James他(著), 落海浩, 首藤信通 (訳) (2018), Rによる統計的学習入門, 朝倉書店)</p></li>
+</ul>
+<p>参考として, 次の書籍は, コードを載せずまた数式を使った説明も殆どなしに, 文章主体で (計量経済学の) 手法の概念や分析結果の解釈の仕方を平易に説明している良書である.
+山本 勲 (2015), 実証分析のための計量経済学, 中央経済社</p>
+</div>
+<div id="統計学統計的手法の学習ステップ" class="section level3 unnumbered hasAnchor">
+<h3>統計学/統計的手法の学習ステップ<a href="index.html#統計学統計的手法の学習ステップ" class="anchor-section" aria-label="Anchor link to header"></a></h3>
+<p><strong>学習プロセス (A, B, C)</strong></p>
+<ul>
+<li><ol style="list-style-type: upper-alpha">
+<li>基本概念や定義を正しく理解する</li>
+</ol>
+<ul>
+<li>言葉やイメージによる理解</li>
+</ul></li>
+<li><ol start="2" style="list-style-type: upper-alpha">
+<li>ソフトウェアを正しく動かせる</li>
+</ol>
+<ul>
+<li>目的に応じた適切な手法の選択</li>
+<li>適切なデータの加工, ソフトウェアの操作</li>
+<li>出力結果 (帳票, 図表) の正しい見方</li>
+</ul></li>
+<li><ol start="3" style="list-style-type: upper-alpha">
+<li>手法の背後にある理論を理解する</li>
+</ol>
+<ul>
+<li>数式による理解</li>
+</ul></li>
+</ul>
+<p>※ AとBは車の両輪であり, A &amp; Bの達成度を高めるには, Cの理解を高める必要がある</p>
+<p><strong>学習内容の大まかな流れ (3ステップ)</strong></p>
+<ul>
+<li>[ステップ1] 統計的手法の理解と実践</li>
+<li>[ステップ2] (統計的手法の基盤となる) 確率論・統計理論 (数理統計学) の理解</li>
+<li>[ステップ3] 専門分野における (計量経済学, 心理学, 疫学, …) 統計的手法の理解と実践</li>
+</ul>
+</div>
+</div>
+<div id="金融ビジネス応用における統計学の最近の趨勢" class="section level2 hasAnchor" number="1.3">
+<h2><span class="header-section-number">1.3</span> 金融・ビジネス応用における統計学の最近の趨勢<a href="index.html#金融ビジネス応用における統計学の最近の趨勢" class="anchor-section" aria-label="Anchor link to header"></a></h2>
+<p>統計学, さらには中核分野として内包するデータサイエンス分野において扱う 対象データの特徴として以下のような傾向がみられる</p>
+<ul>
+<li>大規模化 (“ビッグデータ”)
+<ul>
+<li>レコード数 n → 大, 変数の数 p → 大</li>
+<li>データ数より説明変数が多い場合も （“n&lt;p問題”)</li>
+<li>従来の統計学: 「n 小・中規模」, かつ, 「n&gt;p」</li>
+</ul></li>
+<li>高頻度・高速化
+<ul>
+<li>(従来) 四半期・月次… → 1日内, 秒, ミリ秒, …, リアルタイム</li>
+</ul></li>
+<li>非構造化
+<ul>
+<li>画像, 音声, テキスト等</li>
+</ul></li>
+<li>自動化
+<ul>
+<li>衛星画像, アクセスログ, IoTデータ, ウェアラブル・データ, …</li>
+<li>生成AIによる自動生成データ</li>
+</ul></li>
+<li>“マルチモーダル”化
+<ul>
+<li>テキスト・画像・音声・動画など複数の種類のデータを一括して処理</li>
+</ul></li>
+</ul>
+<p>一方, 金融分野への応用の観点では次のような動向がある.</p>
+<ul>
+<li>オルタナティブデータ (衛星画像, POSデータ, 位置情報, ウェブ検索動向など) の投資判断への活用</li>
+<li>決算短信・ニュース・中央銀行の公表文書などのテキスト分析 (センチメント分析等)
+<ul>
+<li>BERT, 大規模言語モデル (LLM)</li>
+</ul></li>
+<li>機械学習による与信スコアリング・不正検知と, その説明可能性 (XAI)・モデルリスク管理</li>
+<li>生成AIの業務活用 (リサーチの要約, コーディング支援など)
+<ul>
+<li>文章 (ChatGPT, Gemini, Claude, …), 画像 (DALL-E, Stable Diffusion, Imagen, …), 等</li>
+</ul></li>
+<li>複数のデータソースの有機的な組合せ活用の重要性
+<ul>
+<li>財務諸表等の“ハードデータ” × テキスト・SNS等から得られた“ソフトデータ”</li>
+<li>外部ソース・データ × 社内業務データ
+…</li>
+</ul></li>
+</ul>
+<hr />
+</div>
+<div id="本書内の記載の注意点" class="section level2 hasAnchor" number="1.4">
+<h2><span class="header-section-number">1.4</span> 本書内の記載の注意点<a href="index.html#本書内の記載の注意点" class="anchor-section" aria-label="Anchor link to header"></a></h2>
+<ul>
+<li>読者への注) パス名は、各自のPC環境に応じて適宜変更すること</li>
+</ul>
+
+</div>
+</div>
+            </section>
+
+          </div>
+        </div>
+      </div>
+
+<a href="r言語の基本.html" class="navigation navigation-next navigation-unique" aria-label="Next page"><i class="fa fa-angle-right"></i></a>
+    </div>
+  </div>
+<script src="libs/gitbook-2.6.7/js/app.min.js"></script>
+<script src="libs/gitbook-2.6.7/js/clipboard.min.js"></script>
+<script src="libs/gitbook-2.6.7/js/plugin-search.js"></script>
+<script src="libs/gitbook-2.6.7/js/plugin-sharing.js"></script>
+<script src="libs/gitbook-2.6.7/js/plugin-fontsettings.js"></script>
+<script src="libs/gitbook-2.6.7/js/plugin-bookdown.js"></script>
+<script src="libs/gitbook-2.6.7/js/jquery.highlight.js"></script>
+<script src="libs/gitbook-2.6.7/js/plugin-clipboard.js"></script>
+<script>
+gitbook.require(["gitbook"], function(gitbook) {
+gitbook.start({
+"sharing": {
+"github": false,
+"facebook": true,
+"twitter": true,
+"linkedin": false,
+"weibo": false,
+"instapaper": false,
+"vk": false,
+"whatsapp": false,
+"all": ["facebook", "twitter", "linkedin", "weibo", "instapaper"]
+},
+"fontsettings": {
+"theme": "white",
+"family": "sans",
+"size": 2
+},
+"edit": {
+"link": null,
+"text": null
+},
+"history": {
+"link": null,
+"text": null
+},
+"view": {
+"link": null,
+"text": null
+},
+"download": null,
+"search": {
+"engine": "fuse",
+"options": null
+},
+"toc": {
+"collapse": "subsection"
+}
+});
+});
+</script>
+
+<!-- dynamically load mathjax for compatibility with self-contained -->
+<script>
+  (function () {
+    var script = document.createElement("script");
+    script.type = "text/javascript";
+    var src = "true";
+    if (src === "" || src === "true") src = "https://cdnjs.cloudflare.com/ajax/libs/mathjax/2.7.9/latest.js?config=TeX-MML-AM_CHTML";
+    if (location.protocol !== "file:")
+      if (/^https?:/.test(src))
+        src = src.replace(/^https?:/, '');
+    script.src = src;
+    document.getElementsByTagName("head")[0].appendChild(script);
+  })();
+</script>
+</body>
+
+</html>
