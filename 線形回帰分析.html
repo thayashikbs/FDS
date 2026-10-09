@@ -200,6 +200,22 @@ code span.wa { color: #60a0b0; font-weight: bold; font-style: italic; } /* Warni
 <ul>
 <li class="chapter" data-level="" data-path="線形回帰分析.html"><a href="線形回帰分析.html#データ1-1ルーム賃貸マンション"><i class="fa fa-check"></i>データ1: 1ルーム賃貸マンション</a></li>
 </ul></li>
+<li class="chapter" data-level="3.2" data-path="線形回帰分析.html"><a href="線形回帰分析.html#回帰分析の結果の見方と変数の選択"><i class="fa fa-check"></i><b>3.2</b> 回帰分析の結果の見方と変数の選択</a>
+<ul>
+<li class="chapter" data-level="" data-path="線形回帰分析.html"><a href="線形回帰分析.html#データ2-上場企業のpbrデータ-仮想データ"><i class="fa fa-check"></i>データ2: 上場企業のPBRデータ (仮想データ)</a></li>
+</ul></li>
+<li class="chapter" data-level="3.3" data-path="線形回帰分析.html"><a href="線形回帰分析.html#説明変数に質的変数を含む回帰"><i class="fa fa-check"></i><b>3.3</b> 説明変数に質的変数を含む回帰</a>
+<ul>
+<li class="chapter" data-level="" data-path="線形回帰分析.html"><a href="線形回帰分析.html#データセット3-高速道路事故データ"><i class="fa fa-check"></i>データセット#3: 高速道路事故データ</a></li>
+</ul></li>
+<li class="chapter" data-level="3.4" data-path="線形回帰分析.html"><a href="線形回帰分析.html#説明変数に質的変数を含む回帰-2"><i class="fa fa-check"></i><b>3.4</b> 説明変数に質的変数を含む回帰 (2)</a>
+<ul>
+<li class="chapter" data-level="" data-path="線形回帰分析.html"><a href="線形回帰分析.html#データセット5-収入データ-仮想"><i class="fa fa-check"></i>データセット#5: 収入データ (仮想)</a></li>
+</ul></li>
+<li class="chapter" data-level="3.5" data-path="線形回帰分析.html"><a href="線形回帰分析.html#多項式回帰"><i class="fa fa-check"></i><b>3.5</b> 多項式回帰</a>
+<ul>
+<li class="chapter" data-level="" data-path="線形回帰分析.html"><a href="線形回帰分析.html#データセット6-wage"><i class="fa fa-check"></i>データセット#6: <code>Wage</code></a></li>
+</ul></li>
 </ul></li>
 </ul>
 
@@ -501,7 +517,987 @@ code span.wa { color: #60a0b0; font-weight: bold; font-style: italic; } /* Warni
 <span id="cb75-47"><a href="線形回帰分析.html#cb75-47" tabindex="-1"></a><span class="co">#&gt;  0.8455702 -0.2359937 -0.3616101</span></span></code></pre></div>
 <p>標準化偏回帰係数は, 説明変数が1標準偏差変化したときに家賃が何標準偏差変化するかを表し, 変数の単位に依存しない. 本例では <code>area</code> (0.85), <code>dist</code> (-0.36), <code>yrs</code> (-0.24) の順に絶対値が大きく, 家賃の水準に対しては専有面積の影響が最も大きいと読める. 元の単位の偏回帰係数 (<code>dist</code>は-12.44円/m, <code>area</code>は2,397円/平米) の大小だけでは, このような比較はできない.</p>
 
+<!-- 線形回帰分析 (続き): 040-linreg.Rmd から分割 -->
 </div>
+</div>
+</div>
+<div id="回帰分析の結果の見方と変数の選択" class="section level2 hasAnchor" number="3.2">
+<h2><span class="header-section-number">3.2</span> 回帰分析の結果の見方と変数の選択<a href="線形回帰分析.html#回帰分析の結果の見方と変数の選択" class="anchor-section" aria-label="Anchor link to header"></a></h2>
+<div id="データ2-上場企業のpbrデータ-仮想データ" class="section level3 unnumbered hasAnchor">
+<h3>データ2: 上場企業のPBRデータ (仮想データ)<a href="線形回帰分析.html#データ2-上場企業のpbrデータ-仮想データ" class="anchor-section" aria-label="Anchor link to header"></a></h3>
+<p>上場企業 (金融業を除く) 500社について, 株価純資産倍率 (PBR) と, その説明要因となりうる財務指標等を集めた<strong>仮想データ</strong>である.
+PBRを, ROEのデュポン分解の3要素 (利益率・回転率・レバレッジ) と, 成長性・規模・業種によって説明することを考える.</p>
+<p><span class="math display">\[
+\mathrm{ROE} = \frac{\text{純利益}}{\text{自己資本}}
+= \underbrace{\frac{\text{純利益}}{\text{売上高}}}_{\text{売上高純利益率}} \times \underbrace{\frac{\text{売上高}}{\text{総資産}}}_{\text{総資産回転率}} \times \underbrace{\frac{\text{総資産}}{\text{自己資本}}}_{\text{財務レバレッジ}}
+\]</span></p>
+<pre><code>- PBRデータ (firm_pbr.csv), 500社 x 10変数 (仮想データ)
+  - pbr: PBR, 株価純資産倍率 (倍) (目的変数)
+  - roe: ROE, 自己資本利益率 (%) (= margin × turnover × leverage)
+  - margin: 売上高純利益率 (%)
+  - turnover: 総資産回転率 (回)
+  - leverage: 財務レバレッジ (総資産/自己資本, 倍)
+  - growth: 売上高成長率 (前年比, %)
+  - div_yield: 配当利回り (%)  ※ 配当利回り = 配当性向 × ROE ÷ PBR の関係がある
+  - mcap: 時価総額 (億円)
+  - industry: 業種 (&quot;manuf&quot;: 製造業, &quot;retail&quot;: 小売業, &quot;service&quot;: 情報通信・サービス業)
+  - tokyo: 本社所在地ダミー (1: 東京都, 0: それ以外)</code></pre>
+<p>業種 <code>industry</code> は質的変数である. 質的変数 (因子) の扱いは「説明変数に質的変数を含む回帰」の節で詳しく扱うが, ここでは因子型に変換して, そのまま <code>lm()</code> に入れて良い.</p>
+<div class="sourceCode" id="cb77"><pre class="sourceCode r"><code class="sourceCode r"><span id="cb77-1"><a href="線形回帰分析.html#cb77-1" tabindex="-1"></a>firm <span class="ot">&lt;-</span> <span class="fu">read.csv</span>(<span class="st">&quot;firm_pbr.csv&quot;</span>, <span class="at">header =</span> T)</span>
+<span id="cb77-2"><a href="線形回帰分析.html#cb77-2" tabindex="-1"></a>firm<span class="sc">$</span>industry <span class="ot">&lt;-</span> <span class="fu">factor</span>(firm<span class="sc">$</span>industry)  <span class="co"># 業種を因子型に変換</span></span>
+<span id="cb77-3"><a href="線形回帰分析.html#cb77-3" tabindex="-1"></a><span class="fu">summary</span>(firm)</span>
+<span id="cb77-4"><a href="線形回帰分析.html#cb77-4" tabindex="-1"></a><span class="co">#&gt;       pbr             roe             margin          turnover    </span></span>
+<span id="cb77-5"><a href="線形回帰分析.html#cb77-5" tabindex="-1"></a><span class="co">#&gt;  Min.   :0.380   Min.   :-11.19   Min.   :-6.000   Min.   :0.430  </span></span>
+<span id="cb77-6"><a href="線形回帰分析.html#cb77-6" tabindex="-1"></a><span class="co">#&gt;  1st Qu.:0.920   1st Qu.:  5.61   1st Qu.: 2.458   1st Qu.:0.750  </span></span>
+<span id="cb77-7"><a href="線形回帰分析.html#cb77-7" tabindex="-1"></a><span class="co">#&gt;  Median :1.235   Median :  9.49   Median : 4.605   Median :0.950  </span></span>
+<span id="cb77-8"><a href="線形回帰分析.html#cb77-8" tabindex="-1"></a><span class="co">#&gt;  Mean   :1.323   Mean   : 10.71   Mean   : 5.416   Mean   :1.089  </span></span>
+<span id="cb77-9"><a href="線形回帰分析.html#cb77-9" tabindex="-1"></a><span class="co">#&gt;  3rd Qu.:1.640   3rd Qu.: 14.86   3rd Qu.: 7.995   3rd Qu.:1.173  </span></span>
+<span id="cb77-10"><a href="線形回帰分析.html#cb77-10" tabindex="-1"></a><span class="co">#&gt;  Max.   :3.470   Max.   : 41.20   Max.   :20.160   Max.   :2.930  </span></span>
+<span id="cb77-11"><a href="線形回帰分析.html#cb77-11" tabindex="-1"></a><span class="co">#&gt;     leverage         growth          div_yield          mcap      </span></span>
+<span id="cb77-12"><a href="線形回帰分析.html#cb77-12" tabindex="-1"></a><span class="co">#&gt;  Min.   :1.220   Min.   :-19.100   Min.   :0.340   Min.   :   10  </span></span>
+<span id="cb77-13"><a href="線形回帰分析.html#cb77-13" tabindex="-1"></a><span class="co">#&gt;  1st Qu.:1.710   1st Qu.: -0.900   1st Qu.:1.720   1st Qu.:  198  </span></span>
+<span id="cb77-14"><a href="線形回帰分析.html#cb77-14" tabindex="-1"></a><span class="co">#&gt;  Median :1.970   Median :  3.700   Median :2.470   Median :  481  </span></span>
+<span id="cb77-15"><a href="線形回帰分析.html#cb77-15" tabindex="-1"></a><span class="co">#&gt;  Mean   :2.111   Mean   :  3.902   Mean   :2.708   Mean   : 1228  </span></span>
+<span id="cb77-16"><a href="線形回帰分析.html#cb77-16" tabindex="-1"></a><span class="co">#&gt;  3rd Qu.:2.340   3rd Qu.:  9.200   3rd Qu.:3.425   3rd Qu.: 1236  </span></span>
+<span id="cb77-17"><a href="線形回帰分析.html#cb77-17" tabindex="-1"></a><span class="co">#&gt;  Max.   :6.550   Max.   : 30.600   Max.   :8.000   Max.   :15575  </span></span>
+<span id="cb77-18"><a href="線形回帰分析.html#cb77-18" tabindex="-1"></a><span class="co">#&gt;     industry       tokyo    </span></span>
+<span id="cb77-19"><a href="線形回帰分析.html#cb77-19" tabindex="-1"></a><span class="co">#&gt;  manuf  :253   Min.   :0.0  </span></span>
+<span id="cb77-20"><a href="線形回帰分析.html#cb77-20" tabindex="-1"></a><span class="co">#&gt;  retail : 99   1st Qu.:0.0  </span></span>
+<span id="cb77-21"><a href="線形回帰分析.html#cb77-21" tabindex="-1"></a><span class="co">#&gt;  service:148   Median :0.5  </span></span>
+<span id="cb77-22"><a href="線形回帰分析.html#cb77-22" tabindex="-1"></a><span class="co">#&gt;                Mean   :0.5  </span></span>
+<span id="cb77-23"><a href="線形回帰分析.html#cb77-23" tabindex="-1"></a><span class="co">#&gt;                3rd Qu.:1.0  </span></span>
+<span id="cb77-24"><a href="線形回帰分析.html#cb77-24" tabindex="-1"></a><span class="co">#&gt;                Max.   :1.0</span></span></code></pre></div>
+<p>実行に先立ち, 散布図行列や相関係数行列で変数間の関係を確認する.
+ライブラリ<code>corrplot</code>の関数<code>corrplot()</code>を使うと, 相関係数のヒートマップを作成することができる.</p>
+<div class="sourceCode" id="cb78"><pre class="sourceCode r"><code class="sourceCode r"><span id="cb78-1"><a href="線形回帰分析.html#cb78-1" tabindex="-1"></a><span class="fu">pairs</span>(firm[, <span class="fu">c</span>(<span class="st">&quot;pbr&quot;</span>, <span class="st">&quot;margin&quot;</span>, <span class="st">&quot;turnover&quot;</span>, <span class="st">&quot;leverage&quot;</span>, <span class="st">&quot;growth&quot;</span>, <span class="st">&quot;mcap&quot;</span>)])</span></code></pre></div>
+<p><img src="_main_files/figure-html/reg2-2-1.png" width="75%" /></p>
+<div class="sourceCode" id="cb79"><pre class="sourceCode r"><code class="sourceCode r"><span id="cb79-1"><a href="線形回帰分析.html#cb79-1" tabindex="-1"></a><span class="fu">round</span>(<span class="fu">cor</span>(firm[, <span class="fu">c</span>(<span class="st">&quot;pbr&quot;</span>, <span class="st">&quot;roe&quot;</span>, <span class="st">&quot;margin&quot;</span>, <span class="st">&quot;turnover&quot;</span>, <span class="st">&quot;leverage&quot;</span>, <span class="st">&quot;growth&quot;</span>, <span class="st">&quot;mcap&quot;</span>)]),</span>
+<span id="cb79-2"><a href="線形回帰分析.html#cb79-2" tabindex="-1"></a>  <span class="dv">2</span>)</span>
+<span id="cb79-3"><a href="線形回帰分析.html#cb79-3" tabindex="-1"></a><span class="co">#&gt;            pbr   roe margin turnover leverage growth  mcap</span></span>
+<span id="cb79-4"><a href="線形回帰分析.html#cb79-4" tabindex="-1"></a><span class="co">#&gt; pbr       1.00  0.53   0.63    -0.06    -0.12   0.32  0.18</span></span>
+<span id="cb79-5"><a href="線形回帰分析.html#cb79-5" tabindex="-1"></a><span class="co">#&gt; roe       0.53  1.00   0.72     0.20     0.20   0.07 -0.09</span></span>
+<span id="cb79-6"><a href="線形回帰分析.html#cb79-6" tabindex="-1"></a><span class="co">#&gt; margin    0.63  0.72   1.00    -0.32    -0.29   0.09 -0.01</span></span>
+<span id="cb79-7"><a href="線形回帰分析.html#cb79-7" tabindex="-1"></a><span class="co">#&gt; turnover -0.06  0.20  -0.32     1.00     0.38   0.00 -0.21</span></span>
+<span id="cb79-8"><a href="線形回帰分析.html#cb79-8" tabindex="-1"></a><span class="co">#&gt; leverage -0.12  0.20  -0.29     0.38     1.00  -0.06  0.00</span></span>
+<span id="cb79-9"><a href="線形回帰分析.html#cb79-9" tabindex="-1"></a><span class="co">#&gt; growth    0.32  0.07   0.09     0.00    -0.06   1.00 -0.14</span></span>
+<span id="cb79-10"><a href="線形回帰分析.html#cb79-10" tabindex="-1"></a><span class="co">#&gt; mcap      0.18 -0.09  -0.01    -0.21     0.00  -0.14  1.00</span></span>
+<span id="cb79-11"><a href="線形回帰分析.html#cb79-11" tabindex="-1"></a></span>
+<span id="cb79-12"><a href="線形回帰分析.html#cb79-12" tabindex="-1"></a><span class="fu">library</span>(corrplot)</span>
+<span id="cb79-13"><a href="線形回帰分析.html#cb79-13" tabindex="-1"></a><span class="fu">corrplot</span>(<span class="fu">cor</span>(<span class="fu">select</span>(firm, <span class="sc">-</span>industry, <span class="sc">-</span>tokyo)))  <span class="co"># 質的変数を除去. select()はdplyr (tidyverseに含まれる)</span></span></code></pre></div>
+<p><img src="_main_files/figure-html/reg2-2-2.png" width="75%" /></p>
+<div id="lmの出力の読み方" class="section level4 unnumbered hasAnchor">
+<h4><code>lm()</code>の出力の読み方<a href="線形回帰分析.html#lmの出力の読み方" class="anchor-section" aria-label="Anchor link to header"></a></h4>
+<p>デュポン分解の3要素でPBRを説明する回帰モデルを推定する (講義スライド「線形回帰③」の出力例).</p>
+<div class="sourceCode" id="cb80"><pre class="sourceCode r"><code class="sourceCode r"><span id="cb80-1"><a href="線形回帰分析.html#cb80-1" tabindex="-1"></a>res_mod1 <span class="ot">&lt;-</span> <span class="fu">lm</span>(pbr <span class="sc">~</span> margin <span class="sc">+</span> turnover <span class="sc">+</span> leverage, <span class="at">data =</span> firm)</span>
+<span id="cb80-2"><a href="線形回帰分析.html#cb80-2" tabindex="-1"></a><span class="fu">summary</span>(res_mod1)</span>
+<span id="cb80-3"><a href="線形回帰分析.html#cb80-3" tabindex="-1"></a><span class="co">#&gt; </span></span>
+<span id="cb80-4"><a href="線形回帰分析.html#cb80-4" tabindex="-1"></a><span class="co">#&gt; Call:</span></span>
+<span id="cb80-5"><a href="線形回帰分析.html#cb80-5" tabindex="-1"></a><span class="co">#&gt; lm(formula = pbr ~ margin + turnover + leverage, data = firm)</span></span>
+<span id="cb80-6"><a href="線形回帰分析.html#cb80-6" tabindex="-1"></a><span class="co">#&gt; </span></span>
+<span id="cb80-7"><a href="線形回帰分析.html#cb80-7" tabindex="-1"></a><span class="co">#&gt; Residuals:</span></span>
+<span id="cb80-8"><a href="線形回帰分析.html#cb80-8" tabindex="-1"></a><span class="co">#&gt;      Min       1Q   Median       3Q      Max </span></span>
+<span id="cb80-9"><a href="線形回帰分析.html#cb80-9" tabindex="-1"></a><span class="co">#&gt; -0.97185 -0.27721 -0.02146  0.23329  1.88132 </span></span>
+<span id="cb80-10"><a href="線形回帰分析.html#cb80-10" tabindex="-1"></a><span class="co">#&gt; </span></span>
+<span id="cb80-11"><a href="線形回帰分析.html#cb80-11" tabindex="-1"></a><span class="co">#&gt; Coefficients:</span></span>
+<span id="cb80-12"><a href="線形回帰分析.html#cb80-12" tabindex="-1"></a><span class="co">#&gt;             Estimate Std. Error t value Pr(&gt;|t|)    </span></span>
+<span id="cb80-13"><a href="線形回帰分析.html#cb80-13" tabindex="-1"></a><span class="co">#&gt; (Intercept) 0.647548   0.081687   7.927 1.49e-14 ***</span></span>
+<span id="cb80-14"><a href="線形回帰分析.html#cb80-14" tabindex="-1"></a><span class="co">#&gt; margin      0.086295   0.004572  18.876  &lt; 2e-16 ***</span></span>
+<span id="cb80-15"><a href="線形回帰分析.html#cb80-15" tabindex="-1"></a><span class="co">#&gt; turnover    0.166596   0.039125   4.258 2.47e-05 ***</span></span>
+<span id="cb80-16"><a href="線形回帰分析.html#cb80-16" tabindex="-1"></a><span class="co">#&gt; leverage    0.012391   0.032275   0.384    0.701    </span></span>
+<span id="cb80-17"><a href="線形回帰分析.html#cb80-17" tabindex="-1"></a><span class="co">#&gt; ---</span></span>
+<span id="cb80-18"><a href="線形回帰分析.html#cb80-18" tabindex="-1"></a><span class="co">#&gt; Signif. codes:  0 &#39;***&#39; 0.001 &#39;**&#39; 0.01 &#39;*&#39; 0.05 &#39;.&#39; 0.1 &#39; &#39; 1</span></span>
+<span id="cb80-19"><a href="線形回帰分析.html#cb80-19" tabindex="-1"></a><span class="co">#&gt; </span></span>
+<span id="cb80-20"><a href="線形回帰分析.html#cb80-20" tabindex="-1"></a><span class="co">#&gt; Residual standard error: 0.3931 on 496 degrees of freedom</span></span>
+<span id="cb80-21"><a href="線形回帰分析.html#cb80-21" tabindex="-1"></a><span class="co">#&gt; Multiple R-squared:  0.4267, Adjusted R-squared:  0.4232 </span></span>
+<span id="cb80-22"><a href="線形回帰分析.html#cb80-22" tabindex="-1"></a><span class="co">#&gt; F-statistic:   123 on 3 and 496 DF,  p-value: &lt; 2.2e-16</span></span></code></pre></div>
+<ul>
+<li><code>Estimate</code>: 回帰係数の推定値, <code>Std. Error</code>: 標準誤差, <code>t value</code>: <span class="math inline">\(t\)</span>値 (= 推定値 / 標準誤差), <code>Pr(&gt;|t|)</code>: (<span class="math inline">\(t\)</span>値に対する) <span class="math inline">\(p\)</span>値</li>
+<li><code>Residual standard error</code>: 残差標準誤差, <code>Multiple R-squared</code>/<code>Adjusted R-squared</code>: 決定係数/補正決定係数, <code>F-statistic</code>の<code>p-value</code>: モデル全体の有意性 (<span class="math inline">\(F\)</span>検定の<span class="math inline">\(p\)</span>値)</li>
+</ul>
+<p>利益率 <code>margin</code> と回転率 <code>turnover</code> は有意に正である一方, レバレッジ <code>leverage</code> は有意ではない (<span class="math inline">\(p\)</span>値 = 0.701).
+市場は, 利益率や資産効率で稼ぐROEは評価するが, レバレッジ (負債の活用) で稼ぐROEはあまり評価しない, という解釈ができるかもしれない.</p>
+<p>変数の順番を入れ替えても, 回帰係数の推定結果は変わらない.
+一方, 分散分析表 (<code>anova()</code>) は, 通常, 変数の順番に依存する.
+これは, 分散分析表の各行が「それより上の変数を入れた後に, その変数を追加することで減少した残差平方和」(逐次平方和) を表しているためである.
+業種の違いを反映して <code>margin</code> と <code>turnover</code> には相関があるため (相関係数 -0.32), 両者の順番によって平方和が大きく変わる.</p>
+<div class="sourceCode" id="cb81"><pre class="sourceCode r"><code class="sourceCode r"><span id="cb81-1"><a href="線形回帰分析.html#cb81-1" tabindex="-1"></a>res_mod2 <span class="ot">&lt;-</span> <span class="fu">lm</span>(pbr <span class="sc">~</span> turnover <span class="sc">+</span> margin <span class="sc">+</span> leverage, <span class="at">data =</span> firm)</span>
+<span id="cb81-2"><a href="線形回帰分析.html#cb81-2" tabindex="-1"></a><span class="fu">summary</span>(res_mod2)<span class="sc">$</span>coef</span>
+<span id="cb81-3"><a href="線形回帰分析.html#cb81-3" tabindex="-1"></a><span class="co">#&gt;               Estimate  Std. Error    t value     Pr(&gt;|t|)</span></span>
+<span id="cb81-4"><a href="線形回帰分析.html#cb81-4" tabindex="-1"></a><span class="co">#&gt; (Intercept) 0.64754759 0.081686682  7.9272114 1.492457e-14</span></span>
+<span id="cb81-5"><a href="線形回帰分析.html#cb81-5" tabindex="-1"></a><span class="co">#&gt; turnover    0.16659569 0.039125265  4.2580080 2.467757e-05</span></span>
+<span id="cb81-6"><a href="線形回帰分析.html#cb81-6" tabindex="-1"></a><span class="co">#&gt; margin      0.08629539 0.004571802 18.8755743 2.730802e-60</span></span>
+<span id="cb81-7"><a href="線形回帰分析.html#cb81-7" tabindex="-1"></a><span class="co">#&gt; leverage    0.01239137 0.032274590  0.3839357 7.011906e-01</span></span>
+<span id="cb81-8"><a href="線形回帰分析.html#cb81-8" tabindex="-1"></a><span class="fu">anova</span>(res_mod1)</span>
+<span id="cb81-9"><a href="線形回帰分析.html#cb81-9" tabindex="-1"></a><span class="co">#&gt; Analysis of Variance Table</span></span>
+<span id="cb81-10"><a href="線形回帰分析.html#cb81-10" tabindex="-1"></a><span class="co">#&gt; </span></span>
+<span id="cb81-11"><a href="線形回帰分析.html#cb81-11" tabindex="-1"></a><span class="co">#&gt; Response: pbr</span></span>
+<span id="cb81-12"><a href="線形回帰分析.html#cb81-12" tabindex="-1"></a><span class="co">#&gt;            Df Sum Sq Mean Sq  F value    Pr(&gt;F)    </span></span>
+<span id="cb81-13"><a href="線形回帰分析.html#cb81-13" tabindex="-1"></a><span class="co">#&gt; margin      1 53.726  53.726 347.6485 &lt; 2.2e-16 ***</span></span>
+<span id="cb81-14"><a href="線形回帰分析.html#cb81-14" tabindex="-1"></a><span class="co">#&gt; turnover    1  3.299   3.299  21.3450 4.896e-06 ***</span></span>
+<span id="cb81-15"><a href="線形回帰分析.html#cb81-15" tabindex="-1"></a><span class="co">#&gt; leverage    1  0.023   0.023   0.1474    0.7012    </span></span>
+<span id="cb81-16"><a href="線形回帰分析.html#cb81-16" tabindex="-1"></a><span class="co">#&gt; Residuals 496 76.652   0.155                       </span></span>
+<span id="cb81-17"><a href="線形回帰分析.html#cb81-17" tabindex="-1"></a><span class="co">#&gt; ---</span></span>
+<span id="cb81-18"><a href="線形回帰分析.html#cb81-18" tabindex="-1"></a><span class="co">#&gt; Signif. codes:  0 &#39;***&#39; 0.001 &#39;**&#39; 0.01 &#39;*&#39; 0.05 &#39;.&#39; 0.1 &#39; &#39; 1</span></span>
+<span id="cb81-19"><a href="線形回帰分析.html#cb81-19" tabindex="-1"></a><span class="fu">anova</span>(res_mod2)</span>
+<span id="cb81-20"><a href="線形回帰分析.html#cb81-20" tabindex="-1"></a><span class="co">#&gt; Analysis of Variance Table</span></span>
+<span id="cb81-21"><a href="線形回帰分析.html#cb81-21" tabindex="-1"></a><span class="co">#&gt; </span></span>
+<span id="cb81-22"><a href="線形回帰分析.html#cb81-22" tabindex="-1"></a><span class="co">#&gt; Response: pbr</span></span>
+<span id="cb81-23"><a href="線形回帰分析.html#cb81-23" tabindex="-1"></a><span class="co">#&gt;            Df Sum Sq Mean Sq  F value Pr(&gt;F)    </span></span>
+<span id="cb81-24"><a href="線形回帰分析.html#cb81-24" tabindex="-1"></a><span class="co">#&gt; turnover    1  0.425   0.425   2.7530 0.0977 .  </span></span>
+<span id="cb81-25"><a href="線形回帰分析.html#cb81-25" tabindex="-1"></a><span class="co">#&gt; margin      1 56.599  56.599 366.2406 &lt;2e-16 ***</span></span>
+<span id="cb81-26"><a href="線形回帰分析.html#cb81-26" tabindex="-1"></a><span class="co">#&gt; leverage    1  0.023   0.023   0.1474 0.7012    </span></span>
+<span id="cb81-27"><a href="線形回帰分析.html#cb81-27" tabindex="-1"></a><span class="co">#&gt; Residuals 496 76.652   0.155                    </span></span>
+<span id="cb81-28"><a href="線形回帰分析.html#cb81-28" tabindex="-1"></a><span class="co">#&gt; ---</span></span>
+<span id="cb81-29"><a href="線形回帰分析.html#cb81-29" tabindex="-1"></a><span class="co">#&gt; Signif. codes:  0 &#39;***&#39; 0.001 &#39;**&#39; 0.01 &#39;*&#39; 0.05 &#39;.&#39; 0.1 &#39; &#39; 1</span></span></code></pre></div>
+<p>なお, 最終行の (自由度1の) 変数 <code>leverage</code> については, 分散分析表内の<span class="math inline">\(p\)</span>値は回帰係数の<span class="math inline">\(p\)</span>値に等しく, 分散分析表内の<span class="math inline">\(F\)</span>値は回帰係数の<span class="math inline">\(t\)</span>値の2乗に等しい.</p>
+<div class="sourceCode" id="cb82"><pre class="sourceCode r"><code class="sourceCode r"><span id="cb82-1"><a href="線形回帰分析.html#cb82-1" tabindex="-1"></a><span class="fu">summary</span>(res_mod1)<span class="sc">$</span>coef[<span class="st">&quot;leverage&quot;</span>, <span class="st">&quot;t value&quot;</span>]<span class="sc">^</span><span class="dv">2</span>  <span class="co"># anova(res_mod1)のleverage行のF値と一致</span></span>
+<span id="cb82-2"><a href="線形回帰分析.html#cb82-2" tabindex="-1"></a><span class="co">#&gt; [1] 0.1474067</span></span></code></pre></div>
+</div>
+<div id="変数の追加除去" class="section level4 unnumbered hasAnchor">
+<h4>変数の追加・除去<a href="線形回帰分析.html#変数の追加除去" class="anchor-section" aria-label="Anchor link to header"></a></h4>
+<p>関数 <code>update()</code> を使うと, 推定済みのモデルに変数を追加・除去したモデルを簡単に作れる.</p>
+<div class="sourceCode" id="cb83"><pre class="sourceCode r"><code class="sourceCode r"><span id="cb83-1"><a href="線形回帰分析.html#cb83-1" tabindex="-1"></a><span class="co"># update関数でモデル更新: 変数growth追加</span></span>
+<span id="cb83-2"><a href="線形回帰分析.html#cb83-2" tabindex="-1"></a>res_lm2 <span class="ot">&lt;-</span> <span class="fu">update</span>(res_mod1, . <span class="sc">~</span> . <span class="sc">+</span> growth)</span>
+<span id="cb83-3"><a href="線形回帰分析.html#cb83-3" tabindex="-1"></a><span class="fu">summary</span>(res_lm2)</span>
+<span id="cb83-4"><a href="線形回帰分析.html#cb83-4" tabindex="-1"></a><span class="co">#&gt; </span></span>
+<span id="cb83-5"><a href="線形回帰分析.html#cb83-5" tabindex="-1"></a><span class="co">#&gt; Call:</span></span>
+<span id="cb83-6"><a href="線形回帰分析.html#cb83-6" tabindex="-1"></a><span class="co">#&gt; lm(formula = pbr ~ margin + turnover + leverage + growth, data = firm)</span></span>
+<span id="cb83-7"><a href="線形回帰分析.html#cb83-7" tabindex="-1"></a><span class="co">#&gt; </span></span>
+<span id="cb83-8"><a href="線形回帰分析.html#cb83-8" tabindex="-1"></a><span class="co">#&gt; Residuals:</span></span>
+<span id="cb83-9"><a href="線形回帰分析.html#cb83-9" tabindex="-1"></a><span class="co">#&gt;      Min       1Q   Median       3Q      Max </span></span>
+<span id="cb83-10"><a href="線形回帰分析.html#cb83-10" tabindex="-1"></a><span class="co">#&gt; -0.88658 -0.25310 -0.03272  0.23156  1.67710 </span></span>
+<span id="cb83-11"><a href="線形回帰分析.html#cb83-11" tabindex="-1"></a><span class="co">#&gt; </span></span>
+<span id="cb83-12"><a href="線形回帰分析.html#cb83-12" tabindex="-1"></a><span class="co">#&gt; Coefficients:</span></span>
+<span id="cb83-13"><a href="線形回帰分析.html#cb83-13" tabindex="-1"></a><span class="co">#&gt;             Estimate Std. Error t value Pr(&gt;|t|)    </span></span>
+<span id="cb83-14"><a href="線形回帰分析.html#cb83-14" tabindex="-1"></a><span class="co">#&gt; (Intercept) 0.574441   0.077194   7.442 4.44e-13 ***</span></span>
+<span id="cb83-15"><a href="線形回帰分析.html#cb83-15" tabindex="-1"></a><span class="co">#&gt; margin      0.083389   0.004306  19.365  &lt; 2e-16 ***</span></span>
+<span id="cb83-16"><a href="線形回帰分析.html#cb83-16" tabindex="-1"></a><span class="co">#&gt; turnover    0.153133   0.036765   4.165 3.67e-05 ***</span></span>
+<span id="cb83-17"><a href="線形回帰分析.html#cb83-17" tabindex="-1"></a><span class="co">#&gt; leverage    0.025633   0.030340   0.845    0.399    </span></span>
+<span id="cb83-18"><a href="線形回帰分析.html#cb83-18" tabindex="-1"></a><span class="co">#&gt; growth      0.019364   0.002351   8.237 1.59e-15 ***</span></span>
+<span id="cb83-19"><a href="線形回帰分析.html#cb83-19" tabindex="-1"></a><span class="co">#&gt; ---</span></span>
+<span id="cb83-20"><a href="線形回帰分析.html#cb83-20" tabindex="-1"></a><span class="co">#&gt; Signif. codes:  0 &#39;***&#39; 0.001 &#39;**&#39; 0.01 &#39;*&#39; 0.05 &#39;.&#39; 0.1 &#39; &#39; 1</span></span>
+<span id="cb83-21"><a href="線形回帰分析.html#cb83-21" tabindex="-1"></a><span class="co">#&gt; </span></span>
+<span id="cb83-22"><a href="線形回帰分析.html#cb83-22" tabindex="-1"></a><span class="co">#&gt; Residual standard error: 0.369 on 495 degrees of freedom</span></span>
+<span id="cb83-23"><a href="線形回帰分析.html#cb83-23" tabindex="-1"></a><span class="co">#&gt; Multiple R-squared:  0.4958, Adjusted R-squared:  0.4917 </span></span>
+<span id="cb83-24"><a href="線形回帰分析.html#cb83-24" tabindex="-1"></a><span class="co">#&gt; F-statistic: 121.7 on 4 and 495 DF,  p-value: &lt; 2.2e-16</span></span></code></pre></div>
+<div class="sourceCode" id="cb84"><pre class="sourceCode r"><code class="sourceCode r"><span id="cb84-1"><a href="線形回帰分析.html#cb84-1" tabindex="-1"></a><span class="co"># 変数tokyo追加</span></span>
+<span id="cb84-2"><a href="線形回帰分析.html#cb84-2" tabindex="-1"></a>res_lm3 <span class="ot">&lt;-</span> <span class="fu">update</span>(res_lm2, . <span class="sc">~</span> . <span class="sc">+</span> tokyo)</span>
+<span id="cb84-3"><a href="線形回帰分析.html#cb84-3" tabindex="-1"></a><span class="fu">summary</span>(res_lm3)</span>
+<span id="cb84-4"><a href="線形回帰分析.html#cb84-4" tabindex="-1"></a><span class="co">#&gt; </span></span>
+<span id="cb84-5"><a href="線形回帰分析.html#cb84-5" tabindex="-1"></a><span class="co">#&gt; Call:</span></span>
+<span id="cb84-6"><a href="線形回帰分析.html#cb84-6" tabindex="-1"></a><span class="co">#&gt; lm(formula = pbr ~ margin + turnover + leverage + growth + tokyo, </span></span>
+<span id="cb84-7"><a href="線形回帰分析.html#cb84-7" tabindex="-1"></a><span class="co">#&gt;     data = firm)</span></span>
+<span id="cb84-8"><a href="線形回帰分析.html#cb84-8" tabindex="-1"></a><span class="co">#&gt; </span></span>
+<span id="cb84-9"><a href="線形回帰分析.html#cb84-9" tabindex="-1"></a><span class="co">#&gt; Residuals:</span></span>
+<span id="cb84-10"><a href="線形回帰分析.html#cb84-10" tabindex="-1"></a><span class="co">#&gt;      Min       1Q   Median       3Q      Max </span></span>
+<span id="cb84-11"><a href="線形回帰分析.html#cb84-11" tabindex="-1"></a><span class="co">#&gt; -0.88019 -0.25697 -0.03168  0.23145  1.67092 </span></span>
+<span id="cb84-12"><a href="線形回帰分析.html#cb84-12" tabindex="-1"></a><span class="co">#&gt; </span></span>
+<span id="cb84-13"><a href="線形回帰分析.html#cb84-13" tabindex="-1"></a><span class="co">#&gt; Coefficients:</span></span>
+<span id="cb84-14"><a href="線形回帰分析.html#cb84-14" tabindex="-1"></a><span class="co">#&gt;              Estimate Std. Error t value Pr(&gt;|t|)    </span></span>
+<span id="cb84-15"><a href="線形回帰分析.html#cb84-15" tabindex="-1"></a><span class="co">#&gt; (Intercept)  0.581684   0.079683   7.300 1.16e-12 ***</span></span>
+<span id="cb84-16"><a href="線形回帰分析.html#cb84-16" tabindex="-1"></a><span class="co">#&gt; margin       0.083365   0.004310  19.340  &lt; 2e-16 ***</span></span>
+<span id="cb84-17"><a href="線形回帰分析.html#cb84-17" tabindex="-1"></a><span class="co">#&gt; turnover     0.151969   0.036930   4.115 4.54e-05 ***</span></span>
+<span id="cb84-18"><a href="線形回帰分析.html#cb84-18" tabindex="-1"></a><span class="co">#&gt; leverage     0.025839   0.030372   0.851    0.395    </span></span>
+<span id="cb84-19"><a href="線形回帰分析.html#cb84-19" tabindex="-1"></a><span class="co">#&gt; growth       0.019334   0.002354   8.212 1.91e-15 ***</span></span>
+<span id="cb84-20"><a href="線形回帰分析.html#cb84-20" tabindex="-1"></a><span class="co">#&gt; tokyo       -0.012328   0.033182  -0.372    0.710    </span></span>
+<span id="cb84-21"><a href="線形回帰分析.html#cb84-21" tabindex="-1"></a><span class="co">#&gt; ---</span></span>
+<span id="cb84-22"><a href="線形回帰分析.html#cb84-22" tabindex="-1"></a><span class="co">#&gt; Signif. codes:  0 &#39;***&#39; 0.001 &#39;**&#39; 0.01 &#39;*&#39; 0.05 &#39;.&#39; 0.1 &#39; &#39; 1</span></span>
+<span id="cb84-23"><a href="線形回帰分析.html#cb84-23" tabindex="-1"></a><span class="co">#&gt; </span></span>
+<span id="cb84-24"><a href="線形回帰分析.html#cb84-24" tabindex="-1"></a><span class="co">#&gt; Residual standard error: 0.3694 on 494 degrees of freedom</span></span>
+<span id="cb84-25"><a href="線形回帰分析.html#cb84-25" tabindex="-1"></a><span class="co">#&gt; Multiple R-squared:  0.4959, Adjusted R-squared:  0.4908 </span></span>
+<span id="cb84-26"><a href="線形回帰分析.html#cb84-26" tabindex="-1"></a><span class="co">#&gt; F-statistic: 97.21 on 5 and 494 DF,  p-value: &lt; 2.2e-16</span></span></code></pre></div>
+<p><code>tokyo</code> は有意ではなく, 補正決定係数もほとんど改善しない.</p>
+<div class="sourceCode" id="cb85"><pre class="sourceCode r"><code class="sourceCode r"><span id="cb85-1"><a href="線形回帰分析.html#cb85-1" tabindex="-1"></a><span class="co"># 変数mcap追加, tokyo除去</span></span>
+<span id="cb85-2"><a href="線形回帰分析.html#cb85-2" tabindex="-1"></a>res_lm4 <span class="ot">&lt;-</span> <span class="fu">update</span>(res_lm3, . <span class="sc">~</span> . <span class="sc">+</span> mcap <span class="sc">-</span> tokyo)</span>
+<span id="cb85-3"><a href="線形回帰分析.html#cb85-3" tabindex="-1"></a><span class="fu">summary</span>(res_lm4)</span>
+<span id="cb85-4"><a href="線形回帰分析.html#cb85-4" tabindex="-1"></a><span class="co">#&gt; </span></span>
+<span id="cb85-5"><a href="線形回帰分析.html#cb85-5" tabindex="-1"></a><span class="co">#&gt; Call:</span></span>
+<span id="cb85-6"><a href="線形回帰分析.html#cb85-6" tabindex="-1"></a><span class="co">#&gt; lm(formula = pbr ~ margin + turnover + leverage + growth + mcap, </span></span>
+<span id="cb85-7"><a href="線形回帰分析.html#cb85-7" tabindex="-1"></a><span class="co">#&gt;     data = firm)</span></span>
+<span id="cb85-8"><a href="線形回帰分析.html#cb85-8" tabindex="-1"></a><span class="co">#&gt; </span></span>
+<span id="cb85-9"><a href="線形回帰分析.html#cb85-9" tabindex="-1"></a><span class="co">#&gt; Residuals:</span></span>
+<span id="cb85-10"><a href="線形回帰分析.html#cb85-10" tabindex="-1"></a><span class="co">#&gt;      Min       1Q   Median       3Q      Max </span></span>
+<span id="cb85-11"><a href="線形回帰分析.html#cb85-11" tabindex="-1"></a><span class="co">#&gt; -0.82747 -0.23287 -0.02356  0.20494  1.30439 </span></span>
+<span id="cb85-12"><a href="線形回帰分析.html#cb85-12" tabindex="-1"></a><span class="co">#&gt; </span></span>
+<span id="cb85-13"><a href="線形回帰分析.html#cb85-13" tabindex="-1"></a><span class="co">#&gt; Coefficients:</span></span>
+<span id="cb85-14"><a href="線形回帰分析.html#cb85-14" tabindex="-1"></a><span class="co">#&gt;              Estimate Std. Error t value Pr(&gt;|t|)    </span></span>
+<span id="cb85-15"><a href="線形回帰分析.html#cb85-15" tabindex="-1"></a><span class="co">#&gt; (Intercept) 4.297e-01  7.350e-02   5.846 9.18e-09 ***</span></span>
+<span id="cb85-16"><a href="線形回帰分析.html#cb85-16" tabindex="-1"></a><span class="co">#&gt; margin      8.534e-02  4.006e-03  21.307  &lt; 2e-16 ***</span></span>
+<span id="cb85-17"><a href="線形回帰分析.html#cb85-17" tabindex="-1"></a><span class="co">#&gt; turnover    2.248e-01  3.508e-02   6.409 3.43e-10 ***</span></span>
+<span id="cb85-18"><a href="線形回帰分析.html#cb85-18" tabindex="-1"></a><span class="co">#&gt; leverage    7.754e-03  2.825e-02   0.274    0.784    </span></span>
+<span id="cb85-19"><a href="線形回帰分析.html#cb85-19" tabindex="-1"></a><span class="co">#&gt; growth      2.190e-02  2.202e-03   9.945  &lt; 2e-16 ***</span></span>
+<span id="cb85-20"><a href="線形回帰分析.html#cb85-20" tabindex="-1"></a><span class="co">#&gt; mcap        6.840e-05  7.655e-06   8.934  &lt; 2e-16 ***</span></span>
+<span id="cb85-21"><a href="線形回帰分析.html#cb85-21" tabindex="-1"></a><span class="co">#&gt; ---</span></span>
+<span id="cb85-22"><a href="線形回帰分析.html#cb85-22" tabindex="-1"></a><span class="co">#&gt; Signif. codes:  0 &#39;***&#39; 0.001 &#39;**&#39; 0.01 &#39;*&#39; 0.05 &#39;.&#39; 0.1 &#39; &#39; 1</span></span>
+<span id="cb85-23"><a href="線形回帰分析.html#cb85-23" tabindex="-1"></a><span class="co">#&gt; </span></span>
+<span id="cb85-24"><a href="線形回帰分析.html#cb85-24" tabindex="-1"></a><span class="co">#&gt; Residual standard error: 0.3428 on 494 degrees of freedom</span></span>
+<span id="cb85-25"><a href="線形回帰分析.html#cb85-25" tabindex="-1"></a><span class="co">#&gt; Multiple R-squared:  0.5659, Adjusted R-squared:  0.5615 </span></span>
+<span id="cb85-26"><a href="線形回帰分析.html#cb85-26" tabindex="-1"></a><span class="co">#&gt; F-statistic: 128.8 on 5 and 494 DF,  p-value: &lt; 2.2e-16</span></span></code></pre></div>
+<p>目的変数 <code>pbr</code> と説明変数 <code>mcap</code> (時価総額) の関係を散布図で確認すると, <code>mcap</code> は右に裾の長い分布をしており, 直線的な関係から外れている.
+<code>mcap</code> を対数変換すると, 直線的な関係に近づく.</p>
+<div class="sourceCode" id="cb86"><pre class="sourceCode r"><code class="sourceCode r"><span id="cb86-1"><a href="線形回帰分析.html#cb86-1" tabindex="-1"></a><span class="fu">par</span>(<span class="at">mfrow =</span> <span class="fu">c</span>(<span class="dv">1</span>, <span class="dv">2</span>))</span>
+<span id="cb86-2"><a href="線形回帰分析.html#cb86-2" tabindex="-1"></a><span class="fu">plot</span>(firm<span class="sc">$</span>mcap, firm<span class="sc">$</span>pbr, <span class="at">xlab =</span> <span class="st">&quot;mcap&quot;</span>, <span class="at">ylab =</span> <span class="st">&quot;pbr&quot;</span>)</span>
+<span id="cb86-3"><a href="線形回帰分析.html#cb86-3" tabindex="-1"></a><span class="fu">plot</span>(<span class="fu">log</span>(firm<span class="sc">$</span>mcap), firm<span class="sc">$</span>pbr, <span class="at">xlab =</span> <span class="st">&quot;log(mcap)&quot;</span>, <span class="at">ylab =</span> <span class="st">&quot;pbr&quot;</span>)</span></code></pre></div>
+<p><img src="_main_files/figure-html/unnamed-chunk-38-1.png" width="75%" /></p>
+<div class="sourceCode" id="cb87"><pre class="sourceCode r"><code class="sourceCode r"><span id="cb87-1"><a href="線形回帰分析.html#cb87-1" tabindex="-1"></a><span class="fu">par</span>(<span class="at">mfrow =</span> <span class="fu">c</span>(<span class="dv">1</span>, <span class="dv">1</span>))</span></code></pre></div>
+<div class="sourceCode" id="cb88"><pre class="sourceCode r"><code class="sourceCode r"><span id="cb88-1"><a href="線形回帰分析.html#cb88-1" tabindex="-1"></a><span class="co"># mcapの対数を新変数log_mcapとして定義し, モデルに追加</span></span>
+<span id="cb88-2"><a href="線形回帰分析.html#cb88-2" tabindex="-1"></a>firm2 <span class="ot">&lt;-</span> <span class="fu">data.frame</span>(firm, <span class="at">log_mcap =</span> <span class="fu">log</span>(firm<span class="sc">$</span>mcap))</span>
+<span id="cb88-3"><a href="線形回帰分析.html#cb88-3" tabindex="-1"></a>res_lm5 <span class="ot">&lt;-</span> <span class="fu">lm</span>(pbr <span class="sc">~</span> margin <span class="sc">+</span> turnover <span class="sc">+</span> leverage <span class="sc">+</span> growth <span class="sc">+</span> log_mcap, <span class="at">data =</span> firm2)</span>
+<span id="cb88-4"><a href="線形回帰分析.html#cb88-4" tabindex="-1"></a><span class="fu">summary</span>(res_lm5)</span>
+<span id="cb88-5"><a href="線形回帰分析.html#cb88-5" tabindex="-1"></a><span class="co">#&gt; </span></span>
+<span id="cb88-6"><a href="線形回帰分析.html#cb88-6" tabindex="-1"></a><span class="co">#&gt; Call:</span></span>
+<span id="cb88-7"><a href="線形回帰分析.html#cb88-7" tabindex="-1"></a><span class="co">#&gt; lm(formula = pbr ~ margin + turnover + leverage + growth + log_mcap, </span></span>
+<span id="cb88-8"><a href="線形回帰分析.html#cb88-8" tabindex="-1"></a><span class="co">#&gt;     data = firm2)</span></span>
+<span id="cb88-9"><a href="線形回帰分析.html#cb88-9" tabindex="-1"></a><span class="co">#&gt; </span></span>
+<span id="cb88-10"><a href="線形回帰分析.html#cb88-10" tabindex="-1"></a><span class="co">#&gt; Residuals:</span></span>
+<span id="cb88-11"><a href="線形回帰分析.html#cb88-11" tabindex="-1"></a><span class="co">#&gt;      Min       1Q   Median       3Q      Max </span></span>
+<span id="cb88-12"><a href="線形回帰分析.html#cb88-12" tabindex="-1"></a><span class="co">#&gt; -0.77710 -0.22963 -0.01206  0.20767  1.30679 </span></span>
+<span id="cb88-13"><a href="線形回帰分析.html#cb88-13" tabindex="-1"></a><span class="co">#&gt; </span></span>
+<span id="cb88-14"><a href="線形回帰分析.html#cb88-14" tabindex="-1"></a><span class="co">#&gt; Coefficients:</span></span>
+<span id="cb88-15"><a href="線形回帰分析.html#cb88-15" tabindex="-1"></a><span class="co">#&gt;              Estimate Std. Error t value Pr(&gt;|t|)    </span></span>
+<span id="cb88-16"><a href="線形回帰分析.html#cb88-16" tabindex="-1"></a><span class="co">#&gt; (Intercept) -0.392073   0.101953  -3.846 0.000136 ***</span></span>
+<span id="cb88-17"><a href="線形回帰分析.html#cb88-17" tabindex="-1"></a><span class="co">#&gt; margin       0.084403   0.003750  22.506  &lt; 2e-16 ***</span></span>
+<span id="cb88-18"><a href="線形回帰分析.html#cb88-18" tabindex="-1"></a><span class="co">#&gt; turnover     0.270689   0.033341   8.119 3.78e-15 ***</span></span>
+<span id="cb88-19"><a href="線形回帰分析.html#cb88-19" tabindex="-1"></a><span class="co">#&gt; leverage    -0.013454   0.026598  -0.506 0.613197    </span></span>
+<span id="cb88-20"><a href="線形回帰分析.html#cb88-20" tabindex="-1"></a><span class="co">#&gt; growth       0.023382   0.002071  11.288  &lt; 2e-16 ***</span></span>
+<span id="cb88-21"><a href="線形回帰分析.html#cb88-21" tabindex="-1"></a><span class="co">#&gt; log_mcap     0.144253   0.011442  12.608  &lt; 2e-16 ***</span></span>
+<span id="cb88-22"><a href="線形回帰分析.html#cb88-22" tabindex="-1"></a><span class="co">#&gt; ---</span></span>
+<span id="cb88-23"><a href="線形回帰分析.html#cb88-23" tabindex="-1"></a><span class="co">#&gt; Signif. codes:  0 &#39;***&#39; 0.001 &#39;**&#39; 0.01 &#39;*&#39; 0.05 &#39;.&#39; 0.1 &#39; &#39; 1</span></span>
+<span id="cb88-24"><a href="線形回帰分析.html#cb88-24" tabindex="-1"></a><span class="co">#&gt; </span></span>
+<span id="cb88-25"><a href="線形回帰分析.html#cb88-25" tabindex="-1"></a><span class="co">#&gt; Residual standard error: 0.3213 on 494 degrees of freedom</span></span>
+<span id="cb88-26"><a href="線形回帰分析.html#cb88-26" tabindex="-1"></a><span class="co">#&gt; Multiple R-squared:  0.6185, Adjusted R-squared:  0.6147 </span></span>
+<span id="cb88-27"><a href="線形回帰分析.html#cb88-27" tabindex="-1"></a><span class="co">#&gt; F-statistic: 160.2 on 5 and 494 DF,  p-value: &lt; 2.2e-16</span></span></code></pre></div>
+<p>補正決定係数は 0.562 から 0.615 に改善した.</p>
+<p>標準的なモデル選択規準であるAICやBICは, 関数<code>AIC()</code>, <code>BIC()</code>によって計算することができる.</p>
+<div class="sourceCode" id="cb89"><pre class="sourceCode r"><code class="sourceCode r"><span id="cb89-1"><a href="線形回帰分析.html#cb89-1" tabindex="-1"></a><span class="fu">AIC</span>(res_lm5, res_lm4)</span>
+<span id="cb89-2"><a href="線形回帰分析.html#cb89-2" tabindex="-1"></a><span class="co">#&gt;         df      AIC</span></span>
+<span id="cb89-3"><a href="線形回帰分析.html#cb89-3" tabindex="-1"></a><span class="co">#&gt; res_lm5  7 291.5643</span></span>
+<span id="cb89-4"><a href="線形回帰分析.html#cb89-4" tabindex="-1"></a><span class="co">#&gt; res_lm4  7 356.1520</span></span>
+<span id="cb89-5"><a href="線形回帰分析.html#cb89-5" tabindex="-1"></a><span class="fu">BIC</span>(res_lm5, res_lm4)</span>
+<span id="cb89-6"><a href="線形回帰分析.html#cb89-6" tabindex="-1"></a><span class="co">#&gt;         df      BIC</span></span>
+<span id="cb89-7"><a href="線形回帰分析.html#cb89-7" tabindex="-1"></a><span class="co">#&gt; res_lm5  7 321.0666</span></span>
+<span id="cb89-8"><a href="線形回帰分析.html#cb89-8" tabindex="-1"></a><span class="co">#&gt; res_lm4  7 385.6543</span></span></code></pre></div>
+<p>AIC, BIC双方とも, <code>res_lm5</code>は<code>res_lm4</code>より望ましいことを示している.</p>
+<p>入れ子型 (nested) の関係にある2つのモデルを <code>anova()</code> に与えることで, 追加した変数群 (ここでは成長性と規模) の有意性を <span class="math inline">\(F\)</span>検定でまとめて検定できる (講義スライド「線形回帰③」の例).</p>
+<div class="sourceCode" id="cb90"><pre class="sourceCode r"><code class="sourceCode r"><span id="cb90-1"><a href="線形回帰分析.html#cb90-1" tabindex="-1"></a><span class="fu">anova</span>(res_mod1, res_lm5)</span>
+<span id="cb90-2"><a href="線形回帰分析.html#cb90-2" tabindex="-1"></a><span class="co">#&gt; Analysis of Variance Table</span></span>
+<span id="cb90-3"><a href="線形回帰分析.html#cb90-3" tabindex="-1"></a><span class="co">#&gt; </span></span>
+<span id="cb90-4"><a href="線形回帰分析.html#cb90-4" tabindex="-1"></a><span class="co">#&gt; Model 1: pbr ~ margin + turnover + leverage</span></span>
+<span id="cb90-5"><a href="線形回帰分析.html#cb90-5" tabindex="-1"></a><span class="co">#&gt; Model 2: pbr ~ margin + turnover + leverage + growth + log_mcap</span></span>
+<span id="cb90-6"><a href="線形回帰分析.html#cb90-6" tabindex="-1"></a><span class="co">#&gt;   Res.Df    RSS Df Sum of Sq      F    Pr(&gt;F)    </span></span>
+<span id="cb90-7"><a href="線形回帰分析.html#cb90-7" tabindex="-1"></a><span class="co">#&gt; 1    496 76.652                                  </span></span>
+<span id="cb90-8"><a href="線形回帰分析.html#cb90-8" tabindex="-1"></a><span class="co">#&gt; 2    494 51.002  2    25.651 124.23 &lt; 2.2e-16 ***</span></span>
+<span id="cb90-9"><a href="線形回帰分析.html#cb90-9" tabindex="-1"></a><span class="co">#&gt; ---</span></span>
+<span id="cb90-10"><a href="線形回帰分析.html#cb90-10" tabindex="-1"></a><span class="co">#&gt; Signif. codes:  0 &#39;***&#39; 0.001 &#39;**&#39; 0.01 &#39;*&#39; 0.05 &#39;.&#39; 0.1 &#39; &#39; 1</span></span>
+<span id="cb90-11"><a href="線形回帰分析.html#cb90-11" tabindex="-1"></a><span class="co"># anova(res_mod1, res_lm5, test = &#39;LRT&#39;) # 尤度比検定</span></span></code></pre></div>
+<p><span class="math inline">\(p\)</span>値は非常に小さく, 成長性と規模の2変数を加えることで, モデルの説明力は有意に改善している.</p>
+<ul>
+<li>ステップワイズ法による変数選択</li>
+</ul>
+<p>ステップワイズ法は, 関数<code>lm()</code>の実行結果オブジェクトを, 関数<code>step()</code>に入力として与えることで実行することができる.</p>
+<pre><code># step(); AICによって決定
+# scope: モデルサーチの範囲 (追加や削除を検討するべき変数を指定)
+# scope指定ない場合:
+# - directionのデフォルトは, 変数減少法 (後方削除)
+# - モデルサーチ上限 (upper) は, 初期モデル
+# scope指定ある場合:
+# - directionのデフォルトは, 変数増減法
+# - scopeがリストでなく, 単一式で与えられている場合, upperモデルと解釈 (lowerは欠損)</code></pre>
+<div class="sourceCode" id="cb92"><pre class="sourceCode r"><code class="sourceCode r"><span id="cb92-1"><a href="線形回帰分析.html#cb92-1" tabindex="-1"></a>firm3 <span class="ot">&lt;-</span> <span class="fu">select</span>(firm2, <span class="sc">-</span>mcap)  <span class="co"># mcapの代わりにlog_mcapを使用</span></span>
+<span id="cb92-2"><a href="線形回帰分析.html#cb92-2" tabindex="-1"></a>res_lm_all <span class="ot">&lt;-</span> <span class="fu">lm</span>(pbr <span class="sc">~</span> ., <span class="at">data =</span> firm3)  <span class="co"># → 全説明変数 (業種は2つのダミー変数として入る)</span></span>
+<span id="cb92-3"><a href="線形回帰分析.html#cb92-3" tabindex="-1"></a>res_lm_all_2 <span class="ot">&lt;-</span> <span class="fu">lm</span>(pbr <span class="sc">~</span> <span class="dv">1</span>, <span class="at">data =</span> firm3)  <span class="co"># → y切片のみ (変数なし)</span></span>
+<span id="cb92-4"><a href="線形回帰分析.html#cb92-4" tabindex="-1"></a><span class="co">#</span></span>
+<span id="cb92-5"><a href="線形回帰分析.html#cb92-5" tabindex="-1"></a><span class="fu">step</span>(res_lm5)  <span class="co"># 変数減少法 (scopeない場合のデフォルト)</span></span>
+<span id="cb92-6"><a href="線形回帰分析.html#cb92-6" tabindex="-1"></a><span class="co">#&gt; Start:  AIC=-1129.37</span></span>
+<span id="cb92-7"><a href="線形回帰分析.html#cb92-7" tabindex="-1"></a><span class="co">#&gt; pbr ~ margin + turnover + leverage + growth + log_mcap</span></span>
+<span id="cb92-8"><a href="線形回帰分析.html#cb92-8" tabindex="-1"></a><span class="co">#&gt; </span></span>
+<span id="cb92-9"><a href="線形回帰分析.html#cb92-9" tabindex="-1"></a><span class="co">#&gt;            Df Sum of Sq     RSS      AIC</span></span>
+<span id="cb92-10"><a href="線形回帰分析.html#cb92-10" tabindex="-1"></a><span class="co">#&gt; - leverage  1     0.026  51.028 -1131.12</span></span>
+<span id="cb92-11"><a href="線形回帰分析.html#cb92-11" tabindex="-1"></a><span class="co">#&gt; &lt;none&gt;                   51.002 -1129.37</span></span>
+<span id="cb92-12"><a href="線形回帰分析.html#cb92-12" tabindex="-1"></a><span class="co">#&gt; - turnover  1     6.805  57.807 -1068.75</span></span>
+<span id="cb92-13"><a href="線形回帰分析.html#cb92-13" tabindex="-1"></a><span class="co">#&gt; - growth    1    13.155  64.156 -1016.64</span></span>
+<span id="cb92-14"><a href="線形回帰分析.html#cb92-14" tabindex="-1"></a><span class="co">#&gt; - log_mcap  1    16.410  67.412  -991.89</span></span>
+<span id="cb92-15"><a href="線形回帰分析.html#cb92-15" tabindex="-1"></a><span class="co">#&gt; - margin    1    52.295 103.297  -778.50</span></span>
+<span id="cb92-16"><a href="線形回帰分析.html#cb92-16" tabindex="-1"></a><span class="co">#&gt; </span></span>
+<span id="cb92-17"><a href="線形回帰分析.html#cb92-17" tabindex="-1"></a><span class="co">#&gt; Step:  AIC=-1131.12</span></span>
+<span id="cb92-18"><a href="線形回帰分析.html#cb92-18" tabindex="-1"></a><span class="co">#&gt; pbr ~ margin + turnover + growth + log_mcap</span></span>
+<span id="cb92-19"><a href="線形回帰分析.html#cb92-19" tabindex="-1"></a><span class="co">#&gt; </span></span>
+<span id="cb92-20"><a href="線形回帰分析.html#cb92-20" tabindex="-1"></a><span class="co">#&gt;            Df Sum of Sq     RSS      AIC</span></span>
+<span id="cb92-21"><a href="線形回帰分析.html#cb92-21" tabindex="-1"></a><span class="co">#&gt; &lt;none&gt;                   51.028 -1131.12</span></span>
+<span id="cb92-22"><a href="線形回帰分析.html#cb92-22" tabindex="-1"></a><span class="co">#&gt; - turnover  1     7.360  58.388 -1065.75</span></span>
+<span id="cb92-23"><a href="線形回帰分析.html#cb92-23" tabindex="-1"></a><span class="co">#&gt; - growth    1    13.210  64.238 -1018.00</span></span>
+<span id="cb92-24"><a href="線形回帰分析.html#cb92-24" tabindex="-1"></a><span class="co">#&gt; - log_mcap  1    16.481  67.509  -993.17</span></span>
+<span id="cb92-25"><a href="線形回帰分析.html#cb92-25" tabindex="-1"></a><span class="co">#&gt; - margin    1    54.412 105.440  -770.23</span></span>
+<span id="cb92-26"><a href="線形回帰分析.html#cb92-26" tabindex="-1"></a><span class="co">#&gt; </span></span>
+<span id="cb92-27"><a href="線形回帰分析.html#cb92-27" tabindex="-1"></a><span class="co">#&gt; Call:</span></span>
+<span id="cb92-28"><a href="線形回帰分析.html#cb92-28" tabindex="-1"></a><span class="co">#&gt; lm(formula = pbr ~ margin + turnover + growth + log_mcap, data = firm2)</span></span>
+<span id="cb92-29"><a href="線形回帰分析.html#cb92-29" tabindex="-1"></a><span class="co">#&gt; </span></span>
+<span id="cb92-30"><a href="線形回帰分析.html#cb92-30" tabindex="-1"></a><span class="co">#&gt; Coefficients:</span></span>
+<span id="cb92-31"><a href="線形回帰分析.html#cb92-31" tabindex="-1"></a><span class="co">#&gt; (Intercept)       margin     turnover       growth     log_mcap  </span></span>
+<span id="cb92-32"><a href="線形回帰分析.html#cb92-32" tabindex="-1"></a><span class="co">#&gt;    -0.41203      0.08474      0.26500      0.02342      0.14358</span></span>
+<span id="cb92-33"><a href="線形回帰分析.html#cb92-33" tabindex="-1"></a><span class="co"># step(res_lm5, direction = &#39;forward&#39;)\t# 変数増加法 (上限は初期モデル)</span></span>
+<span id="cb92-34"><a href="線形回帰分析.html#cb92-34" tabindex="-1"></a><span class="co"># step(res_lm5, direction = &#39;both&#39;)\t# 変数増減法 (上限は初期モデル)</span></span></code></pre></div>
+<p>変数減少法により, <code>leverage</code> が除かれた.</p>
+<div class="sourceCode" id="cb93"><pre class="sourceCode r"><code class="sourceCode r"><span id="cb93-1"><a href="線形回帰分析.html#cb93-1" tabindex="-1"></a><span class="co"># 採用する変数の上限・下限の指定</span></span>
+<span id="cb93-2"><a href="線形回帰分析.html#cb93-2" tabindex="-1"></a><span class="fu">step</span>(res_lm_all, <span class="at">scope =</span> <span class="fu">list</span>(<span class="at">lower =</span> <span class="sc">~</span>margin <span class="sc">+</span> turnover <span class="sc">+</span> leverage))  <span class="co"># 下限のモデルを指定. 変数増減法</span></span>
+<span id="cb93-3"><a href="線形回帰分析.html#cb93-3" tabindex="-1"></a><span class="co">#&gt; Start:  AIC=-1323.47</span></span>
+<span id="cb93-4"><a href="線形回帰分析.html#cb93-4" tabindex="-1"></a><span class="co">#&gt; pbr ~ roe + margin + turnover + leverage + growth + div_yield + </span></span>
+<span id="cb93-5"><a href="線形回帰分析.html#cb93-5" tabindex="-1"></a><span class="co">#&gt;     industry + tokyo + log_mcap</span></span>
+<span id="cb93-6"><a href="線形回帰分析.html#cb93-6" tabindex="-1"></a><span class="co">#&gt; </span></span>
+<span id="cb93-7"><a href="線形回帰分析.html#cb93-7" tabindex="-1"></a><span class="co">#&gt;             Df Sum of Sq    RSS     AIC</span></span>
+<span id="cb93-8"><a href="線形回帰分析.html#cb93-8" tabindex="-1"></a><span class="co">#&gt; - tokyo      1    0.0005 33.909 -1325.5</span></span>
+<span id="cb93-9"><a href="線形回帰分析.html#cb93-9" tabindex="-1"></a><span class="co">#&gt; &lt;none&gt;                   33.909 -1323.5</span></span>
+<span id="cb93-10"><a href="線形回帰分析.html#cb93-10" tabindex="-1"></a><span class="co">#&gt; - roe        1    0.5722 34.481 -1317.1</span></span>
+<span id="cb93-11"><a href="線形回帰分析.html#cb93-11" tabindex="-1"></a><span class="co">#&gt; - industry   2    3.0459 36.955 -1284.5</span></span>
+<span id="cb93-12"><a href="線形回帰分析.html#cb93-12" tabindex="-1"></a><span class="co">#&gt; - growth     1    4.6422 38.551 -1261.3</span></span>
+<span id="cb93-13"><a href="線形回帰分析.html#cb93-13" tabindex="-1"></a><span class="co">#&gt; - log_mcap   1    8.0191 41.928 -1219.3</span></span>
+<span id="cb93-14"><a href="線形回帰分析.html#cb93-14" tabindex="-1"></a><span class="co">#&gt; - div_yield  1   10.8088 44.718 -1187.1</span></span>
+<span id="cb93-15"><a href="線形回帰分析.html#cb93-15" tabindex="-1"></a><span class="co">#&gt; </span></span>
+<span id="cb93-16"><a href="線形回帰分析.html#cb93-16" tabindex="-1"></a><span class="co">#&gt; Step:  AIC=-1325.46</span></span>
+<span id="cb93-17"><a href="線形回帰分析.html#cb93-17" tabindex="-1"></a><span class="co">#&gt; pbr ~ roe + margin + turnover + leverage + growth + div_yield + </span></span>
+<span id="cb93-18"><a href="線形回帰分析.html#cb93-18" tabindex="-1"></a><span class="co">#&gt;     industry + log_mcap</span></span>
+<span id="cb93-19"><a href="線形回帰分析.html#cb93-19" tabindex="-1"></a><span class="co">#&gt; </span></span>
+<span id="cb93-20"><a href="線形回帰分析.html#cb93-20" tabindex="-1"></a><span class="co">#&gt;             Df Sum of Sq    RSS     AIC</span></span>
+<span id="cb93-21"><a href="線形回帰分析.html#cb93-21" tabindex="-1"></a><span class="co">#&gt; &lt;none&gt;                   33.909 -1325.5</span></span>
+<span id="cb93-22"><a href="線形回帰分析.html#cb93-22" tabindex="-1"></a><span class="co">#&gt; - roe        1    0.5744 34.484 -1319.1</span></span>
+<span id="cb93-23"><a href="線形回帰分析.html#cb93-23" tabindex="-1"></a><span class="co">#&gt; - industry   2    3.0458 36.955 -1286.5</span></span>
+<span id="cb93-24"><a href="線形回帰分析.html#cb93-24" tabindex="-1"></a><span class="co">#&gt; - growth     1    4.6574 38.567 -1263.1</span></span>
+<span id="cb93-25"><a href="線形回帰分析.html#cb93-25" tabindex="-1"></a><span class="co">#&gt; - log_mcap   1    8.0508 41.960 -1220.9</span></span>
+<span id="cb93-26"><a href="線形回帰分析.html#cb93-26" tabindex="-1"></a><span class="co">#&gt; - div_yield  1   10.8087 44.718 -1189.1</span></span>
+<span id="cb93-27"><a href="線形回帰分析.html#cb93-27" tabindex="-1"></a><span class="co">#&gt; </span></span>
+<span id="cb93-28"><a href="線形回帰分析.html#cb93-28" tabindex="-1"></a><span class="co">#&gt; Call:</span></span>
+<span id="cb93-29"><a href="線形回帰分析.html#cb93-29" tabindex="-1"></a><span class="co">#&gt; lm(formula = pbr ~ roe + margin + turnover + leverage + growth + </span></span>
+<span id="cb93-30"><a href="線形回帰分析.html#cb93-30" tabindex="-1"></a><span class="co">#&gt;     div_yield + industry + log_mcap, data = firm3)</span></span>
+<span id="cb93-31"><a href="線形回帰分析.html#cb93-31" tabindex="-1"></a><span class="co">#&gt; </span></span>
+<span id="cb93-32"><a href="線形回帰分析.html#cb93-32" tabindex="-1"></a><span class="co">#&gt; Coefficients:</span></span>
+<span id="cb93-33"><a href="線形回帰分析.html#cb93-33" tabindex="-1"></a><span class="co">#&gt;     (Intercept)              roe           margin         turnover  </span></span>
+<span id="cb93-34"><a href="線形回帰分析.html#cb93-34" tabindex="-1"></a><span class="co">#&gt;         0.01077          0.01068          0.06314          0.27352  </span></span>
+<span id="cb93-35"><a href="線形回帰分析.html#cb93-35" tabindex="-1"></a><span class="co">#&gt;        leverage           growth        div_yield   industryretail  </span></span>
+<span id="cb93-36"><a href="線形回帰分析.html#cb93-36" tabindex="-1"></a><span class="co">#&gt;         0.04904          0.01465         -0.12210         -0.04364  </span></span>
+<span id="cb93-37"><a href="線形回帰分析.html#cb93-37" tabindex="-1"></a><span class="co">#&gt; industryservice         log_mcap  </span></span>
+<span id="cb93-38"><a href="線形回帰分析.html#cb93-38" tabindex="-1"></a><span class="co">#&gt;         0.21717          0.10769</span></span>
+<span id="cb93-39"><a href="線形回帰分析.html#cb93-39" tabindex="-1"></a><span class="fu">step</span>(res_lm_all_2, <span class="at">scope =</span> <span class="fu">list</span>(<span class="at">upper =</span> <span class="sc">~</span>margin <span class="sc">+</span> turnover <span class="sc">+</span> leverage))  <span class="co"># 上限のモデルを指定. 変数増減法</span></span>
+<span id="cb93-40"><a href="線形回帰分析.html#cb93-40" tabindex="-1"></a><span class="co">#&gt; Start:  AIC=-657.51</span></span>
+<span id="cb93-41"><a href="線形回帰分析.html#cb93-41" tabindex="-1"></a><span class="co">#&gt; pbr ~ 1</span></span>
+<span id="cb93-42"><a href="線形回帰分析.html#cb93-42" tabindex="-1"></a><span class="co">#&gt; </span></span>
+<span id="cb93-43"><a href="線形回帰分析.html#cb93-43" tabindex="-1"></a><span class="co">#&gt;            Df Sum of Sq     RSS     AIC</span></span>
+<span id="cb93-44"><a href="線形回帰分析.html#cb93-44" tabindex="-1"></a><span class="co">#&gt; + margin    1    53.726  79.974 -912.45</span></span>
+<span id="cb93-45"><a href="線形回帰分析.html#cb93-45" tabindex="-1"></a><span class="co">#&gt; + leverage  1     1.970 131.730 -662.93</span></span>
+<span id="cb93-46"><a href="線形回帰分析.html#cb93-46" tabindex="-1"></a><span class="co">#&gt; &lt;none&gt;                  133.700 -657.51</span></span>
+<span id="cb93-47"><a href="線形回帰分析.html#cb93-47" tabindex="-1"></a><span class="co">#&gt; + turnover  1     0.425 133.274 -657.10</span></span>
+<span id="cb93-48"><a href="線形回帰分析.html#cb93-48" tabindex="-1"></a><span class="co">#&gt; </span></span>
+<span id="cb93-49"><a href="線形回帰分析.html#cb93-49" tabindex="-1"></a><span class="co">#&gt; Step:  AIC=-912.45</span></span>
+<span id="cb93-50"><a href="線形回帰分析.html#cb93-50" tabindex="-1"></a><span class="co">#&gt; pbr ~ margin</span></span>
+<span id="cb93-51"><a href="線形回帰分析.html#cb93-51" tabindex="-1"></a><span class="co">#&gt; </span></span>
+<span id="cb93-52"><a href="線形回帰分析.html#cb93-52" tabindex="-1"></a><span class="co">#&gt;            Df Sum of Sq     RSS     AIC</span></span>
+<span id="cb93-53"><a href="線形回帰分析.html#cb93-53" tabindex="-1"></a><span class="co">#&gt; + turnover  1     3.299  76.675 -931.51</span></span>
+<span id="cb93-54"><a href="線形回帰分析.html#cb93-54" tabindex="-1"></a><span class="co">#&gt; + leverage  1     0.520  79.454 -913.71</span></span>
+<span id="cb93-55"><a href="線形回帰分析.html#cb93-55" tabindex="-1"></a><span class="co">#&gt; &lt;none&gt;                   79.974 -912.45</span></span>
+<span id="cb93-56"><a href="線形回帰分析.html#cb93-56" tabindex="-1"></a><span class="co">#&gt; - margin    1    53.726 133.700 -657.51</span></span>
+<span id="cb93-57"><a href="線形回帰分析.html#cb93-57" tabindex="-1"></a><span class="co">#&gt; </span></span>
+<span id="cb93-58"><a href="線形回帰分析.html#cb93-58" tabindex="-1"></a><span class="co">#&gt; Step:  AIC=-931.51</span></span>
+<span id="cb93-59"><a href="線形回帰分析.html#cb93-59" tabindex="-1"></a><span class="co">#&gt; pbr ~ margin + turnover</span></span>
+<span id="cb93-60"><a href="線形回帰分析.html#cb93-60" tabindex="-1"></a><span class="co">#&gt; </span></span>
+<span id="cb93-61"><a href="線形回帰分析.html#cb93-61" tabindex="-1"></a><span class="co">#&gt;            Df Sum of Sq     RSS     AIC</span></span>
+<span id="cb93-62"><a href="線形回帰分析.html#cb93-62" tabindex="-1"></a><span class="co">#&gt; &lt;none&gt;                   76.675 -931.51</span></span>
+<span id="cb93-63"><a href="線形回帰分析.html#cb93-63" tabindex="-1"></a><span class="co">#&gt; + leverage  1     0.023  76.652 -929.66</span></span>
+<span id="cb93-64"><a href="線形回帰分析.html#cb93-64" tabindex="-1"></a><span class="co">#&gt; - turnover  1     3.299  79.974 -912.45</span></span>
+<span id="cb93-65"><a href="線形回帰分析.html#cb93-65" tabindex="-1"></a><span class="co">#&gt; - margin    1    56.599 133.274 -657.10</span></span>
+<span id="cb93-66"><a href="線形回帰分析.html#cb93-66" tabindex="-1"></a><span class="co">#&gt; </span></span>
+<span id="cb93-67"><a href="線形回帰分析.html#cb93-67" tabindex="-1"></a><span class="co">#&gt; Call:</span></span>
+<span id="cb93-68"><a href="線形回帰分析.html#cb93-68" tabindex="-1"></a><span class="co">#&gt; lm(formula = pbr ~ margin + turnover, data = firm3)</span></span>
+<span id="cb93-69"><a href="線形回帰分析.html#cb93-69" tabindex="-1"></a><span class="co">#&gt; </span></span>
+<span id="cb93-70"><a href="線形回帰分析.html#cb93-70" tabindex="-1"></a><span class="co">#&gt; Coefficients:</span></span>
+<span id="cb93-71"><a href="線形回帰分析.html#cb93-71" tabindex="-1"></a><span class="co">#&gt; (Intercept)       margin     turnover  </span></span>
+<span id="cb93-72"><a href="線形回帰分析.html#cb93-72" tabindex="-1"></a><span class="co">#&gt;     0.67027      0.08597      0.17137</span></span>
+<span id="cb93-73"><a href="線形回帰分析.html#cb93-73" tabindex="-1"></a><span class="fu">step</span>(res_lm5, <span class="at">scope =</span> <span class="fu">list</span>(<span class="at">upper =</span> <span class="sc">~</span>margin <span class="sc">+</span> turnover <span class="sc">+</span> leverage <span class="sc">+</span> growth <span class="sc">+</span> log_mcap <span class="sc">+</span></span>
+<span id="cb93-74"><a href="線形回帰分析.html#cb93-74" tabindex="-1"></a>  industry <span class="sc">+</span> tokyo, <span class="at">lower =</span> <span class="sc">~</span>margin <span class="sc">+</span> turnover <span class="sc">+</span> leverage))</span>
+<span id="cb93-75"><a href="線形回帰分析.html#cb93-75" tabindex="-1"></a><span class="co">#&gt; Start:  AIC=-1129.37</span></span>
+<span id="cb93-76"><a href="線形回帰分析.html#cb93-76" tabindex="-1"></a><span class="co">#&gt; pbr ~ margin + turnover + leverage + growth + log_mcap</span></span>
+<span id="cb93-77"><a href="線形回帰分析.html#cb93-77" tabindex="-1"></a><span class="co">#&gt; </span></span>
+<span id="cb93-78"><a href="線形回帰分析.html#cb93-78" tabindex="-1"></a><span class="co">#&gt;            Df Sum of Sq    RSS      AIC</span></span>
+<span id="cb93-79"><a href="線形回帰分析.html#cb93-79" tabindex="-1"></a><span class="co">#&gt; + industry  2    6.2824 44.719 -1191.10</span></span>
+<span id="cb93-80"><a href="線形回帰分析.html#cb93-80" tabindex="-1"></a><span class="co">#&gt; &lt;none&gt;                  51.002 -1129.37</span></span>
+<span id="cb93-81"><a href="線形回帰分析.html#cb93-81" tabindex="-1"></a><span class="co">#&gt; + tokyo     1    0.0083 50.993 -1127.46</span></span>
+<span id="cb93-82"><a href="線形回帰分析.html#cb93-82" tabindex="-1"></a><span class="co">#&gt; - growth    1   13.1546 64.156 -1016.64</span></span>
+<span id="cb93-83"><a href="線形回帰分析.html#cb93-83" tabindex="-1"></a><span class="co">#&gt; - log_mcap  1   16.4103 67.412  -991.89</span></span>
+<span id="cb93-84"><a href="線形回帰分析.html#cb93-84" tabindex="-1"></a><span class="co">#&gt; </span></span>
+<span id="cb93-85"><a href="線形回帰分析.html#cb93-85" tabindex="-1"></a><span class="co">#&gt; Step:  AIC=-1191.1</span></span>
+<span id="cb93-86"><a href="線形回帰分析.html#cb93-86" tabindex="-1"></a><span class="co">#&gt; pbr ~ margin + turnover + leverage + growth + log_mcap + industry</span></span>
+<span id="cb93-87"><a href="線形回帰分析.html#cb93-87" tabindex="-1"></a><span class="co">#&gt; </span></span>
+<span id="cb93-88"><a href="線形回帰分析.html#cb93-88" tabindex="-1"></a><span class="co">#&gt;            Df Sum of Sq    RSS     AIC</span></span>
+<span id="cb93-89"><a href="線形回帰分析.html#cb93-89" tabindex="-1"></a><span class="co">#&gt; &lt;none&gt;                  44.719 -1191.1</span></span>
+<span id="cb93-90"><a href="線形回帰分析.html#cb93-90" tabindex="-1"></a><span class="co">#&gt; + tokyo     1    0.0003 44.719 -1189.1</span></span>
+<span id="cb93-91"><a href="線形回帰分析.html#cb93-91" tabindex="-1"></a><span class="co">#&gt; - industry  2    6.2824 51.002 -1129.4</span></span>
+<span id="cb93-92"><a href="線形回帰分析.html#cb93-92" tabindex="-1"></a><span class="co">#&gt; - growth    1    9.3764 54.096 -1097.9</span></span>
+<span id="cb93-93"><a href="線形回帰分析.html#cb93-93" tabindex="-1"></a><span class="co">#&gt; - log_mcap  1   16.7254 61.445 -1034.2</span></span>
+<span id="cb93-94"><a href="線形回帰分析.html#cb93-94" tabindex="-1"></a><span class="co">#&gt; </span></span>
+<span id="cb93-95"><a href="線形回帰分析.html#cb93-95" tabindex="-1"></a><span class="co">#&gt; Call:</span></span>
+<span id="cb93-96"><a href="線形回帰分析.html#cb93-96" tabindex="-1"></a><span class="co">#&gt; lm(formula = pbr ~ margin + turnover + leverage + growth + log_mcap + </span></span>
+<span id="cb93-97"><a href="線形回帰分析.html#cb93-97" tabindex="-1"></a><span class="co">#&gt;     industry, data = firm2)</span></span>
+<span id="cb93-98"><a href="線形回帰分析.html#cb93-98" tabindex="-1"></a><span class="co">#&gt; </span></span>
+<span id="cb93-99"><a href="線形回帰分析.html#cb93-99" tabindex="-1"></a><span class="co">#&gt; Coefficients:</span></span>
+<span id="cb93-100"><a href="線形回帰分析.html#cb93-100" tabindex="-1"></a><span class="co">#&gt;     (Intercept)           margin         turnover         leverage  </span></span>
+<span id="cb93-101"><a href="線形回帰分析.html#cb93-101" tabindex="-1"></a><span class="co">#&gt;        -0.63350          0.07110          0.38666          0.04165  </span></span>
+<span id="cb93-102"><a href="線形回帰分析.html#cb93-102" tabindex="-1"></a><span class="co">#&gt;          growth         log_mcap   industryretail  industryservice  </span></span>
+<span id="cb93-103"><a href="線形回帰分析.html#cb93-103" tabindex="-1"></a><span class="co">#&gt;         0.02014          0.14717         -0.12019          0.30087</span></span>
+<span id="cb93-104"><a href="線形回帰分析.html#cb93-104" tabindex="-1"></a><span class="co"># 上限・下限を同時に指定. 変数増減法</span></span></code></pre></div>
+</div>
+<div id="多重共線性のチェックについて" class="section level4 unnumbered hasAnchor">
+<h4>多重共線性のチェックについて<a href="線形回帰分析.html#多重共線性のチェックについて" class="anchor-section" aria-label="Anchor link to header"></a></h4>
+<p>VIF (Variance Inflation Factor) によって, 説明変数間の多重共線性 (マルチコ) の
+有無を確認することができる.
+VIFによる多重共線性への対応に関する慣用ルールとして, 5以上の値を持つ説明変数は要注意, 10以上の変数は除去するのが良いとされている.</p>
+<div class="sourceCode" id="cb94"><pre class="sourceCode r"><code class="sourceCode r"><span id="cb94-1"><a href="線形回帰分析.html#cb94-1" tabindex="-1"></a><span class="co"># install.packages(&#39;car&#39;)\t\t# or RStudio, Tools → Install packages,</span></span>
+<span id="cb94-2"><a href="線形回帰分析.html#cb94-2" tabindex="-1"></a><span class="fu">library</span>(car)  <span class="co"># &#39;Companion to Applied Regression&#39; package</span></span>
+<span id="cb94-3"><a href="線形回帰分析.html#cb94-3" tabindex="-1"></a><span class="fu">vif</span>(res_lm_all)  <span class="co"># 全説明変数についてVIFを計算</span></span>
+<span id="cb94-4"><a href="線形回帰分析.html#cb94-4" tabindex="-1"></a><span class="co">#&gt;               GVIF Df GVIF^(1/(2*Df))</span></span>
+<span id="cb94-5"><a href="線形回帰分析.html#cb94-5" tabindex="-1"></a><span class="co">#&gt; roe       6.042142  1        2.458077</span></span>
+<span id="cb94-6"><a href="線形回帰分析.html#cb94-6" tabindex="-1"></a><span class="co">#&gt; margin    6.566291  1        2.562478</span></span>
+<span id="cb94-7"><a href="線形回帰分析.html#cb94-7" tabindex="-1"></a><span class="co">#&gt; turnover  5.642767  1        2.375451</span></span>
+<span id="cb94-8"><a href="線形回帰分析.html#cb94-8" tabindex="-1"></a><span class="co">#&gt; leverage  2.031983  1        1.425477</span></span>
+<span id="cb94-9"><a href="線形回帰分析.html#cb94-9" tabindex="-1"></a><span class="co">#&gt; growth    1.151077  1        1.072883</span></span>
+<span id="cb94-10"><a href="線形回帰分析.html#cb94-10" tabindex="-1"></a><span class="co">#&gt; div_yield 1.377147  1        1.173519</span></span>
+<span id="cb94-11"><a href="線形回帰分析.html#cb94-11" tabindex="-1"></a><span class="co">#&gt; industry  6.152914  2        1.574962</span></span>
+<span id="cb94-12"><a href="線形回帰分析.html#cb94-12" tabindex="-1"></a><span class="co">#&gt; tokyo     1.015043  1        1.007494</span></span>
+<span id="cb94-13"><a href="線形回帰分析.html#cb94-13" tabindex="-1"></a><span class="co">#&gt; log_mcap  1.270998  1        1.127386</span></span></code></pre></div>
+<p>説明変数に質的変数 (<code>industry</code>) を含むため, VIFを拡張した<strong>GVIF (Generalized VIF)</strong> が表示されている (GVIFの見方は, 後述の高速道路事故データの例を参照).
+<code>roe</code>, <code>margin</code>, <code>turnover</code> のGVIF (量的変数ではVIFと同じ) が5を超えている.
+<code>roe</code> を除いてVIF値を再計算してみる.</p>
+<div class="sourceCode" id="cb95"><pre class="sourceCode r"><code class="sourceCode r"><span id="cb95-1"><a href="線形回帰分析.html#cb95-1" tabindex="-1"></a><span class="fu">vif</span>(<span class="fu">update</span>(res_lm_all, . <span class="sc">~</span> . <span class="sc">-</span> roe))  <span class="co"># roeを除いてVIF値を再計算</span></span>
+<span id="cb95-2"><a href="線形回帰分析.html#cb95-2" tabindex="-1"></a><span class="co">#&gt;               GVIF Df GVIF^(1/(2*Df))</span></span>
+<span id="cb95-3"><a href="線形回帰分析.html#cb95-3" tabindex="-1"></a><span class="co">#&gt; margin    1.505672  1        1.227058</span></span>
+<span id="cb95-4"><a href="線形回帰分析.html#cb95-4" tabindex="-1"></a><span class="co">#&gt; turnover  3.992716  1        1.998178</span></span>
+<span id="cb95-5"><a href="線形回帰分析.html#cb95-5" tabindex="-1"></a><span class="co">#&gt; leverage  1.421687  1        1.192345</span></span>
+<span id="cb95-6"><a href="線形回帰分析.html#cb95-6" tabindex="-1"></a><span class="co">#&gt; growth    1.143216  1        1.069213</span></span>
+<span id="cb95-7"><a href="線形回帰分析.html#cb95-7" tabindex="-1"></a><span class="co">#&gt; div_yield 1.310837  1        1.144918</span></span>
+<span id="cb95-8"><a href="線形回帰分析.html#cb95-8" tabindex="-1"></a><span class="co">#&gt; industry  5.796596  2        1.551648</span></span>
+<span id="cb95-9"><a href="線形回帰分析.html#cb95-9" tabindex="-1"></a><span class="co">#&gt; tokyo     1.013484  1        1.006720</span></span>
+<span id="cb95-10"><a href="線形回帰分析.html#cb95-10" tabindex="-1"></a><span class="co">#&gt; log_mcap  1.258052  1        1.121629</span></span></code></pre></div>
+<p>→ <code>margin</code>, <code>turnover</code> のVIF値が大きく減少した.
+<code>roe</code> は, 恒等式 ROE = 利益率 × 回転率 × レバレッジ により, 他の3変数でほぼ決まってしまう.
+このように, 恒等式 (定義式) の関係にある変数を同時に説明変数に入れると, 多重共線性の原因となる.</p>
+<p>線形回帰分析におけるマルチコを考慮した変数選択法としては, 例えば, Kariya, Kurata and Hayashi (2024) の提案した”Empirically Effective Modelling Methodology (EEM-M)“がある.</p>
+<p><strong>参考文献</strong></p>
+<ul>
+<li><a href="https://doi.org/10.1016/j.jspi.2023.07.001">Kariya, Kurata and Hayashi (2024). “A Modelling Framework for Regression with Collinearity”, <em>Journal of Statistical Planning and Inference</em>, 228 (1), Pages 95-115.</a></li>
+<li><a href="https://thayashi-kbs.shinyapps.io/eemmapp/">EEM-Mアプリ</a></li>
+</ul>
+</div>
+</div>
+</div>
+<div id="説明変数に質的変数を含む回帰" class="section level2 hasAnchor" number="3.3">
+<h2><span class="header-section-number">3.3</span> 説明変数に質的変数を含む回帰<a href="線形回帰分析.html#説明変数に質的変数を含む回帰" class="anchor-section" aria-label="Anchor link to header"></a></h2>
+<div id="データセット3-高速道路事故データ" class="section level3 unnumbered hasAnchor">
+<h3>データセット#3: 高速道路事故データ<a href="線形回帰分析.html#データセット3-高速道路事故データ" class="anchor-section" aria-label="Anchor link to header"></a></h3>
+<pre><code>- Hoffstedt’s Highway accident data
+  - adt：1日の平均交通量（単位：千台)
+  - trks：総交通量に占めるトラック交通量の割合
+  - lane：交通の総車線数
+  - acpt：1マイルあたりのアクセスポイント数
+  - sigs: 1マイルあたりの信号付きインターチェンジの数
+  - itg：1マイルあたりの高速道路型インターチェンジの数
+  - slim：1973年の制限速度
+  - lwid: 車線幅（フィート単位） 
+  - shld: 車道の外側路肩の幅（フィート単位)
+  - htype: 道路の種類または道路の財源を示す指標:
+    &quot;mc&quot;: メジャーコレクター (major collector), &quot;fai&quot;: 州間 (interstate) 高速道路, &quot;pa&quot;: 地域・都市間主要幹線 (principal arterial) 道路, &quot;ma&quot;; 地域・都市内主要幹線 (major arterial) 道路
+  - rate: 1973年の事故発生率（百万車両マイル当たり）
+- 注) htypeは4-水準因子
+- 参考文献: Weisberg (2014), Applied Linear Regression, 4th Ed., Wiley.</code></pre>
+<div class="sourceCode" id="cb97"><pre class="sourceCode r"><code class="sourceCode r"><span id="cb97-1"><a href="線形回帰分析.html#cb97-1" tabindex="-1"></a><span class="fu">library</span>(alr4)</span>
+<span id="cb97-2"><a href="線形回帰分析.html#cb97-2" tabindex="-1"></a><span class="fu">data</span>(Highway)</span>
+<span id="cb97-3"><a href="線形回帰分析.html#cb97-3" tabindex="-1"></a><span class="fu">str</span>(Highway)</span>
+<span id="cb97-4"><a href="線形回帰分析.html#cb97-4" tabindex="-1"></a><span class="co">#&gt; &#39;data.frame&#39;:    39 obs. of  12 variables:</span></span>
+<span id="cb97-5"><a href="線形回帰分析.html#cb97-5" tabindex="-1"></a><span class="co">#&gt;  $ adt  : int  69 73 49 61 28 30 46 25 43 23 ...</span></span>
+<span id="cb97-6"><a href="線形回帰分析.html#cb97-6" tabindex="-1"></a><span class="co">#&gt;  $ trks : int  8 8 10 13 12 6 8 9 12 7 ...</span></span>
+<span id="cb97-7"><a href="線形回帰分析.html#cb97-7" tabindex="-1"></a><span class="co">#&gt;  $ lane : int  8 4 4 6 4 4 4 4 4 4 ...</span></span>
+<span id="cb97-8"><a href="線形回帰分析.html#cb97-8" tabindex="-1"></a><span class="co">#&gt;  $ acpt : num  4.6 4.4 4.7 3.8 2.2 24.8 11 18.5 7.5 8.2 ...</span></span>
+<span id="cb97-9"><a href="線形回帰分析.html#cb97-9" tabindex="-1"></a><span class="co">#&gt;  $ sigs : num  0 0 0 0 0 1.84 0.7 0.38 1.39 1.21 ...</span></span>
+<span id="cb97-10"><a href="線形回帰分析.html#cb97-10" tabindex="-1"></a><span class="co">#&gt;  $ itg  : num  1.2 1.43 1.54 0.94 0.65 0.34 0.47 0.38 0.95 0.12 ...</span></span>
+<span id="cb97-11"><a href="線形回帰分析.html#cb97-11" tabindex="-1"></a><span class="co">#&gt;  $ slim : int  55 60 60 65 70 55 55 55 50 50 ...</span></span>
+<span id="cb97-12"><a href="線形回帰分析.html#cb97-12" tabindex="-1"></a><span class="co">#&gt;  $ len  : num  4.99 16.11 9.75 10.65 20.01 ...</span></span>
+<span id="cb97-13"><a href="線形回帰分析.html#cb97-13" tabindex="-1"></a><span class="co">#&gt;  $ lwid : int  12 12 12 12 12 12 12 12 12 12 ...</span></span>
+<span id="cb97-14"><a href="線形回帰分析.html#cb97-14" tabindex="-1"></a><span class="co">#&gt;  $ shld : int  10 10 10 10 10 10 8 10 4 5 ...</span></span>
+<span id="cb97-15"><a href="線形回帰分析.html#cb97-15" tabindex="-1"></a><span class="co">#&gt;  $ htype: Factor w/ 4 levels &quot;mc&quot;,&quot;fai&quot;,&quot;pa&quot;,..: 2 2 2 2 2 3 3 3 3 3 ...</span></span>
+<span id="cb97-16"><a href="線形回帰分析.html#cb97-16" tabindex="-1"></a><span class="co">#&gt;  $ rate : num  4.58 2.86 3.02 2.29 1.61 6.87 3.85 6.12 3.29 5.88 ...</span></span>
+<span id="cb97-17"><a href="線形回帰分析.html#cb97-17" tabindex="-1"></a>Highway <span class="sc">%&gt;%</span></span>
+<span id="cb97-18"><a href="線形回帰分析.html#cb97-18" tabindex="-1"></a>  <span class="fu">head</span>()</span>
+<span id="cb97-19"><a href="線形回帰分析.html#cb97-19" tabindex="-1"></a><span class="co">#&gt;   adt trks lane acpt sigs  itg slim   len lwid shld htype rate</span></span>
+<span id="cb97-20"><a href="線形回帰分析.html#cb97-20" tabindex="-1"></a><span class="co">#&gt; 1  69    8    8  4.6 0.00 1.20   55  4.99   12   10   fai 4.58</span></span>
+<span id="cb97-21"><a href="線形回帰分析.html#cb97-21" tabindex="-1"></a><span class="co">#&gt; 2  73    8    4  4.4 0.00 1.43   60 16.11   12   10   fai 2.86</span></span>
+<span id="cb97-22"><a href="線形回帰分析.html#cb97-22" tabindex="-1"></a><span class="co">#&gt; 3  49   10    4  4.7 0.00 1.54   60  9.75   12   10   fai 3.02</span></span>
+<span id="cb97-23"><a href="線形回帰分析.html#cb97-23" tabindex="-1"></a><span class="co">#&gt; 4  61   13    6  3.8 0.00 0.94   65 10.65   12   10   fai 2.29</span></span>
+<span id="cb97-24"><a href="線形回帰分析.html#cb97-24" tabindex="-1"></a><span class="co">#&gt; 5  28   12    4  2.2 0.00 0.65   70 20.01   12   10   fai 1.61</span></span>
+<span id="cb97-25"><a href="線形回帰分析.html#cb97-25" tabindex="-1"></a><span class="co">#&gt; 6  30    6    4 24.8 1.84 0.34   55  5.97   12   10    pa 6.87</span></span></code></pre></div>
+<p>ライブラリ<code>corrplot</code>の関数<code>corrplot.mixed()</code>を使うと, 相関係数のヒートマップと相関係数の値を同時に表示するプロットを作成することができる.</p>
+<div class="sourceCode" id="cb98"><pre class="sourceCode r"><code class="sourceCode r"><span id="cb98-1"><a href="線形回帰分析.html#cb98-1" tabindex="-1"></a><span class="fu">library</span>(corrplot)</span>
+<span id="cb98-2"><a href="線形回帰分析.html#cb98-2" tabindex="-1"></a>cor_hw <span class="ot">&lt;-</span> <span class="fu">cor</span>(<span class="fu">cbind</span>(Highway<span class="sc">$</span>rate, Highway[, <span class="sc">-</span>(<span class="dv">11</span><span class="sc">:</span><span class="dv">12</span>)]))  <span class="co"># htypeを除去</span></span>
+<span id="cb98-3"><a href="線形回帰分析.html#cb98-3" tabindex="-1"></a><span class="fu">corrplot.mixed</span>(cor_hw)</span></code></pre></div>
+<p><img src="_main_files/figure-html/unnamed-chunk-45-1.png" width="75%" /></p>
+<div class="sourceCode" id="cb99"><pre class="sourceCode r"><code class="sourceCode r"><span id="cb99-1"><a href="線形回帰分析.html#cb99-1" tabindex="-1"></a><span class="co"># OLS回帰</span></span>
+<span id="cb99-2"><a href="線形回帰分析.html#cb99-2" tabindex="-1"></a>res_lm <span class="ot">&lt;-</span> <span class="fu">lm</span>(rate <span class="sc">~</span> ., <span class="at">data =</span> Highway)</span>
+<span id="cb99-3"><a href="線形回帰分析.html#cb99-3" tabindex="-1"></a><span class="fu">summary</span>(res_lm)</span>
+<span id="cb99-4"><a href="線形回帰分析.html#cb99-4" tabindex="-1"></a><span class="co">#&gt; </span></span>
+<span id="cb99-5"><a href="線形回帰分析.html#cb99-5" tabindex="-1"></a><span class="co">#&gt; Call:</span></span>
+<span id="cb99-6"><a href="線形回帰分析.html#cb99-6" tabindex="-1"></a><span class="co">#&gt; lm(formula = rate ~ ., data = Highway)</span></span>
+<span id="cb99-7"><a href="線形回帰分析.html#cb99-7" tabindex="-1"></a><span class="co">#&gt; </span></span>
+<span id="cb99-8"><a href="線形回帰分析.html#cb99-8" tabindex="-1"></a><span class="co">#&gt; Residuals:</span></span>
+<span id="cb99-9"><a href="線形回帰分析.html#cb99-9" tabindex="-1"></a><span class="co">#&gt;      Min       1Q   Median       3Q      Max </span></span>
+<span id="cb99-10"><a href="線形回帰分析.html#cb99-10" tabindex="-1"></a><span class="co">#&gt; -1.99564 -0.62039 -0.05676  0.61741  2.54998 </span></span>
+<span id="cb99-11"><a href="線形回帰分析.html#cb99-11" tabindex="-1"></a><span class="co">#&gt; </span></span>
+<span id="cb99-12"><a href="線形回帰分析.html#cb99-12" tabindex="-1"></a><span class="co">#&gt; Coefficients:</span></span>
+<span id="cb99-13"><a href="線形回帰分析.html#cb99-13" tabindex="-1"></a><span class="co">#&gt;              Estimate Std. Error t value Pr(&gt;|t|)  </span></span>
+<span id="cb99-14"><a href="線形回帰分析.html#cb99-14" tabindex="-1"></a><span class="co">#&gt; (Intercept) 13.658212   6.872719   1.987   0.0579 .</span></span>
+<span id="cb99-15"><a href="線形回帰分析.html#cb99-15" tabindex="-1"></a><span class="co">#&gt; adt         -0.004038   0.033945  -0.119   0.9063  </span></span>
+<span id="cb99-16"><a href="線形回帰分析.html#cb99-16" tabindex="-1"></a><span class="co">#&gt; trks        -0.100150   0.114726  -0.873   0.3910  </span></span>
+<span id="cb99-17"><a href="線形回帰分析.html#cb99-17" tabindex="-1"></a><span class="co">#&gt; lane         0.026675   0.283834   0.094   0.9259  </span></span>
+<span id="cb99-18"><a href="線形回帰分析.html#cb99-18" tabindex="-1"></a><span class="co">#&gt; acpt         0.066588   0.042569   1.564   0.1303  </span></span>
+<span id="cb99-19"><a href="線形回帰分析.html#cb99-19" tabindex="-1"></a><span class="co">#&gt; sigs         0.713644   0.525213   1.359   0.1864  </span></span>
+<span id="cb99-20"><a href="線形回帰分析.html#cb99-20" tabindex="-1"></a><span class="co">#&gt; itg         -0.475478   1.282742  -0.371   0.7140  </span></span>
+<span id="cb99-21"><a href="線形回帰分析.html#cb99-21" tabindex="-1"></a><span class="co">#&gt; slim        -0.123778   0.081683  -1.515   0.1422  </span></span>
+<span id="cb99-22"><a href="線形回帰分析.html#cb99-22" tabindex="-1"></a><span class="co">#&gt; len         -0.064751   0.033369  -1.940   0.0637 .</span></span>
+<span id="cb99-23"><a href="線形回帰分析.html#cb99-23" tabindex="-1"></a><span class="co">#&gt; lwid        -0.133813   0.597917  -0.224   0.8247  </span></span>
+<span id="cb99-24"><a href="線形回帰分析.html#cb99-24" tabindex="-1"></a><span class="co">#&gt; shld         0.014113   0.162174   0.087   0.9313  </span></span>
+<span id="cb99-25"><a href="線形回帰分析.html#cb99-25" tabindex="-1"></a><span class="co">#&gt; htypefai     0.543592   1.728270   0.315   0.7557  </span></span>
+<span id="cb99-26"><a href="線形回帰分析.html#cb99-26" tabindex="-1"></a><span class="co">#&gt; htypepa     -1.009777   1.105612  -0.913   0.3698  </span></span>
+<span id="cb99-27"><a href="線形回帰分析.html#cb99-27" tabindex="-1"></a><span class="co">#&gt; htypema     -0.548025   0.975623  -0.562   0.5793  </span></span>
+<span id="cb99-28"><a href="線形回帰分析.html#cb99-28" tabindex="-1"></a><span class="co">#&gt; ---</span></span>
+<span id="cb99-29"><a href="線形回帰分析.html#cb99-29" tabindex="-1"></a><span class="co">#&gt; Signif. codes:  0 &#39;***&#39; 0.001 &#39;**&#39; 0.01 &#39;*&#39; 0.05 &#39;.&#39; 0.1 &#39; &#39; 1</span></span>
+<span id="cb99-30"><a href="線形回帰分析.html#cb99-30" tabindex="-1"></a><span class="co">#&gt; </span></span>
+<span id="cb99-31"><a href="線形回帰分析.html#cb99-31" tabindex="-1"></a><span class="co">#&gt; Residual standard error: 1.198 on 25 degrees of freedom</span></span>
+<span id="cb99-32"><a href="線形回帰分析.html#cb99-32" tabindex="-1"></a><span class="co">#&gt; Multiple R-squared:  0.7605, Adjusted R-squared:  0.636 </span></span>
+<span id="cb99-33"><a href="線形回帰分析.html#cb99-33" tabindex="-1"></a><span class="co">#&gt; F-statistic: 6.107 on 13 and 25 DF,  p-value: 5.733e-05</span></span></code></pre></div>
+<div class="sourceCode" id="cb100"><pre class="sourceCode r"><code class="sourceCode r"><span id="cb100-1"><a href="線形回帰分析.html#cb100-1" tabindex="-1"></a><span class="co"># 多重共線性のチェック (VIF) install.packages(&#39;car&#39;)\t\t# or RStudio, Tools →</span></span>
+<span id="cb100-2"><a href="線形回帰分析.html#cb100-2" tabindex="-1"></a><span class="co"># Install packages,</span></span>
+<span id="cb100-3"><a href="線形回帰分析.html#cb100-3" tabindex="-1"></a><span class="fu">library</span>(car)  <span class="co"># &#39;Companion to Applied Regression&#39; package</span></span>
+<span id="cb100-4"><a href="線形回帰分析.html#cb100-4" tabindex="-1"></a><span class="fu">vif</span>(res_lm)</span>
+<span id="cb100-5"><a href="線形回帰分析.html#cb100-5" tabindex="-1"></a><span class="co">#&gt;            GVIF Df GVIF^(1/(2*Df))</span></span>
+<span id="cb100-6"><a href="線形回帰分析.html#cb100-6" tabindex="-1"></a><span class="co">#&gt; adt   10.563911  1        3.250217</span></span>
+<span id="cb100-7"><a href="線形回帰分析.html#cb100-7" tabindex="-1"></a><span class="co">#&gt; trks   1.931277  1        1.389704</span></span>
+<span id="cb100-8"><a href="線形回帰分析.html#cb100-8" tabindex="-1"></a><span class="co">#&gt; lane   3.947949  1        1.986945</span></span>
+<span id="cb100-9"><a href="線形回帰分析.html#cb100-9" tabindex="-1"></a><span class="co">#&gt; acpt   4.164627  1        2.040742</span></span>
+<span id="cb100-10"><a href="線形回帰分析.html#cb100-10" tabindex="-1"></a><span class="co">#&gt; sigs   2.929007  1        1.711434</span></span>
+<span id="cb100-11"><a href="線形回帰分析.html#cb100-11" tabindex="-1"></a><span class="co">#&gt; itg    7.362521  1        2.713397</span></span>
+<span id="cb100-12"><a href="線形回帰分析.html#cb100-12" tabindex="-1"></a><span class="co">#&gt; slim   6.041264  1        2.457898</span></span>
+<span id="cb100-13"><a href="線形回帰分析.html#cb100-13" tabindex="-1"></a><span class="co">#&gt; len    1.706597  1        1.306368</span></span>
+<span id="cb100-14"><a href="線形回帰分析.html#cb100-14" tabindex="-1"></a><span class="co">#&gt; lwid   1.966483  1        1.402313</span></span>
+<span id="cb100-15"><a href="線形回帰分析.html#cb100-15" tabindex="-1"></a><span class="co">#&gt; shld   6.417952  1        2.533368</span></span>
+<span id="cb100-16"><a href="線形回帰分析.html#cb100-16" tabindex="-1"></a><span class="co">#&gt; htype 28.984452  3        1.752646</span></span></code></pre></div>
+<p>データセット<code>Highway</code>は質的変数 (<code>htype</code>) を含んでいることから,
+VIFを拡張した<strong>GVIF (Generalized VIF)</strong> を算出している.</p>
+<p>GVIFを (変数間で比較できるように) 自由度調整した値GVIF<span class="math inline">\(^{1/(2D_f)}\)</span>は,
+量的変数の場合オリジナルのVIFの平方根を取ったものに対応している.
+そこで, この自由度調整済GVIF<span class="math inline">\(^{1/(2D_f)}\)</span>は,
+<span class="math inline">\(\sqrt{5} \approx 2.24\)</span>越えで要注意, <span class="math inline">\(\sqrt{10} \approx 3.16\)</span>越えで除去を検討というのが一つの目安となる</p>
+<p>ただ, そもそもVIFの5, 10が慣用的な閾値に過ぎないことから,
+2.24や3.16といった小数の値まで厳密に評価する合理性は乏しい.
+そこで, (使いやすくかつ覚えやすくするため) 数字を丸めて, 例えば,
+「2までなら安全, 2〜5で要注意, 5越えたら除去を検討する」
+等がより実践的である.</p>
+<!--
+2〜3 程度で要注意, 4以上で除去を検討するというのが実務的な目安となる
+-->
+<p>→ <code>adt</code>は要注意だが, 以下では除かないでステップワイズを実行してみる.</p>
+<!---
+自由度 = カテゴリー変数の場合, 水準数-1
+**GVIF**（Generalized VIF）
+- GVIFは, VIFの拡張であり, 特に質的変数を含む回帰モデルで多重共線性を評価するために使用
+- GVIFは, VIFを自由度で調整したもの. 質的変数のレベル数によって調整
+- GVIFは, VIFの平方根を自由度の逆数で累乗した値として計算
+--->
+<div class="sourceCode" id="cb101"><pre class="sourceCode r"><code class="sourceCode r"><span id="cb101-1"><a href="線形回帰分析.html#cb101-1" tabindex="-1"></a><span class="co"># ステップワイズ回帰</span></span>
+<span id="cb101-2"><a href="線形回帰分析.html#cb101-2" tabindex="-1"></a>res_step <span class="ot">&lt;-</span> <span class="fu">step</span>(res_lm, <span class="at">trace =</span> <span class="dv">0</span>)  <span class="co"># 実行プロセスの非表示</span></span>
+<span id="cb101-3"><a href="線形回帰分析.html#cb101-3" tabindex="-1"></a><span class="fu">summary</span>(res_step)</span>
+<span id="cb101-4"><a href="線形回帰分析.html#cb101-4" tabindex="-1"></a><span class="co">#&gt; </span></span>
+<span id="cb101-5"><a href="線形回帰分析.html#cb101-5" tabindex="-1"></a><span class="co">#&gt; Call:</span></span>
+<span id="cb101-6"><a href="線形回帰分析.html#cb101-6" tabindex="-1"></a><span class="co">#&gt; lm(formula = rate ~ acpt + sigs + slim + len, data = Highway)</span></span>
+<span id="cb101-7"><a href="線形回帰分析.html#cb101-7" tabindex="-1"></a><span class="co">#&gt; </span></span>
+<span id="cb101-8"><a href="線形回帰分析.html#cb101-8" tabindex="-1"></a><span class="co">#&gt; Residuals:</span></span>
+<span id="cb101-9"><a href="線形回帰分析.html#cb101-9" tabindex="-1"></a><span class="co">#&gt;     Min      1Q  Median      3Q     Max </span></span>
+<span id="cb101-10"><a href="線形回帰分析.html#cb101-10" tabindex="-1"></a><span class="co">#&gt; -1.7505 -0.8659  0.1051  0.6618  2.5116 </span></span>
+<span id="cb101-11"><a href="線形回帰分析.html#cb101-11" tabindex="-1"></a><span class="co">#&gt; </span></span>
+<span id="cb101-12"><a href="線形回帰分析.html#cb101-12" tabindex="-1"></a><span class="co">#&gt; Coefficients:</span></span>
+<span id="cb101-13"><a href="線形回帰分析.html#cb101-13" tabindex="-1"></a><span class="co">#&gt;             Estimate Std. Error t value Pr(&gt;|t|)   </span></span>
+<span id="cb101-14"><a href="線形回帰分析.html#cb101-14" tabindex="-1"></a><span class="co">#&gt; (Intercept)  8.81443    2.60435   3.385  0.00181 **</span></span>
+<span id="cb101-15"><a href="線形回帰分析.html#cb101-15" tabindex="-1"></a><span class="co">#&gt; acpt         0.08940    0.02818   3.173  0.00319 **</span></span>
+<span id="cb101-16"><a href="線形回帰分析.html#cb101-16" tabindex="-1"></a><span class="co">#&gt; sigs         0.48538    0.34164   1.421  0.16450   </span></span>
+<span id="cb101-17"><a href="線形回帰分析.html#cb101-17" tabindex="-1"></a><span class="co">#&gt; slim        -0.09599    0.04255  -2.256  0.03064 * </span></span>
+<span id="cb101-18"><a href="線形回帰分析.html#cb101-18" tabindex="-1"></a><span class="co">#&gt; len         -0.06856    0.02524  -2.717  0.01030 * </span></span>
+<span id="cb101-19"><a href="線形回帰分析.html#cb101-19" tabindex="-1"></a><span class="co">#&gt; ---</span></span>
+<span id="cb101-20"><a href="線形回帰分析.html#cb101-20" tabindex="-1"></a><span class="co">#&gt; Signif. codes:  0 &#39;***&#39; 0.001 &#39;**&#39; 0.01 &#39;*&#39; 0.05 &#39;.&#39; 0.1 &#39; &#39; 1</span></span>
+<span id="cb101-21"><a href="線形回帰分析.html#cb101-21" tabindex="-1"></a><span class="co">#&gt; </span></span>
+<span id="cb101-22"><a href="線形回帰分析.html#cb101-22" tabindex="-1"></a><span class="co">#&gt; Residual standard error: 1.116 on 34 degrees of freedom</span></span>
+<span id="cb101-23"><a href="線形回帰分析.html#cb101-23" tabindex="-1"></a><span class="co">#&gt; Multiple R-squared:  0.7176, Adjusted R-squared:  0.6843 </span></span>
+<span id="cb101-24"><a href="線形回帰分析.html#cb101-24" tabindex="-1"></a><span class="co">#&gt; F-statistic:  21.6 on 4 and 34 DF,  p-value: 6.112e-09</span></span>
+<span id="cb101-25"><a href="線形回帰分析.html#cb101-25" tabindex="-1"></a></span>
+<span id="cb101-26"><a href="線形回帰分析.html#cb101-26" tabindex="-1"></a><span class="do">## 除かれた変数群の有意性 anova(res_step, res_lm) # anova(res_lm, res_step)</span></span></code></pre></div>
+<p>(自主課題)</p>
+<ul>
+<li>ステップワイズで得られたモデルの結果を解釈してみよう.</li>
+</ul>
+
+</div>
+</div>
+<div id="説明変数に質的変数を含む回帰-2" class="section level2 hasAnchor" number="3.4">
+<h2><span class="header-section-number">3.4</span> 説明変数に質的変数を含む回帰 (2)<a href="線形回帰分析.html#説明変数に質的変数を含む回帰-2" class="anchor-section" aria-label="Anchor link to header"></a></h2>
+<p>関数<code>lm()</code>の結果を関数<code>anova()</code>に入力することで,
+分散分析表を作成する.</p>
+<p>関数<code>anova()</code>は各説明変数 (量的変数, 質的変数どちらについても)
+ごとに変動性を分割して <span class="math inline">\(F\)</span> 値および <span class="math inline">\(p\)</span> 値を計算する詳細な分散分析表 (ANOVA table) を作成する.
+また, 二つ以上の包含関係 (ネスト)
+のある回帰モデルの適合結果オブジェクトを同時に引数として与えることで,
+追加 (あるいは除去される) 変数群の持つ有意性を一括して調べることが出来る.</p>
+<!--
+さらに, Rの環境設定のための関数`options()`のパラメータの一つであるコントラスト("contrasts")を変えることで, パラメータの持つ意味が, すなわち, 解釈が変わることも確認する.
+-->
+<div id="データセット5-収入データ-仮想" class="section level3 unnumbered hasAnchor">
+<h3>データセット#5: 収入データ (仮想)<a href="線形回帰分析.html#データセット5-収入データ-仮想" class="anchor-section" aria-label="Anchor link to header"></a></h3>
+<pre><code>- income.csv
+ - 月収 (万円)
+ - キャリア年数 (年)
+ - 能力試験 (点)
+ - 業種 (A/B)</code></pre>
+<div class="sourceCode" id="cb103"><pre class="sourceCode r"><code class="sourceCode r"><span id="cb103-1"><a href="線形回帰分析.html#cb103-1" tabindex="-1"></a>dat1 <span class="ot">&lt;-</span> <span class="fu">read.csv</span>(<span class="st">&quot;income.csv&quot;</span>)</span></code></pre></div>
+<div class="sourceCode" id="cb104"><pre class="sourceCode r"><code class="sourceCode r"><span id="cb104-1"><a href="線形回帰分析.html#cb104-1" tabindex="-1"></a><span class="co"># キャリア年数を説明変数とする単回帰</span></span>
+<span id="cb104-2"><a href="線形回帰分析.html#cb104-2" tabindex="-1"></a>lm1_mod0 <span class="ot">&lt;-</span> <span class="fu">lm</span>(月収 <span class="sc">~</span> キャリア年数, <span class="at">data =</span> dat1)</span>
+<span id="cb104-3"><a href="線形回帰分析.html#cb104-3" tabindex="-1"></a><span class="fu">summary</span>(lm1_mod0)</span>
+<span id="cb104-4"><a href="線形回帰分析.html#cb104-4" tabindex="-1"></a><span class="co">#&gt; </span></span>
+<span id="cb104-5"><a href="線形回帰分析.html#cb104-5" tabindex="-1"></a><span class="co">#&gt; Call:</span></span>
+<span id="cb104-6"><a href="線形回帰分析.html#cb104-6" tabindex="-1"></a><span class="co">#&gt; lm(formula = 月収 ~ キャリア年数, data = dat1)</span></span>
+<span id="cb104-7"><a href="線形回帰分析.html#cb104-7" tabindex="-1"></a><span class="co">#&gt; </span></span>
+<span id="cb104-8"><a href="線形回帰分析.html#cb104-8" tabindex="-1"></a><span class="co">#&gt; Residuals:</span></span>
+<span id="cb104-9"><a href="線形回帰分析.html#cb104-9" tabindex="-1"></a><span class="co">#&gt;      Min       1Q   Median       3Q      Max </span></span>
+<span id="cb104-10"><a href="線形回帰分析.html#cb104-10" tabindex="-1"></a><span class="co">#&gt; -16.8581  -3.4759  -0.7415   4.5299  13.6303 </span></span>
+<span id="cb104-11"><a href="線形回帰分析.html#cb104-11" tabindex="-1"></a><span class="co">#&gt; </span></span>
+<span id="cb104-12"><a href="線形回帰分析.html#cb104-12" tabindex="-1"></a><span class="co">#&gt; Coefficients:</span></span>
+<span id="cb104-13"><a href="線形回帰分析.html#cb104-13" tabindex="-1"></a><span class="co">#&gt;              Estimate Std. Error t value Pr(&gt;|t|)    </span></span>
+<span id="cb104-14"><a href="線形回帰分析.html#cb104-14" tabindex="-1"></a><span class="co">#&gt; (Intercept)   19.8952     1.8298   10.87   &lt;2e-16 ***</span></span>
+<span id="cb104-15"><a href="線形回帰分析.html#cb104-15" tabindex="-1"></a><span class="co">#&gt; キャリア年数   1.9703     0.1362   14.46   &lt;2e-16 ***</span></span>
+<span id="cb104-16"><a href="線形回帰分析.html#cb104-16" tabindex="-1"></a><span class="co">#&gt; ---</span></span>
+<span id="cb104-17"><a href="線形回帰分析.html#cb104-17" tabindex="-1"></a><span class="co">#&gt; Signif. codes:  0 &#39;***&#39; 0.001 &#39;**&#39; 0.01 &#39;*&#39; 0.05 &#39;.&#39; 0.1 &#39; &#39; 1</span></span>
+<span id="cb104-18"><a href="線形回帰分析.html#cb104-18" tabindex="-1"></a><span class="co">#&gt; </span></span>
+<span id="cb104-19"><a href="線形回帰分析.html#cb104-19" tabindex="-1"></a><span class="co">#&gt; Residual standard error: 5.495 on 98 degrees of freedom</span></span>
+<span id="cb104-20"><a href="線形回帰分析.html#cb104-20" tabindex="-1"></a><span class="co">#&gt; Multiple R-squared:  0.681,  Adjusted R-squared:  0.6778 </span></span>
+<span id="cb104-21"><a href="線形回帰分析.html#cb104-21" tabindex="-1"></a><span class="co">#&gt; F-statistic: 209.2 on 1 and 98 DF,  p-value: &lt; 2.2e-16</span></span>
+<span id="cb104-22"><a href="線形回帰分析.html#cb104-22" tabindex="-1"></a><span class="fu">anova</span>(lm1_mod0)  <span class="co"># ANOVA表</span></span>
+<span id="cb104-23"><a href="線形回帰分析.html#cb104-23" tabindex="-1"></a><span class="co">#&gt; Analysis of Variance Table</span></span>
+<span id="cb104-24"><a href="線形回帰分析.html#cb104-24" tabindex="-1"></a><span class="co">#&gt; </span></span>
+<span id="cb104-25"><a href="線形回帰分析.html#cb104-25" tabindex="-1"></a><span class="co">#&gt; Response: 月収</span></span>
+<span id="cb104-26"><a href="線形回帰分析.html#cb104-26" tabindex="-1"></a><span class="co">#&gt;              Df Sum Sq Mean Sq F value    Pr(&gt;F)    </span></span>
+<span id="cb104-27"><a href="線形回帰分析.html#cb104-27" tabindex="-1"></a><span class="co">#&gt; キャリア年数  1 6316.7  6316.7  209.23 &lt; 2.2e-16 ***</span></span>
+<span id="cb104-28"><a href="線形回帰分析.html#cb104-28" tabindex="-1"></a><span class="co">#&gt; Residuals    98 2958.6    30.2                      </span></span>
+<span id="cb104-29"><a href="線形回帰分析.html#cb104-29" tabindex="-1"></a><span class="co">#&gt; ---</span></span>
+<span id="cb104-30"><a href="線形回帰分析.html#cb104-30" tabindex="-1"></a><span class="co">#&gt; Signif. codes:  0 &#39;***&#39; 0.001 &#39;**&#39; 0.01 &#39;*&#39; 0.05 &#39;.&#39; 0.1 &#39; &#39; 1</span></span>
+<span id="cb104-31"><a href="線形回帰分析.html#cb104-31" tabindex="-1"></a></span>
+<span id="cb104-32"><a href="線形回帰分析.html#cb104-32" tabindex="-1"></a><span class="co"># 業種 (質的変数) を説明変数に追加 交互作用項なしモデル lm1_mod1 &lt;- lm(月収 ~</span></span>
+<span id="cb104-33"><a href="線形回帰分析.html#cb104-33" tabindex="-1"></a><span class="co"># キャリア年数 + 業種, data = dat1)</span></span>
+<span id="cb104-34"><a href="線形回帰分析.html#cb104-34" tabindex="-1"></a>lm1_mod1 <span class="ot">&lt;-</span> <span class="fu">update</span>(lm1_mod0, . <span class="sc">~</span> . <span class="sc">+</span> 業種)</span>
+<span id="cb104-35"><a href="線形回帰分析.html#cb104-35" tabindex="-1"></a><span class="fu">summary</span>(lm1_mod1)</span>
+<span id="cb104-36"><a href="線形回帰分析.html#cb104-36" tabindex="-1"></a><span class="co">#&gt; </span></span>
+<span id="cb104-37"><a href="線形回帰分析.html#cb104-37" tabindex="-1"></a><span class="co">#&gt; Call:</span></span>
+<span id="cb104-38"><a href="線形回帰分析.html#cb104-38" tabindex="-1"></a><span class="co">#&gt; lm(formula = 月収 ~ キャリア年数 + 業種, data = dat1)</span></span>
+<span id="cb104-39"><a href="線形回帰分析.html#cb104-39" tabindex="-1"></a><span class="co">#&gt; </span></span>
+<span id="cb104-40"><a href="線形回帰分析.html#cb104-40" tabindex="-1"></a><span class="co">#&gt; Residuals:</span></span>
+<span id="cb104-41"><a href="線形回帰分析.html#cb104-41" tabindex="-1"></a><span class="co">#&gt;      Min       1Q   Median       3Q      Max </span></span>
+<span id="cb104-42"><a href="線形回帰分析.html#cb104-42" tabindex="-1"></a><span class="co">#&gt; -14.4436  -3.5628  -0.6921   3.5165  12.6536 </span></span>
+<span id="cb104-43"><a href="線形回帰分析.html#cb104-43" tabindex="-1"></a><span class="co">#&gt; </span></span>
+<span id="cb104-44"><a href="線形回帰分析.html#cb104-44" tabindex="-1"></a><span class="co">#&gt; Coefficients:</span></span>
+<span id="cb104-45"><a href="線形回帰分析.html#cb104-45" tabindex="-1"></a><span class="co">#&gt;              Estimate Std. Error t value Pr(&gt;|t|)    </span></span>
+<span id="cb104-46"><a href="線形回帰分析.html#cb104-46" tabindex="-1"></a><span class="co">#&gt; (Intercept)   20.7222     1.7727  11.690  &lt; 2e-16 ***</span></span>
+<span id="cb104-47"><a href="線形回帰分析.html#cb104-47" tabindex="-1"></a><span class="co">#&gt; キャリア年数   1.9900     0.1306  15.233  &lt; 2e-16 ***</span></span>
+<span id="cb104-48"><a href="線形回帰分析.html#cb104-48" tabindex="-1"></a><span class="co">#&gt; 業種B         -3.5982     1.1499  -3.129  0.00232 ** </span></span>
+<span id="cb104-49"><a href="線形回帰分析.html#cb104-49" tabindex="-1"></a><span class="co">#&gt; ---</span></span>
+<span id="cb104-50"><a href="線形回帰分析.html#cb104-50" tabindex="-1"></a><span class="co">#&gt; Signif. codes:  0 &#39;***&#39; 0.001 &#39;**&#39; 0.01 &#39;*&#39; 0.05 &#39;.&#39; 0.1 &#39; &#39; 1</span></span>
+<span id="cb104-51"><a href="線形回帰分析.html#cb104-51" tabindex="-1"></a><span class="co">#&gt; </span></span>
+<span id="cb104-52"><a href="線形回帰分析.html#cb104-52" tabindex="-1"></a><span class="co">#&gt; Residual standard error: 5.264 on 97 degrees of freedom</span></span>
+<span id="cb104-53"><a href="線形回帰分析.html#cb104-53" tabindex="-1"></a><span class="co">#&gt; Multiple R-squared:  0.7103, Adjusted R-squared:  0.7043 </span></span>
+<span id="cb104-54"><a href="線形回帰分析.html#cb104-54" tabindex="-1"></a><span class="co">#&gt; F-statistic: 118.9 on 2 and 97 DF,  p-value: &lt; 2.2e-16</span></span>
+<span id="cb104-55"><a href="線形回帰分析.html#cb104-55" tabindex="-1"></a><span class="fu">anova</span>(lm1_mod1)  <span class="co"># ANOVA表</span></span>
+<span id="cb104-56"><a href="線形回帰分析.html#cb104-56" tabindex="-1"></a><span class="co">#&gt; Analysis of Variance Table</span></span>
+<span id="cb104-57"><a href="線形回帰分析.html#cb104-57" tabindex="-1"></a><span class="co">#&gt; </span></span>
+<span id="cb104-58"><a href="線形回帰分析.html#cb104-58" tabindex="-1"></a><span class="co">#&gt; Response: 月収</span></span>
+<span id="cb104-59"><a href="線形回帰分析.html#cb104-59" tabindex="-1"></a><span class="co">#&gt;              Df Sum Sq Mean Sq  F value    Pr(&gt;F)    </span></span>
+<span id="cb104-60"><a href="線形回帰分析.html#cb104-60" tabindex="-1"></a><span class="co">#&gt; キャリア年数  1 6316.7  6316.7 227.9980 &lt; 2.2e-16 ***</span></span>
+<span id="cb104-61"><a href="線形回帰分析.html#cb104-61" tabindex="-1"></a><span class="co">#&gt; 業種          1  271.2   271.2   9.7906  0.002317 ** </span></span>
+<span id="cb104-62"><a href="線形回帰分析.html#cb104-62" tabindex="-1"></a><span class="co">#&gt; Residuals    97 2687.4    27.7                       </span></span>
+<span id="cb104-63"><a href="線形回帰分析.html#cb104-63" tabindex="-1"></a><span class="co">#&gt; ---</span></span>
+<span id="cb104-64"><a href="線形回帰分析.html#cb104-64" tabindex="-1"></a><span class="co">#&gt; Signif. codes:  0 &#39;***&#39; 0.001 &#39;**&#39; 0.01 &#39;*&#39; 0.05 &#39;.&#39; 0.1 &#39; &#39; 1</span></span></code></pre></div>
+<p><code>summary(lm1_mod1)</code>の出力結果から, この回帰分析のベースラインは
+業種Aであることが分かる. すなわち, ２つ目の回帰係数<code>業種B</code>は,
+業種Bに属することによる相対効果, すなわち, 業種BのAに対する目的変数<code>月収</code>の平均値の差分を表している.</p>
+<p>具体的には, 回帰係数の切片項の値が <span class="math inline">\(20.7222\)</span> が業種Aの切片となっていて,
+一方, 業種Bは <span class="math inline">\(20.7222-3.5982=17.1240\)</span> を切片に持つと読むことができる.
+<!---
+具体的には, 回帰係数の切片項の値が $22.92898$ が業種Aの切片となっていて,
+一方, 業種Bは $23.92898-3.77837=20.15061$ を切片に持つと読むことができる.
+--->
+業種の違いによるキャリア年数の影響度 (傾き) の違い を調べるためには,
+業種とキャリア年数の2つの項を持つモデルに両者の交互作用項を加え,
+その交互作用項の有意性 (<span class="math inline">\(t\)</span>値に基づく<span class="math inline">\(p\)</span>値) を確認すれば良い.</p>
+<div class="sourceCode" id="cb105"><pre class="sourceCode r"><code class="sourceCode r"><span id="cb105-1"><a href="線形回帰分析.html#cb105-1" tabindex="-1"></a><span class="co"># 交互作用項有りモデル</span></span>
+<span id="cb105-2"><a href="線形回帰分析.html#cb105-2" tabindex="-1"></a>lm1_mod1_2 <span class="ot">&lt;-</span> <span class="fu">lm</span>(月収 <span class="sc">~</span> キャリア年数 <span class="sc">*</span> 業種, <span class="at">data =</span> dat1)</span>
+<span id="cb105-3"><a href="線形回帰分析.html#cb105-3" tabindex="-1"></a><span class="fu">summary</span>(lm1_mod1_2)</span>
+<span id="cb105-4"><a href="線形回帰分析.html#cb105-4" tabindex="-1"></a><span class="co">#&gt; </span></span>
+<span id="cb105-5"><a href="線形回帰分析.html#cb105-5" tabindex="-1"></a><span class="co">#&gt; Call:</span></span>
+<span id="cb105-6"><a href="線形回帰分析.html#cb105-6" tabindex="-1"></a><span class="co">#&gt; lm(formula = 月収 ~ キャリア年数 * 業種, data = dat1)</span></span>
+<span id="cb105-7"><a href="線形回帰分析.html#cb105-7" tabindex="-1"></a><span class="co">#&gt; </span></span>
+<span id="cb105-8"><a href="線形回帰分析.html#cb105-8" tabindex="-1"></a><span class="co">#&gt; Residuals:</span></span>
+<span id="cb105-9"><a href="線形回帰分析.html#cb105-9" tabindex="-1"></a><span class="co">#&gt;      Min       1Q   Median       3Q      Max </span></span>
+<span id="cb105-10"><a href="線形回帰分析.html#cb105-10" tabindex="-1"></a><span class="co">#&gt; -13.2175  -3.7691  -0.8021   3.4916  13.2028 </span></span>
+<span id="cb105-11"><a href="線形回帰分析.html#cb105-11" tabindex="-1"></a><span class="co">#&gt; </span></span>
+<span id="cb105-12"><a href="線形回帰分析.html#cb105-12" tabindex="-1"></a><span class="co">#&gt; Coefficients:</span></span>
+<span id="cb105-13"><a href="線形回帰分析.html#cb105-13" tabindex="-1"></a><span class="co">#&gt;                    Estimate Std. Error t value Pr(&gt;|t|)    </span></span>
+<span id="cb105-14"><a href="線形回帰分析.html#cb105-14" tabindex="-1"></a><span class="co">#&gt; (Intercept)         19.3523     2.0795   9.306  4.6e-15 ***</span></span>
+<span id="cb105-15"><a href="線形回帰分析.html#cb105-15" tabindex="-1"></a><span class="co">#&gt; キャリア年数         2.0980     0.1563  13.424  &lt; 2e-16 ***</span></span>
+<span id="cb105-16"><a href="線形回帰分析.html#cb105-16" tabindex="-1"></a><span class="co">#&gt; 業種B                0.9930     3.8464   0.258    0.797    </span></span>
+<span id="cb105-17"><a href="線形回帰分析.html#cb105-17" tabindex="-1"></a><span class="co">#&gt; キャリア年数:業種B  -0.3537     0.2828  -1.250    0.214    </span></span>
+<span id="cb105-18"><a href="線形回帰分析.html#cb105-18" tabindex="-1"></a><span class="co">#&gt; ---</span></span>
+<span id="cb105-19"><a href="線形回帰分析.html#cb105-19" tabindex="-1"></a><span class="co">#&gt; Signif. codes:  0 &#39;***&#39; 0.001 &#39;**&#39; 0.01 &#39;*&#39; 0.05 &#39;.&#39; 0.1 &#39; &#39; 1</span></span>
+<span id="cb105-20"><a href="線形回帰分析.html#cb105-20" tabindex="-1"></a><span class="co">#&gt; </span></span>
+<span id="cb105-21"><a href="線形回帰分析.html#cb105-21" tabindex="-1"></a><span class="co">#&gt; Residual standard error: 5.248 on 96 degrees of freedom</span></span>
+<span id="cb105-22"><a href="線形回帰分析.html#cb105-22" tabindex="-1"></a><span class="co">#&gt; Multiple R-squared:  0.7149, Adjusted R-squared:  0.706 </span></span>
+<span id="cb105-23"><a href="線形回帰分析.html#cb105-23" tabindex="-1"></a><span class="co">#&gt; F-statistic: 80.24 on 3 and 96 DF,  p-value: &lt; 2.2e-16</span></span>
+<span id="cb105-24"><a href="線形回帰分析.html#cb105-24" tabindex="-1"></a><span class="fu">anova</span>(lm1_mod1_2)</span>
+<span id="cb105-25"><a href="線形回帰分析.html#cb105-25" tabindex="-1"></a><span class="co">#&gt; Analysis of Variance Table</span></span>
+<span id="cb105-26"><a href="線形回帰分析.html#cb105-26" tabindex="-1"></a><span class="co">#&gt; </span></span>
+<span id="cb105-27"><a href="線形回帰分析.html#cb105-27" tabindex="-1"></a><span class="co">#&gt; Response: 月収</span></span>
+<span id="cb105-28"><a href="線形回帰分析.html#cb105-28" tabindex="-1"></a><span class="co">#&gt;                   Df Sum Sq Mean Sq  F value    Pr(&gt;F)    </span></span>
+<span id="cb105-29"><a href="線形回帰分析.html#cb105-29" tabindex="-1"></a><span class="co">#&gt; キャリア年数       1 6316.7  6316.7 229.3230 &lt; 2.2e-16 ***</span></span>
+<span id="cb105-30"><a href="線形回帰分析.html#cb105-30" tabindex="-1"></a><span class="co">#&gt; 業種               1  271.2   271.2   9.8475  0.002259 ** </span></span>
+<span id="cb105-31"><a href="線形回帰分析.html#cb105-31" tabindex="-1"></a><span class="co">#&gt; キャリア年数:業種  1   43.1    43.1   1.5637  0.214160    </span></span>
+<span id="cb105-32"><a href="線形回帰分析.html#cb105-32" tabindex="-1"></a><span class="co">#&gt; Residuals         96 2644.3    27.5                       </span></span>
+<span id="cb105-33"><a href="線形回帰分析.html#cb105-33" tabindex="-1"></a><span class="co">#&gt; ---</span></span>
+<span id="cb105-34"><a href="線形回帰分析.html#cb105-34" tabindex="-1"></a><span class="co">#&gt; Signif. codes:  0 &#39;***&#39; 0.001 &#39;**&#39; 0.01 &#39;*&#39; 0.05 &#39;.&#39; 0.1 &#39; &#39; 1</span></span></code></pre></div>
+<p>回帰係数の結果表より, 交互作用項は有意な差があるとは言えない, すなわち, 業種の違いによる回帰係数の差は認められなかった (十分な証拠が得られなかった).</p>
+<p>代替的に, 業種とキャリア年数の交互作用ありモデルとなしモデルについて<code>lm()</code>をそれぞれ走らせ, 二つの結果を<code>anova()</code>に同時に与えることで両者の変動性に有意な差があるかを調べても良い.</p>
+<div class="sourceCode" id="cb106"><pre class="sourceCode r"><code class="sourceCode r"><span id="cb106-1"><a href="線形回帰分析.html#cb106-1" tabindex="-1"></a><span class="fu">anova</span>(lm1_mod1, lm1_mod1_2)  <span class="co"># ANOVA表</span></span>
+<span id="cb106-2"><a href="線形回帰分析.html#cb106-2" tabindex="-1"></a><span class="co">#&gt; Analysis of Variance Table</span></span>
+<span id="cb106-3"><a href="線形回帰分析.html#cb106-3" tabindex="-1"></a><span class="co">#&gt; </span></span>
+<span id="cb106-4"><a href="線形回帰分析.html#cb106-4" tabindex="-1"></a><span class="co">#&gt; Model 1: 月収 ~ キャリア年数 + 業種</span></span>
+<span id="cb106-5"><a href="線形回帰分析.html#cb106-5" tabindex="-1"></a><span class="co">#&gt; Model 2: 月収 ~ キャリア年数 * 業種</span></span>
+<span id="cb106-6"><a href="線形回帰分析.html#cb106-6" tabindex="-1"></a><span class="co">#&gt;   Res.Df    RSS Df Sum of Sq      F Pr(&gt;F)</span></span>
+<span id="cb106-7"><a href="線形回帰分析.html#cb106-7" tabindex="-1"></a><span class="co">#&gt; 1     97 2687.4                           </span></span>
+<span id="cb106-8"><a href="線形回帰分析.html#cb106-8" tabindex="-1"></a><span class="co">#&gt; 2     96 2644.3  1    43.073 1.5637 0.2142</span></span></code></pre></div>
+<p>先述の交互作用項の<span class="math inline">\(t\)</span>値に基づいた<span class="math inline">\(p\)</span>値と等価な結果が得られた.</p>
+<div class="sourceCode" id="cb107"><pre class="sourceCode r"><code class="sourceCode r"><span id="cb107-1"><a href="線形回帰分析.html#cb107-1" tabindex="-1"></a>lm1_mod2 <span class="ot">&lt;-</span> <span class="fu">update</span>(lm1_mod1, . <span class="sc">~</span> . <span class="sc">+</span> 能力試験)</span>
+<span id="cb107-2"><a href="線形回帰分析.html#cb107-2" tabindex="-1"></a><span class="fu">summary</span>(lm1_mod2)</span>
+<span id="cb107-3"><a href="線形回帰分析.html#cb107-3" tabindex="-1"></a><span class="co">#&gt; </span></span>
+<span id="cb107-4"><a href="線形回帰分析.html#cb107-4" tabindex="-1"></a><span class="co">#&gt; Call:</span></span>
+<span id="cb107-5"><a href="線形回帰分析.html#cb107-5" tabindex="-1"></a><span class="co">#&gt; lm(formula = 月収 ~ キャリア年数 + 業種 + 能力試験, </span></span>
+<span id="cb107-6"><a href="線形回帰分析.html#cb107-6" tabindex="-1"></a><span class="co">#&gt;     data = dat1)</span></span>
+<span id="cb107-7"><a href="線形回帰分析.html#cb107-7" tabindex="-1"></a><span class="co">#&gt; </span></span>
+<span id="cb107-8"><a href="線形回帰分析.html#cb107-8" tabindex="-1"></a><span class="co">#&gt; Residuals:</span></span>
+<span id="cb107-9"><a href="線形回帰分析.html#cb107-9" tabindex="-1"></a><span class="co">#&gt;      Min       1Q   Median       3Q      Max </span></span>
+<span id="cb107-10"><a href="線形回帰分析.html#cb107-10" tabindex="-1"></a><span class="co">#&gt; -14.8763  -3.9926  -0.6659   3.7814  12.0713 </span></span>
+<span id="cb107-11"><a href="線形回帰分析.html#cb107-11" tabindex="-1"></a><span class="co">#&gt; </span></span>
+<span id="cb107-12"><a href="線形回帰分析.html#cb107-12" tabindex="-1"></a><span class="co">#&gt; Coefficients:</span></span>
+<span id="cb107-13"><a href="線形回帰分析.html#cb107-13" tabindex="-1"></a><span class="co">#&gt;              Estimate Std. Error t value Pr(&gt;|t|)    </span></span>
+<span id="cb107-14"><a href="線形回帰分析.html#cb107-14" tabindex="-1"></a><span class="co">#&gt; (Intercept)  23.92898    3.52028   6.797    9e-10 ***</span></span>
+<span id="cb107-15"><a href="線形回帰分析.html#cb107-15" tabindex="-1"></a><span class="co">#&gt; キャリア年数  1.98691    0.13060  15.214  &lt; 2e-16 ***</span></span>
+<span id="cb107-16"><a href="線形回帰分析.html#cb107-16" tabindex="-1"></a><span class="co">#&gt; 業種B        -3.77837    1.16192  -3.252  0.00158 ** </span></span>
+<span id="cb107-17"><a href="線形回帰分析.html#cb107-17" tabindex="-1"></a><span class="co">#&gt; 能力試験     -0.06343    0.06017  -1.054  0.29444    </span></span>
+<span id="cb107-18"><a href="線形回帰分析.html#cb107-18" tabindex="-1"></a><span class="co">#&gt; ---</span></span>
+<span id="cb107-19"><a href="線形回帰分析.html#cb107-19" tabindex="-1"></a><span class="co">#&gt; Signif. codes:  0 &#39;***&#39; 0.001 &#39;**&#39; 0.01 &#39;*&#39; 0.05 &#39;.&#39; 0.1 &#39; &#39; 1</span></span>
+<span id="cb107-20"><a href="線形回帰分析.html#cb107-20" tabindex="-1"></a><span class="co">#&gt; </span></span>
+<span id="cb107-21"><a href="線形回帰分析.html#cb107-21" tabindex="-1"></a><span class="co">#&gt; Residual standard error: 5.261 on 96 degrees of freedom</span></span>
+<span id="cb107-22"><a href="線形回帰分析.html#cb107-22" tabindex="-1"></a><span class="co">#&gt; Multiple R-squared:  0.7136, Adjusted R-squared:  0.7046 </span></span>
+<span id="cb107-23"><a href="線形回帰分析.html#cb107-23" tabindex="-1"></a><span class="co">#&gt; F-statistic: 79.72 on 3 and 96 DF,  p-value: &lt; 2.2e-16</span></span>
+<span id="cb107-24"><a href="線形回帰分析.html#cb107-24" tabindex="-1"></a><span class="fu">anova</span>(lm1_mod2)  <span class="co"># ANOVA表</span></span>
+<span id="cb107-25"><a href="線形回帰分析.html#cb107-25" tabindex="-1"></a><span class="co">#&gt; Analysis of Variance Table</span></span>
+<span id="cb107-26"><a href="線形回帰分析.html#cb107-26" tabindex="-1"></a><span class="co">#&gt; </span></span>
+<span id="cb107-27"><a href="線形回帰分析.html#cb107-27" tabindex="-1"></a><span class="co">#&gt; Response: 月収</span></span>
+<span id="cb107-28"><a href="線形回帰分析.html#cb107-28" tabindex="-1"></a><span class="co">#&gt;              Df Sum Sq Mean Sq  F value  Pr(&gt;F)    </span></span>
+<span id="cb107-29"><a href="線形回帰分析.html#cb107-29" tabindex="-1"></a><span class="co">#&gt; キャリア年数  1 6316.7  6316.7 228.2596 &lt; 2e-16 ***</span></span>
+<span id="cb107-30"><a href="線形回帰分析.html#cb107-30" tabindex="-1"></a><span class="co">#&gt; 業種          1  271.2   271.2   9.8018 0.00231 ** </span></span>
+<span id="cb107-31"><a href="線形回帰分析.html#cb107-31" tabindex="-1"></a><span class="co">#&gt; 能力試験      1   30.8    30.8   1.1113 0.29444    </span></span>
+<span id="cb107-32"><a href="線形回帰分析.html#cb107-32" tabindex="-1"></a><span class="co">#&gt; Residuals    96 2656.6    27.7                     </span></span>
+<span id="cb107-33"><a href="線形回帰分析.html#cb107-33" tabindex="-1"></a><span class="co">#&gt; ---</span></span>
+<span id="cb107-34"><a href="線形回帰分析.html#cb107-34" tabindex="-1"></a><span class="co">#&gt; Signif. codes:  0 &#39;***&#39; 0.001 &#39;**&#39; 0.01 &#39;*&#39; 0.05 &#39;.&#39; 0.1 &#39; &#39; 1</span></span></code></pre></div>
+<p>次に, 関数<code>anova()</code>により, ネスト関係にある二つのモデル<code>lm1_mod0</code>,
+<code>lm1_mod2</code>を比較する.</p>
+<div class="sourceCode" id="cb108"><pre class="sourceCode r"><code class="sourceCode r"><span id="cb108-1"><a href="線形回帰分析.html#cb108-1" tabindex="-1"></a><span class="co"># モデル比較 anova(lm1_mod0, lm1_mod1, lm1_mod2)</span></span>
+<span id="cb108-2"><a href="線形回帰分析.html#cb108-2" tabindex="-1"></a><span class="fu">anova</span>(lm1_mod0, lm1_mod2)</span>
+<span id="cb108-3"><a href="線形回帰分析.html#cb108-3" tabindex="-1"></a><span class="co">#&gt; Analysis of Variance Table</span></span>
+<span id="cb108-4"><a href="線形回帰分析.html#cb108-4" tabindex="-1"></a><span class="co">#&gt; </span></span>
+<span id="cb108-5"><a href="線形回帰分析.html#cb108-5" tabindex="-1"></a><span class="co">#&gt; Model 1: 月収 ~ キャリア年数</span></span>
+<span id="cb108-6"><a href="線形回帰分析.html#cb108-6" tabindex="-1"></a><span class="co">#&gt; Model 2: 月収 ~ キャリア年数 + 業種 + 能力試験</span></span>
+<span id="cb108-7"><a href="線形回帰分析.html#cb108-7" tabindex="-1"></a><span class="co">#&gt;   Res.Df    RSS Df Sum of Sq      F   Pr(&gt;F)   </span></span>
+<span id="cb108-8"><a href="線形回帰分析.html#cb108-8" tabindex="-1"></a><span class="co">#&gt; 1     98 2958.6                                </span></span>
+<span id="cb108-9"><a href="線形回帰分析.html#cb108-9" tabindex="-1"></a><span class="co">#&gt; 2     96 2656.6  2       302 5.4566 0.005695 **</span></span>
+<span id="cb108-10"><a href="線形回帰分析.html#cb108-10" tabindex="-1"></a><span class="co">#&gt; ---</span></span>
+<span id="cb108-11"><a href="線形回帰分析.html#cb108-11" tabindex="-1"></a><span class="co">#&gt; Signif. codes:  0 &#39;***&#39; 0.001 &#39;**&#39; 0.01 &#39;*&#39; 0.05 &#39;.&#39; 0.1 &#39; &#39; 1</span></span></code></pre></div>
+<p>二つの変数, 業種, 能力試験は一括して, 偶然 (サンプリング・エラー) とはみなせないような体系的な (有意な) 変動を持つことを示している.
+すなわち, 業種と能力試験は説明変数に加えておいた方が良いと判断される.</p>
+<p>さらに, モデル選択規準AICによっても, これらを説明変数に持つ<code>lm1_mod2</code>の方が望ましいことを示している.</p>
+<div class="sourceCode" id="cb109"><pre class="sourceCode r"><code class="sourceCode r"><span id="cb109-1"><a href="線形回帰分析.html#cb109-1" tabindex="-1"></a><span class="fu">AIC</span>(lm1_mod0, lm1_mod2)</span>
+<span id="cb109-2"><a href="線形回帰分析.html#cb109-2" tabindex="-1"></a><span class="co">#&gt;          df      AIC</span></span>
+<span id="cb109-3"><a href="線形回帰分析.html#cb109-3" tabindex="-1"></a><span class="co">#&gt; lm1_mod0  3 628.5190</span></span>
+<span id="cb109-4"><a href="線形回帰分析.html#cb109-4" tabindex="-1"></a><span class="co">#&gt; lm1_mod2  5 621.7522</span></span></code></pre></div>
+<div id="コントラストの設定変更" class="section level4 unnumbered hasAnchor">
+<h4>“コントラスト”の設定変更<a href="線形回帰分析.html#コントラストの設定変更" class="anchor-section" aria-label="Anchor link to header"></a></h4>
+<p>関数<code>options()</code>のパラメータの一つであるコントラスト (contrasts) を変えることで, パラメータの持つ意味が, すなわち, 解釈が変わる.</p>
+<p>Rのデフォルトは, 処置対比 (“contr.treatment”).</p>
+<pre><code>#options(&quot;contrasts&quot;)
+#options(&quot;contrasts&quot; = c(&quot;contr.treatment&quot;, &quot;contr.poly&quot;))  # デフォルト
+#options(&quot;contrasts&quot; = c(&quot;contr.sum&quot;, &quot;contr.poly&quot;))</code></pre>
+<p>零和対比 (“contr.sum) に変更した場合について結果を, 上と比較してみよう.</p>
+<div class="sourceCode" id="cb111"><pre class="sourceCode r"><code class="sourceCode r"><span id="cb111-1"><a href="線形回帰分析.html#cb111-1" tabindex="-1"></a><span class="fu">options</span>(<span class="at">contrasts =</span> <span class="fu">c</span>(<span class="st">&quot;contr.sum&quot;</span>, <span class="st">&quot;contr.poly&quot;</span>))</span>
+<span id="cb111-2"><a href="線形回帰分析.html#cb111-2" tabindex="-1"></a>lm1_mod2_2 <span class="ot">&lt;-</span> <span class="fu">update</span>(lm1_mod1, . <span class="sc">~</span> . <span class="sc">+</span> 能力試験)</span>
+<span id="cb111-3"><a href="線形回帰分析.html#cb111-3" tabindex="-1"></a><span class="fu">summary</span>(lm1_mod2_2)</span>
+<span id="cb111-4"><a href="線形回帰分析.html#cb111-4" tabindex="-1"></a><span class="co">#&gt; </span></span>
+<span id="cb111-5"><a href="線形回帰分析.html#cb111-5" tabindex="-1"></a><span class="co">#&gt; Call:</span></span>
+<span id="cb111-6"><a href="線形回帰分析.html#cb111-6" tabindex="-1"></a><span class="co">#&gt; lm(formula = 月収 ~ キャリア年数 + 業種 + 能力試験, </span></span>
+<span id="cb111-7"><a href="線形回帰分析.html#cb111-7" tabindex="-1"></a><span class="co">#&gt;     data = dat1)</span></span>
+<span id="cb111-8"><a href="線形回帰分析.html#cb111-8" tabindex="-1"></a><span class="co">#&gt; </span></span>
+<span id="cb111-9"><a href="線形回帰分析.html#cb111-9" tabindex="-1"></a><span class="co">#&gt; Residuals:</span></span>
+<span id="cb111-10"><a href="線形回帰分析.html#cb111-10" tabindex="-1"></a><span class="co">#&gt;      Min       1Q   Median       3Q      Max </span></span>
+<span id="cb111-11"><a href="線形回帰分析.html#cb111-11" tabindex="-1"></a><span class="co">#&gt; -14.8763  -3.9926  -0.6659   3.7814  12.0713 </span></span>
+<span id="cb111-12"><a href="線形回帰分析.html#cb111-12" tabindex="-1"></a><span class="co">#&gt; </span></span>
+<span id="cb111-13"><a href="線形回帰分析.html#cb111-13" tabindex="-1"></a><span class="co">#&gt; Coefficients:</span></span>
+<span id="cb111-14"><a href="線形回帰分析.html#cb111-14" tabindex="-1"></a><span class="co">#&gt;              Estimate Std. Error t value Pr(&gt;|t|)    </span></span>
+<span id="cb111-15"><a href="線形回帰分析.html#cb111-15" tabindex="-1"></a><span class="co">#&gt; (Intercept)  22.03980    3.45054   6.387 6.02e-09 ***</span></span>
+<span id="cb111-16"><a href="線形回帰分析.html#cb111-16" tabindex="-1"></a><span class="co">#&gt; キャリア年数  1.98691    0.13060  15.214  &lt; 2e-16 ***</span></span>
+<span id="cb111-17"><a href="線形回帰分析.html#cb111-17" tabindex="-1"></a><span class="co">#&gt; 業種1         1.88919    0.58096   3.252  0.00158 ** </span></span>
+<span id="cb111-18"><a href="線形回帰分析.html#cb111-18" tabindex="-1"></a><span class="co">#&gt; 能力試験     -0.06343    0.06017  -1.054  0.29444    </span></span>
+<span id="cb111-19"><a href="線形回帰分析.html#cb111-19" tabindex="-1"></a><span class="co">#&gt; ---</span></span>
+<span id="cb111-20"><a href="線形回帰分析.html#cb111-20" tabindex="-1"></a><span class="co">#&gt; Signif. codes:  0 &#39;***&#39; 0.001 &#39;**&#39; 0.01 &#39;*&#39; 0.05 &#39;.&#39; 0.1 &#39; &#39; 1</span></span>
+<span id="cb111-21"><a href="線形回帰分析.html#cb111-21" tabindex="-1"></a><span class="co">#&gt; </span></span>
+<span id="cb111-22"><a href="線形回帰分析.html#cb111-22" tabindex="-1"></a><span class="co">#&gt; Residual standard error: 5.261 on 96 degrees of freedom</span></span>
+<span id="cb111-23"><a href="線形回帰分析.html#cb111-23" tabindex="-1"></a><span class="co">#&gt; Multiple R-squared:  0.7136, Adjusted R-squared:  0.7046 </span></span>
+<span id="cb111-24"><a href="線形回帰分析.html#cb111-24" tabindex="-1"></a><span class="co">#&gt; F-statistic: 79.72 on 3 and 96 DF,  p-value: &lt; 2.2e-16</span></span></code></pre></div>
+<p>ここでは, 回帰係数<code>業種1</code>が業種Aに対応, 一方, <code>業種2</code> (業種B) は省略されている.
+零和条件から, <code>業種2</code>の係数は<span class="math inline">\(-1.88919\)</span>であることが分かる.
+すなわち, 切片項の値が <span class="math inline">\(22.03980\)</span> であることから,
+業種Aの切片の値は, <span class="math inline">\(22.03980+1.88919=23.92899\)</span>, 一方, Bは,
+<span class="math inline">\(22.03980-1.88919=20.15061\)</span>
+となると読める.
+すなわち, 先のデフォルトの処置対比の場合 (<code>lm1_mod2</code>) の業種A, Bそれぞれの切片の値 (<span class="math inline">\(23.92898\)</span>, <span class="math inline">\(23.92898-3.77837=20.15061\)</span>) と一致していることが確認される.</p>
+<div class="sourceCode" id="cb112"><pre class="sourceCode r"><code class="sourceCode r"><span id="cb112-1"><a href="線形回帰分析.html#cb112-1" tabindex="-1"></a><span class="co"># コントラストの設定をデフォルト (処置対比) に戻しておく</span></span>
+<span id="cb112-2"><a href="線形回帰分析.html#cb112-2" tabindex="-1"></a><span class="fu">options</span>(<span class="at">contrasts =</span> <span class="fu">c</span>(<span class="st">&quot;contr.treatment&quot;</span>, <span class="st">&quot;contr.poly&quot;</span>))</span></code></pre></div>
+</div>
+</div>
+</div>
+<div id="多項式回帰" class="section level2 hasAnchor" number="3.5">
+<h2><span class="header-section-number">3.5</span> 多項式回帰<a href="線形回帰分析.html#多項式回帰" class="anchor-section" aria-label="Anchor link to header"></a></h2>
+<div id="データセット6-wage" class="section level3 unnumbered hasAnchor">
+<h3>データセット#6: <code>Wage</code><a href="線形回帰分析.html#データセット6-wage" class="anchor-section" aria-label="Anchor link to header"></a></h3>
+<pre><code>中部大西洋地域の男性労働者3000人の賃金その他のデータ.
+Inquidia Consulting（旧Open BI）のSteve Millerが手作業で集計.
+Current Population Surveyの2011年3月補足より.
+出所: https://www.re3data.org/repository/r3d100011860</code></pre>
+<p>パッケージ<code>ISLR2</code>に含まれるデータセット<code>Wage</code>を用いて, 賃金を被説明変数, 年齢を説明変数とする回帰分析を行う.</p>
+<div class="sourceCode" id="cb114"><pre class="sourceCode r"><code class="sourceCode r"><span id="cb114-1"><a href="線形回帰分析.html#cb114-1" tabindex="-1"></a><span class="fu">library</span>(ISLR2)  <span class="co"># ISLR 第2版 (James et al., 2021) のパッケージ</span></span>
+<span id="cb114-2"><a href="線形回帰分析.html#cb114-2" tabindex="-1"></a><span class="fu">head</span>(Wage)</span>
+<span id="cb114-3"><a href="線形回帰分析.html#cb114-3" tabindex="-1"></a><span class="co">#&gt;        year age           maritl     race       education             region</span></span>
+<span id="cb114-4"><a href="線形回帰分析.html#cb114-4" tabindex="-1"></a><span class="co">#&gt; 231655 2006  18 1. Never Married 1. White    1. &lt; HS Grad 2. Middle Atlantic</span></span>
+<span id="cb114-5"><a href="線形回帰分析.html#cb114-5" tabindex="-1"></a><span class="co">#&gt; 86582  2004  24 1. Never Married 1. White 4. College Grad 2. Middle Atlantic</span></span>
+<span id="cb114-6"><a href="線形回帰分析.html#cb114-6" tabindex="-1"></a><span class="co">#&gt; 161300 2003  45       2. Married 1. White 3. Some College 2. Middle Atlantic</span></span>
+<span id="cb114-7"><a href="線形回帰分析.html#cb114-7" tabindex="-1"></a><span class="co">#&gt; 155159 2003  43       2. Married 3. Asian 4. College Grad 2. Middle Atlantic</span></span>
+<span id="cb114-8"><a href="線形回帰分析.html#cb114-8" tabindex="-1"></a><span class="co">#&gt; 11443  2005  50      4. Divorced 1. White      2. HS Grad 2. Middle Atlantic</span></span>
+<span id="cb114-9"><a href="線形回帰分析.html#cb114-9" tabindex="-1"></a><span class="co">#&gt; 376662 2008  54       2. Married 1. White 4. College Grad 2. Middle Atlantic</span></span>
+<span id="cb114-10"><a href="線形回帰分析.html#cb114-10" tabindex="-1"></a><span class="co">#&gt;              jobclass         health health_ins  logwage      wage</span></span>
+<span id="cb114-11"><a href="線形回帰分析.html#cb114-11" tabindex="-1"></a><span class="co">#&gt; 231655  1. Industrial      1. &lt;=Good      2. No 4.318063  75.04315</span></span>
+<span id="cb114-12"><a href="線形回帰分析.html#cb114-12" tabindex="-1"></a><span class="co">#&gt; 86582  2. Information 2. &gt;=Very Good      2. No 4.255273  70.47602</span></span>
+<span id="cb114-13"><a href="線形回帰分析.html#cb114-13" tabindex="-1"></a><span class="co">#&gt; 161300  1. Industrial      1. &lt;=Good     1. Yes 4.875061 130.98218</span></span>
+<span id="cb114-14"><a href="線形回帰分析.html#cb114-14" tabindex="-1"></a><span class="co">#&gt; 155159 2. Information 2. &gt;=Very Good     1. Yes 5.041393 154.68529</span></span>
+<span id="cb114-15"><a href="線形回帰分析.html#cb114-15" tabindex="-1"></a><span class="co">#&gt; 11443  2. Information      1. &lt;=Good     1. Yes 4.318063  75.04315</span></span>
+<span id="cb114-16"><a href="線形回帰分析.html#cb114-16" tabindex="-1"></a><span class="co">#&gt; 376662 2. Information 2. &gt;=Very Good     1. Yes 4.845098 127.11574</span></span>
+<span id="cb114-17"><a href="線形回帰分析.html#cb114-17" tabindex="-1"></a><span class="co"># par(new=T)</span></span>
+<span id="cb114-18"><a href="線形回帰分析.html#cb114-18" tabindex="-1"></a><span class="fu">plot</span>(Wage<span class="sc">$</span>age, Wage<span class="sc">$</span>wage)</span></code></pre></div>
+<p><img src="_main_files/figure-html/unnamed-chunk-59-1.png" width="75%" /></p>
+<ul>
+<li>2次の多項式回帰</li>
+</ul>
+<div class="sourceCode" id="cb115"><pre class="sourceCode r"><code class="sourceCode r"><span id="cb115-1"><a href="線形回帰分析.html#cb115-1" tabindex="-1"></a><span class="co"># 2次</span></span>
+<span id="cb115-2"><a href="線形回帰分析.html#cb115-2" tabindex="-1"></a>res_lm2 <span class="ot">&lt;-</span> <span class="fu">lm</span>(wage <span class="sc">~</span> <span class="fu">poly</span>(age, <span class="dv">2</span>), <span class="at">data =</span> Wage)  <span class="co"># 2次の直交多項式</span></span>
+<span id="cb115-3"><a href="線形回帰分析.html#cb115-3" tabindex="-1"></a><span class="fu">head</span>(<span class="fu">poly</span>(Wage<span class="sc">$</span>age, <span class="dv">2</span>))  <span class="co"># 2次の多項式</span></span>
+<span id="cb115-4"><a href="線形回帰分析.html#cb115-4" tabindex="-1"></a><span class="co">#&gt;                  1            2</span></span>
+<span id="cb115-5"><a href="線形回帰分析.html#cb115-5" tabindex="-1"></a><span class="co">#&gt; [1,] -0.0386247992  0.055908727</span></span>
+<span id="cb115-6"><a href="線形回帰分析.html#cb115-6" tabindex="-1"></a><span class="co">#&gt; [2,] -0.0291326034  0.026298066</span></span>
+<span id="cb115-7"><a href="線形回帰分析.html#cb115-7" tabindex="-1"></a><span class="co">#&gt; [3,]  0.0040900817 -0.014506548</span></span>
+<span id="cb115-8"><a href="線形回帰分析.html#cb115-8" tabindex="-1"></a><span class="co">#&gt; [4,]  0.0009260164 -0.014831404</span></span>
+<span id="cb115-9"><a href="線形回帰分析.html#cb115-9" tabindex="-1"></a><span class="co">#&gt; [5,]  0.0120002448 -0.009815846</span></span>
+<span id="cb115-10"><a href="線形回帰分析.html#cb115-10" tabindex="-1"></a><span class="co">#&gt; [6,]  0.0183283753 -0.002073906</span></span>
+<span id="cb115-11"><a href="線形回帰分析.html#cb115-11" tabindex="-1"></a><span class="fu">coef</span>(<span class="fu">summary</span>(res_lm2))</span>
+<span id="cb115-12"><a href="線形回帰分析.html#cb115-12" tabindex="-1"></a><span class="co">#&gt;                Estimate Std. Error   t value     Pr(&gt;|t|)</span></span>
+<span id="cb115-13"><a href="線形回帰分析.html#cb115-13" tabindex="-1"></a><span class="co">#&gt; (Intercept)    111.7036   0.730162 152.98470 0.000000e+00</span></span>
+<span id="cb115-14"><a href="線形回帰分析.html#cb115-14" tabindex="-1"></a><span class="co">#&gt; poly(age, 2)1  447.0679  39.992617  11.17876 1.878131e-28</span></span>
+<span id="cb115-15"><a href="線形回帰分析.html#cb115-15" tabindex="-1"></a><span class="co">#&gt; poly(age, 2)2 -478.3158  39.992617 -11.96010 3.077420e-32</span></span>
+<span id="cb115-16"><a href="線形回帰分析.html#cb115-16" tabindex="-1"></a><span class="fu">plot</span>(Wage<span class="sc">$</span>age, <span class="fu">predict</span>(res_lm2), <span class="at">pch =</span> <span class="dv">2</span>, <span class="at">col =</span> <span class="st">&quot;blue&quot;</span>)</span></code></pre></div>
+<p><img src="_main_files/figure-html/unnamed-chunk-60-1.png" width="75%" /></p>
+<ul>
+<li>3次の多項式回帰</li>
+</ul>
+<div class="sourceCode" id="cb116"><pre class="sourceCode r"><code class="sourceCode r"><span id="cb116-1"><a href="線形回帰分析.html#cb116-1" tabindex="-1"></a><span class="co"># 3次</span></span>
+<span id="cb116-2"><a href="線形回帰分析.html#cb116-2" tabindex="-1"></a>res_lm3 <span class="ot">&lt;-</span> <span class="fu">lm</span>(wage <span class="sc">~</span> <span class="fu">poly</span>(age, <span class="dv">3</span>), <span class="at">data =</span> Wage)  <span class="co"># 3次の直交多項式</span></span>
+<span id="cb116-3"><a href="線形回帰分析.html#cb116-3" tabindex="-1"></a><span class="fu">head</span>(<span class="fu">poly</span>(Wage<span class="sc">$</span>age, <span class="dv">3</span>))  <span class="co"># 3次の多項式</span></span>
+<span id="cb116-4"><a href="線形回帰分析.html#cb116-4" tabindex="-1"></a><span class="co">#&gt;                  1            2             3</span></span>
+<span id="cb116-5"><a href="線形回帰分析.html#cb116-5" tabindex="-1"></a><span class="co">#&gt; [1,] -0.0386247992  0.055908727 -0.0717405794</span></span>
+<span id="cb116-6"><a href="線形回帰分析.html#cb116-6" tabindex="-1"></a><span class="co">#&gt; [2,] -0.0291326034  0.026298066 -0.0145499511</span></span>
+<span id="cb116-7"><a href="線形回帰分析.html#cb116-7" tabindex="-1"></a><span class="co">#&gt; [3,]  0.0040900817 -0.014506548 -0.0001331835</span></span>
+<span id="cb116-8"><a href="線形回帰分析.html#cb116-8" tabindex="-1"></a><span class="co">#&gt; [4,]  0.0009260164 -0.014831404  0.0045136682</span></span>
+<span id="cb116-9"><a href="線形回帰分析.html#cb116-9" tabindex="-1"></a><span class="co">#&gt; [5,]  0.0120002448 -0.009815846 -0.0111366263</span></span>
+<span id="cb116-10"><a href="線形回帰分析.html#cb116-10" tabindex="-1"></a><span class="co">#&gt; [6,]  0.0183283753 -0.002073906 -0.0166282799</span></span>
+<span id="cb116-11"><a href="線形回帰分析.html#cb116-11" tabindex="-1"></a><span class="fu">coef</span>(<span class="fu">summary</span>(res_lm3))</span>
+<span id="cb116-12"><a href="線形回帰分析.html#cb116-12" tabindex="-1"></a><span class="co">#&gt;                Estimate Std. Error    t value     Pr(&gt;|t|)</span></span>
+<span id="cb116-13"><a href="線形回帰分析.html#cb116-13" tabindex="-1"></a><span class="co">#&gt; (Intercept)    111.7036  0.7290826 153.211181 0.000000e+00</span></span>
+<span id="cb116-14"><a href="線形回帰分析.html#cb116-14" tabindex="-1"></a><span class="co">#&gt; poly(age, 3)1  447.0679 39.9334995  11.195309 1.570802e-28</span></span>
+<span id="cb116-15"><a href="線形回帰分析.html#cb116-15" tabindex="-1"></a><span class="co">#&gt; poly(age, 3)2 -478.3158 39.9334995 -11.977808 2.511784e-32</span></span>
+<span id="cb116-16"><a href="線形回帰分析.html#cb116-16" tabindex="-1"></a><span class="co">#&gt; poly(age, 3)3  125.5217 39.9334995   3.143268 1.687063e-03</span></span>
+<span id="cb116-17"><a href="線形回帰分析.html#cb116-17" tabindex="-1"></a><span class="fu">plot</span>(Wage<span class="sc">$</span>age, <span class="fu">predict</span>(res_lm3), <span class="at">pch =</span> <span class="dv">2</span>, <span class="at">col =</span> <span class="st">&quot;blue&quot;</span>)</span></code></pre></div>
+<p><img src="_main_files/figure-html/unnamed-chunk-61-1.png" width="75%" /></p>
+<ul>
+<li>4次の多項式回帰</li>
+</ul>
+<div class="sourceCode" id="cb117"><pre class="sourceCode r"><code class="sourceCode r"><span id="cb117-1"><a href="線形回帰分析.html#cb117-1" tabindex="-1"></a><span class="co"># 4次</span></span>
+<span id="cb117-2"><a href="線形回帰分析.html#cb117-2" tabindex="-1"></a>res_lm4 <span class="ot">&lt;-</span> <span class="fu">lm</span>(wage <span class="sc">~</span> <span class="fu">poly</span>(age, <span class="dv">4</span>), <span class="at">data =</span> Wage)  <span class="co"># 4次の直交多項式</span></span>
+<span id="cb117-3"><a href="線形回帰分析.html#cb117-3" tabindex="-1"></a><span class="fu">head</span>(<span class="fu">poly</span>(Wage<span class="sc">$</span>age, <span class="dv">4</span>))  <span class="co"># 4次の多項式</span></span>
+<span id="cb117-4"><a href="線形回帰分析.html#cb117-4" tabindex="-1"></a><span class="co">#&gt;                  1            2             3            4</span></span>
+<span id="cb117-5"><a href="線形回帰分析.html#cb117-5" tabindex="-1"></a><span class="co">#&gt; [1,] -0.0386247992  0.055908727 -0.0717405794  0.086729854</span></span>
+<span id="cb117-6"><a href="線形回帰分析.html#cb117-6" tabindex="-1"></a><span class="co">#&gt; [2,] -0.0291326034  0.026298066 -0.0145499511 -0.002599280</span></span>
+<span id="cb117-7"><a href="線形回帰分析.html#cb117-7" tabindex="-1"></a><span class="co">#&gt; [3,]  0.0040900817 -0.014506548 -0.0001331835  0.014480093</span></span>
+<span id="cb117-8"><a href="線形回帰分析.html#cb117-8" tabindex="-1"></a><span class="co">#&gt; [4,]  0.0009260164 -0.014831404  0.0045136682  0.012657507</span></span>
+<span id="cb117-9"><a href="線形回帰分析.html#cb117-9" tabindex="-1"></a><span class="co">#&gt; [5,]  0.0120002448 -0.009815846 -0.0111366263  0.010211456</span></span>
+<span id="cb117-10"><a href="線形回帰分析.html#cb117-10" tabindex="-1"></a><span class="co">#&gt; [6,]  0.0183283753 -0.002073906 -0.0166282799 -0.001314381</span></span>
+<span id="cb117-11"><a href="線形回帰分析.html#cb117-11" tabindex="-1"></a><span class="fu">coef</span>(<span class="fu">summary</span>(res_lm4))</span>
+<span id="cb117-12"><a href="線形回帰分析.html#cb117-12" tabindex="-1"></a><span class="co">#&gt;                 Estimate Std. Error    t value     Pr(&gt;|t|)</span></span>
+<span id="cb117-13"><a href="線形回帰分析.html#cb117-13" tabindex="-1"></a><span class="co">#&gt; (Intercept)    111.70361  0.7287409 153.283015 0.000000e+00</span></span>
+<span id="cb117-14"><a href="線形回帰分析.html#cb117-14" tabindex="-1"></a><span class="co">#&gt; poly(age, 4)1  447.06785 39.9147851  11.200558 1.484604e-28</span></span>
+<span id="cb117-15"><a href="線形回帰分析.html#cb117-15" tabindex="-1"></a><span class="co">#&gt; poly(age, 4)2 -478.31581 39.9147851 -11.983424 2.355831e-32</span></span>
+<span id="cb117-16"><a href="線形回帰分析.html#cb117-16" tabindex="-1"></a><span class="co">#&gt; poly(age, 4)3  125.52169 39.9147851   3.144742 1.678622e-03</span></span>
+<span id="cb117-17"><a href="線形回帰分析.html#cb117-17" tabindex="-1"></a><span class="co">#&gt; poly(age, 4)4  -77.91118 39.9147851  -1.951938 5.103865e-02</span></span>
+<span id="cb117-18"><a href="線形回帰分析.html#cb117-18" tabindex="-1"></a><span class="fu">plot</span>(Wage<span class="sc">$</span>age, <span class="fu">predict</span>(res_lm4), <span class="at">pch =</span> <span class="dv">2</span>, <span class="at">col =</span> <span class="st">&quot;blue&quot;</span>)</span></code></pre></div>
+<p><img src="_main_files/figure-html/unnamed-chunk-62-1.png" width="75%" /></p>
+<div class="sourceCode" id="cb118"><pre class="sourceCode r"><code class="sourceCode r"><span id="cb118-1"><a href="線形回帰分析.html#cb118-1" tabindex="-1"></a><span class="co">#</span></span>
+<span id="cb118-2"><a href="線形回帰分析.html#cb118-2" tabindex="-1"></a>res_lm4_2 <span class="ot">&lt;-</span> <span class="fu">lm</span>(wage <span class="sc">~</span> <span class="fu">poly</span>(age, <span class="dv">4</span>, <span class="at">raw =</span> T), <span class="at">data =</span> Wage)  <span class="co"># 非直交化</span></span>
+<span id="cb118-3"><a href="線形回帰分析.html#cb118-3" tabindex="-1"></a><span class="fu">head</span>(<span class="fu">poly</span>(Wage<span class="sc">$</span>age, <span class="dv">4</span>, <span class="at">raw =</span> T))  <span class="co"># 4次の多項式</span></span>
+<span id="cb118-4"><a href="線形回帰分析.html#cb118-4" tabindex="-1"></a><span class="co">#&gt;       1    2      3       4</span></span>
+<span id="cb118-5"><a href="線形回帰分析.html#cb118-5" tabindex="-1"></a><span class="co">#&gt; [1,] 18  324   5832  104976</span></span>
+<span id="cb118-6"><a href="線形回帰分析.html#cb118-6" tabindex="-1"></a><span class="co">#&gt; [2,] 24  576  13824  331776</span></span>
+<span id="cb118-7"><a href="線形回帰分析.html#cb118-7" tabindex="-1"></a><span class="co">#&gt; [3,] 45 2025  91125 4100625</span></span>
+<span id="cb118-8"><a href="線形回帰分析.html#cb118-8" tabindex="-1"></a><span class="co">#&gt; [4,] 43 1849  79507 3418801</span></span>
+<span id="cb118-9"><a href="線形回帰分析.html#cb118-9" tabindex="-1"></a><span class="co">#&gt; [5,] 50 2500 125000 6250000</span></span>
+<span id="cb118-10"><a href="線形回帰分析.html#cb118-10" tabindex="-1"></a><span class="co">#&gt; [6,] 54 2916 157464 8503056</span></span>
+<span id="cb118-11"><a href="線形回帰分析.html#cb118-11" tabindex="-1"></a><span class="fu">coef</span>(<span class="fu">summary</span>(res_lm4_2))</span>
+<span id="cb118-12"><a href="線形回帰分析.html#cb118-12" tabindex="-1"></a><span class="co">#&gt;                             Estimate   Std. Error   t value     Pr(&gt;|t|)</span></span>
+<span id="cb118-13"><a href="線形回帰分析.html#cb118-13" tabindex="-1"></a><span class="co">#&gt; (Intercept)            -1.841542e+02 6.004038e+01 -3.067172 0.0021802539</span></span>
+<span id="cb118-14"><a href="線形回帰分析.html#cb118-14" tabindex="-1"></a><span class="co">#&gt; poly(age, 4, raw = T)1  2.124552e+01 5.886748e+00  3.609042 0.0003123618</span></span>
+<span id="cb118-15"><a href="線形回帰分析.html#cb118-15" tabindex="-1"></a><span class="co">#&gt; poly(age, 4, raw = T)2 -5.638593e-01 2.061083e-01 -2.735743 0.0062606446</span></span>
+<span id="cb118-16"><a href="線形回帰分析.html#cb118-16" tabindex="-1"></a><span class="co">#&gt; poly(age, 4, raw = T)3  6.810688e-03 3.065931e-03  2.221409 0.0263977518</span></span>
+<span id="cb118-17"><a href="線形回帰分析.html#cb118-17" tabindex="-1"></a><span class="co">#&gt; poly(age, 4, raw = T)4 -3.203830e-05 1.641359e-05 -1.951938 0.0510386498</span></span></code></pre></div>
+<p>モデル式を変えて結果を比較する.</p>
+<div class="sourceCode" id="cb119"><pre class="sourceCode r"><code class="sourceCode r"><span id="cb119-1"><a href="線形回帰分析.html#cb119-1" tabindex="-1"></a><span class="co"># 上と同一</span></span>
+<span id="cb119-2"><a href="線形回帰分析.html#cb119-2" tabindex="-1"></a>res_lm4_3 <span class="ot">&lt;-</span> <span class="fu">lm</span>(wage <span class="sc">~</span> age <span class="sc">+</span> <span class="fu">I</span>(age<span class="sc">^</span><span class="dv">2</span>) <span class="sc">+</span> <span class="fu">I</span>(age<span class="sc">^</span><span class="dv">3</span>) <span class="sc">+</span> <span class="fu">I</span>(age<span class="sc">^</span><span class="dv">4</span>), <span class="at">data =</span> Wage)</span>
+<span id="cb119-3"><a href="線形回帰分析.html#cb119-3" tabindex="-1"></a><span class="fu">coef</span>(<span class="fu">summary</span>(res_lm4_3))</span>
+<span id="cb119-4"><a href="線形回帰分析.html#cb119-4" tabindex="-1"></a><span class="co">#</span></span>
+<span id="cb119-5"><a href="線形回帰分析.html#cb119-5" tabindex="-1"></a>res_lm4_3 <span class="ot">&lt;-</span> <span class="fu">lm</span>(wage <span class="sc">~</span> <span class="fu">cbind</span>(age, age<span class="sc">^</span><span class="dv">2</span>, age<span class="sc">^</span><span class="dv">3</span>, age<span class="sc">^</span><span class="dv">4</span>), <span class="at">data =</span> Wage)</span>
+<span id="cb119-6"><a href="線形回帰分析.html#cb119-6" tabindex="-1"></a><span class="fu">coef</span>(<span class="fu">summary</span>(res_lm4_3))</span>
+<span id="cb119-7"><a href="線形回帰分析.html#cb119-7" tabindex="-1"></a></span>
+<span id="cb119-8"><a href="線形回帰分析.html#cb119-8" tabindex="-1"></a><span class="co"># 以下と比較せよ</span></span>
+<span id="cb119-9"><a href="線形回帰分析.html#cb119-9" tabindex="-1"></a>res_lm4_4 <span class="ot">&lt;-</span> <span class="fu">lm</span>(wage <span class="sc">~</span> age <span class="sc">+</span> age<span class="sc">^</span><span class="dv">2</span> <span class="sc">+</span> age<span class="sc">^</span><span class="dv">3</span> <span class="sc">+</span> age<span class="sc">^</span><span class="dv">4</span>, <span class="at">data =</span> Wage)</span>
+<span id="cb119-10"><a href="線形回帰分析.html#cb119-10" tabindex="-1"></a><span class="fu">coef</span>(<span class="fu">summary</span>(res_lm4_4))</span></code></pre></div>
+
 </div>
 </div>
 </div>
