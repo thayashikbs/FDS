@@ -1,0 +1,905 @@
+<!DOCTYPE html>
+<html lang="" xml:lang="">
+<head>
+
+  <meta charset="utf-8" />
+  <meta http-equiv="X-UA-Compatible" content="IE=edge" />
+  <title>Chapter 5 一般化加法モデル (GAM) | 金融データサイエンス</title>
+  <meta name="description" content="Chapter 5 一般化加法モデル (GAM) | 金融データサイエンス" />
+  <meta name="generator" content="bookdown 0.37 and GitBook 2.6.7" />
+
+  <meta property="og:title" content="Chapter 5 一般化加法モデル (GAM) | 金融データサイエンス" />
+  <meta property="og:type" content="book" />
+  
+  
+  
+
+  <meta name="twitter:card" content="summary" />
+  <meta name="twitter:title" content="Chapter 5 一般化加法モデル (GAM) | 金融データサイエンス" />
+  
+  
+  
+
+<meta name="author" content="林 高樹" />
+
+
+
+  <meta name="viewport" content="width=device-width, initial-scale=1" />
+  <meta name="apple-mobile-web-app-capable" content="yes" />
+  <meta name="apple-mobile-web-app-status-bar-style" content="black" />
+  
+  
+<link rel="prev" href="ロジットプロビット回帰分析.html"/>
+
+<script src="libs/jquery-3.6.1/jquery-3.6.1.min.js"></script>
+<script src="https://cdn.jsdelivr.net/npm/fuse.js@6.4.6/dist/fuse.min.js"></script>
+<link href="libs/gitbook-2.6.7/css/style.css" rel="stylesheet" />
+<link href="libs/gitbook-2.6.7/css/plugin-table.css" rel="stylesheet" />
+<link href="libs/gitbook-2.6.7/css/plugin-bookdown.css" rel="stylesheet" />
+<link href="libs/gitbook-2.6.7/css/plugin-highlight.css" rel="stylesheet" />
+<link href="libs/gitbook-2.6.7/css/plugin-search.css" rel="stylesheet" />
+<link href="libs/gitbook-2.6.7/css/plugin-fontsettings.css" rel="stylesheet" />
+<link href="libs/gitbook-2.6.7/css/plugin-clipboard.css" rel="stylesheet" />
+
+
+
+
+
+
+
+
+<link href="libs/anchor-sections-1.1.0/anchor-sections.css" rel="stylesheet" />
+<link href="libs/anchor-sections-1.1.0/anchor-sections-hash.css" rel="stylesheet" />
+<script src="libs/anchor-sections-1.1.0/anchor-sections.js"></script>
+
+
+<style type="text/css">
+pre > code.sourceCode { white-space: pre; position: relative; }
+pre > code.sourceCode > span { line-height: 1.25; }
+pre > code.sourceCode > span:empty { height: 1.2em; }
+.sourceCode { overflow: visible; }
+code.sourceCode > span { color: inherit; text-decoration: inherit; }
+pre.sourceCode { margin: 0; }
+@media screen {
+div.sourceCode { overflow: auto; }
+}
+@media print {
+pre > code.sourceCode { white-space: pre-wrap; }
+pre > code.sourceCode > span { text-indent: -5em; padding-left: 5em; }
+}
+pre.numberSource code
+  { counter-reset: source-line 0; }
+pre.numberSource code > span
+  { position: relative; left: -4em; counter-increment: source-line; }
+pre.numberSource code > span > a:first-child::before
+  { content: counter(source-line);
+    position: relative; left: -1em; text-align: right; vertical-align: baseline;
+    border: none; display: inline-block;
+    -webkit-touch-callout: none; -webkit-user-select: none;
+    -khtml-user-select: none; -moz-user-select: none;
+    -ms-user-select: none; user-select: none;
+    padding: 0 4px; width: 4em;
+    color: #aaaaaa;
+  }
+pre.numberSource { margin-left: 3em; border-left: 1px solid #aaaaaa;  padding-left: 4px; }
+div.sourceCode
+  {   }
+@media screen {
+pre > code.sourceCode > span > a:first-child::before { text-decoration: underline; }
+}
+code span.al { color: #ff0000; font-weight: bold; } /* Alert */
+code span.an { color: #60a0b0; font-weight: bold; font-style: italic; } /* Annotation */
+code span.at { color: #7d9029; } /* Attribute */
+code span.bn { color: #40a070; } /* BaseN */
+code span.bu { color: #008000; } /* BuiltIn */
+code span.cf { color: #007020; font-weight: bold; } /* ControlFlow */
+code span.ch { color: #4070a0; } /* Char */
+code span.cn { color: #880000; } /* Constant */
+code span.co { color: #60a0b0; font-style: italic; } /* Comment */
+code span.cv { color: #60a0b0; font-weight: bold; font-style: italic; } /* CommentVar */
+code span.do { color: #ba2121; font-style: italic; } /* Documentation */
+code span.dt { color: #902000; } /* DataType */
+code span.dv { color: #40a070; } /* DecVal */
+code span.er { color: #ff0000; font-weight: bold; } /* Error */
+code span.ex { } /* Extension */
+code span.fl { color: #40a070; } /* Float */
+code span.fu { color: #06287e; } /* Function */
+code span.im { color: #008000; font-weight: bold; } /* Import */
+code span.in { color: #60a0b0; font-weight: bold; font-style: italic; } /* Information */
+code span.kw { color: #007020; font-weight: bold; } /* Keyword */
+code span.op { color: #666666; } /* Operator */
+code span.ot { color: #007020; } /* Other */
+code span.pp { color: #bc7a00; } /* Preprocessor */
+code span.sc { color: #4070a0; } /* SpecialChar */
+code span.ss { color: #bb6688; } /* SpecialString */
+code span.st { color: #4070a0; } /* String */
+code span.va { color: #19177c; } /* Variable */
+code span.vs { color: #4070a0; } /* VerbatimString */
+code span.wa { color: #60a0b0; font-weight: bold; font-style: italic; } /* Warning */
+</style>
+
+<style type="text/css">
+  
+  div.hanging-indent{margin-left: 1.5em; text-indent: -1.5em;}
+</style>
+
+</head>
+
+<body>
+
+
+
+  <div class="book without-animation with-summary font-size-2 font-family-1" data-basepath=".">
+
+    <div class="book-summary">
+      <nav role="navigation">
+
+<ul class="summary">
+<li><a href="./">金融データサイエンス</a></li>
+
+<li class="divider"></li>
+<li class="chapter" data-level="1" data-path="index.html"><a href="index.html"><i class="fa fa-check"></i><b>1</b> はじめに</a>
+<ul>
+<li class="chapter" data-level="1.1" data-path="index.html"><a href="index.html#コースの目的"><i class="fa fa-check"></i><b>1.1</b> コースの目的</a></li>
+<li class="chapter" data-level="1.2" data-path="index.html"><a href="index.html#統計学統計的手法の学習について"><i class="fa fa-check"></i><b>1.2</b> 統計学/統計的手法の学習について</a>
+<ul>
+<li class="chapter" data-level="" data-path="index.html"><a href="index.html#学習の目標"><i class="fa fa-check"></i>学習の目標</a></li>
+<li class="chapter" data-level="" data-path="index.html"><a href="index.html#統計学統計的手法の学習方法"><i class="fa fa-check"></i>統計学/統計的手法の学習方法</a></li>
+<li class="chapter" data-level="" data-path="index.html"><a href="index.html#統計学統計的手法の学習ステップ"><i class="fa fa-check"></i>統計学/統計的手法の学習ステップ</a></li>
+</ul></li>
+<li class="chapter" data-level="1.3" data-path="index.html"><a href="index.html#金融ビジネス応用における統計学の最近の趨勢"><i class="fa fa-check"></i><b>1.3</b> 金融・ビジネス応用における統計学の最近の趨勢</a></li>
+<li class="chapter" data-level="1.4" data-path="index.html"><a href="index.html#本書内の記載の注意点"><i class="fa fa-check"></i><b>1.4</b> 本書内の記載の注意点</a></li>
+</ul></li>
+<li class="chapter" data-level="2" data-path="r言語の基本.html"><a href="r言語の基本.html"><i class="fa fa-check"></i><b>2</b> R言語の基本</a>
+<ul>
+<li class="chapter" data-level="2.1" data-path="r言語の基本.html"><a href="r言語の基本.html#rの基本プログラミング"><i class="fa fa-check"></i><b>2.1</b> Rの基本プログラミング</a>
+<ul>
+<li class="chapter" data-level="" data-path="r言語の基本.html"><a href="r言語の基本.html#生成ai利用に関する注意事項"><i class="fa fa-check"></i>生成AI利用に関する注意事項</a></li>
+<li class="chapter" data-level="2.1.1" data-path="r言語の基本.html"><a href="r言語の基本.html#基本操作"><i class="fa fa-check"></i><b>2.1.1</b> 基本操作</a></li>
+<li class="chapter" data-level="2.1.2" data-path="r言語の基本.html"><a href="r言語の基本.html#基本構文"><i class="fa fa-check"></i><b>2.1.2</b> 基本構文</a></li>
+<li class="chapter" data-level="2.1.3" data-path="r言語の基本.html"><a href="r言語の基本.html#自作関数"><i class="fa fa-check"></i><b>2.1.3</b> 自作関数</a></li>
+<li class="chapter" data-level="2.1.4" data-path="r言語の基本.html"><a href="r言語の基本.html#パッケージのインストール-読み込み"><i class="fa fa-check"></i><b>2.1.4</b> パッケージのインストール &amp; 読み込み</a></li>
+<li class="chapter" data-level="2.1.5" data-path="r言語の基本.html"><a href="r言語の基本.html#ヘルプ"><i class="fa fa-check"></i><b>2.1.5</b> ヘルプ</a></li>
+</ul></li>
+<li class="chapter" data-level="2.2" data-path="r言語の基本.html"><a href="r言語の基本.html#データの型や構造"><i class="fa fa-check"></i><b>2.2</b> データの型や構造</a>
+<ul>
+<li class="chapter" data-level="2.2.1" data-path="r言語の基本.html"><a href="r言語の基本.html#データの値の種類-データ型"><i class="fa fa-check"></i><b>2.2.1</b> データの値の種類 (“データ型”)</a></li>
+<li class="chapter" data-level="2.2.2" data-path="r言語の基本.html"><a href="r言語の基本.html#データの配列の仕方-データ構造"><i class="fa fa-check"></i><b>2.2.2</b> データの配列の仕方 (“データ構造”)</a></li>
+<li class="chapter" data-level="2.2.3" data-path="r言語の基本.html"><a href="r言語の基本.html#ベクトル"><i class="fa fa-check"></i><b>2.2.3</b> ベクトル</a></li>
+<li class="chapter" data-level="2.2.4" data-path="r言語の基本.html"><a href="r言語の基本.html#行列"><i class="fa fa-check"></i><b>2.2.4</b> 行列</a></li>
+<li class="chapter" data-level="2.2.5" data-path="r言語の基本.html"><a href="r言語の基本.html#リスト"><i class="fa fa-check"></i><b>2.2.5</b> リスト</a></li>
+<li class="chapter" data-level="2.2.6" data-path="r言語の基本.html"><a href="r言語の基本.html#データフレーム"><i class="fa fa-check"></i><b>2.2.6</b> データフレーム</a></li>
+</ul></li>
+<li class="chapter" data-level="2.3" data-path="r言語の基本.html"><a href="r言語の基本.html#データの操作演算"><i class="fa fa-check"></i><b>2.3</b> データの操作・演算</a>
+<ul>
+<li class="chapter" data-level="2.3.1" data-path="r言語の基本.html"><a href="r言語の基本.html#ベクトルの結合-ソート"><i class="fa fa-check"></i><b>2.3.1</b> ベクトルの結合, ソート</a></li>
+<li class="chapter" data-level="2.3.2" data-path="r言語の基本.html"><a href="r言語の基本.html#二項演算"><i class="fa fa-check"></i><b>2.3.2</b> 二項演算</a></li>
+<li class="chapter" data-level="2.3.3" data-path="r言語の基本.html"><a href="r言語の基本.html#論理演算"><i class="fa fa-check"></i><b>2.3.3</b> 論理演算</a></li>
+<li class="chapter" data-level="2.3.4" data-path="r言語の基本.html"><a href="r言語の基本.html#条件式"><i class="fa fa-check"></i><b>2.3.4</b> 条件式</a></li>
+<li class="chapter" data-level="2.3.5" data-path="r言語の基本.html"><a href="r言語の基本.html#行列演算"><i class="fa fa-check"></i><b>2.3.5</b> 行列演算</a></li>
+</ul></li>
+<li class="chapter" data-level="2.4" data-path="r言語の基本.html"><a href="r言語の基本.html#r関数"><i class="fa fa-check"></i><b>2.4</b> R関数</a>
+<ul>
+<li class="chapter" data-level="2.4.1" data-path="r言語の基本.html"><a href="r言語の基本.html#数学基本関数"><i class="fa fa-check"></i><b>2.4.1</b> 数学基本関数</a></li>
+<li class="chapter" data-level="2.4.2" data-path="r言語の基本.html"><a href="r言語の基本.html#基本統計量の計算"><i class="fa fa-check"></i><b>2.4.2</b> 基本統計量の計算</a></li>
+<li class="chapter" data-level="2.4.3" data-path="r言語の基本.html"><a href="r言語の基本.html#確率分布"><i class="fa fa-check"></i><b>2.4.3</b> 確率分布</a></li>
+<li class="chapter" data-level="2.4.4" data-path="r言語の基本.html"><a href="r言語の基本.html#その他便利な関数"><i class="fa fa-check"></i><b>2.4.4</b> その他便利な関数</a></li>
+</ul></li>
+<li class="chapter" data-level="2.5" data-path="r言語の基本.html"><a href="r言語の基本.html#データの可視化"><i class="fa fa-check"></i><b>2.5</b> データの可視化</a></li>
+<li class="chapter" data-level="2.6" data-path="r言語の基本.html"><a href="r言語の基本.html#ファイル入出力"><i class="fa fa-check"></i><b>2.6</b> ファイル入出力</a>
+<ul>
+<li class="chapter" data-level="2.6.1" data-path="r言語の基本.html"><a href="r言語の基本.html#テキストファイル読み込み"><i class="fa fa-check"></i><b>2.6.1</b> テキストファイル読み込み</a></li>
+<li class="chapter" data-level="2.6.2" data-path="r言語の基本.html"><a href="r言語の基本.html#テキストファイル書き出し"><i class="fa fa-check"></i><b>2.6.2</b> テキストファイル書き出し</a></li>
+</ul></li>
+<li class="chapter" data-level="2.7" data-path="r言語の基本.html"><a href="r言語の基本.html#パッケージtidyverse"><i class="fa fa-check"></i><b>2.7</b> パッケージ<code>tidyverse</code></a>
+<ul>
+<li class="chapter" data-level="2.7.1" data-path="r言語の基本.html"><a href="r言語の基本.html#q-rの初心者はtidyverseから勉強することは可能か"><i class="fa fa-check"></i><b>2.7.1</b> Q: Rの初心者は<code>tidyverse</code>から勉強することは可能か?</a></li>
+<li class="chapter" data-level="2.7.2" data-path="r言語の基本.html"><a href="r言語の基本.html#tidyverseの基本"><i class="fa fa-check"></i><b>2.7.2</b> <code>tidyverse</code>の基本</a></li>
+</ul></li>
+</ul></li>
+<li class="chapter" data-level="3" data-path="線形回帰分析.html"><a href="線形回帰分析.html"><i class="fa fa-check"></i><b>3</b> 線形回帰分析</a>
+<ul>
+<li class="chapter" data-level="3.1" data-path="線形回帰分析.html"><a href="線形回帰分析.html#重回帰分析の基本操作"><i class="fa fa-check"></i><b>3.1</b> 重回帰分析の基本操作</a>
+<ul>
+<li class="chapter" data-level="" data-path="線形回帰分析.html"><a href="線形回帰分析.html#データ1-1ルーム賃貸マンション"><i class="fa fa-check"></i>データ1: 1ルーム賃貸マンション</a></li>
+</ul></li>
+<li class="chapter" data-level="3.2" data-path="線形回帰分析.html"><a href="線形回帰分析.html#回帰分析の結果の見方と変数の選択"><i class="fa fa-check"></i><b>3.2</b> 回帰分析の結果の見方と変数の選択</a>
+<ul>
+<li class="chapter" data-level="" data-path="線形回帰分析.html"><a href="線形回帰分析.html#データ2-上場企業のpbrデータ-仮想データ"><i class="fa fa-check"></i>データ2: 上場企業のPBRデータ (仮想データ)</a></li>
+</ul></li>
+<li class="chapter" data-level="3.3" data-path="線形回帰分析.html"><a href="線形回帰分析.html#説明変数に質的変数を含む回帰"><i class="fa fa-check"></i><b>3.3</b> 説明変数に質的変数を含む回帰</a>
+<ul>
+<li class="chapter" data-level="" data-path="線形回帰分析.html"><a href="線形回帰分析.html#データセット3-高速道路事故データ"><i class="fa fa-check"></i>データセット#3: 高速道路事故データ</a></li>
+</ul></li>
+<li class="chapter" data-level="3.4" data-path="線形回帰分析.html"><a href="線形回帰分析.html#説明変数に質的変数を含む回帰-2"><i class="fa fa-check"></i><b>3.4</b> 説明変数に質的変数を含む回帰 (2)</a>
+<ul>
+<li class="chapter" data-level="" data-path="線形回帰分析.html"><a href="線形回帰分析.html#データセット5-収入データ-仮想"><i class="fa fa-check"></i>データセット#5: 収入データ (仮想)</a></li>
+</ul></li>
+<li class="chapter" data-level="3.5" data-path="線形回帰分析.html"><a href="線形回帰分析.html#多項式回帰"><i class="fa fa-check"></i><b>3.5</b> 多項式回帰</a>
+<ul>
+<li class="chapter" data-level="" data-path="線形回帰分析.html"><a href="線形回帰分析.html#データセット6-wage"><i class="fa fa-check"></i>データセット#6: <code>Wage</code></a></li>
+</ul></li>
+<li class="chapter" data-level="3.6" data-path="線形回帰分析.html"><a href="線形回帰分析.html#関数factorについて"><i class="fa fa-check"></i><b>3.6</b> 関数<code>factor()</code>について</a>
+<ul>
+<li class="chapter" data-level="" data-path="線形回帰分析.html"><a href="線形回帰分析.html#rでのfactor関数の使い方"><i class="fa fa-check"></i>Rでのfactor関数の使い方</a></li>
+</ul></li>
+</ul></li>
+<li class="chapter" data-level="4" data-path="ロジットプロビット回帰分析.html"><a href="ロジットプロビット回帰分析.html"><i class="fa fa-check"></i><b>4</b> ロジット/プロビット回帰分析</a>
+<ul>
+<li class="chapter" data-level="4.1" data-path="ロジットプロビット回帰分析.html"><a href="ロジットプロビット回帰分析.html#ロジット回帰分析の基本操作"><i class="fa fa-check"></i><b>4.1</b> ロジット回帰分析の基本操作</a>
+<ul>
+<li class="chapter" data-level="" data-path="ロジットプロビット回帰分析.html"><a href="ロジットプロビット回帰分析.html#ロジットモデル-シミュレーションデータ"><i class="fa fa-check"></i>ロジットモデル: シミュレーションデータ</a></li>
+</ul></li>
+<li class="chapter" data-level="4.2" data-path="ロジットプロビット回帰分析.html"><a href="ロジットプロビット回帰分析.html#データ分析例"><i class="fa fa-check"></i><b>4.2</b> データ分析例</a>
+<ul>
+<li class="chapter" data-level="" data-path="ロジットプロビット回帰分析.html"><a href="ロジットプロビット回帰分析.html#データ1-社債デフォルトデータ-集計データ-仮想"><i class="fa fa-check"></i>データ1: 社債デフォルト・データ (集計データ, 仮想)</a></li>
+<li class="chapter" data-level="" data-path="ロジットプロビット回帰分析.html"><a href="ロジットプロビット回帰分析.html#データ2-個人向けローンのデフォルトデータ-仮想"><i class="fa fa-check"></i>データ2: 個人向けローンのデフォルト・データ (仮想)</a></li>
+</ul></li>
+<li class="chapter" data-level="4.3" data-path="ロジットプロビット回帰分析.html"><a href="ロジットプロビット回帰分析.html#オッズ比と相対リスク"><i class="fa fa-check"></i><b>4.3</b> オッズ比と相対リスク</a></li>
+<li class="chapter" data-level="4.4" data-path="ロジットプロビット回帰分析.html"><a href="ロジットプロビット回帰分析.html#疑似r2の計算"><i class="fa fa-check"></i><b>4.4</b> 疑似R2の計算</a>
+<ul>
+<li class="chapter" data-level="" data-path="ロジットプロビット回帰分析.html"><a href="ロジットプロビット回帰分析.html#パッケージdesctoolsの利用"><i class="fa fa-check"></i>パッケージ<strong>DescTools</strong>の利用</a></li>
+<li class="chapter" data-level="" data-path="ロジットプロビット回帰分析.html"><a href="ロジットプロビット回帰分析.html#パッケージpsclの利用"><i class="fa fa-check"></i>パッケージ<strong>pscl</strong>の利用</a></li>
+<li class="chapter" data-level="" data-path="ロジットプロビット回帰分析.html"><a href="ロジットプロビット回帰分析.html#パッケージperformanceの利用"><i class="fa fa-check"></i>パッケージ<strong>performance</strong>の利用</a></li>
+</ul></li>
+</ul></li>
+<li class="chapter" data-level="5" data-path="一般化加法モデル-gam.html"><a href="一般化加法モデル-gam.html"><i class="fa fa-check"></i><b>5</b> 一般化加法モデル (GAM)</a>
+<ul>
+<li class="chapter" data-level="5.1" data-path="一般化加法モデル-gam.html"><a href="一般化加法モデル-gam.html#データ-社債の信用スプレッド-仮想"><i class="fa fa-check"></i><b>5.1</b> データ: 社債の信用スプレッド (仮想)</a></li>
+<li class="chapter" data-level="5.2" data-path="一般化加法モデル-gam.html"><a href="一般化加法モデル-gam.html#多項式回帰とスプライン"><i class="fa fa-check"></i><b>5.2</b> 多項式回帰とスプライン</a>
+<ul>
+<li class="chapter" data-level="" data-path="一般化加法モデル-gam.html"><a href="一般化加法モデル-gam.html#多項式回帰-1"><i class="fa fa-check"></i>多項式回帰</a></li>
+<li class="chapter" data-level="" data-path="一般化加法モデル-gam.html"><a href="一般化加法モデル-gam.html#スプライン"><i class="fa fa-check"></i>スプライン</a></li>
+</ul></li>
+<li class="chapter" data-level="5.3" data-path="一般化加法モデル-gam.html"><a href="一般化加法モデル-gam.html#パッケージgamの利用"><i class="fa fa-check"></i><b>5.3</b> パッケージ<strong>gam</strong>の利用</a></li>
+<li class="chapter" data-level="5.4" data-path="一般化加法モデル-gam.html"><a href="一般化加法モデル-gam.html#パッケージmgcvの利用"><i class="fa fa-check"></i><b>5.4</b> パッケージ<strong>mgcv</strong>の利用</a>
+<ul>
+<li class="chapter" data-level="" data-path="一般化加法モデル-gam.html"><a href="一般化加法モデル-gam.html#関数名の衝突について"><i class="fa fa-check"></i>関数名の衝突について</a></li>
+<li class="chapter" data-level="" data-path="一般化加法モデル-gam.html"><a href="一般化加法モデル-gam.html#gam-の当てはめ"><i class="fa fa-check"></i>GAM の当てはめ</a></li>
+<li class="chapter" data-level="" data-path="一般化加法モデル-gam.html"><a href="一般化加法モデル-gam.html#交互作用を含めた-gam"><i class="fa fa-check"></i>交互作用を含めた GAM</a></li>
+<li class="chapter" data-level="" data-path="一般化加法モデル-gam.html"><a href="一般化加法モデル-gam.html#gam-によるロジット回帰"><i class="fa fa-check"></i>GAM によるロジット回帰</a></li>
+</ul></li>
+<li class="chapter" data-level="5.5" data-path="一般化加法モデル-gam.html"><a href="一般化加法モデル-gam.html#パッケージprophetの利用"><i class="fa fa-check"></i><b>5.5</b> パッケージ<strong>prophet</strong>の利用</a>
+<ul>
+<li class="chapter" data-level="" data-path="一般化加法モデル-gam.html"><a href="一般化加法モデル-gam.html#データ-atm出金額-仮想"><i class="fa fa-check"></i>データ: ATM出金額 (仮想)</a></li>
+<li class="chapter" data-level="" data-path="一般化加法モデル-gam.html"><a href="一般化加法モデル-gam.html#prophet-による予測"><i class="fa fa-check"></i>prophet による予測</a></li>
+</ul></li>
+</ul></li>
+<li class="divider"></li>
+<li><a href="https://github.com/rstudio/bookdown" target="blank">Published with bookdown</a></li>
+</ul>
+
+      </nav>
+    </div>
+
+    <div class="book-body">
+      <div class="body-inner">
+        <div class="book-header" role="navigation">
+          <h1>
+            <i class="fa fa-circle-o-notch fa-spin"></i><a href="./">金融データサイエンス</a>
+          </h1>
+        </div>
+
+        <div class="page-wrapper" tabindex="-1" role="main">
+          <div class="page-inner">
+
+            <section class="normal" id="section-">
+<div id="一般化加法モデル-gam" class="section level1 hasAnchor" number="5">
+<h1><span class="header-section-number">Chapter 5</span> 一般化加法モデル (GAM)<a href="一般化加法モデル-gam.html#一般化加法モデル-gam" class="anchor-section" aria-label="Anchor link to header"></a></h1>
+<!-- 2026.10.15 Claude: R演習スクリプト R_gam_dist.R (2026年度版) に合わせて, データを社債の信用スプレッド・個人ローン・ATM出金額 (仮想データ) に変更 (旧: Wage, Boston, AirPassengers) -->
+<p>本章の内容は, 授業の R 演習スクリプト <code>R_gam_dist.R</code> に対応する.
+使用するデータは, いずれも授業用に作成した仮想データである.
+スクリプトの構成は, 参考書 ISLR2 の第7章 (Lab) を参考にした.</p>
+<p>本章では, GAMを実行するパッケージとして, (参考書ISLRが使用している) <strong>gam</strong>, および<strong>mgcv</strong>を紹介する.
+しかし, 後述のように, 二つのパッケージを同時に読み込むと
+プログラムの一部が正常に動作しなくなる可能性があるため,
+一つのプログラムの中ではどちらか一方のみを使用するのが安全である.
+特段の理由がなければ, <strong>mgcv</strong>のみを使用するのが良い.</p>
+<ul>
+<li><strong>mgcv</strong>の方が理論的により適切な計算を行っている (後述).</li>
+</ul>
+<p>さらに,</p>
+<ul>
+<li><strong>mgcv</strong>の方が, より多様な機能を持っている. 例えば,
+<ul>
+<li>パッケージ<strong>mgcv</strong>の関数<code>gam()</code>は, 説明変数間の交互作用をモデルに
+取り入れられるなど柔軟性に富む.</li>
+<li>パッケージ<strong>mgcv</strong>の関数<code>s()</code>は, 多様な平滑化項を指定することができる.</li>
+</ul></li>
+</ul>
+<div id="データ-社債の信用スプレッド-仮想" class="section level2 hasAnchor" number="5.1">
+<h2><span class="header-section-number">5.1</span> データ: 社債の信用スプレッド (仮想)<a href="一般化加法モデル-gam.html#データ-社債の信用スプレッド-仮想" class="anchor-section" aria-label="Anchor link to header"></a></h2>
+<pre><code>- bond_spread.csv, 600銘柄
+  - spread: 信用スプレッド (国債利回りとの差, bp) (目的変数)
+  - leverage: 発行体の負債/総資産 (%)
+  - equity_vol: 発行体の株価ボラティリティ (年率, %)
+  - maturity: 残存年数 (年)
+  - log_assets: 発行体の総資産 (対数)
+  - industry: 業種 (manuf: 製造業, nonmanuf: 非製造業, utility: 電力・ガス)</code></pre>
+<p>このデータは, 構造型モデル (Merton モデル) の考え方に基づいて作成した.
+すなわち, 発行体のレバレッジと株価ボラティリティが高いほど倒産確率が高く,
+スプレッドは「非線形に」拡大する.</p>
+<div class="sourceCode" id="cb167"><pre class="sourceCode r"><code class="sourceCode r"><span id="cb167-1"><a href="一般化加法モデル-gam.html#cb167-1" tabindex="-1"></a>bond <span class="ot">&lt;-</span> <span class="fu">read.csv</span>(<span class="st">&quot;class/bond_spread.csv&quot;</span>)</span>
+<span id="cb167-2"><a href="一般化加法モデル-gam.html#cb167-2" tabindex="-1"></a>bond<span class="sc">$</span>industry <span class="ot">&lt;-</span> <span class="fu">factor</span>(bond<span class="sc">$</span>industry)</span>
+<span id="cb167-3"><a href="一般化加法モデル-gam.html#cb167-3" tabindex="-1"></a><span class="fu">summary</span>(bond)</span>
+<span id="cb167-4"><a href="一般化加法モデル-gam.html#cb167-4" tabindex="-1"></a><span class="co">#&gt;      spread          leverage       equity_vol       maturity    </span></span>
+<span id="cb167-5"><a href="一般化加法モデル-gam.html#cb167-5" tabindex="-1"></a><span class="co">#&gt;  Min.   :  3.00   Min.   : 5.00   Min.   :12.00   Min.   : 1.10  </span></span>
+<span id="cb167-6"><a href="一般化加法モデル-gam.html#cb167-6" tabindex="-1"></a><span class="co">#&gt;  1st Qu.: 51.50   1st Qu.:24.07   1st Qu.:22.90   1st Qu.: 6.00  </span></span>
+<span id="cb167-7"><a href="一般化加法モデル-gam.html#cb167-7" tabindex="-1"></a><span class="co">#&gt;  Median : 68.60   Median :40.20   Median :28.20   Median :10.40  </span></span>
+<span id="cb167-8"><a href="一般化加法モデル-gam.html#cb167-8" tabindex="-1"></a><span class="co">#&gt;  Mean   : 85.79   Mean   :40.21   Mean   :29.61   Mean   :10.52  </span></span>
+<span id="cb167-9"><a href="一般化加法モデル-gam.html#cb167-9" tabindex="-1"></a><span class="co">#&gt;  3rd Qu.: 99.08   3rd Qu.:54.52   3rd Qu.:35.00   3rd Qu.:15.10  </span></span>
+<span id="cb167-10"><a href="一般化加法モデル-gam.html#cb167-10" tabindex="-1"></a><span class="co">#&gt;  Max.   :399.00   Max.   :85.00   Max.   :66.50   Max.   :20.00  </span></span>
+<span id="cb167-11"><a href="一般化加法モデル-gam.html#cb167-11" tabindex="-1"></a><span class="co">#&gt;    log_assets        industry  </span></span>
+<span id="cb167-12"><a href="一般化加法モデル-gam.html#cb167-12" tabindex="-1"></a><span class="co">#&gt;  Min.   : 7.63   manuf   :273  </span></span>
+<span id="cb167-13"><a href="一般化加法モデル-gam.html#cb167-13" tabindex="-1"></a><span class="co">#&gt;  1st Qu.:10.17   nonmanuf:238  </span></span>
+<span id="cb167-14"><a href="一般化加法モデル-gam.html#cb167-14" tabindex="-1"></a><span class="co">#&gt;  Median :11.01   utility : 89  </span></span>
+<span id="cb167-15"><a href="一般化加法モデル-gam.html#cb167-15" tabindex="-1"></a><span class="co">#&gt;  Mean   :11.01                 </span></span>
+<span id="cb167-16"><a href="一般化加法モデル-gam.html#cb167-16" tabindex="-1"></a><span class="co">#&gt;  3rd Qu.:11.84                 </span></span>
+<span id="cb167-17"><a href="一般化加法モデル-gam.html#cb167-17" tabindex="-1"></a><span class="co">#&gt;  Max.   :14.54</span></span>
+<span id="cb167-18"><a href="一般化加法モデル-gam.html#cb167-18" tabindex="-1"></a><span class="fu">pairs</span>(bond[, <span class="dv">1</span><span class="sc">:</span><span class="dv">5</span>], <span class="at">cex =</span> <span class="fl">0.4</span>)</span></code></pre></div>
+<p><img src="_main_files/figure-html/unnamed-chunk-108-1.png" width="75%" /></p>
+<p>まず, 線形回帰を当てはめ, 残差プロットを確認する.</p>
+<div class="sourceCode" id="cb168"><pre class="sourceCode r"><code class="sourceCode r"><span id="cb168-1"><a href="一般化加法モデル-gam.html#cb168-1" tabindex="-1"></a>fit_lm <span class="ot">&lt;-</span> <span class="fu">lm</span>(spread <span class="sc">~</span> leverage <span class="sc">+</span> equity_vol <span class="sc">+</span> maturity <span class="sc">+</span> log_assets <span class="sc">+</span> industry, <span class="at">data =</span> bond)</span>
+<span id="cb168-2"><a href="一般化加法モデル-gam.html#cb168-2" tabindex="-1"></a><span class="fu">summary</span>(fit_lm)</span>
+<span id="cb168-3"><a href="一般化加法モデル-gam.html#cb168-3" tabindex="-1"></a><span class="co">#&gt; </span></span>
+<span id="cb168-4"><a href="一般化加法モデル-gam.html#cb168-4" tabindex="-1"></a><span class="co">#&gt; Call:</span></span>
+<span id="cb168-5"><a href="一般化加法モデル-gam.html#cb168-5" tabindex="-1"></a><span class="co">#&gt; lm(formula = spread ~ leverage + equity_vol + maturity + log_assets + </span></span>
+<span id="cb168-6"><a href="一般化加法モデル-gam.html#cb168-6" tabindex="-1"></a><span class="co">#&gt;     industry, data = bond)</span></span>
+<span id="cb168-7"><a href="一般化加法モデル-gam.html#cb168-7" tabindex="-1"></a><span class="co">#&gt; </span></span>
+<span id="cb168-8"><a href="一般化加法モデル-gam.html#cb168-8" tabindex="-1"></a><span class="co">#&gt; Residuals:</span></span>
+<span id="cb168-9"><a href="一般化加法モデル-gam.html#cb168-9" tabindex="-1"></a><span class="co">#&gt;     Min      1Q  Median      3Q     Max </span></span>
+<span id="cb168-10"><a href="一般化加法モデル-gam.html#cb168-10" tabindex="-1"></a><span class="co">#&gt; -80.278 -17.984  -4.935  13.928 127.398 </span></span>
+<span id="cb168-11"><a href="一般化加法モデル-gam.html#cb168-11" tabindex="-1"></a><span class="co">#&gt; </span></span>
+<span id="cb168-12"><a href="一般化加法モデル-gam.html#cb168-12" tabindex="-1"></a><span class="co">#&gt; Coefficients:</span></span>
+<span id="cb168-13"><a href="一般化加法モデル-gam.html#cb168-13" tabindex="-1"></a><span class="co">#&gt;                   Estimate Std. Error t value Pr(&gt;|t|)    </span></span>
+<span id="cb168-14"><a href="一般化加法モデル-gam.html#cb168-14" tabindex="-1"></a><span class="co">#&gt; (Intercept)      -44.45709   11.21034  -3.966 8.21e-05 ***</span></span>
+<span id="cb168-15"><a href="一般化加法モデル-gam.html#cb168-15" tabindex="-1"></a><span class="co">#&gt; leverage           1.05497    0.05888  17.918  &lt; 2e-16 ***</span></span>
+<span id="cb168-16"><a href="一般化加法モデル-gam.html#cb168-16" tabindex="-1"></a><span class="co">#&gt; equity_vol         4.92080    0.12794  38.463  &lt; 2e-16 ***</span></span>
+<span id="cb168-17"><a href="一般化加法モデル-gam.html#cb168-17" tabindex="-1"></a><span class="co">#&gt; maturity           1.08810    0.21488   5.064 5.49e-07 ***</span></span>
+<span id="cb168-18"><a href="一般化加法モデル-gam.html#cb168-18" tabindex="-1"></a><span class="co">#&gt; log_assets        -6.14400    0.95746  -6.417 2.85e-10 ***</span></span>
+<span id="cb168-19"><a href="一般化加法モデル-gam.html#cb168-19" tabindex="-1"></a><span class="co">#&gt; industrynonmanuf   2.64075    2.46991   1.069    0.285    </span></span>
+<span id="cb168-20"><a href="一般化加法モデル-gam.html#cb168-20" tabindex="-1"></a><span class="co">#&gt; industryutility  -18.36033    3.40994  -5.384 1.05e-07 ***</span></span>
+<span id="cb168-21"><a href="一般化加法モデル-gam.html#cb168-21" tabindex="-1"></a><span class="co">#&gt; ---</span></span>
+<span id="cb168-22"><a href="一般化加法モデル-gam.html#cb168-22" tabindex="-1"></a><span class="co">#&gt; Signif. codes:  0 &#39;***&#39; 0.001 &#39;**&#39; 0.01 &#39;*&#39; 0.05 &#39;.&#39; 0.1 &#39; &#39; 1</span></span>
+<span id="cb168-23"><a href="一般化加法モデル-gam.html#cb168-23" tabindex="-1"></a><span class="co">#&gt; </span></span>
+<span id="cb168-24"><a href="一般化加法モデル-gam.html#cb168-24" tabindex="-1"></a><span class="co">#&gt; Residual standard error: 27.83 on 593 degrees of freedom</span></span>
+<span id="cb168-25"><a href="一般化加法モデル-gam.html#cb168-25" tabindex="-1"></a><span class="co">#&gt; Multiple R-squared:  0.768,  Adjusted R-squared:  0.7657 </span></span>
+<span id="cb168-26"><a href="一般化加法モデル-gam.html#cb168-26" tabindex="-1"></a><span class="co">#&gt; F-statistic: 327.2 on 6 and 593 DF,  p-value: &lt; 2.2e-16</span></span>
+<span id="cb168-27"><a href="一般化加法モデル-gam.html#cb168-27" tabindex="-1"></a><span class="fu">plot</span>(<span class="fu">fitted</span>(fit_lm), <span class="fu">resid</span>(fit_lm))</span>
+<span id="cb168-28"><a href="一般化加法モデル-gam.html#cb168-28" tabindex="-1"></a><span class="fu">abline</span>(<span class="at">h =</span> <span class="dv">0</span>)</span>
+<span id="cb168-29"><a href="一般化加法モデル-gam.html#cb168-29" tabindex="-1"></a><span class="fu">lines</span>(<span class="fu">lowess</span>(<span class="fu">fitted</span>(fit_lm), <span class="fu">resid</span>(fit_lm)), <span class="at">col =</span> <span class="st">&quot;red&quot;</span>, <span class="at">lwd =</span> <span class="dv">2</span>)</span></code></pre></div>
+<p><img src="_main_files/figure-html/unnamed-chunk-109-1.png" width="75%" /></p>
+<p><span class="math inline">\(R^2\)</span>は0.77と高いが, 残差プロットには曲線的なパターン (赤線) が残っている.
+説明変数と目的変数の間の関係が線形ではない (非線形性がある) ことを示唆している.</p>
+</div>
+<div id="多項式回帰とスプライン" class="section level2 hasAnchor" number="5.2">
+<h2><span class="header-section-number">5.2</span> 多項式回帰とスプライン<a href="一般化加法モデル-gam.html#多項式回帰とスプライン" class="anchor-section" aria-label="Anchor link to header"></a></h2>
+<p>GAM に進む前に, スプレッドと株価ボラティリティ (<code>equity_vol</code>) の1変数の関係を, 曲線で当てはめる方法を確認する.</p>
+<div class="sourceCode" id="cb169"><pre class="sourceCode r"><code class="sourceCode r"><span id="cb169-1"><a href="一般化加法モデル-gam.html#cb169-1" tabindex="-1"></a>vol_lims <span class="ot">&lt;-</span> <span class="fu">range</span>(bond<span class="sc">$</span>equity_vol)</span>
+<span id="cb169-2"><a href="一般化加法モデル-gam.html#cb169-2" tabindex="-1"></a>vol_grid <span class="ot">&lt;-</span> <span class="fu">seq</span>(<span class="at">from =</span> vol_lims[<span class="dv">1</span>], <span class="at">to =</span> vol_lims[<span class="dv">2</span>], <span class="at">length.out =</span> <span class="dv">100</span>)</span></code></pre></div>
+<div id="多項式回帰-1" class="section level3 unnumbered hasAnchor">
+<h3>多項式回帰<a href="一般化加法モデル-gam.html#多項式回帰-1" class="anchor-section" aria-label="Anchor link to header"></a></h3>
+<div class="sourceCode" id="cb170"><pre class="sourceCode r"><code class="sourceCode r"><span id="cb170-1"><a href="一般化加法モデル-gam.html#cb170-1" tabindex="-1"></a><span class="co"># 多項式回帰 (4次の直交多項式)</span></span>
+<span id="cb170-2"><a href="一般化加法モデル-gam.html#cb170-2" tabindex="-1"></a>fit_poly <span class="ot">&lt;-</span> <span class="fu">lm</span>(spread <span class="sc">~</span> <span class="fu">poly</span>(equity_vol, <span class="dv">4</span>), <span class="at">data =</span> bond)</span>
+<span id="cb170-3"><a href="一般化加法モデル-gam.html#cb170-3" tabindex="-1"></a><span class="fu">coef</span>(<span class="fu">summary</span>(fit_poly))</span>
+<span id="cb170-4"><a href="一般化加法モデル-gam.html#cb170-4" tabindex="-1"></a><span class="co">#&gt;                       Estimate Std. Error   t value      Pr(&gt;|t|)</span></span>
+<span id="cb170-5"><a href="一般化加法モデル-gam.html#cb170-5" tabindex="-1"></a><span class="co">#&gt; (Intercept)            85.7940   1.291988 66.404662 2.505144e-277</span></span>
+<span id="cb170-6"><a href="一般化加法モデル-gam.html#cb170-6" tabindex="-1"></a><span class="co">#&gt; poly(equity_vol, 4)1 1086.6979  31.647104 34.337988 2.823902e-143</span></span>
+<span id="cb170-7"><a href="一般化加法モデル-gam.html#cb170-7" tabindex="-1"></a><span class="co">#&gt; poly(equity_vol, 4)2  352.3344  31.647104 11.133226  2.779507e-26</span></span>
+<span id="cb170-8"><a href="一般化加法モデル-gam.html#cb170-8" tabindex="-1"></a><span class="co">#&gt; poly(equity_vol, 4)3 -210.7230  31.647104 -6.658525  6.296506e-11</span></span>
+<span id="cb170-9"><a href="一般化加法モデル-gam.html#cb170-9" tabindex="-1"></a><span class="co">#&gt; poly(equity_vol, 4)4 -185.6627  31.647104 -5.866658  7.383561e-09</span></span></code></pre></div>
+<p><code>poly(x, 4)</code>は, 互いに直交する4次までの多項式 (直交多項式) を生成する.
+引数<code>raw = TRUE</code>とすると, <span class="math inline">\(x, x^2, x^3, x^4\)</span> そのもの (非直交) となる.
+どちらでも予測値は同じであるが, 個々の係数の値は異なる.</p>
+</div>
+<div id="スプライン" class="section level3 unnumbered hasAnchor">
+<h3>スプライン<a href="一般化加法モデル-gam.html#スプライン" class="anchor-section" aria-label="Anchor link to header"></a></h3>
+<div class="sourceCode" id="cb171"><pre class="sourceCode r"><code class="sourceCode r"><span id="cb171-1"><a href="一般化加法モデル-gam.html#cb171-1" tabindex="-1"></a><span class="fu">library</span>(splines)</span>
+<span id="cb171-2"><a href="一般化加法モデル-gam.html#cb171-2" tabindex="-1"></a><span class="co"># B-スプライン (B-spline): 節点 (knots) を指定</span></span>
+<span id="cb171-3"><a href="一般化加法モデル-gam.html#cb171-3" tabindex="-1"></a>fit_sp <span class="ot">&lt;-</span> <span class="fu">lm</span>(spread <span class="sc">~</span> <span class="fu">bs</span>(equity_vol, <span class="at">knots =</span> <span class="fu">c</span>(<span class="dv">25</span>, <span class="dv">35</span>, <span class="dv">45</span>)), <span class="at">data =</span> bond)</span>
+<span id="cb171-4"><a href="一般化加法モデル-gam.html#cb171-4" tabindex="-1"></a>pred_sp <span class="ot">&lt;-</span> <span class="fu">predict</span>(fit_sp, <span class="at">newdata =</span> <span class="fu">list</span>(<span class="at">equity_vol =</span> vol_grid), <span class="at">se =</span> <span class="cn">TRUE</span>)</span>
+<span id="cb171-5"><a href="一般化加法モデル-gam.html#cb171-5" tabindex="-1"></a><span class="fu">plot</span>(bond<span class="sc">$</span>equity_vol, bond<span class="sc">$</span>spread, <span class="at">col =</span> <span class="st">&quot;grey&quot;</span>, <span class="at">xlab =</span> <span class="st">&quot;株価ボラティリティ (%)&quot;</span>,</span>
+<span id="cb171-6"><a href="一般化加法モデル-gam.html#cb171-6" tabindex="-1"></a>  <span class="at">ylab =</span> <span class="st">&quot;スプレッド (bp)&quot;</span>)</span>
+<span id="cb171-7"><a href="一般化加法モデル-gam.html#cb171-7" tabindex="-1"></a><span class="fu">lines</span>(vol_grid, pred_sp<span class="sc">$</span>fit, <span class="at">lwd =</span> <span class="dv">2</span>)</span>
+<span id="cb171-8"><a href="一般化加法モデル-gam.html#cb171-8" tabindex="-1"></a><span class="fu">lines</span>(vol_grid, pred_sp<span class="sc">$</span>fit <span class="sc">+</span> <span class="dv">2</span> <span class="sc">*</span> pred_sp<span class="sc">$</span>se, <span class="at">lty =</span> <span class="st">&quot;dashed&quot;</span>)</span>
+<span id="cb171-9"><a href="一般化加法モデル-gam.html#cb171-9" tabindex="-1"></a><span class="fu">lines</span>(vol_grid, pred_sp<span class="sc">$</span>fit <span class="sc">-</span> <span class="dv">2</span> <span class="sc">*</span> pred_sp<span class="sc">$</span>se, <span class="at">lty =</span> <span class="st">&quot;dashed&quot;</span>)</span></code></pre></div>
+<p><img src="_main_files/figure-html/unnamed-chunk-112-1.png" width="75%" /></p>
+<div class="sourceCode" id="cb172"><pre class="sourceCode r"><code class="sourceCode r"><span id="cb172-1"><a href="一般化加法モデル-gam.html#cb172-1" tabindex="-1"></a><span class="co"># 自然スプライン (natural spline): 両端を直線に制約. 自由度で指定</span></span>
+<span id="cb172-2"><a href="一般化加法モデル-gam.html#cb172-2" tabindex="-1"></a>fit_sp2 <span class="ot">&lt;-</span> <span class="fu">lm</span>(spread <span class="sc">~</span> <span class="fu">ns</span>(equity_vol, <span class="at">df =</span> <span class="dv">4</span>), <span class="at">data =</span> bond)</span>
+<span id="cb172-3"><a href="一般化加法モデル-gam.html#cb172-3" tabindex="-1"></a>pred_sp2 <span class="ot">&lt;-</span> <span class="fu">predict</span>(fit_sp2, <span class="at">newdata =</span> <span class="fu">list</span>(<span class="at">equity_vol =</span> vol_grid), <span class="at">se =</span> <span class="cn">TRUE</span>)</span>
+<span id="cb172-4"><a href="一般化加法モデル-gam.html#cb172-4" tabindex="-1"></a><span class="fu">plot</span>(bond<span class="sc">$</span>equity_vol, bond<span class="sc">$</span>spread, <span class="at">col =</span> <span class="st">&quot;grey&quot;</span>, <span class="at">xlab =</span> <span class="st">&quot;株価ボラティリティ (%)&quot;</span>,</span>
+<span id="cb172-5"><a href="一般化加法モデル-gam.html#cb172-5" tabindex="-1"></a>  <span class="at">ylab =</span> <span class="st">&quot;スプレッド (bp)&quot;</span>)</span>
+<span id="cb172-6"><a href="一般化加法モデル-gam.html#cb172-6" tabindex="-1"></a><span class="fu">lines</span>(vol_grid, pred_sp2<span class="sc">$</span>fit, <span class="at">lwd =</span> <span class="dv">2</span>)</span>
+<span id="cb172-7"><a href="一般化加法モデル-gam.html#cb172-7" tabindex="-1"></a><span class="fu">lines</span>(vol_grid, pred_sp2<span class="sc">$</span>fit <span class="sc">+</span> <span class="dv">2</span> <span class="sc">*</span> pred_sp2<span class="sc">$</span>se, <span class="at">lty =</span> <span class="st">&quot;dashed&quot;</span>)</span>
+<span id="cb172-8"><a href="一般化加法モデル-gam.html#cb172-8" tabindex="-1"></a><span class="fu">lines</span>(vol_grid, pred_sp2<span class="sc">$</span>fit <span class="sc">-</span> <span class="dv">2</span> <span class="sc">*</span> pred_sp2<span class="sc">$</span>se, <span class="at">lty =</span> <span class="st">&quot;dashed&quot;</span>)</span></code></pre></div>
+<p><img src="_main_files/figure-html/unnamed-chunk-113-1.png" width="75%" /></p>
+<p>B-スプラインは, 端の方 (データが少ない領域) で曲線が暴れやすく, 信頼区間も広がりやすい.
+自然スプラインは, 両端の外側で直線になるという制約を加えることで, これを抑えている.</p>
+<div class="sourceCode" id="cb173"><pre class="sourceCode r"><code class="sourceCode r"><span id="cb173-1"><a href="一般化加法モデル-gam.html#cb173-1" tabindex="-1"></a><span class="co"># 平滑化スプライン (smoothing spline)</span></span>
+<span id="cb173-2"><a href="一般化加法モデル-gam.html#cb173-2" tabindex="-1"></a><span class="fu">plot</span>(bond<span class="sc">$</span>equity_vol, bond<span class="sc">$</span>spread, <span class="at">cex =</span> <span class="fl">0.5</span>, <span class="at">col =</span> <span class="st">&quot;darkgrey&quot;</span>, <span class="at">xlab =</span> <span class="st">&quot;株価ボラティリティ (%)&quot;</span>,</span>
+<span id="cb173-3"><a href="一般化加法モデル-gam.html#cb173-3" tabindex="-1"></a>  <span class="at">ylab =</span> <span class="st">&quot;スプレッド (bp)&quot;</span>)</span>
+<span id="cb173-4"><a href="一般化加法モデル-gam.html#cb173-4" tabindex="-1"></a>fit_sp3 <span class="ot">&lt;-</span> <span class="fu">smooth.spline</span>(bond<span class="sc">$</span>equity_vol, bond<span class="sc">$</span>spread, <span class="at">df =</span> <span class="dv">30</span>)  <span class="co"># 自由度 = 30 (柔らかすぎる)</span></span>
+<span id="cb173-5"><a href="一般化加法モデル-gam.html#cb173-5" tabindex="-1"></a>fit_sp4 <span class="ot">&lt;-</span> <span class="fu">smooth.spline</span>(bond<span class="sc">$</span>equity_vol, bond<span class="sc">$</span>spread, <span class="at">cv =</span> <span class="cn">TRUE</span>)  <span class="co"># 交差検証で自由度を選択</span></span>
+<span id="cb173-6"><a href="一般化加法モデル-gam.html#cb173-6" tabindex="-1"></a>fit_sp4<span class="sc">$</span>df</span>
+<span id="cb173-7"><a href="一般化加法モデル-gam.html#cb173-7" tabindex="-1"></a><span class="co">#&gt; [1] 11.03971</span></span>
+<span id="cb173-8"><a href="一般化加法モデル-gam.html#cb173-8" tabindex="-1"></a><span class="fu">lines</span>(fit_sp3, <span class="at">col =</span> <span class="st">&quot;red&quot;</span>, <span class="at">lwd =</span> <span class="dv">2</span>)</span>
+<span id="cb173-9"><a href="一般化加法モデル-gam.html#cb173-9" tabindex="-1"></a><span class="fu">lines</span>(fit_sp4, <span class="at">col =</span> <span class="st">&quot;blue&quot;</span>, <span class="at">lwd =</span> <span class="dv">2</span>)</span>
+<span id="cb173-10"><a href="一般化加法モデル-gam.html#cb173-10" tabindex="-1"></a><span class="fu">legend</span>(<span class="st">&quot;topleft&quot;</span>, <span class="at">legend =</span> <span class="fu">c</span>(<span class="st">&quot;30 DF&quot;</span>, <span class="fu">paste</span>(<span class="fu">round</span>(fit_sp4<span class="sc">$</span>df, <span class="dv">1</span>), <span class="st">&quot;DF (CV)&quot;</span>)), <span class="at">col =</span> <span class="fu">c</span>(<span class="st">&quot;red&quot;</span>,</span>
+<span id="cb173-11"><a href="一般化加法モデル-gam.html#cb173-11" tabindex="-1"></a>  <span class="st">&quot;blue&quot;</span>), <span class="at">lty =</span> <span class="dv">1</span>, <span class="at">lwd =</span> <span class="dv">2</span>, <span class="at">cex =</span> <span class="fl">0.8</span>)</span></code></pre></div>
+<p><img src="_main_files/figure-html/unnamed-chunk-114-1.png" width="75%" /></p>
+<p>平滑化スプラインでは, 曲線の滑らかさを自由度 (<code>df</code>) で調整する.
+自由度30 (赤) は柔らかすぎてデータの細かい変動まで追ってしまう (過学習).
+交差検証 (<code>cv = TRUE</code>) で選ぶと, 自由度は約11となった (青).</p>
+</div>
+</div>
+<div id="パッケージgamの利用" class="section level2 hasAnchor" number="5.3">
+<h2><span class="header-section-number">5.3</span> パッケージ<strong>gam</strong>の利用<a href="一般化加法モデル-gam.html#パッケージgamの利用" class="anchor-section" aria-label="Anchor link to header"></a></h2>
+<div class="sourceCode" id="cb174"><pre class="sourceCode r"><code class="sourceCode r"><span id="cb174-1"><a href="一般化加法モデル-gam.html#cb174-1" tabindex="-1"></a><span class="co"># 念のため実行 (mgcv が先にロードされていると誤動作するため)</span></span>
+<span id="cb174-2"><a href="一般化加法モデル-gam.html#cb174-2" tabindex="-1"></a><span class="cf">if</span> (<span class="st">&quot;package:mgcv&quot;</span> <span class="sc">%in%</span> <span class="fu">search</span>()) <span class="fu">detach</span>(<span class="st">&quot;package:mgcv&quot;</span>, <span class="at">unload =</span> <span class="cn">TRUE</span>)</span>
+<span id="cb174-3"><a href="一般化加法モデル-gam.html#cb174-3" tabindex="-1"></a><span class="fu">library</span>(gam)</span></code></pre></div>
+<pre><code>関数gam() (パッケージ gam):
+- 加法予測子のシンボリック表現や誤差分布を指定の上でGAMを当てはめる
+- バックフィッティング・アルゴリズムを採用 (異なる平滑化やフィッティングの方法を混ぜられる)
+- 局所回帰 lo() や平滑化スプライン s() をサポート
+- usage:
+  gam(formula, family = gaussian, data, weights, subset, na.action,
+      start, etastart, mustart, control = gam.control(...),
+      model = TRUE, method, x = FALSE, y = TRUE, ...)</code></pre>
+<p>まず, <code>lm()</code>と自然スプラインの基底 <code>ns()</code> を組み合わせることでも, GAM と同様のモデル (各変数の非線形な関数の和) を当てはめられることを確認する.</p>
+<div class="sourceCode" id="cb176"><pre class="sourceCode r"><code class="sourceCode r"><span id="cb176-1"><a href="一般化加法モデル-gam.html#cb176-1" tabindex="-1"></a><span class="co"># lm() + 自然スプライン基底による「GAM」</span></span>
+<span id="cb176-2"><a href="一般化加法モデル-gam.html#cb176-2" tabindex="-1"></a>fit_gam0 <span class="ot">&lt;-</span> <span class="fu">lm</span>(spread <span class="sc">~</span> <span class="fu">ns</span>(equity_vol, <span class="dv">4</span>) <span class="sc">+</span> <span class="fu">ns</span>(maturity, <span class="dv">4</span>) <span class="sc">+</span> leverage <span class="sc">+</span> log_assets <span class="sc">+</span></span>
+<span id="cb176-3"><a href="一般化加法モデル-gam.html#cb176-3" tabindex="-1"></a>  industry, <span class="at">data =</span> bond)</span>
+<span id="cb176-4"><a href="一般化加法モデル-gam.html#cb176-4" tabindex="-1"></a><span class="fu">summary</span>(fit_gam0)</span>
+<span id="cb176-5"><a href="一般化加法モデル-gam.html#cb176-5" tabindex="-1"></a><span class="co">#&gt; </span></span>
+<span id="cb176-6"><a href="一般化加法モデル-gam.html#cb176-6" tabindex="-1"></a><span class="co">#&gt; Call:</span></span>
+<span id="cb176-7"><a href="一般化加法モデル-gam.html#cb176-7" tabindex="-1"></a><span class="co">#&gt; lm(formula = spread ~ ns(equity_vol, 4) + ns(maturity, 4) + leverage + </span></span>
+<span id="cb176-8"><a href="一般化加法モデル-gam.html#cb176-8" tabindex="-1"></a><span class="co">#&gt;     log_assets + industry, data = bond)</span></span>
+<span id="cb176-9"><a href="一般化加法モデル-gam.html#cb176-9" tabindex="-1"></a><span class="co">#&gt; </span></span>
+<span id="cb176-10"><a href="一般化加法モデル-gam.html#cb176-10" tabindex="-1"></a><span class="co">#&gt; Residuals:</span></span>
+<span id="cb176-11"><a href="一般化加法モデル-gam.html#cb176-11" tabindex="-1"></a><span class="co">#&gt;      Min       1Q   Median       3Q      Max </span></span>
+<span id="cb176-12"><a href="一般化加法モデル-gam.html#cb176-12" tabindex="-1"></a><span class="co">#&gt; -164.216  -12.810    1.313   15.129   67.970 </span></span>
+<span id="cb176-13"><a href="一般化加法モデル-gam.html#cb176-13" tabindex="-1"></a><span class="co">#&gt; </span></span>
+<span id="cb176-14"><a href="一般化加法モデル-gam.html#cb176-14" tabindex="-1"></a><span class="co">#&gt; Coefficients:</span></span>
+<span id="cb176-15"><a href="一般化加法モデル-gam.html#cb176-15" tabindex="-1"></a><span class="co">#&gt;                    Estimate Std. Error t value Pr(&gt;|t|)    </span></span>
+<span id="cb176-16"><a href="一般化加法モデル-gam.html#cb176-16" tabindex="-1"></a><span class="co">#&gt; (Intercept)         51.9139    11.7492   4.419 1.18e-05 ***</span></span>
+<span id="cb176-17"><a href="一般化加法モデル-gam.html#cb176-17" tabindex="-1"></a><span class="co">#&gt; ns(equity_vol, 4)1  12.4131     6.5646   1.891 0.059127 .  </span></span>
+<span id="cb176-18"><a href="一般化加法モデル-gam.html#cb176-18" tabindex="-1"></a><span class="co">#&gt; ns(equity_vol, 4)2 105.6509     6.3445  16.652  &lt; 2e-16 ***</span></span>
+<span id="cb176-19"><a href="一般化加法モデル-gam.html#cb176-19" tabindex="-1"></a><span class="co">#&gt; ns(equity_vol, 4)3 217.5138    15.9078  13.673  &lt; 2e-16 ***</span></span>
+<span id="cb176-20"><a href="一般化加法モデル-gam.html#cb176-20" tabindex="-1"></a><span class="co">#&gt; ns(equity_vol, 4)4 300.6032    11.1689  26.914  &lt; 2e-16 ***</span></span>
+<span id="cb176-21"><a href="一般化加法モデル-gam.html#cb176-21" tabindex="-1"></a><span class="co">#&gt; ns(maturity, 4)1    17.7548     4.6791   3.794 0.000163 ***</span></span>
+<span id="cb176-22"><a href="一般化加法モデル-gam.html#cb176-22" tabindex="-1"></a><span class="co">#&gt; ns(maturity, 4)2    15.9056     4.7161   3.373 0.000794 ***</span></span>
+<span id="cb176-23"><a href="一般化加法モデル-gam.html#cb176-23" tabindex="-1"></a><span class="co">#&gt; ns(maturity, 4)3    40.9654     9.6837   4.230 2.71e-05 ***</span></span>
+<span id="cb176-24"><a href="一般化加法モデル-gam.html#cb176-24" tabindex="-1"></a><span class="co">#&gt; ns(maturity, 4)4    16.8925     4.6438   3.638 0.000299 ***</span></span>
+<span id="cb176-25"><a href="一般化加法モデル-gam.html#cb176-25" tabindex="-1"></a><span class="co">#&gt; leverage             1.0695     0.0487  21.962  &lt; 2e-16 ***</span></span>
+<span id="cb176-26"><a href="一般化加法モデル-gam.html#cb176-26" tabindex="-1"></a><span class="co">#&gt; log_assets          -5.7176     0.7928  -7.212 1.71e-12 ***</span></span>
+<span id="cb176-27"><a href="一般化加法モデル-gam.html#cb176-27" tabindex="-1"></a><span class="co">#&gt; industrynonmanuf     2.3577     2.0328   1.160 0.246591    </span></span>
+<span id="cb176-28"><a href="一般化加法モデル-gam.html#cb176-28" tabindex="-1"></a><span class="co">#&gt; industryutility    -15.6482     2.8349  -5.520 5.10e-08 ***</span></span>
+<span id="cb176-29"><a href="一般化加法モデル-gam.html#cb176-29" tabindex="-1"></a><span class="co">#&gt; ---</span></span>
+<span id="cb176-30"><a href="一般化加法モデル-gam.html#cb176-30" tabindex="-1"></a><span class="co">#&gt; Signif. codes:  0 &#39;***&#39; 0.001 &#39;**&#39; 0.01 &#39;*&#39; 0.05 &#39;.&#39; 0.1 &#39; &#39; 1</span></span>
+<span id="cb176-31"><a href="一般化加法モデル-gam.html#cb176-31" tabindex="-1"></a><span class="co">#&gt; </span></span>
+<span id="cb176-32"><a href="一般化加法モデル-gam.html#cb176-32" tabindex="-1"></a><span class="co">#&gt; Residual standard error: 22.88 on 587 degrees of freedom</span></span>
+<span id="cb176-33"><a href="一般化加法モデル-gam.html#cb176-33" tabindex="-1"></a><span class="co">#&gt; Multiple R-squared:  0.8448, Adjusted R-squared:  0.8416 </span></span>
+<span id="cb176-34"><a href="一般化加法モデル-gam.html#cb176-34" tabindex="-1"></a><span class="co">#&gt; F-statistic: 266.2 on 12 and 587 DF,  p-value: &lt; 2.2e-16</span></span></code></pre></div>
+<p>次に, パッケージ<strong>gam</strong>の<code>gam()</code>で, 平滑化スプライン <code>s()</code> を使った GAM を当てはめる.
+<code>s()</code>の第2引数は自由度である.</p>
+<div class="sourceCode" id="cb177"><pre class="sourceCode r"><code class="sourceCode r"><span id="cb177-1"><a href="一般化加法モデル-gam.html#cb177-1" tabindex="-1"></a><span class="co"># gam::gam() による GAM (s: 平滑化スプライン, 第2引数は自由度)</span></span>
+<span id="cb177-2"><a href="一般化加法モデル-gam.html#cb177-2" tabindex="-1"></a>fit_gam3 <span class="ot">&lt;-</span> <span class="fu">gam</span>(spread <span class="sc">~</span> <span class="fu">s</span>(equity_vol, <span class="dv">4</span>) <span class="sc">+</span> <span class="fu">s</span>(maturity, <span class="dv">4</span>) <span class="sc">+</span> leverage <span class="sc">+</span> log_assets <span class="sc">+</span></span>
+<span id="cb177-3"><a href="一般化加法モデル-gam.html#cb177-3" tabindex="-1"></a>  industry, <span class="at">data =</span> bond)</span>
+<span id="cb177-4"><a href="一般化加法モデル-gam.html#cb177-4" tabindex="-1"></a><span class="fu">summary</span>(fit_gam3)  <span class="co"># → &#39;Anova for Nonparametric Effects&#39;</span></span>
+<span id="cb177-5"><a href="一般化加法モデル-gam.html#cb177-5" tabindex="-1"></a><span class="co">#&gt; </span></span>
+<span id="cb177-6"><a href="一般化加法モデル-gam.html#cb177-6" tabindex="-1"></a><span class="co">#&gt; Call: gam(formula = spread ~ s(equity_vol, 4) + s(maturity, 4) + leverage + </span></span>
+<span id="cb177-7"><a href="一般化加法モデル-gam.html#cb177-7" tabindex="-1"></a><span class="co">#&gt;     log_assets + industry, data = bond)</span></span>
+<span id="cb177-8"><a href="一般化加法モデル-gam.html#cb177-8" tabindex="-1"></a><span class="co">#&gt; Deviance Residuals:</span></span>
+<span id="cb177-9"><a href="一般化加法モデル-gam.html#cb177-9" tabindex="-1"></a><span class="co">#&gt;       Min        1Q    Median        3Q       Max </span></span>
+<span id="cb177-10"><a href="一般化加法モデル-gam.html#cb177-10" tabindex="-1"></a><span class="co">#&gt; -138.3987  -12.7339    0.5897   14.7071   71.7016 </span></span>
+<span id="cb177-11"><a href="一般化加法モデル-gam.html#cb177-11" tabindex="-1"></a><span class="co">#&gt; </span></span>
+<span id="cb177-12"><a href="一般化加法モデル-gam.html#cb177-12" tabindex="-1"></a><span class="co">#&gt; (Dispersion Parameter for gaussian family taken to be 499.6668)</span></span>
+<span id="cb177-13"><a href="一般化加法モデル-gam.html#cb177-13" tabindex="-1"></a><span class="co">#&gt; </span></span>
+<span id="cb177-14"><a href="一般化加法モデル-gam.html#cb177-14" tabindex="-1"></a><span class="co">#&gt;     Null Deviance: 1979842 on 599 degrees of freedom</span></span>
+<span id="cb177-15"><a href="一般化加法モデル-gam.html#cb177-15" tabindex="-1"></a><span class="co">#&gt; Residual Deviance: 293304.3 on 586.9998 degrees of freedom</span></span>
+<span id="cb177-16"><a href="一般化加法モデル-gam.html#cb177-16" tabindex="-1"></a><span class="co">#&gt; AIC: 5445.949 </span></span>
+<span id="cb177-17"><a href="一般化加法モデル-gam.html#cb177-17" tabindex="-1"></a><span class="co">#&gt; </span></span>
+<span id="cb177-18"><a href="一般化加法モデル-gam.html#cb177-18" tabindex="-1"></a><span class="co">#&gt; Number of Local Scoring Iterations: NA </span></span>
+<span id="cb177-19"><a href="一般化加法モデル-gam.html#cb177-19" tabindex="-1"></a><span class="co">#&gt; </span></span>
+<span id="cb177-20"><a href="一般化加法モデル-gam.html#cb177-20" tabindex="-1"></a><span class="co">#&gt; Anova for Parametric Effects</span></span>
+<span id="cb177-21"><a href="一般化加法モデル-gam.html#cb177-21" tabindex="-1"></a><span class="co">#&gt;                   Df  Sum Sq Mean Sq  F value    Pr(&gt;F)    </span></span>
+<span id="cb177-22"><a href="一般化加法モデル-gam.html#cb177-22" tabindex="-1"></a><span class="co">#&gt; s(equity_vol, 4)   1 1182050 1182050 2365.677 &lt; 2.2e-16 ***</span></span>
+<span id="cb177-23"><a href="一般化加法モデル-gam.html#cb177-23" tabindex="-1"></a><span class="co">#&gt; s(maturity, 4)     1   22725   22725   45.481 3.697e-11 ***</span></span>
+<span id="cb177-24"><a href="一般化加法モデル-gam.html#cb177-24" tabindex="-1"></a><span class="co">#&gt; leverage           1  254954  254954  510.248 &lt; 2.2e-16 ***</span></span>
+<span id="cb177-25"><a href="一般化加法モデル-gam.html#cb177-25" tabindex="-1"></a><span class="co">#&gt; log_assets         1   30846   30846   61.732 1.886e-14 ***</span></span>
+<span id="cb177-26"><a href="一般化加法モデル-gam.html#cb177-26" tabindex="-1"></a><span class="co">#&gt; industry           2   21935   10967   21.949 6.415e-10 ***</span></span>
+<span id="cb177-27"><a href="一般化加法モデル-gam.html#cb177-27" tabindex="-1"></a><span class="co">#&gt; Residuals        587  293304     500                       </span></span>
+<span id="cb177-28"><a href="一般化加法モデル-gam.html#cb177-28" tabindex="-1"></a><span class="co">#&gt; ---</span></span>
+<span id="cb177-29"><a href="一般化加法モデル-gam.html#cb177-29" tabindex="-1"></a><span class="co">#&gt; Signif. codes:  0 &#39;***&#39; 0.001 &#39;**&#39; 0.01 &#39;*&#39; 0.05 &#39;.&#39; 0.1 &#39; &#39; 1</span></span>
+<span id="cb177-30"><a href="一般化加法モデル-gam.html#cb177-30" tabindex="-1"></a><span class="co">#&gt; </span></span>
+<span id="cb177-31"><a href="一般化加法モデル-gam.html#cb177-31" tabindex="-1"></a><span class="co">#&gt; Anova for Nonparametric Effects</span></span>
+<span id="cb177-32"><a href="一般化加法モデル-gam.html#cb177-32" tabindex="-1"></a><span class="co">#&gt;                  Npar Df  Npar F  Pr(F)    </span></span>
+<span id="cb177-33"><a href="一般化加法モデル-gam.html#cb177-33" tabindex="-1"></a><span class="co">#&gt; (Intercept)                                </span></span>
+<span id="cb177-34"><a href="一般化加法モデル-gam.html#cb177-34" tabindex="-1"></a><span class="co">#&gt; s(equity_vol, 4)       3 107.711 &lt;2e-16 ***</span></span>
+<span id="cb177-35"><a href="一般化加法モデル-gam.html#cb177-35" tabindex="-1"></a><span class="co">#&gt; s(maturity, 4)         3   2.015 0.1107    </span></span>
+<span id="cb177-36"><a href="一般化加法モデル-gam.html#cb177-36" tabindex="-1"></a><span class="co">#&gt; leverage                                   </span></span>
+<span id="cb177-37"><a href="一般化加法モデル-gam.html#cb177-37" tabindex="-1"></a><span class="co">#&gt; log_assets                                 </span></span>
+<span id="cb177-38"><a href="一般化加法モデル-gam.html#cb177-38" tabindex="-1"></a><span class="co">#&gt; industry                                   </span></span>
+<span id="cb177-39"><a href="一般化加法モデル-gam.html#cb177-39" tabindex="-1"></a><span class="co">#&gt; ---</span></span>
+<span id="cb177-40"><a href="一般化加法モデル-gam.html#cb177-40" tabindex="-1"></a><span class="co">#&gt; Signif. codes:  0 &#39;***&#39; 0.001 &#39;**&#39; 0.01 &#39;*&#39; 0.05 &#39;.&#39; 0.1 &#39; &#39; 1</span></span>
+<span id="cb177-41"><a href="一般化加法モデル-gam.html#cb177-41" tabindex="-1"></a><span class="fu">par</span>(<span class="at">mfrow =</span> <span class="fu">c</span>(<span class="dv">2</span>, <span class="dv">3</span>))</span>
+<span id="cb177-42"><a href="一般化加法モデル-gam.html#cb177-42" tabindex="-1"></a><span class="fu">plot</span>(fit_gam3, <span class="at">se =</span> <span class="cn">TRUE</span>, <span class="at">col =</span> <span class="st">&quot;blue&quot;</span>)  <span class="co"># 各項の形状 (部分効果)</span></span>
+<span id="cb177-43"><a href="一般化加法モデル-gam.html#cb177-43" tabindex="-1"></a><span class="fu">par</span>(<span class="at">mfrow =</span> <span class="fu">c</span>(<span class="dv">1</span>, <span class="dv">1</span>))</span></code></pre></div>
+<p><img src="_main_files/figure-html/unnamed-chunk-117-1.png" width="75%" /></p>
+<p><code>summary()</code>の “Anova for Nonparametric Effects” は, 各平滑化項について「線形の関係で十分か (非線形な部分は不要か)」を検定している.
+<code>equity_vol</code>の非線形部分は強く有意であるのに対し, <code>maturity</code>の非線形部分は有意ではない.</p>
+<p><code>gam()</code>内で実行されている平滑化スプラインは, モデルの複雑さを示す自由度 (関数<code>s()</code>の2つ目の引数) の大きさで, 実質的に包含関係を表すことができる.
+すなわち, モデル間に包含関係 (ネスト, “nested”) がある場合には,
+線形モデルの場合と同様に, 関数<code>anova()</code>を適用し,
+両者のデータへの当てはまりの悪さ (逸脱度) の差の有意性を調べることで,
+モデルを複雑にすることの妥当性を定量的に評価することができる.</p>
+<p>なお, モデル間に包含関係がない場合には, これまでと同様,
+AICやBICの大きさを比較することでモデルを選択すれば良い
+(<em>パッケージ<strong>gam</strong>を使用したモデル選択については,
+以下の注意点を参照</em>).</p>
+<p>ここでは, 残存年数 <code>maturity</code> を「入れない」「線形で入れる」「平滑化スプラインで入れる」の3つのモデルを比べる.</p>
+<div class="sourceCode" id="cb178"><pre class="sourceCode r"><code class="sourceCode r"><span id="cb178-1"><a href="一般化加法モデル-gam.html#cb178-1" tabindex="-1"></a>fit_gam1 <span class="ot">&lt;-</span> <span class="fu">gam</span>(spread <span class="sc">~</span> <span class="fu">s</span>(equity_vol, <span class="dv">4</span>) <span class="sc">+</span> leverage <span class="sc">+</span> log_assets <span class="sc">+</span> industry, <span class="at">data =</span> bond)</span>
+<span id="cb178-2"><a href="一般化加法モデル-gam.html#cb178-2" tabindex="-1"></a>fit_gam2 <span class="ot">&lt;-</span> <span class="fu">gam</span>(spread <span class="sc">~</span> <span class="fu">s</span>(equity_vol, <span class="dv">4</span>) <span class="sc">+</span> maturity <span class="sc">+</span> leverage <span class="sc">+</span> log_assets <span class="sc">+</span> industry,</span>
+<span id="cb178-3"><a href="一般化加法モデル-gam.html#cb178-3" tabindex="-1"></a>  <span class="at">data =</span> bond)</span>
+<span id="cb178-4"><a href="一般化加法モデル-gam.html#cb178-4" tabindex="-1"></a><span class="fu">anova</span>(fit_gam1, fit_gam2, fit_gam3, <span class="at">test =</span> <span class="st">&quot;F&quot;</span>)</span>
+<span id="cb178-5"><a href="一般化加法モデル-gam.html#cb178-5" tabindex="-1"></a><span class="co">#&gt; Analysis of Deviance Table</span></span>
+<span id="cb178-6"><a href="一般化加法モデル-gam.html#cb178-6" tabindex="-1"></a><span class="co">#&gt; </span></span>
+<span id="cb178-7"><a href="一般化加法モデル-gam.html#cb178-7" tabindex="-1"></a><span class="co">#&gt; Model 1: spread ~ s(equity_vol, 4) + leverage + log_assets + industry</span></span>
+<span id="cb178-8"><a href="一般化加法モデル-gam.html#cb178-8" tabindex="-1"></a><span class="co">#&gt; Model 2: spread ~ s(equity_vol, 4) + maturity + leverage + log_assets + </span></span>
+<span id="cb178-9"><a href="一般化加法モデル-gam.html#cb178-9" tabindex="-1"></a><span class="co">#&gt;     industry</span></span>
+<span id="cb178-10"><a href="一般化加法モデル-gam.html#cb178-10" tabindex="-1"></a><span class="co">#&gt; Model 3: spread ~ s(equity_vol, 4) + s(maturity, 4) + leverage + log_assets + </span></span>
+<span id="cb178-11"><a href="一般化加法モデル-gam.html#cb178-11" tabindex="-1"></a><span class="co">#&gt;     industry</span></span>
+<span id="cb178-12"><a href="一般化加法モデル-gam.html#cb178-12" tabindex="-1"></a><span class="co">#&gt;   Resid. Df Resid. Dev Df Deviance       F    Pr(&gt;F)    </span></span>
+<span id="cb178-13"><a href="一般化加法モデル-gam.html#cb178-13" tabindex="-1"></a><span class="co">#&gt; 1       591     316928                                  </span></span>
+<span id="cb178-14"><a href="一般化加法モデル-gam.html#cb178-14" tabindex="-1"></a><span class="co">#&gt; 2       590     296226  1    20702 41.4310 2.539e-10 ***</span></span>
+<span id="cb178-15"><a href="一般化加法モデル-gam.html#cb178-15" tabindex="-1"></a><span class="co">#&gt; 3       587     293304  3     2922  1.9493    0.1205    </span></span>
+<span id="cb178-16"><a href="一般化加法モデル-gam.html#cb178-16" tabindex="-1"></a><span class="co">#&gt; ---</span></span>
+<span id="cb178-17"><a href="一般化加法モデル-gam.html#cb178-17" tabindex="-1"></a><span class="co">#&gt; Signif. codes:  0 &#39;***&#39; 0.001 &#39;**&#39; 0.01 &#39;*&#39; 0.05 &#39;.&#39; 0.1 &#39; &#39; 1</span></span>
+<span id="cb178-18"><a href="一般化加法モデル-gam.html#cb178-18" tabindex="-1"></a><span class="fu">AIC</span>(fit_gam1, fit_gam2, fit_gam3)</span>
+<span id="cb178-19"><a href="一般化加法モデル-gam.html#cb178-19" tabindex="-1"></a><span class="co">#&gt;          df      AIC</span></span>
+<span id="cb178-20"><a href="一般化加法モデル-gam.html#cb178-20" tabindex="-1"></a><span class="co">#&gt; fit_gam1  7 5484.427</span></span>
+<span id="cb178-21"><a href="一般化加法モデル-gam.html#cb178-21" tabindex="-1"></a><span class="co">#&gt; fit_gam2  8 5445.896</span></span>
+<span id="cb178-22"><a href="一般化加法モデル-gam.html#cb178-22" tabindex="-1"></a><span class="co">#&gt; fit_gam3  8 5445.949</span></span></code></pre></div>
+<p>これより, モデル1と2の間には有意水準0.1%で差が見られるが,
+2と3の間には (有意水準10%でも) 差は見られない.
+AICで比較しても, モデル2と3はほぼ同じで, モデル1より大幅に小さい.
+すなわち, この3つのモデルの中では, <code>maturity</code>を線形で加えたモデル2が妥当と言えそうである.</p>
+<div class="sourceCode" id="cb179"><pre class="sourceCode r"><code class="sourceCode r"><span id="cb179-1"><a href="一般化加法モデル-gam.html#cb179-1" tabindex="-1"></a><span class="fu">detach</span>(<span class="st">&quot;package:gam&quot;</span>, <span class="at">unload =</span> <span class="cn">TRUE</span>)</span></code></pre></div>
+<div id="パッケージgamの使用に関する注意点" class="section level4 unnumbered hasAnchor">
+<h4>パッケージ<strong>gam</strong>の使用に関する注意点<a href="一般化加法モデル-gam.html#パッケージgamの使用に関する注意点" class="anchor-section" aria-label="Anchor link to header"></a></h4>
+<p>関数<code>gam::gam()</code>は, R言語の前身であるS言語から継承されてきた古い関数であり,
+関数内部における計算 (バックフィッティング) の欠点が指摘されている.</p>
+<p>その後, GAMの当てはめのアルゴリズムは今日までに種々提案されており,
+次節で解説するパッケージ<strong>mgcv</strong>は, 欠点を改善した
+それらの一つをRパッケージ化したものである.</p>
+<p>また, パッケージ<strong>gam</strong>の<code>gam()</code>の出力はクラス”glm”を継承していることから, 変数選択/モデル選択の際に使用する
+関数<code>anova()</code>や<code>AIC()</code>の内部では,
+<code>gam()</code>の出力はクラス”glm”のオブジェクトとして処理され, それ自体が不正確さを
+もたらす可能性がある.</p>
+<p>したがって, <strong>gam</strong>の<code>gam()</code>の推定結果や,
+その出力を使ったモデルの比較や選択は, 信頼性にやや欠ける点に注意が必要である.</p>
+<pre><code>補足:
+gam の関数 s() は, 外から与える引数 df によって固定された自由度で平滑化スプラインを当てはめる.
+一方, mgcv の s() は, データから平滑化パラメータを自動的に推定しつつ, 平滑化スプラインを当てはめる
+(&quot;有効自由度&quot; (ISLR, p.278) が推定される).
+異なる滑らかさを持つモデル同士を比較する場合には, gam は公平なモデル比較をしているとは言えないため, mgcv の使用が良い.</code></pre>
+</div>
+</div>
+<div id="パッケージmgcvの利用" class="section level2 hasAnchor" number="5.4">
+<h2><span class="header-section-number">5.4</span> パッケージ<strong>mgcv</strong>の利用<a href="一般化加法モデル-gam.html#パッケージmgcvの利用" class="anchor-section" aria-label="Anchor link to header"></a></h2>
+<div class="sourceCode" id="cb181"><pre class="sourceCode r"><code class="sourceCode r"><span id="cb181-1"><a href="一般化加法モデル-gam.html#cb181-1" tabindex="-1"></a><span class="fu">library</span>(mgcv)</span></code></pre></div>
+<pre><code>関数gam() (パッケージ mgcv):
+- Generalized additive models with integrated smoothness estimation
+- 平滑化の程度を自動選択 (GCV や REML)
+- usage:
+  gam(formula, family = gaussian(), data = list(), weights = NULL,
+  subset = NULL, na.action, offset = NULL, method = &quot;GCV.Cp&quot;,
+  optimizer = c(&quot;outer&quot;, &quot;newton&quot;), control = list(), scale = 0,
+  select = FALSE, knots = NULL, sp = NULL, min.sp = NULL, H = NULL,
+  gamma = 1, fit = TRUE, paraPen = NULL, G = NULL, in.out,
+  drop.unused.levels = TRUE, drop.intercept = NULL, discrete = FALSE, ...)
+- 参考: https://cran.r-project.org/web/packages/mgcv/mgcv.pdf</code></pre>
+<div id="関数名の衝突について" class="section level3 unnumbered hasAnchor">
+<h3>関数名の衝突について<a href="一般化加法モデル-gam.html#関数名の衝突について" class="anchor-section" aria-label="Anchor link to header"></a></h3>
+<p><strong>mgcv</strong>には, 先に見た<strong>gam</strong>と同じ名前の関数<code>gam()</code>, <code>s()</code>が
+存在することから, 両方を読み込むと衝突 (コンフリクト) が生じる (“名前空間の衝突”と呼ぶ).
+Rでは, より後から<code>library()</code>や<code>require()</code>で読み込んだパッケージの関数が優先される.</p>
+<p>関数の衝突を確認する方法としては, 次のものがある.</p>
+<div class="sourceCode" id="cb183"><pre class="sourceCode r"><code class="sourceCode r"><span id="cb183-1"><a href="一般化加法モデル-gam.html#cb183-1" tabindex="-1"></a><span class="co"># conflicts() # 一覧</span></span>
+<span id="cb183-2"><a href="一般化加法モデル-gam.html#cb183-2" tabindex="-1"></a><span class="fu">find</span>(<span class="st">&quot;gam&quot;</span>)</span>
+<span id="cb183-3"><a href="一般化加法モデル-gam.html#cb183-3" tabindex="-1"></a><span class="co">#&gt; [1] &quot;package:mgcv&quot;</span></span></code></pre></div>
+<p>関数の優先順位を入れ替える方法 (パッケージ<strong>gam</strong>を<strong>mgcv</strong>よりも優先する場合) としては,</p>
+<ol style="list-style-type: decimal">
+<li>再度<code>library()</code>を実行する:</li>
+</ol>
+<div class="sourceCode" id="cb184"><pre class="sourceCode r"><code class="sourceCode r"><span id="cb184-1"><a href="一般化加法モデル-gam.html#cb184-1" tabindex="-1"></a><span class="fu">library</span>(gam)</span></code></pre></div>
+<ol start="2" style="list-style-type: decimal">
+<li><code>detach()</code>でパッケージを外す:</li>
+</ol>
+<div class="sourceCode" id="cb185"><pre class="sourceCode r"><code class="sourceCode r"><span id="cb185-1"><a href="一般化加法モデル-gam.html#cb185-1" tabindex="-1"></a><span class="fu">detach</span>(<span class="st">&quot;package:mgcv&quot;</span>, <span class="at">unload =</span> <span class="cn">TRUE</span>)</span></code></pre></div>
+<ol start="3" style="list-style-type: decimal">
+<li>その都度「パッケージ名::関数名」を使う:</li>
+</ol>
+<div class="sourceCode" id="cb186"><pre class="sourceCode r"><code class="sourceCode r"><span id="cb186-1"><a href="一般化加法モデル-gam.html#cb186-1" tabindex="-1"></a>gam<span class="sc">::</span><span class="fu">gam</span>(spread <span class="sc">~</span> ., <span class="at">data =</span> bond)</span></code></pre></div>
+<p>がある. ただし, (3) の方法でも, <code>s()</code>が正しく解釈されないことがあるため, 上述のように, 一つのプログラムではどちらか一方のみを使うのが安全である.</p>
+</div>
+<div id="gam-の当てはめ" class="section level3 unnumbered hasAnchor">
+<h3>GAM の当てはめ<a href="一般化加法モデル-gam.html#gam-の当てはめ" class="anchor-section" aria-label="Anchor link to header"></a></h3>
+<p>すべての量的変数に平滑化項 <code>s()</code> を入れた GAM を当てはめる.
+<code>method = "REML"</code>は, 平滑化の程度を制限付き最尤法 (REML) で選ぶ指定である.</p>
+<div class="sourceCode" id="cb187"><pre class="sourceCode r"><code class="sourceCode r"><span id="cb187-1"><a href="一般化加法モデル-gam.html#cb187-1" tabindex="-1"></a>fit_mg <span class="ot">&lt;-</span> <span class="fu">gam</span>(spread <span class="sc">~</span> <span class="fu">s</span>(leverage) <span class="sc">+</span> <span class="fu">s</span>(equity_vol) <span class="sc">+</span> <span class="fu">s</span>(maturity) <span class="sc">+</span> <span class="fu">s</span>(log_assets) <span class="sc">+</span></span>
+<span id="cb187-2"><a href="一般化加法モデル-gam.html#cb187-2" tabindex="-1"></a>  industry, <span class="at">data =</span> bond, <span class="at">method =</span> <span class="st">&quot;REML&quot;</span>)</span>
+<span id="cb187-3"><a href="一般化加法モデル-gam.html#cb187-3" tabindex="-1"></a><span class="fu">summary</span>(fit_mg)  <span class="co"># edf (有効自由度) ≈ 1 なら, ほぼ線形</span></span>
+<span id="cb187-4"><a href="一般化加法モデル-gam.html#cb187-4" tabindex="-1"></a><span class="co">#&gt; </span></span>
+<span id="cb187-5"><a href="一般化加法モデル-gam.html#cb187-5" tabindex="-1"></a><span class="co">#&gt; Family: gaussian </span></span>
+<span id="cb187-6"><a href="一般化加法モデル-gam.html#cb187-6" tabindex="-1"></a><span class="co">#&gt; Link function: identity </span></span>
+<span id="cb187-7"><a href="一般化加法モデル-gam.html#cb187-7" tabindex="-1"></a><span class="co">#&gt; </span></span>
+<span id="cb187-8"><a href="一般化加法モデル-gam.html#cb187-8" tabindex="-1"></a><span class="co">#&gt; Formula:</span></span>
+<span id="cb187-9"><a href="一般化加法モデル-gam.html#cb187-9" tabindex="-1"></a><span class="co">#&gt; spread ~ s(leverage) + s(equity_vol) + s(maturity) + s(log_assets) + </span></span>
+<span id="cb187-10"><a href="一般化加法モデル-gam.html#cb187-10" tabindex="-1"></a><span class="co">#&gt;     industry</span></span>
+<span id="cb187-11"><a href="一般化加法モデル-gam.html#cb187-11" tabindex="-1"></a><span class="co">#&gt; </span></span>
+<span id="cb187-12"><a href="一般化加法モデル-gam.html#cb187-12" tabindex="-1"></a><span class="co">#&gt; Parametric coefficients:</span></span>
+<span id="cb187-13"><a href="一般化加法モデル-gam.html#cb187-13" tabindex="-1"></a><span class="co">#&gt;                  Estimate Std. Error t value Pr(&gt;|t|)    </span></span>
+<span id="cb187-14"><a href="一般化加法モデル-gam.html#cb187-14" tabindex="-1"></a><span class="co">#&gt; (Intercept)        87.481      1.305  67.025  &lt; 2e-16 ***</span></span>
+<span id="cb187-15"><a href="一般化加法モデル-gam.html#cb187-15" tabindex="-1"></a><span class="co">#&gt; industrynonmanuf    1.594      1.917   0.831    0.406    </span></span>
+<span id="cb187-16"><a href="一般化加法モデル-gam.html#cb187-16" tabindex="-1"></a><span class="co">#&gt; industryutility   -15.636      2.659  -5.881 6.87e-09 ***</span></span>
+<span id="cb187-17"><a href="一般化加法モデル-gam.html#cb187-17" tabindex="-1"></a><span class="co">#&gt; ---</span></span>
+<span id="cb187-18"><a href="一般化加法モデル-gam.html#cb187-18" tabindex="-1"></a><span class="co">#&gt; Signif. codes:  0 &#39;***&#39; 0.001 &#39;**&#39; 0.01 &#39;*&#39; 0.05 &#39;.&#39; 0.1 &#39; &#39; 1</span></span>
+<span id="cb187-19"><a href="一般化加法モデル-gam.html#cb187-19" tabindex="-1"></a><span class="co">#&gt; </span></span>
+<span id="cb187-20"><a href="一般化加法モデル-gam.html#cb187-20" tabindex="-1"></a><span class="co">#&gt; Approximate significance of smooth terms:</span></span>
+<span id="cb187-21"><a href="一般化加法モデル-gam.html#cb187-21" tabindex="-1"></a><span class="co">#&gt;                 edf Ref.df      F p-value    </span></span>
+<span id="cb187-22"><a href="一般化加法モデル-gam.html#cb187-22" tabindex="-1"></a><span class="co">#&gt; s(leverage)   1.000  1.001 493.10  &lt;2e-16 ***</span></span>
+<span id="cb187-23"><a href="一般化加法モデル-gam.html#cb187-23" tabindex="-1"></a><span class="co">#&gt; s(equity_vol) 8.244  8.842 325.38  &lt;2e-16 ***</span></span>
+<span id="cb187-24"><a href="一般化加法モデル-gam.html#cb187-24" tabindex="-1"></a><span class="co">#&gt; s(maturity)   1.936  2.421  18.94  &lt;2e-16 ***</span></span>
+<span id="cb187-25"><a href="一般化加法モデル-gam.html#cb187-25" tabindex="-1"></a><span class="co">#&gt; s(log_assets) 1.000  1.001  49.97  &lt;2e-16 ***</span></span>
+<span id="cb187-26"><a href="一般化加法モデル-gam.html#cb187-26" tabindex="-1"></a><span class="co">#&gt; ---</span></span>
+<span id="cb187-27"><a href="一般化加法モデル-gam.html#cb187-27" tabindex="-1"></a><span class="co">#&gt; Signif. codes:  0 &#39;***&#39; 0.001 &#39;**&#39; 0.01 &#39;*&#39; 0.05 &#39;.&#39; 0.1 &#39; &#39; 1</span></span>
+<span id="cb187-28"><a href="一般化加法モデル-gam.html#cb187-28" tabindex="-1"></a><span class="co">#&gt; </span></span>
+<span id="cb187-29"><a href="一般化加法モデル-gam.html#cb187-29" tabindex="-1"></a><span class="co">#&gt; R-sq.(adj) =   0.86   Deviance explained = 86.4%</span></span>
+<span id="cb187-30"><a href="一般化加法モデル-gam.html#cb187-30" tabindex="-1"></a><span class="co">#&gt; -REML = 2695.7  Scale est. = 461.67    n = 600</span></span>
+<span id="cb187-31"><a href="一般化加法モデル-gam.html#cb187-31" tabindex="-1"></a><span class="fu">plot</span>(fit_mg, <span class="at">pages =</span> <span class="dv">1</span>, <span class="at">residuals =</span> <span class="cn">TRUE</span>, <span class="at">pch =</span> <span class="dv">1</span>, <span class="at">cex =</span> <span class="fl">0.3</span>, <span class="at">se =</span> <span class="cn">TRUE</span>)</span></code></pre></div>
+<p><img src="_main_files/figure-html/unnamed-chunk-125-1.png" width="75%" /></p>
+<p><code>summary()</code>の “Approximate significance of smooth terms” の<code>edf</code> (有効自由度) は, 推定された曲線の複雑さを表す.
+<code>edf</code>が1に近い <code>leverage</code> と <code>log_assets</code> はほぼ線形, <code>equity_vol</code> (<code>edf</code> ≈ 8.2) は強い非線形性を持つ.
+図からも, ボラティリティが高くなるとスプレッドが加速度的に拡大する様子が分かり, 構造型モデルの考え方と整合的である.</p>
+<div class="sourceCode" id="cb188"><pre class="sourceCode r"><code class="sourceCode r"><span id="cb188-1"><a href="一般化加法モデル-gam.html#cb188-1" tabindex="-1"></a><span class="fu">AIC</span>(fit_lm, fit_mg)  <span class="co"># 線形回帰との比較</span></span>
+<span id="cb188-2"><a href="一般化加法モデル-gam.html#cb188-2" tabindex="-1"></a><span class="co">#&gt;              df      AIC</span></span>
+<span id="cb188-3"><a href="一般化加法モデル-gam.html#cb188-3" tabindex="-1"></a><span class="co">#&gt; fit_lm  8.00000 5702.969</span></span>
+<span id="cb188-4"><a href="一般化加法モデル-gam.html#cb188-4" tabindex="-1"></a><span class="co">#&gt; fit_mg 17.26433 5402.791</span></span></code></pre></div>
+</div>
+<div id="交互作用を含めた-gam" class="section level3 unnumbered hasAnchor">
+<h3>交互作用を含めた GAM<a href="一般化加法モデル-gam.html#交互作用を含めた-gam" class="anchor-section" aria-label="Anchor link to header"></a></h3>
+<p><strong>mgcv</strong>の<code>gam()</code>では, 2変数の関数 (交互作用) も平滑化項として入れられる.
+理論的には, 「レバレッジが高く, かつボラティリティが高い」企業でスプレッドが急拡大すると考えられる.
+<code>ti()</code>は, 各変数単独の効果 (<code>s()</code>) を除いた, 交互作用部分のみの平滑化項である.</p>
+<div class="sourceCode" id="cb189"><pre class="sourceCode r"><code class="sourceCode r"><span id="cb189-1"><a href="一般化加法モデル-gam.html#cb189-1" tabindex="-1"></a>fit_int <span class="ot">&lt;-</span> <span class="fu">gam</span>(spread <span class="sc">~</span> <span class="fu">s</span>(leverage) <span class="sc">+</span> <span class="fu">s</span>(equity_vol) <span class="sc">+</span> <span class="fu">ti</span>(leverage, equity_vol) <span class="sc">+</span></span>
+<span id="cb189-2"><a href="一般化加法モデル-gam.html#cb189-2" tabindex="-1"></a>  <span class="fu">s</span>(maturity) <span class="sc">+</span> <span class="fu">s</span>(log_assets) <span class="sc">+</span> industry, <span class="at">data =</span> bond, <span class="at">method =</span> <span class="st">&quot;REML&quot;</span>)</span>
+<span id="cb189-3"><a href="一般化加法モデル-gam.html#cb189-3" tabindex="-1"></a><span class="fu">summary</span>(fit_int)</span>
+<span id="cb189-4"><a href="一般化加法モデル-gam.html#cb189-4" tabindex="-1"></a><span class="co">#&gt; </span></span>
+<span id="cb189-5"><a href="一般化加法モデル-gam.html#cb189-5" tabindex="-1"></a><span class="co">#&gt; Family: gaussian </span></span>
+<span id="cb189-6"><a href="一般化加法モデル-gam.html#cb189-6" tabindex="-1"></a><span class="co">#&gt; Link function: identity </span></span>
+<span id="cb189-7"><a href="一般化加法モデル-gam.html#cb189-7" tabindex="-1"></a><span class="co">#&gt; </span></span>
+<span id="cb189-8"><a href="一般化加法モデル-gam.html#cb189-8" tabindex="-1"></a><span class="co">#&gt; Formula:</span></span>
+<span id="cb189-9"><a href="一般化加法モデル-gam.html#cb189-9" tabindex="-1"></a><span class="co">#&gt; spread ~ s(leverage) + s(equity_vol) + ti(leverage, equity_vol) + </span></span>
+<span id="cb189-10"><a href="一般化加法モデル-gam.html#cb189-10" tabindex="-1"></a><span class="co">#&gt;     s(maturity) + s(log_assets) + industry</span></span>
+<span id="cb189-11"><a href="一般化加法モデル-gam.html#cb189-11" tabindex="-1"></a><span class="co">#&gt; </span></span>
+<span id="cb189-12"><a href="一般化加法モデル-gam.html#cb189-12" tabindex="-1"></a><span class="co">#&gt; Parametric coefficients:</span></span>
+<span id="cb189-13"><a href="一般化加法モデル-gam.html#cb189-13" tabindex="-1"></a><span class="co">#&gt;                  Estimate Std. Error t value Pr(&gt;|t|)    </span></span>
+<span id="cb189-14"><a href="一般化加法モデル-gam.html#cb189-14" tabindex="-1"></a><span class="co">#&gt; (Intercept)       88.2904     0.7457 118.395   &lt;2e-16 ***</span></span>
+<span id="cb189-15"><a href="一般化加法モデル-gam.html#cb189-15" tabindex="-1"></a><span class="co">#&gt; industrynonmanuf  -0.1680     1.0924  -0.154    0.878    </span></span>
+<span id="cb189-16"><a href="一般化加法モデル-gam.html#cb189-16" tabindex="-1"></a><span class="co">#&gt; industryutility  -17.5770     1.5230 -11.541   &lt;2e-16 ***</span></span>
+<span id="cb189-17"><a href="一般化加法モデル-gam.html#cb189-17" tabindex="-1"></a><span class="co">#&gt; ---</span></span>
+<span id="cb189-18"><a href="一般化加法モデル-gam.html#cb189-18" tabindex="-1"></a><span class="co">#&gt; Signif. codes:  0 &#39;***&#39; 0.001 &#39;**&#39; 0.01 &#39;*&#39; 0.05 &#39;.&#39; 0.1 &#39; &#39; 1</span></span>
+<span id="cb189-19"><a href="一般化加法モデル-gam.html#cb189-19" tabindex="-1"></a><span class="co">#&gt; </span></span>
+<span id="cb189-20"><a href="一般化加法モデル-gam.html#cb189-20" tabindex="-1"></a><span class="co">#&gt; Approximate significance of smooth terms:</span></span>
+<span id="cb189-21"><a href="一般化加法モデル-gam.html#cb189-21" tabindex="-1"></a><span class="co">#&gt;                            edf Ref.df       F p-value    </span></span>
+<span id="cb189-22"><a href="一般化加法モデル-gam.html#cb189-22" tabindex="-1"></a><span class="co">#&gt; s(leverage)              2.281  2.862  549.98  &lt;2e-16 ***</span></span>
+<span id="cb189-23"><a href="一般化加法モデル-gam.html#cb189-23" tabindex="-1"></a><span class="co">#&gt; s(equity_vol)            6.770  7.837 1022.91  &lt;2e-16 ***</span></span>
+<span id="cb189-24"><a href="一般化加法モデル-gam.html#cb189-24" tabindex="-1"></a><span class="co">#&gt; ti(leverage,equity_vol) 12.546 14.307   90.70  &lt;2e-16 ***</span></span>
+<span id="cb189-25"><a href="一般化加法モデル-gam.html#cb189-25" tabindex="-1"></a><span class="co">#&gt; s(maturity)              3.694  4.572   44.86  &lt;2e-16 ***</span></span>
+<span id="cb189-26"><a href="一般化加法モデル-gam.html#cb189-26" tabindex="-1"></a><span class="co">#&gt; s(log_assets)            1.009  1.018  174.83  &lt;2e-16 ***</span></span>
+<span id="cb189-27"><a href="一般化加法モデル-gam.html#cb189-27" tabindex="-1"></a><span class="co">#&gt; ---</span></span>
+<span id="cb189-28"><a href="一般化加法モデル-gam.html#cb189-28" tabindex="-1"></a><span class="co">#&gt; Signif. codes:  0 &#39;***&#39; 0.001 &#39;**&#39; 0.01 &#39;*&#39; 0.05 &#39;.&#39; 0.1 &#39; &#39; 1</span></span>
+<span id="cb189-29"><a href="一般化加法モデル-gam.html#cb189-29" tabindex="-1"></a><span class="co">#&gt; </span></span>
+<span id="cb189-30"><a href="一般化加法モデル-gam.html#cb189-30" tabindex="-1"></a><span class="co">#&gt; R-sq.(adj) =  0.955   Deviance explained = 95.7%</span></span>
+<span id="cb189-31"><a href="一般化加法モデル-gam.html#cb189-31" tabindex="-1"></a><span class="co">#&gt; -REML = 2370.5  Scale est. = 147.84    n = 600</span></span>
+<span id="cb189-32"><a href="一般化加法モデル-gam.html#cb189-32" tabindex="-1"></a><span class="fu">vis.gam</span>(fit_int, <span class="at">view =</span> <span class="fu">c</span>(<span class="st">&quot;leverage&quot;</span>, <span class="st">&quot;equity_vol&quot;</span>), <span class="at">color =</span> <span class="st">&quot;topo&quot;</span>, <span class="at">theta =</span> <span class="dv">40</span>)  <span class="co"># 3次元プロット</span></span></code></pre></div>
+<p><img src="_main_files/figure-html/unnamed-chunk-127-1.png" width="75%" /></p>
+<div class="sourceCode" id="cb190"><pre class="sourceCode r"><code class="sourceCode r"><span id="cb190-1"><a href="一般化加法モデル-gam.html#cb190-1" tabindex="-1"></a><span class="fu">vis.gam</span>(fit_int, <span class="at">view =</span> <span class="fu">c</span>(<span class="st">&quot;leverage&quot;</span>, <span class="st">&quot;equity_vol&quot;</span>), <span class="at">plot.type =</span> <span class="st">&quot;contour&quot;</span>, <span class="at">color =</span> <span class="st">&quot;topo&quot;</span>)  <span class="co"># 等高線</span></span></code></pre></div>
+<p><img src="_main_files/figure-html/unnamed-chunk-127-2.png" width="75%" /></p>
+<div class="sourceCode" id="cb191"><pre class="sourceCode r"><code class="sourceCode r"><span id="cb191-1"><a href="一般化加法モデル-gam.html#cb191-1" tabindex="-1"></a><span class="fu">AIC</span>(fit_mg, fit_int)</span>
+<span id="cb191-2"><a href="一般化加法モデル-gam.html#cb191-2" tabindex="-1"></a><span class="co">#&gt;               df      AIC</span></span>
+<span id="cb191-3"><a href="一般化加法モデル-gam.html#cb191-3" tabindex="-1"></a><span class="co">#&gt; fit_mg  17.26433 5402.791</span></span>
+<span id="cb191-4"><a href="一般化加法モデル-gam.html#cb191-4" tabindex="-1"></a><span class="co">#&gt; fit_int 32.46273 4735.282</span></span></code></pre></div>
+<p>交互作用項は有意で, AICも大きく改善している (5403 → 4735).
+3次元プロットからは, レバレッジとボラティリティがともに高い領域で, スプレッドが急に高くなる形が読み取れる.</p>
+<p>注意点としては, データが少ない, あるいは存在しない領域 (例えば, レバレッジもボラティリティも極端に高い組合せ) まで面を描いてしまうことから,
+そうした領域について誤った解釈をしないようにしなければならない.</p>
+</div>
+<div id="gam-によるロジット回帰" class="section level3 unnumbered hasAnchor">
+<h3>GAM によるロジット回帰<a href="一般化加法モデル-gam.html#gam-によるロジット回帰" class="anchor-section" aria-label="Anchor link to header"></a></h3>
+<p><code>family = binomial</code>とすれば, 0/1の目的変数に対する GAM (一般化加法ロジットモデル) を当てはめられる.
+前章の個人ローン・データで, 各変数の効果が線形 (対数オッズの尺度で) かどうかを調べる.</p>
+<div class="sourceCode" id="cb192"><pre class="sourceCode r"><code class="sourceCode r"><span id="cb192-1"><a href="一般化加法モデル-gam.html#cb192-1" tabindex="-1"></a>loan <span class="ot">&lt;-</span> <span class="fu">read.csv</span>(<span class="st">&quot;class/loan_default.csv&quot;</span>)</span>
+<span id="cb192-2"><a href="一般化加法モデル-gam.html#cb192-2" tabindex="-1"></a>loan<span class="sc">$</span>employ <span class="ot">&lt;-</span> <span class="fu">factor</span>(loan<span class="sc">$</span>employ, <span class="at">levels =</span> <span class="fu">c</span>(<span class="st">&quot;regular&quot;</span>, <span class="st">&quot;nonregular&quot;</span>))</span>
+<span id="cb192-3"><a href="一般化加法モデル-gam.html#cb192-3" tabindex="-1"></a>fit_lgam <span class="ot">&lt;-</span> <span class="fu">gam</span>(default <span class="sc">~</span> <span class="fu">s</span>(balance) <span class="sc">+</span> <span class="fu">s</span>(income) <span class="sc">+</span> <span class="fu">s</span>(age) <span class="sc">+</span> employ, <span class="at">family =</span> binomial,</span>
+<span id="cb192-4"><a href="一般化加法モデル-gam.html#cb192-4" tabindex="-1"></a>  <span class="at">data =</span> loan, <span class="at">method =</span> <span class="st">&quot;REML&quot;</span>)</span>
+<span id="cb192-5"><a href="一般化加法モデル-gam.html#cb192-5" tabindex="-1"></a><span class="fu">summary</span>(fit_lgam)</span>
+<span id="cb192-6"><a href="一般化加法モデル-gam.html#cb192-6" tabindex="-1"></a><span class="co">#&gt; </span></span>
+<span id="cb192-7"><a href="一般化加法モデル-gam.html#cb192-7" tabindex="-1"></a><span class="co">#&gt; Family: binomial </span></span>
+<span id="cb192-8"><a href="一般化加法モデル-gam.html#cb192-8" tabindex="-1"></a><span class="co">#&gt; Link function: logit </span></span>
+<span id="cb192-9"><a href="一般化加法モデル-gam.html#cb192-9" tabindex="-1"></a><span class="co">#&gt; </span></span>
+<span id="cb192-10"><a href="一般化加法モデル-gam.html#cb192-10" tabindex="-1"></a><span class="co">#&gt; Formula:</span></span>
+<span id="cb192-11"><a href="一般化加法モデル-gam.html#cb192-11" tabindex="-1"></a><span class="co">#&gt; default ~ s(balance) + s(income) + s(age) + employ</span></span>
+<span id="cb192-12"><a href="一般化加法モデル-gam.html#cb192-12" tabindex="-1"></a><span class="co">#&gt; </span></span>
+<span id="cb192-13"><a href="一般化加法モデル-gam.html#cb192-13" tabindex="-1"></a><span class="co">#&gt; Parametric coefficients:</span></span>
+<span id="cb192-14"><a href="一般化加法モデル-gam.html#cb192-14" tabindex="-1"></a><span class="co">#&gt;                  Estimate Std. Error z value Pr(&gt;|z|)    </span></span>
+<span id="cb192-15"><a href="一般化加法モデル-gam.html#cb192-15" tabindex="-1"></a><span class="co">#&gt; (Intercept)       -3.9867     0.2207 -18.068   &lt;2e-16 ***</span></span>
+<span id="cb192-16"><a href="一般化加法モデル-gam.html#cb192-16" tabindex="-1"></a><span class="co">#&gt; employnonregular   0.6366     0.2632   2.419   0.0156 *  </span></span>
+<span id="cb192-17"><a href="一般化加法モデル-gam.html#cb192-17" tabindex="-1"></a><span class="co">#&gt; ---</span></span>
+<span id="cb192-18"><a href="一般化加法モデル-gam.html#cb192-18" tabindex="-1"></a><span class="co">#&gt; Signif. codes:  0 &#39;***&#39; 0.001 &#39;**&#39; 0.01 &#39;*&#39; 0.05 &#39;.&#39; 0.1 &#39; &#39; 1</span></span>
+<span id="cb192-19"><a href="一般化加法モデル-gam.html#cb192-19" tabindex="-1"></a><span class="co">#&gt; </span></span>
+<span id="cb192-20"><a href="一般化加法モデル-gam.html#cb192-20" tabindex="-1"></a><span class="co">#&gt; Approximate significance of smooth terms:</span></span>
+<span id="cb192-21"><a href="一般化加法モデル-gam.html#cb192-21" tabindex="-1"></a><span class="co">#&gt;              edf Ref.df Chi.sq p-value    </span></span>
+<span id="cb192-22"><a href="一般化加法モデル-gam.html#cb192-22" tabindex="-1"></a><span class="co">#&gt; s(balance) 2.817  3.563 83.886  &lt;2e-16 ***</span></span>
+<span id="cb192-23"><a href="一般化加法モデル-gam.html#cb192-23" tabindex="-1"></a><span class="co">#&gt; s(income)  3.439  4.198 81.576  &lt;2e-16 ***</span></span>
+<span id="cb192-24"><a href="一般化加法モデル-gam.html#cb192-24" tabindex="-1"></a><span class="co">#&gt; s(age)     1.001  1.001  0.361   0.548    </span></span>
+<span id="cb192-25"><a href="一般化加法モデル-gam.html#cb192-25" tabindex="-1"></a><span class="co">#&gt; ---</span></span>
+<span id="cb192-26"><a href="一般化加法モデル-gam.html#cb192-26" tabindex="-1"></a><span class="co">#&gt; Signif. codes:  0 &#39;***&#39; 0.001 &#39;**&#39; 0.01 &#39;*&#39; 0.05 &#39;.&#39; 0.1 &#39; &#39; 1</span></span>
+<span id="cb192-27"><a href="一般化加法モデル-gam.html#cb192-27" tabindex="-1"></a><span class="co">#&gt; </span></span>
+<span id="cb192-28"><a href="一般化加法モデル-gam.html#cb192-28" tabindex="-1"></a><span class="co">#&gt; R-sq.(adj) =  0.195   Deviance explained = 23.8%</span></span>
+<span id="cb192-29"><a href="一般化加法モデル-gam.html#cb192-29" tabindex="-1"></a><span class="co">#&gt; -REML = 335.65  Scale est. = 1         n = 2000</span></span>
+<span id="cb192-30"><a href="一般化加法モデル-gam.html#cb192-30" tabindex="-1"></a><span class="fu">plot</span>(fit_lgam, <span class="at">pages =</span> <span class="dv">1</span>, <span class="at">se =</span> <span class="cn">TRUE</span>)  <span class="co"># 縦軸は対数オッズの尺度</span></span></code></pre></div>
+<p><img src="_main_files/figure-html/unnamed-chunk-128-1.png" width="75%" /></p>
+<p><code>balance</code>と<code>income</code>は<code>edf</code>が1より大きく, 対数オッズとの関係にも非線形性が見られる.
+<code>age</code>は<code>edf</code> ≈ 1 で, 有意でもない (前章のロジット回帰の結果と整合的).</p>
+<p>(自主課題)</p>
+<ul>
+<li>以上のGAMの実行結果を解釈してみよう.</li>
+<li><code>ti(leverage, equity_vol)</code>の代わりに, 他の変数ペア (例: <code>ti(leverage, maturity)</code>) の交互作用も調べてみよう.</li>
+</ul>
+</div>
+</div>
+<div id="パッケージprophetの利用" class="section level2 hasAnchor" number="5.5">
+<h2><span class="header-section-number">5.5</span> パッケージ<strong>prophet</strong>の利用<a href="一般化加法モデル-gam.html#パッケージprophetの利用" class="anchor-section" aria-label="Anchor link to header"></a></h2>
+<p>時系列予測を目的とした関数および補助関数のパッケージである.
+非線形のトレンドと季節性・休日効果を足し合わせる加法モデルであり, GAM の考え方を時系列予測に応用したものと言える.</p>
+<pre><code>prophet:
+- 非線形のトレンド + 年次・週次・日次の季節性 + 休日効果, の加法モデルに基づいて時系列を予測
+- 強い季節性があり, 数シーズン分の過去データを持つ時系列に対して良く機能
+- 欠損値やトレンドの変化に対して頑健. 通常, 外れ値もうまく処理する
+- 出所: https://facebook.github.io/prophet/docs/quick_start.html#r-api</code></pre>
+<div class="sourceCode" id="cb194"><pre class="sourceCode r"><code class="sourceCode r"><span id="cb194-1"><a href="一般化加法モデル-gam.html#cb194-1" tabindex="-1"></a><span class="co"># install.packages(&#39;prophet&#39;)</span></span>
+<span id="cb194-2"><a href="一般化加法モデル-gam.html#cb194-2" tabindex="-1"></a><span class="fu">library</span>(prophet)</span></code></pre></div>
+<div id="データ-atm出金額-仮想" class="section level3 unnumbered hasAnchor">
+<h3>データ: ATM出金額 (仮想)<a href="一般化加法モデル-gam.html#データ-atm出金額-仮想" class="anchor-section" aria-label="Anchor link to header"></a></h3>
+<pre><code>- atm_daily.csv, ある地方銀行の ATM 出金額 (日次, 百万円), 2023/1/1〜2025/12/31
+  - date: 日付
+  - amount: 出金額 (百万円)</code></pre>
+<div class="sourceCode" id="cb196"><pre class="sourceCode r"><code class="sourceCode r"><span id="cb196-1"><a href="一般化加法モデル-gam.html#cb196-1" tabindex="-1"></a>atm <span class="ot">&lt;-</span> <span class="fu">read.csv</span>(<span class="st">&quot;class/atm_daily.csv&quot;</span>)</span>
+<span id="cb196-2"><a href="一般化加法モデル-gam.html#cb196-2" tabindex="-1"></a>atm<span class="sc">$</span>date <span class="ot">&lt;-</span> <span class="fu">as.Date</span>(atm<span class="sc">$</span>date)</span>
+<span id="cb196-3"><a href="一般化加法モデル-gam.html#cb196-3" tabindex="-1"></a><span class="fu">plot</span>(atm<span class="sc">$</span>date, atm<span class="sc">$</span>amount, <span class="at">type =</span> <span class="st">&quot;l&quot;</span>, <span class="at">xlab =</span> <span class="st">&quot;&quot;</span>, <span class="at">ylab =</span> <span class="st">&quot;出金額 (百万円)&quot;</span>)</span></code></pre></div>
+<p><img src="_main_files/figure-html/unnamed-chunk-130-1.png" width="75%" /></p>
+</div>
+<div id="prophet-による予測" class="section level3 unnumbered hasAnchor">
+<h3>prophet による予測<a href="一般化加法モデル-gam.html#prophet-による予測" class="anchor-section" aria-label="Anchor link to header"></a></h3>
+<p>休日効果として, 年末年始, ゴールデンウィーク, お盆の連休を指定する.</p>
+<div class="sourceCode" id="cb197"><pre class="sourceCode r"><code class="sourceCode r"><span id="cb197-1"><a href="一般化加法モデル-gam.html#cb197-1" tabindex="-1"></a><span class="co"># 休日 (連休) の指定: 年末年始, GW, お盆</span></span>
+<span id="cb197-2"><a href="一般化加法モデル-gam.html#cb197-2" tabindex="-1"></a>hol <span class="ot">&lt;-</span> <span class="fu">data.frame</span>(<span class="at">holiday =</span> <span class="st">&quot;long_holiday&quot;</span>, <span class="at">ds =</span> <span class="fu">as.Date</span>(<span class="fu">c</span>(<span class="fu">paste0</span>(<span class="dv">2023</span><span class="sc">:</span><span class="dv">2026</span>, <span class="st">&quot;-01-01&quot;</span>),</span>
+<span id="cb197-3"><a href="一般化加法モデル-gam.html#cb197-3" tabindex="-1"></a>  <span class="fu">paste0</span>(<span class="dv">2023</span><span class="sc">:</span><span class="dv">2026</span>, <span class="st">&quot;-05-03&quot;</span>), <span class="fu">paste0</span>(<span class="dv">2023</span><span class="sc">:</span><span class="dv">2026</span>, <span class="st">&quot;-08-13&quot;</span>))), <span class="at">lower_window =</span> <span class="dv">0</span>,</span>
+<span id="cb197-4"><a href="一般化加法モデル-gam.html#cb197-4" tabindex="-1"></a>  <span class="at">upper_window =</span> <span class="dv">2</span>)  <span class="co"># 当日から2日後までを休日効果とする</span></span></code></pre></div>
+<p><code>prophet()</code>に与えるデータフレームの列名は, 日付を<code>ds</code>, 値を<code>y</code>とする必要がある.</p>
+<div class="sourceCode" id="cb198"><pre class="sourceCode r"><code class="sourceCode r"><span id="cb198-1"><a href="一般化加法モデル-gam.html#cb198-1" tabindex="-1"></a><span class="co"># prophet モデルの推定</span></span>
+<span id="cb198-2"><a href="一般化加法モデル-gam.html#cb198-2" tabindex="-1"></a>atm_df <span class="ot">&lt;-</span> <span class="fu">data.frame</span>(<span class="at">ds =</span> atm<span class="sc">$</span>date, <span class="at">y =</span> atm<span class="sc">$</span>amount)</span>
+<span id="cb198-3"><a href="一般化加法モデル-gam.html#cb198-3" tabindex="-1"></a>atm_ppht <span class="ot">&lt;-</span> <span class="fu">prophet</span>(atm_df, <span class="at">holidays =</span> hol, <span class="at">yearly.seasonality =</span> <span class="cn">TRUE</span>, <span class="at">weekly.seasonality =</span> <span class="cn">TRUE</span>,</span>
+<span id="cb198-4"><a href="一般化加法モデル-gam.html#cb198-4" tabindex="-1"></a>  <span class="at">daily.seasonality =</span> <span class="cn">FALSE</span>)</span>
+<span id="cb198-5"><a href="一般化加法モデル-gam.html#cb198-5" tabindex="-1"></a></span>
+<span id="cb198-6"><a href="一般化加法モデル-gam.html#cb198-6" tabindex="-1"></a><span class="co"># 予測する日付の生成 (90日先まで) と予測</span></span>
+<span id="cb198-7"><a href="一般化加法モデル-gam.html#cb198-7" tabindex="-1"></a>dates_ft <span class="ot">&lt;-</span> <span class="fu">make_future_dataframe</span>(atm_ppht, <span class="at">periods =</span> <span class="dv">90</span>)</span>
+<span id="cb198-8"><a href="一般化加法モデル-gam.html#cb198-8" tabindex="-1"></a>atm_forecast <span class="ot">&lt;-</span> <span class="fu">predict</span>(atm_ppht, dates_ft)</span>
+<span id="cb198-9"><a href="一般化加法モデル-gam.html#cb198-9" tabindex="-1"></a><span class="fu">tail</span>(atm_forecast[<span class="fu">c</span>(<span class="st">&quot;ds&quot;</span>, <span class="st">&quot;yhat&quot;</span>, <span class="st">&quot;yhat_lower&quot;</span>, <span class="st">&quot;yhat_upper&quot;</span>)])</span>
+<span id="cb198-10"><a href="一般化加法モデル-gam.html#cb198-10" tabindex="-1"></a><span class="co">#&gt;              ds     yhat yhat_lower yhat_upper</span></span>
+<span id="cb198-11"><a href="一般化加法モデル-gam.html#cb198-11" tabindex="-1"></a><span class="co">#&gt; 1181 2026-03-26 48.69645   43.56687   53.47653</span></span>
+<span id="cb198-12"><a href="一般化加法モデル-gam.html#cb198-12" tabindex="-1"></a><span class="co">#&gt; 1182 2026-03-27 53.53165   48.86172   58.32532</span></span>
+<span id="cb198-13"><a href="一般化加法モデル-gam.html#cb198-13" tabindex="-1"></a><span class="co">#&gt; 1183 2026-03-28 44.12946   39.60808   48.93103</span></span>
+<span id="cb198-14"><a href="一般化加法モデル-gam.html#cb198-14" tabindex="-1"></a><span class="co">#&gt; 1184 2026-03-29 40.95480   36.16324   45.69445</span></span>
+<span id="cb198-15"><a href="一般化加法モデル-gam.html#cb198-15" tabindex="-1"></a><span class="co">#&gt; 1185 2026-03-30 50.06196   45.54247   54.98011</span></span>
+<span id="cb198-16"><a href="一般化加法モデル-gam.html#cb198-16" tabindex="-1"></a><span class="co">#&gt; 1186 2026-03-31 48.02466   43.47958   52.91538</span></span>
+<span id="cb198-17"><a href="一般化加法モデル-gam.html#cb198-17" tabindex="-1"></a></span>
+<span id="cb198-18"><a href="一般化加法モデル-gam.html#cb198-18" tabindex="-1"></a><span class="fu">plot</span>(atm_ppht, atm_forecast)</span></code></pre></div>
+<p><img src="_main_files/figure-html/unnamed-chunk-132-1.png" width="75%" /></p>
+<div class="sourceCode" id="cb199"><pre class="sourceCode r"><code class="sourceCode r"><span id="cb199-1"><a href="一般化加法モデル-gam.html#cb199-1" tabindex="-1"></a><span class="fu">prophet_plot_components</span>(atm_ppht, atm_forecast)  <span class="co"># トレンド, 休日, 週次, 年次の各成分</span></span></code></pre></div>
+<p><img src="_main_files/figure-html/unnamed-chunk-132-2.png" width="75%" /></p>
+<p>各成分の図から, 連休の前後の出金額の変化 (休日効果), 曜日による違い (週次の季節性), 年間の変動 (年次の季節性) が分離されていることが分かる.</p>
+<p>注) 給料日 (25日前後) の効果は, 上の成分には現れない.
+<code>add_regressor()</code>で「25日前後ダミー」を説明変数に加えると改善する (自主課題).</p>
+<pre><code>prophet の主な引数
+- growth: &quot;linear&quot; (デフォルト), &quot;logistic&quot;, &quot;flat&quot;
+- changepoints (変化点): 日付ベクトルをユーザー指定 or 潜在的な変化点の自動選択 (デフォルト)
+- n.changepoints (変化点の数): 25 (デフォルト)
+- yearly.seasonality (年次季節性): &quot;auto&quot; (デフォルト), TRUE, FALSE, 生成する Fourier 項の数
+- weekly.seasonality (週次季節性): 同上
+- daily.seasonality (日次季節性): 同上
+- holidays (休日の指定): なし (デフォルト)
+- seasonality.mode (季節性の入り方): &quot;additive&quot; (加法的, デフォルト), &quot;multiplicative&quot; (乗法的)</code></pre>
+
+</div>
+</div>
+</div>
+            </section>
+
+          </div>
+        </div>
+      </div>
+<a href="ロジットプロビット回帰分析.html" class="navigation navigation-prev navigation-unique" aria-label="Previous page"><i class="fa fa-angle-left"></i></a>
+
+    </div>
+  </div>
+<script src="libs/gitbook-2.6.7/js/app.min.js"></script>
+<script src="libs/gitbook-2.6.7/js/clipboard.min.js"></script>
+<script src="libs/gitbook-2.6.7/js/plugin-search.js"></script>
+<script src="libs/gitbook-2.6.7/js/plugin-sharing.js"></script>
+<script src="libs/gitbook-2.6.7/js/plugin-fontsettings.js"></script>
+<script src="libs/gitbook-2.6.7/js/plugin-bookdown.js"></script>
+<script src="libs/gitbook-2.6.7/js/jquery.highlight.js"></script>
+<script src="libs/gitbook-2.6.7/js/plugin-clipboard.js"></script>
+<script>
+gitbook.require(["gitbook"], function(gitbook) {
+gitbook.start({
+"sharing": {
+"github": false,
+"facebook": true,
+"twitter": true,
+"linkedin": false,
+"weibo": false,
+"instapaper": false,
+"vk": false,
+"whatsapp": false,
+"all": ["facebook", "twitter", "linkedin", "weibo", "instapaper"]
+},
+"fontsettings": {
+"theme": "white",
+"family": "sans",
+"size": 2
+},
+"edit": {
+"link": null,
+"text": null
+},
+"history": {
+"link": null,
+"text": null
+},
+"view": {
+"link": null,
+"text": null
+},
+"download": null,
+"search": {
+"engine": "fuse",
+"options": null
+},
+"toc": {
+"collapse": "subsection"
+}
+});
+});
+</script>
+
+<!-- dynamically load mathjax for compatibility with self-contained -->
+<script>
+  (function () {
+    var script = document.createElement("script");
+    script.type = "text/javascript";
+    var src = "true";
+    if (src === "" || src === "true") src = "https://cdnjs.cloudflare.com/ajax/libs/mathjax/2.7.9/latest.js?config=TeX-MML-AM_CHTML";
+    if (location.protocol !== "file:")
+      if (/^https?:/.test(src))
+        src = src.replace(/^https?:/, '');
+    script.src = src;
+    document.getElementsByTagName("head")[0].appendChild(script);
+  })();
+</script>
+</body>
+
+</html>
