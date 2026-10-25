@@ -1,0 +1,775 @@
+<!DOCTYPE html>
+<html lang="" xml:lang="">
+<head>
+
+  <meta charset="utf-8" />
+  <meta http-equiv="X-UA-Compatible" content="IE=edge" />
+  <title>Chapter 7 判別分析 | 金融データサイエンス</title>
+  <meta name="description" content="Chapter 7 判別分析 | 金融データサイエンス" />
+  <meta name="generator" content="bookdown 0.37 and GitBook 2.6.7" />
+
+  <meta property="og:title" content="Chapter 7 判別分析 | 金融データサイエンス" />
+  <meta property="og:type" content="book" />
+  
+  
+  
+
+  <meta name="twitter:card" content="summary" />
+  <meta name="twitter:title" content="Chapter 7 判別分析 | 金融データサイエンス" />
+  
+  
+  
+
+<meta name="author" content="林 高樹" />
+
+
+
+  <meta name="viewport" content="width=device-width, initial-scale=1" />
+  <meta name="apple-mobile-web-app-capable" content="yes" />
+  <meta name="apple-mobile-web-app-status-bar-style" content="black" />
+  
+  
+<link rel="prev" href="正則化回帰-lasso-ridge回帰-elastic-net.html"/>
+
+<script src="libs/jquery-3.6.1/jquery-3.6.1.min.js"></script>
+<script src="https://cdn.jsdelivr.net/npm/fuse.js@6.4.6/dist/fuse.min.js"></script>
+<link href="libs/gitbook-2.6.7/css/style.css" rel="stylesheet" />
+<link href="libs/gitbook-2.6.7/css/plugin-table.css" rel="stylesheet" />
+<link href="libs/gitbook-2.6.7/css/plugin-bookdown.css" rel="stylesheet" />
+<link href="libs/gitbook-2.6.7/css/plugin-highlight.css" rel="stylesheet" />
+<link href="libs/gitbook-2.6.7/css/plugin-search.css" rel="stylesheet" />
+<link href="libs/gitbook-2.6.7/css/plugin-fontsettings.css" rel="stylesheet" />
+<link href="libs/gitbook-2.6.7/css/plugin-clipboard.css" rel="stylesheet" />
+
+
+
+
+
+
+
+
+<link href="libs/anchor-sections-1.1.0/anchor-sections.css" rel="stylesheet" />
+<link href="libs/anchor-sections-1.1.0/anchor-sections-hash.css" rel="stylesheet" />
+<script src="libs/anchor-sections-1.1.0/anchor-sections.js"></script>
+
+
+<style type="text/css">
+pre > code.sourceCode { white-space: pre; position: relative; }
+pre > code.sourceCode > span { line-height: 1.25; }
+pre > code.sourceCode > span:empty { height: 1.2em; }
+.sourceCode { overflow: visible; }
+code.sourceCode > span { color: inherit; text-decoration: inherit; }
+pre.sourceCode { margin: 0; }
+@media screen {
+div.sourceCode { overflow: auto; }
+}
+@media print {
+pre > code.sourceCode { white-space: pre-wrap; }
+pre > code.sourceCode > span { text-indent: -5em; padding-left: 5em; }
+}
+pre.numberSource code
+  { counter-reset: source-line 0; }
+pre.numberSource code > span
+  { position: relative; left: -4em; counter-increment: source-line; }
+pre.numberSource code > span > a:first-child::before
+  { content: counter(source-line);
+    position: relative; left: -1em; text-align: right; vertical-align: baseline;
+    border: none; display: inline-block;
+    -webkit-touch-callout: none; -webkit-user-select: none;
+    -khtml-user-select: none; -moz-user-select: none;
+    -ms-user-select: none; user-select: none;
+    padding: 0 4px; width: 4em;
+    color: #aaaaaa;
+  }
+pre.numberSource { margin-left: 3em; border-left: 1px solid #aaaaaa;  padding-left: 4px; }
+div.sourceCode
+  {   }
+@media screen {
+pre > code.sourceCode > span > a:first-child::before { text-decoration: underline; }
+}
+code span.al { color: #ff0000; font-weight: bold; } /* Alert */
+code span.an { color: #60a0b0; font-weight: bold; font-style: italic; } /* Annotation */
+code span.at { color: #7d9029; } /* Attribute */
+code span.bn { color: #40a070; } /* BaseN */
+code span.bu { color: #008000; } /* BuiltIn */
+code span.cf { color: #007020; font-weight: bold; } /* ControlFlow */
+code span.ch { color: #4070a0; } /* Char */
+code span.cn { color: #880000; } /* Constant */
+code span.co { color: #60a0b0; font-style: italic; } /* Comment */
+code span.cv { color: #60a0b0; font-weight: bold; font-style: italic; } /* CommentVar */
+code span.do { color: #ba2121; font-style: italic; } /* Documentation */
+code span.dt { color: #902000; } /* DataType */
+code span.dv { color: #40a070; } /* DecVal */
+code span.er { color: #ff0000; font-weight: bold; } /* Error */
+code span.ex { } /* Extension */
+code span.fl { color: #40a070; } /* Float */
+code span.fu { color: #06287e; } /* Function */
+code span.im { color: #008000; font-weight: bold; } /* Import */
+code span.in { color: #60a0b0; font-weight: bold; font-style: italic; } /* Information */
+code span.kw { color: #007020; font-weight: bold; } /* Keyword */
+code span.op { color: #666666; } /* Operator */
+code span.ot { color: #007020; } /* Other */
+code span.pp { color: #bc7a00; } /* Preprocessor */
+code span.sc { color: #4070a0; } /* SpecialChar */
+code span.ss { color: #bb6688; } /* SpecialString */
+code span.st { color: #4070a0; } /* String */
+code span.va { color: #19177c; } /* Variable */
+code span.vs { color: #4070a0; } /* VerbatimString */
+code span.wa { color: #60a0b0; font-weight: bold; font-style: italic; } /* Warning */
+</style>
+
+<style type="text/css">
+  
+  div.hanging-indent{margin-left: 1.5em; text-indent: -1.5em;}
+</style>
+
+</head>
+
+<body>
+
+
+
+  <div class="book without-animation with-summary font-size-2 font-family-1" data-basepath=".">
+
+    <div class="book-summary">
+      <nav role="navigation">
+
+<ul class="summary">
+<li><a href="./">金融データサイエンス</a></li>
+
+<li class="divider"></li>
+<li class="chapter" data-level="1" data-path="index.html"><a href="index.html"><i class="fa fa-check"></i><b>1</b> はじめに</a>
+<ul>
+<li class="chapter" data-level="1.1" data-path="index.html"><a href="index.html#コースの目的"><i class="fa fa-check"></i><b>1.1</b> コースの目的</a></li>
+<li class="chapter" data-level="1.2" data-path="index.html"><a href="index.html#統計学統計的手法の学習について"><i class="fa fa-check"></i><b>1.2</b> 統計学/統計的手法の学習について</a>
+<ul>
+<li class="chapter" data-level="" data-path="index.html"><a href="index.html#学習の目標"><i class="fa fa-check"></i>学習の目標</a></li>
+<li class="chapter" data-level="" data-path="index.html"><a href="index.html#統計学統計的手法の学習方法"><i class="fa fa-check"></i>統計学/統計的手法の学習方法</a></li>
+<li class="chapter" data-level="" data-path="index.html"><a href="index.html#統計学統計的手法の学習ステップ"><i class="fa fa-check"></i>統計学/統計的手法の学習ステップ</a></li>
+</ul></li>
+<li class="chapter" data-level="1.3" data-path="index.html"><a href="index.html#金融ビジネス応用における統計学の最近の趨勢"><i class="fa fa-check"></i><b>1.3</b> 金融・ビジネス応用における統計学の最近の趨勢</a></li>
+<li class="chapter" data-level="1.4" data-path="index.html"><a href="index.html#本書内の記載の注意点"><i class="fa fa-check"></i><b>1.4</b> 本書内の記載の注意点</a></li>
+</ul></li>
+<li class="chapter" data-level="2" data-path="r言語の基本.html"><a href="r言語の基本.html"><i class="fa fa-check"></i><b>2</b> R言語の基本</a>
+<ul>
+<li class="chapter" data-level="2.1" data-path="r言語の基本.html"><a href="r言語の基本.html#rの基本プログラミング"><i class="fa fa-check"></i><b>2.1</b> Rの基本プログラミング</a>
+<ul>
+<li class="chapter" data-level="" data-path="r言語の基本.html"><a href="r言語の基本.html#生成ai利用に関する注意事項"><i class="fa fa-check"></i>生成AI利用に関する注意事項</a></li>
+<li class="chapter" data-level="2.1.1" data-path="r言語の基本.html"><a href="r言語の基本.html#基本操作"><i class="fa fa-check"></i><b>2.1.1</b> 基本操作</a></li>
+<li class="chapter" data-level="2.1.2" data-path="r言語の基本.html"><a href="r言語の基本.html#基本構文"><i class="fa fa-check"></i><b>2.1.2</b> 基本構文</a></li>
+<li class="chapter" data-level="2.1.3" data-path="r言語の基本.html"><a href="r言語の基本.html#自作関数"><i class="fa fa-check"></i><b>2.1.3</b> 自作関数</a></li>
+<li class="chapter" data-level="2.1.4" data-path="r言語の基本.html"><a href="r言語の基本.html#パッケージのインストール-読み込み"><i class="fa fa-check"></i><b>2.1.4</b> パッケージのインストール &amp; 読み込み</a></li>
+<li class="chapter" data-level="2.1.5" data-path="r言語の基本.html"><a href="r言語の基本.html#ヘルプ"><i class="fa fa-check"></i><b>2.1.5</b> ヘルプ</a></li>
+</ul></li>
+<li class="chapter" data-level="2.2" data-path="r言語の基本.html"><a href="r言語の基本.html#データの型や構造"><i class="fa fa-check"></i><b>2.2</b> データの型や構造</a>
+<ul>
+<li class="chapter" data-level="2.2.1" data-path="r言語の基本.html"><a href="r言語の基本.html#データの値の種類-データ型"><i class="fa fa-check"></i><b>2.2.1</b> データの値の種類 (“データ型”)</a></li>
+<li class="chapter" data-level="2.2.2" data-path="r言語の基本.html"><a href="r言語の基本.html#データの配列の仕方-データ構造"><i class="fa fa-check"></i><b>2.2.2</b> データの配列の仕方 (“データ構造”)</a></li>
+<li class="chapter" data-level="2.2.3" data-path="r言語の基本.html"><a href="r言語の基本.html#ベクトル"><i class="fa fa-check"></i><b>2.2.3</b> ベクトル</a></li>
+<li class="chapter" data-level="2.2.4" data-path="r言語の基本.html"><a href="r言語の基本.html#行列"><i class="fa fa-check"></i><b>2.2.4</b> 行列</a></li>
+<li class="chapter" data-level="2.2.5" data-path="r言語の基本.html"><a href="r言語の基本.html#リスト"><i class="fa fa-check"></i><b>2.2.5</b> リスト</a></li>
+<li class="chapter" data-level="2.2.6" data-path="r言語の基本.html"><a href="r言語の基本.html#データフレーム"><i class="fa fa-check"></i><b>2.2.6</b> データフレーム</a></li>
+</ul></li>
+<li class="chapter" data-level="2.3" data-path="r言語の基本.html"><a href="r言語の基本.html#データの操作演算"><i class="fa fa-check"></i><b>2.3</b> データの操作・演算</a>
+<ul>
+<li class="chapter" data-level="2.3.1" data-path="r言語の基本.html"><a href="r言語の基本.html#ベクトルの結合-ソート"><i class="fa fa-check"></i><b>2.3.1</b> ベクトルの結合, ソート</a></li>
+<li class="chapter" data-level="2.3.2" data-path="r言語の基本.html"><a href="r言語の基本.html#二項演算"><i class="fa fa-check"></i><b>2.3.2</b> 二項演算</a></li>
+<li class="chapter" data-level="2.3.3" data-path="r言語の基本.html"><a href="r言語の基本.html#論理演算"><i class="fa fa-check"></i><b>2.3.3</b> 論理演算</a></li>
+<li class="chapter" data-level="2.3.4" data-path="r言語の基本.html"><a href="r言語の基本.html#条件式"><i class="fa fa-check"></i><b>2.3.4</b> 条件式</a></li>
+<li class="chapter" data-level="2.3.5" data-path="r言語の基本.html"><a href="r言語の基本.html#行列演算"><i class="fa fa-check"></i><b>2.3.5</b> 行列演算</a></li>
+</ul></li>
+<li class="chapter" data-level="2.4" data-path="r言語の基本.html"><a href="r言語の基本.html#r関数"><i class="fa fa-check"></i><b>2.4</b> R関数</a>
+<ul>
+<li class="chapter" data-level="2.4.1" data-path="r言語の基本.html"><a href="r言語の基本.html#数学基本関数"><i class="fa fa-check"></i><b>2.4.1</b> 数学基本関数</a></li>
+<li class="chapter" data-level="2.4.2" data-path="r言語の基本.html"><a href="r言語の基本.html#基本統計量の計算"><i class="fa fa-check"></i><b>2.4.2</b> 基本統計量の計算</a></li>
+<li class="chapter" data-level="2.4.3" data-path="r言語の基本.html"><a href="r言語の基本.html#確率分布"><i class="fa fa-check"></i><b>2.4.3</b> 確率分布</a></li>
+<li class="chapter" data-level="2.4.4" data-path="r言語の基本.html"><a href="r言語の基本.html#その他便利な関数"><i class="fa fa-check"></i><b>2.4.4</b> その他便利な関数</a></li>
+</ul></li>
+<li class="chapter" data-level="2.5" data-path="r言語の基本.html"><a href="r言語の基本.html#データの可視化"><i class="fa fa-check"></i><b>2.5</b> データの可視化</a></li>
+<li class="chapter" data-level="2.6" data-path="r言語の基本.html"><a href="r言語の基本.html#ファイル入出力"><i class="fa fa-check"></i><b>2.6</b> ファイル入出力</a>
+<ul>
+<li class="chapter" data-level="2.6.1" data-path="r言語の基本.html"><a href="r言語の基本.html#テキストファイル読み込み"><i class="fa fa-check"></i><b>2.6.1</b> テキストファイル読み込み</a></li>
+<li class="chapter" data-level="2.6.2" data-path="r言語の基本.html"><a href="r言語の基本.html#テキストファイル書き出し"><i class="fa fa-check"></i><b>2.6.2</b> テキストファイル書き出し</a></li>
+</ul></li>
+<li class="chapter" data-level="2.7" data-path="r言語の基本.html"><a href="r言語の基本.html#パッケージtidyverse"><i class="fa fa-check"></i><b>2.7</b> パッケージ<code>tidyverse</code></a>
+<ul>
+<li class="chapter" data-level="2.7.1" data-path="r言語の基本.html"><a href="r言語の基本.html#q-rの初心者はtidyverseから勉強することは可能か"><i class="fa fa-check"></i><b>2.7.1</b> Q: Rの初心者は<code>tidyverse</code>から勉強することは可能か?</a></li>
+<li class="chapter" data-level="2.7.2" data-path="r言語の基本.html"><a href="r言語の基本.html#tidyverseの基本"><i class="fa fa-check"></i><b>2.7.2</b> <code>tidyverse</code>の基本</a></li>
+</ul></li>
+</ul></li>
+<li class="chapter" data-level="3" data-path="線形回帰分析.html"><a href="線形回帰分析.html"><i class="fa fa-check"></i><b>3</b> 線形回帰分析</a>
+<ul>
+<li class="chapter" data-level="3.1" data-path="線形回帰分析.html"><a href="線形回帰分析.html#重回帰分析の基本操作"><i class="fa fa-check"></i><b>3.1</b> 重回帰分析の基本操作</a>
+<ul>
+<li class="chapter" data-level="" data-path="線形回帰分析.html"><a href="線形回帰分析.html#データ1-1ルーム賃貸マンション"><i class="fa fa-check"></i>データ1: 1ルーム賃貸マンション</a></li>
+</ul></li>
+<li class="chapter" data-level="3.2" data-path="線形回帰分析.html"><a href="線形回帰分析.html#回帰分析の結果の見方と変数の選択"><i class="fa fa-check"></i><b>3.2</b> 回帰分析の結果の見方と変数の選択</a>
+<ul>
+<li class="chapter" data-level="" data-path="線形回帰分析.html"><a href="線形回帰分析.html#データ2-上場企業のpbrデータ-仮想データ"><i class="fa fa-check"></i>データ2: 上場企業のPBRデータ (仮想データ)</a></li>
+</ul></li>
+<li class="chapter" data-level="3.3" data-path="線形回帰分析.html"><a href="線形回帰分析.html#説明変数に質的変数を含む回帰"><i class="fa fa-check"></i><b>3.3</b> 説明変数に質的変数を含む回帰</a>
+<ul>
+<li class="chapter" data-level="" data-path="線形回帰分析.html"><a href="線形回帰分析.html#データセット3-高速道路事故データ"><i class="fa fa-check"></i>データセット#3: 高速道路事故データ</a></li>
+</ul></li>
+<li class="chapter" data-level="3.4" data-path="線形回帰分析.html"><a href="線形回帰分析.html#説明変数に質的変数を含む回帰-2"><i class="fa fa-check"></i><b>3.4</b> 説明変数に質的変数を含む回帰 (2)</a>
+<ul>
+<li class="chapter" data-level="" data-path="線形回帰分析.html"><a href="線形回帰分析.html#データセット5-収入データ-仮想"><i class="fa fa-check"></i>データセット#5: 収入データ (仮想)</a></li>
+</ul></li>
+<li class="chapter" data-level="3.5" data-path="線形回帰分析.html"><a href="線形回帰分析.html#多項式回帰"><i class="fa fa-check"></i><b>3.5</b> 多項式回帰</a>
+<ul>
+<li class="chapter" data-level="" data-path="線形回帰分析.html"><a href="線形回帰分析.html#データセット6-wage"><i class="fa fa-check"></i>データセット#6: <code>Wage</code></a></li>
+</ul></li>
+<li class="chapter" data-level="3.6" data-path="線形回帰分析.html"><a href="線形回帰分析.html#関数factorについて"><i class="fa fa-check"></i><b>3.6</b> 関数<code>factor()</code>について</a>
+<ul>
+<li class="chapter" data-level="" data-path="線形回帰分析.html"><a href="線形回帰分析.html#rでのfactor関数の使い方"><i class="fa fa-check"></i>Rでのfactor関数の使い方</a></li>
+</ul></li>
+</ul></li>
+<li class="chapter" data-level="4" data-path="ロジットプロビット回帰分析.html"><a href="ロジットプロビット回帰分析.html"><i class="fa fa-check"></i><b>4</b> ロジット/プロビット回帰分析</a>
+<ul>
+<li class="chapter" data-level="4.1" data-path="ロジットプロビット回帰分析.html"><a href="ロジットプロビット回帰分析.html#ロジット回帰分析の基本操作"><i class="fa fa-check"></i><b>4.1</b> ロジット回帰分析の基本操作</a>
+<ul>
+<li class="chapter" data-level="" data-path="ロジットプロビット回帰分析.html"><a href="ロジットプロビット回帰分析.html#ロジットモデル-シミュレーションデータ"><i class="fa fa-check"></i>ロジットモデル: シミュレーションデータ</a></li>
+</ul></li>
+<li class="chapter" data-level="4.2" data-path="ロジットプロビット回帰分析.html"><a href="ロジットプロビット回帰分析.html#データ分析例"><i class="fa fa-check"></i><b>4.2</b> データ分析例</a>
+<ul>
+<li class="chapter" data-level="" data-path="ロジットプロビット回帰分析.html"><a href="ロジットプロビット回帰分析.html#データ1-社債デフォルトデータ-集計データ-仮想"><i class="fa fa-check"></i>データ1: 社債デフォルト・データ (集計データ, 仮想)</a></li>
+<li class="chapter" data-level="" data-path="ロジットプロビット回帰分析.html"><a href="ロジットプロビット回帰分析.html#データ2-個人向けローンのデフォルトデータ-仮想"><i class="fa fa-check"></i>データ2: 個人向けローンのデフォルト・データ (仮想)</a></li>
+</ul></li>
+<li class="chapter" data-level="4.3" data-path="ロジットプロビット回帰分析.html"><a href="ロジットプロビット回帰分析.html#オッズ比と相対リスク"><i class="fa fa-check"></i><b>4.3</b> オッズ比と相対リスク</a></li>
+<li class="chapter" data-level="4.4" data-path="ロジットプロビット回帰分析.html"><a href="ロジットプロビット回帰分析.html#疑似r2の計算"><i class="fa fa-check"></i><b>4.4</b> 疑似R2の計算</a>
+<ul>
+<li class="chapter" data-level="" data-path="ロジットプロビット回帰分析.html"><a href="ロジットプロビット回帰分析.html#パッケージdesctoolsの利用"><i class="fa fa-check"></i>パッケージ<strong>DescTools</strong>の利用</a></li>
+<li class="chapter" data-level="" data-path="ロジットプロビット回帰分析.html"><a href="ロジットプロビット回帰分析.html#パッケージpsclの利用"><i class="fa fa-check"></i>パッケージ<strong>pscl</strong>の利用</a></li>
+<li class="chapter" data-level="" data-path="ロジットプロビット回帰分析.html"><a href="ロジットプロビット回帰分析.html#パッケージperformanceの利用"><i class="fa fa-check"></i>パッケージ<strong>performance</strong>の利用</a></li>
+</ul></li>
+</ul></li>
+<li class="chapter" data-level="5" data-path="一般化加法モデル-gam.html"><a href="一般化加法モデル-gam.html"><i class="fa fa-check"></i><b>5</b> 一般化加法モデル (GAM)</a>
+<ul>
+<li class="chapter" data-level="5.1" data-path="一般化加法モデル-gam.html"><a href="一般化加法モデル-gam.html#データ-社債の信用スプレッド-仮想"><i class="fa fa-check"></i><b>5.1</b> データ: 社債の信用スプレッド (仮想)</a></li>
+<li class="chapter" data-level="5.2" data-path="一般化加法モデル-gam.html"><a href="一般化加法モデル-gam.html#多項式回帰とスプライン"><i class="fa fa-check"></i><b>5.2</b> 多項式回帰とスプライン</a>
+<ul>
+<li class="chapter" data-level="" data-path="一般化加法モデル-gam.html"><a href="一般化加法モデル-gam.html#多項式回帰-1"><i class="fa fa-check"></i>多項式回帰</a></li>
+<li class="chapter" data-level="" data-path="一般化加法モデル-gam.html"><a href="一般化加法モデル-gam.html#スプライン"><i class="fa fa-check"></i>スプライン</a></li>
+</ul></li>
+<li class="chapter" data-level="5.3" data-path="一般化加法モデル-gam.html"><a href="一般化加法モデル-gam.html#パッケージgamの利用"><i class="fa fa-check"></i><b>5.3</b> パッケージ<strong>gam</strong>の利用</a></li>
+<li class="chapter" data-level="5.4" data-path="一般化加法モデル-gam.html"><a href="一般化加法モデル-gam.html#パッケージmgcvの利用"><i class="fa fa-check"></i><b>5.4</b> パッケージ<strong>mgcv</strong>の利用</a>
+<ul>
+<li class="chapter" data-level="" data-path="一般化加法モデル-gam.html"><a href="一般化加法モデル-gam.html#関数名の衝突について"><i class="fa fa-check"></i>関数名の衝突について</a></li>
+<li class="chapter" data-level="" data-path="一般化加法モデル-gam.html"><a href="一般化加法モデル-gam.html#gam-の当てはめ"><i class="fa fa-check"></i>GAM の当てはめ</a></li>
+<li class="chapter" data-level="" data-path="一般化加法モデル-gam.html"><a href="一般化加法モデル-gam.html#交互作用を含めた-gam"><i class="fa fa-check"></i>交互作用を含めた GAM</a></li>
+<li class="chapter" data-level="" data-path="一般化加法モデル-gam.html"><a href="一般化加法モデル-gam.html#gam-によるロジット回帰"><i class="fa fa-check"></i>GAM によるロジット回帰</a></li>
+</ul></li>
+<li class="chapter" data-level="5.5" data-path="一般化加法モデル-gam.html"><a href="一般化加法モデル-gam.html#パッケージprophetの利用"><i class="fa fa-check"></i><b>5.5</b> パッケージ<strong>prophet</strong>の利用</a>
+<ul>
+<li class="chapter" data-level="" data-path="一般化加法モデル-gam.html"><a href="一般化加法モデル-gam.html#データ-atm出金額-仮想"><i class="fa fa-check"></i>データ: ATM出金額 (仮想)</a></li>
+<li class="chapter" data-level="" data-path="一般化加法モデル-gam.html"><a href="一般化加法モデル-gam.html#prophet-による予測"><i class="fa fa-check"></i>prophet による予測</a></li>
+</ul></li>
+</ul></li>
+<li class="chapter" data-level="6" data-path="正則化回帰-lasso-ridge回帰-elastic-net.html"><a href="正則化回帰-lasso-ridge回帰-elastic-net.html"><i class="fa fa-check"></i><b>6</b> 正則化回帰 (lasso, ridge回帰, elastic net)</a>
+<ul>
+<li class="chapter" data-level="6.1" data-path="正則化回帰-lasso-ridge回帰-elastic-net.html"><a href="正則化回帰-lasso-ridge回帰-elastic-net.html#検証用セット法による回帰モデルの予測精度評価"><i class="fa fa-check"></i><b>6.1</b> 検証用セット法による回帰モデルの予測精度評価</a>
+<ul>
+<li class="chapter" data-level="" data-path="正則化回帰-lasso-ridge回帰-elastic-net.html"><a href="正則化回帰-lasso-ridge回帰-elastic-net.html#データ1-社債の信用スプレッドと企業特性-仮想"><i class="fa fa-check"></i>データ1: 社債の信用スプレッドと企業特性 (仮想)</a></li>
+</ul></li>
+<li class="chapter" data-level="6.2" data-path="正則化回帰-lasso-ridge回帰-elastic-net.html"><a href="正則化回帰-lasso-ridge回帰-elastic-net.html#lasso"><i class="fa fa-check"></i><b>6.2</b> lasso</a>
+<ul>
+<li class="chapter" data-level="" data-path="正則化回帰-lasso-ridge回帰-elastic-net.html"><a href="正則化回帰-lasso-ridge回帰-elastic-net.html#関数glmnetの基本操作"><i class="fa fa-check"></i>関数<code>glmnet()</code>の基本操作</a></li>
+<li class="chapter" data-level="" data-path="正則化回帰-lasso-ridge回帰-elastic-net.html"><a href="正則化回帰-lasso-ridge回帰-elastic-net.html#lambdaのグリッド指定によるglmnetの一括実行"><i class="fa fa-check"></i><code>lambda</code>のグリッド指定による<code>glmnet()</code>の一括実行</a></li>
+<li class="chapter" data-level="" data-path="正則化回帰-lasso-ridge回帰-elastic-net.html"><a href="正則化回帰-lasso-ridge回帰-elastic-net.html#交差検証によるパラメータチューニング"><i class="fa fa-check"></i>交差検証によるパラメータ・チューニング</a></li>
+</ul></li>
+<li class="chapter" data-level="6.3" data-path="正則化回帰-lasso-ridge回帰-elastic-net.html"><a href="正則化回帰-lasso-ridge回帰-elastic-net.html#ridge回帰"><i class="fa fa-check"></i><b>6.3</b> ridge回帰</a></li>
+<li class="chapter" data-level="6.4" data-path="正則化回帰-lasso-ridge回帰-elastic-net.html"><a href="正則化回帰-lasso-ridge回帰-elastic-net.html#elastic-net"><i class="fa fa-check"></i><b>6.4</b> elastic net</a>
+<ul>
+<li class="chapter" data-level="" data-path="正則化回帰-lasso-ridge回帰-elastic-net.html"><a href="正則化回帰-lasso-ridge回帰-elastic-net.html#テストmse-の比較"><i class="fa fa-check"></i>テストMSE の比較</a></li>
+</ul></li>
+<li class="chapter" data-level="6.5" data-path="正則化回帰-lasso-ridge回帰-elastic-net.html"><a href="正則化回帰-lasso-ridge回帰-elastic-net.html#一般化線形モデル-glm-正則化"><i class="fa fa-check"></i><b>6.5</b> 一般化線形モデル (GLM) + 正則化</a>
+<ul>
+<li class="chapter" data-level="" data-path="正則化回帰-lasso-ridge回帰-elastic-net.html"><a href="正則化回帰-lasso-ridge回帰-elastic-net.html#データ2-german-credit-データ"><i class="fa fa-check"></i>データ2: German Credit データ</a></li>
+</ul></li>
+<li class="chapter" data-level="6.6" data-path="正則化回帰-lasso-ridge回帰-elastic-net.html"><a href="正則化回帰-lasso-ridge回帰-elastic-net.html#補足-glm-に対する変数選択の代替的方法"><i class="fa fa-check"></i><b>6.6</b> 補足: GLM に対する変数選択の代替的方法</a></li>
+</ul></li>
+<li class="chapter" data-level="7" data-path="判別分析.html"><a href="判別分析.html"><i class="fa fa-check"></i><b>7</b> 判別分析</a>
+<ul>
+<li class="chapter" data-level="7.1" data-path="判別分析.html"><a href="判別分析.html#線形判別2次判別knn法-米国株価指数の騰落"><i class="fa fa-check"></i><b>7.1</b> 線形判別・2次判別・kNN法: 米国株価指数の騰落</a>
+<ul>
+<li class="chapter" data-level="" data-path="判別分析.html"><a href="判別分析.html#データ1-米国sp500-日次リターンデータ"><i class="fa fa-check"></i>データ1: 米国S&amp;P500 日次リターン・データ</a></li>
+<li class="chapter" data-level="" data-path="判別分析.html"><a href="判別分析.html#線形判別-lda"><i class="fa fa-check"></i>線形判別 (LDA)</a></li>
+<li class="chapter" data-level="" data-path="判別分析.html"><a href="判別分析.html#次判別-qda"><i class="fa fa-check"></i>2次判別 (QDA)</a></li>
+<li class="chapter" data-level="" data-path="判別分析.html"><a href="判別分析.html#knn法"><i class="fa fa-check"></i>kNN法</a></li>
+</ul></li>
+<li class="chapter" data-level="7.2" data-path="判別分析.html"><a href="判別分析.html#klar-パッケージによる判別境界の可視化-社債発行体の格付"><i class="fa fa-check"></i><b>7.2</b> klaR パッケージによる判別境界の可視化: 社債発行体の格付</a>
+<ul>
+<li class="chapter" data-level="" data-path="判別分析.html"><a href="判別分析.html#データ2-社債発行体の格付データ-仮想"><i class="fa fa-check"></i>データ2: 社債発行体の格付データ (仮想)</a></li>
+<li class="chapter" data-level="" data-path="判別分析.html"><a href="判別分析.html#関数partimatによる判別境界の可視化"><i class="fa fa-check"></i>関数<code>partimat()</code>による判別境界の可視化</a></li>
+<li class="chapter" data-level="" data-path="判別分析.html"><a href="判別分析.html#ナイーブベイズ法"><i class="fa fa-check"></i>ナイーブ・ベイズ法</a></li>
+<li class="chapter" data-level="" data-path="判別分析.html"><a href="判別分析.html#全ての財務指標を使った判別-lda-vs-qda"><i class="fa fa-check"></i>全ての財務指標を使った判別: LDA vs QDA</a></li>
+</ul></li>
+</ul></li>
+<li class="divider"></li>
+<li><a href="https://github.com/rstudio/bookdown" target="blank">Published with bookdown</a></li>
+</ul>
+
+      </nav>
+    </div>
+
+    <div class="book-body">
+      <div class="body-inner">
+        <div class="book-header" role="navigation">
+          <h1>
+            <i class="fa fa-circle-o-notch fa-spin"></i><a href="./">金融データサイエンス</a>
+          </h1>
+        </div>
+
+        <div class="page-wrapper" tabindex="-1" role="main">
+          <div class="page-inner">
+
+            <section class="normal" id="section-">
+<div id="判別分析" class="section level1 hasAnchor" number="7">
+<h1><span class="header-section-number">Chapter 7</span> 判別分析<a href="判別分析.html#判別分析" class="anchor-section" aria-label="Anchor link to header"></a></h1>
+<!-- 2026.10.25 Claude: R演習スクリプト R_discrim_dist.R (2026年度版) に合わせて改訂. データ#2 を MBA入学許可データ (admission.csv) から社債発行体の格付データ (rating.csv, 仮想データ) に変更 -->
+<p>本章の内容は, 授業の R 演習スクリプト <code>R_discrim_dist.R</code> に対応する.</p>
+<p>判別分析における標準的な手法である線形判別 (LDA), 2次判別 (QDA) は,
+標準パッケージ<strong>MASS</strong>に含まれている関数<code>lda()</code>, <code>qda()</code>で,
+kNN (k近傍法) はパッケージ<strong>class</strong>に含まれている関数<code>knn()</code>で
+実行することができる.
+さらに, パッケージ<strong>klaR</strong>を使うと, 2変数ずつの判別境界を可視化したり, ナイーブ・ベイズ法を実行したりできる.</p>
+<div id="線形判別2次判別knn法-米国株価指数の騰落" class="section level2 hasAnchor" number="7.1">
+<h2><span class="header-section-number">7.1</span> 線形判別・2次判別・kNN法: 米国株価指数の騰落<a href="判別分析.html#線形判別2次判別knn法-米国株価指数の騰落" class="anchor-section" aria-label="Anchor link to header"></a></h2>
+<ul>
+<li>以下のコード作成の参考: ISLR2, Ch.4 (Lab: Classification Methods)</li>
+</ul>
+<div id="データ1-米国sp500-日次リターンデータ" class="section level3 unnumbered hasAnchor">
+<h3>データ1: 米国S&amp;P500 日次リターン・データ<a href="判別分析.html#データ1-米国sp500-日次リターンデータ" class="anchor-section" aria-label="Anchor link to header"></a></h3>
+<pre><code>Smarket: S&amp;P500 の日次%リターン, 2001〜2005年 (1,250日)
+- Year: 観測値の記録年 (2001--2005)
+- Lag1〜Lag5: 1〜5日前の%リターン
+- Volume: 出来高 (日次取引株式数, 10億株)
+- Today: 当日の%リターン
+- Direction: 相場の方向 (Down/Up, 2水準の因子)</code></pre>
+<div class="sourceCode" id="cb235"><pre class="sourceCode r"><code class="sourceCode r"><span id="cb235-1"><a href="判別分析.html#cb235-1" tabindex="-1"></a><span class="fu">library</span>(ISLR2)</span>
+<span id="cb235-2"><a href="判別分析.html#cb235-2" tabindex="-1"></a><span class="fu">names</span>(Smarket)</span>
+<span id="cb235-3"><a href="判別分析.html#cb235-3" tabindex="-1"></a><span class="co">#&gt; [1] &quot;Year&quot;      &quot;Lag1&quot;      &quot;Lag2&quot;      &quot;Lag3&quot;      &quot;Lag4&quot;      &quot;Lag5&quot;     </span></span>
+<span id="cb235-4"><a href="判別分析.html#cb235-4" tabindex="-1"></a><span class="co">#&gt; [7] &quot;Volume&quot;    &quot;Today&quot;     &quot;Direction&quot;</span></span>
+<span id="cb235-5"><a href="判別分析.html#cb235-5" tabindex="-1"></a><span class="fu">dim</span>(Smarket)</span>
+<span id="cb235-6"><a href="判別分析.html#cb235-6" tabindex="-1"></a><span class="co">#&gt; [1] 1250    9</span></span>
+<span id="cb235-7"><a href="判別分析.html#cb235-7" tabindex="-1"></a><span class="fu">summary</span>(Smarket)</span>
+<span id="cb235-8"><a href="判別分析.html#cb235-8" tabindex="-1"></a><span class="co">#&gt;       Year           Lag1                Lag2                Lag3          </span></span>
+<span id="cb235-9"><a href="判別分析.html#cb235-9" tabindex="-1"></a><span class="co">#&gt;  Min.   :2001   Min.   :-4.922000   Min.   :-4.922000   Min.   :-4.922000  </span></span>
+<span id="cb235-10"><a href="判別分析.html#cb235-10" tabindex="-1"></a><span class="co">#&gt;  1st Qu.:2002   1st Qu.:-0.639500   1st Qu.:-0.639500   1st Qu.:-0.640000  </span></span>
+<span id="cb235-11"><a href="判別分析.html#cb235-11" tabindex="-1"></a><span class="co">#&gt;  Median :2003   Median : 0.039000   Median : 0.039000   Median : 0.038500  </span></span>
+<span id="cb235-12"><a href="判別分析.html#cb235-12" tabindex="-1"></a><span class="co">#&gt;  Mean   :2003   Mean   : 0.003834   Mean   : 0.003919   Mean   : 0.001716  </span></span>
+<span id="cb235-13"><a href="判別分析.html#cb235-13" tabindex="-1"></a><span class="co">#&gt;  3rd Qu.:2004   3rd Qu.: 0.596750   3rd Qu.: 0.596750   3rd Qu.: 0.596750  </span></span>
+<span id="cb235-14"><a href="判別分析.html#cb235-14" tabindex="-1"></a><span class="co">#&gt;  Max.   :2005   Max.   : 5.733000   Max.   : 5.733000   Max.   : 5.733000  </span></span>
+<span id="cb235-15"><a href="判別分析.html#cb235-15" tabindex="-1"></a><span class="co">#&gt;       Lag4                Lag5              Volume           Today          </span></span>
+<span id="cb235-16"><a href="判別分析.html#cb235-16" tabindex="-1"></a><span class="co">#&gt;  Min.   :-4.922000   Min.   :-4.92200   Min.   :0.3561   Min.   :-4.922000  </span></span>
+<span id="cb235-17"><a href="判別分析.html#cb235-17" tabindex="-1"></a><span class="co">#&gt;  1st Qu.:-0.640000   1st Qu.:-0.64000   1st Qu.:1.2574   1st Qu.:-0.639500  </span></span>
+<span id="cb235-18"><a href="判別分析.html#cb235-18" tabindex="-1"></a><span class="co">#&gt;  Median : 0.038500   Median : 0.03850   Median :1.4229   Median : 0.038500  </span></span>
+<span id="cb235-19"><a href="判別分析.html#cb235-19" tabindex="-1"></a><span class="co">#&gt;  Mean   : 0.001636   Mean   : 0.00561   Mean   :1.4783   Mean   : 0.003138  </span></span>
+<span id="cb235-20"><a href="判別分析.html#cb235-20" tabindex="-1"></a><span class="co">#&gt;  3rd Qu.: 0.596750   3rd Qu.: 0.59700   3rd Qu.:1.6417   3rd Qu.: 0.596750  </span></span>
+<span id="cb235-21"><a href="判別分析.html#cb235-21" tabindex="-1"></a><span class="co">#&gt;  Max.   : 5.733000   Max.   : 5.73300   Max.   :3.1525   Max.   : 5.733000  </span></span>
+<span id="cb235-22"><a href="判別分析.html#cb235-22" tabindex="-1"></a><span class="co">#&gt;  Direction </span></span>
+<span id="cb235-23"><a href="判別分析.html#cb235-23" tabindex="-1"></a><span class="co">#&gt;  Down:602  </span></span>
+<span id="cb235-24"><a href="判別分析.html#cb235-24" tabindex="-1"></a><span class="co">#&gt;  Up  :648  </span></span>
+<span id="cb235-25"><a href="判別分析.html#cb235-25" tabindex="-1"></a><span class="co">#&gt;            </span></span>
+<span id="cb235-26"><a href="判別分析.html#cb235-26" tabindex="-1"></a><span class="co">#&gt;            </span></span>
+<span id="cb235-27"><a href="判別分析.html#cb235-27" tabindex="-1"></a><span class="co">#&gt;            </span></span>
+<span id="cb235-28"><a href="判別分析.html#cb235-28" tabindex="-1"></a><span class="co">#&gt; </span></span>
+<span id="cb235-29"><a href="判別分析.html#cb235-29" tabindex="-1"></a><span class="fu">cor</span>(Smarket[, <span class="sc">-</span><span class="dv">9</span>])  <span class="co"># 9列目 (Direction) は因子なので除く</span></span>
+<span id="cb235-30"><a href="判別分析.html#cb235-30" tabindex="-1"></a><span class="co">#&gt;              Year         Lag1         Lag2         Lag3         Lag4</span></span>
+<span id="cb235-31"><a href="判別分析.html#cb235-31" tabindex="-1"></a><span class="co">#&gt; Year   1.00000000  0.029699649  0.030596422  0.033194581  0.035688718</span></span>
+<span id="cb235-32"><a href="判別分析.html#cb235-32" tabindex="-1"></a><span class="co">#&gt; Lag1   0.02969965  1.000000000 -0.026294328 -0.010803402 -0.002985911</span></span>
+<span id="cb235-33"><a href="判別分析.html#cb235-33" tabindex="-1"></a><span class="co">#&gt; Lag2   0.03059642 -0.026294328  1.000000000 -0.025896670 -0.010853533</span></span>
+<span id="cb235-34"><a href="判別分析.html#cb235-34" tabindex="-1"></a><span class="co">#&gt; Lag3   0.03319458 -0.010803402 -0.025896670  1.000000000 -0.024051036</span></span>
+<span id="cb235-35"><a href="判別分析.html#cb235-35" tabindex="-1"></a><span class="co">#&gt; Lag4   0.03568872 -0.002985911 -0.010853533 -0.024051036  1.000000000</span></span>
+<span id="cb235-36"><a href="判別分析.html#cb235-36" tabindex="-1"></a><span class="co">#&gt; Lag5   0.02978799 -0.005674606 -0.003557949 -0.018808338 -0.027083641</span></span>
+<span id="cb235-37"><a href="判別分析.html#cb235-37" tabindex="-1"></a><span class="co">#&gt; Volume 0.53900647  0.040909908 -0.043383215 -0.041823686 -0.048414246</span></span>
+<span id="cb235-38"><a href="判別分析.html#cb235-38" tabindex="-1"></a><span class="co">#&gt; Today  0.03009523 -0.026155045 -0.010250033 -0.002447647 -0.006899527</span></span>
+<span id="cb235-39"><a href="判別分析.html#cb235-39" tabindex="-1"></a><span class="co">#&gt;                Lag5      Volume        Today</span></span>
+<span id="cb235-40"><a href="判別分析.html#cb235-40" tabindex="-1"></a><span class="co">#&gt; Year    0.029787995  0.53900647  0.030095229</span></span>
+<span id="cb235-41"><a href="判別分析.html#cb235-41" tabindex="-1"></a><span class="co">#&gt; Lag1   -0.005674606  0.04090991 -0.026155045</span></span>
+<span id="cb235-42"><a href="判別分析.html#cb235-42" tabindex="-1"></a><span class="co">#&gt; Lag2   -0.003557949 -0.04338321 -0.010250033</span></span>
+<span id="cb235-43"><a href="判別分析.html#cb235-43" tabindex="-1"></a><span class="co">#&gt; Lag3   -0.018808338 -0.04182369 -0.002447647</span></span>
+<span id="cb235-44"><a href="判別分析.html#cb235-44" tabindex="-1"></a><span class="co">#&gt; Lag4   -0.027083641 -0.04841425 -0.006899527</span></span>
+<span id="cb235-45"><a href="判別分析.html#cb235-45" tabindex="-1"></a><span class="co">#&gt; Lag5    1.000000000 -0.02200231 -0.034860083</span></span>
+<span id="cb235-46"><a href="判別分析.html#cb235-46" tabindex="-1"></a><span class="co">#&gt; Volume -0.022002315  1.00000000  0.014591823</span></span>
+<span id="cb235-47"><a href="判別分析.html#cb235-47" tabindex="-1"></a><span class="co">#&gt; Today  -0.034860083  0.01459182  1.000000000</span></span></code></pre></div>
+<p>まず, データセットを学習データとテストデータに2分割する (検証用セット・アプローチ).
+具体的には, 時間軸に沿って, 2004年以前を学習用, 2005年をテスト用に使用する.
+時系列データでは, 未来のデータで学習して過去を予測することにならないよう, ランダムではなく時間で分割する.</p>
+<div class="sourceCode" id="cb236"><pre class="sourceCode r"><code class="sourceCode r"><span id="cb236-1"><a href="判別分析.html#cb236-1" tabindex="-1"></a>idx_train <span class="ot">&lt;-</span> <span class="fu">which</span>(Smarket<span class="sc">$</span>Year <span class="sc">&lt;</span> <span class="dv">2005</span>)</span>
+<span id="cb236-2"><a href="判別分析.html#cb236-2" tabindex="-1"></a>Smarket_2005 <span class="ot">&lt;-</span> Smarket[<span class="sc">-</span>idx_train, ]</span>
+<span id="cb236-3"><a href="判別分析.html#cb236-3" tabindex="-1"></a><span class="fu">dim</span>(Smarket_2005)</span>
+<span id="cb236-4"><a href="判別分析.html#cb236-4" tabindex="-1"></a><span class="co">#&gt; [1] 252   9</span></span>
+<span id="cb236-5"><a href="判別分析.html#cb236-5" tabindex="-1"></a>Direction_2005 <span class="ot">&lt;-</span> Smarket<span class="sc">$</span>Direction[<span class="sc">-</span>idx_train]</span></code></pre></div>
+<div class="sourceCode" id="cb237"><pre class="sourceCode r"><code class="sourceCode r"><span id="cb237-1"><a href="判別分析.html#cb237-1" tabindex="-1"></a><span class="co"># 代替的方法 (ISLR2)</span></span>
+<span id="cb237-2"><a href="判別分析.html#cb237-2" tabindex="-1"></a>train <span class="ot">&lt;-</span> (Smarket<span class="sc">$</span>Year <span class="sc">&lt;</span> <span class="dv">2005</span>)</span>
+<span id="cb237-3"><a href="判別分析.html#cb237-3" tabindex="-1"></a>Smarket_2005 <span class="ot">&lt;-</span> Smarket[<span class="sc">!</span>train, ]</span>
+<span id="cb237-4"><a href="判別分析.html#cb237-4" tabindex="-1"></a>Direction_2005 <span class="ot">&lt;-</span> Smarket<span class="sc">$</span>Direction[<span class="sc">!</span>train]</span></code></pre></div>
+</div>
+<div id="線形判別-lda" class="section level3 unnumbered hasAnchor">
+<h3>線形判別 (LDA)<a href="判別分析.html#線形判別-lda" class="anchor-section" aria-label="Anchor link to header"></a></h3>
+<ul>
+<li>モデルの当てはめ</li>
+</ul>
+<p>線形判別の実行は, パッケージ<strong>MASS</strong>の関数<code>lda()</code>により行うことができる.</p>
+<div class="sourceCode" id="cb238"><pre class="sourceCode r"><code class="sourceCode r"><span id="cb238-1"><a href="判別分析.html#cb238-1" tabindex="-1"></a><span class="fu">library</span>(MASS)</span>
+<span id="cb238-2"><a href="判別分析.html#cb238-2" tabindex="-1"></a>fit_lda <span class="ot">&lt;-</span> <span class="fu">lda</span>(Direction <span class="sc">~</span> Lag1 <span class="sc">+</span> Lag2, <span class="at">data =</span> Smarket, <span class="at">subset =</span> idx_train)</span>
+<span id="cb238-3"><a href="判別分析.html#cb238-3" tabindex="-1"></a>fit_lda  <span class="co"># 事前確率, 各群の平均, 判別係数</span></span>
+<span id="cb238-4"><a href="判別分析.html#cb238-4" tabindex="-1"></a><span class="co">#&gt; Call:</span></span>
+<span id="cb238-5"><a href="判別分析.html#cb238-5" tabindex="-1"></a><span class="co">#&gt; lda(Direction ~ Lag1 + Lag2, data = Smarket, subset = idx_train)</span></span>
+<span id="cb238-6"><a href="判別分析.html#cb238-6" tabindex="-1"></a><span class="co">#&gt; </span></span>
+<span id="cb238-7"><a href="判別分析.html#cb238-7" tabindex="-1"></a><span class="co">#&gt; Prior probabilities of groups:</span></span>
+<span id="cb238-8"><a href="判別分析.html#cb238-8" tabindex="-1"></a><span class="co">#&gt;     Down       Up </span></span>
+<span id="cb238-9"><a href="判別分析.html#cb238-9" tabindex="-1"></a><span class="co">#&gt; 0.491984 0.508016 </span></span>
+<span id="cb238-10"><a href="判別分析.html#cb238-10" tabindex="-1"></a><span class="co">#&gt; </span></span>
+<span id="cb238-11"><a href="判別分析.html#cb238-11" tabindex="-1"></a><span class="co">#&gt; Group means:</span></span>
+<span id="cb238-12"><a href="判別分析.html#cb238-12" tabindex="-1"></a><span class="co">#&gt;             Lag1        Lag2</span></span>
+<span id="cb238-13"><a href="判別分析.html#cb238-13" tabindex="-1"></a><span class="co">#&gt; Down  0.04279022  0.03389409</span></span>
+<span id="cb238-14"><a href="判別分析.html#cb238-14" tabindex="-1"></a><span class="co">#&gt; Up   -0.03954635 -0.03132544</span></span>
+<span id="cb238-15"><a href="判別分析.html#cb238-15" tabindex="-1"></a><span class="co">#&gt; </span></span>
+<span id="cb238-16"><a href="判別分析.html#cb238-16" tabindex="-1"></a><span class="co">#&gt; Coefficients of linear discriminants:</span></span>
+<span id="cb238-17"><a href="判別分析.html#cb238-17" tabindex="-1"></a><span class="co">#&gt;             LD1</span></span>
+<span id="cb238-18"><a href="判別分析.html#cb238-18" tabindex="-1"></a><span class="co">#&gt; Lag1 -0.6420190</span></span>
+<span id="cb238-19"><a href="判別分析.html#cb238-19" tabindex="-1"></a><span class="co">#&gt; Lag2 -0.5135293</span></span></code></pre></div>
+<p><code>fit_lda</code>の出力には, 各グループ (<code>Down</code>, <code>Up</code>) の事前確率 (学習データでの割合),
+予測変数 (<code>Lag1</code>, <code>Lag2</code>) のグループ平均,
+線形判別関数の係数などが格納されている.</p>
+<ul>
+<li>判別 (外挿予測)</li>
+</ul>
+<p><code>lda()</code>の出力を関数<code>predict()</code>に入力することで,
+判別結果 (<code>class</code>), およびその判断に使用した
+事後確率 (<code>posterior</code>) が出力される.</p>
+<div class="sourceCode" id="cb239"><pre class="sourceCode r"><code class="sourceCode r"><span id="cb239-1"><a href="判別分析.html#cb239-1" tabindex="-1"></a>pred_lda <span class="ot">&lt;-</span> <span class="fu">predict</span>(fit_lda, Smarket_2005)  <span class="co"># テストデータの判別 (外挿予測)</span></span>
+<span id="cb239-2"><a href="判別分析.html#cb239-2" tabindex="-1"></a><span class="fu">names</span>(pred_lda)  <span class="co"># class, posterior, x</span></span>
+<span id="cb239-3"><a href="判別分析.html#cb239-3" tabindex="-1"></a><span class="co">#&gt; [1] &quot;class&quot;     &quot;posterior&quot; &quot;x&quot;</span></span>
+<span id="cb239-4"><a href="判別分析.html#cb239-4" tabindex="-1"></a><span class="fu">head</span>(pred_lda<span class="sc">$</span>class)</span>
+<span id="cb239-5"><a href="判別分析.html#cb239-5" tabindex="-1"></a><span class="co">#&gt; [1] Up Up Up Up Up Up</span></span>
+<span id="cb239-6"><a href="判別分析.html#cb239-6" tabindex="-1"></a><span class="co">#&gt; Levels: Down Up</span></span>
+<span id="cb239-7"><a href="判別分析.html#cb239-7" tabindex="-1"></a><span class="fu">head</span>(pred_lda<span class="sc">$</span>posterior)</span>
+<span id="cb239-8"><a href="判別分析.html#cb239-8" tabindex="-1"></a><span class="co">#&gt;           Down        Up</span></span>
+<span id="cb239-9"><a href="判別分析.html#cb239-9" tabindex="-1"></a><span class="co">#&gt; 999  0.4901792 0.5098208</span></span>
+<span id="cb239-10"><a href="判別分析.html#cb239-10" tabindex="-1"></a><span class="co">#&gt; 1000 0.4792185 0.5207815</span></span>
+<span id="cb239-11"><a href="判別分析.html#cb239-11" tabindex="-1"></a><span class="co">#&gt; 1001 0.4668185 0.5331815</span></span>
+<span id="cb239-12"><a href="判別分析.html#cb239-12" tabindex="-1"></a><span class="co">#&gt; 1002 0.4740011 0.5259989</span></span>
+<span id="cb239-13"><a href="判別分析.html#cb239-13" tabindex="-1"></a><span class="co">#&gt; 1003 0.4927877 0.5072123</span></span>
+<span id="cb239-14"><a href="判別分析.html#cb239-14" tabindex="-1"></a><span class="co">#&gt; 1004 0.4938562 0.5061438</span></span></code></pre></div>
+<ul>
+<li>精度評価</li>
+</ul>
+<p>学習済みモデルの性能は,
+テストデータを判別させ (外挿予測), 実際の値 (正解) と比較することで評価する.
+分類精度は, 混同行列や正解率で確認することができる.</p>
+<div class="sourceCode" id="cb240"><pre class="sourceCode r"><code class="sourceCode r"><span id="cb240-1"><a href="判別分析.html#cb240-1" tabindex="-1"></a><span class="fu">table</span>(予測 <span class="ot">=</span> pred_lda<span class="sc">$</span>class, 実績 <span class="ot">=</span> Direction_2005)  <span class="co"># 混同行列</span></span>
+<span id="cb240-2"><a href="判別分析.html#cb240-2" tabindex="-1"></a><span class="co">#&gt;       実績</span></span>
+<span id="cb240-3"><a href="判別分析.html#cb240-3" tabindex="-1"></a><span class="co">#&gt; 予測 Down  Up</span></span>
+<span id="cb240-4"><a href="判別分析.html#cb240-4" tabindex="-1"></a><span class="co">#&gt;   Down   35  35</span></span>
+<span id="cb240-5"><a href="判別分析.html#cb240-5" tabindex="-1"></a><span class="co">#&gt;   Up     76 106</span></span>
+<span id="cb240-6"><a href="判別分析.html#cb240-6" tabindex="-1"></a><span class="fu">mean</span>(pred_lda<span class="sc">$</span>class <span class="sc">==</span> Direction_2005)  <span class="co"># 正解率</span></span>
+<span id="cb240-7"><a href="判別分析.html#cb240-7" tabindex="-1"></a><span class="co">#&gt; [1] 0.5595238</span></span></code></pre></div>
+<p>事後確率 (<code>posterior</code>) の1列目は, 下落 (<code>Down</code>) の確率である.
+判別結果は, 事後確率が大きい方のクラスに割り当てたものである (2クラスの場合, しきい値0.5).</p>
+<div class="sourceCode" id="cb241"><pre class="sourceCode r"><code class="sourceCode r"><span id="cb241-1"><a href="判別分析.html#cb241-1" tabindex="-1"></a>pred_lda<span class="sc">$</span>posterior[<span class="dv">1</span><span class="sc">:</span><span class="dv">20</span>, <span class="dv">1</span>]</span>
+<span id="cb241-2"><a href="判別分析.html#cb241-2" tabindex="-1"></a><span class="co">#&gt;       999      1000      1001      1002      1003      1004      1005      1006 </span></span>
+<span id="cb241-3"><a href="判別分析.html#cb241-3" tabindex="-1"></a><span class="co">#&gt; 0.4901792 0.4792185 0.4668185 0.4740011 0.4927877 0.4938562 0.4951016 0.4872861 </span></span>
+<span id="cb241-4"><a href="判別分析.html#cb241-4" tabindex="-1"></a><span class="co">#&gt;      1007      1008      1009      1010      1011      1012      1013      1014 </span></span>
+<span id="cb241-5"><a href="判別分析.html#cb241-5" tabindex="-1"></a><span class="co">#&gt; 0.4907013 0.4844026 0.4906963 0.5119988 0.4895152 0.4706761 0.4744593 0.4799583 </span></span>
+<span id="cb241-6"><a href="判別分析.html#cb241-6" tabindex="-1"></a><span class="co">#&gt;      1015      1016      1017      1018 </span></span>
+<span id="cb241-7"><a href="判別分析.html#cb241-7" tabindex="-1"></a><span class="co">#&gt; 0.4935775 0.5030894 0.4978806 0.4886331</span></span>
+<span id="cb241-8"><a href="判別分析.html#cb241-8" tabindex="-1"></a>pred_lda<span class="sc">$</span>class[<span class="dv">1</span><span class="sc">:</span><span class="dv">20</span>]</span>
+<span id="cb241-9"><a href="判別分析.html#cb241-9" tabindex="-1"></a><span class="co">#&gt;  [1] Up   Up   Up   Up   Up   Up   Up   Up   Up   Up   Up   Down Up   Up   Up  </span></span>
+<span id="cb241-10"><a href="判別分析.html#cb241-10" tabindex="-1"></a><span class="co">#&gt; [16] Up   Up   Down Up   Up  </span></span>
+<span id="cb241-11"><a href="判別分析.html#cb241-11" tabindex="-1"></a><span class="co">#&gt; Levels: Down Up</span></span>
+<span id="cb241-12"><a href="判別分析.html#cb241-12" tabindex="-1"></a><span class="fu">sum</span>(pred_lda<span class="sc">$</span>posterior[, <span class="dv">1</span>] <span class="sc">&gt;=</span> <span class="fl">0.5</span>)  <span class="co"># 下落と予測した日数</span></span>
+<span id="cb241-13"><a href="判別分析.html#cb241-13" tabindex="-1"></a><span class="co">#&gt; [1] 70</span></span>
+<span id="cb241-14"><a href="判別分析.html#cb241-14" tabindex="-1"></a><span class="fu">sum</span>(pred_lda<span class="sc">$</span>posterior[, <span class="dv">1</span>] <span class="sc">&gt;</span> <span class="fl">0.9</span>)  <span class="co"># 下落確率が 0.9 を超えた日数</span></span>
+<span id="cb241-15"><a href="判別分析.html#cb241-15" tabindex="-1"></a><span class="co">#&gt; [1] 0</span></span>
+<span id="cb241-16"><a href="判別分析.html#cb241-16" tabindex="-1"></a><span class="fu">max</span>(pred_lda<span class="sc">$</span>posterior[, <span class="dv">1</span>])  <span class="co"># 下落確率の最大値</span></span>
+<span id="cb241-17"><a href="判別分析.html#cb241-17" tabindex="-1"></a><span class="co">#&gt; [1] 0.520235</span></span></code></pre></div>
+<p>下落確率の最大値でも0.5をわずかに上回る程度であり, モデルは「確信を持って」判別できていない.
+過去のリターンから翌日の騰落を当てるのは非常に難しい (効率的市場仮説と整合的).</p>
+</div>
+<div id="次判別-qda" class="section level3 unnumbered hasAnchor">
+<h3>2次判別 (QDA)<a href="判別分析.html#次判別-qda" class="anchor-section" aria-label="Anchor link to header"></a></h3>
+<p>2次判別は, パッケージ<strong>MASS</strong>の関数<code>qda()</code>により行うことができる.
+操作は<code>lda()</code>と同様である.</p>
+<div class="sourceCode" id="cb242"><pre class="sourceCode r"><code class="sourceCode r"><span id="cb242-1"><a href="判別分析.html#cb242-1" tabindex="-1"></a>fit_qda <span class="ot">&lt;-</span> <span class="fu">qda</span>(Direction <span class="sc">~</span> Lag1 <span class="sc">+</span> Lag2, <span class="at">data =</span> Smarket, <span class="at">subset =</span> idx_train)</span>
+<span id="cb242-2"><a href="判別分析.html#cb242-2" tabindex="-1"></a>fit_qda</span>
+<span id="cb242-3"><a href="判別分析.html#cb242-3" tabindex="-1"></a><span class="co">#&gt; Call:</span></span>
+<span id="cb242-4"><a href="判別分析.html#cb242-4" tabindex="-1"></a><span class="co">#&gt; qda(Direction ~ Lag1 + Lag2, data = Smarket, subset = idx_train)</span></span>
+<span id="cb242-5"><a href="判別分析.html#cb242-5" tabindex="-1"></a><span class="co">#&gt; </span></span>
+<span id="cb242-6"><a href="判別分析.html#cb242-6" tabindex="-1"></a><span class="co">#&gt; Prior probabilities of groups:</span></span>
+<span id="cb242-7"><a href="判別分析.html#cb242-7" tabindex="-1"></a><span class="co">#&gt;     Down       Up </span></span>
+<span id="cb242-8"><a href="判別分析.html#cb242-8" tabindex="-1"></a><span class="co">#&gt; 0.491984 0.508016 </span></span>
+<span id="cb242-9"><a href="判別分析.html#cb242-9" tabindex="-1"></a><span class="co">#&gt; </span></span>
+<span id="cb242-10"><a href="判別分析.html#cb242-10" tabindex="-1"></a><span class="co">#&gt; Group means:</span></span>
+<span id="cb242-11"><a href="判別分析.html#cb242-11" tabindex="-1"></a><span class="co">#&gt;             Lag1        Lag2</span></span>
+<span id="cb242-12"><a href="判別分析.html#cb242-12" tabindex="-1"></a><span class="co">#&gt; Down  0.04279022  0.03389409</span></span>
+<span id="cb242-13"><a href="判別分析.html#cb242-13" tabindex="-1"></a><span class="co">#&gt; Up   -0.03954635 -0.03132544</span></span>
+<span id="cb242-14"><a href="判別分析.html#cb242-14" tabindex="-1"></a>pred_qda <span class="ot">&lt;-</span> <span class="fu">predict</span>(fit_qda, Smarket_2005)</span>
+<span id="cb242-15"><a href="判別分析.html#cb242-15" tabindex="-1"></a><span class="fu">table</span>(予測 <span class="ot">=</span> pred_qda<span class="sc">$</span>class, 実績 <span class="ot">=</span> Direction_2005)</span>
+<span id="cb242-16"><a href="判別分析.html#cb242-16" tabindex="-1"></a><span class="co">#&gt;       実績</span></span>
+<span id="cb242-17"><a href="判別分析.html#cb242-17" tabindex="-1"></a><span class="co">#&gt; 予測 Down  Up</span></span>
+<span id="cb242-18"><a href="判別分析.html#cb242-18" tabindex="-1"></a><span class="co">#&gt;   Down   30  20</span></span>
+<span id="cb242-19"><a href="判別分析.html#cb242-19" tabindex="-1"></a><span class="co">#&gt;   Up     81 121</span></span>
+<span id="cb242-20"><a href="判別分析.html#cb242-20" tabindex="-1"></a><span class="fu">mean</span>(pred_qda<span class="sc">$</span>class <span class="sc">==</span> Direction_2005)</span>
+<span id="cb242-21"><a href="判別分析.html#cb242-21" tabindex="-1"></a><span class="co">#&gt; [1] 0.5992063</span></span></code></pre></div>
+<p>学習済みモデルのパラメータ推定値は
+<code>lda()</code>や<code>qda()</code>の出力に格納されており, これらから
+判別関数や判別境界の形を知ることができる.</p>
+<div class="sourceCode" id="cb243"><pre class="sourceCode r"><code class="sourceCode r"><span id="cb243-1"><a href="判別分析.html#cb243-1" tabindex="-1"></a>fit_lda<span class="sc">$</span>scaling  <span class="co"># 線形判別関数の係数</span></span>
+<span id="cb243-2"><a href="判別分析.html#cb243-2" tabindex="-1"></a><span class="fu">hist</span>(<span class="fu">predict</span>(fit_lda)<span class="sc">$</span>x)  <span class="co"># 判別得点</span></span>
+<span id="cb243-3"><a href="判別分析.html#cb243-3" tabindex="-1"></a>fit_lda<span class="sc">$</span>means  <span class="co"># グループ平均</span></span>
+<span id="cb243-4"><a href="判別分析.html#cb243-4" tabindex="-1"></a>fit_lda<span class="sc">$</span>prior  <span class="co"># 事前確率</span></span></code></pre></div>
+<p>ここで用いた<code>Smarket</code>は時系列データなので, 時間的に古いものを学習用,
+新しいものをテスト用とした.
+時系列でない一般のデータの場合, データの分割は通常ランダムに行うが, それでも
+学習済みモデルの性能はデータの分割の仕方に依存してしまう.
+そこで, 分割への依存を軽減し, 予測精度の評価の信頼性を高めるために, 交差検証 (クロス・バリデーション) を行うことが推奨される.</p>
+<p>関数<code>lda()</code>や<code>qda()</code>は引数<code>CV</code>を持っていて, これを<code>TRUE</code>と設定すると, LOOCV を実行する (デフォルトは<code>FALSE</code>).
+(<code>Smarket</code>は時系列データなので, LOOCV の使用は適切でない. ここでは省略する.)</p>
+<pre><code>LOOCV (Leave-One-Out Cross-Validation)
+- 交差検証法の一種. 1個抜き交差検証
+- データセットの各データ点を1つずつテスト用データとして取り出し, 残りを学習用データとしてモデルを当てはめ, 取り出した点を予測する.
+- これをデータセットの全てのデータ点について繰り返し, モデルの性能を評価する.</code></pre>
+</div>
+<div id="knn法" class="section level3 unnumbered hasAnchor">
+<h3>kNN法<a href="判別分析.html#knn法" class="anchor-section" aria-label="Anchor link to header"></a></h3>
+<p>kNN法は, 標準パッケージ<strong>class</strong>の関数<code>knn()</code>によって実行できる.
+kNN法では, 近傍の数<span class="math inline">\(k\)</span>を与える必要がある.
+<code>knn()</code>へのデータの与え方は, <code>lda()</code>, <code>qda()</code>とは異なり,
+学習用の予測変数, テスト用の予測変数, 学習用の目的変数 (ラベル) を順に与える.</p>
+<div class="sourceCode" id="cb245"><pre class="sourceCode r"><code class="sourceCode r"><span id="cb245-1"><a href="判別分析.html#cb245-1" tabindex="-1"></a><span class="fu">library</span>(class)</span>
+<span id="cb245-2"><a href="判別分析.html#cb245-2" tabindex="-1"></a>train_x <span class="ot">&lt;-</span> <span class="fu">cbind</span>(Smarket<span class="sc">$</span>Lag1, Smarket<span class="sc">$</span>Lag2)[idx_train, ]</span>
+<span id="cb245-3"><a href="判別分析.html#cb245-3" tabindex="-1"></a>test_x <span class="ot">&lt;-</span> <span class="fu">cbind</span>(Smarket<span class="sc">$</span>Lag1, Smarket<span class="sc">$</span>Lag2)[<span class="sc">-</span>idx_train, ]</span>
+<span id="cb245-4"><a href="判別分析.html#cb245-4" tabindex="-1"></a>train_direction <span class="ot">&lt;-</span> Smarket<span class="sc">$</span>Direction[idx_train]</span></code></pre></div>
+<p>ここでは<span class="math inline">\(k=1\)</span>とした例を示す.
+距離が同じ点が複数ある場合にはランダムに選ばれるので, 結果を再現できるよう<code>set.seed()</code>を指定しておく.</p>
+<div class="sourceCode" id="cb246"><pre class="sourceCode r"><code class="sourceCode r"><span id="cb246-1"><a href="判別分析.html#cb246-1" tabindex="-1"></a><span class="fu">set.seed</span>(<span class="dv">1</span>)</span>
+<span id="cb246-2"><a href="判別分析.html#cb246-2" tabindex="-1"></a>pred_knn <span class="ot">&lt;-</span> <span class="fu">knn</span>(train_x, test_x, train_direction, <span class="at">k =</span> <span class="dv">1</span>)</span>
+<span id="cb246-3"><a href="判別分析.html#cb246-3" tabindex="-1"></a><span class="fu">table</span>(予測 <span class="ot">=</span> pred_knn, 実績 <span class="ot">=</span> Direction_2005)</span>
+<span id="cb246-4"><a href="判別分析.html#cb246-4" tabindex="-1"></a><span class="co">#&gt;       実績</span></span>
+<span id="cb246-5"><a href="判別分析.html#cb246-5" tabindex="-1"></a><span class="co">#&gt; 予測 Down Up</span></span>
+<span id="cb246-6"><a href="判別分析.html#cb246-6" tabindex="-1"></a><span class="co">#&gt;   Down   43 58</span></span>
+<span id="cb246-7"><a href="判別分析.html#cb246-7" tabindex="-1"></a><span class="co">#&gt;   Up     68 83</span></span>
+<span id="cb246-8"><a href="判別分析.html#cb246-8" tabindex="-1"></a><span class="fu">mean</span>(pred_knn <span class="sc">==</span> Direction_2005)</span>
+<span id="cb246-9"><a href="判別分析.html#cb246-9" tabindex="-1"></a><span class="co">#&gt; [1] 0.5</span></span></code></pre></div>
+<ul>
+<li>交差検証 (LOOCV)</li>
+</ul>
+<p>パッケージ<strong>class</strong>には, 関数<code>knn.cv()</code>が用意されている.
+これは, 学習データの各点を, その点を除いた残りの点で分類する (LOOCV).
+返り値は各点の分類結果なので, 正解率は自分で計算する.</p>
+<div class="sourceCode" id="cb247"><pre class="sourceCode r"><code class="sourceCode r"><span id="cb247-1"><a href="判別分析.html#cb247-1" tabindex="-1"></a>res_knn3 <span class="ot">&lt;-</span> <span class="fu">data.frame</span>(<span class="at">y =</span> train_direction, <span class="at">yhat =</span> <span class="fu">knn.cv</span>(train_x, train_direction,</span>
+<span id="cb247-2"><a href="判別分析.html#cb247-2" tabindex="-1"></a>  <span class="at">k =</span> <span class="dv">3</span>))</span>
+<span id="cb247-3"><a href="判別分析.html#cb247-3" tabindex="-1"></a><span class="fu">table</span>(res_knn3)</span>
+<span id="cb247-4"><a href="判別分析.html#cb247-4" tabindex="-1"></a><span class="co">#&gt;       yhat</span></span>
+<span id="cb247-5"><a href="判別分析.html#cb247-5" tabindex="-1"></a><span class="co">#&gt; y      Down  Up</span></span>
+<span id="cb247-6"><a href="判別分析.html#cb247-6" tabindex="-1"></a><span class="co">#&gt;   Down  232 259</span></span>
+<span id="cb247-7"><a href="判別分析.html#cb247-7" tabindex="-1"></a><span class="co">#&gt;   Up    249 258</span></span>
+<span id="cb247-8"><a href="判別分析.html#cb247-8" tabindex="-1"></a><span class="fu">mean</span>(res_knn3<span class="sc">$</span>y <span class="sc">==</span> res_knn3<span class="sc">$</span>yhat)  <span class="co"># LOOCV による正解率</span></span>
+<span id="cb247-9"><a href="判別分析.html#cb247-9" tabindex="-1"></a><span class="co">#&gt; [1] 0.490982</span></span></code></pre></div>
+<p>なお, 上でも触れたように, 時系列データに対して LOOCV などの交差検証を行う際には注意が必要である.
+将来のデータを学習して過去のデータを予測するようなデータの使い方は, 将来予測を目的とする場合には適切ではない.
+ここでは, あくまで操作の参考として示している.</p>
+<p>kNN法は<span class="math inline">\(k\)</span>の大きさによって結果が左右されるので, 適切な<span class="math inline">\(k\)</span>の選択が重要である.</p>
+<div class="sourceCode" id="cb248"><pre class="sourceCode r"><code class="sourceCode r"><span id="cb248-1"><a href="判別分析.html#cb248-1" tabindex="-1"></a>acc_k <span class="ot">&lt;-</span> <span class="fu">sapply</span>(<span class="dv">1</span><span class="sc">:</span><span class="dv">10</span>, <span class="cf">function</span>(k) <span class="fu">mean</span>(<span class="fu">knn.cv</span>(train_x, train_direction, <span class="at">k =</span> k) <span class="sc">==</span></span>
+<span id="cb248-2"><a href="判別分析.html#cb248-2" tabindex="-1"></a>  train_direction))</span>
+<span id="cb248-3"><a href="判別分析.html#cb248-3" tabindex="-1"></a><span class="fu">round</span>(acc_k, <span class="dv">3</span>)</span>
+<span id="cb248-4"><a href="判別分析.html#cb248-4" tabindex="-1"></a><span class="co">#&gt;  [1] 0.508 0.519 0.491 0.489 0.495 0.500 0.495 0.508 0.483 0.489</span></span></code></pre></div>
+<p><span class="math inline">\(k\)</span>を変えても, 正解率は50%前後のままである.
+LDA・QDA の結果と合わせて, 前日・前々日のリターンから翌日の騰落を予測するのは難しいことが分かる.</p>
+</div>
+</div>
+<div id="klar-パッケージによる判別境界の可視化-社債発行体の格付" class="section level2 hasAnchor" number="7.2">
+<h2><span class="header-section-number">7.2</span> klaR パッケージによる判別境界の可視化: 社債発行体の格付<a href="判別分析.html#klar-パッケージによる判別境界の可視化-社債発行体の格付" class="anchor-section" aria-label="Anchor link to header"></a></h2>
+<div id="データ2-社債発行体の格付データ-仮想" class="section level3 unnumbered hasAnchor">
+<h3>データ2: 社債発行体の格付データ (仮想)<a href="判別分析.html#データ2-社債発行体の格付データ-仮想" class="anchor-section" aria-label="Anchor link to header"></a></h3>
+<pre><code>- rating.csv, 600社
+  - rating: 格付 (A, BBB, HY: 投機的等級)
+  - mcap: 時価総額 (億円)
+  - debt_ebitda: 有利子負債 / EBITDA (倍)
+  - int_coverage: インタレスト・カバレッジ・レシオ (倍)
+  - roa: 総資産利益率 (%)
+  - equity_ratio: 自己資本比率 (%)
+  - equity_vol: 株価ボラティリティ (%)</code></pre>
+<p>格付は順序のあるカテゴリーであり, 3クラスの判別問題となる.
+<code>factor()</code>の引数<code>levels</code>で, 格付の高い順に水準を並べておく.</p>
+<div class="sourceCode" id="cb250"><pre class="sourceCode r"><code class="sourceCode r"><span id="cb250-1"><a href="判別分析.html#cb250-1" tabindex="-1"></a>rating <span class="ot">&lt;-</span> <span class="fu">read.csv</span>(<span class="st">&quot;class/rating.csv&quot;</span>, <span class="at">stringsAsFactors =</span> <span class="cn">TRUE</span>)</span>
+<span id="cb250-2"><a href="判別分析.html#cb250-2" tabindex="-1"></a>rating<span class="sc">$</span>rating <span class="ot">&lt;-</span> <span class="fu">factor</span>(rating<span class="sc">$</span>rating, <span class="at">levels =</span> <span class="fu">c</span>(<span class="st">&quot;A&quot;</span>, <span class="st">&quot;BBB&quot;</span>, <span class="st">&quot;HY&quot;</span>))</span>
+<span id="cb250-3"><a href="判別分析.html#cb250-3" tabindex="-1"></a><span class="fu">summary</span>(rating)</span>
+<span id="cb250-4"><a href="判別分析.html#cb250-4" tabindex="-1"></a><span class="co">#&gt;  rating         mcap          debt_ebitda     int_coverage         roa        </span></span>
+<span id="cb250-5"><a href="判別分析.html#cb250-5" tabindex="-1"></a><span class="co">#&gt;  A  :210   Min.   :   17.0   Min.   :0.000   Min.   :  0.90   Min.   :-3.100  </span></span>
+<span id="cb250-6"><a href="判別分析.html#cb250-6" tabindex="-1"></a><span class="co">#&gt;  BBB:240   1st Qu.:  510.8   1st Qu.:1.455   1st Qu.:  5.80   1st Qu.: 2.197  </span></span>
+<span id="cb250-7"><a href="判別分析.html#cb250-7" tabindex="-1"></a><span class="co">#&gt;  HY :150   Median : 1096.0   Median :2.520   Median : 10.45   Median : 4.000  </span></span>
+<span id="cb250-8"><a href="判別分析.html#cb250-8" tabindex="-1"></a><span class="co">#&gt;            Mean   : 2545.7   Mean   :2.552   Mean   : 13.96   Mean   : 4.023  </span></span>
+<span id="cb250-9"><a href="判別分析.html#cb250-9" tabindex="-1"></a><span class="co">#&gt;            3rd Qu.: 2572.5   3rd Qu.:3.603   3rd Qu.: 17.80   3rd Qu.: 5.865  </span></span>
+<span id="cb250-10"><a href="判別分析.html#cb250-10" tabindex="-1"></a><span class="co">#&gt;            Max.   :51758.0   Max.   :7.460   Max.   :150.00   Max.   :11.410  </span></span>
+<span id="cb250-11"><a href="判別分析.html#cb250-11" tabindex="-1"></a><span class="co">#&gt;   equity_ratio     equity_vol   </span></span>
+<span id="cb250-12"><a href="判別分析.html#cb250-12" tabindex="-1"></a><span class="co">#&gt;  Min.   : 5.00   Min.   :10.00  </span></span>
+<span id="cb250-13"><a href="判別分析.html#cb250-13" tabindex="-1"></a><span class="co">#&gt;  1st Qu.:36.15   1st Qu.:24.40  </span></span>
+<span id="cb250-14"><a href="判別分析.html#cb250-14" tabindex="-1"></a><span class="co">#&gt;  Median :44.30   Median :30.05  </span></span>
+<span id="cb250-15"><a href="判別分析.html#cb250-15" tabindex="-1"></a><span class="co">#&gt;  Mean   :44.69   Mean   :30.64  </span></span>
+<span id="cb250-16"><a href="判別分析.html#cb250-16" tabindex="-1"></a><span class="co">#&gt;  3rd Qu.:53.83   3rd Qu.:36.83  </span></span>
+<span id="cb250-17"><a href="判別分析.html#cb250-17" tabindex="-1"></a><span class="co">#&gt;  Max.   :83.10   Max.   :54.80</span></span>
+<span id="cb250-18"><a href="判別分析.html#cb250-18" tabindex="-1"></a><span class="fu">plot</span>(rating<span class="sc">$</span>mcap, rating<span class="sc">$</span>debt_ebitda, <span class="at">col =</span> rating<span class="sc">$</span>rating, <span class="at">log =</span> <span class="st">&quot;x&quot;</span>, <span class="at">xlab =</span> <span class="st">&quot;時価総額 (億円, 対数目盛)&quot;</span>,</span>
+<span id="cb250-19"><a href="判別分析.html#cb250-19" tabindex="-1"></a>  <span class="at">ylab =</span> <span class="st">&quot;有利子負債 / EBITDA (倍)&quot;</span>)</span>
+<span id="cb250-20"><a href="判別分析.html#cb250-20" tabindex="-1"></a><span class="fu">legend</span>(<span class="st">&quot;topright&quot;</span>, <span class="at">legend =</span> <span class="fu">levels</span>(rating<span class="sc">$</span>rating), <span class="at">col =</span> <span class="dv">1</span><span class="sc">:</span><span class="dv">3</span>, <span class="at">pch =</span> <span class="dv">1</span>)</span></code></pre></div>
+<p><img src="_main_files/figure-html/unnamed-chunk-172-1.png" width="75%" /></p>
+<p>規模が小さく (時価総額が小さく), 負債の重い (有利子負債/EBITDA が大きい) 企業ほど, 格付が低い傾向がある.</p>
+</div>
+<div id="関数partimatによる判別境界の可視化" class="section level3 unnumbered hasAnchor">
+<h3>関数<code>partimat()</code>による判別境界の可視化<a href="判別分析.html#関数partimatによる判別境界の可視化" class="anchor-section" aria-label="Anchor link to header"></a></h3>
+<p>パッケージ<strong>klaR</strong>の関数<code>partimat()</code>は, 2変数ずつの判別境界を可視化する.
+判別分析やそれ以外の多様なクラス分類手法をサポートしている.</p>
+<ul>
+<li>引数<code>method</code>で指定: “lda”, “qda”, “rpart”, “naiveBayes”, “rda”, “sknn”, “svmlight”</li>
+</ul>
+<p>図の中の記号は各企業の格付 (A, B = BBB, H = HY) であり, 赤字は誤って判別された企業を表す.
+図の上の “app. error rate” は, 学習データ自身で評価した誤判別率 (見かけの誤判別率) である.
+ここでは, 時価総額 (<code>mcap</code>) と有利子負債/EBITDA (<code>debt_ebitda</code>) の2変数を使う.</p>
+<div class="sourceCode" id="cb251"><pre class="sourceCode r"><code class="sourceCode r"><span id="cb251-1"><a href="判別分析.html#cb251-1" tabindex="-1"></a><span class="co"># install.packages(&#39;klaR&#39;)</span></span>
+<span id="cb251-2"><a href="判別分析.html#cb251-2" tabindex="-1"></a><span class="fu">library</span>(klaR)</span>
+<span id="cb251-3"><a href="判別分析.html#cb251-3" tabindex="-1"></a>rt2 <span class="ot">&lt;-</span> rating[, <span class="fu">c</span>(<span class="st">&quot;rating&quot;</span>, <span class="st">&quot;mcap&quot;</span>, <span class="st">&quot;debt_ebitda&quot;</span>)]</span>
+<span id="cb251-4"><a href="判別分析.html#cb251-4" tabindex="-1"></a><span class="fu">partimat</span>(rating <span class="sc">~</span> ., <span class="at">data =</span> rt2, <span class="at">method =</span> <span class="st">&quot;lda&quot;</span>)  <span class="co"># 線形判別</span></span></code></pre></div>
+<p><img src="_main_files/figure-html/unnamed-chunk-173-1.png" width="75%" /></p>
+<div class="sourceCode" id="cb252"><pre class="sourceCode r"><code class="sourceCode r"><span id="cb252-1"><a href="判別分析.html#cb252-1" tabindex="-1"></a><span class="fu">partimat</span>(rating <span class="sc">~</span> ., <span class="at">data =</span> rt2, <span class="at">method =</span> <span class="st">&quot;qda&quot;</span>)  <span class="co"># 2次判別</span></span></code></pre></div>
+<p><img src="_main_files/figure-html/unnamed-chunk-173-2.png" width="75%" /></p>
+<div class="sourceCode" id="cb253"><pre class="sourceCode r"><code class="sourceCode r"><span id="cb253-1"><a href="判別分析.html#cb253-1" tabindex="-1"></a><span class="fu">partimat</span>(rating <span class="sc">~</span> ., <span class="at">data =</span> rt2, <span class="at">method =</span> <span class="st">&quot;sknn&quot;</span>)  <span class="co"># 単純 kNN 法 (デフォルト k = 3)</span></span></code></pre></div>
+<p><img src="_main_files/figure-html/unnamed-chunk-173-3.png" width="75%" /></p>
+<p>LDA の判別境界は直線, QDA の判別境界は曲線になる.</p>
+<p>一方, kNN の判別境界は, 時価総額の軸に沿った「横じま」になっている.
+これは, 時価総額 (数十〜5万程度) の値の範囲が, 負債倍率 (0〜7.5程度) よりはるかに大きいため, 点と点の距離がほぼ時価総額の差だけで決まってしまうためである.
+距離に基づく手法では, 変数間で尺度をそろえる必要がある.</p>
+<p>そこで, 右に歪んだ時価総額を対数変換し, 2変数を標準化してから kNN法を再実行する.</p>
+<div class="sourceCode" id="cb254"><pre class="sourceCode r"><code class="sourceCode r"><span id="cb254-1"><a href="判別分析.html#cb254-1" tabindex="-1"></a>rt2s <span class="ot">&lt;-</span> <span class="fu">data.frame</span>(<span class="at">rating =</span> rt2<span class="sc">$</span>rating, <span class="at">log_mcap =</span> <span class="fu">scale</span>(<span class="fu">log</span>(rt2<span class="sc">$</span>mcap)), <span class="at">debt_ebitda =</span> <span class="fu">scale</span>(rt2<span class="sc">$</span>debt_ebitda))</span>
+<span id="cb254-2"><a href="判別分析.html#cb254-2" tabindex="-1"></a><span class="fu">partimat</span>(rating <span class="sc">~</span> ., <span class="at">data =</span> rt2s, <span class="at">method =</span> <span class="st">&quot;sknn&quot;</span>)</span></code></pre></div>
+<p><img src="_main_files/figure-html/unnamed-chunk-174-1.png" width="75%" /></p>
+<p>判別境界が2変数の両方に依存するようになり, 見かけの誤判別率も下がった.</p>
+</div>
+<div id="ナイーブベイズ法" class="section level3 unnumbered hasAnchor">
+<h3>ナイーブ・ベイズ法<a href="判別分析.html#ナイーブベイズ法" class="anchor-section" aria-label="Anchor link to header"></a></h3>
+<p>パッケージ<strong>klaR</strong>には, ナイーブ・ベイズ法を実行する関数<code>NaiveBayes()</code>も用意されている.
+ナイーブ・ベイズ法は, 各クラスの中で予測変数どうしが独立であると仮定する.</p>
+<div class="sourceCode" id="cb255"><pre class="sourceCode r"><code class="sourceCode r"><span id="cb255-1"><a href="判別分析.html#cb255-1" tabindex="-1"></a>fit_nb <span class="ot">&lt;-</span> <span class="fu">NaiveBayes</span>(rating <span class="sc">~</span> ., <span class="at">data =</span> rt2s)  <span class="co"># usekernel = FALSE (デフォルト) → 正規分布</span></span>
+<span id="cb255-2"><a href="判別分析.html#cb255-2" tabindex="-1"></a><span class="fu">table</span>(予測 <span class="ot">=</span> <span class="fu">predict</span>(fit_nb)<span class="sc">$</span>class, 実績 <span class="ot">=</span> rt2s<span class="sc">$</span>rating)</span>
+<span id="cb255-3"><a href="判別分析.html#cb255-3" tabindex="-1"></a><span class="co">#&gt;      実績</span></span>
+<span id="cb255-4"><a href="判別分析.html#cb255-4" tabindex="-1"></a><span class="co">#&gt; 予測   A BBB  HY</span></span>
+<span id="cb255-5"><a href="判別分析.html#cb255-5" tabindex="-1"></a><span class="co">#&gt;   A   144  31   0</span></span>
+<span id="cb255-6"><a href="判別分析.html#cb255-6" tabindex="-1"></a><span class="co">#&gt;   BBB  66 195  61</span></span>
+<span id="cb255-7"><a href="判別分析.html#cb255-7" tabindex="-1"></a><span class="co">#&gt;   HY    0  14  89</span></span></code></pre></div>
+<p>関数<code>partimat()</code>において, <code>method = "naiveBayes"</code>と指定してもよい.</p>
+<div class="sourceCode" id="cb256"><pre class="sourceCode r"><code class="sourceCode r"><span id="cb256-1"><a href="判別分析.html#cb256-1" tabindex="-1"></a><span class="fu">partimat</span>(rating <span class="sc">~</span> ., <span class="at">data =</span> rt2s, <span class="at">method =</span> <span class="st">&quot;naiveBayes&quot;</span>)</span></code></pre></div>
+<p><img src="_main_files/figure-html/unnamed-chunk-176-1.png" width="75%" /></p>
+</div>
+<div id="全ての財務指標を使った判別-lda-vs-qda" class="section level3 unnumbered hasAnchor">
+<h3>全ての財務指標を使った判別: LDA vs QDA<a href="判別分析.html#全ての財務指標を使った判別-lda-vs-qda" class="anchor-section" aria-label="Anchor link to header"></a></h3>
+<p>最後に, 6つの財務指標をすべて使って判別し, 学習用 (400社) とテスト用 (200社) に分けて, LDA と QDA の予測精度を比べる.
+時価総額とインタレスト・カバレッジ・レシオは右に歪んだ分布なので, 対数変換しておく.</p>
+<div class="sourceCode" id="cb257"><pre class="sourceCode r"><code class="sourceCode r"><span id="cb257-1"><a href="判別分析.html#cb257-1" tabindex="-1"></a>rating<span class="sc">$</span>log_mcap <span class="ot">&lt;-</span> <span class="fu">log</span>(rating<span class="sc">$</span>mcap)</span>
+<span id="cb257-2"><a href="判別分析.html#cb257-2" tabindex="-1"></a>rating<span class="sc">$</span>log_icr <span class="ot">&lt;-</span> <span class="fu">log</span>(rating<span class="sc">$</span>int_coverage)</span>
+<span id="cb257-3"><a href="判別分析.html#cb257-3" tabindex="-1"></a><span class="fu">set.seed</span>(<span class="dv">1</span>)</span>
+<span id="cb257-4"><a href="判別分析.html#cb257-4" tabindex="-1"></a>tr <span class="ot">&lt;-</span> <span class="fu">sample</span>(<span class="fu">nrow</span>(rating), <span class="dv">400</span>)</span>
+<span id="cb257-5"><a href="判別分析.html#cb257-5" tabindex="-1"></a>fo <span class="ot">&lt;-</span> rating <span class="sc">~</span> log_mcap <span class="sc">+</span> debt_ebitda <span class="sc">+</span> log_icr <span class="sc">+</span> roa <span class="sc">+</span> equity_ratio <span class="sc">+</span> equity_vol</span>
+<span id="cb257-6"><a href="判別分析.html#cb257-6" tabindex="-1"></a>fit_lda2 <span class="ot">&lt;-</span> <span class="fu">lda</span>(fo, <span class="at">data =</span> rating, <span class="at">subset =</span> tr)</span>
+<span id="cb257-7"><a href="判別分析.html#cb257-7" tabindex="-1"></a>fit_qda2 <span class="ot">&lt;-</span> <span class="fu">qda</span>(fo, <span class="at">data =</span> rating, <span class="at">subset =</span> tr)</span>
+<span id="cb257-8"><a href="判別分析.html#cb257-8" tabindex="-1"></a>pred_lda2 <span class="ot">&lt;-</span> <span class="fu">predict</span>(fit_lda2, rating[<span class="sc">-</span>tr, ])<span class="sc">$</span>class</span>
+<span id="cb257-9"><a href="判別分析.html#cb257-9" tabindex="-1"></a>pred_qda2 <span class="ot">&lt;-</span> <span class="fu">predict</span>(fit_qda2, rating[<span class="sc">-</span>tr, ])<span class="sc">$</span>class</span>
+<span id="cb257-10"><a href="判別分析.html#cb257-10" tabindex="-1"></a><span class="fu">table</span>(予測 <span class="ot">=</span> pred_lda2, 実績 <span class="ot">=</span> rating<span class="sc">$</span>rating[<span class="sc">-</span>tr])</span>
+<span id="cb257-11"><a href="判別分析.html#cb257-11" tabindex="-1"></a><span class="co">#&gt;      実績</span></span>
+<span id="cb257-12"><a href="判別分析.html#cb257-12" tabindex="-1"></a><span class="co">#&gt; 予測  A BBB HY</span></span>
+<span id="cb257-13"><a href="判別分析.html#cb257-13" tabindex="-1"></a><span class="co">#&gt;   A   57   3  0</span></span>
+<span id="cb257-14"><a href="判別分析.html#cb257-14" tabindex="-1"></a><span class="co">#&gt;   BBB 17  67 14</span></span>
+<span id="cb257-15"><a href="判別分析.html#cb257-15" tabindex="-1"></a><span class="co">#&gt;   HY   0   6 36</span></span>
+<span id="cb257-16"><a href="判別分析.html#cb257-16" tabindex="-1"></a><span class="fu">c</span>(<span class="at">LDA =</span> <span class="fu">mean</span>(pred_lda2 <span class="sc">==</span> rating<span class="sc">$</span>rating[<span class="sc">-</span>tr]), <span class="at">QDA =</span> <span class="fu">mean</span>(pred_qda2 <span class="sc">==</span> rating<span class="sc">$</span>rating[<span class="sc">-</span>tr]))</span>
+<span id="cb257-17"><a href="判別分析.html#cb257-17" tabindex="-1"></a><span class="co">#&gt;  LDA  QDA </span></span>
+<span id="cb257-18"><a href="判別分析.html#cb257-18" tabindex="-1"></a><span class="co">#&gt; 0.80 0.82</span></span></code></pre></div>
+<p>2変数だけの場合に比べて, 正解率は大きく上がる.
+混同行列を見ると, 誤判別の多くは「A と BBB」「BBB と HY」のように隣の格付との間で起きており, A を HY と判別するような大きな誤りはない.
+格付が順序のあるカテゴリーであることを反映している (順序を明示的に扱うモデルとして, 順序ロジット・モデルなどもある).</p>
+<p>(自主課題)</p>
+<ul>
+<li>kNN法の<span class="math inline">\(k\)</span>を変えて (例えば <code>partimat(..., method = "sknn", kn = 10)</code>), 判別境界がどう変わるか確かめてみよう.</li>
+<li>全ての財務指標を使った判別で, kNN法 (変数を標準化した上で) やナイーブ・ベイズ法の正解率も求め, LDA・QDA と比べてみよう.</li>
+</ul>
+
+</div>
+</div>
+</div>
+            </section>
+
+          </div>
+        </div>
+      </div>
+<a href="正則化回帰-lasso-ridge回帰-elastic-net.html" class="navigation navigation-prev navigation-unique" aria-label="Previous page"><i class="fa fa-angle-left"></i></a>
+
+    </div>
+  </div>
+<script src="libs/gitbook-2.6.7/js/app.min.js"></script>
+<script src="libs/gitbook-2.6.7/js/clipboard.min.js"></script>
+<script src="libs/gitbook-2.6.7/js/plugin-search.js"></script>
+<script src="libs/gitbook-2.6.7/js/plugin-sharing.js"></script>
+<script src="libs/gitbook-2.6.7/js/plugin-fontsettings.js"></script>
+<script src="libs/gitbook-2.6.7/js/plugin-bookdown.js"></script>
+<script src="libs/gitbook-2.6.7/js/jquery.highlight.js"></script>
+<script src="libs/gitbook-2.6.7/js/plugin-clipboard.js"></script>
+<script>
+gitbook.require(["gitbook"], function(gitbook) {
+gitbook.start({
+"sharing": {
+"github": false,
+"facebook": true,
+"twitter": true,
+"linkedin": false,
+"weibo": false,
+"instapaper": false,
+"vk": false,
+"whatsapp": false,
+"all": ["facebook", "twitter", "linkedin", "weibo", "instapaper"]
+},
+"fontsettings": {
+"theme": "white",
+"family": "sans",
+"size": 2
+},
+"edit": {
+"link": null,
+"text": null
+},
+"history": {
+"link": null,
+"text": null
+},
+"view": {
+"link": null,
+"text": null
+},
+"download": null,
+"search": {
+"engine": "fuse",
+"options": null
+},
+"toc": {
+"collapse": "subsection"
+}
+});
+});
+</script>
+
+<!-- dynamically load mathjax for compatibility with self-contained -->
+<script>
+  (function () {
+    var script = document.createElement("script");
+    script.type = "text/javascript";
+    var src = "true";
+    if (src === "" || src === "true") src = "https://cdnjs.cloudflare.com/ajax/libs/mathjax/2.7.9/latest.js?config=TeX-MML-AM_CHTML";
+    if (location.protocol !== "file:")
+      if (/^https?:/.test(src))
+        src = src.replace(/^https?:/, '');
+    script.src = src;
+    document.getElementsByTagName("head")[0].appendChild(script);
+  })();
+</script>
+</body>
+
+</html>

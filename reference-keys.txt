@@ -53,3 +53,13 @@ tidyverseの基本
 パッケージgamの利用
 パッケージmgcvの利用
 パッケージprophetの利用
+正則化回帰-lasso-ridge回帰-elastic-net
+検証用セット法による回帰モデルの予測精度評価
+lasso
+ridge回帰
+elastic-net
+一般化線形モデル-glm-正則化
+補足-glm-に対する変数選択の代替的方法
+判別分析
+線形判別2次判別knn法-米国株価指数の騰落
+klar-パッケージによる判別境界の可視化-社債発行体の格付
