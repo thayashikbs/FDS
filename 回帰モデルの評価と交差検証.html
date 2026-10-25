@@ -4,18 +4,18 @@
 
   <meta charset="utf-8" />
   <meta http-equiv="X-UA-Compatible" content="IE=edge" />
-  <title>Chapter 6 回帰モデルの評価と交差検証 | 金融データサイエンス</title>
-  <meta name="description" content="Chapter 6 回帰モデルの評価と交差検証 | 金融データサイエンス" />
+  <title>Chapter 7 回帰モデルの評価と交差検証 | 金融データサイエンス</title>
+  <meta name="description" content="Chapter 7 回帰モデルの評価と交差検証 | 金融データサイエンス" />
   <meta name="generator" content="bookdown 0.37 and GitBook 2.6.7" />
 
-  <meta property="og:title" content="Chapter 6 回帰モデルの評価と交差検証 | 金融データサイエンス" />
+  <meta property="og:title" content="Chapter 7 回帰モデルの評価と交差検証 | 金融データサイエンス" />
   <meta property="og:type" content="book" />
   
   
   
 
   <meta name="twitter:card" content="summary" />
-  <meta name="twitter:title" content="Chapter 6 回帰モデルの評価と交差検証 | 金融データサイエンス" />
+  <meta name="twitter:title" content="Chapter 7 回帰モデルの評価と交差検証 | 金融データサイエンス" />
   
   
   
@@ -29,8 +29,8 @@
   <meta name="apple-mobile-web-app-status-bar-style" content="black" />
   
   
-<link rel="prev" href="一般化加法モデル-gam.html"/>
-<link rel="next" href="正則化回帰-lasso-ridge回帰-elastic-net.html"/>
+<link rel="prev" href="正則化回帰-lasso-ridge回帰-elastic-net.html"/>
+<link rel="next" href="判別分析.html"/>
 <script src="libs/jquery-3.6.1/jquery-3.6.1.min.js"></script>
 <script src="https://cdn.jsdelivr.net/npm/fuse.js@6.4.6/dist/fuse.min.js"></script>
 <link href="libs/gitbook-2.6.7/css/style.css" rel="stylesheet" />
@@ -241,6 +241,7 @@ code span.wa { color: #60a0b0; font-weight: bold; font-style: italic; } /* Warni
 <li class="chapter" data-level="" data-path="ロジットプロビット回帰分析.html"><a href="ロジットプロビット回帰分析.html#パッケージdesctoolsの利用"><i class="fa fa-check"></i>パッケージ<strong>DescTools</strong>の利用</a></li>
 <li class="chapter" data-level="" data-path="ロジットプロビット回帰分析.html"><a href="ロジットプロビット回帰分析.html#パッケージpsclの利用"><i class="fa fa-check"></i>パッケージ<strong>pscl</strong>の利用</a></li>
 <li class="chapter" data-level="" data-path="ロジットプロビット回帰分析.html"><a href="ロジットプロビット回帰分析.html#パッケージperformanceの利用"><i class="fa fa-check"></i>パッケージ<strong>performance</strong>の利用</a></li>
+<li class="chapter" data-level="" data-path="ロジットプロビット回帰分析.html"><a href="ロジットプロビット回帰分析.html#参考-疑似r2の使い分け"><i class="fa fa-check"></i>(参考) 疑似R2の使い分け</a></li>
 </ul></li>
 </ul></li>
 <li class="chapter" data-level="5" data-path="一般化加法モデル-gam.html"><a href="一般化加法モデル-gam.html"><i class="fa fa-check"></i><b>5</b> 一般化加法モデル (GAM)</a>
@@ -265,44 +266,44 @@ code span.wa { color: #60a0b0; font-weight: bold; font-style: italic; } /* Warni
 <li class="chapter" data-level="" data-path="一般化加法モデル-gam.html"><a href="一般化加法モデル-gam.html#prophet-による予測"><i class="fa fa-check"></i>prophet による予測</a></li>
 </ul></li>
 </ul></li>
-<li class="chapter" data-level="6" data-path="回帰モデルの評価と交差検証.html"><a href="回帰モデルの評価と交差検証.html"><i class="fa fa-check"></i><b>6</b> 回帰モデルの評価と交差検証</a>
+<li class="chapter" data-level="6" data-path="正則化回帰-lasso-ridge回帰-elastic-net.html"><a href="正則化回帰-lasso-ridge回帰-elastic-net.html"><i class="fa fa-check"></i><b>6</b> 正則化回帰 (lasso, ridge回帰, elastic net)</a>
 <ul>
-<li class="chapter" data-level="6.1" data-path="回帰モデルの評価と交差検証.html"><a href="回帰モデルの評価と交差検証.html#学習誤差と予測誤差"><i class="fa fa-check"></i><b>6.1</b> 学習誤差と予測誤差</a>
-<ul>
-<li class="chapter" data-level="" data-path="回帰モデルの評価と交差検証.html"><a href="回帰モデルの評価と交差検証.html#データ-社債の信用スプレッド-仮想-1"><i class="fa fa-check"></i>データ: 社債の信用スプレッド (仮想)</a></li>
-<li class="chapter" data-level="" data-path="回帰モデルの評価と交差検証.html"><a href="回帰モデルの評価と交差検証.html#学習誤差はモデルを複雑にするほど下がる"><i class="fa fa-check"></i>学習誤差はモデルを複雑にするほど下がる</a></li>
-</ul></li>
-<li class="chapter" data-level="6.2" data-path="回帰モデルの評価と交差検証.html"><a href="回帰モデルの評価と交差検証.html#検証用セットアプローチ"><i class="fa fa-check"></i><b>6.2</b> 検証用セット・アプローチ</a></li>
-<li class="chapter" data-level="6.3" data-path="回帰モデルの評価と交差検証.html"><a href="回帰モデルの評価と交差検証.html#交差検証"><i class="fa fa-check"></i><b>6.3</b> 交差検証</a>
-<ul>
-<li class="chapter" data-level="" data-path="回帰モデルの評価と交差検証.html"><a href="回帰モデルの評価と交差検証.html#loocv-1個抜き交差検証"><i class="fa fa-check"></i>LOOCV (1個抜き交差検証)</a></li>
-<li class="chapter" data-level="" data-path="回帰モデルの評価と交差検証.html"><a href="回帰モデルの評価と交差検証.html#k-分割交差検証-k-fold-cv"><i class="fa fa-check"></i>k-分割交差検証 (k-fold CV)</a></li>
-<li class="chapter" data-level="" data-path="回帰モデルの評価と交差検証.html"><a href="回帰モデルの評価と交差検証.html#標準誤差ルール"><i class="fa fa-check"></i>1標準誤差ルール</a></li>
-</ul></li>
-<li class="chapter" data-level="6.4" data-path="回帰モデルの評価と交差検証.html"><a href="回帰モデルの評価と交差検証.html#その他の評価指標"><i class="fa fa-check"></i><b>6.4</b> その他の評価指標</a></li>
-</ul></li>
-<li class="chapter" data-level="7" data-path="正則化回帰-lasso-ridge回帰-elastic-net.html"><a href="正則化回帰-lasso-ridge回帰-elastic-net.html"><i class="fa fa-check"></i><b>7</b> 正則化回帰 (lasso, ridge回帰, elastic net)</a>
-<ul>
-<li class="chapter" data-level="7.1" data-path="正則化回帰-lasso-ridge回帰-elastic-net.html"><a href="正則化回帰-lasso-ridge回帰-elastic-net.html#検証用セット法による回帰モデルの予測精度評価"><i class="fa fa-check"></i><b>7.1</b> 検証用セット法による回帰モデルの予測精度評価</a>
+<li class="chapter" data-level="6.1" data-path="正則化回帰-lasso-ridge回帰-elastic-net.html"><a href="正則化回帰-lasso-ridge回帰-elastic-net.html#検証用セット法による回帰モデルの予測精度評価"><i class="fa fa-check"></i><b>6.1</b> 検証用セット法による回帰モデルの予測精度評価</a>
 <ul>
 <li class="chapter" data-level="" data-path="正則化回帰-lasso-ridge回帰-elastic-net.html"><a href="正則化回帰-lasso-ridge回帰-elastic-net.html#データ1-社債の信用スプレッドと企業特性-仮想"><i class="fa fa-check"></i>データ1: 社債の信用スプレッドと企業特性 (仮想)</a></li>
 </ul></li>
-<li class="chapter" data-level="7.2" data-path="正則化回帰-lasso-ridge回帰-elastic-net.html"><a href="正則化回帰-lasso-ridge回帰-elastic-net.html#lasso"><i class="fa fa-check"></i><b>7.2</b> lasso</a>
+<li class="chapter" data-level="6.2" data-path="正則化回帰-lasso-ridge回帰-elastic-net.html"><a href="正則化回帰-lasso-ridge回帰-elastic-net.html#lasso"><i class="fa fa-check"></i><b>6.2</b> lasso</a>
 <ul>
 <li class="chapter" data-level="" data-path="正則化回帰-lasso-ridge回帰-elastic-net.html"><a href="正則化回帰-lasso-ridge回帰-elastic-net.html#関数glmnetの基本操作"><i class="fa fa-check"></i>関数<code>glmnet()</code>の基本操作</a></li>
 <li class="chapter" data-level="" data-path="正則化回帰-lasso-ridge回帰-elastic-net.html"><a href="正則化回帰-lasso-ridge回帰-elastic-net.html#lambdaのグリッド指定によるglmnetの一括実行"><i class="fa fa-check"></i><code>lambda</code>のグリッド指定による<code>glmnet()</code>の一括実行</a></li>
 <li class="chapter" data-level="" data-path="正則化回帰-lasso-ridge回帰-elastic-net.html"><a href="正則化回帰-lasso-ridge回帰-elastic-net.html#交差検証によるパラメータチューニング"><i class="fa fa-check"></i>交差検証によるパラメータ・チューニング</a></li>
 </ul></li>
-<li class="chapter" data-level="7.3" data-path="正則化回帰-lasso-ridge回帰-elastic-net.html"><a href="正則化回帰-lasso-ridge回帰-elastic-net.html#ridge回帰"><i class="fa fa-check"></i><b>7.3</b> ridge回帰</a></li>
-<li class="chapter" data-level="7.4" data-path="正則化回帰-lasso-ridge回帰-elastic-net.html"><a href="正則化回帰-lasso-ridge回帰-elastic-net.html#elastic-net"><i class="fa fa-check"></i><b>7.4</b> elastic net</a>
+<li class="chapter" data-level="6.3" data-path="正則化回帰-lasso-ridge回帰-elastic-net.html"><a href="正則化回帰-lasso-ridge回帰-elastic-net.html#ridge回帰"><i class="fa fa-check"></i><b>6.3</b> ridge回帰</a></li>
+<li class="chapter" data-level="6.4" data-path="正則化回帰-lasso-ridge回帰-elastic-net.html"><a href="正則化回帰-lasso-ridge回帰-elastic-net.html#elastic-net"><i class="fa fa-check"></i><b>6.4</b> elastic net</a>
 <ul>
 <li class="chapter" data-level="" data-path="正則化回帰-lasso-ridge回帰-elastic-net.html"><a href="正則化回帰-lasso-ridge回帰-elastic-net.html#テストmse-の比較"><i class="fa fa-check"></i>テストMSE の比較</a></li>
 </ul></li>
-<li class="chapter" data-level="7.5" data-path="正則化回帰-lasso-ridge回帰-elastic-net.html"><a href="正則化回帰-lasso-ridge回帰-elastic-net.html#一般化線形モデル-glm-正則化"><i class="fa fa-check"></i><b>7.5</b> 一般化線形モデル (GLM) + 正則化</a>
+<li class="chapter" data-level="6.5" data-path="正則化回帰-lasso-ridge回帰-elastic-net.html"><a href="正則化回帰-lasso-ridge回帰-elastic-net.html#一般化線形モデル-glm-正則化"><i class="fa fa-check"></i><b>6.5</b> 一般化線形モデル (GLM) + 正則化</a>
 <ul>
 <li class="chapter" data-level="" data-path="正則化回帰-lasso-ridge回帰-elastic-net.html"><a href="正則化回帰-lasso-ridge回帰-elastic-net.html#データ2-german-credit-データ"><i class="fa fa-check"></i>データ2: German Credit データ</a></li>
 </ul></li>
-<li class="chapter" data-level="7.6" data-path="正則化回帰-lasso-ridge回帰-elastic-net.html"><a href="正則化回帰-lasso-ridge回帰-elastic-net.html#補足-glm-に対する変数選択の代替的方法"><i class="fa fa-check"></i><b>7.6</b> 補足: GLM に対する変数選択の代替的方法</a></li>
+<li class="chapter" data-level="6.6" data-path="正則化回帰-lasso-ridge回帰-elastic-net.html"><a href="正則化回帰-lasso-ridge回帰-elastic-net.html#補足-glm-に対する変数選択の代替的方法"><i class="fa fa-check"></i><b>6.6</b> 補足: GLM に対する変数選択の代替的方法</a></li>
+</ul></li>
+<li class="chapter" data-level="7" data-path="回帰モデルの評価と交差検証.html"><a href="回帰モデルの評価と交差検証.html"><i class="fa fa-check"></i><b>7</b> 回帰モデルの評価と交差検証</a>
+<ul>
+<li class="chapter" data-level="7.1" data-path="回帰モデルの評価と交差検証.html"><a href="回帰モデルの評価と交差検証.html#学習誤差と予測誤差"><i class="fa fa-check"></i><b>7.1</b> 学習誤差と予測誤差</a>
+<ul>
+<li class="chapter" data-level="" data-path="回帰モデルの評価と交差検証.html"><a href="回帰モデルの評価と交差検証.html#データ-社債の信用スプレッド-仮想-1"><i class="fa fa-check"></i>データ: 社債の信用スプレッド (仮想)</a></li>
+<li class="chapter" data-level="" data-path="回帰モデルの評価と交差検証.html"><a href="回帰モデルの評価と交差検証.html#学習誤差はモデルを複雑にするほど下がる"><i class="fa fa-check"></i>学習誤差はモデルを複雑にするほど下がる</a></li>
+</ul></li>
+<li class="chapter" data-level="7.2" data-path="回帰モデルの評価と交差検証.html"><a href="回帰モデルの評価と交差検証.html#検証用セットアプローチ"><i class="fa fa-check"></i><b>7.2</b> 検証用セット・アプローチ</a></li>
+<li class="chapter" data-level="7.3" data-path="回帰モデルの評価と交差検証.html"><a href="回帰モデルの評価と交差検証.html#交差検証"><i class="fa fa-check"></i><b>7.3</b> 交差検証</a>
+<ul>
+<li class="chapter" data-level="" data-path="回帰モデルの評価と交差検証.html"><a href="回帰モデルの評価と交差検証.html#loocv-1個抜き交差検証"><i class="fa fa-check"></i>LOOCV (1個抜き交差検証)</a></li>
+<li class="chapter" data-level="" data-path="回帰モデルの評価と交差検証.html"><a href="回帰モデルの評価と交差検証.html#k-分割交差検証-k-fold-cv"><i class="fa fa-check"></i>k-分割交差検証 (k-fold CV)</a></li>
+<li class="chapter" data-level="" data-path="回帰モデルの評価と交差検証.html"><a href="回帰モデルの評価と交差検証.html#標準誤差ルール"><i class="fa fa-check"></i>1標準誤差ルール</a></li>
+</ul></li>
+<li class="chapter" data-level="7.4" data-path="回帰モデルの評価と交差検証.html"><a href="回帰モデルの評価と交差検証.html#その他の評価指標"><i class="fa fa-check"></i><b>7.4</b> その他の評価指標</a></li>
 </ul></li>
 <li class="chapter" data-level="8" data-path="判別分析.html"><a href="判別分析.html"><i class="fa fa-check"></i><b>8</b> 判別分析</a>
 <ul>
@@ -340,14 +341,14 @@ code span.wa { color: #60a0b0; font-weight: bold; font-style: italic; } /* Warni
           <div class="page-inner">
 
             <section class="normal" id="section-">
-<div id="回帰モデルの評価と交差検証" class="section level1 hasAnchor" number="6">
-<h1><span class="header-section-number">Chapter 6</span> 回帰モデルの評価と交差検証<a href="回帰モデルの評価と交差検証.html#回帰モデルの評価と交差検証" class="anchor-section" aria-label="Anchor link to header"></a></h1>
-<!-- 2026.10.25 Claude: 新規作成. R演習スクリプト R_cv_dist.R (2026年度版), スライド「回帰モデルの評価」に対応 -->
+<div id="回帰モデルの評価と交差検証" class="section level1 hasAnchor" number="7">
+<h1><span class="header-section-number">Chapter 7</span> 回帰モデルの評価と交差検証<a href="回帰モデルの評価と交差検証.html#回帰モデルの評価と交差検証" class="anchor-section" aria-label="Anchor link to header"></a></h1>
+<!-- 2026.10.25 Claude: 新規作成 (065-cv として作成し, 指摘により lasso の章の後ろの 075-cv に移動). R演習スクリプト R_cv_dist.R (2026年度版), スライド「回帰モデルの評価」に対応 -->
 <p>本章の内容は, スライド「回帰モデルの評価」と, R 演習スクリプト <code>R_cv_dist.R</code> に対応する (授業では R 演習は行わなかったので, 自習用).
-次章の正則化回帰で使う交差検証 (<code>cv.glmnet()</code>) の考え方の基礎となる.</p>
+前章の正則化回帰では, 交差検証 (<code>cv.glmnet()</code>) で正則化パラメータ <span class="math inline">\(\lambda\)</span> を選んだ. 本章では, 回帰モデルの予測精度の評価と, 交差検証の考え方を基礎から確認する.</p>
 <p>※ 本章の分析の流れは, ISLR2, Ch.5 (Lab: Cross-Validation) を参考にした.</p>
-<div id="学習誤差と予測誤差" class="section level2 hasAnchor" number="6.1">
-<h2><span class="header-section-number">6.1</span> 学習誤差と予測誤差<a href="回帰モデルの評価と交差検証.html#学習誤差と予測誤差" class="anchor-section" aria-label="Anchor link to header"></a></h2>
+<div id="学習誤差と予測誤差" class="section level2 hasAnchor" number="7.1">
+<h2><span class="header-section-number">7.1</span> 学習誤差と予測誤差<a href="回帰モデルの評価と交差検証.html#学習誤差と予測誤差" class="anchor-section" aria-label="Anchor link to header"></a></h2>
 <div id="データ-社債の信用スプレッド-仮想-1" class="section level3 unnumbered hasAnchor">
 <h3>データ: 社債の信用スプレッド (仮想)<a href="回帰モデルの評価と交差検証.html#データ-社債の信用スプレッド-仮想-1" class="anchor-section" aria-label="Anchor link to header"></a></h3>
 <p>GAM の章と同じ社債の信用スプレッド・データを使う.</p>
@@ -356,59 +357,59 @@ code span.wa { color: #60a0b0; font-weight: bold; font-style: italic; } /* Warni
   - equity_vol: 発行体の株価ボラティリティ (年率, %)
   - ほか: leverage, maturity, log_assets, industry</code></pre>
 <p>ここでは, 「スプレッドを株価ボラティリティの何次の多項式で予測するのが良いか」を, 予測誤差の観点から選ぶ.</p>
-<div class="sourceCode" id="cb202"><pre class="sourceCode r"><code class="sourceCode r"><span id="cb202-1"><a href="回帰モデルの評価と交差検証.html#cb202-1" tabindex="-1"></a>bond <span class="ot">&lt;-</span> <span class="fu">read.csv</span>(<span class="st">&quot;class/bond_spread.csv&quot;</span>)</span>
-<span id="cb202-2"><a href="回帰モデルの評価と交差検証.html#cb202-2" tabindex="-1"></a><span class="fu">plot</span>(bond<span class="sc">$</span>equity_vol, bond<span class="sc">$</span>spread, <span class="at">cex =</span> <span class="fl">0.5</span>, <span class="at">xlab =</span> <span class="st">&quot;株価ボラティリティ (%)&quot;</span>,</span>
-<span id="cb202-3"><a href="回帰モデルの評価と交差検証.html#cb202-3" tabindex="-1"></a>  <span class="at">ylab =</span> <span class="st">&quot;スプレッド (bp)&quot;</span>)</span></code></pre></div>
-<p><img src="_main_files/figure-html/unnamed-chunk-135-1.png" width="75%" /></p>
+<div class="sourceCode" id="cb236"><pre class="sourceCode r"><code class="sourceCode r"><span id="cb236-1"><a href="回帰モデルの評価と交差検証.html#cb236-1" tabindex="-1"></a>bond <span class="ot">&lt;-</span> <span class="fu">read.csv</span>(<span class="st">&quot;class/bond_spread.csv&quot;</span>)</span>
+<span id="cb236-2"><a href="回帰モデルの評価と交差検証.html#cb236-2" tabindex="-1"></a><span class="fu">plot</span>(bond<span class="sc">$</span>equity_vol, bond<span class="sc">$</span>spread, <span class="at">cex =</span> <span class="fl">0.5</span>, <span class="at">xlab =</span> <span class="st">&quot;株価ボラティリティ (%)&quot;</span>,</span>
+<span id="cb236-3"><a href="回帰モデルの評価と交差検証.html#cb236-3" tabindex="-1"></a>  <span class="at">ylab =</span> <span class="st">&quot;スプレッド (bp)&quot;</span>)</span></code></pre></div>
+<p><img src="_main_files/figure-html/unnamed-chunk-161-1.png" width="75%" /></p>
 </div>
 <div id="学習誤差はモデルを複雑にするほど下がる" class="section level3 unnumbered hasAnchor">
 <h3>学習誤差はモデルを複雑にするほど下がる<a href="回帰モデルの評価と交差検証.html#学習誤差はモデルを複雑にするほど下がる" class="anchor-section" aria-label="Anchor link to header"></a></h3>
 <p>モデルを推定したデータ (学習データ) に対する誤差 (学習MSE) は, 多項式の次数を上げてモデルを複雑にするほど, 必ず小さくなる.</p>
-<div class="sourceCode" id="cb203"><pre class="sourceCode r"><code class="sourceCode r"><span id="cb203-1"><a href="回帰モデルの評価と交差検証.html#cb203-1" tabindex="-1"></a>train_mse <span class="ot">&lt;-</span> <span class="fu">sapply</span>(<span class="dv">1</span><span class="sc">:</span><span class="dv">10</span>, <span class="cf">function</span>(d) {</span>
-<span id="cb203-2"><a href="回帰モデルの評価と交差検証.html#cb203-2" tabindex="-1"></a>  fit <span class="ot">&lt;-</span> <span class="fu">lm</span>(spread <span class="sc">~</span> <span class="fu">poly</span>(equity_vol, d), <span class="at">data =</span> bond)</span>
-<span id="cb203-3"><a href="回帰モデルの評価と交差検証.html#cb203-3" tabindex="-1"></a>  <span class="fu">mean</span>(<span class="fu">resid</span>(fit)<span class="sc">^</span><span class="dv">2</span>)</span>
-<span id="cb203-4"><a href="回帰モデルの評価と交差検証.html#cb203-4" tabindex="-1"></a>})</span>
-<span id="cb203-5"><a href="回帰モデルの評価と交差検証.html#cb203-5" tabindex="-1"></a><span class="fu">plot</span>(<span class="dv">1</span><span class="sc">:</span><span class="dv">10</span>, train_mse, <span class="at">type =</span> <span class="st">&quot;b&quot;</span>, <span class="at">xlab =</span> <span class="st">&quot;多項式の次数&quot;</span>, <span class="at">ylab =</span> <span class="st">&quot;学習MSE&quot;</span>)</span></code></pre></div>
-<p><img src="_main_files/figure-html/unnamed-chunk-136-1.png" width="75%" /></p>
+<div class="sourceCode" id="cb237"><pre class="sourceCode r"><code class="sourceCode r"><span id="cb237-1"><a href="回帰モデルの評価と交差検証.html#cb237-1" tabindex="-1"></a>train_mse <span class="ot">&lt;-</span> <span class="fu">sapply</span>(<span class="dv">1</span><span class="sc">:</span><span class="dv">10</span>, <span class="cf">function</span>(d) {</span>
+<span id="cb237-2"><a href="回帰モデルの評価と交差検証.html#cb237-2" tabindex="-1"></a>  fit <span class="ot">&lt;-</span> <span class="fu">lm</span>(spread <span class="sc">~</span> <span class="fu">poly</span>(equity_vol, d), <span class="at">data =</span> bond)</span>
+<span id="cb237-3"><a href="回帰モデルの評価と交差検証.html#cb237-3" tabindex="-1"></a>  <span class="fu">mean</span>(<span class="fu">resid</span>(fit)<span class="sc">^</span><span class="dv">2</span>)</span>
+<span id="cb237-4"><a href="回帰モデルの評価と交差検証.html#cb237-4" tabindex="-1"></a>})</span>
+<span id="cb237-5"><a href="回帰モデルの評価と交差検証.html#cb237-5" tabindex="-1"></a><span class="fu">plot</span>(<span class="dv">1</span><span class="sc">:</span><span class="dv">10</span>, train_mse, <span class="at">type =</span> <span class="st">&quot;b&quot;</span>, <span class="at">xlab =</span> <span class="st">&quot;多項式の次数&quot;</span>, <span class="at">ylab =</span> <span class="st">&quot;学習MSE&quot;</span>)</span></code></pre></div>
+<p><img src="_main_files/figure-html/unnamed-chunk-162-1.png" width="75%" /></p>
 <p>しかし, 私たちが知りたいのは, まだ見ていない新しいデータに対する予測の誤差 (予測誤差, テスト誤差) である.
 複雑すぎるモデルは, 学習データの偶然の変動 (ノイズ) まで当てはめてしまい, 新しいデータに対しては予測が悪くなる (<strong>過学習</strong>).
 予測誤差を推定するには, モデルの推定に使わなかったデータで評価する必要がある.</p>
 </div>
 </div>
-<div id="検証用セットアプローチ" class="section level2 hasAnchor" number="6.2">
-<h2><span class="header-section-number">6.2</span> 検証用セット・アプローチ<a href="回帰モデルの評価と交差検証.html#検証用セットアプローチ" class="anchor-section" aria-label="Anchor link to header"></a></h2>
+<div id="検証用セットアプローチ" class="section level2 hasAnchor" number="7.2">
+<h2><span class="header-section-number">7.2</span> 検証用セット・アプローチ<a href="回帰モデルの評価と交差検証.html#検証用セットアプローチ" class="anchor-section" aria-label="Anchor link to header"></a></h2>
 <p>データを学習用と検証用にランダムに分け, 学習用データで推定したモデルを, 検証用データで評価する (hold-out 法).</p>
-<div class="sourceCode" id="cb204"><pre class="sourceCode r"><code class="sourceCode r"><span id="cb204-1"><a href="回帰モデルの評価と交差検証.html#cb204-1" tabindex="-1"></a><span class="fu">set.seed</span>(<span class="dv">1</span>)</span>
-<span id="cb204-2"><a href="回帰モデルの評価と交差検証.html#cb204-2" tabindex="-1"></a>train <span class="ot">&lt;-</span> <span class="fu">sample</span>(<span class="fu">nrow</span>(bond), <span class="fu">nrow</span>(bond)<span class="sc">/</span><span class="dv">2</span>)  <span class="co"># 半分を学習用, 残りを検証用</span></span>
-<span id="cb204-3"><a href="回帰モデルの評価と交差検証.html#cb204-3" tabindex="-1"></a></span>
-<span id="cb204-4"><a href="回帰モデルの評価と交差検証.html#cb204-4" tabindex="-1"></a>val_mse <span class="ot">&lt;-</span> <span class="fu">sapply</span>(<span class="dv">1</span><span class="sc">:</span><span class="dv">10</span>, <span class="cf">function</span>(d) {</span>
-<span id="cb204-5"><a href="回帰モデルの評価と交差検証.html#cb204-5" tabindex="-1"></a>  fit <span class="ot">&lt;-</span> <span class="fu">lm</span>(spread <span class="sc">~</span> <span class="fu">poly</span>(equity_vol, d), <span class="at">data =</span> bond, <span class="at">subset =</span> train)</span>
-<span id="cb204-6"><a href="回帰モデルの評価と交差検証.html#cb204-6" tabindex="-1"></a>  pred <span class="ot">&lt;-</span> <span class="fu">predict</span>(fit, <span class="at">newdata =</span> bond[<span class="sc">-</span>train, ])</span>
-<span id="cb204-7"><a href="回帰モデルの評価と交差検証.html#cb204-7" tabindex="-1"></a>  <span class="fu">mean</span>((bond<span class="sc">$</span>spread[<span class="sc">-</span>train] <span class="sc">-</span> pred)<span class="sc">^</span><span class="dv">2</span>)  <span class="co"># 検証用データでの MSE</span></span>
-<span id="cb204-8"><a href="回帰モデルの評価と交差検証.html#cb204-8" tabindex="-1"></a>})</span>
-<span id="cb204-9"><a href="回帰モデルの評価と交差検証.html#cb204-9" tabindex="-1"></a><span class="fu">round</span>(val_mse, <span class="dv">1</span>)</span>
-<span id="cb204-10"><a href="回帰モデルの評価と交差検証.html#cb204-10" tabindex="-1"></a><span class="co">#&gt;  [1] 1339.6 1081.6 1116.4 1086.3 1059.9 1041.3 1058.3 1077.6 1151.3 1317.1</span></span>
-<span id="cb204-11"><a href="回帰モデルの評価と交差検証.html#cb204-11" tabindex="-1"></a><span class="fu">which.min</span>(val_mse)</span>
-<span id="cb204-12"><a href="回帰モデルの評価と交差検証.html#cb204-12" tabindex="-1"></a><span class="co">#&gt; [1] 6</span></span></code></pre></div>
+<div class="sourceCode" id="cb238"><pre class="sourceCode r"><code class="sourceCode r"><span id="cb238-1"><a href="回帰モデルの評価と交差検証.html#cb238-1" tabindex="-1"></a><span class="fu">set.seed</span>(<span class="dv">1</span>)</span>
+<span id="cb238-2"><a href="回帰モデルの評価と交差検証.html#cb238-2" tabindex="-1"></a>train <span class="ot">&lt;-</span> <span class="fu">sample</span>(<span class="fu">nrow</span>(bond), <span class="fu">nrow</span>(bond)<span class="sc">/</span><span class="dv">2</span>)  <span class="co"># 半分を学習用, 残りを検証用</span></span>
+<span id="cb238-3"><a href="回帰モデルの評価と交差検証.html#cb238-3" tabindex="-1"></a></span>
+<span id="cb238-4"><a href="回帰モデルの評価と交差検証.html#cb238-4" tabindex="-1"></a>val_mse <span class="ot">&lt;-</span> <span class="fu">sapply</span>(<span class="dv">1</span><span class="sc">:</span><span class="dv">10</span>, <span class="cf">function</span>(d) {</span>
+<span id="cb238-5"><a href="回帰モデルの評価と交差検証.html#cb238-5" tabindex="-1"></a>  fit <span class="ot">&lt;-</span> <span class="fu">lm</span>(spread <span class="sc">~</span> <span class="fu">poly</span>(equity_vol, d), <span class="at">data =</span> bond, <span class="at">subset =</span> train)</span>
+<span id="cb238-6"><a href="回帰モデルの評価と交差検証.html#cb238-6" tabindex="-1"></a>  pred <span class="ot">&lt;-</span> <span class="fu">predict</span>(fit, <span class="at">newdata =</span> bond[<span class="sc">-</span>train, ])</span>
+<span id="cb238-7"><a href="回帰モデルの評価と交差検証.html#cb238-7" tabindex="-1"></a>  <span class="fu">mean</span>((bond<span class="sc">$</span>spread[<span class="sc">-</span>train] <span class="sc">-</span> pred)<span class="sc">^</span><span class="dv">2</span>)  <span class="co"># 検証用データでの MSE</span></span>
+<span id="cb238-8"><a href="回帰モデルの評価と交差検証.html#cb238-8" tabindex="-1"></a>})</span>
+<span id="cb238-9"><a href="回帰モデルの評価と交差検証.html#cb238-9" tabindex="-1"></a><span class="fu">round</span>(val_mse, <span class="dv">1</span>)</span>
+<span id="cb238-10"><a href="回帰モデルの評価と交差検証.html#cb238-10" tabindex="-1"></a><span class="co">#&gt;  [1] 1339.6 1081.6 1116.4 1086.3 1059.9 1041.3 1058.3 1077.6 1151.3 1317.1</span></span>
+<span id="cb238-11"><a href="回帰モデルの評価と交差検証.html#cb238-11" tabindex="-1"></a><span class="fu">which.min</span>(val_mse)</span>
+<span id="cb238-12"><a href="回帰モデルの評価と交差検証.html#cb238-12" tabindex="-1"></a><span class="co">#&gt; [1] 6</span></span></code></pre></div>
 <p>検証MSE は, 1次から2次で大きく下がり, その後はほぼ横ばいで, 次数が高すぎると再び上がる.</p>
 <p>検証用セット・アプローチの弱点は, 結果がデータの分割の仕方に依存することである.
 分割を変えて (乱数の種を変えて) 繰り返すと, 検証MSE の曲線は大きくばらつく.
 また, データの半分しか学習に使わないので, 予測誤差を過大に推定しがちである.</p>
-<div class="sourceCode" id="cb205"><pre class="sourceCode r"><code class="sourceCode r"><span id="cb205-1"><a href="回帰モデルの評価と交差検証.html#cb205-1" tabindex="-1"></a><span class="fu">plot</span>(<span class="dv">1</span><span class="sc">:</span><span class="dv">10</span>, val_mse, <span class="at">type =</span> <span class="st">&quot;b&quot;</span>, <span class="at">ylim =</span> <span class="fu">range</span>(val_mse) <span class="sc">*</span> <span class="fu">c</span>(<span class="fl">0.9</span>, <span class="fl">1.2</span>), <span class="at">xlab =</span> <span class="st">&quot;多項式の次数&quot;</span>,</span>
-<span id="cb205-2"><a href="回帰モデルの評価と交差検証.html#cb205-2" tabindex="-1"></a>  <span class="at">ylab =</span> <span class="st">&quot;検証MSE&quot;</span>)</span>
-<span id="cb205-3"><a href="回帰モデルの評価と交差検証.html#cb205-3" tabindex="-1"></a><span class="cf">for</span> (s <span class="cf">in</span> <span class="dv">2</span><span class="sc">:</span><span class="dv">6</span>) {</span>
-<span id="cb205-4"><a href="回帰モデルの評価と交差検証.html#cb205-4" tabindex="-1"></a>  <span class="fu">set.seed</span>(s)</span>
-<span id="cb205-5"><a href="回帰モデルの評価と交差検証.html#cb205-5" tabindex="-1"></a>  tr <span class="ot">&lt;-</span> <span class="fu">sample</span>(<span class="fu">nrow</span>(bond), <span class="fu">nrow</span>(bond)<span class="sc">/</span><span class="dv">2</span>)</span>
-<span id="cb205-6"><a href="回帰モデルの評価と交差検証.html#cb205-6" tabindex="-1"></a>  v <span class="ot">&lt;-</span> <span class="fu">sapply</span>(<span class="dv">1</span><span class="sc">:</span><span class="dv">10</span>, <span class="cf">function</span>(d) {</span>
-<span id="cb205-7"><a href="回帰モデルの評価と交差検証.html#cb205-7" tabindex="-1"></a>    fit <span class="ot">&lt;-</span> <span class="fu">lm</span>(spread <span class="sc">~</span> <span class="fu">poly</span>(equity_vol, d), <span class="at">data =</span> bond, <span class="at">subset =</span> tr)</span>
-<span id="cb205-8"><a href="回帰モデルの評価と交差検証.html#cb205-8" tabindex="-1"></a>    <span class="fu">mean</span>((bond<span class="sc">$</span>spread[<span class="sc">-</span>tr] <span class="sc">-</span> <span class="fu">predict</span>(fit, bond[<span class="sc">-</span>tr, ]))<span class="sc">^</span><span class="dv">2</span>)</span>
-<span id="cb205-9"><a href="回帰モデルの評価と交差検証.html#cb205-9" tabindex="-1"></a>  })</span>
-<span id="cb205-10"><a href="回帰モデルの評価と交差検証.html#cb205-10" tabindex="-1"></a>  <span class="fu">lines</span>(<span class="dv">1</span><span class="sc">:</span><span class="dv">10</span>, v, <span class="at">col =</span> s, <span class="at">type =</span> <span class="st">&quot;b&quot;</span>)</span>
-<span id="cb205-11"><a href="回帰モデルの評価と交差検証.html#cb205-11" tabindex="-1"></a>}</span></code></pre></div>
-<p><img src="_main_files/figure-html/unnamed-chunk-138-1.png" width="75%" /></p>
+<div class="sourceCode" id="cb239"><pre class="sourceCode r"><code class="sourceCode r"><span id="cb239-1"><a href="回帰モデルの評価と交差検証.html#cb239-1" tabindex="-1"></a><span class="fu">plot</span>(<span class="dv">1</span><span class="sc">:</span><span class="dv">10</span>, val_mse, <span class="at">type =</span> <span class="st">&quot;b&quot;</span>, <span class="at">ylim =</span> <span class="fu">range</span>(val_mse) <span class="sc">*</span> <span class="fu">c</span>(<span class="fl">0.9</span>, <span class="fl">1.2</span>), <span class="at">xlab =</span> <span class="st">&quot;多項式の次数&quot;</span>,</span>
+<span id="cb239-2"><a href="回帰モデルの評価と交差検証.html#cb239-2" tabindex="-1"></a>  <span class="at">ylab =</span> <span class="st">&quot;検証MSE&quot;</span>)</span>
+<span id="cb239-3"><a href="回帰モデルの評価と交差検証.html#cb239-3" tabindex="-1"></a><span class="cf">for</span> (s <span class="cf">in</span> <span class="dv">2</span><span class="sc">:</span><span class="dv">6</span>) {</span>
+<span id="cb239-4"><a href="回帰モデルの評価と交差検証.html#cb239-4" tabindex="-1"></a>  <span class="fu">set.seed</span>(s)</span>
+<span id="cb239-5"><a href="回帰モデルの評価と交差検証.html#cb239-5" tabindex="-1"></a>  tr <span class="ot">&lt;-</span> <span class="fu">sample</span>(<span class="fu">nrow</span>(bond), <span class="fu">nrow</span>(bond)<span class="sc">/</span><span class="dv">2</span>)</span>
+<span id="cb239-6"><a href="回帰モデルの評価と交差検証.html#cb239-6" tabindex="-1"></a>  v <span class="ot">&lt;-</span> <span class="fu">sapply</span>(<span class="dv">1</span><span class="sc">:</span><span class="dv">10</span>, <span class="cf">function</span>(d) {</span>
+<span id="cb239-7"><a href="回帰モデルの評価と交差検証.html#cb239-7" tabindex="-1"></a>    fit <span class="ot">&lt;-</span> <span class="fu">lm</span>(spread <span class="sc">~</span> <span class="fu">poly</span>(equity_vol, d), <span class="at">data =</span> bond, <span class="at">subset =</span> tr)</span>
+<span id="cb239-8"><a href="回帰モデルの評価と交差検証.html#cb239-8" tabindex="-1"></a>    <span class="fu">mean</span>((bond<span class="sc">$</span>spread[<span class="sc">-</span>tr] <span class="sc">-</span> <span class="fu">predict</span>(fit, bond[<span class="sc">-</span>tr, ]))<span class="sc">^</span><span class="dv">2</span>)</span>
+<span id="cb239-9"><a href="回帰モデルの評価と交差検証.html#cb239-9" tabindex="-1"></a>  })</span>
+<span id="cb239-10"><a href="回帰モデルの評価と交差検証.html#cb239-10" tabindex="-1"></a>  <span class="fu">lines</span>(<span class="dv">1</span><span class="sc">:</span><span class="dv">10</span>, v, <span class="at">col =</span> s, <span class="at">type =</span> <span class="st">&quot;b&quot;</span>)</span>
+<span id="cb239-11"><a href="回帰モデルの評価と交差検証.html#cb239-11" tabindex="-1"></a>}</span></code></pre></div>
+<p><img src="_main_files/figure-html/unnamed-chunk-164-1.png" width="75%" /></p>
 </div>
-<div id="交差検証" class="section level2 hasAnchor" number="6.3">
-<h2><span class="header-section-number">6.3</span> 交差検証<a href="回帰モデルの評価と交差検証.html#交差検証" class="anchor-section" aria-label="Anchor link to header"></a></h2>
+<div id="交差検証" class="section level2 hasAnchor" number="7.3">
+<h2><span class="header-section-number">7.3</span> 交差検証<a href="回帰モデルの評価と交差検証.html#交差検証" class="anchor-section" aria-label="Anchor link to header"></a></h2>
 <div id="loocv-1個抜き交差検証" class="section level3 unnumbered hasAnchor">
 <h3>LOOCV (1個抜き交差検証)<a href="回帰モデルの評価と交差検証.html#loocv-1個抜き交差検証" class="anchor-section" aria-label="Anchor link to header"></a></h3>
 <p><strong>LOOCV</strong> (leave-one-out cross-validation) は, データの1点を検証用に取り出し, 残りの <span class="math inline">\(n-1\)</span> 点でモデルを推定して, 取り出した点を予測する. これを全ての点について繰り返し, 予測誤差の平均をとる.
@@ -418,18 +419,18 @@ CV_{(n)} = \frac{1}{n} \sum_{i=1}^{n} (y_i - \hat{y}_{(-i)})^2
 (<span class="math inline">\(\hat{y}_{(-i)}\)</span>: <span class="math inline">\(i\)</span> 番目の点を除いて推定したモデルによる, <span class="math inline">\(i\)</span> 番目の点の予測値).
 分割の仕方による変動がなく, ほぼ全てのデータを学習に使える.</p>
 <p>パッケージ<strong>boot</strong>の関数<code>cv.glm()</code>を使う. <code>glm()</code>で<code>family</code>を指定しなければ, <code>lm()</code>と同じ (最小二乗法) になる.</p>
-<div class="sourceCode" id="cb206"><pre class="sourceCode r"><code class="sourceCode r"><span id="cb206-1"><a href="回帰モデルの評価と交差検証.html#cb206-1" tabindex="-1"></a><span class="fu">library</span>(boot)</span>
-<span id="cb206-2"><a href="回帰モデルの評価と交差検証.html#cb206-2" tabindex="-1"></a>glm_fit <span class="ot">&lt;-</span> <span class="fu">glm</span>(spread <span class="sc">~</span> equity_vol, <span class="at">data =</span> bond)</span>
-<span id="cb206-3"><a href="回帰モデルの評価と交差検証.html#cb206-3" tabindex="-1"></a>cv_err <span class="ot">&lt;-</span> <span class="fu">cv.glm</span>(bond, glm_fit)</span>
-<span id="cb206-4"><a href="回帰モデルの評価と交差検証.html#cb206-4" tabindex="-1"></a>cv_err<span class="sc">$</span>delta  <span class="co"># 1つ目: LOOCV による予測MSEの推定値 (2つ目は補正版)</span></span>
-<span id="cb206-5"><a href="回帰モデルの評価と交差検証.html#cb206-5" tabindex="-1"></a><span class="co">#&gt; [1] 1349.141 1349.126</span></span>
-<span id="cb206-6"><a href="回帰モデルの評価と交差検証.html#cb206-6" tabindex="-1"></a></span>
-<span id="cb206-7"><a href="回帰モデルの評価と交差検証.html#cb206-7" tabindex="-1"></a>loocv_mse <span class="ot">&lt;-</span> <span class="fu">sapply</span>(<span class="dv">1</span><span class="sc">:</span><span class="dv">6</span>, <span class="cf">function</span>(d) {</span>
-<span id="cb206-8"><a href="回帰モデルの評価と交差検証.html#cb206-8" tabindex="-1"></a>  fit <span class="ot">&lt;-</span> <span class="fu">glm</span>(spread <span class="sc">~</span> <span class="fu">poly</span>(equity_vol, d), <span class="at">data =</span> bond)</span>
-<span id="cb206-9"><a href="回帰モデルの評価と交差検証.html#cb206-9" tabindex="-1"></a>  <span class="fu">cv.glm</span>(bond, fit)<span class="sc">$</span>delta[<span class="dv">1</span>]</span>
-<span id="cb206-10"><a href="回帰モデルの評価と交差検証.html#cb206-10" tabindex="-1"></a>})</span>
-<span id="cb206-11"><a href="回帰モデルの評価と交差検証.html#cb206-11" tabindex="-1"></a><span class="fu">round</span>(loocv_mse, <span class="dv">1</span>)</span>
-<span id="cb206-12"><a href="回帰モデルの評価と交差検証.html#cb206-12" tabindex="-1"></a><span class="co">#&gt; [1] 1349.1 1192.3 1138.6 1073.3 1055.7 1048.4</span></span></code></pre></div>
+<div class="sourceCode" id="cb240"><pre class="sourceCode r"><code class="sourceCode r"><span id="cb240-1"><a href="回帰モデルの評価と交差検証.html#cb240-1" tabindex="-1"></a><span class="fu">library</span>(boot)</span>
+<span id="cb240-2"><a href="回帰モデルの評価と交差検証.html#cb240-2" tabindex="-1"></a>glm_fit <span class="ot">&lt;-</span> <span class="fu">glm</span>(spread <span class="sc">~</span> equity_vol, <span class="at">data =</span> bond)</span>
+<span id="cb240-3"><a href="回帰モデルの評価と交差検証.html#cb240-3" tabindex="-1"></a>cv_err <span class="ot">&lt;-</span> <span class="fu">cv.glm</span>(bond, glm_fit)</span>
+<span id="cb240-4"><a href="回帰モデルの評価と交差検証.html#cb240-4" tabindex="-1"></a>cv_err<span class="sc">$</span>delta  <span class="co"># 1つ目: LOOCV による予測MSEの推定値 (2つ目は補正版)</span></span>
+<span id="cb240-5"><a href="回帰モデルの評価と交差検証.html#cb240-5" tabindex="-1"></a><span class="co">#&gt; [1] 1349.141 1349.126</span></span>
+<span id="cb240-6"><a href="回帰モデルの評価と交差検証.html#cb240-6" tabindex="-1"></a></span>
+<span id="cb240-7"><a href="回帰モデルの評価と交差検証.html#cb240-7" tabindex="-1"></a>loocv_mse <span class="ot">&lt;-</span> <span class="fu">sapply</span>(<span class="dv">1</span><span class="sc">:</span><span class="dv">6</span>, <span class="cf">function</span>(d) {</span>
+<span id="cb240-8"><a href="回帰モデルの評価と交差検証.html#cb240-8" tabindex="-1"></a>  fit <span class="ot">&lt;-</span> <span class="fu">glm</span>(spread <span class="sc">~</span> <span class="fu">poly</span>(equity_vol, d), <span class="at">data =</span> bond)</span>
+<span id="cb240-9"><a href="回帰モデルの評価と交差検証.html#cb240-9" tabindex="-1"></a>  <span class="fu">cv.glm</span>(bond, fit)<span class="sc">$</span>delta[<span class="dv">1</span>]</span>
+<span id="cb240-10"><a href="回帰モデルの評価と交差検証.html#cb240-10" tabindex="-1"></a>})</span>
+<span id="cb240-11"><a href="回帰モデルの評価と交差検証.html#cb240-11" tabindex="-1"></a><span class="fu">round</span>(loocv_mse, <span class="dv">1</span>)</span>
+<span id="cb240-12"><a href="回帰モデルの評価と交差検証.html#cb240-12" tabindex="-1"></a><span class="co">#&gt; [1] 1349.1 1192.3 1138.6 1073.3 1055.7 1048.4</span></span></code></pre></div>
 <p>LOOCV はモデルを <span class="math inline">\(n\)</span> 回推定するので, データが大きいと計算に時間がかかる.</p>
 </div>
 <div id="k-分割交差検証-k-fold-cv" class="section level3 unnumbered hasAnchor">
@@ -440,21 +441,21 @@ CV_{(k)} = \frac{1}{k} \sum_{j=1}^{k} \mathrm{MSE}_j
 \]</span>
 <span class="math inline">\(k = 5\)</span> や <span class="math inline">\(k = 10\)</span> がよく使われる. LOOCV より計算が軽く, 予測誤差の推定の安定性 (分散) の点でも優れることが多い.
 <code>cv.glm()</code>の引数<code>K</code>で指定する.</p>
-<div class="sourceCode" id="cb207"><pre class="sourceCode r"><code class="sourceCode r"><span id="cb207-1"><a href="回帰モデルの評価と交差検証.html#cb207-1" tabindex="-1"></a><span class="fu">set.seed</span>(<span class="dv">17</span>)</span>
-<span id="cb207-2"><a href="回帰モデルの評価と交差検証.html#cb207-2" tabindex="-1"></a>kfold_mse <span class="ot">&lt;-</span> <span class="fu">sapply</span>(<span class="dv">1</span><span class="sc">:</span><span class="dv">10</span>, <span class="cf">function</span>(d) {</span>
-<span id="cb207-3"><a href="回帰モデルの評価と交差検証.html#cb207-3" tabindex="-1"></a>  fit <span class="ot">&lt;-</span> <span class="fu">glm</span>(spread <span class="sc">~</span> <span class="fu">poly</span>(equity_vol, d), <span class="at">data =</span> bond)</span>
-<span id="cb207-4"><a href="回帰モデルの評価と交差検証.html#cb207-4" tabindex="-1"></a>  <span class="fu">cv.glm</span>(bond, fit, <span class="at">K =</span> <span class="dv">10</span>)<span class="sc">$</span>delta[<span class="dv">1</span>]  <span class="co"># 10-分割交差検証</span></span>
-<span id="cb207-5"><a href="回帰モデルの評価と交差検証.html#cb207-5" tabindex="-1"></a>})</span>
-<span id="cb207-6"><a href="回帰モデルの評価と交差検証.html#cb207-6" tabindex="-1"></a><span class="fu">round</span>(kfold_mse, <span class="dv">1</span>)</span>
-<span id="cb207-7"><a href="回帰モデルの評価と交差検証.html#cb207-7" tabindex="-1"></a><span class="co">#&gt;  [1] 1342.4 1356.2 1205.3 1038.3 1031.1 1045.0 2313.6 1281.9 1811.0 1984.2</span></span>
-<span id="cb207-8"><a href="回帰モデルの評価と交差検証.html#cb207-8" tabindex="-1"></a><span class="fu">which.min</span>(kfold_mse)</span>
-<span id="cb207-9"><a href="回帰モデルの評価と交差検証.html#cb207-9" tabindex="-1"></a><span class="co">#&gt; [1] 5</span></span>
-<span id="cb207-10"><a href="回帰モデルの評価と交差検証.html#cb207-10" tabindex="-1"></a></span>
-<span id="cb207-11"><a href="回帰モデルの評価と交差検証.html#cb207-11" tabindex="-1"></a><span class="fu">plot</span>(<span class="dv">1</span><span class="sc">:</span><span class="dv">10</span>, kfold_mse, <span class="at">type =</span> <span class="st">&quot;b&quot;</span>, <span class="at">xlab =</span> <span class="st">&quot;多項式の次数&quot;</span>, <span class="at">ylab =</span> <span class="st">&quot;10-fold CV MSE&quot;</span>)</span>
-<span id="cb207-12"><a href="回帰モデルの評価と交差検証.html#cb207-12" tabindex="-1"></a><span class="fu">lines</span>(<span class="dv">1</span><span class="sc">:</span><span class="dv">10</span>, train_mse, <span class="at">type =</span> <span class="st">&quot;b&quot;</span>, <span class="at">col =</span> <span class="st">&quot;grey&quot;</span>)  <span class="co"># 学習MSE (参考)</span></span>
-<span id="cb207-13"><a href="回帰モデルの評価と交差検証.html#cb207-13" tabindex="-1"></a><span class="fu">legend</span>(<span class="st">&quot;topright&quot;</span>, <span class="at">legend =</span> <span class="fu">c</span>(<span class="st">&quot;10-fold CV&quot;</span>, <span class="st">&quot;学習MSE&quot;</span>), <span class="at">col =</span> <span class="fu">c</span>(<span class="st">&quot;black&quot;</span>, <span class="st">&quot;grey&quot;</span>),</span>
-<span id="cb207-14"><a href="回帰モデルの評価と交差検証.html#cb207-14" tabindex="-1"></a>  <span class="at">lty =</span> <span class="dv">1</span>)</span></code></pre></div>
-<p><img src="_main_files/figure-html/unnamed-chunk-140-1.png" width="75%" /></p>
+<div class="sourceCode" id="cb241"><pre class="sourceCode r"><code class="sourceCode r"><span id="cb241-1"><a href="回帰モデルの評価と交差検証.html#cb241-1" tabindex="-1"></a><span class="fu">set.seed</span>(<span class="dv">17</span>)</span>
+<span id="cb241-2"><a href="回帰モデルの評価と交差検証.html#cb241-2" tabindex="-1"></a>kfold_mse <span class="ot">&lt;-</span> <span class="fu">sapply</span>(<span class="dv">1</span><span class="sc">:</span><span class="dv">10</span>, <span class="cf">function</span>(d) {</span>
+<span id="cb241-3"><a href="回帰モデルの評価と交差検証.html#cb241-3" tabindex="-1"></a>  fit <span class="ot">&lt;-</span> <span class="fu">glm</span>(spread <span class="sc">~</span> <span class="fu">poly</span>(equity_vol, d), <span class="at">data =</span> bond)</span>
+<span id="cb241-4"><a href="回帰モデルの評価と交差検証.html#cb241-4" tabindex="-1"></a>  <span class="fu">cv.glm</span>(bond, fit, <span class="at">K =</span> <span class="dv">10</span>)<span class="sc">$</span>delta[<span class="dv">1</span>]  <span class="co"># 10-分割交差検証</span></span>
+<span id="cb241-5"><a href="回帰モデルの評価と交差検証.html#cb241-5" tabindex="-1"></a>})</span>
+<span id="cb241-6"><a href="回帰モデルの評価と交差検証.html#cb241-6" tabindex="-1"></a><span class="fu">round</span>(kfold_mse, <span class="dv">1</span>)</span>
+<span id="cb241-7"><a href="回帰モデルの評価と交差検証.html#cb241-7" tabindex="-1"></a><span class="co">#&gt;  [1] 1342.4 1356.2 1205.3 1038.3 1031.1 1045.0 2313.6 1281.9 1811.0 1984.2</span></span>
+<span id="cb241-8"><a href="回帰モデルの評価と交差検証.html#cb241-8" tabindex="-1"></a><span class="fu">which.min</span>(kfold_mse)</span>
+<span id="cb241-9"><a href="回帰モデルの評価と交差検証.html#cb241-9" tabindex="-1"></a><span class="co">#&gt; [1] 5</span></span>
+<span id="cb241-10"><a href="回帰モデルの評価と交差検証.html#cb241-10" tabindex="-1"></a></span>
+<span id="cb241-11"><a href="回帰モデルの評価と交差検証.html#cb241-11" tabindex="-1"></a><span class="fu">plot</span>(<span class="dv">1</span><span class="sc">:</span><span class="dv">10</span>, kfold_mse, <span class="at">type =</span> <span class="st">&quot;b&quot;</span>, <span class="at">xlab =</span> <span class="st">&quot;多項式の次数&quot;</span>, <span class="at">ylab =</span> <span class="st">&quot;10-fold CV MSE&quot;</span>)</span>
+<span id="cb241-12"><a href="回帰モデルの評価と交差検証.html#cb241-12" tabindex="-1"></a><span class="fu">lines</span>(<span class="dv">1</span><span class="sc">:</span><span class="dv">10</span>, train_mse, <span class="at">type =</span> <span class="st">&quot;b&quot;</span>, <span class="at">col =</span> <span class="st">&quot;grey&quot;</span>)  <span class="co"># 学習MSE (参考)</span></span>
+<span id="cb241-13"><a href="回帰モデルの評価と交差検証.html#cb241-13" tabindex="-1"></a><span class="fu">legend</span>(<span class="st">&quot;topright&quot;</span>, <span class="at">legend =</span> <span class="fu">c</span>(<span class="st">&quot;10-fold CV&quot;</span>, <span class="st">&quot;学習MSE&quot;</span>), <span class="at">col =</span> <span class="fu">c</span>(<span class="st">&quot;black&quot;</span>, <span class="st">&quot;grey&quot;</span>),</span>
+<span id="cb241-14"><a href="回帰モデルの評価と交差検証.html#cb241-14" tabindex="-1"></a>  <span class="at">lty =</span> <span class="dv">1</span>)</span></code></pre></div>
+<p><img src="_main_files/figure-html/unnamed-chunk-166-1.png" width="75%" /></p>
 <p>学習MSE (灰色) は次数とともに下がり続けるが, CV誤差は途中から上がる.
 特に次数が高い (7次以上) と CV誤差が大きく跳ね上がる. 高次の多項式は, データの端の方 (ボラティリティが極端に高い銘柄) で曲線が暴れやすく, そうした点が検証用 fold に入ると予測が大きく外れるためである.</p>
 </div>
@@ -464,24 +465,24 @@ CV_{(k)} = \frac{1}{k} \sum_{j=1}^{k} \mathrm{MSE}_j
 そこで, 「CV誤差の最小値 + その標準誤差」以内に収まるモデルの中で, 最も単純なモデルを選ぶ方法がある (<strong>1標準誤差ルール</strong>).
 正則化回帰の章の <code>lambda.1se</code> と同じ考え方である.
 fold ごとの MSE から, CV誤差の平均と標準誤差を自分で計算してみる.</p>
-<div class="sourceCode" id="cb208"><pre class="sourceCode r"><code class="sourceCode r"><span id="cb208-1"><a href="回帰モデルの評価と交差検証.html#cb208-1" tabindex="-1"></a><span class="fu">set.seed</span>(<span class="dv">17</span>)</span>
-<span id="cb208-2"><a href="回帰モデルの評価と交差検証.html#cb208-2" tabindex="-1"></a>fold <span class="ot">&lt;-</span> <span class="fu">sample</span>(<span class="fu">rep</span>(<span class="dv">1</span><span class="sc">:</span><span class="dv">10</span>, <span class="at">length.out =</span> <span class="fu">nrow</span>(bond)))  <span class="co"># 各観測をどの fold に割り当てるか</span></span>
-<span id="cb208-3"><a href="回帰モデルの評価と交差検証.html#cb208-3" tabindex="-1"></a>mse_fold <span class="ot">&lt;-</span> <span class="fu">sapply</span>(<span class="dv">1</span><span class="sc">:</span><span class="dv">10</span>, <span class="cf">function</span>(d) <span class="fu">sapply</span>(<span class="dv">1</span><span class="sc">:</span><span class="dv">10</span>, <span class="cf">function</span>(k) {</span>
-<span id="cb208-4"><a href="回帰モデルの評価と交差検証.html#cb208-4" tabindex="-1"></a>  fit <span class="ot">&lt;-</span> <span class="fu">lm</span>(spread <span class="sc">~</span> <span class="fu">poly</span>(equity_vol, d), <span class="at">data =</span> bond[fold <span class="sc">!=</span> k, ])</span>
-<span id="cb208-5"><a href="回帰モデルの評価と交差検証.html#cb208-5" tabindex="-1"></a>  <span class="fu">mean</span>((bond<span class="sc">$</span>spread[fold <span class="sc">==</span> k] <span class="sc">-</span> <span class="fu">predict</span>(fit, bond[fold <span class="sc">==</span> k, ]))<span class="sc">^</span><span class="dv">2</span>)</span>
-<span id="cb208-6"><a href="回帰モデルの評価と交差検証.html#cb208-6" tabindex="-1"></a>}))  <span class="co"># 行: fold, 列: 次数</span></span>
-<span id="cb208-7"><a href="回帰モデルの評価と交差検証.html#cb208-7" tabindex="-1"></a>cv_mean <span class="ot">&lt;-</span> <span class="fu">colMeans</span>(mse_fold)</span>
-<span id="cb208-8"><a href="回帰モデルの評価と交差検証.html#cb208-8" tabindex="-1"></a>cv_se <span class="ot">&lt;-</span> <span class="fu">apply</span>(mse_fold, <span class="dv">2</span>, sd)<span class="sc">/</span><span class="fu">sqrt</span>(<span class="dv">10</span>)</span>
-<span id="cb208-9"><a href="回帰モデルの評価と交差検証.html#cb208-9" tabindex="-1"></a>d_min <span class="ot">&lt;-</span> <span class="fu">which.min</span>(cv_mean)</span>
-<span id="cb208-10"><a href="回帰モデルの評価と交差検証.html#cb208-10" tabindex="-1"></a>d_1se <span class="ot">&lt;-</span> <span class="fu">min</span>(<span class="fu">which</span>(cv_mean <span class="sc">&lt;=</span> cv_mean[d_min] <span class="sc">+</span> cv_se[d_min]))</span>
-<span id="cb208-11"><a href="回帰モデルの評価と交差検証.html#cb208-11" tabindex="-1"></a><span class="fu">c</span>(<span class="at">min =</span> d_min, <span class="at">one_se =</span> d_1se)</span>
-<span id="cb208-12"><a href="回帰モデルの評価と交差検証.html#cb208-12" tabindex="-1"></a><span class="co">#&gt;    min one_se </span></span>
-<span id="cb208-13"><a href="回帰モデルの評価と交差検証.html#cb208-13" tabindex="-1"></a><span class="co">#&gt;      6      3</span></span></code></pre></div>
+<div class="sourceCode" id="cb242"><pre class="sourceCode r"><code class="sourceCode r"><span id="cb242-1"><a href="回帰モデルの評価と交差検証.html#cb242-1" tabindex="-1"></a><span class="fu">set.seed</span>(<span class="dv">17</span>)</span>
+<span id="cb242-2"><a href="回帰モデルの評価と交差検証.html#cb242-2" tabindex="-1"></a>fold <span class="ot">&lt;-</span> <span class="fu">sample</span>(<span class="fu">rep</span>(<span class="dv">1</span><span class="sc">:</span><span class="dv">10</span>, <span class="at">length.out =</span> <span class="fu">nrow</span>(bond)))  <span class="co"># 各観測をどの fold に割り当てるか</span></span>
+<span id="cb242-3"><a href="回帰モデルの評価と交差検証.html#cb242-3" tabindex="-1"></a>mse_fold <span class="ot">&lt;-</span> <span class="fu">sapply</span>(<span class="dv">1</span><span class="sc">:</span><span class="dv">10</span>, <span class="cf">function</span>(d) <span class="fu">sapply</span>(<span class="dv">1</span><span class="sc">:</span><span class="dv">10</span>, <span class="cf">function</span>(k) {</span>
+<span id="cb242-4"><a href="回帰モデルの評価と交差検証.html#cb242-4" tabindex="-1"></a>  fit <span class="ot">&lt;-</span> <span class="fu">lm</span>(spread <span class="sc">~</span> <span class="fu">poly</span>(equity_vol, d), <span class="at">data =</span> bond[fold <span class="sc">!=</span> k, ])</span>
+<span id="cb242-5"><a href="回帰モデルの評価と交差検証.html#cb242-5" tabindex="-1"></a>  <span class="fu">mean</span>((bond<span class="sc">$</span>spread[fold <span class="sc">==</span> k] <span class="sc">-</span> <span class="fu">predict</span>(fit, bond[fold <span class="sc">==</span> k, ]))<span class="sc">^</span><span class="dv">2</span>)</span>
+<span id="cb242-6"><a href="回帰モデルの評価と交差検証.html#cb242-6" tabindex="-1"></a>}))  <span class="co"># 行: fold, 列: 次数</span></span>
+<span id="cb242-7"><a href="回帰モデルの評価と交差検証.html#cb242-7" tabindex="-1"></a>cv_mean <span class="ot">&lt;-</span> <span class="fu">colMeans</span>(mse_fold)</span>
+<span id="cb242-8"><a href="回帰モデルの評価と交差検証.html#cb242-8" tabindex="-1"></a>cv_se <span class="ot">&lt;-</span> <span class="fu">apply</span>(mse_fold, <span class="dv">2</span>, sd)<span class="sc">/</span><span class="fu">sqrt</span>(<span class="dv">10</span>)</span>
+<span id="cb242-9"><a href="回帰モデルの評価と交差検証.html#cb242-9" tabindex="-1"></a>d_min <span class="ot">&lt;-</span> <span class="fu">which.min</span>(cv_mean)</span>
+<span id="cb242-10"><a href="回帰モデルの評価と交差検証.html#cb242-10" tabindex="-1"></a>d_1se <span class="ot">&lt;-</span> <span class="fu">min</span>(<span class="fu">which</span>(cv_mean <span class="sc">&lt;=</span> cv_mean[d_min] <span class="sc">+</span> cv_se[d_min]))</span>
+<span id="cb242-11"><a href="回帰モデルの評価と交差検証.html#cb242-11" tabindex="-1"></a><span class="fu">c</span>(<span class="at">min =</span> d_min, <span class="at">one_se =</span> d_1se)</span>
+<span id="cb242-12"><a href="回帰モデルの評価と交差検証.html#cb242-12" tabindex="-1"></a><span class="co">#&gt;    min one_se </span></span>
+<span id="cb242-13"><a href="回帰モデルの評価と交差検証.html#cb242-13" tabindex="-1"></a><span class="co">#&gt;      6      3</span></span></code></pre></div>
 <p>CV誤差が最小になるのは6次であるが, 1標準誤差ルールでは, より単純な3次の多項式が選ばれる.</p>
 </div>
 </div>
-<div id="その他の評価指標" class="section level2 hasAnchor" number="6.4">
-<h2><span class="header-section-number">6.4</span> その他の評価指標<a href="回帰モデルの評価と交差検証.html#その他の評価指標" class="anchor-section" aria-label="Anchor link to header"></a></h2>
+<div id="その他の評価指標" class="section level2 hasAnchor" number="7.4">
+<h2><span class="header-section-number">7.4</span> その他の評価指標<a href="回帰モデルの評価と交差検証.html#その他の評価指標" class="anchor-section" aria-label="Anchor link to header"></a></h2>
 <p>回帰モデルの予測精度の指標は MSE だけではない. 目的に応じて使い分ける.</p>
 <ul>
 <li><strong>MSE</strong> (平均2乗誤差) と <strong>RMSE</strong> (その平方根): 大きな誤差を重く評価する. RMSE は目的変数と同じ単位 (bp) になる.</li>
@@ -490,13 +491,13 @@ fold ごとの MSE から, CV誤差の平均と標準誤差を自分で計算し
 <li><strong>MAPE</strong> (平均絶対パーセント誤差): 相対的な誤差 (%) で評価する. 目的変数が0に近い値をとると不安定になる.</li>
 </ul>
 <p>選んだ次数のモデルを学習用データで推定し, 検証用データで各指標を計算する.</p>
-<div class="sourceCode" id="cb209"><pre class="sourceCode r"><code class="sourceCode r"><span id="cb209-1"><a href="回帰モデルの評価と交差検証.html#cb209-1" tabindex="-1"></a>fit <span class="ot">&lt;-</span> <span class="fu">lm</span>(spread <span class="sc">~</span> <span class="fu">poly</span>(equity_vol, d_1se), <span class="at">data =</span> bond, <span class="at">subset =</span> train)</span>
-<span id="cb209-2"><a href="回帰モデルの評価と交差検証.html#cb209-2" tabindex="-1"></a>pred <span class="ot">&lt;-</span> <span class="fu">predict</span>(fit, <span class="at">newdata =</span> bond[<span class="sc">-</span>train, ])</span>
-<span id="cb209-3"><a href="回帰モデルの評価と交差検証.html#cb209-3" tabindex="-1"></a>y <span class="ot">&lt;-</span> bond<span class="sc">$</span>spread[<span class="sc">-</span>train]</span>
-<span id="cb209-4"><a href="回帰モデルの評価と交差検証.html#cb209-4" tabindex="-1"></a><span class="fu">c</span>(<span class="at">MSE =</span> <span class="fu">mean</span>((y <span class="sc">-</span> pred)<span class="sc">^</span><span class="dv">2</span>), <span class="at">RMSE =</span> <span class="fu">sqrt</span>(<span class="fu">mean</span>((y <span class="sc">-</span> pred)<span class="sc">^</span><span class="dv">2</span>)), <span class="at">MAE =</span> <span class="fu">mean</span>(<span class="fu">abs</span>(y <span class="sc">-</span> pred)),</span>
-<span id="cb209-5"><a href="回帰モデルの評価と交差検証.html#cb209-5" tabindex="-1"></a>  <span class="at">MedAE =</span> <span class="fu">median</span>(<span class="fu">abs</span>(y <span class="sc">-</span> pred)), <span class="at">MAPE =</span> <span class="dv">100</span> <span class="sc">*</span> <span class="fu">mean</span>(<span class="fu">abs</span>((y <span class="sc">-</span> pred)<span class="sc">/</span>y)))</span>
-<span id="cb209-6"><a href="回帰モデルの評価と交差検証.html#cb209-6" tabindex="-1"></a><span class="co">#&gt;        MSE       RMSE        MAE      MedAE       MAPE </span></span>
-<span id="cb209-7"><a href="回帰モデルの評価と交差検証.html#cb209-7" tabindex="-1"></a><span class="co">#&gt; 1116.35452   33.41189   24.79039   18.95277   39.43331</span></span></code></pre></div>
+<div class="sourceCode" id="cb243"><pre class="sourceCode r"><code class="sourceCode r"><span id="cb243-1"><a href="回帰モデルの評価と交差検証.html#cb243-1" tabindex="-1"></a>fit <span class="ot">&lt;-</span> <span class="fu">lm</span>(spread <span class="sc">~</span> <span class="fu">poly</span>(equity_vol, d_1se), <span class="at">data =</span> bond, <span class="at">subset =</span> train)</span>
+<span id="cb243-2"><a href="回帰モデルの評価と交差検証.html#cb243-2" tabindex="-1"></a>pred <span class="ot">&lt;-</span> <span class="fu">predict</span>(fit, <span class="at">newdata =</span> bond[<span class="sc">-</span>train, ])</span>
+<span id="cb243-3"><a href="回帰モデルの評価と交差検証.html#cb243-3" tabindex="-1"></a>y <span class="ot">&lt;-</span> bond<span class="sc">$</span>spread[<span class="sc">-</span>train]</span>
+<span id="cb243-4"><a href="回帰モデルの評価と交差検証.html#cb243-4" tabindex="-1"></a><span class="fu">c</span>(<span class="at">MSE =</span> <span class="fu">mean</span>((y <span class="sc">-</span> pred)<span class="sc">^</span><span class="dv">2</span>), <span class="at">RMSE =</span> <span class="fu">sqrt</span>(<span class="fu">mean</span>((y <span class="sc">-</span> pred)<span class="sc">^</span><span class="dv">2</span>)), <span class="at">MAE =</span> <span class="fu">mean</span>(<span class="fu">abs</span>(y <span class="sc">-</span> pred)),</span>
+<span id="cb243-5"><a href="回帰モデルの評価と交差検証.html#cb243-5" tabindex="-1"></a>  <span class="at">MedAE =</span> <span class="fu">median</span>(<span class="fu">abs</span>(y <span class="sc">-</span> pred)), <span class="at">MAPE =</span> <span class="dv">100</span> <span class="sc">*</span> <span class="fu">mean</span>(<span class="fu">abs</span>((y <span class="sc">-</span> pred)<span class="sc">/</span>y)))</span>
+<span id="cb243-6"><a href="回帰モデルの評価と交差検証.html#cb243-6" tabindex="-1"></a><span class="co">#&gt;        MSE       RMSE        MAE      MedAE       MAPE </span></span>
+<span id="cb243-7"><a href="回帰モデルの評価と交差検証.html#cb243-7" tabindex="-1"></a><span class="co">#&gt; 1116.35452   33.41189   24.79039   18.95277   39.43331</span></span></code></pre></div>
 <p>MAPE が約39% と大きいのは, スプレッドが一桁の bp と小さい銘柄では, わずかな誤差でも相対誤差が大きくなるためである.</p>
 <p>(自主課題)</p>
 <ul>
@@ -511,8 +512,8 @@ fold ごとの MSE から, CV誤差の平均と標準誤差を自分で計算し
           </div>
         </div>
       </div>
-<a href="一般化加法モデル-gam.html" class="navigation navigation-prev " aria-label="Previous page"><i class="fa fa-angle-left"></i></a>
-<a href="正則化回帰-lasso-ridge回帰-elastic-net.html" class="navigation navigation-next " aria-label="Next page"><i class="fa fa-angle-right"></i></a>
+<a href="正則化回帰-lasso-ridge回帰-elastic-net.html" class="navigation navigation-prev " aria-label="Previous page"><i class="fa fa-angle-left"></i></a>
+<a href="判別分析.html" class="navigation navigation-next " aria-label="Next page"><i class="fa fa-angle-right"></i></a>
     </div>
   </div>
 <script src="libs/gitbook-2.6.7/js/app.min.js"></script>
