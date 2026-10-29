@@ -343,6 +343,7 @@ code span.wa { color: #60a0b0; font-weight: bold; font-style: italic; } /* Warni
             <section class="normal" id="section-">
 <div id="正則化回帰-lasso-ridge回帰-elastic-net" class="section level1 hasAnchor" number="6">
 <h1><span class="header-section-number">Chapter 6</span> 正則化回帰 (lasso, ridge回帰, elastic net)<a href="正則化回帰-lasso-ridge回帰-elastic-net.html#正則化回帰-lasso-ridge回帰-elastic-net" class="anchor-section" aria-label="Anchor link to header"></a></h1>
+<!-- 2026.10.29 Claude: 「同じ系統」→「同じ種類」, 相関の強い説明変数に対する ridge / lasso / elastic net の振る舞いの違いを明記 (指摘: 林) -->
 <!-- 2026.10.25 Claude (2): elastic net の説明を修正 (指摘: 林) -->
 <!-- 2026.10.25 Claude: R演習スクリプト R_lasso_dist.R (2026年度版) に合わせて, データを信用スプレッド (仮想データ) に変更 (旧: winequality-white). GLM + 正則化 (German Credit) は継続 -->
 <p>本章の内容は, 授業の R 演習スクリプト <code>R_lasso_dist.R</code> に対応する.</p>
@@ -372,9 +373,12 @@ Jerome Friedman, Trevor Hastie, Robert Tibshirani
   - 成長・投資: sales_growth, capex_assets, asset_growth (%)
   - その他: rd_sales, payout, foreign_own, firm_age, board_indep, inventory_turn,
             receivable_days, tokyo, listed_years</code></pre>
-<p>説明変数が30個と多く, しかも同じ系統の指標どうし (例えば, 収益性の4指標) は強く相関している.
-このような状況では, 全変数を使った最小二乗法 (OLS) の推定は不安定になりやすく, 予測精度も下がりやすい.
-正則化回帰は, こうした場面で威力を発揮する.</p>
+<p>説明変数が30個と多く, しかも同じ種類の指標どうし (例えば, 収益性の4指標) は強く相関している.
+このような状況では, 全変数を使った最小二乗法 (OLS) の推定は不安定 (係数のばらつきが大きい) になりやすく, 予測精度も下がりやすい.
+正則化回帰は, 係数をゼロの方向に縮めることで推定のばらつきを抑え, 予測精度の改善を図る.
+ただし, 相関の強い変数に対する振る舞いは手法によって異なる.
+ridge回帰は相関の強い変数の係数を互いに近い値に縮めて推定を安定させるのに対し, lasso は相関の強い変数のグループから一部の変数だけを選び, どれが選ばれるかはデータの少しの違いで変わりやすい.
+elastic net は, 両者の中間的な性質を持つ (以下で確かめる).</p>
 <div class="sourceCode" id="cb203"><pre class="sourceCode r"><code class="sourceCode r"><span id="cb203-1"><a href="正則化回帰-lasso-ridge回帰-elastic-net.html#cb203-1" tabindex="-1"></a><span class="fu">library</span>(glmnet)  <span class="co"># Lasso and Elastic-Net Regularized Generalized Linear Models</span></span>
 <span id="cb203-2"><a href="正則化回帰-lasso-ridge回帰-elastic-net.html#cb203-2" tabindex="-1"></a>cs <span class="ot">&lt;-</span> <span class="fu">read.csv</span>(<span class="st">&quot;class/credit_spread.csv&quot;</span>)</span>
 <span id="cb203-3"><a href="正則化回帰-lasso-ridge回帰-elastic-net.html#cb203-3" tabindex="-1"></a><span class="fu">dim</span>(cs)</span>
@@ -453,7 +457,7 @@ Jerome Friedman, Trevor Hastie, Robert Tibshirani
 <span id="cb204-53"><a href="正則化回帰-lasso-ridge回帰-elastic-net.html#cb204-53" tabindex="-1"></a>lm_pred <span class="ot">&lt;-</span> <span class="fu">predict</span>(lm_mod, <span class="at">newdata =</span> cs[<span class="sc">-</span>train, ])</span>
 <span id="cb204-54"><a href="正則化回帰-lasso-ridge回帰-elastic-net.html#cb204-54" tabindex="-1"></a><span class="fu">mean</span>((lm_pred <span class="sc">-</span> cs<span class="sc">$</span>spread[<span class="sc">-</span>train])<span class="sc">^</span><span class="dv">2</span>)  <span class="co"># テストMSE (OLS)</span></span>
 <span id="cb204-55"><a href="正則化回帰-lasso-ridge回帰-elastic-net.html#cb204-55" tabindex="-1"></a><span class="co">#&gt; [1] 1619.031</span></span></code></pre></div>
-<p><code>summary()</code>の出力を見ると, 同じ系統の指標の中で, 一部だけが有意になったり, 直観とは逆の符号になったりしている変数がある.
+<p><code>summary()</code>の出力を見ると, 同じ種類の指標の中で, 一部だけが有意になったり, 直観とは逆の符号になったりしている変数がある.
 説明変数どうしの相関が強いため (多重共線性), 個々の係数が不安定になっている.</p>
 </div>
 </div>
@@ -660,41 +664,42 @@ CV誤差最小の<span class="math inline">\(\lambda\)</span>よりも大きな<
 <span id="cb216-4"><a href="正則化回帰-lasso-ridge回帰-elastic-net.html#cb216-4" tabindex="-1"></a><span class="fu">mean</span>((lasso_pred2 <span class="sc">-</span> y[<span class="sc">-</span>train])<span class="sc">^</span><span class="dv">2</span>)</span>
 <span id="cb216-5"><a href="正則化回帰-lasso-ridge回帰-elastic-net.html#cb216-5" tabindex="-1"></a><span class="co">#&gt; [1] 1500.546</span></span>
 <span id="cb216-6"><a href="正則化回帰-lasso-ridge回帰-elastic-net.html#cb216-6" tabindex="-1"></a></span>
-<span id="cb216-7"><a href="正則化回帰-lasso-ridge回帰-elastic-net.html#cb216-7" tabindex="-1"></a><span class="co"># 選ばれた変数: 同じ系統の指標から1つずつ選ばれているか?</span></span>
-<span id="cb216-8"><a href="正則化回帰-lasso-ridge回帰-elastic-net.html#cb216-8" tabindex="-1"></a><span class="fu">coef</span>(cv_out, <span class="at">s =</span> <span class="st">&quot;lambda.1se&quot;</span>)</span>
-<span id="cb216-9"><a href="正則化回帰-lasso-ridge回帰-elastic-net.html#cb216-9" tabindex="-1"></a><span class="co">#&gt; 31 x 1 sparse Matrix of class &quot;dgCMatrix&quot;</span></span>
-<span id="cb216-10"><a href="正則化回帰-lasso-ridge回帰-elastic-net.html#cb216-10" tabindex="-1"></a><span class="co">#&gt;                          s1</span></span>
-<span id="cb216-11"><a href="正則化回帰-lasso-ridge回帰-elastic-net.html#cb216-11" tabindex="-1"></a><span class="co">#&gt; (Intercept)     143.2696830</span></span>
-<span id="cb216-12"><a href="正則化回帰-lasso-ridge回帰-elastic-net.html#cb216-12" tabindex="-1"></a><span class="co">#&gt; roa              -5.3983390</span></span>
-<span id="cb216-13"><a href="正則化回帰-lasso-ridge回帰-elastic-net.html#cb216-13" tabindex="-1"></a><span class="co">#&gt; roe               .        </span></span>
-<span id="cb216-14"><a href="正則化回帰-lasso-ridge回帰-elastic-net.html#cb216-14" tabindex="-1"></a><span class="co">#&gt; op_margin        -1.3205209</span></span>
-<span id="cb216-15"><a href="正則化回帰-lasso-ridge回帰-elastic-net.html#cb216-15" tabindex="-1"></a><span class="co">#&gt; ebitda_margin    -0.1031488</span></span>
-<span id="cb216-16"><a href="正則化回帰-lasso-ridge回帰-elastic-net.html#cb216-16" tabindex="-1"></a><span class="co">#&gt; debt_assets       2.7257140</span></span>
-<span id="cb216-17"><a href="正則化回帰-lasso-ridge回帰-elastic-net.html#cb216-17" tabindex="-1"></a><span class="co">#&gt; debt_equity       .        </span></span>
-<span id="cb216-18"><a href="正則化回帰-lasso-ridge回帰-elastic-net.html#cb216-18" tabindex="-1"></a><span class="co">#&gt; net_debt_ebitda   3.2911240</span></span>
-<span id="cb216-19"><a href="正則化回帰-lasso-ridge回帰-elastic-net.html#cb216-19" tabindex="-1"></a><span class="co">#&gt; int_coverage     -0.2523586</span></span>
-<span id="cb216-20"><a href="正則化回帰-lasso-ridge回帰-elastic-net.html#cb216-20" tabindex="-1"></a><span class="co">#&gt; current_ratio     .        </span></span>
-<span id="cb216-21"><a href="正則化回帰-lasso-ridge回帰-elastic-net.html#cb216-21" tabindex="-1"></a><span class="co">#&gt; quick_ratio       .        </span></span>
-<span id="cb216-22"><a href="正則化回帰-lasso-ridge回帰-elastic-net.html#cb216-22" tabindex="-1"></a><span class="co">#&gt; cash_assets      -1.2859068</span></span>
-<span id="cb216-23"><a href="正則化回帰-lasso-ridge回帰-elastic-net.html#cb216-23" tabindex="-1"></a><span class="co">#&gt; log_assets       -7.9330240</span></span>
-<span id="cb216-24"><a href="正則化回帰-lasso-ridge回帰-elastic-net.html#cb216-24" tabindex="-1"></a><span class="co">#&gt; log_sales         .        </span></span>
-<span id="cb216-25"><a href="正則化回帰-lasso-ridge回帰-elastic-net.html#cb216-25" tabindex="-1"></a><span class="co">#&gt; log_mcap         -5.4470553</span></span>
-<span id="cb216-26"><a href="正則化回帰-lasso-ridge回帰-elastic-net.html#cb216-26" tabindex="-1"></a><span class="co">#&gt; employees_k       .        </span></span>
-<span id="cb216-27"><a href="正則化回帰-lasso-ridge回帰-elastic-net.html#cb216-27" tabindex="-1"></a><span class="co">#&gt; equity_vol        3.0033281</span></span>
-<span id="cb216-28"><a href="正則化回帰-lasso-ridge回帰-elastic-net.html#cb216-28" tabindex="-1"></a><span class="co">#&gt; beta              .        </span></span>
-<span id="cb216-29"><a href="正則化回帰-lasso-ridge回帰-elastic-net.html#cb216-29" tabindex="-1"></a><span class="co">#&gt; max_drawdown      .        </span></span>
-<span id="cb216-30"><a href="正則化回帰-lasso-ridge回帰-elastic-net.html#cb216-30" tabindex="-1"></a><span class="co">#&gt; sales_growth      .        </span></span>
-<span id="cb216-31"><a href="正則化回帰-lasso-ridge回帰-elastic-net.html#cb216-31" tabindex="-1"></a><span class="co">#&gt; capex_assets      .        </span></span>
-<span id="cb216-32"><a href="正則化回帰-lasso-ridge回帰-elastic-net.html#cb216-32" tabindex="-1"></a><span class="co">#&gt; asset_growth      .        </span></span>
-<span id="cb216-33"><a href="正則化回帰-lasso-ridge回帰-elastic-net.html#cb216-33" tabindex="-1"></a><span class="co">#&gt; rd_sales          .        </span></span>
-<span id="cb216-34"><a href="正則化回帰-lasso-ridge回帰-elastic-net.html#cb216-34" tabindex="-1"></a><span class="co">#&gt; payout           -0.1068294</span></span>
-<span id="cb216-35"><a href="正則化回帰-lasso-ridge回帰-elastic-net.html#cb216-35" tabindex="-1"></a><span class="co">#&gt; foreign_own       .        </span></span>
-<span id="cb216-36"><a href="正則化回帰-lasso-ridge回帰-elastic-net.html#cb216-36" tabindex="-1"></a><span class="co">#&gt; firm_age          .        </span></span>
-<span id="cb216-37"><a href="正則化回帰-lasso-ridge回帰-elastic-net.html#cb216-37" tabindex="-1"></a><span class="co">#&gt; board_indep       .        </span></span>
-<span id="cb216-38"><a href="正則化回帰-lasso-ridge回帰-elastic-net.html#cb216-38" tabindex="-1"></a><span class="co">#&gt; inventory_turn    .        </span></span>
-<span id="cb216-39"><a href="正則化回帰-lasso-ridge回帰-elastic-net.html#cb216-39" tabindex="-1"></a><span class="co">#&gt; receivable_days   .        </span></span>
-<span id="cb216-40"><a href="正則化回帰-lasso-ridge回帰-elastic-net.html#cb216-40" tabindex="-1"></a><span class="co">#&gt; tokyo             .        </span></span>
-<span id="cb216-41"><a href="正則化回帰-lasso-ridge回帰-elastic-net.html#cb216-41" tabindex="-1"></a><span class="co">#&gt; listed_years      .</span></span></code></pre></div>
+<span id="cb216-7"><a href="正則化回帰-lasso-ridge回帰-elastic-net.html#cb216-7" tabindex="-1"></a><span class="co"># 選ばれた変数: 互いに相関の強い指標のグループ (例: 収益性の4指標) から,</span></span>
+<span id="cb216-8"><a href="正則化回帰-lasso-ridge回帰-elastic-net.html#cb216-8" tabindex="-1"></a><span class="co"># 一部だけが選ばれているか?</span></span>
+<span id="cb216-9"><a href="正則化回帰-lasso-ridge回帰-elastic-net.html#cb216-9" tabindex="-1"></a><span class="fu">coef</span>(cv_out, <span class="at">s =</span> <span class="st">&quot;lambda.1se&quot;</span>)</span>
+<span id="cb216-10"><a href="正則化回帰-lasso-ridge回帰-elastic-net.html#cb216-10" tabindex="-1"></a><span class="co">#&gt; 31 x 1 sparse Matrix of class &quot;dgCMatrix&quot;</span></span>
+<span id="cb216-11"><a href="正則化回帰-lasso-ridge回帰-elastic-net.html#cb216-11" tabindex="-1"></a><span class="co">#&gt;                          s1</span></span>
+<span id="cb216-12"><a href="正則化回帰-lasso-ridge回帰-elastic-net.html#cb216-12" tabindex="-1"></a><span class="co">#&gt; (Intercept)     143.2696830</span></span>
+<span id="cb216-13"><a href="正則化回帰-lasso-ridge回帰-elastic-net.html#cb216-13" tabindex="-1"></a><span class="co">#&gt; roa              -5.3983390</span></span>
+<span id="cb216-14"><a href="正則化回帰-lasso-ridge回帰-elastic-net.html#cb216-14" tabindex="-1"></a><span class="co">#&gt; roe               .        </span></span>
+<span id="cb216-15"><a href="正則化回帰-lasso-ridge回帰-elastic-net.html#cb216-15" tabindex="-1"></a><span class="co">#&gt; op_margin        -1.3205209</span></span>
+<span id="cb216-16"><a href="正則化回帰-lasso-ridge回帰-elastic-net.html#cb216-16" tabindex="-1"></a><span class="co">#&gt; ebitda_margin    -0.1031488</span></span>
+<span id="cb216-17"><a href="正則化回帰-lasso-ridge回帰-elastic-net.html#cb216-17" tabindex="-1"></a><span class="co">#&gt; debt_assets       2.7257140</span></span>
+<span id="cb216-18"><a href="正則化回帰-lasso-ridge回帰-elastic-net.html#cb216-18" tabindex="-1"></a><span class="co">#&gt; debt_equity       .        </span></span>
+<span id="cb216-19"><a href="正則化回帰-lasso-ridge回帰-elastic-net.html#cb216-19" tabindex="-1"></a><span class="co">#&gt; net_debt_ebitda   3.2911240</span></span>
+<span id="cb216-20"><a href="正則化回帰-lasso-ridge回帰-elastic-net.html#cb216-20" tabindex="-1"></a><span class="co">#&gt; int_coverage     -0.2523586</span></span>
+<span id="cb216-21"><a href="正則化回帰-lasso-ridge回帰-elastic-net.html#cb216-21" tabindex="-1"></a><span class="co">#&gt; current_ratio     .        </span></span>
+<span id="cb216-22"><a href="正則化回帰-lasso-ridge回帰-elastic-net.html#cb216-22" tabindex="-1"></a><span class="co">#&gt; quick_ratio       .        </span></span>
+<span id="cb216-23"><a href="正則化回帰-lasso-ridge回帰-elastic-net.html#cb216-23" tabindex="-1"></a><span class="co">#&gt; cash_assets      -1.2859068</span></span>
+<span id="cb216-24"><a href="正則化回帰-lasso-ridge回帰-elastic-net.html#cb216-24" tabindex="-1"></a><span class="co">#&gt; log_assets       -7.9330240</span></span>
+<span id="cb216-25"><a href="正則化回帰-lasso-ridge回帰-elastic-net.html#cb216-25" tabindex="-1"></a><span class="co">#&gt; log_sales         .        </span></span>
+<span id="cb216-26"><a href="正則化回帰-lasso-ridge回帰-elastic-net.html#cb216-26" tabindex="-1"></a><span class="co">#&gt; log_mcap         -5.4470553</span></span>
+<span id="cb216-27"><a href="正則化回帰-lasso-ridge回帰-elastic-net.html#cb216-27" tabindex="-1"></a><span class="co">#&gt; employees_k       .        </span></span>
+<span id="cb216-28"><a href="正則化回帰-lasso-ridge回帰-elastic-net.html#cb216-28" tabindex="-1"></a><span class="co">#&gt; equity_vol        3.0033281</span></span>
+<span id="cb216-29"><a href="正則化回帰-lasso-ridge回帰-elastic-net.html#cb216-29" tabindex="-1"></a><span class="co">#&gt; beta              .        </span></span>
+<span id="cb216-30"><a href="正則化回帰-lasso-ridge回帰-elastic-net.html#cb216-30" tabindex="-1"></a><span class="co">#&gt; max_drawdown      .        </span></span>
+<span id="cb216-31"><a href="正則化回帰-lasso-ridge回帰-elastic-net.html#cb216-31" tabindex="-1"></a><span class="co">#&gt; sales_growth      .        </span></span>
+<span id="cb216-32"><a href="正則化回帰-lasso-ridge回帰-elastic-net.html#cb216-32" tabindex="-1"></a><span class="co">#&gt; capex_assets      .        </span></span>
+<span id="cb216-33"><a href="正則化回帰-lasso-ridge回帰-elastic-net.html#cb216-33" tabindex="-1"></a><span class="co">#&gt; asset_growth      .        </span></span>
+<span id="cb216-34"><a href="正則化回帰-lasso-ridge回帰-elastic-net.html#cb216-34" tabindex="-1"></a><span class="co">#&gt; rd_sales          .        </span></span>
+<span id="cb216-35"><a href="正則化回帰-lasso-ridge回帰-elastic-net.html#cb216-35" tabindex="-1"></a><span class="co">#&gt; payout           -0.1068294</span></span>
+<span id="cb216-36"><a href="正則化回帰-lasso-ridge回帰-elastic-net.html#cb216-36" tabindex="-1"></a><span class="co">#&gt; foreign_own       .        </span></span>
+<span id="cb216-37"><a href="正則化回帰-lasso-ridge回帰-elastic-net.html#cb216-37" tabindex="-1"></a><span class="co">#&gt; firm_age          .        </span></span>
+<span id="cb216-38"><a href="正則化回帰-lasso-ridge回帰-elastic-net.html#cb216-38" tabindex="-1"></a><span class="co">#&gt; board_indep       .        </span></span>
+<span id="cb216-39"><a href="正則化回帰-lasso-ridge回帰-elastic-net.html#cb216-39" tabindex="-1"></a><span class="co">#&gt; inventory_turn    .        </span></span>
+<span id="cb216-40"><a href="正則化回帰-lasso-ridge回帰-elastic-net.html#cb216-40" tabindex="-1"></a><span class="co">#&gt; receivable_days   .        </span></span>
+<span id="cb216-41"><a href="正則化回帰-lasso-ridge回帰-elastic-net.html#cb216-41" tabindex="-1"></a><span class="co">#&gt; tokyo             .        </span></span>
+<span id="cb216-42"><a href="正則化回帰-lasso-ridge回帰-elastic-net.html#cb216-42" tabindex="-1"></a><span class="co">#&gt; listed_years      .</span></span></code></pre></div>
 <p>例えば, 収益性の指標では <code>roe</code> が, 負債の指標では <code>debt_equity</code> が除かれ, 相関の強い指標の中から一部が選ばれている.
 lasso は, 相関の強い変数群からは「どれか1つ (少数)」を選ぶ傾向がある.</p>
 <p><code>cv.glmnet()</code>の出力の確認:</p>
