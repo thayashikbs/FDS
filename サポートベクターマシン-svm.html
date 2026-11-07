@@ -1,0 +1,1023 @@
+<!DOCTYPE html>
+<html lang="" xml:lang="">
+<head>
+
+  <meta charset="utf-8" />
+  <meta http-equiv="X-UA-Compatible" content="IE=edge" />
+  <title>Chapter 11 サポートベクターマシン (SVM) | 金融データサイエンス</title>
+  <meta name="description" content="Chapter 11 サポートベクターマシン (SVM) | 金融データサイエンス" />
+  <meta name="generator" content="bookdown 0.37 and GitBook 2.6.7" />
+
+  <meta property="og:title" content="Chapter 11 サポートベクターマシン (SVM) | 金融データサイエンス" />
+  <meta property="og:type" content="book" />
+  
+  
+  
+
+  <meta name="twitter:card" content="summary" />
+  <meta name="twitter:title" content="Chapter 11 サポートベクターマシン (SVM) | 金融データサイエンス" />
+  
+  
+  
+
+<meta name="author" content="林 高樹" />
+
+
+
+  <meta name="viewport" content="width=device-width, initial-scale=1" />
+  <meta name="apple-mobile-web-app-capable" content="yes" />
+  <meta name="apple-mobile-web-app-status-bar-style" content="black" />
+  
+  
+<link rel="prev" href="決定木とアンサンブル学習.html"/>
+<link rel="next" href="主成分分析-pca.html"/>
+<script src="libs/jquery-3.6.1/jquery-3.6.1.min.js"></script>
+<script src="https://cdn.jsdelivr.net/npm/fuse.js@6.4.6/dist/fuse.min.js"></script>
+<link href="libs/gitbook-2.6.7/css/style.css" rel="stylesheet" />
+<link href="libs/gitbook-2.6.7/css/plugin-table.css" rel="stylesheet" />
+<link href="libs/gitbook-2.6.7/css/plugin-bookdown.css" rel="stylesheet" />
+<link href="libs/gitbook-2.6.7/css/plugin-highlight.css" rel="stylesheet" />
+<link href="libs/gitbook-2.6.7/css/plugin-search.css" rel="stylesheet" />
+<link href="libs/gitbook-2.6.7/css/plugin-fontsettings.css" rel="stylesheet" />
+<link href="libs/gitbook-2.6.7/css/plugin-clipboard.css" rel="stylesheet" />
+
+
+
+
+
+
+
+
+<link href="libs/anchor-sections-1.1.0/anchor-sections.css" rel="stylesheet" />
+<link href="libs/anchor-sections-1.1.0/anchor-sections-hash.css" rel="stylesheet" />
+<script src="libs/anchor-sections-1.1.0/anchor-sections.js"></script>
+
+
+<style type="text/css">
+pre > code.sourceCode { white-space: pre; position: relative; }
+pre > code.sourceCode > span { line-height: 1.25; }
+pre > code.sourceCode > span:empty { height: 1.2em; }
+.sourceCode { overflow: visible; }
+code.sourceCode > span { color: inherit; text-decoration: inherit; }
+pre.sourceCode { margin: 0; }
+@media screen {
+div.sourceCode { overflow: auto; }
+}
+@media print {
+pre > code.sourceCode { white-space: pre-wrap; }
+pre > code.sourceCode > span { text-indent: -5em; padding-left: 5em; }
+}
+pre.numberSource code
+  { counter-reset: source-line 0; }
+pre.numberSource code > span
+  { position: relative; left: -4em; counter-increment: source-line; }
+pre.numberSource code > span > a:first-child::before
+  { content: counter(source-line);
+    position: relative; left: -1em; text-align: right; vertical-align: baseline;
+    border: none; display: inline-block;
+    -webkit-touch-callout: none; -webkit-user-select: none;
+    -khtml-user-select: none; -moz-user-select: none;
+    -ms-user-select: none; user-select: none;
+    padding: 0 4px; width: 4em;
+    color: #aaaaaa;
+  }
+pre.numberSource { margin-left: 3em; border-left: 1px solid #aaaaaa;  padding-left: 4px; }
+div.sourceCode
+  {   }
+@media screen {
+pre > code.sourceCode > span > a:first-child::before { text-decoration: underline; }
+}
+code span.al { color: #ff0000; font-weight: bold; } /* Alert */
+code span.an { color: #60a0b0; font-weight: bold; font-style: italic; } /* Annotation */
+code span.at { color: #7d9029; } /* Attribute */
+code span.bn { color: #40a070; } /* BaseN */
+code span.bu { color: #008000; } /* BuiltIn */
+code span.cf { color: #007020; font-weight: bold; } /* ControlFlow */
+code span.ch { color: #4070a0; } /* Char */
+code span.cn { color: #880000; } /* Constant */
+code span.co { color: #60a0b0; font-style: italic; } /* Comment */
+code span.cv { color: #60a0b0; font-weight: bold; font-style: italic; } /* CommentVar */
+code span.do { color: #ba2121; font-style: italic; } /* Documentation */
+code span.dt { color: #902000; } /* DataType */
+code span.dv { color: #40a070; } /* DecVal */
+code span.er { color: #ff0000; font-weight: bold; } /* Error */
+code span.ex { } /* Extension */
+code span.fl { color: #40a070; } /* Float */
+code span.fu { color: #06287e; } /* Function */
+code span.im { color: #008000; font-weight: bold; } /* Import */
+code span.in { color: #60a0b0; font-weight: bold; font-style: italic; } /* Information */
+code span.kw { color: #007020; font-weight: bold; } /* Keyword */
+code span.op { color: #666666; } /* Operator */
+code span.ot { color: #007020; } /* Other */
+code span.pp { color: #bc7a00; } /* Preprocessor */
+code span.sc { color: #4070a0; } /* SpecialChar */
+code span.ss { color: #bb6688; } /* SpecialString */
+code span.st { color: #4070a0; } /* String */
+code span.va { color: #19177c; } /* Variable */
+code span.vs { color: #4070a0; } /* VerbatimString */
+code span.wa { color: #60a0b0; font-weight: bold; font-style: italic; } /* Warning */
+</style>
+
+<style type="text/css">
+  
+  div.hanging-indent{margin-left: 1.5em; text-indent: -1.5em;}
+</style>
+
+</head>
+
+<body>
+
+
+
+  <div class="book without-animation with-summary font-size-2 font-family-1" data-basepath=".">
+
+    <div class="book-summary">
+      <nav role="navigation">
+
+<ul class="summary">
+<li><a href="./">金融データサイエンス</a></li>
+
+<li class="divider"></li>
+<li class="chapter" data-level="1" data-path="index.html"><a href="index.html"><i class="fa fa-check"></i><b>1</b> はじめに</a>
+<ul>
+<li class="chapter" data-level="1.1" data-path="index.html"><a href="index.html#コースの目的"><i class="fa fa-check"></i><b>1.1</b> コースの目的</a></li>
+<li class="chapter" data-level="1.2" data-path="index.html"><a href="index.html#統計学統計的手法の学習について"><i class="fa fa-check"></i><b>1.2</b> 統計学/統計的手法の学習について</a>
+<ul>
+<li class="chapter" data-level="" data-path="index.html"><a href="index.html#学習の目標"><i class="fa fa-check"></i>学習の目標</a></li>
+<li class="chapter" data-level="" data-path="index.html"><a href="index.html#統計学統計的手法の学習方法"><i class="fa fa-check"></i>統計学/統計的手法の学習方法</a></li>
+<li class="chapter" data-level="" data-path="index.html"><a href="index.html#統計学統計的手法の学習ステップ"><i class="fa fa-check"></i>統計学/統計的手法の学習ステップ</a></li>
+</ul></li>
+<li class="chapter" data-level="1.3" data-path="index.html"><a href="index.html#金融ビジネス応用における統計学の最近の趨勢"><i class="fa fa-check"></i><b>1.3</b> 金融・ビジネス応用における統計学の最近の趨勢</a></li>
+<li class="chapter" data-level="1.4" data-path="index.html"><a href="index.html#本書内の記載の注意点"><i class="fa fa-check"></i><b>1.4</b> 本書内の記載の注意点</a></li>
+</ul></li>
+<li class="chapter" data-level="2" data-path="r言語の基本.html"><a href="r言語の基本.html"><i class="fa fa-check"></i><b>2</b> R言語の基本</a>
+<ul>
+<li class="chapter" data-level="2.1" data-path="r言語の基本.html"><a href="r言語の基本.html#rの基本プログラミング"><i class="fa fa-check"></i><b>2.1</b> Rの基本プログラミング</a>
+<ul>
+<li class="chapter" data-level="" data-path="r言語の基本.html"><a href="r言語の基本.html#生成ai利用に関する注意事項"><i class="fa fa-check"></i>生成AI利用に関する注意事項</a></li>
+<li class="chapter" data-level="2.1.1" data-path="r言語の基本.html"><a href="r言語の基本.html#基本操作"><i class="fa fa-check"></i><b>2.1.1</b> 基本操作</a></li>
+<li class="chapter" data-level="2.1.2" data-path="r言語の基本.html"><a href="r言語の基本.html#基本構文"><i class="fa fa-check"></i><b>2.1.2</b> 基本構文</a></li>
+<li class="chapter" data-level="2.1.3" data-path="r言語の基本.html"><a href="r言語の基本.html#自作関数"><i class="fa fa-check"></i><b>2.1.3</b> 自作関数</a></li>
+<li class="chapter" data-level="2.1.4" data-path="r言語の基本.html"><a href="r言語の基本.html#パッケージのインストール-読み込み"><i class="fa fa-check"></i><b>2.1.4</b> パッケージのインストール &amp; 読み込み</a></li>
+<li class="chapter" data-level="2.1.5" data-path="r言語の基本.html"><a href="r言語の基本.html#ヘルプ"><i class="fa fa-check"></i><b>2.1.5</b> ヘルプ</a></li>
+</ul></li>
+<li class="chapter" data-level="2.2" data-path="r言語の基本.html"><a href="r言語の基本.html#データの型や構造"><i class="fa fa-check"></i><b>2.2</b> データの型や構造</a>
+<ul>
+<li class="chapter" data-level="2.2.1" data-path="r言語の基本.html"><a href="r言語の基本.html#データの値の種類-データ型"><i class="fa fa-check"></i><b>2.2.1</b> データの値の種類 (“データ型”)</a></li>
+<li class="chapter" data-level="2.2.2" data-path="r言語の基本.html"><a href="r言語の基本.html#データの配列の仕方-データ構造"><i class="fa fa-check"></i><b>2.2.2</b> データの配列の仕方 (“データ構造”)</a></li>
+<li class="chapter" data-level="2.2.3" data-path="r言語の基本.html"><a href="r言語の基本.html#ベクトル"><i class="fa fa-check"></i><b>2.2.3</b> ベクトル</a></li>
+<li class="chapter" data-level="2.2.4" data-path="r言語の基本.html"><a href="r言語の基本.html#行列"><i class="fa fa-check"></i><b>2.2.4</b> 行列</a></li>
+<li class="chapter" data-level="2.2.5" data-path="r言語の基本.html"><a href="r言語の基本.html#リスト"><i class="fa fa-check"></i><b>2.2.5</b> リスト</a></li>
+<li class="chapter" data-level="2.2.6" data-path="r言語の基本.html"><a href="r言語の基本.html#データフレーム"><i class="fa fa-check"></i><b>2.2.6</b> データフレーム</a></li>
+</ul></li>
+<li class="chapter" data-level="2.3" data-path="r言語の基本.html"><a href="r言語の基本.html#データの操作演算"><i class="fa fa-check"></i><b>2.3</b> データの操作・演算</a>
+<ul>
+<li class="chapter" data-level="2.3.1" data-path="r言語の基本.html"><a href="r言語の基本.html#ベクトルの結合-ソート"><i class="fa fa-check"></i><b>2.3.1</b> ベクトルの結合, ソート</a></li>
+<li class="chapter" data-level="2.3.2" data-path="r言語の基本.html"><a href="r言語の基本.html#二項演算"><i class="fa fa-check"></i><b>2.3.2</b> 二項演算</a></li>
+<li class="chapter" data-level="2.3.3" data-path="r言語の基本.html"><a href="r言語の基本.html#論理演算"><i class="fa fa-check"></i><b>2.3.3</b> 論理演算</a></li>
+<li class="chapter" data-level="2.3.4" data-path="r言語の基本.html"><a href="r言語の基本.html#条件式"><i class="fa fa-check"></i><b>2.3.4</b> 条件式</a></li>
+<li class="chapter" data-level="2.3.5" data-path="r言語の基本.html"><a href="r言語の基本.html#行列演算"><i class="fa fa-check"></i><b>2.3.5</b> 行列演算</a></li>
+</ul></li>
+<li class="chapter" data-level="2.4" data-path="r言語の基本.html"><a href="r言語の基本.html#r関数"><i class="fa fa-check"></i><b>2.4</b> R関数</a>
+<ul>
+<li class="chapter" data-level="2.4.1" data-path="r言語の基本.html"><a href="r言語の基本.html#数学基本関数"><i class="fa fa-check"></i><b>2.4.1</b> 数学基本関数</a></li>
+<li class="chapter" data-level="2.4.2" data-path="r言語の基本.html"><a href="r言語の基本.html#基本統計量の計算"><i class="fa fa-check"></i><b>2.4.2</b> 基本統計量の計算</a></li>
+<li class="chapter" data-level="2.4.3" data-path="r言語の基本.html"><a href="r言語の基本.html#確率分布"><i class="fa fa-check"></i><b>2.4.3</b> 確率分布</a></li>
+<li class="chapter" data-level="2.4.4" data-path="r言語の基本.html"><a href="r言語の基本.html#その他便利な関数"><i class="fa fa-check"></i><b>2.4.4</b> その他便利な関数</a></li>
+</ul></li>
+<li class="chapter" data-level="2.5" data-path="r言語の基本.html"><a href="r言語の基本.html#データの可視化"><i class="fa fa-check"></i><b>2.5</b> データの可視化</a></li>
+<li class="chapter" data-level="2.6" data-path="r言語の基本.html"><a href="r言語の基本.html#ファイル入出力"><i class="fa fa-check"></i><b>2.6</b> ファイル入出力</a>
+<ul>
+<li class="chapter" data-level="2.6.1" data-path="r言語の基本.html"><a href="r言語の基本.html#テキストファイル読み込み"><i class="fa fa-check"></i><b>2.6.1</b> テキストファイル読み込み</a></li>
+<li class="chapter" data-level="2.6.2" data-path="r言語の基本.html"><a href="r言語の基本.html#テキストファイル書き出し"><i class="fa fa-check"></i><b>2.6.2</b> テキストファイル書き出し</a></li>
+</ul></li>
+<li class="chapter" data-level="2.7" data-path="r言語の基本.html"><a href="r言語の基本.html#パッケージtidyverse"><i class="fa fa-check"></i><b>2.7</b> パッケージ<code>tidyverse</code></a>
+<ul>
+<li class="chapter" data-level="2.7.1" data-path="r言語の基本.html"><a href="r言語の基本.html#q-rの初心者はtidyverseから勉強することは可能か"><i class="fa fa-check"></i><b>2.7.1</b> Q: Rの初心者は<code>tidyverse</code>から勉強することは可能か?</a></li>
+<li class="chapter" data-level="2.7.2" data-path="r言語の基本.html"><a href="r言語の基本.html#tidyverseの基本"><i class="fa fa-check"></i><b>2.7.2</b> <code>tidyverse</code>の基本</a></li>
+</ul></li>
+</ul></li>
+<li class="chapter" data-level="3" data-path="線形回帰分析.html"><a href="線形回帰分析.html"><i class="fa fa-check"></i><b>3</b> 線形回帰分析</a>
+<ul>
+<li class="chapter" data-level="3.1" data-path="線形回帰分析.html"><a href="線形回帰分析.html#重回帰分析の基本操作"><i class="fa fa-check"></i><b>3.1</b> 重回帰分析の基本操作</a>
+<ul>
+<li class="chapter" data-level="" data-path="線形回帰分析.html"><a href="線形回帰分析.html#データ1-1ルーム賃貸マンション"><i class="fa fa-check"></i>データ1: 1ルーム賃貸マンション</a></li>
+</ul></li>
+<li class="chapter" data-level="3.2" data-path="線形回帰分析.html"><a href="線形回帰分析.html#回帰分析の結果の見方と変数の選択"><i class="fa fa-check"></i><b>3.2</b> 回帰分析の結果の見方と変数の選択</a>
+<ul>
+<li class="chapter" data-level="" data-path="線形回帰分析.html"><a href="線形回帰分析.html#データ2-上場企業のpbrデータ-仮想データ"><i class="fa fa-check"></i>データ2: 上場企業のPBRデータ (仮想データ)</a></li>
+</ul></li>
+<li class="chapter" data-level="3.3" data-path="線形回帰分析.html"><a href="線形回帰分析.html#説明変数に質的変数を含む回帰"><i class="fa fa-check"></i><b>3.3</b> 説明変数に質的変数を含む回帰</a>
+<ul>
+<li class="chapter" data-level="" data-path="線形回帰分析.html"><a href="線形回帰分析.html#データセット3-高速道路事故データ"><i class="fa fa-check"></i>データセット#3: 高速道路事故データ</a></li>
+</ul></li>
+<li class="chapter" data-level="3.4" data-path="線形回帰分析.html"><a href="線形回帰分析.html#説明変数に質的変数を含む回帰-2"><i class="fa fa-check"></i><b>3.4</b> 説明変数に質的変数を含む回帰 (2)</a>
+<ul>
+<li class="chapter" data-level="" data-path="線形回帰分析.html"><a href="線形回帰分析.html#データセット5-収入データ-仮想"><i class="fa fa-check"></i>データセット#5: 収入データ (仮想)</a></li>
+</ul></li>
+<li class="chapter" data-level="3.5" data-path="線形回帰分析.html"><a href="線形回帰分析.html#多項式回帰"><i class="fa fa-check"></i><b>3.5</b> 多項式回帰</a>
+<ul>
+<li class="chapter" data-level="" data-path="線形回帰分析.html"><a href="線形回帰分析.html#データセット6-wage"><i class="fa fa-check"></i>データセット#6: <code>Wage</code></a></li>
+</ul></li>
+<li class="chapter" data-level="3.6" data-path="線形回帰分析.html"><a href="線形回帰分析.html#関数factorについて"><i class="fa fa-check"></i><b>3.6</b> 関数<code>factor()</code>について</a>
+<ul>
+<li class="chapter" data-level="" data-path="線形回帰分析.html"><a href="線形回帰分析.html#rでのfactor関数の使い方"><i class="fa fa-check"></i>Rでのfactor関数の使い方</a></li>
+</ul></li>
+</ul></li>
+<li class="chapter" data-level="4" data-path="ロジットプロビット回帰分析.html"><a href="ロジットプロビット回帰分析.html"><i class="fa fa-check"></i><b>4</b> ロジット/プロビット回帰分析</a>
+<ul>
+<li class="chapter" data-level="4.1" data-path="ロジットプロビット回帰分析.html"><a href="ロジットプロビット回帰分析.html#ロジット回帰分析の基本操作"><i class="fa fa-check"></i><b>4.1</b> ロジット回帰分析の基本操作</a>
+<ul>
+<li class="chapter" data-level="" data-path="ロジットプロビット回帰分析.html"><a href="ロジットプロビット回帰分析.html#ロジットモデル-シミュレーションデータ"><i class="fa fa-check"></i>ロジットモデル: シミュレーションデータ</a></li>
+</ul></li>
+<li class="chapter" data-level="4.2" data-path="ロジットプロビット回帰分析.html"><a href="ロジットプロビット回帰分析.html#データ分析例"><i class="fa fa-check"></i><b>4.2</b> データ分析例</a>
+<ul>
+<li class="chapter" data-level="" data-path="ロジットプロビット回帰分析.html"><a href="ロジットプロビット回帰分析.html#データ1-社債デフォルトデータ-集計データ-仮想"><i class="fa fa-check"></i>データ1: 社債デフォルト・データ (集計データ, 仮想)</a></li>
+<li class="chapter" data-level="" data-path="ロジットプロビット回帰分析.html"><a href="ロジットプロビット回帰分析.html#データ2-個人向けローンのデフォルトデータ-仮想"><i class="fa fa-check"></i>データ2: 個人向けローンのデフォルト・データ (仮想)</a></li>
+</ul></li>
+<li class="chapter" data-level="4.3" data-path="ロジットプロビット回帰分析.html"><a href="ロジットプロビット回帰分析.html#オッズ比と相対リスク"><i class="fa fa-check"></i><b>4.3</b> オッズ比と相対リスク</a></li>
+<li class="chapter" data-level="4.4" data-path="ロジットプロビット回帰分析.html"><a href="ロジットプロビット回帰分析.html#疑似r2の計算"><i class="fa fa-check"></i><b>4.4</b> 疑似R2の計算</a>
+<ul>
+<li class="chapter" data-level="" data-path="ロジットプロビット回帰分析.html"><a href="ロジットプロビット回帰分析.html#パッケージdesctoolsの利用"><i class="fa fa-check"></i>パッケージ<strong>DescTools</strong>の利用</a></li>
+<li class="chapter" data-level="" data-path="ロジットプロビット回帰分析.html"><a href="ロジットプロビット回帰分析.html#パッケージpsclの利用"><i class="fa fa-check"></i>パッケージ<strong>pscl</strong>の利用</a></li>
+<li class="chapter" data-level="" data-path="ロジットプロビット回帰分析.html"><a href="ロジットプロビット回帰分析.html#パッケージperformanceの利用"><i class="fa fa-check"></i>パッケージ<strong>performance</strong>の利用</a></li>
+<li class="chapter" data-level="" data-path="ロジットプロビット回帰分析.html"><a href="ロジットプロビット回帰分析.html#参考-疑似r2の使い分け"><i class="fa fa-check"></i>(参考) 疑似R2の使い分け</a></li>
+</ul></li>
+</ul></li>
+<li class="chapter" data-level="5" data-path="一般化加法モデル-gam.html"><a href="一般化加法モデル-gam.html"><i class="fa fa-check"></i><b>5</b> 一般化加法モデル (GAM)</a>
+<ul>
+<li class="chapter" data-level="5.1" data-path="一般化加法モデル-gam.html"><a href="一般化加法モデル-gam.html#データ-社債の信用スプレッド-仮想"><i class="fa fa-check"></i><b>5.1</b> データ: 社債の信用スプレッド (仮想)</a></li>
+<li class="chapter" data-level="5.2" data-path="一般化加法モデル-gam.html"><a href="一般化加法モデル-gam.html#多項式回帰とスプライン"><i class="fa fa-check"></i><b>5.2</b> 多項式回帰とスプライン</a>
+<ul>
+<li class="chapter" data-level="" data-path="一般化加法モデル-gam.html"><a href="一般化加法モデル-gam.html#多項式回帰-1"><i class="fa fa-check"></i>多項式回帰</a></li>
+<li class="chapter" data-level="" data-path="一般化加法モデル-gam.html"><a href="一般化加法モデル-gam.html#スプライン"><i class="fa fa-check"></i>スプライン</a></li>
+</ul></li>
+<li class="chapter" data-level="5.3" data-path="一般化加法モデル-gam.html"><a href="一般化加法モデル-gam.html#パッケージgamの利用"><i class="fa fa-check"></i><b>5.3</b> パッケージ<strong>gam</strong>の利用</a></li>
+<li class="chapter" data-level="5.4" data-path="一般化加法モデル-gam.html"><a href="一般化加法モデル-gam.html#パッケージmgcvの利用"><i class="fa fa-check"></i><b>5.4</b> パッケージ<strong>mgcv</strong>の利用</a>
+<ul>
+<li class="chapter" data-level="" data-path="一般化加法モデル-gam.html"><a href="一般化加法モデル-gam.html#関数名の衝突について"><i class="fa fa-check"></i>関数名の衝突について</a></li>
+<li class="chapter" data-level="" data-path="一般化加法モデル-gam.html"><a href="一般化加法モデル-gam.html#gam-の当てはめ"><i class="fa fa-check"></i>GAM の当てはめ</a></li>
+<li class="chapter" data-level="" data-path="一般化加法モデル-gam.html"><a href="一般化加法モデル-gam.html#交互作用を含めた-gam"><i class="fa fa-check"></i>交互作用を含めた GAM</a></li>
+<li class="chapter" data-level="" data-path="一般化加法モデル-gam.html"><a href="一般化加法モデル-gam.html#gam-によるロジット回帰"><i class="fa fa-check"></i>GAM によるロジット回帰</a></li>
+</ul></li>
+<li class="chapter" data-level="5.5" data-path="一般化加法モデル-gam.html"><a href="一般化加法モデル-gam.html#パッケージprophetの利用"><i class="fa fa-check"></i><b>5.5</b> パッケージ<strong>prophet</strong>の利用</a>
+<ul>
+<li class="chapter" data-level="" data-path="一般化加法モデル-gam.html"><a href="一般化加法モデル-gam.html#データ-atm出金額-仮想"><i class="fa fa-check"></i>データ: ATM出金額 (仮想)</a></li>
+<li class="chapter" data-level="" data-path="一般化加法モデル-gam.html"><a href="一般化加法モデル-gam.html#prophet-による予測"><i class="fa fa-check"></i>prophet による予測</a></li>
+</ul></li>
+</ul></li>
+<li class="chapter" data-level="6" data-path="正則化回帰-lasso-ridge回帰-elastic-net.html"><a href="正則化回帰-lasso-ridge回帰-elastic-net.html"><i class="fa fa-check"></i><b>6</b> 正則化回帰 (lasso, ridge回帰, elastic net)</a>
+<ul>
+<li class="chapter" data-level="6.1" data-path="正則化回帰-lasso-ridge回帰-elastic-net.html"><a href="正則化回帰-lasso-ridge回帰-elastic-net.html#検証用セット法による回帰モデルの予測精度評価"><i class="fa fa-check"></i><b>6.1</b> 検証用セット法による回帰モデルの予測精度評価</a>
+<ul>
+<li class="chapter" data-level="" data-path="正則化回帰-lasso-ridge回帰-elastic-net.html"><a href="正則化回帰-lasso-ridge回帰-elastic-net.html#データ1-社債の信用スプレッドと企業特性-仮想"><i class="fa fa-check"></i>データ1: 社債の信用スプレッドと企業特性 (仮想)</a></li>
+</ul></li>
+<li class="chapter" data-level="6.2" data-path="正則化回帰-lasso-ridge回帰-elastic-net.html"><a href="正則化回帰-lasso-ridge回帰-elastic-net.html#lasso"><i class="fa fa-check"></i><b>6.2</b> lasso</a>
+<ul>
+<li class="chapter" data-level="" data-path="正則化回帰-lasso-ridge回帰-elastic-net.html"><a href="正則化回帰-lasso-ridge回帰-elastic-net.html#関数glmnetの基本操作"><i class="fa fa-check"></i>関数<code>glmnet()</code>の基本操作</a></li>
+<li class="chapter" data-level="" data-path="正則化回帰-lasso-ridge回帰-elastic-net.html"><a href="正則化回帰-lasso-ridge回帰-elastic-net.html#lambdaのグリッド指定によるglmnetの一括実行"><i class="fa fa-check"></i><code>lambda</code>のグリッド指定による<code>glmnet()</code>の一括実行</a></li>
+<li class="chapter" data-level="" data-path="正則化回帰-lasso-ridge回帰-elastic-net.html"><a href="正則化回帰-lasso-ridge回帰-elastic-net.html#交差検証によるパラメータチューニング"><i class="fa fa-check"></i>交差検証によるパラメータ・チューニング</a></li>
+</ul></li>
+<li class="chapter" data-level="6.3" data-path="正則化回帰-lasso-ridge回帰-elastic-net.html"><a href="正則化回帰-lasso-ridge回帰-elastic-net.html#ridge回帰"><i class="fa fa-check"></i><b>6.3</b> ridge回帰</a></li>
+<li class="chapter" data-level="6.4" data-path="正則化回帰-lasso-ridge回帰-elastic-net.html"><a href="正則化回帰-lasso-ridge回帰-elastic-net.html#elastic-net"><i class="fa fa-check"></i><b>6.4</b> elastic net</a>
+<ul>
+<li class="chapter" data-level="" data-path="正則化回帰-lasso-ridge回帰-elastic-net.html"><a href="正則化回帰-lasso-ridge回帰-elastic-net.html#テストmse-の比較"><i class="fa fa-check"></i>テストMSE の比較</a></li>
+</ul></li>
+<li class="chapter" data-level="6.5" data-path="正則化回帰-lasso-ridge回帰-elastic-net.html"><a href="正則化回帰-lasso-ridge回帰-elastic-net.html#一般化線形モデル-glm-正則化"><i class="fa fa-check"></i><b>6.5</b> 一般化線形モデル (GLM) + 正則化</a>
+<ul>
+<li class="chapter" data-level="" data-path="正則化回帰-lasso-ridge回帰-elastic-net.html"><a href="正則化回帰-lasso-ridge回帰-elastic-net.html#データ2-german-credit-データ"><i class="fa fa-check"></i>データ2: German Credit データ</a></li>
+</ul></li>
+<li class="chapter" data-level="6.6" data-path="正則化回帰-lasso-ridge回帰-elastic-net.html"><a href="正則化回帰-lasso-ridge回帰-elastic-net.html#補足-glm-に対する変数選択の代替的方法"><i class="fa fa-check"></i><b>6.6</b> 補足: GLM に対する変数選択の代替的方法</a></li>
+</ul></li>
+<li class="chapter" data-level="7" data-path="回帰モデルの評価と交差検証.html"><a href="回帰モデルの評価と交差検証.html"><i class="fa fa-check"></i><b>7</b> 回帰モデルの評価と交差検証</a>
+<ul>
+<li class="chapter" data-level="7.1" data-path="回帰モデルの評価と交差検証.html"><a href="回帰モデルの評価と交差検証.html#学習誤差と予測誤差"><i class="fa fa-check"></i><b>7.1</b> 学習誤差と予測誤差</a>
+<ul>
+<li class="chapter" data-level="" data-path="回帰モデルの評価と交差検証.html"><a href="回帰モデルの評価と交差検証.html#データ-社債の信用スプレッド-仮想-1"><i class="fa fa-check"></i>データ: 社債の信用スプレッド (仮想)</a></li>
+<li class="chapter" data-level="" data-path="回帰モデルの評価と交差検証.html"><a href="回帰モデルの評価と交差検証.html#学習誤差はモデルを複雑にするほど下がる"><i class="fa fa-check"></i>学習誤差はモデルを複雑にするほど下がる</a></li>
+</ul></li>
+<li class="chapter" data-level="7.2" data-path="回帰モデルの評価と交差検証.html"><a href="回帰モデルの評価と交差検証.html#検証用セットアプローチ"><i class="fa fa-check"></i><b>7.2</b> 検証用セット・アプローチ</a></li>
+<li class="chapter" data-level="7.3" data-path="回帰モデルの評価と交差検証.html"><a href="回帰モデルの評価と交差検証.html#交差検証"><i class="fa fa-check"></i><b>7.3</b> 交差検証</a>
+<ul>
+<li class="chapter" data-level="" data-path="回帰モデルの評価と交差検証.html"><a href="回帰モデルの評価と交差検証.html#loocv-1個抜き交差検証"><i class="fa fa-check"></i>LOOCV (1個抜き交差検証)</a></li>
+<li class="chapter" data-level="" data-path="回帰モデルの評価と交差検証.html"><a href="回帰モデルの評価と交差検証.html#k-分割交差検証-k-fold-cv"><i class="fa fa-check"></i>k-分割交差検証 (k-fold CV)</a></li>
+<li class="chapter" data-level="" data-path="回帰モデルの評価と交差検証.html"><a href="回帰モデルの評価と交差検証.html#標準誤差ルール"><i class="fa fa-check"></i>1標準誤差ルール</a></li>
+</ul></li>
+<li class="chapter" data-level="7.4" data-path="回帰モデルの評価と交差検証.html"><a href="回帰モデルの評価と交差検証.html#その他の評価指標"><i class="fa fa-check"></i><b>7.4</b> その他の評価指標</a></li>
+</ul></li>
+<li class="chapter" data-level="8" data-path="判別分析.html"><a href="判別分析.html"><i class="fa fa-check"></i><b>8</b> 判別分析</a>
+<ul>
+<li class="chapter" data-level="8.1" data-path="判別分析.html"><a href="判別分析.html#線形判別2次判別knn法-米国株価指数の騰落"><i class="fa fa-check"></i><b>8.1</b> 線形判別・2次判別・kNN法: 米国株価指数の騰落</a>
+<ul>
+<li class="chapter" data-level="" data-path="判別分析.html"><a href="判別分析.html#データ1-米国sp500-日次リターンデータ"><i class="fa fa-check"></i>データ1: 米国S&amp;P500 日次リターン・データ</a></li>
+<li class="chapter" data-level="" data-path="判別分析.html"><a href="判別分析.html#線形判別-lda"><i class="fa fa-check"></i>線形判別 (LDA)</a></li>
+<li class="chapter" data-level="" data-path="判別分析.html"><a href="判別分析.html#次判別-qda"><i class="fa fa-check"></i>2次判別 (QDA)</a></li>
+<li class="chapter" data-level="" data-path="判別分析.html"><a href="判別分析.html#knn法"><i class="fa fa-check"></i>kNN法</a></li>
+</ul></li>
+<li class="chapter" data-level="8.2" data-path="判別分析.html"><a href="判別分析.html#klar-パッケージによる判別境界の可視化-社債発行体の格付"><i class="fa fa-check"></i><b>8.2</b> klaR パッケージによる判別境界の可視化: 社債発行体の格付</a>
+<ul>
+<li class="chapter" data-level="" data-path="判別分析.html"><a href="判別分析.html#データ2-社債発行体の格付データ-仮想"><i class="fa fa-check"></i>データ2: 社債発行体の格付データ (仮想)</a></li>
+<li class="chapter" data-level="" data-path="判別分析.html"><a href="判別分析.html#関数partimatによる判別境界の可視化"><i class="fa fa-check"></i>関数<code>partimat()</code>による判別境界の可視化</a></li>
+<li class="chapter" data-level="" data-path="判別分析.html"><a href="判別分析.html#ナイーブベイズ法"><i class="fa fa-check"></i>ナイーブ・ベイズ法</a></li>
+<li class="chapter" data-level="" data-path="判別分析.html"><a href="判別分析.html#全ての財務指標を使った判別-lda-vs-qda"><i class="fa fa-check"></i>全ての財務指標を使った判別: LDA vs QDA</a></li>
+</ul></li>
+</ul></li>
+<li class="chapter" data-level="9" data-path="決定木分析.html"><a href="決定木分析.html"><i class="fa fa-check"></i><b>9</b> 決定木分析</a>
+<ul>
+<li class="chapter" data-level="9.1" data-path="決定木分析.html"><a href="決定木分析.html#導入-回帰木-vs-線形回帰"><i class="fa fa-check"></i><b>9.1</b> 導入: 回帰木 vs 線形回帰</a>
+<ul>
+<li class="chapter" data-level="" data-path="決定木分析.html"><a href="決定木分析.html#データセット1-自動車の制動距離"><i class="fa fa-check"></i>データセット1: 自動車の制動距離</a></li>
+<li class="chapter" data-level="9.1.1" data-path="決定木分析.html"><a href="決定木分析.html#基本操作-回帰木"><i class="fa fa-check"></i><b>9.1.1</b> 基本操作: 回帰木</a></li>
+</ul></li>
+<li class="chapter" data-level="9.2" data-path="決定木分析.html"><a href="決定木分析.html#回帰木"><i class="fa fa-check"></i><b>9.2</b> 回帰木</a>
+<ul>
+<li class="chapter" data-level="" data-path="決定木分析.html"><a href="決定木分析.html#データセット2-米国株価指数データ-再掲"><i class="fa fa-check"></i>データセット2: 米国株価指数データ (再掲)</a></li>
+</ul></li>
+<li class="chapter" data-level="9.3" data-path="決定木分析.html"><a href="決定木分析.html#分類木"><i class="fa fa-check"></i><b>9.3</b> 分類木</a></li>
+</ul></li>
+<li class="chapter" data-level="10" data-path="決定木とアンサンブル学習.html"><a href="決定木とアンサンブル学習.html"><i class="fa fa-check"></i><b>10</b> 決定木とアンサンブル学習</a>
+<ul>
+<li class="chapter" data-level="10.1" data-path="決定木とアンサンブル学習.html"><a href="決定木とアンサンブル学習.html#決定木-分類木-パッケージ-tree"><i class="fa fa-check"></i><b>10.1</b> 決定木 (分類木): パッケージ tree</a>
+<ul>
+<li class="chapter" data-level="" data-path="決定木とアンサンブル学習.html"><a href="決定木とアンサンブル学習.html#データ-個人ローン信用データ-再掲"><i class="fa fa-check"></i>データ: 個人ローン信用データ (再掲)</a></li>
+</ul></li>
+<li class="chapter" data-level="10.2" data-path="決定木とアンサンブル学習.html"><a href="決定木とアンサンブル学習.html#分類モデルの評価指標"><i class="fa fa-check"></i><b>10.2</b> 分類モデルの評価指標</a></li>
+<li class="chapter" data-level="10.3" data-path="決定木とアンサンブル学習.html"><a href="決定木とアンサンブル学習.html#決定木-分類木-パッケージ-rpart-rpart.plot"><i class="fa fa-check"></i><b>10.3</b> 決定木 (分類木): パッケージ rpart + rpart.plot</a></li>
+<li class="chapter" data-level="10.4" data-path="決定木とアンサンブル学習.html"><a href="決定木とアンサンブル学習.html#ランダムフォレスト分類木"><i class="fa fa-check"></i><b>10.4</b> ランダムフォレスト分類木</a></li>
+<li class="chapter" data-level="10.5" data-path="決定木とアンサンブル学習.html"><a href="決定木とアンサンブル学習.html#勾配ブースティング-パッケージ-gbm"><i class="fa fa-check"></i><b>10.5</b> 勾配ブースティング: パッケージ gbm</a></li>
+</ul></li>
+<li class="chapter" data-level="11" data-path="サポートベクターマシン-svm.html"><a href="サポートベクターマシン-svm.html"><i class="fa fa-check"></i><b>11</b> サポートベクターマシン (SVM)</a>
+<ul>
+<li class="chapter" data-level="" data-path="サポートベクターマシン-svm.html"><a href="サポートベクターマシン-svm.html#データ-社債発行体の格付-第4回と同じデータ"><i class="fa fa-check"></i>データ: 社債発行体の格付 (第4回と同じデータ)</a></li>
+<li class="chapter" data-level="11.1" data-path="サポートベクターマシン-svm.html"><a href="サポートベクターマシン-svm.html#svm-rbfカーネル-の特徴の確認"><i class="fa fa-check"></i><b>11.1</b> SVM (RBFカーネル) の特徴の確認</a>
+<ul>
+<li class="chapter" data-level="" data-path="サポートベクターマシン-svm.html"><a href="サポートベクターマシン-svm.html#svmの実行"><i class="fa fa-check"></i>SVMの実行</a></li>
+</ul></li>
+<li class="chapter" data-level="11.2" data-path="サポートベクターマシン-svm.html"><a href="サポートベクターマシン-svm.html#値分類-クレジットカードの延滞"><i class="fa fa-check"></i><b>11.2</b> 2値分類: クレジットカードの延滞</a>
+<ul>
+<li class="chapter" data-level="" data-path="サポートベクターマシン-svm.html"><a href="サポートベクターマシン-svm.html#データ-クレジットカードの延滞-仮想データ"><i class="fa fa-check"></i>データ: クレジットカードの延滞 (仮想データ)</a></li>
+<li class="chapter" data-level="" data-path="サポートベクターマシン-svm.html"><a href="サポートベクターマシン-svm.html#svmの実行-1"><i class="fa fa-check"></i>SVMの実行</a></li>
+<li class="chapter" data-level="" data-path="サポートベクターマシン-svm.html"><a href="サポートベクターマシン-svm.html#roc-曲線と-auc"><i class="fa fa-check"></i>ROC 曲線と AUC</a></li>
+</ul></li>
+<li class="chapter" data-level="11.3" data-path="サポートベクターマシン-svm.html"><a href="サポートベクターマシン-svm.html#値分類-格付"><i class="fa fa-check"></i><b>11.3</b> 3値分類: 格付</a></li>
+<li class="chapter" data-level="11.4" data-path="サポートベクターマシン-svm.html"><a href="サポートベクターマシン-svm.html#代替パッケージ-e1071-の利用"><i class="fa fa-check"></i><b>11.4</b> 代替パッケージ e1071 の利用</a>
+<ul>
+<li class="chapter" data-level="" data-path="サポートベクターマシン-svm.html"><a href="サポートベクターマシン-svm.html#不均衡データへの対応-クラスの重み"><i class="fa fa-check"></i>不均衡データへの対応: クラスの重み</a></li>
+</ul></li>
+<li class="chapter" data-level="11.5" data-path="サポートベクターマシン-svm.html"><a href="サポートベクターマシン-svm.html#ハイパーパラメータのチューニング"><i class="fa fa-check"></i><b>11.5</b> ハイパーパラメータのチューニング</a>
+<ul>
+<li class="chapter" data-level="" data-path="サポートベクターマシン-svm.html"><a href="サポートベクターマシン-svm.html#e1071-内にあるチューニング用の便利な関数群"><i class="fa fa-check"></i>e1071 内にあるチューニング用の便利な関数群</a></li>
+</ul></li>
+</ul></li>
+<li class="chapter" data-level="12" data-path="主成分分析-pca.html"><a href="主成分分析-pca.html"><i class="fa fa-check"></i><b>12</b> 主成分分析 (PCA)</a>
+<ul>
+<li class="chapter" data-level="12.1" data-path="主成分分析-pca.html"><a href="主成分分析-pca.html#分散共分散行列か-相関行列か-usarrests"><i class="fa fa-check"></i><b>12.1</b> 分散共分散行列か, 相関行列か: USArrests</a>
+<ul>
+<li class="chapter" data-level="" data-path="主成分分析-pca.html"><a href="主成分分析-pca.html#データ-usarrests-r-の組み込みデータ"><i class="fa fa-check"></i>データ: USArrests (R の組み込みデータ)</a></li>
+</ul></li>
+<li class="chapter" data-level="12.2" data-path="主成分分析-pca.html"><a href="主成分分析-pca.html#基本操作-企業の評価スコア"><i class="fa fa-check"></i><b>12.2</b> 基本操作: 企業の評価スコア</a>
+<ul>
+<li class="chapter" data-level="" data-path="主成分分析-pca.html"><a href="主成分分析-pca.html#データ-企業の評価スコア-仮想データ"><i class="fa fa-check"></i>データ: 企業の評価スコア (仮想データ)</a></li>
+<li class="chapter" data-level="" data-path="主成分分析-pca.html"><a href="主成分分析-pca.html#pca-の実行"><i class="fa fa-check"></i>PCA の実行</a></li>
+<li class="chapter" data-level="" data-path="主成分分析-pca.html"><a href="主成分分析-pca.html#主成分負荷量"><i class="fa fa-check"></i>主成分負荷量</a></li>
+<li class="chapter" data-level="" data-path="主成分分析-pca.html"><a href="主成分分析-pca.html#主成分得点"><i class="fa fa-check"></i>主成分得点</a></li>
+<li class="chapter" data-level="" data-path="主成分分析-pca.html"><a href="主成分分析-pca.html#バイプロット"><i class="fa fa-check"></i>バイプロット</a></li>
+<li class="chapter" data-level="" data-path="主成分分析-pca.html"><a href="主成分分析-pca.html#計算結果の確認"><i class="fa fa-check"></i>計算結果の確認</a></li>
+<li class="chapter" data-level="" data-path="主成分分析-pca.html"><a href="主成分分析-pca.html#代替的な関数-prcomp"><i class="fa fa-check"></i>代替的な関数: prcomp()</a></li>
+</ul></li>
+<li class="chapter" data-level="12.3" data-path="主成分分析-pca.html"><a href="主成分分析-pca.html#財務比率データ-分散共分散行列か-相関行列か"><i class="fa fa-check"></i><b>12.3</b> 財務比率データ: 分散共分散行列か, 相関行列か</a>
+<ul>
+<li class="chapter" data-level="" data-path="主成分分析-pca.html"><a href="主成分分析-pca.html#データ-上場企業の財務比率-仮想データ"><i class="fa fa-check"></i>データ: 上場企業の財務比率 (仮想データ)</a></li>
+<li class="chapter" data-level="" data-path="主成分分析-pca.html"><a href="主成分分析-pca.html#分散共分散行列に対する-pca"><i class="fa fa-check"></i>分散共分散行列に対する PCA</a></li>
+<li class="chapter" data-level="" data-path="主成分分析-pca.html"><a href="主成分分析-pca.html#相関行列に対する-pca"><i class="fa fa-check"></i>相関行列に対する PCA</a></li>
+</ul></li>
+<li class="chapter" data-level="12.4" data-path="主成分分析-pca.html"><a href="主成分分析-pca.html#国債利回り-イールドカーブ-の主成分分析"><i class="fa fa-check"></i><b>12.4</b> 国債利回り (イールドカーブ) の主成分分析</a>
+<ul>
+<li class="chapter" data-level="" data-path="主成分分析-pca.html"><a href="主成分分析-pca.html#データ-国債利回り-仮想データ"><i class="fa fa-check"></i>データ: 国債利回り (仮想データ)</a></li>
+</ul></li>
+<li class="chapter" data-level="12.5" data-path="主成分分析-pca.html"><a href="主成分分析-pca.html#課題-株式リターンの主成分分析"><i class="fa fa-check"></i><b>12.5</b> 課題: 株式リターンの主成分分析</a></li>
+</ul></li>
+<li class="divider"></li>
+<li><a href="https://github.com/rstudio/bookdown" target="blank">Published with bookdown</a></li>
+</ul>
+
+      </nav>
+    </div>
+
+    <div class="book-body">
+      <div class="body-inner">
+        <div class="book-header" role="navigation">
+          <h1>
+            <i class="fa fa-circle-o-notch fa-spin"></i><a href="./">金融データサイエンス</a>
+          </h1>
+        </div>
+
+        <div class="page-wrapper" tabindex="-1" role="main">
+          <div class="page-inner">
+
+            <section class="normal" id="section-">
+<div id="サポートベクターマシン-svm" class="section level1 hasAnchor" number="11">
+<h1><span class="header-section-number">Chapter 11</span> サポートベクターマシン (SVM)<a href="サポートベクターマシン-svm.html#サポートベクターマシン-svm" class="anchor-section" aria-label="Anchor link to header"></a></h1>
+<!-- 2026.11.07 Claude: R演習スクリプト R_SVM_dist.R (2026年度版) に合わせて全面改訂. データを iris / spam から, 社債発行体の格付 (rating.csv. (1) は BBB と HY の100社を抽出) とクレジットカードの延滞 (card_default.csv, 仮想データ) に変更 -->
+<p>本章の内容は, 授業の R 演習スクリプト <code>R_SVM_dist.R</code> に対応する.</p>
+<p>サポートベクターマシン (SVM) は, 説明変数の空間を分割する決定境界を
+データから直接推定するアプローチである識別モデル (discriminative model) と呼ばれる
+クラス分類手法の一つである.</p>
+<p>SVMは, 原理的には, 2クラス分類問題に対して適用される.
+多クラス分類問題に対しては, 複数の2クラス問題に分割し, 各々にSVMを適合して得られた個々の分類結果を統合する形で解決を図る.</p>
+<p>SVMは, 多次元の説明変数の空間上に布置された2クラスの点の集合に対して,
+“マージン” (境界面から一番近い点までの距離) が最大となるという意味において,
+2グループができるだけうまく分離されるような平面 (境界面) を引くことを試みる.
+その際, 完全な分離ではなく, 分類の失敗 (誤判別) やマージン違反を許容するような
+平面を引く. 許容の程度はハイパーパラメータ (コスト <span class="math inline">\(C\)</span>) を通じて分析者がSVMに与える.</p>
+<p>また, SVMは, カーネル関数を上手に選択することで, 説明変数空間における
+境界面がドーナツ型を含む非線形な形状をしているようなケースにも柔軟に対応することができる.</p>
+<p>どのように非線形なケースに対応するかについてその原理を大雑把に述べると,</p>
+<ul>
+<li>数学的には, 再生核ヒルベルト空間 (RKHS) の理論に基づいている</li>
+<li>データ点が配置されている元の空間から, 非線形な写像によって高次元 (または無限次元) の空間へ写される</li>
+<li>その高次元の空間で, 線形な平面 (超平面) を引いて分割する</li>
+<li>すると, 元の空間では非線形な分割がなされている (非線形SVM)</li>
+<li>各データ点を高次元の空間に写す非線形な変換を, 実際に計算する必要はない</li>
+<li>よって, 非線形な変換のことは忘れて (無視して), カーネル関数を選べば良い (“カーネルトリック”)</li>
+</ul>
+<p>ちなみに, 本章では扱わないが, SVMは, 回帰問題にも応用することができる (サポートベクター回帰). そこでは, やはりカーネル関数をうまく選択することで説明変数の元の空間内では非線形な形状の回帰曲面を得ることができる. また, 分類問題におけるマージン違反の許容に対応するものとして, 最小二乗法の代わりに, 回帰残差の絶対値が閾値以上のもののみを損失として数える損失関数を最小化する問題を解いている.</p>
+<p>なお, SVMにおいても, 学習データに対するモデルの過剰・過小学習を避けるには,
+交差検証などによりハイパーパラメータのチューニングを適切に行う必要がある.</p>
+<p>本章では, SVMの中でも, 恐らくもっともポピュラーな (Gaussian) RBFカーネルを中心に説明する.
+パッケージ<strong>kernlab</strong>の関数<code>ksvm()</code>, <strong>e1071</strong>の<code>svm()</code>を用いる.</p>
+<div id="データ-社債発行体の格付-第4回と同じデータ" class="section level3 unnumbered hasAnchor">
+<h3>データ: 社債発行体の格付 (第4回と同じデータ)<a href="サポートベクターマシン-svm.html#データ-社債発行体の格付-第4回と同じデータ" class="anchor-section" aria-label="Anchor link to header"></a></h3>
+<pre><code>rating.csv: 600社 (仮想データ)
+- rating: 格付 (A, BBB, HY)
+- mcap: 時価総額 (億円), debt_ebitda: 有利子負債/EBITDA (倍)
+- int_coverage: インタレスト・カバレッジ (倍), roa (%), equity_ratio (%), equity_vol (%)</code></pre>
+<div class="sourceCode" id="cb338"><pre class="sourceCode r"><code class="sourceCode r"><span id="cb338-1"><a href="サポートベクターマシン-svm.html#cb338-1" tabindex="-1"></a>rating <span class="ot">&lt;-</span> <span class="fu">read.csv</span>(<span class="st">&quot;class/rating.csv&quot;</span>, <span class="at">stringsAsFactors =</span> <span class="cn">TRUE</span>)</span>
+<span id="cb338-2"><a href="サポートベクターマシン-svm.html#cb338-2" tabindex="-1"></a>rating<span class="sc">$</span>rating <span class="ot">&lt;-</span> <span class="fu">factor</span>(rating<span class="sc">$</span>rating, <span class="at">levels =</span> <span class="fu">c</span>(<span class="st">&quot;A&quot;</span>, <span class="st">&quot;BBB&quot;</span>, <span class="st">&quot;HY&quot;</span>))</span>
+<span id="cb338-3"><a href="サポートベクターマシン-svm.html#cb338-3" tabindex="-1"></a>rating<span class="sc">$</span>log_mcap <span class="ot">&lt;-</span> <span class="fu">log</span>(rating<span class="sc">$</span>mcap)</span>
+<span id="cb338-4"><a href="サポートベクターマシン-svm.html#cb338-4" tabindex="-1"></a>rating<span class="sc">$</span>log_icr <span class="ot">&lt;-</span> <span class="fu">log</span>(rating<span class="sc">$</span>int_coverage)</span>
+<span id="cb338-5"><a href="サポートベクターマシン-svm.html#cb338-5" tabindex="-1"></a><span class="fu">table</span>(rating<span class="sc">$</span>rating)</span>
+<span id="cb338-6"><a href="サポートベクターマシン-svm.html#cb338-6" tabindex="-1"></a><span class="co">#&gt; </span></span>
+<span id="cb338-7"><a href="サポートベクターマシン-svm.html#cb338-7" tabindex="-1"></a><span class="co">#&gt;   A BBB  HY </span></span>
+<span id="cb338-8"><a href="サポートベクターマシン-svm.html#cb338-8" tabindex="-1"></a><span class="co">#&gt; 210 240 150</span></span></code></pre></div>
+</div>
+<div id="svm-rbfカーネル-の特徴の確認" class="section level2 hasAnchor" number="11.1">
+<h2><span class="header-section-number">11.1</span> SVM (RBFカーネル) の特徴の確認<a href="サポートベクターマシン-svm.html#svm-rbfカーネル-の特徴の確認" class="anchor-section" aria-label="Anchor link to header"></a></h2>
+<p>SVM の特徴を理解するため, BBB と HY の2クラス, 説明変数2つ (<code>log_mcap</code>, <code>debt_ebitda</code>) に絞って分析する.
+データ点が多いと, ハイパーパラメータを変えたときの境界の形の変化が見えにくいので, 100社を無作為に抽出して使う.</p>
+<div class="sourceCode" id="cb339"><pre class="sourceCode r"><code class="sourceCode r"><span id="cb339-1"><a href="サポートベクターマシン-svm.html#cb339-1" tabindex="-1"></a>rt1 <span class="ot">&lt;-</span> <span class="fu">subset</span>(rating, rating <span class="sc">!=</span> <span class="st">&quot;A&quot;</span>, <span class="at">select =</span> <span class="fu">c</span>(log_mcap, debt_ebitda, rating))</span>
+<span id="cb339-2"><a href="サポートベクターマシン-svm.html#cb339-2" tabindex="-1"></a>rt1<span class="sc">$</span>rating <span class="ot">&lt;-</span> <span class="fu">droplevels</span>(rt1<span class="sc">$</span>rating)</span>
+<span id="cb339-3"><a href="サポートベクターマシン-svm.html#cb339-3" tabindex="-1"></a><span class="fu">set.seed</span>(<span class="dv">1</span>)</span>
+<span id="cb339-4"><a href="サポートベクターマシン-svm.html#cb339-4" tabindex="-1"></a>rt1 <span class="ot">&lt;-</span> rt1[<span class="fu">sample</span>(<span class="fu">nrow</span>(rt1), <span class="dv">100</span>), ]</span>
+<span id="cb339-5"><a href="サポートベクターマシン-svm.html#cb339-5" tabindex="-1"></a><span class="fu">table</span>(rt1<span class="sc">$</span>rating)</span>
+<span id="cb339-6"><a href="サポートベクターマシン-svm.html#cb339-6" tabindex="-1"></a><span class="co">#&gt; </span></span>
+<span id="cb339-7"><a href="サポートベクターマシン-svm.html#cb339-7" tabindex="-1"></a><span class="co">#&gt; BBB  HY </span></span>
+<span id="cb339-8"><a href="サポートベクターマシン-svm.html#cb339-8" tabindex="-1"></a><span class="co">#&gt;  65  35</span></span></code></pre></div>
+<div id="svmの実行" class="section level3 unnumbered hasAnchor">
+<h3>SVMの実行<a href="サポートベクターマシン-svm.html#svmの実行" class="anchor-section" aria-label="Anchor link to header"></a></h3>
+<p>パッケージ<strong>kernlab</strong>, 関数<code>ksvm()</code>を使用する.</p>
+<div class="sourceCode" id="cb340"><pre class="sourceCode r"><code class="sourceCode r"><span id="cb340-1"><a href="サポートベクターマシン-svm.html#cb340-1" tabindex="-1"></a><span class="fu">library</span>(kernlab)</span>
+<span id="cb340-2"><a href="サポートベクターマシン-svm.html#cb340-2" tabindex="-1"></a>rt_ksvm <span class="ot">&lt;-</span> <span class="fu">ksvm</span>(rating <span class="sc">~</span> ., <span class="at">data =</span> rt1)  <span class="co"># デフォルト (kpar = &#39;automatic&#39;)</span></span>
+<span id="cb340-3"><a href="サポートベクターマシン-svm.html#cb340-3" tabindex="-1"></a>rt_ksvm  <span class="co"># サポートベクターの数, 学習誤差</span></span>
+<span id="cb340-4"><a href="サポートベクターマシン-svm.html#cb340-4" tabindex="-1"></a><span class="co">#&gt; Support Vector Machine object of class &quot;ksvm&quot; </span></span>
+<span id="cb340-5"><a href="サポートベクターマシン-svm.html#cb340-5" tabindex="-1"></a><span class="co">#&gt; </span></span>
+<span id="cb340-6"><a href="サポートベクターマシン-svm.html#cb340-6" tabindex="-1"></a><span class="co">#&gt; SV type: C-svc  (classification) </span></span>
+<span id="cb340-7"><a href="サポートベクターマシン-svm.html#cb340-7" tabindex="-1"></a><span class="co">#&gt;  parameter : cost C = 1 </span></span>
+<span id="cb340-8"><a href="サポートベクターマシン-svm.html#cb340-8" tabindex="-1"></a><span class="co">#&gt; </span></span>
+<span id="cb340-9"><a href="サポートベクターマシン-svm.html#cb340-9" tabindex="-1"></a><span class="co">#&gt; Gaussian Radial Basis kernel function. </span></span>
+<span id="cb340-10"><a href="サポートベクターマシン-svm.html#cb340-10" tabindex="-1"></a><span class="co">#&gt;  Hyperparameter : sigma =  0.831228198679164 </span></span>
+<span id="cb340-11"><a href="サポートベクターマシン-svm.html#cb340-11" tabindex="-1"></a><span class="co">#&gt; </span></span>
+<span id="cb340-12"><a href="サポートベクターマシン-svm.html#cb340-12" tabindex="-1"></a><span class="co">#&gt; Number of Support Vectors : 64 </span></span>
+<span id="cb340-13"><a href="サポートベクターマシン-svm.html#cb340-13" tabindex="-1"></a><span class="co">#&gt; </span></span>
+<span id="cb340-14"><a href="サポートベクターマシン-svm.html#cb340-14" tabindex="-1"></a><span class="co">#&gt; Objective Function Value : -49.0948 </span></span>
+<span id="cb340-15"><a href="サポートベクターマシン-svm.html#cb340-15" tabindex="-1"></a><span class="co">#&gt; Training error : 0.19</span></span>
+<span id="cb340-16"><a href="サポートベクターマシン-svm.html#cb340-16" tabindex="-1"></a><span class="fu">table</span>(予測 <span class="ot">=</span> <span class="fu">predict</span>(rt_ksvm, rt1[, <span class="dv">1</span><span class="sc">:</span><span class="dv">2</span>]), 実績 <span class="ot">=</span> rt1<span class="sc">$</span>rating)</span>
+<span id="cb340-17"><a href="サポートベクターマシン-svm.html#cb340-17" tabindex="-1"></a><span class="co">#&gt;      実績</span></span>
+<span id="cb340-18"><a href="サポートベクターマシン-svm.html#cb340-18" tabindex="-1"></a><span class="co">#&gt; 予測 BBB HY</span></span>
+<span id="cb340-19"><a href="サポートベクターマシン-svm.html#cb340-19" tabindex="-1"></a><span class="co">#&gt;   BBB  59 13</span></span>
+<span id="cb340-20"><a href="サポートベクターマシン-svm.html#cb340-20" tabindex="-1"></a><span class="co">#&gt;   HY    6 22</span></span>
+<span id="cb340-21"><a href="サポートベクターマシン-svm.html#cb340-21" tabindex="-1"></a><span class="fu">plot</span>(rt_ksvm, <span class="at">data =</span> rt1[, <span class="dv">1</span><span class="sc">:</span><span class="dv">2</span>])</span></code></pre></div>
+<p><img src="_main_files/figure-html/unnamed-chunk-245-1.png" width="75%" /></p>
+<p>予測変数が2つの2値分類なので, 境界を可視化できる.
+図の色は判別関数の値で, 白い帯 (値が0付近) が分離境界にあたる.
+記号の違い (○ と △) がクラスを, 塗りつぶされた点がサポートベクターを表す.
+なお, <code>kpar = "automatic"</code> では, <code>sigma</code> の値がデータから乱数を使って自動的に決められる.</p>
+<p>ハイパーパラメータ (<code>sigma</code>, <code>C</code>) の値を変えて実行してみる.
+<code>kernlab</code> の <code>sigma</code> は, スライドの RBF カーネルの <span class="math inline">\(\gamma\)</span> に相当する.</p>
+<div class="sourceCode" id="cb341"><pre class="sourceCode r"><code class="sourceCode r"><span id="cb341-1"><a href="サポートベクターマシン-svm.html#cb341-1" tabindex="-1"></a>rt_ksvm <span class="ot">&lt;-</span> <span class="fu">ksvm</span>(rating <span class="sc">~</span> ., <span class="at">data =</span> rt1, <span class="at">kpar =</span> <span class="fu">list</span>(<span class="at">sigma =</span> <span class="dv">10</span>))  <span class="co"># → より複雑な境界</span></span>
+<span id="cb341-2"><a href="サポートベクターマシン-svm.html#cb341-2" tabindex="-1"></a>rt_ksvm</span>
+<span id="cb341-3"><a href="サポートベクターマシン-svm.html#cb341-3" tabindex="-1"></a><span class="co">#&gt; Support Vector Machine object of class &quot;ksvm&quot; </span></span>
+<span id="cb341-4"><a href="サポートベクターマシン-svm.html#cb341-4" tabindex="-1"></a><span class="co">#&gt; </span></span>
+<span id="cb341-5"><a href="サポートベクターマシン-svm.html#cb341-5" tabindex="-1"></a><span class="co">#&gt; SV type: C-svc  (classification) </span></span>
+<span id="cb341-6"><a href="サポートベクターマシン-svm.html#cb341-6" tabindex="-1"></a><span class="co">#&gt;  parameter : cost C = 1 </span></span>
+<span id="cb341-7"><a href="サポートベクターマシン-svm.html#cb341-7" tabindex="-1"></a><span class="co">#&gt; </span></span>
+<span id="cb341-8"><a href="サポートベクターマシン-svm.html#cb341-8" tabindex="-1"></a><span class="co">#&gt; Gaussian Radial Basis kernel function. </span></span>
+<span id="cb341-9"><a href="サポートベクターマシン-svm.html#cb341-9" tabindex="-1"></a><span class="co">#&gt;  Hyperparameter : sigma =  10 </span></span>
+<span id="cb341-10"><a href="サポートベクターマシン-svm.html#cb341-10" tabindex="-1"></a><span class="co">#&gt; </span></span>
+<span id="cb341-11"><a href="サポートベクターマシン-svm.html#cb341-11" tabindex="-1"></a><span class="co">#&gt; Number of Support Vectors : 81 </span></span>
+<span id="cb341-12"><a href="サポートベクターマシン-svm.html#cb341-12" tabindex="-1"></a><span class="co">#&gt; </span></span>
+<span id="cb341-13"><a href="サポートベクターマシン-svm.html#cb341-13" tabindex="-1"></a><span class="co">#&gt; Objective Function Value : -44.023 </span></span>
+<span id="cb341-14"><a href="サポートベクターマシン-svm.html#cb341-14" tabindex="-1"></a><span class="co">#&gt; Training error : 0.08</span></span>
+<span id="cb341-15"><a href="サポートベクターマシン-svm.html#cb341-15" tabindex="-1"></a><span class="fu">plot</span>(rt_ksvm, <span class="at">data =</span> rt1[, <span class="dv">1</span><span class="sc">:</span><span class="dv">2</span>])</span></code></pre></div>
+<p><img src="_main_files/figure-html/unnamed-chunk-246-1.png" width="75%" /></p>
+<div class="sourceCode" id="cb342"><pre class="sourceCode r"><code class="sourceCode r"><span id="cb342-1"><a href="サポートベクターマシン-svm.html#cb342-1" tabindex="-1"></a>rt_ksvm <span class="ot">&lt;-</span> <span class="fu">ksvm</span>(rating <span class="sc">~</span> ., <span class="at">data =</span> rt1, <span class="at">kpar =</span> <span class="fu">list</span>(<span class="at">sigma =</span> <span class="fl">0.1</span>))  <span class="co"># → より大雑把な境界</span></span>
+<span id="cb342-2"><a href="サポートベクターマシン-svm.html#cb342-2" tabindex="-1"></a>rt_ksvm</span>
+<span id="cb342-3"><a href="サポートベクターマシン-svm.html#cb342-3" tabindex="-1"></a><span class="co">#&gt; Support Vector Machine object of class &quot;ksvm&quot; </span></span>
+<span id="cb342-4"><a href="サポートベクターマシン-svm.html#cb342-4" tabindex="-1"></a><span class="co">#&gt; </span></span>
+<span id="cb342-5"><a href="サポートベクターマシン-svm.html#cb342-5" tabindex="-1"></a><span class="co">#&gt; SV type: C-svc  (classification) </span></span>
+<span id="cb342-6"><a href="サポートベクターマシン-svm.html#cb342-6" tabindex="-1"></a><span class="co">#&gt;  parameter : cost C = 1 </span></span>
+<span id="cb342-7"><a href="サポートベクターマシン-svm.html#cb342-7" tabindex="-1"></a><span class="co">#&gt; </span></span>
+<span id="cb342-8"><a href="サポートベクターマシン-svm.html#cb342-8" tabindex="-1"></a><span class="co">#&gt; Gaussian Radial Basis kernel function. </span></span>
+<span id="cb342-9"><a href="サポートベクターマシン-svm.html#cb342-9" tabindex="-1"></a><span class="co">#&gt;  Hyperparameter : sigma =  0.1 </span></span>
+<span id="cb342-10"><a href="サポートベクターマシン-svm.html#cb342-10" tabindex="-1"></a><span class="co">#&gt; </span></span>
+<span id="cb342-11"><a href="サポートベクターマシン-svm.html#cb342-11" tabindex="-1"></a><span class="co">#&gt; Number of Support Vectors : 62 </span></span>
+<span id="cb342-12"><a href="サポートベクターマシン-svm.html#cb342-12" tabindex="-1"></a><span class="co">#&gt; </span></span>
+<span id="cb342-13"><a href="サポートベクターマシン-svm.html#cb342-13" tabindex="-1"></a><span class="co">#&gt; Objective Function Value : -55.7124 </span></span>
+<span id="cb342-14"><a href="サポートベクターマシン-svm.html#cb342-14" tabindex="-1"></a><span class="co">#&gt; Training error : 0.25</span></span>
+<span id="cb342-15"><a href="サポートベクターマシン-svm.html#cb342-15" tabindex="-1"></a><span class="fu">plot</span>(rt_ksvm, <span class="at">data =</span> rt1[, <span class="dv">1</span><span class="sc">:</span><span class="dv">2</span>])</span></code></pre></div>
+<p><img src="_main_files/figure-html/unnamed-chunk-247-1.png" width="75%" /></p>
+<p><code>sigma</code> が大きいと, 各データ点の影響が及ぶ範囲が狭くなり, 学習データに細かく合わせた複雑な境界になる (過学習しやすい).
+<code>sigma</code> が小さいと, 滑らかで大雑把な境界になる.</p>
+<div class="sourceCode" id="cb343"><pre class="sourceCode r"><code class="sourceCode r"><span id="cb343-1"><a href="サポートベクターマシン-svm.html#cb343-1" tabindex="-1"></a>rt_ksvm <span class="ot">&lt;-</span> <span class="fu">ksvm</span>(rating <span class="sc">~</span> ., <span class="at">data =</span> rt1, <span class="at">kpar =</span> <span class="fu">list</span>(<span class="at">sigma =</span> <span class="fl">0.1</span>), <span class="at">C =</span> <span class="dv">10</span>)  <span class="co"># → より少ない SV</span></span>
+<span id="cb343-2"><a href="サポートベクターマシン-svm.html#cb343-2" tabindex="-1"></a>rt_ksvm</span>
+<span id="cb343-3"><a href="サポートベクターマシン-svm.html#cb343-3" tabindex="-1"></a><span class="co">#&gt; Support Vector Machine object of class &quot;ksvm&quot; </span></span>
+<span id="cb343-4"><a href="サポートベクターマシン-svm.html#cb343-4" tabindex="-1"></a><span class="co">#&gt; </span></span>
+<span id="cb343-5"><a href="サポートベクターマシン-svm.html#cb343-5" tabindex="-1"></a><span class="co">#&gt; SV type: C-svc  (classification) </span></span>
+<span id="cb343-6"><a href="サポートベクターマシン-svm.html#cb343-6" tabindex="-1"></a><span class="co">#&gt;  parameter : cost C = 10 </span></span>
+<span id="cb343-7"><a href="サポートベクターマシン-svm.html#cb343-7" tabindex="-1"></a><span class="co">#&gt; </span></span>
+<span id="cb343-8"><a href="サポートベクターマシン-svm.html#cb343-8" tabindex="-1"></a><span class="co">#&gt; Gaussian Radial Basis kernel function. </span></span>
+<span id="cb343-9"><a href="サポートベクターマシン-svm.html#cb343-9" tabindex="-1"></a><span class="co">#&gt;  Hyperparameter : sigma =  0.1 </span></span>
+<span id="cb343-10"><a href="サポートベクターマシン-svm.html#cb343-10" tabindex="-1"></a><span class="co">#&gt; </span></span>
+<span id="cb343-11"><a href="サポートベクターマシン-svm.html#cb343-11" tabindex="-1"></a><span class="co">#&gt; Number of Support Vectors : 54 </span></span>
+<span id="cb343-12"><a href="サポートベクターマシン-svm.html#cb343-12" tabindex="-1"></a><span class="co">#&gt; </span></span>
+<span id="cb343-13"><a href="サポートベクターマシン-svm.html#cb343-13" tabindex="-1"></a><span class="co">#&gt; Objective Function Value : -496.0492 </span></span>
+<span id="cb343-14"><a href="サポートベクターマシン-svm.html#cb343-14" tabindex="-1"></a><span class="co">#&gt; Training error : 0.24</span></span>
+<span id="cb343-15"><a href="サポートベクターマシン-svm.html#cb343-15" tabindex="-1"></a>rt_ksvm <span class="ot">&lt;-</span> <span class="fu">ksvm</span>(rating <span class="sc">~</span> ., <span class="at">data =</span> rt1, <span class="at">kpar =</span> <span class="fu">list</span>(<span class="at">sigma =</span> <span class="fl">0.1</span>), <span class="at">C =</span> <span class="fl">0.01</span>)  <span class="co"># → より多くの SV</span></span>
+<span id="cb343-16"><a href="サポートベクターマシン-svm.html#cb343-16" tabindex="-1"></a>rt_ksvm</span>
+<span id="cb343-17"><a href="サポートベクターマシン-svm.html#cb343-17" tabindex="-1"></a><span class="co">#&gt; Support Vector Machine object of class &quot;ksvm&quot; </span></span>
+<span id="cb343-18"><a href="サポートベクターマシン-svm.html#cb343-18" tabindex="-1"></a><span class="co">#&gt; </span></span>
+<span id="cb343-19"><a href="サポートベクターマシン-svm.html#cb343-19" tabindex="-1"></a><span class="co">#&gt; SV type: C-svc  (classification) </span></span>
+<span id="cb343-20"><a href="サポートベクターマシン-svm.html#cb343-20" tabindex="-1"></a><span class="co">#&gt;  parameter : cost C = 0.01 </span></span>
+<span id="cb343-21"><a href="サポートベクターマシン-svm.html#cb343-21" tabindex="-1"></a><span class="co">#&gt; </span></span>
+<span id="cb343-22"><a href="サポートベクターマシン-svm.html#cb343-22" tabindex="-1"></a><span class="co">#&gt; Gaussian Radial Basis kernel function. </span></span>
+<span id="cb343-23"><a href="サポートベクターマシン-svm.html#cb343-23" tabindex="-1"></a><span class="co">#&gt;  Hyperparameter : sigma =  0.1 </span></span>
+<span id="cb343-24"><a href="サポートベクターマシン-svm.html#cb343-24" tabindex="-1"></a><span class="co">#&gt; </span></span>
+<span id="cb343-25"><a href="サポートベクターマシン-svm.html#cb343-25" tabindex="-1"></a><span class="co">#&gt; Number of Support Vectors : 71 </span></span>
+<span id="cb343-26"><a href="サポートベクターマシン-svm.html#cb343-26" tabindex="-1"></a><span class="co">#&gt; </span></span>
+<span id="cb343-27"><a href="サポートベクターマシン-svm.html#cb343-27" tabindex="-1"></a><span class="co">#&gt; Objective Function Value : -0.6978 </span></span>
+<span id="cb343-28"><a href="サポートベクターマシン-svm.html#cb343-28" tabindex="-1"></a><span class="co">#&gt; Training error : 0.35</span></span>
+<span id="cb343-29"><a href="サポートベクターマシン-svm.html#cb343-29" tabindex="-1"></a><span class="fu">plot</span>(rt_ksvm, <span class="at">data =</span> rt1[, <span class="dv">1</span><span class="sc">:</span><span class="dv">2</span>])</span></code></pre></div>
+<p><img src="_main_files/figure-html/unnamed-chunk-248-1.png" width="75%" /></p>
+<p><code>C</code> は誤判別・マージン違反に対するコストである.
+<code>C</code> が小さいと, マージン違反を大目に見る代わりにマージンを広く取るので, サポートベクターが多くなる.
+<code>C = 0.01</code> では, ほとんどの点がサポートベクターとなり, 全ての点を多数派のクラス (BBB) に判別している.
+<code>C</code> が大きいと, マージン違反を厳しく罰するので, マージンは狭く, サポートベクターは少なくなる.</p>
+<p><strong>自主課題</strong>
+<code>sigma</code> と <code>C</code> の組合せを変えて, 境界の形やサポートベクターの数, 学習誤差がどう変わるか試してみよう.</p>
+</div>
+</div>
+<div id="値分類-クレジットカードの延滞" class="section level2 hasAnchor" number="11.2">
+<h2><span class="header-section-number">11.2</span> 2値分類: クレジットカードの延滞<a href="サポートベクターマシン-svm.html#値分類-クレジットカードの延滞" class="anchor-section" aria-label="Anchor link to header"></a></h2>
+<div id="データ-クレジットカードの延滞-仮想データ" class="section level3 unnumbered hasAnchor">
+<h3>データ: クレジットカードの延滞 (仮想データ)<a href="サポートベクターマシン-svm.html#データ-クレジットカードの延滞-仮想データ" class="anchor-section" aria-label="Anchor link to header"></a></h3>
+<pre><code>card_default.csv: 3,000件 (仮想データ)
+- default: 延滞 (yes / no) (目的変数)
+- limit: 利用枠 (万円), util: 利用率 (%), delay: 直近6か月の支払遅延回数 (回),
+- age: 年齢, income: 年収 (万円), cash_ratio: キャッシング比率 (%),
+- tenure: 会員年数 (年), n_cards: 保有カード枚数
+※ 利用率が一定水準を超えると延滞が急増する, 年齢の影響がU字型, などの非線形な関係を含む</code></pre>
+<div class="sourceCode" id="cb345"><pre class="sourceCode r"><code class="sourceCode r"><span id="cb345-1"><a href="サポートベクターマシン-svm.html#cb345-1" tabindex="-1"></a>card <span class="ot">&lt;-</span> <span class="fu">read.csv</span>(<span class="st">&quot;class/card_default.csv&quot;</span>, <span class="at">stringsAsFactors =</span> <span class="cn">TRUE</span>)</span>
+<span id="cb345-2"><a href="サポートベクターマシン-svm.html#cb345-2" tabindex="-1"></a>card<span class="sc">$</span>default <span class="ot">&lt;-</span> <span class="fu">factor</span>(card<span class="sc">$</span>default, <span class="at">levels =</span> <span class="fu">c</span>(<span class="st">&quot;no&quot;</span>, <span class="st">&quot;yes&quot;</span>))</span>
+<span id="cb345-3"><a href="サポートベクターマシン-svm.html#cb345-3" tabindex="-1"></a><span class="fu">table</span>(card<span class="sc">$</span>default)</span>
+<span id="cb345-4"><a href="サポートベクターマシン-svm.html#cb345-4" tabindex="-1"></a><span class="co">#&gt; </span></span>
+<span id="cb345-5"><a href="サポートベクターマシン-svm.html#cb345-5" tabindex="-1"></a><span class="co">#&gt;   no  yes </span></span>
+<span id="cb345-6"><a href="サポートベクターマシン-svm.html#cb345-6" tabindex="-1"></a><span class="co">#&gt; 2804  196</span></span>
+<span id="cb345-7"><a href="サポートベクターマシン-svm.html#cb345-7" tabindex="-1"></a><span class="fu">set.seed</span>(<span class="dv">50</span>)</span>
+<span id="cb345-8"><a href="サポートベクターマシン-svm.html#cb345-8" tabindex="-1"></a>train_idx <span class="ot">&lt;-</span> <span class="fu">sample</span>(<span class="fu">nrow</span>(card), <span class="fu">round</span>(<span class="fu">nrow</span>(card) <span class="sc">*</span> <span class="dv">2</span><span class="sc">/</span><span class="dv">3</span>))</span>
+<span id="cb345-9"><a href="サポートベクターマシン-svm.html#cb345-9" tabindex="-1"></a>card_train <span class="ot">&lt;-</span> card[train_idx, ]</span>
+<span id="cb345-10"><a href="サポートベクターマシン-svm.html#cb345-10" tabindex="-1"></a>card_test <span class="ot">&lt;-</span> card[<span class="sc">-</span>train_idx, ]</span></code></pre></div>
+</div>
+<div id="svmの実行-1" class="section level3 unnumbered hasAnchor">
+<h3>SVMの実行<a href="サポートベクターマシン-svm.html#svmの実行-1" class="anchor-section" aria-label="Anchor link to header"></a></h3>
+<pre><code>ksvm() の主な引数:
+- kernel: &quot;rbfdot&quot; (Gaussian RBF, デフォルト), &quot;vanilladot&quot; (線形), &quot;polydot&quot; (多項式)
+- C: コスト (デフォルト 1), kpar: カーネルのパラメータ (rbfdot では sigma)
+- cross: k-分割交差検証による誤差の推定
+- prob.model = TRUE: クラス所属確率も計算
+注) 説明変数は, デフォルトで標準化される (scaled = TRUE)</code></pre>
+<div class="sourceCode" id="cb347"><pre class="sourceCode r"><code class="sourceCode r"><span id="cb347-1"><a href="サポートベクターマシン-svm.html#cb347-1" tabindex="-1"></a><span class="co"># 線形カーネル</span></span>
+<span id="cb347-2"><a href="サポートベクターマシン-svm.html#cb347-2" tabindex="-1"></a>(card_lin <span class="ot">&lt;-</span> <span class="fu">ksvm</span>(default <span class="sc">~</span> ., <span class="at">data =</span> card_train, <span class="at">kernel =</span> <span class="st">&quot;vanilladot&quot;</span>, <span class="at">C =</span> <span class="dv">1</span>, <span class="at">cross =</span> <span class="dv">3</span>,</span>
+<span id="cb347-3"><a href="サポートベクターマシン-svm.html#cb347-3" tabindex="-1"></a>  <span class="at">prob.model =</span> <span class="cn">TRUE</span>))</span>
+<span id="cb347-4"><a href="サポートベクターマシン-svm.html#cb347-4" tabindex="-1"></a><span class="co">#&gt;  Setting default kernel parameters  </span></span>
+<span id="cb347-5"><a href="サポートベクターマシン-svm.html#cb347-5" tabindex="-1"></a><span class="co">#&gt; maximum number of iterations reached 0.01081129 0.01002182</span></span>
+<span id="cb347-6"><a href="サポートベクターマシン-svm.html#cb347-6" tabindex="-1"></a><span class="co">#&gt; Support Vector Machine object of class &quot;ksvm&quot; </span></span>
+<span id="cb347-7"><a href="サポートベクターマシン-svm.html#cb347-7" tabindex="-1"></a><span class="co">#&gt; </span></span>
+<span id="cb347-8"><a href="サポートベクターマシン-svm.html#cb347-8" tabindex="-1"></a><span class="co">#&gt; SV type: C-svc  (classification) </span></span>
+<span id="cb347-9"><a href="サポートベクターマシン-svm.html#cb347-9" tabindex="-1"></a><span class="co">#&gt;  parameter : cost C = 1 </span></span>
+<span id="cb347-10"><a href="サポートベクターマシン-svm.html#cb347-10" tabindex="-1"></a><span class="co">#&gt; </span></span>
+<span id="cb347-11"><a href="サポートベクターマシン-svm.html#cb347-11" tabindex="-1"></a><span class="co">#&gt; Linear (vanilla) kernel function. </span></span>
+<span id="cb347-12"><a href="サポートベクターマシン-svm.html#cb347-12" tabindex="-1"></a><span class="co">#&gt; </span></span>
+<span id="cb347-13"><a href="サポートベクターマシン-svm.html#cb347-13" tabindex="-1"></a><span class="co">#&gt; Number of Support Vectors : 307 </span></span>
+<span id="cb347-14"><a href="サポートベクターマシン-svm.html#cb347-14" tabindex="-1"></a><span class="co">#&gt; </span></span>
+<span id="cb347-15"><a href="サポートベクターマシン-svm.html#cb347-15" tabindex="-1"></a><span class="co">#&gt; Objective Function Value : -256 </span></span>
+<span id="cb347-16"><a href="サポートベクターマシン-svm.html#cb347-16" tabindex="-1"></a><span class="co">#&gt; Training error : 0.064 </span></span>
+<span id="cb347-17"><a href="サポートベクターマシン-svm.html#cb347-17" tabindex="-1"></a><span class="co">#&gt; Cross validation error : 0.064002 </span></span>
+<span id="cb347-18"><a href="サポートベクターマシン-svm.html#cb347-18" tabindex="-1"></a><span class="co">#&gt; Probability model included.</span></span>
+<span id="cb347-19"><a href="サポートベクターマシン-svm.html#cb347-19" tabindex="-1"></a>pred_lin <span class="ot">&lt;-</span> <span class="fu">predict</span>(card_lin, card_test)</span>
+<span id="cb347-20"><a href="サポートベクターマシン-svm.html#cb347-20" tabindex="-1"></a>(tab_lin <span class="ot">&lt;-</span> <span class="fu">table</span>(予測 <span class="ot">=</span> pred_lin, 実績 <span class="ot">=</span> card_test<span class="sc">$</span>default))</span>
+<span id="cb347-21"><a href="サポートベクターマシン-svm.html#cb347-21" tabindex="-1"></a><span class="co">#&gt;      実績</span></span>
+<span id="cb347-22"><a href="サポートベクターマシン-svm.html#cb347-22" tabindex="-1"></a><span class="co">#&gt; 予測  no yes</span></span>
+<span id="cb347-23"><a href="サポートベクターマシン-svm.html#cb347-23" tabindex="-1"></a><span class="co">#&gt;   no  932  68</span></span>
+<span id="cb347-24"><a href="サポートベクターマシン-svm.html#cb347-24" tabindex="-1"></a><span class="co">#&gt;   yes   0   0</span></span></code></pre></div>
+<div class="sourceCode" id="cb348"><pre class="sourceCode r"><code class="sourceCode r"><span id="cb348-1"><a href="サポートベクターマシン-svm.html#cb348-1" tabindex="-1"></a><span class="co"># RBF カーネル</span></span>
+<span id="cb348-2"><a href="サポートベクターマシン-svm.html#cb348-2" tabindex="-1"></a>(card_rbf <span class="ot">&lt;-</span> <span class="fu">ksvm</span>(default <span class="sc">~</span> ., <span class="at">data =</span> card_train, <span class="at">kernel =</span> <span class="st">&quot;rbfdot&quot;</span>, <span class="at">C =</span> <span class="dv">1</span>, <span class="at">cross =</span> <span class="dv">3</span>,</span>
+<span id="cb348-3"><a href="サポートベクターマシン-svm.html#cb348-3" tabindex="-1"></a>  <span class="at">prob.model =</span> <span class="cn">TRUE</span>))</span>
+<span id="cb348-4"><a href="サポートベクターマシン-svm.html#cb348-4" tabindex="-1"></a><span class="co">#&gt; Support Vector Machine object of class &quot;ksvm&quot; </span></span>
+<span id="cb348-5"><a href="サポートベクターマシン-svm.html#cb348-5" tabindex="-1"></a><span class="co">#&gt; </span></span>
+<span id="cb348-6"><a href="サポートベクターマシン-svm.html#cb348-6" tabindex="-1"></a><span class="co">#&gt; SV type: C-svc  (classification) </span></span>
+<span id="cb348-7"><a href="サポートベクターマシン-svm.html#cb348-7" tabindex="-1"></a><span class="co">#&gt;  parameter : cost C = 1 </span></span>
+<span id="cb348-8"><a href="サポートベクターマシン-svm.html#cb348-8" tabindex="-1"></a><span class="co">#&gt; </span></span>
+<span id="cb348-9"><a href="サポートベクターマシン-svm.html#cb348-9" tabindex="-1"></a><span class="co">#&gt; Gaussian Radial Basis kernel function. </span></span>
+<span id="cb348-10"><a href="サポートベクターマシン-svm.html#cb348-10" tabindex="-1"></a><span class="co">#&gt;  Hyperparameter : sigma =  0.100346733594059 </span></span>
+<span id="cb348-11"><a href="サポートベクターマシン-svm.html#cb348-11" tabindex="-1"></a><span class="co">#&gt; </span></span>
+<span id="cb348-12"><a href="サポートベクターマシン-svm.html#cb348-12" tabindex="-1"></a><span class="co">#&gt; Number of Support Vectors : 360 </span></span>
+<span id="cb348-13"><a href="サポートベクターマシン-svm.html#cb348-13" tabindex="-1"></a><span class="co">#&gt; </span></span>
+<span id="cb348-14"><a href="サポートベクターマシン-svm.html#cb348-14" tabindex="-1"></a><span class="co">#&gt; Objective Function Value : -230.4993 </span></span>
+<span id="cb348-15"><a href="サポートベクターマシン-svm.html#cb348-15" tabindex="-1"></a><span class="co">#&gt; Training error : 0.0505 </span></span>
+<span id="cb348-16"><a href="サポートベクターマシン-svm.html#cb348-16" tabindex="-1"></a><span class="co">#&gt; Cross validation error : 0.062497 </span></span>
+<span id="cb348-17"><a href="サポートベクターマシン-svm.html#cb348-17" tabindex="-1"></a><span class="co">#&gt; Probability model included.</span></span>
+<span id="cb348-18"><a href="サポートベクターマシン-svm.html#cb348-18" tabindex="-1"></a>pred_rbf <span class="ot">&lt;-</span> <span class="fu">predict</span>(card_rbf, card_test)</span>
+<span id="cb348-19"><a href="サポートベクターマシン-svm.html#cb348-19" tabindex="-1"></a>(tab_rbf <span class="ot">&lt;-</span> <span class="fu">table</span>(予測 <span class="ot">=</span> pred_rbf, 実績 <span class="ot">=</span> card_test<span class="sc">$</span>default))</span>
+<span id="cb348-20"><a href="サポートベクターマシン-svm.html#cb348-20" tabindex="-1"></a><span class="co">#&gt;      実績</span></span>
+<span id="cb348-21"><a href="サポートベクターマシン-svm.html#cb348-21" tabindex="-1"></a><span class="co">#&gt; 予測  no yes</span></span>
+<span id="cb348-22"><a href="サポートベクターマシン-svm.html#cb348-22" tabindex="-1"></a><span class="co">#&gt;   no  928  61</span></span>
+<span id="cb348-23"><a href="サポートベクターマシン-svm.html#cb348-23" tabindex="-1"></a><span class="co">#&gt;   yes   4   7</span></span></code></pre></div>
+<div class="sourceCode" id="cb349"><pre class="sourceCode r"><code class="sourceCode r"><span id="cb349-1"><a href="サポートベクターマシン-svm.html#cb349-1" tabindex="-1"></a><span class="fu">library</span>(caret)</span>
+<span id="cb349-2"><a href="サポートベクターマシン-svm.html#cb349-2" tabindex="-1"></a><span class="fu">confusionMatrix</span>(tab_rbf, <span class="at">positive =</span> <span class="st">&quot;yes&quot;</span>, <span class="at">mode =</span> <span class="st">&quot;prec_recall&quot;</span>)</span>
+<span id="cb349-3"><a href="サポートベクターマシン-svm.html#cb349-3" tabindex="-1"></a><span class="co">#&gt; Confusion Matrix and Statistics</span></span>
+<span id="cb349-4"><a href="サポートベクターマシン-svm.html#cb349-4" tabindex="-1"></a><span class="co">#&gt; </span></span>
+<span id="cb349-5"><a href="サポートベクターマシン-svm.html#cb349-5" tabindex="-1"></a><span class="co">#&gt;      実績</span></span>
+<span id="cb349-6"><a href="サポートベクターマシン-svm.html#cb349-6" tabindex="-1"></a><span class="co">#&gt; 予測  no yes</span></span>
+<span id="cb349-7"><a href="サポートベクターマシン-svm.html#cb349-7" tabindex="-1"></a><span class="co">#&gt;   no  928  61</span></span>
+<span id="cb349-8"><a href="サポートベクターマシン-svm.html#cb349-8" tabindex="-1"></a><span class="co">#&gt;   yes   4   7</span></span>
+<span id="cb349-9"><a href="サポートベクターマシン-svm.html#cb349-9" tabindex="-1"></a><span class="co">#&gt;                                           </span></span>
+<span id="cb349-10"><a href="サポートベクターマシン-svm.html#cb349-10" tabindex="-1"></a><span class="co">#&gt;                Accuracy : 0.935           </span></span>
+<span id="cb349-11"><a href="サポートベクターマシン-svm.html#cb349-11" tabindex="-1"></a><span class="co">#&gt;                  95% CI : (0.9179, 0.9495)</span></span>
+<span id="cb349-12"><a href="サポートベクターマシン-svm.html#cb349-12" tabindex="-1"></a><span class="co">#&gt;     No Information Rate : 0.932           </span></span>
+<span id="cb349-13"><a href="サポートベクターマシン-svm.html#cb349-13" tabindex="-1"></a><span class="co">#&gt;     P-Value [Acc &gt; NIR] : 0.383           </span></span>
+<span id="cb349-14"><a href="サポートベクターマシン-svm.html#cb349-14" tabindex="-1"></a><span class="co">#&gt;                                           </span></span>
+<span id="cb349-15"><a href="サポートベクターマシン-svm.html#cb349-15" tabindex="-1"></a><span class="co">#&gt;                   Kappa : 0.1613          </span></span>
+<span id="cb349-16"><a href="サポートベクターマシン-svm.html#cb349-16" tabindex="-1"></a><span class="co">#&gt;                                           </span></span>
+<span id="cb349-17"><a href="サポートベクターマシン-svm.html#cb349-17" tabindex="-1"></a><span class="co">#&gt;  Mcnemar&#39;s Test P-Value : 3.759e-12       </span></span>
+<span id="cb349-18"><a href="サポートベクターマシン-svm.html#cb349-18" tabindex="-1"></a><span class="co">#&gt;                                           </span></span>
+<span id="cb349-19"><a href="サポートベクターマシン-svm.html#cb349-19" tabindex="-1"></a><span class="co">#&gt;               Precision : 0.6364          </span></span>
+<span id="cb349-20"><a href="サポートベクターマシン-svm.html#cb349-20" tabindex="-1"></a><span class="co">#&gt;                  Recall : 0.1029          </span></span>
+<span id="cb349-21"><a href="サポートベクターマシン-svm.html#cb349-21" tabindex="-1"></a><span class="co">#&gt;                      F1 : 0.1772          </span></span>
+<span id="cb349-22"><a href="サポートベクターマシン-svm.html#cb349-22" tabindex="-1"></a><span class="co">#&gt;              Prevalence : 0.0680          </span></span>
+<span id="cb349-23"><a href="サポートベクターマシン-svm.html#cb349-23" tabindex="-1"></a><span class="co">#&gt;          Detection Rate : 0.0070          </span></span>
+<span id="cb349-24"><a href="サポートベクターマシン-svm.html#cb349-24" tabindex="-1"></a><span class="co">#&gt;    Detection Prevalence : 0.0110          </span></span>
+<span id="cb349-25"><a href="サポートベクターマシン-svm.html#cb349-25" tabindex="-1"></a><span class="co">#&gt;       Balanced Accuracy : 0.5493          </span></span>
+<span id="cb349-26"><a href="サポートベクターマシン-svm.html#cb349-26" tabindex="-1"></a><span class="co">#&gt;                                           </span></span>
+<span id="cb349-27"><a href="サポートベクターマシン-svm.html#cb349-27" tabindex="-1"></a><span class="co">#&gt;        &#39;Positive&#39; Class : yes             </span></span>
+<span id="cb349-28"><a href="サポートベクターマシン-svm.html#cb349-28" tabindex="-1"></a><span class="co">#&gt; </span></span></code></pre></div>
+<p>線形カーネルの SVM は, 全員を「延滞しない (no)」と予測している.
+RBF カーネルの正解率 (Accuracy) は高く見えるが, 延滞は全体の7%程度しかないので, 全員を「延滞しない」と予測するだけでも正解率は約93%になる (<code>No Information Rate</code>).
+延滞 (yes) の再現率 (Recall) も合わせて確認する必要がある.</p>
+<p>出力オブジェクトから, 各種の値を取り出すことができる.</p>
+<div class="sourceCode" id="cb350"><pre class="sourceCode r"><code class="sourceCode r"><span id="cb350-1"><a href="サポートベクターマシン-svm.html#cb350-1" tabindex="-1"></a>card_rbf<span class="sc">@</span>cross  <span class="co"># 交差検証による誤差</span></span>
+<span id="cb350-2"><a href="サポートベクターマシン-svm.html#cb350-2" tabindex="-1"></a><span class="co">#&gt; [1] 0.06249653</span></span>
+<span id="cb350-3"><a href="サポートベクターマシン-svm.html#cb350-3" tabindex="-1"></a>card_rbf<span class="sc">@</span>nSV  <span class="co"># サポートベクターの数</span></span>
+<span id="cb350-4"><a href="サポートベクターマシン-svm.html#cb350-4" tabindex="-1"></a><span class="co">#&gt; [1] 360</span></span>
+<span id="cb350-5"><a href="サポートベクターマシン-svm.html#cb350-5" tabindex="-1"></a><span class="co"># card_rbf@alphaindex # サポートベクターのインデックス</span></span></code></pre></div>
+</div>
+<div id="roc-曲線と-auc" class="section level3 unnumbered hasAnchor">
+<h3>ROC 曲線と AUC<a href="サポートベクターマシン-svm.html#roc-曲線と-auc" class="anchor-section" aria-label="Anchor link to header"></a></h3>
+<p>延滞確率をスコアとして, しきい値によらない比較を行う.
+比較のため, ロジット回帰も推定する.</p>
+<div class="sourceCode" id="cb351"><pre class="sourceCode r"><code class="sourceCode r"><span id="cb351-1"><a href="サポートベクターマシン-svm.html#cb351-1" tabindex="-1"></a><span class="fu">library</span>(ROCR)</span>
+<span id="cb351-2"><a href="サポートベクターマシン-svm.html#cb351-2" tabindex="-1"></a>auc <span class="ot">&lt;-</span> <span class="cf">function</span>(score, y) <span class="fu">performance</span>(<span class="fu">prediction</span>(score, y), <span class="st">&quot;auc&quot;</span>)<span class="sc">@</span>y.values[[<span class="dv">1</span>]]</span>
+<span id="cb351-3"><a href="サポートベクターマシン-svm.html#cb351-3" tabindex="-1"></a>p_lin <span class="ot">&lt;-</span> <span class="fu">predict</span>(card_lin, card_test, <span class="at">type =</span> <span class="st">&quot;probabilities&quot;</span>)[, <span class="st">&quot;yes&quot;</span>]</span>
+<span id="cb351-4"><a href="サポートベクターマシン-svm.html#cb351-4" tabindex="-1"></a>p_rbf <span class="ot">&lt;-</span> <span class="fu">predict</span>(card_rbf, card_test, <span class="at">type =</span> <span class="st">&quot;probabilities&quot;</span>)[, <span class="st">&quot;yes&quot;</span>]</span>
+<span id="cb351-5"><a href="サポートベクターマシン-svm.html#cb351-5" tabindex="-1"></a>p_glm <span class="ot">&lt;-</span> <span class="fu">predict</span>(<span class="fu">glm</span>(default <span class="sc">~</span> ., <span class="at">family =</span> binomial, <span class="at">data =</span> card_train), card_test,</span>
+<span id="cb351-6"><a href="サポートベクターマシン-svm.html#cb351-6" tabindex="-1"></a>  <span class="at">type =</span> <span class="st">&quot;response&quot;</span>)</span>
+<span id="cb351-7"><a href="サポートベクターマシン-svm.html#cb351-7" tabindex="-1"></a><span class="fu">round</span>(<span class="fu">c</span>(<span class="at">SVM_linear =</span> <span class="fu">auc</span>(p_lin, card_test<span class="sc">$</span>default), <span class="at">SVM_rbf =</span> <span class="fu">auc</span>(p_rbf, card_test<span class="sc">$</span>default),</span>
+<span id="cb351-8"><a href="サポートベクターマシン-svm.html#cb351-8" tabindex="-1"></a>  <span class="at">logit =</span> <span class="fu">auc</span>(p_glm, card_test<span class="sc">$</span>default)), <span class="dv">3</span>)</span>
+<span id="cb351-9"><a href="サポートベクターマシン-svm.html#cb351-9" tabindex="-1"></a><span class="co">#&gt; SVM_linear    SVM_rbf      logit </span></span>
+<span id="cb351-10"><a href="サポートベクターマシン-svm.html#cb351-10" tabindex="-1"></a><span class="co">#&gt;      0.716      0.777      0.856</span></span>
+<span id="cb351-11"><a href="サポートベクターマシン-svm.html#cb351-11" tabindex="-1"></a><span class="fu">plot</span>(<span class="fu">performance</span>(<span class="fu">prediction</span>(p_rbf, card_test<span class="sc">$</span>default), <span class="st">&quot;tpr&quot;</span>, <span class="st">&quot;fpr&quot;</span>), <span class="at">col =</span> <span class="st">&quot;blue&quot;</span>)</span>
+<span id="cb351-12"><a href="サポートベクターマシン-svm.html#cb351-12" tabindex="-1"></a><span class="fu">plot</span>(<span class="fu">performance</span>(<span class="fu">prediction</span>(p_glm, card_test<span class="sc">$</span>default), <span class="st">&quot;tpr&quot;</span>, <span class="st">&quot;fpr&quot;</span>), <span class="at">col =</span> <span class="st">&quot;red&quot;</span>,</span>
+<span id="cb351-13"><a href="サポートベクターマシン-svm.html#cb351-13" tabindex="-1"></a>  <span class="at">add =</span> <span class="cn">TRUE</span>)</span>
+<span id="cb351-14"><a href="サポートベクターマシン-svm.html#cb351-14" tabindex="-1"></a><span class="fu">abline</span>(<span class="dv">0</span>, <span class="dv">1</span>, <span class="at">lty =</span> <span class="dv">3</span>)</span>
+<span id="cb351-15"><a href="サポートベクターマシン-svm.html#cb351-15" tabindex="-1"></a><span class="fu">legend</span>(<span class="st">&quot;bottomright&quot;</span>, <span class="at">legend =</span> <span class="fu">c</span>(<span class="st">&quot;SVM (RBF)&quot;</span>, <span class="st">&quot;ロジット&quot;</span>), <span class="at">col =</span> <span class="fu">c</span>(<span class="st">&quot;blue&quot;</span>, <span class="st">&quot;red&quot;</span>),</span>
+<span id="cb351-16"><a href="サポートベクターマシン-svm.html#cb351-16" tabindex="-1"></a>  <span class="at">lty =</span> <span class="dv">1</span>)</span></code></pre></div>
+<p><img src="_main_files/figure-html/unnamed-chunk-254-1.png" width="75%" /></p>
+<p>線形カーネルより RBF カーネルの方が AUC は高いが, このデータではロジット回帰の AUC が最も高い.
+表形式 (構造化) データでは, SVM が常に最良とは限らない. 複数の手法を比較することが大切である.</p>
+<p><strong>自主課題</strong>
+ハイパーパラメータ (<code>C</code>, <code>sigma</code>) を変えて, AUC や再現率がどう変わるか試してみよう.</p>
+</div>
+</div>
+<div id="値分類-格付" class="section level2 hasAnchor" number="11.3">
+<h2><span class="header-section-number">11.3</span> 3値分類: 格付<a href="サポートベクターマシン-svm.html#値分類-格付" class="anchor-section" aria-label="Anchor link to header"></a></h2>
+<p>全ての財務指標を使って, A / BBB / HY の3クラスを判別する.
+<code>ksvm()</code> は, クラス数が3以上の場合, One-versus-One (OvO) 法 (全てのクラスの組合せについて2値分類の SVM を学習し, 多数決で判別) で分類する.</p>
+<div class="sourceCode" id="cb352"><pre class="sourceCode r"><code class="sourceCode r"><span id="cb352-1"><a href="サポートベクターマシン-svm.html#cb352-1" tabindex="-1"></a><span class="fu">set.seed</span>(<span class="dv">1</span>)</span>
+<span id="cb352-2"><a href="サポートベクターマシン-svm.html#cb352-2" tabindex="-1"></a>train_idx <span class="ot">&lt;-</span> <span class="fu">sample</span>(<span class="fu">nrow</span>(rating), <span class="dv">400</span>)</span>
+<span id="cb352-3"><a href="サポートベクターマシン-svm.html#cb352-3" tabindex="-1"></a>fo <span class="ot">&lt;-</span> rating <span class="sc">~</span> log_mcap <span class="sc">+</span> debt_ebitda <span class="sc">+</span> log_icr <span class="sc">+</span> roa <span class="sc">+</span> equity_ratio <span class="sc">+</span> equity_vol</span>
+<span id="cb352-4"><a href="サポートベクターマシン-svm.html#cb352-4" tabindex="-1"></a>rt_train <span class="ot">&lt;-</span> rating[train_idx, ]</span>
+<span id="cb352-5"><a href="サポートベクターマシン-svm.html#cb352-5" tabindex="-1"></a>rt_test <span class="ot">&lt;-</span> rating[<span class="sc">-</span>train_idx, ]</span>
+<span id="cb352-6"><a href="サポートベクターマシン-svm.html#cb352-6" tabindex="-1"></a></span>
+<span id="cb352-7"><a href="サポートベクターマシン-svm.html#cb352-7" tabindex="-1"></a><span class="cf">for</span> (s <span class="cf">in</span> <span class="fu">c</span>(<span class="fl">0.01</span>, <span class="fl">0.1</span>, <span class="dv">1</span>)) <span class="cf">for</span> (C <span class="cf">in</span> <span class="fu">c</span>(<span class="fl">0.1</span>, <span class="dv">1</span>, <span class="dv">10</span>)) {</span>
+<span id="cb352-8"><a href="サポートベクターマシン-svm.html#cb352-8" tabindex="-1"></a>  m <span class="ot">&lt;-</span> <span class="fu">ksvm</span>(fo, <span class="at">data =</span> rt_train, <span class="at">kpar =</span> <span class="fu">list</span>(<span class="at">sigma =</span> s), <span class="at">C =</span> C)</span>
+<span id="cb352-9"><a href="サポートベクターマシン-svm.html#cb352-9" tabindex="-1"></a>  acc <span class="ot">&lt;-</span> <span class="fu">mean</span>(<span class="fu">predict</span>(m, rt_test) <span class="sc">==</span> rt_test<span class="sc">$</span>rating)</span>
+<span id="cb352-10"><a href="サポートベクターマシン-svm.html#cb352-10" tabindex="-1"></a>  <span class="fu">cat</span>(<span class="fu">sprintf</span>(<span class="st">&quot;sigma = %5.2f, C = %5.1f: SV数 = %3d, テスト正解率 = %.3f</span><span class="sc">\n</span><span class="st">&quot;</span>,</span>
+<span id="cb352-11"><a href="サポートベクターマシン-svm.html#cb352-11" tabindex="-1"></a>    s, C, m<span class="sc">@</span>nSV, acc))</span>
+<span id="cb352-12"><a href="サポートベクターマシン-svm.html#cb352-12" tabindex="-1"></a>}</span>
+<span id="cb352-13"><a href="サポートベクターマシン-svm.html#cb352-13" tabindex="-1"></a><span class="co">#&gt; sigma =  0.01, C =   0.1: SV数 = 400, テスト正解率 = 0.405</span></span>
+<span id="cb352-14"><a href="サポートベクターマシン-svm.html#cb352-14" tabindex="-1"></a><span class="co">#&gt; sigma =  0.01, C =   1.0: SV数 = 343, テスト正解率 = 0.785</span></span>
+<span id="cb352-15"><a href="サポートベクターマシン-svm.html#cb352-15" tabindex="-1"></a><span class="co">#&gt; sigma =  0.01, C =  10.0: SV数 = 242, テスト正解率 = 0.785</span></span>
+<span id="cb352-16"><a href="サポートベクターマシン-svm.html#cb352-16" tabindex="-1"></a><span class="co">#&gt; sigma =  0.10, C =   0.1: SV数 = 374, テスト正解率 = 0.755</span></span>
+<span id="cb352-17"><a href="サポートベクターマシン-svm.html#cb352-17" tabindex="-1"></a><span class="co">#&gt; sigma =  0.10, C =   1.0: SV数 = 260, テスト正解率 = 0.785</span></span>
+<span id="cb352-18"><a href="サポートベクターマシン-svm.html#cb352-18" tabindex="-1"></a><span class="co">#&gt; sigma =  0.10, C =  10.0: SV数 = 209, テスト正解率 = 0.765</span></span>
+<span id="cb352-19"><a href="サポートベクターマシン-svm.html#cb352-19" tabindex="-1"></a><span class="co">#&gt; sigma =  1.00, C =   0.1: SV数 = 386, テスト正解率 = 0.390</span></span>
+<span id="cb352-20"><a href="サポートベクターマシン-svm.html#cb352-20" tabindex="-1"></a><span class="co">#&gt; sigma =  1.00, C =   1.0: SV数 = 358, テスト正解率 = 0.760</span></span>
+<span id="cb352-21"><a href="サポートベクターマシン-svm.html#cb352-21" tabindex="-1"></a><span class="co">#&gt; sigma =  1.00, C =  10.0: SV数 = 365, テスト正解率 = 0.720</span></span></code></pre></div>
+<p><strong>自主課題</strong>
+第8章の LDA / QDA の正解率と比べてみよう.</p>
+</div>
+<div id="代替パッケージ-e1071-の利用" class="section level2 hasAnchor" number="11.4">
+<h2><span class="header-section-number">11.4</span> 代替パッケージ e1071 の利用<a href="サポートベクターマシン-svm.html#代替パッケージ-e1071-の利用" class="anchor-section" aria-label="Anchor link to header"></a></h2>
+<p>パッケージ<strong>e1071</strong>の関数<code>svm()</code> (ISLR2 の Lab でも使用) でも, SVM を実行できる.
+RBF カーネルのハイパーパラメータは, <code>gamma</code> と <code>cost</code> である.</p>
+<div class="sourceCode" id="cb353"><pre class="sourceCode r"><code class="sourceCode r"><span id="cb353-1"><a href="サポートベクターマシン-svm.html#cb353-1" tabindex="-1"></a><span class="fu">library</span>(e1071)</span>
+<span id="cb353-2"><a href="サポートベクターマシン-svm.html#cb353-2" tabindex="-1"></a>rt_svm <span class="ot">&lt;-</span> <span class="fu">svm</span>(fo, <span class="at">data =</span> rt_train, <span class="at">kernel =</span> <span class="st">&quot;radial&quot;</span>, <span class="at">cost =</span> <span class="dv">10</span>, <span class="at">gamma =</span> <span class="fl">0.1</span>)</span>
+<span id="cb353-3"><a href="サポートベクターマシン-svm.html#cb353-3" tabindex="-1"></a><span class="fu">summary</span>(rt_svm)</span>
+<span id="cb353-4"><a href="サポートベクターマシン-svm.html#cb353-4" tabindex="-1"></a><span class="co">#&gt; </span></span>
+<span id="cb353-5"><a href="サポートベクターマシン-svm.html#cb353-5" tabindex="-1"></a><span class="co">#&gt; Call:</span></span>
+<span id="cb353-6"><a href="サポートベクターマシン-svm.html#cb353-6" tabindex="-1"></a><span class="co">#&gt; svm(formula = fo, data = rt_train, kernel = &quot;radial&quot;, cost = 10, </span></span>
+<span id="cb353-7"><a href="サポートベクターマシン-svm.html#cb353-7" tabindex="-1"></a><span class="co">#&gt;     gamma = 0.1)</span></span>
+<span id="cb353-8"><a href="サポートベクターマシン-svm.html#cb353-8" tabindex="-1"></a><span class="co">#&gt; </span></span>
+<span id="cb353-9"><a href="サポートベクターマシン-svm.html#cb353-9" tabindex="-1"></a><span class="co">#&gt; </span></span>
+<span id="cb353-10"><a href="サポートベクターマシン-svm.html#cb353-10" tabindex="-1"></a><span class="co">#&gt; Parameters:</span></span>
+<span id="cb353-11"><a href="サポートベクターマシン-svm.html#cb353-11" tabindex="-1"></a><span class="co">#&gt;    SVM-Type:  C-classification </span></span>
+<span id="cb353-12"><a href="サポートベクターマシン-svm.html#cb353-12" tabindex="-1"></a><span class="co">#&gt;  SVM-Kernel:  radial </span></span>
+<span id="cb353-13"><a href="サポートベクターマシン-svm.html#cb353-13" tabindex="-1"></a><span class="co">#&gt;        cost:  10 </span></span>
+<span id="cb353-14"><a href="サポートベクターマシン-svm.html#cb353-14" tabindex="-1"></a><span class="co">#&gt; </span></span>
+<span id="cb353-15"><a href="サポートベクターマシン-svm.html#cb353-15" tabindex="-1"></a><span class="co">#&gt; Number of Support Vectors:  209</span></span>
+<span id="cb353-16"><a href="サポートベクターマシン-svm.html#cb353-16" tabindex="-1"></a><span class="co">#&gt; </span></span>
+<span id="cb353-17"><a href="サポートベクターマシン-svm.html#cb353-17" tabindex="-1"></a><span class="co">#&gt;  ( 62 100 47 )</span></span>
+<span id="cb353-18"><a href="サポートベクターマシン-svm.html#cb353-18" tabindex="-1"></a><span class="co">#&gt; </span></span>
+<span id="cb353-19"><a href="サポートベクターマシン-svm.html#cb353-19" tabindex="-1"></a><span class="co">#&gt; </span></span>
+<span id="cb353-20"><a href="サポートベクターマシン-svm.html#cb353-20" tabindex="-1"></a><span class="co">#&gt; Number of Classes:  3 </span></span>
+<span id="cb353-21"><a href="サポートベクターマシン-svm.html#cb353-21" tabindex="-1"></a><span class="co">#&gt; </span></span>
+<span id="cb353-22"><a href="サポートベクターマシン-svm.html#cb353-22" tabindex="-1"></a><span class="co">#&gt; Levels: </span></span>
+<span id="cb353-23"><a href="サポートベクターマシン-svm.html#cb353-23" tabindex="-1"></a><span class="co">#&gt;  A BBB HY</span></span>
+<span id="cb353-24"><a href="サポートベクターマシン-svm.html#cb353-24" tabindex="-1"></a><span class="fu">table</span>(予測 <span class="ot">=</span> <span class="fu">predict</span>(rt_svm, rt_test), 実績 <span class="ot">=</span> rt_test<span class="sc">$</span>rating)</span>
+<span id="cb353-25"><a href="サポートベクターマシン-svm.html#cb353-25" tabindex="-1"></a><span class="co">#&gt;      実績</span></span>
+<span id="cb353-26"><a href="サポートベクターマシン-svm.html#cb353-26" tabindex="-1"></a><span class="co">#&gt; 予測  A BBB HY</span></span>
+<span id="cb353-27"><a href="サポートベクターマシン-svm.html#cb353-27" tabindex="-1"></a><span class="co">#&gt;   A   56   9  0</span></span>
+<span id="cb353-28"><a href="サポートベクターマシン-svm.html#cb353-28" tabindex="-1"></a><span class="co">#&gt;   BBB 18  58 11</span></span>
+<span id="cb353-29"><a href="サポートベクターマシン-svm.html#cb353-29" tabindex="-1"></a><span class="co">#&gt;   HY   0   9 39</span></span></code></pre></div>
+<p>説明変数が3つ以上の場合でも, 2変数の平面に限って境界を可視化できる (他の変数は <code>slice</code> で指定した値に固定する).</p>
+<div class="sourceCode" id="cb354"><pre class="sourceCode r"><code class="sourceCode r"><span id="cb354-1"><a href="サポートベクターマシン-svm.html#cb354-1" tabindex="-1"></a><span class="fu">plot</span>(rt_svm, rt_train, debt_ebitda <span class="sc">~</span> log_mcap, <span class="at">slice =</span> <span class="fu">list</span>(<span class="at">log_icr =</span> <span class="fu">log</span>(<span class="dv">10</span>), <span class="at">roa =</span> <span class="dv">4</span>,</span>
+<span id="cb354-2"><a href="サポートベクターマシン-svm.html#cb354-2" tabindex="-1"></a>  <span class="at">equity_ratio =</span> <span class="dv">45</span>, <span class="at">equity_vol =</span> <span class="dv">30</span>))</span></code></pre></div>
+<p><img src="_main_files/figure-html/unnamed-chunk-257-1.png" width="75%" /></p>
+<div id="不均衡データへの対応-クラスの重み" class="section level3 unnumbered hasAnchor">
+<h3>不均衡データへの対応: クラスの重み<a href="サポートベクターマシン-svm.html#不均衡データへの対応-クラスの重み" class="anchor-section" aria-label="Anchor link to header"></a></h3>
+<p>引数 <code>class.weights</code> で, 延滞 (yes) を見逃すコストを大きくすると, 延滞の再現率が上がる.</p>
+<div class="sourceCode" id="cb355"><pre class="sourceCode r"><code class="sourceCode r"><span id="cb355-1"><a href="サポートベクターマシン-svm.html#cb355-1" tabindex="-1"></a>card_w <span class="ot">&lt;-</span> <span class="fu">svm</span>(default <span class="sc">~</span> ., <span class="at">data =</span> card_train, <span class="at">kernel =</span> <span class="st">&quot;radial&quot;</span>, <span class="at">class.weights =</span> <span class="fu">c</span>(<span class="at">no =</span> <span class="dv">1</span>,</span>
+<span id="cb355-2"><a href="サポートベクターマシン-svm.html#cb355-2" tabindex="-1"></a>  <span class="at">yes =</span> <span class="dv">5</span>))</span>
+<span id="cb355-3"><a href="サポートベクターマシン-svm.html#cb355-3" tabindex="-1"></a><span class="fu">table</span>(予測 <span class="ot">=</span> <span class="fu">predict</span>(card_w, card_test), 実績 <span class="ot">=</span> card_test<span class="sc">$</span>default)</span>
+<span id="cb355-4"><a href="サポートベクターマシン-svm.html#cb355-4" tabindex="-1"></a><span class="co">#&gt;      実績</span></span>
+<span id="cb355-5"><a href="サポートベクターマシン-svm.html#cb355-5" tabindex="-1"></a><span class="co">#&gt; 予測  no yes</span></span>
+<span id="cb355-6"><a href="サポートベクターマシン-svm.html#cb355-6" tabindex="-1"></a><span class="co">#&gt;   no  887  39</span></span>
+<span id="cb355-7"><a href="サポートベクターマシン-svm.html#cb355-7" tabindex="-1"></a><span class="co">#&gt;   yes  45  29</span></span></code></pre></div>
+<p>前節の RBF カーネル (重みなし) と比べると, 延滞を正しく予測できる件数が増える代わりに, 延滞しない顧客を延滞と誤って予測する件数も増える.</p>
+</div>
+</div>
+<div id="ハイパーパラメータのチューニング" class="section level2 hasAnchor" number="11.5">
+<h2><span class="header-section-number">11.5</span> ハイパーパラメータのチューニング<a href="サポートベクターマシン-svm.html#ハイパーパラメータのチューニング" class="anchor-section" aria-label="Anchor link to header"></a></h2>
+<p>パッケージ<strong>e1071</strong>内の関数<code>tune()</code>を使用する (デフォルト: 10-分割交差検証, 誤分類率で評価).</p>
+<div class="sourceCode" id="cb356"><pre class="sourceCode r"><code class="sourceCode r"><span id="cb356-1"><a href="サポートベクターマシン-svm.html#cb356-1" tabindex="-1"></a><span class="fu">set.seed</span>(<span class="dv">1</span>)</span>
+<span id="cb356-2"><a href="サポートベクターマシン-svm.html#cb356-2" tabindex="-1"></a>tune_svm <span class="ot">&lt;-</span> <span class="fu">tune</span>(svm, fo, <span class="at">data =</span> rt_train, <span class="at">ranges =</span> <span class="fu">list</span>(<span class="at">gamma =</span> <span class="dv">10</span><span class="sc">^</span>(<span class="sc">-</span><span class="dv">3</span><span class="sc">:</span><span class="dv">1</span>), <span class="at">cost =</span> <span class="dv">10</span><span class="sc">^</span>(<span class="sc">-</span><span class="dv">1</span><span class="sc">:</span><span class="dv">2</span>)))</span>
+<span id="cb356-3"><a href="サポートベクターマシン-svm.html#cb356-3" tabindex="-1"></a><span class="fu">summary</span>(tune_svm)</span>
+<span id="cb356-4"><a href="サポートベクターマシン-svm.html#cb356-4" tabindex="-1"></a><span class="co">#&gt; </span></span>
+<span id="cb356-5"><a href="サポートベクターマシン-svm.html#cb356-5" tabindex="-1"></a><span class="co">#&gt; Parameter tuning of &#39;svm&#39;:</span></span>
+<span id="cb356-6"><a href="サポートベクターマシン-svm.html#cb356-6" tabindex="-1"></a><span class="co">#&gt; </span></span>
+<span id="cb356-7"><a href="サポートベクターマシン-svm.html#cb356-7" tabindex="-1"></a><span class="co">#&gt; - sampling method: 10-fold cross validation </span></span>
+<span id="cb356-8"><a href="サポートベクターマシン-svm.html#cb356-8" tabindex="-1"></a><span class="co">#&gt; </span></span>
+<span id="cb356-9"><a href="サポートベクターマシン-svm.html#cb356-9" tabindex="-1"></a><span class="co">#&gt; - best parameters:</span></span>
+<span id="cb356-10"><a href="サポートベクターマシン-svm.html#cb356-10" tabindex="-1"></a><span class="co">#&gt;  gamma cost</span></span>
+<span id="cb356-11"><a href="サポートベクターマシン-svm.html#cb356-11" tabindex="-1"></a><span class="co">#&gt;  0.001  100</span></span>
+<span id="cb356-12"><a href="サポートベクターマシン-svm.html#cb356-12" tabindex="-1"></a><span class="co">#&gt; </span></span>
+<span id="cb356-13"><a href="サポートベクターマシン-svm.html#cb356-13" tabindex="-1"></a><span class="co">#&gt; - best performance: 0.2025 </span></span>
+<span id="cb356-14"><a href="サポートベクターマシン-svm.html#cb356-14" tabindex="-1"></a><span class="co">#&gt; </span></span>
+<span id="cb356-15"><a href="サポートベクターマシン-svm.html#cb356-15" tabindex="-1"></a><span class="co">#&gt; - Detailed performance results:</span></span>
+<span id="cb356-16"><a href="サポートベクターマシン-svm.html#cb356-16" tabindex="-1"></a><span class="co">#&gt;    gamma  cost  error dispersion</span></span>
+<span id="cb356-17"><a href="サポートベクターマシン-svm.html#cb356-17" tabindex="-1"></a><span class="co">#&gt; 1  1e-03   0.1 0.5900 0.05916080</span></span>
+<span id="cb356-18"><a href="サポートベクターマシン-svm.html#cb356-18" tabindex="-1"></a><span class="co">#&gt; 2  1e-02   0.1 0.5800 0.06213784</span></span>
+<span id="cb356-19"><a href="サポートベクターマシン-svm.html#cb356-19" tabindex="-1"></a><span class="co">#&gt; 3  1e-01   0.1 0.2675 0.07075977</span></span>
+<span id="cb356-20"><a href="サポートベクターマシン-svm.html#cb356-20" tabindex="-1"></a><span class="co">#&gt; 4  1e+00   0.1 0.5875 0.06263873</span></span>
+<span id="cb356-21"><a href="サポートベクターマシン-svm.html#cb356-21" tabindex="-1"></a><span class="co">#&gt; 5  1e+01   0.1 0.5900 0.05916080</span></span>
+<span id="cb356-22"><a href="サポートベクターマシン-svm.html#cb356-22" tabindex="-1"></a><span class="co">#&gt; 6  1e-03   1.0 0.5800 0.06213784</span></span>
+<span id="cb356-23"><a href="サポートベクターマシン-svm.html#cb356-23" tabindex="-1"></a><span class="co">#&gt; 7  1e-02   1.0 0.2250 0.06972167</span></span>
+<span id="cb356-24"><a href="サポートベクターマシン-svm.html#cb356-24" tabindex="-1"></a><span class="co">#&gt; 8  1e-01   1.0 0.2125 0.05303301</span></span>
+<span id="cb356-25"><a href="サポートベクターマシン-svm.html#cb356-25" tabindex="-1"></a><span class="co">#&gt; 9  1e+00   1.0 0.2725 0.07678433</span></span>
+<span id="cb356-26"><a href="サポートベクターマシン-svm.html#cb356-26" tabindex="-1"></a><span class="co">#&gt; 10 1e+01   1.0 0.5900 0.05552777</span></span>
+<span id="cb356-27"><a href="サポートベクターマシン-svm.html#cb356-27" tabindex="-1"></a><span class="co">#&gt; 11 1e-03  10.0 0.2225 0.06503204</span></span>
+<span id="cb356-28"><a href="サポートベクターマシン-svm.html#cb356-28" tabindex="-1"></a><span class="co">#&gt; 12 1e-02  10.0 0.2050 0.04972145</span></span>
+<span id="cb356-29"><a href="サポートベクターマシン-svm.html#cb356-29" tabindex="-1"></a><span class="co">#&gt; 13 1e-01  10.0 0.2325 0.06460349</span></span>
+<span id="cb356-30"><a href="サポートベクターマシン-svm.html#cb356-30" tabindex="-1"></a><span class="co">#&gt; 14 1e+00  10.0 0.3600 0.09442810</span></span>
+<span id="cb356-31"><a href="サポートベクターマシン-svm.html#cb356-31" tabindex="-1"></a><span class="co">#&gt; 15 1e+01  10.0 0.5875 0.05034602</span></span>
+<span id="cb356-32"><a href="サポートベクターマシン-svm.html#cb356-32" tabindex="-1"></a><span class="co">#&gt; 16 1e-03 100.0 0.2025 0.04158325</span></span>
+<span id="cb356-33"><a href="サポートベクターマシン-svm.html#cb356-33" tabindex="-1"></a><span class="co">#&gt; 17 1e-02 100.0 0.2100 0.03162278</span></span>
+<span id="cb356-34"><a href="サポートベクターマシン-svm.html#cb356-34" tabindex="-1"></a><span class="co">#&gt; 18 1e-01 100.0 0.2775 0.05197489</span></span>
+<span id="cb356-35"><a href="サポートベクターマシン-svm.html#cb356-35" tabindex="-1"></a><span class="co">#&gt; 19 1e+00 100.0 0.3600 0.08676277</span></span>
+<span id="cb356-36"><a href="サポートベクターマシン-svm.html#cb356-36" tabindex="-1"></a><span class="co">#&gt; 20 1e+01 100.0 0.5875 0.05034602</span></span>
+<span id="cb356-37"><a href="サポートベクターマシン-svm.html#cb356-37" tabindex="-1"></a><span class="fu">plot</span>(tune_svm)  <span class="co"># CV 誤差のヒートマップ</span></span></code></pre></div>
+<p><img src="_main_files/figure-html/unnamed-chunk-259-1.png" width="75%" /></p>
+<div class="sourceCode" id="cb357"><pre class="sourceCode r"><code class="sourceCode r"><span id="cb357-1"><a href="サポートベクターマシン-svm.html#cb357-1" tabindex="-1"></a>bestmod_svm <span class="ot">&lt;-</span> tune_svm<span class="sc">$</span>best.model  <span class="co"># 最適なハイパーパラメータでのモデル</span></span>
+<span id="cb357-2"><a href="サポートベクターマシン-svm.html#cb357-2" tabindex="-1"></a><span class="fu">summary</span>(bestmod_svm)</span>
+<span id="cb357-3"><a href="サポートベクターマシン-svm.html#cb357-3" tabindex="-1"></a><span class="co">#&gt; </span></span>
+<span id="cb357-4"><a href="サポートベクターマシン-svm.html#cb357-4" tabindex="-1"></a><span class="co">#&gt; Call:</span></span>
+<span id="cb357-5"><a href="サポートベクターマシン-svm.html#cb357-5" tabindex="-1"></a><span class="co">#&gt; best.tune(METHOD = svm, train.x = fo, data = rt_train, ranges = list(gamma = 10^(-3:1), </span></span>
+<span id="cb357-6"><a href="サポートベクターマシン-svm.html#cb357-6" tabindex="-1"></a><span class="co">#&gt;     cost = 10^(-1:2)))</span></span>
+<span id="cb357-7"><a href="サポートベクターマシン-svm.html#cb357-7" tabindex="-1"></a><span class="co">#&gt; </span></span>
+<span id="cb357-8"><a href="サポートベクターマシン-svm.html#cb357-8" tabindex="-1"></a><span class="co">#&gt; </span></span>
+<span id="cb357-9"><a href="サポートベクターマシン-svm.html#cb357-9" tabindex="-1"></a><span class="co">#&gt; Parameters:</span></span>
+<span id="cb357-10"><a href="サポートベクターマシン-svm.html#cb357-10" tabindex="-1"></a><span class="co">#&gt;    SVM-Type:  C-classification </span></span>
+<span id="cb357-11"><a href="サポートベクターマシン-svm.html#cb357-11" tabindex="-1"></a><span class="co">#&gt;  SVM-Kernel:  radial </span></span>
+<span id="cb357-12"><a href="サポートベクターマシン-svm.html#cb357-12" tabindex="-1"></a><span class="co">#&gt;        cost:  100 </span></span>
+<span id="cb357-13"><a href="サポートベクターマシン-svm.html#cb357-13" tabindex="-1"></a><span class="co">#&gt; </span></span>
+<span id="cb357-14"><a href="サポートベクターマシン-svm.html#cb357-14" tabindex="-1"></a><span class="co">#&gt; Number of Support Vectors:  239</span></span>
+<span id="cb357-15"><a href="サポートベクターマシン-svm.html#cb357-15" tabindex="-1"></a><span class="co">#&gt; </span></span>
+<span id="cb357-16"><a href="サポートベクターマシン-svm.html#cb357-16" tabindex="-1"></a><span class="co">#&gt;  ( 69 118 52 )</span></span>
+<span id="cb357-17"><a href="サポートベクターマシン-svm.html#cb357-17" tabindex="-1"></a><span class="co">#&gt; </span></span>
+<span id="cb357-18"><a href="サポートベクターマシン-svm.html#cb357-18" tabindex="-1"></a><span class="co">#&gt; </span></span>
+<span id="cb357-19"><a href="サポートベクターマシン-svm.html#cb357-19" tabindex="-1"></a><span class="co">#&gt; Number of Classes:  3 </span></span>
+<span id="cb357-20"><a href="サポートベクターマシン-svm.html#cb357-20" tabindex="-1"></a><span class="co">#&gt; </span></span>
+<span id="cb357-21"><a href="サポートベクターマシン-svm.html#cb357-21" tabindex="-1"></a><span class="co">#&gt; Levels: </span></span>
+<span id="cb357-22"><a href="サポートベクターマシン-svm.html#cb357-22" tabindex="-1"></a><span class="co">#&gt;  A BBB HY</span></span>
+<span id="cb357-23"><a href="サポートベクターマシン-svm.html#cb357-23" tabindex="-1"></a><span class="fu">mean</span>(<span class="fu">predict</span>(bestmod_svm, rt_test) <span class="sc">==</span> rt_test<span class="sc">$</span>rating)  <span class="co"># テスト正解率</span></span>
+<span id="cb357-24"><a href="サポートベクターマシン-svm.html#cb357-24" tabindex="-1"></a><span class="co">#&gt; [1] 0.785</span></span></code></pre></div>
+<pre><code>tune() の使い方のヒント:
+- 引数 tunecontrol の値を関数 tune.control() で設定できる
+- 例: tunecontrol = tune.control(sampling = &quot;boot&quot;)
+  sampling: &quot;cross&quot; (交差検証, デフォルト), &quot;boot&quot; (ブートストラップ), &quot;fix&quot; (1回だけ分割)</code></pre>
+<div id="e1071-内にあるチューニング用の便利な関数群" class="section level3 unnumbered hasAnchor">
+<h3>e1071 内にあるチューニング用の便利な関数群<a href="サポートベクターマシン-svm.html#e1071-内にあるチューニング用の便利な関数群" class="anchor-section" aria-label="Anchor link to header"></a></h3>
+<p><strong>e1071</strong>には, <code>tune()</code>のラッパー関数として, <code>tune.svm()</code>, <code>tune.rpart()</code>, <code>tune.randomForest()</code>, <code>tune.knn()</code> 等がある.
+予測変数と目的変数を個別に指定する (<code>x = ..., y = ...</code>) 関数と, モデル式 (<code>y ~ x</code>) で指定する関数があるので注意する.</p>
+<ul>
+<li>kNN法: <code>k</code> の探索範囲を指定</li>
+</ul>
+<div class="sourceCode" id="cb359"><pre class="sourceCode r"><code class="sourceCode r"><span id="cb359-1"><a href="サポートベクターマシン-svm.html#cb359-1" tabindex="-1"></a>x <span class="ot">&lt;-</span> <span class="fu">scale</span>(rating[, <span class="fu">c</span>(<span class="st">&quot;log_mcap&quot;</span>, <span class="st">&quot;debt_ebitda&quot;</span>, <span class="st">&quot;log_icr&quot;</span>, <span class="st">&quot;roa&quot;</span>, <span class="st">&quot;equity_ratio&quot;</span>,</span>
+<span id="cb359-2"><a href="サポートベクターマシン-svm.html#cb359-2" tabindex="-1"></a>  <span class="st">&quot;equity_vol&quot;</span>)])</span>
+<span id="cb359-3"><a href="サポートベクターマシン-svm.html#cb359-3" tabindex="-1"></a>y <span class="ot">&lt;-</span> rating<span class="sc">$</span>rating</span>
+<span id="cb359-4"><a href="サポートベクターマシン-svm.html#cb359-4" tabindex="-1"></a><span class="fu">set.seed</span>(<span class="dv">1</span>)</span>
+<span id="cb359-5"><a href="サポートベクターマシン-svm.html#cb359-5" tabindex="-1"></a>res_tune_knn <span class="ot">&lt;-</span> <span class="fu">tune.knn</span>(x, y, <span class="at">k =</span> <span class="dv">1</span><span class="sc">:</span><span class="dv">20</span>, <span class="at">tunecontrol =</span> <span class="fu">tune.control</span>(<span class="at">sampling =</span> <span class="st">&quot;cross&quot;</span>))</span>
+<span id="cb359-6"><a href="サポートベクターマシン-svm.html#cb359-6" tabindex="-1"></a><span class="fu">summary</span>(res_tune_knn)</span>
+<span id="cb359-7"><a href="サポートベクターマシン-svm.html#cb359-7" tabindex="-1"></a><span class="co">#&gt; </span></span>
+<span id="cb359-8"><a href="サポートベクターマシン-svm.html#cb359-8" tabindex="-1"></a><span class="co">#&gt; Parameter tuning of &#39;knn.wrapper&#39;:</span></span>
+<span id="cb359-9"><a href="サポートベクターマシン-svm.html#cb359-9" tabindex="-1"></a><span class="co">#&gt; </span></span>
+<span id="cb359-10"><a href="サポートベクターマシン-svm.html#cb359-10" tabindex="-1"></a><span class="co">#&gt; - sampling method: 10-fold cross validation </span></span>
+<span id="cb359-11"><a href="サポートベクターマシン-svm.html#cb359-11" tabindex="-1"></a><span class="co">#&gt; </span></span>
+<span id="cb359-12"><a href="サポートベクターマシン-svm.html#cb359-12" tabindex="-1"></a><span class="co">#&gt; - best parameters:</span></span>
+<span id="cb359-13"><a href="サポートベクターマシン-svm.html#cb359-13" tabindex="-1"></a><span class="co">#&gt;   k</span></span>
+<span id="cb359-14"><a href="サポートベクターマシン-svm.html#cb359-14" tabindex="-1"></a><span class="co">#&gt;  13</span></span>
+<span id="cb359-15"><a href="サポートベクターマシン-svm.html#cb359-15" tabindex="-1"></a><span class="co">#&gt; </span></span>
+<span id="cb359-16"><a href="サポートベクターマシン-svm.html#cb359-16" tabindex="-1"></a><span class="co">#&gt; - best performance: 0.235 </span></span>
+<span id="cb359-17"><a href="サポートベクターマシン-svm.html#cb359-17" tabindex="-1"></a><span class="co">#&gt; </span></span>
+<span id="cb359-18"><a href="サポートベクターマシン-svm.html#cb359-18" tabindex="-1"></a><span class="co">#&gt; - Detailed performance results:</span></span>
+<span id="cb359-19"><a href="サポートベクターマシン-svm.html#cb359-19" tabindex="-1"></a><span class="co">#&gt;     k     error dispersion</span></span>
+<span id="cb359-20"><a href="サポートベクターマシン-svm.html#cb359-20" tabindex="-1"></a><span class="co">#&gt; 1   1 0.3166667 0.05826716</span></span>
+<span id="cb359-21"><a href="サポートベクターマシン-svm.html#cb359-21" tabindex="-1"></a><span class="co">#&gt; 2   2 0.3066667 0.04245550</span></span>
+<span id="cb359-22"><a href="サポートベクターマシン-svm.html#cb359-22" tabindex="-1"></a><span class="co">#&gt; 3   3 0.2866667 0.04430534</span></span>
+<span id="cb359-23"><a href="サポートベクターマシン-svm.html#cb359-23" tabindex="-1"></a><span class="co">#&gt; 4   4 0.2966667 0.07149204</span></span>
+<span id="cb359-24"><a href="サポートベクターマシン-svm.html#cb359-24" tabindex="-1"></a><span class="co">#&gt; 5   5 0.2716667 0.05668300</span></span>
+<span id="cb359-25"><a href="サポートベクターマシン-svm.html#cb359-25" tabindex="-1"></a><span class="co">#&gt; 6   6 0.2833333 0.05931710</span></span>
+<span id="cb359-26"><a href="サポートベクターマシン-svm.html#cb359-26" tabindex="-1"></a><span class="co">#&gt; 7   7 0.2733333 0.05993824</span></span>
+<span id="cb359-27"><a href="サポートベクターマシン-svm.html#cb359-27" tabindex="-1"></a><span class="co">#&gt; 8   8 0.2650000 0.06547547</span></span>
+<span id="cb359-28"><a href="サポートベクターマシン-svm.html#cb359-28" tabindex="-1"></a><span class="co">#&gt; 9   9 0.2516667 0.06452581</span></span>
+<span id="cb359-29"><a href="サポートベクターマシン-svm.html#cb359-29" tabindex="-1"></a><span class="co">#&gt; 10 10 0.2616667 0.05033836</span></span>
+<span id="cb359-30"><a href="サポートベクターマシン-svm.html#cb359-30" tabindex="-1"></a><span class="co">#&gt; 11 11 0.2516667 0.04040688</span></span>
+<span id="cb359-31"><a href="サポートベクターマシン-svm.html#cb359-31" tabindex="-1"></a><span class="co">#&gt; 12 12 0.2450000 0.05155005</span></span>
+<span id="cb359-32"><a href="サポートベクターマシン-svm.html#cb359-32" tabindex="-1"></a><span class="co">#&gt; 13 13 0.2350000 0.05468767</span></span>
+<span id="cb359-33"><a href="サポートベクターマシン-svm.html#cb359-33" tabindex="-1"></a><span class="co">#&gt; 14 14 0.2516667 0.03804643</span></span>
+<span id="cb359-34"><a href="サポートベクターマシン-svm.html#cb359-34" tabindex="-1"></a><span class="co">#&gt; 15 15 0.2433333 0.06146363</span></span>
+<span id="cb359-35"><a href="サポートベクターマシン-svm.html#cb359-35" tabindex="-1"></a><span class="co">#&gt; 16 16 0.2400000 0.06858355</span></span>
+<span id="cb359-36"><a href="サポートベクターマシン-svm.html#cb359-36" tabindex="-1"></a><span class="co">#&gt; 17 17 0.2450000 0.05094781</span></span>
+<span id="cb359-37"><a href="サポートベクターマシン-svm.html#cb359-37" tabindex="-1"></a><span class="co">#&gt; 18 18 0.2533333 0.06176419</span></span>
+<span id="cb359-38"><a href="サポートベクターマシン-svm.html#cb359-38" tabindex="-1"></a><span class="co">#&gt; 19 19 0.2516667 0.06158904</span></span>
+<span id="cb359-39"><a href="サポートベクターマシン-svm.html#cb359-39" tabindex="-1"></a><span class="co">#&gt; 20 20 0.2483333 0.07472171</span></span>
+<span id="cb359-40"><a href="サポートベクターマシン-svm.html#cb359-40" tabindex="-1"></a><span class="fu">plot</span>(res_tune_knn)</span></code></pre></div>
+<p><img src="_main_files/figure-html/unnamed-chunk-260-1.png" width="75%" /></p>
+<ul>
+<li>回帰木: <code>rpart()</code> の <code>minsplit</code> (分割に必要な最小観測数) を探索 (社債スプレッドのデータ. 第5章の GAM と同じデータ)</li>
+</ul>
+<div class="sourceCode" id="cb360"><pre class="sourceCode r"><code class="sourceCode r"><span id="cb360-1"><a href="サポートベクターマシン-svm.html#cb360-1" tabindex="-1"></a>bond <span class="ot">&lt;-</span> <span class="fu">read.csv</span>(<span class="st">&quot;class/bond_spread.csv&quot;</span>, <span class="at">stringsAsFactors =</span> <span class="cn">TRUE</span>)</span>
+<span id="cb360-2"><a href="サポートベクターマシン-svm.html#cb360-2" tabindex="-1"></a><span class="fu">set.seed</span>(<span class="dv">1</span>)</span>
+<span id="cb360-3"><a href="サポートベクターマシン-svm.html#cb360-3" tabindex="-1"></a>res_tune_rpart <span class="ot">&lt;-</span> <span class="fu">tune.rpart</span>(spread <span class="sc">~</span> ., <span class="at">data =</span> bond, <span class="at">minsplit =</span> <span class="fu">c</span>(<span class="dv">5</span>, <span class="dv">10</span>, <span class="dv">20</span>, <span class="dv">40</span>))</span>
+<span id="cb360-4"><a href="サポートベクターマシン-svm.html#cb360-4" tabindex="-1"></a><span class="fu">summary</span>(res_tune_rpart)</span>
+<span id="cb360-5"><a href="サポートベクターマシン-svm.html#cb360-5" tabindex="-1"></a><span class="co">#&gt; </span></span>
+<span id="cb360-6"><a href="サポートベクターマシン-svm.html#cb360-6" tabindex="-1"></a><span class="co">#&gt; Parameter tuning of &#39;rpart.wrapper&#39;:</span></span>
+<span id="cb360-7"><a href="サポートベクターマシン-svm.html#cb360-7" tabindex="-1"></a><span class="co">#&gt; </span></span>
+<span id="cb360-8"><a href="サポートベクターマシン-svm.html#cb360-8" tabindex="-1"></a><span class="co">#&gt; - sampling method: 10-fold cross validation </span></span>
+<span id="cb360-9"><a href="サポートベクターマシン-svm.html#cb360-9" tabindex="-1"></a><span class="co">#&gt; </span></span>
+<span id="cb360-10"><a href="サポートベクターマシン-svm.html#cb360-10" tabindex="-1"></a><span class="co">#&gt; - best parameters:</span></span>
+<span id="cb360-11"><a href="サポートベクターマシン-svm.html#cb360-11" tabindex="-1"></a><span class="co">#&gt;  minsplit</span></span>
+<span id="cb360-12"><a href="サポートベクターマシン-svm.html#cb360-12" tabindex="-1"></a><span class="co">#&gt;        10</span></span>
+<span id="cb360-13"><a href="サポートベクターマシン-svm.html#cb360-13" tabindex="-1"></a><span class="co">#&gt; </span></span>
+<span id="cb360-14"><a href="サポートベクターマシン-svm.html#cb360-14" tabindex="-1"></a><span class="co">#&gt; - best performance: 753.6763 </span></span>
+<span id="cb360-15"><a href="サポートベクターマシン-svm.html#cb360-15" tabindex="-1"></a><span class="co">#&gt; </span></span>
+<span id="cb360-16"><a href="サポートベクターマシン-svm.html#cb360-16" tabindex="-1"></a><span class="co">#&gt; - Detailed performance results:</span></span>
+<span id="cb360-17"><a href="サポートベクターマシン-svm.html#cb360-17" tabindex="-1"></a><span class="co">#&gt;   minsplit    error dispersion</span></span>
+<span id="cb360-18"><a href="サポートベクターマシン-svm.html#cb360-18" tabindex="-1"></a><span class="co">#&gt; 1        5 812.2222   361.7244</span></span>
+<span id="cb360-19"><a href="サポートベクターマシン-svm.html#cb360-19" tabindex="-1"></a><span class="co">#&gt; 2       10 753.6763   320.0165</span></span>
+<span id="cb360-20"><a href="サポートベクターマシン-svm.html#cb360-20" tabindex="-1"></a><span class="co">#&gt; 3       20 819.3848   330.3632</span></span>
+<span id="cb360-21"><a href="サポートベクターマシン-svm.html#cb360-21" tabindex="-1"></a><span class="co">#&gt; 4       40 822.3780   309.1370</span></span>
+<span id="cb360-22"><a href="サポートベクターマシン-svm.html#cb360-22" tabindex="-1"></a><span class="fu">plot</span>(res_tune_rpart)</span></code></pre></div>
+<p><img src="_main_files/figure-html/unnamed-chunk-261-1.png" width="75%" /></p>
+<p>アルゴリズムごとにハイパーパラメータが異なるため, 正しい設定には, 各関数のマニュアルの確認が必要である.
+ハイパーパラメータのチューニングは, パッケージ<strong>caret</strong>や<strong>tidymodels</strong>でも実行できる.</p>
+
+</div>
+</div>
+</div>
+            </section>
+
+          </div>
+        </div>
+      </div>
+<a href="決定木とアンサンブル学習.html" class="navigation navigation-prev " aria-label="Previous page"><i class="fa fa-angle-left"></i></a>
+<a href="主成分分析-pca.html" class="navigation navigation-next " aria-label="Next page"><i class="fa fa-angle-right"></i></a>
+    </div>
+  </div>
+<script src="libs/gitbook-2.6.7/js/app.min.js"></script>
+<script src="libs/gitbook-2.6.7/js/clipboard.min.js"></script>
+<script src="libs/gitbook-2.6.7/js/plugin-search.js"></script>
+<script src="libs/gitbook-2.6.7/js/plugin-sharing.js"></script>
+<script src="libs/gitbook-2.6.7/js/plugin-fontsettings.js"></script>
+<script src="libs/gitbook-2.6.7/js/plugin-bookdown.js"></script>
+<script src="libs/gitbook-2.6.7/js/jquery.highlight.js"></script>
+<script src="libs/gitbook-2.6.7/js/plugin-clipboard.js"></script>
+<script>
+gitbook.require(["gitbook"], function(gitbook) {
+gitbook.start({
+"sharing": {
+"github": false,
+"facebook": true,
+"twitter": true,
+"linkedin": false,
+"weibo": false,
+"instapaper": false,
+"vk": false,
+"whatsapp": false,
+"all": ["facebook", "twitter", "linkedin", "weibo", "instapaper"]
+},
+"fontsettings": {
+"theme": "white",
+"family": "sans",
+"size": 2
+},
+"edit": {
+"link": null,
+"text": null
+},
+"history": {
+"link": null,
+"text": null
+},
+"view": {
+"link": null,
+"text": null
+},
+"download": null,
+"search": {
+"engine": "fuse",
+"options": null
+},
+"toc": {
+"collapse": "subsection"
+}
+});
+});
+</script>
+
+<!-- dynamically load mathjax for compatibility with self-contained -->
+<script>
+  (function () {
+    var script = document.createElement("script");
+    script.type = "text/javascript";
+    var src = "true";
+    if (src === "" || src === "true") src = "https://cdnjs.cloudflare.com/ajax/libs/mathjax/2.7.9/latest.js?config=TeX-MML-AM_CHTML";
+    if (location.protocol !== "file:")
+      if (/^https?:/.test(src))
+        src = src.replace(/^https?:/, '');
+    script.src = src;
+    document.getElementsByTagName("head")[0].appendChild(script);
+  })();
+</script>
+</body>
+
+</html>
