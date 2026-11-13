@@ -1201,7 +1201,7 @@ VIFによる多重共線性への対応に関する慣用ルールとして, 5�
 <span id="cb97-12"><a href="線形回帰分析.html#cb97-12" tabindex="-1"></a><span class="co">#&gt;  $ len  : num  4.99 16.11 9.75 10.65 20.01 ...</span></span>
 <span id="cb97-13"><a href="線形回帰分析.html#cb97-13" tabindex="-1"></a><span class="co">#&gt;  $ lwid : int  12 12 12 12 12 12 12 12 12 12 ...</span></span>
 <span id="cb97-14"><a href="線形回帰分析.html#cb97-14" tabindex="-1"></a><span class="co">#&gt;  $ shld : int  10 10 10 10 10 10 8 10 4 5 ...</span></span>
-<span id="cb97-15"><a href="線形回帰分析.html#cb97-15" tabindex="-1"></a><span class="co">#&gt;  $ htype: Factor w/ 4 levels &quot;mc&quot;,&quot;fai&quot;,&quot;pa&quot;,..: 2 2 2 2 2 3 3 3 3 3 ...</span></span>
+<span id="cb97-15"><a href="線形回帰分析.html#cb97-15" tabindex="-1"></a><span class="co">#&gt;  $ htype: Factor w/ 4 levels &quot;fai&quot;,&quot;ma&quot;,&quot;mc&quot;,..: 1 1 1 1 1 4 4 4 4 4 ...</span></span>
 <span id="cb97-16"><a href="線形回帰分析.html#cb97-16" tabindex="-1"></a><span class="co">#&gt;  $ rate : num  4.58 2.86 3.02 2.29 1.61 6.87 3.85 6.12 3.29 5.88 ...</span></span>
 <span id="cb97-17"><a href="線形回帰分析.html#cb97-17" tabindex="-1"></a>Highway <span class="sc">%&gt;%</span></span>
 <span id="cb97-18"><a href="線形回帰分析.html#cb97-18" tabindex="-1"></a>  <span class="fu">head</span>()</span>
@@ -1230,7 +1230,7 @@ VIFによる多重共線性への対応に関する慣用ルールとして, 5�
 <span id="cb99-11"><a href="線形回帰分析.html#cb99-11" tabindex="-1"></a><span class="co">#&gt; </span></span>
 <span id="cb99-12"><a href="線形回帰分析.html#cb99-12" tabindex="-1"></a><span class="co">#&gt; Coefficients:</span></span>
 <span id="cb99-13"><a href="線形回帰分析.html#cb99-13" tabindex="-1"></a><span class="co">#&gt;              Estimate Std. Error t value Pr(&gt;|t|)  </span></span>
-<span id="cb99-14"><a href="線形回帰分析.html#cb99-14" tabindex="-1"></a><span class="co">#&gt; (Intercept) 13.658212   6.872719   1.987   0.0579 .</span></span>
+<span id="cb99-14"><a href="線形回帰分析.html#cb99-14" tabindex="-1"></a><span class="co">#&gt; (Intercept) 14.201804   7.316072   1.941   0.0636 .</span></span>
 <span id="cb99-15"><a href="線形回帰分析.html#cb99-15" tabindex="-1"></a><span class="co">#&gt; adt         -0.004038   0.033945  -0.119   0.9063  </span></span>
 <span id="cb99-16"><a href="線形回帰分析.html#cb99-16" tabindex="-1"></a><span class="co">#&gt; trks        -0.100150   0.114726  -0.873   0.3910  </span></span>
 <span id="cb99-17"><a href="線形回帰分析.html#cb99-17" tabindex="-1"></a><span class="co">#&gt; lane         0.026675   0.283834   0.094   0.9259  </span></span>
@@ -1241,9 +1241,9 @@ VIFによる多重共線性への対応に関する慣用ルールとして, 5�
 <span id="cb99-22"><a href="線形回帰分析.html#cb99-22" tabindex="-1"></a><span class="co">#&gt; len         -0.064751   0.033369  -1.940   0.0637 .</span></span>
 <span id="cb99-23"><a href="線形回帰分析.html#cb99-23" tabindex="-1"></a><span class="co">#&gt; lwid        -0.133813   0.597917  -0.224   0.8247  </span></span>
 <span id="cb99-24"><a href="線形回帰分析.html#cb99-24" tabindex="-1"></a><span class="co">#&gt; shld         0.014113   0.162174   0.087   0.9313  </span></span>
-<span id="cb99-25"><a href="線形回帰分析.html#cb99-25" tabindex="-1"></a><span class="co">#&gt; htypefai     0.543592   1.728270   0.315   0.7557  </span></span>
-<span id="cb99-26"><a href="線形回帰分析.html#cb99-26" tabindex="-1"></a><span class="co">#&gt; htypepa     -1.009777   1.105612  -0.913   0.3698  </span></span>
-<span id="cb99-27"><a href="線形回帰分析.html#cb99-27" tabindex="-1"></a><span class="co">#&gt; htypema     -0.548025   0.975623  -0.562   0.5793  </span></span>
+<span id="cb99-25"><a href="線形回帰分析.html#cb99-25" tabindex="-1"></a><span class="co">#&gt; htypema     -1.091617   1.649591  -0.662   0.5142  </span></span>
+<span id="cb99-26"><a href="線形回帰分析.html#cb99-26" tabindex="-1"></a><span class="co">#&gt; htypemc     -0.543592   1.728270  -0.315   0.7557  </span></span>
+<span id="cb99-27"><a href="線形回帰分析.html#cb99-27" tabindex="-1"></a><span class="co">#&gt; htypepa     -1.553370   1.339159  -1.160   0.2570  </span></span>
 <span id="cb99-28"><a href="線形回帰分析.html#cb99-28" tabindex="-1"></a><span class="co">#&gt; ---</span></span>
 <span id="cb99-29"><a href="線形回帰分析.html#cb99-29" tabindex="-1"></a><span class="co">#&gt; Signif. codes:  0 &#39;***&#39; 0.001 &#39;**&#39; 0.01 &#39;*&#39; 0.05 &#39;.&#39; 0.1 &#39; &#39; 1</span></span>
 <span id="cb99-30"><a href="線形回帰分析.html#cb99-30" tabindex="-1"></a><span class="co">#&gt; </span></span>
