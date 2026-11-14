@@ -393,8 +393,8 @@ code span.wa { color: #60a0b0; font-weight: bold; font-style: italic; } /* Warni
 </ul></li>
 <li class="chapter" data-level="12.4" data-path="主成分分析-pca.html"><a href="主成分分析-pca.html#イールドカーブへの応用"><i class="fa fa-check"></i><b>12.4</b> イールドカーブへの応用</a>
 <ul>
-<li class="chapter" data-level="" data-path="主成分分析-pca.html"><a href="主成分分析-pca.html#データ-国債利回り-仮想データ"><i class="fa fa-check"></i>データ: 国債利回り (仮想データ)</a></li>
-<li class="chapter" data-level="" data-path="主成分分析-pca.html"><a href="主成分分析-pca.html#参考-財務省の国債金利データ-実データ"><i class="fa fa-check"></i>(参考) 財務省の国債金利データ (実データ)</a></li>
+<li class="chapter" data-level="" data-path="主成分分析-pca.html"><a href="主成分分析-pca.html#データ-国債金利-実データ-財務省国債金利情報"><i class="fa fa-check"></i>データ: 国債金利 (実データ: 財務省「国債金利情報」)</a></li>
+<li class="chapter" data-level="" data-path="主成分分析-pca.html"><a href="主成分分析-pca.html#pca-の実行-1"><i class="fa fa-check"></i>PCA の実行</a></li>
 </ul></li>
 <li class="chapter" data-level="12.5" data-path="主成分分析-pca.html"><a href="主成分分析-pca.html#自主課題"><i class="fa fa-check"></i><b>12.5</b> 自主課題</a></li>
 </ul></li>
@@ -473,7 +473,7 @@ code span.wa { color: #60a0b0; font-weight: bold; font-style: italic; } /* Warni
             <section class="normal" id="section-">
 <div id="主成分分析-pca" class="section level1 hasAnchor" number="12">
 <h1><span class="header-section-number">Chapter 12</span> 主成分分析 (PCA)<a href="主成分分析-pca.html#主成分分析-pca" class="anchor-section" aria-label="Anchor link to header"></a></h1>
-<!-- 2026.11.07 Claude: R演習スクリプト R_pca_dist.R (2026年度版) に合わせて全面改訂. データを, USArrests (R の組み込みデータ), 企業の評価スコア (firm_eval9.csv), 財務比率 (firm_ratios.csv), 国債利回り (jgb_yield.csv), 株式リターン (stock_returns30.csv) に (USArrests 以外は仮想データ) . 2026.11.13 Claude: 冒頭の princomp()/prcomp() の説明を, 計算方法 (固有値分解/特異値分解) の違いが分かる形に修正し, 「(参考) 固有値分解と特異値分解」を追加 (BS と共通) -->
+<!-- 2026.11.07 Claude: R演習スクリプト R_pca_dist.R (2026年度版) に合わせて全面改訂. データを, USArrests (R の組み込みデータ), 企業の評価スコア (firm_eval9.csv), 財務比率 (firm_ratios.csv), 国債金利 (財務省の公開データ), 株式リターン (stock_returns30.csv) に (USArrests と国債金利は実データ, 他は仮想データ. 国債金利は 2026.11.14 に仮想データ jgb_yield.csv から財務省の公開データの直接読み込みに変更) . 2026.11.13 Claude: 冒頭の princomp()/prcomp() の説明を, 計算方法 (固有値分解/特異値分解) の違いが分かる形に修正し, 「(参考) 固有値分解と特異値分解」を追加 (BS と共通) -->
 <p>本章の内容は, 授業の R 演習スクリプト <code>R_pca_dist.R</code> に対応する.</p>
 <p>主成分分析 (principal component analysis, PCA) は, 互いに相関のある多数の変数を, 情報の損失をできるだけ小さくしながら, 互いに無相関な少数の合成変数 (主成分) に集約する手法である.
 第1主成分は, 変数の線形結合のうち分散が最大となるもの, 第2主成分は, 第1主成分と無相関なもののうち分散が最大となるもの, … と順に定められる.
@@ -827,53 +827,85 @@ R のヘルプでは, 数値計算の精度の点で <code>prcomp()</code> (特�
 </div>
 <div id="イールドカーブへの応用" class="section level2 hasAnchor" number="12.4">
 <h2><span class="header-section-number">12.4</span> イールドカーブへの応用<a href="主成分分析-pca.html#イールドカーブへの応用" class="anchor-section" aria-label="Anchor link to header"></a></h2>
-<div id="データ-国債利回り-仮想データ" class="section level3 unnumbered hasAnchor">
-<h3>データ: 国債利回り (仮想データ)<a href="主成分分析-pca.html#データ-国債利回り-仮想データ" class="anchor-section" aria-label="Anchor link to header"></a></h3>
-<pre><code>jgb_yield.csv: 月末値, 2006年1月〜2025年12月 (240か月) (仮想データ)
-- month: 年月, y1〜y30: 残存期間 1, 2, 3, 5, 7, 10, 15, 20, 30年の利回り (%)</code></pre>
-<div class="sourceCode" id="cb387"><pre class="sourceCode r"><code class="sourceCode r"><span id="cb387-1"><a href="主成分分析-pca.html#cb387-1" tabindex="-1"></a>jgb <span class="ot">&lt;-</span> <span class="fu">read.csv</span>(<span class="st">&quot;class/jgb_yield.csv&quot;</span>)</span>
-<span id="cb387-2"><a href="主成分分析-pca.html#cb387-2" tabindex="-1"></a>maturity <span class="ot">&lt;-</span> <span class="fu">c</span>(<span class="dv">1</span>, <span class="dv">2</span>, <span class="dv">3</span>, <span class="dv">5</span>, <span class="dv">7</span>, <span class="dv">10</span>, <span class="dv">15</span>, <span class="dv">20</span>, <span class="dv">30</span>)</span>
-<span id="cb387-3"><a href="主成分分析-pca.html#cb387-3" tabindex="-1"></a><span class="co"># イールドカーブの例 (いくつかの時点)</span></span>
-<span id="cb387-4"><a href="主成分分析-pca.html#cb387-4" tabindex="-1"></a><span class="fu">matplot</span>(maturity, <span class="fu">t</span>(jgb[<span class="fu">c</span>(<span class="dv">1</span>, <span class="dv">60</span>, <span class="dv">120</span>, <span class="dv">180</span>, <span class="dv">240</span>), <span class="sc">-</span><span class="dv">1</span>]), <span class="at">type =</span> <span class="st">&quot;b&quot;</span>, <span class="at">pch =</span> <span class="dv">1</span><span class="sc">:</span><span class="dv">5</span>, <span class="at">lty =</span> <span class="dv">1</span>,</span>
-<span id="cb387-5"><a href="主成分分析-pca.html#cb387-5" tabindex="-1"></a>  <span class="at">xlab =</span> <span class="st">&quot;残存期間 (年)&quot;</span>, <span class="at">ylab =</span> <span class="st">&quot;利回り (%)&quot;</span>)</span>
-<span id="cb387-6"><a href="主成分分析-pca.html#cb387-6" tabindex="-1"></a><span class="fu">legend</span>(<span class="st">&quot;bottomright&quot;</span>, <span class="at">legend =</span> jgb<span class="sc">$</span>month[<span class="fu">c</span>(<span class="dv">1</span>, <span class="dv">60</span>, <span class="dv">120</span>, <span class="dv">180</span>, <span class="dv">240</span>)], <span class="at">col =</span> <span class="dv">1</span><span class="sc">:</span><span class="dv">5</span>, <span class="at">pch =</span> <span class="dv">1</span><span class="sc">:</span><span class="dv">5</span>,</span>
-<span id="cb387-7"><a href="主成分分析-pca.html#cb387-7" tabindex="-1"></a>  <span class="at">lty =</span> <span class="dv">1</span>)</span></code></pre></div>
-<p><img src="_main_files/figure-html/unnamed-chunk-282-1.png" width="75%" /></p>
+<div id="データ-国債金利-実データ-財務省国債金利情報" class="section level3 unnumbered hasAnchor">
+<h3>データ: 国債金利 (実データ: 財務省「国債金利情報」)<a href="主成分分析-pca.html#データ-国債金利-実データ-財務省国債金利情報" class="anchor-section" aria-label="Anchor link to header"></a></h3>
+<p>財務省は, 国債の流通利回りから計算した残存期間ごとの金利 (国債金利) をウェブサイトで公開しており, R から直接読み込むことができる.</p>
+<pre><code>財務省「国債金利情報」: https://www.mof.go.jp/jgbs/reference/interest_rate/
+- jgbcm_all.csv: 1974年9月以降の日次データ (残存期間 1〜40年, 単位 %)
+- 1行目はタイトル, 2行目が列名. 文字コードは Shift_JIS. 欠損値は &quot;-&quot;. 基準日は和暦 (例: R8.10.30)</code></pre>
+<div class="sourceCode" id="cb387"><pre class="sourceCode r"><code class="sourceCode r"><span id="cb387-1"><a href="主成分分析-pca.html#cb387-1" tabindex="-1"></a>url <span class="ot">&lt;-</span> <span class="st">&quot;https://www.mof.go.jp/jgbs/reference/interest_rate/data/jgbcm_all.csv&quot;</span></span>
+<span id="cb387-2"><a href="主成分分析-pca.html#cb387-2" tabindex="-1"></a>jgb_mof <span class="ot">&lt;-</span> <span class="fu">read.csv</span>(url, <span class="at">skip =</span> <span class="dv">1</span>, <span class="at">header =</span> <span class="cn">TRUE</span>, <span class="at">fileEncoding =</span> <span class="st">&quot;Shift_JIS&quot;</span>, <span class="at">na.strings =</span> <span class="st">&quot;-&quot;</span>,</span>
+<span id="cb387-3"><a href="主成分分析-pca.html#cb387-3" tabindex="-1"></a>  <span class="at">check.names =</span> <span class="cn">FALSE</span>)</span>
+<span id="cb387-4"><a href="主成分分析-pca.html#cb387-4" tabindex="-1"></a><span class="fu">names</span>(jgb_mof)[<span class="dv">1</span>] <span class="ot">&lt;-</span> <span class="st">&quot;date&quot;</span></span>
+<span id="cb387-5"><a href="主成分分析-pca.html#cb387-5" tabindex="-1"></a><span class="fu">tail</span>(jgb_mof, <span class="dv">3</span>)</span>
+<span id="cb387-6"><a href="主成分分析-pca.html#cb387-6" tabindex="-1"></a><span class="co">#&gt;           date   1年   2年   3年   4年   5年   6年   7年   8年   9年  10年</span></span>
+<span id="cb387-7"><a href="主成分分析-pca.html#cb387-7" tabindex="-1"></a><span class="co">#&gt; 13328 R8.10.28 1.674 1.915 2.015 2.166 2.281 2.365 2.473 2.614 2.739 2.867</span></span>
+<span id="cb387-8"><a href="主成分分析-pca.html#cb387-8" tabindex="-1"></a><span class="co">#&gt; 13329 R8.10.29 1.677 1.901 2.016 2.171 2.285 2.370 2.479 2.621 2.744 2.876</span></span>
+<span id="cb387-9"><a href="主成分分析-pca.html#cb387-9" tabindex="-1"></a><span class="co">#&gt; 13330 R8.10.30 1.659 1.875 1.982 2.135 2.237 2.320 2.424 2.568 2.690 2.817</span></span>
+<span id="cb387-10"><a href="主成分分析-pca.html#cb387-10" tabindex="-1"></a><span class="co">#&gt;        15年  20年  25年  30年  40年</span></span>
+<span id="cb387-11"><a href="主成分分析-pca.html#cb387-11" tabindex="-1"></a><span class="co">#&gt; 13328 3.385 3.685 3.973 3.941 3.974</span></span>
+<span id="cb387-12"><a href="主成分分析-pca.html#cb387-12" tabindex="-1"></a><span class="co">#&gt; 13329 3.397 3.701 3.988 3.956 3.984</span></span>
+<span id="cb387-13"><a href="主成分分析-pca.html#cb387-13" tabindex="-1"></a><span class="co">#&gt; 13330 3.351 3.652 3.943 3.908 3.934</span></span>
+<span id="cb387-14"><a href="主成分分析-pca.html#cb387-14" tabindex="-1"></a><span class="co"># 基準日 (和暦: S = 昭和, H = 平成, R = 令和) を西暦の日付に変換</span></span>
+<span id="cb387-15"><a href="主成分分析-pca.html#cb387-15" tabindex="-1"></a>era <span class="ot">&lt;-</span> <span class="fu">c</span>(<span class="at">S =</span> <span class="dv">1925</span>, <span class="at">H =</span> <span class="dv">1988</span>, <span class="at">R =</span> <span class="dv">2018</span>)</span>
+<span id="cb387-16"><a href="主成分分析-pca.html#cb387-16" tabindex="-1"></a>ymd <span class="ot">&lt;-</span> <span class="fu">do.call</span>(rbind, <span class="fu">strsplit</span>(<span class="fu">substring</span>(jgb_mof<span class="sc">$</span>date, <span class="dv">2</span>), <span class="st">&quot;.&quot;</span>, <span class="at">fixed =</span> <span class="cn">TRUE</span>))</span>
+<span id="cb387-17"><a href="主成分分析-pca.html#cb387-17" tabindex="-1"></a>jgb_mof<span class="sc">$</span>date <span class="ot">&lt;-</span> <span class="fu">as.Date</span>(<span class="fu">sprintf</span>(<span class="st">&quot;%d-%s-%s&quot;</span>, era[<span class="fu">substr</span>(jgb_mof<span class="sc">$</span>date, <span class="dv">1</span>, <span class="dv">1</span>)] <span class="sc">+</span> <span class="fu">as.integer</span>(ymd[,</span>
+<span id="cb387-18"><a href="主成分分析-pca.html#cb387-18" tabindex="-1"></a>  <span class="dv">1</span>]), ymd[, <span class="dv">2</span>], ymd[, <span class="dv">3</span>]))</span>
+<span id="cb387-19"><a href="主成分分析-pca.html#cb387-19" tabindex="-1"></a><span class="fu">range</span>(jgb_mof<span class="sc">$</span>date)</span>
+<span id="cb387-20"><a href="主成分分析-pca.html#cb387-20" tabindex="-1"></a><span class="co">#&gt; [1] &quot;1974-09-24&quot; &quot;2026-10-30&quot;</span></span></code></pre></div>
+<p>2006年1月以降の各月の最終営業日の値 (月末値) を取り出し, 残存期間 1, 2, 3, 5, 7, 10, 15, 20, 30年の9年限を使う.</p>
+<div class="sourceCode" id="cb388"><pre class="sourceCode r"><code class="sourceCode r"><span id="cb388-1"><a href="主成分分析-pca.html#cb388-1" tabindex="-1"></a>jgb <span class="ot">&lt;-</span> jgb_mof <span class="sc">%&gt;%</span></span>
+<span id="cb388-2"><a href="主成分分析-pca.html#cb388-2" tabindex="-1"></a>  <span class="fu">filter</span>(date <span class="sc">&gt;=</span> <span class="fu">as.Date</span>(<span class="st">&quot;2006-01-01&quot;</span>)) <span class="sc">%&gt;%</span></span>
+<span id="cb388-3"><a href="主成分分析-pca.html#cb388-3" tabindex="-1"></a>  <span class="fu">mutate</span>(<span class="at">month =</span> <span class="fu">format</span>(date, <span class="st">&quot;%Y-%m&quot;</span>)) <span class="sc">%&gt;%</span></span>
+<span id="cb388-4"><a href="主成分分析-pca.html#cb388-4" tabindex="-1"></a>  <span class="fu">group_by</span>(month) <span class="sc">%&gt;%</span></span>
+<span id="cb388-5"><a href="主成分分析-pca.html#cb388-5" tabindex="-1"></a>  <span class="fu">slice_tail</span>(<span class="at">n =</span> <span class="dv">1</span>) <span class="sc">%&gt;%</span>                           <span class="co"># 各月の最終営業日</span></span>
+<span id="cb388-6"><a href="主成分分析-pca.html#cb388-6" tabindex="-1"></a>  <span class="fu">ungroup</span>() <span class="sc">%&gt;%</span></span>
+<span id="cb388-7"><a href="主成分分析-pca.html#cb388-7" tabindex="-1"></a>  dplyr<span class="sc">::</span><span class="fu">select</span>(month, <span class="st">`</span><span class="at">1年</span><span class="st">`</span>, <span class="st">`</span><span class="at">2年</span><span class="st">`</span>, <span class="st">`</span><span class="at">3年</span><span class="st">`</span>, <span class="st">`</span><span class="at">5年</span><span class="st">`</span>, <span class="st">`</span><span class="at">7年</span><span class="st">`</span>, <span class="st">`</span><span class="at">10年</span><span class="st">`</span>, <span class="st">`</span><span class="at">15年</span><span class="st">`</span>, <span class="st">`</span><span class="at">20年</span><span class="st">`</span>, <span class="st">`</span><span class="at">30年</span><span class="st">`</span>)</span>
+<span id="cb388-8"><a href="主成分分析-pca.html#cb388-8" tabindex="-1"></a>maturity <span class="ot">&lt;-</span> <span class="fu">c</span>(<span class="dv">1</span>, <span class="dv">2</span>, <span class="dv">3</span>, <span class="dv">5</span>, <span class="dv">7</span>, <span class="dv">10</span>, <span class="dv">15</span>, <span class="dv">20</span>, <span class="dv">30</span>)</span>
+<span id="cb388-9"><a href="主成分分析-pca.html#cb388-9" tabindex="-1"></a><span class="co"># イールドカーブの例 (いくつかの時点)</span></span>
+<span id="cb388-10"><a href="主成分分析-pca.html#cb388-10" tabindex="-1"></a>idx <span class="ot">&lt;-</span> <span class="fu">round</span>(<span class="fu">seq</span>(<span class="dv">1</span>, <span class="fu">nrow</span>(jgb), <span class="at">length.out =</span> <span class="dv">5</span>))</span>
+<span id="cb388-11"><a href="主成分分析-pca.html#cb388-11" tabindex="-1"></a><span class="fu">matplot</span>(maturity, <span class="fu">t</span>(jgb[idx, <span class="sc">-</span><span class="dv">1</span>]), <span class="at">type =</span> <span class="st">&quot;b&quot;</span>, <span class="at">pch =</span> <span class="dv">1</span><span class="sc">:</span><span class="dv">5</span>, <span class="at">lty =</span> <span class="dv">1</span>,</span>
+<span id="cb388-12"><a href="主成分分析-pca.html#cb388-12" tabindex="-1"></a>        <span class="at">xlab =</span> <span class="st">&quot;残存期間 (年)&quot;</span>, <span class="at">ylab =</span> <span class="st">&quot;利回り (%)&quot;</span>)</span>
+<span id="cb388-13"><a href="主成分分析-pca.html#cb388-13" tabindex="-1"></a><span class="fu">legend</span>(<span class="st">&quot;topleft&quot;</span>, <span class="at">legend =</span> jgb<span class="sc">$</span>month[idx], <span class="at">col =</span> <span class="dv">1</span><span class="sc">:</span><span class="dv">5</span>, <span class="at">pch =</span> <span class="dv">1</span><span class="sc">:</span><span class="dv">5</span>, <span class="at">lty =</span> <span class="dv">1</span>)</span></code></pre></div>
+<p><img src="_main_files/figure-html/unnamed-chunk-283-1.png" width="75%" /></p>
+</div>
+<div id="pca-の実行-1" class="section level3 unnumbered hasAnchor">
+<h3>PCA の実行<a href="主成分分析-pca.html#pca-の実行-1" class="anchor-section" aria-label="Anchor link to header"></a></h3>
 <p>利回りの水準そのものではなく, 利回りの月次変化 (bp) に対して PCA を行う.
 単位がそろっているので, 分散共分散行列に対する PCA で良い.</p>
-<div class="sourceCode" id="cb388"><pre class="sourceCode r"><code class="sourceCode r"><span id="cb388-1"><a href="主成分分析-pca.html#cb388-1" tabindex="-1"></a>d_yield <span class="ot">&lt;-</span> jgb <span class="sc">%&gt;%</span></span>
-<span id="cb388-2"><a href="主成分分析-pca.html#cb388-2" tabindex="-1"></a>  dplyr<span class="sc">::</span><span class="fu">select</span>(<span class="sc">-</span>month) <span class="sc">%&gt;%</span></span>
-<span id="cb388-3"><a href="主成分分析-pca.html#cb388-3" tabindex="-1"></a>  <span class="fu">as.matrix</span>() <span class="sc">%&gt;%</span></span>
-<span id="cb388-4"><a href="主成分分析-pca.html#cb388-4" tabindex="-1"></a>  <span class="fu">diff</span>() <span class="sc">*</span> <span class="dv">100</span></span>
-<span id="cb388-5"><a href="主成分分析-pca.html#cb388-5" tabindex="-1"></a><span class="fu">round</span>(<span class="fu">cor</span>(d_yield), <span class="dv">2</span>)  <span class="co"># 残存期間の近い利回りほど相関が高い</span></span>
-<span id="cb388-6"><a href="主成分分析-pca.html#cb388-6" tabindex="-1"></a><span class="co">#&gt;       y1   y2   y3   y5   y7  y10  y15  y20  y30</span></span>
-<span id="cb388-7"><a href="主成分分析-pca.html#cb388-7" tabindex="-1"></a><span class="co">#&gt; y1  1.00 0.92 0.84 0.74 0.67 0.63 0.59 0.56 0.50</span></span>
-<span id="cb388-8"><a href="主成分分析-pca.html#cb388-8" tabindex="-1"></a><span class="co">#&gt; y2  0.92 1.00 0.95 0.91 0.86 0.81 0.75 0.69 0.57</span></span>
-<span id="cb388-9"><a href="主成分分析-pca.html#cb388-9" tabindex="-1"></a><span class="co">#&gt; y3  0.84 0.95 1.00 0.95 0.92 0.87 0.80 0.73 0.59</span></span>
-<span id="cb388-10"><a href="主成分分析-pca.html#cb388-10" tabindex="-1"></a><span class="co">#&gt; y5  0.74 0.91 0.95 1.00 0.96 0.93 0.87 0.80 0.65</span></span>
-<span id="cb388-11"><a href="主成分分析-pca.html#cb388-11" tabindex="-1"></a><span class="co">#&gt; y7  0.67 0.86 0.92 0.96 1.00 0.95 0.91 0.85 0.72</span></span>
-<span id="cb388-12"><a href="主成分分析-pca.html#cb388-12" tabindex="-1"></a><span class="co">#&gt; y10 0.63 0.81 0.87 0.93 0.95 1.00 0.96 0.92 0.82</span></span>
-<span id="cb388-13"><a href="主成分分析-pca.html#cb388-13" tabindex="-1"></a><span class="co">#&gt; y15 0.59 0.75 0.80 0.87 0.91 0.96 1.00 0.96 0.90</span></span>
-<span id="cb388-14"><a href="主成分分析-pca.html#cb388-14" tabindex="-1"></a><span class="co">#&gt; y20 0.56 0.69 0.73 0.80 0.85 0.92 0.96 1.00 0.94</span></span>
-<span id="cb388-15"><a href="主成分分析-pca.html#cb388-15" tabindex="-1"></a><span class="co">#&gt; y30 0.50 0.57 0.59 0.65 0.72 0.82 0.90 0.94 1.00</span></span>
-<span id="cb388-16"><a href="主成分分析-pca.html#cb388-16" tabindex="-1"></a>pc_yield <span class="ot">&lt;-</span> <span class="fu">prcomp</span>(d_yield)</span>
-<span id="cb388-17"><a href="主成分分析-pca.html#cb388-17" tabindex="-1"></a><span class="fu">summary</span>(pc_yield)</span>
-<span id="cb388-18"><a href="主成分分析-pca.html#cb388-18" tabindex="-1"></a><span class="co">#&gt; Importance of components:</span></span>
-<span id="cb388-19"><a href="主成分分析-pca.html#cb388-19" tabindex="-1"></a><span class="co">#&gt;                            PC1    PC2     PC3     PC4     PC5     PC6     PC7</span></span>
-<span id="cb388-20"><a href="主成分分析-pca.html#cb388-20" tabindex="-1"></a><span class="co">#&gt; Standard deviation     21.9910 8.6477 5.18446 1.55382 1.51281 1.39105 1.30641</span></span>
-<span id="cb388-21"><a href="主成分分析-pca.html#cb388-21" tabindex="-1"></a><span class="co">#&gt; Proportion of Variance  0.8111 0.1254 0.04508 0.00405 0.00384 0.00325 0.00286</span></span>
-<span id="cb388-22"><a href="主成分分析-pca.html#cb388-22" tabindex="-1"></a><span class="co">#&gt; Cumulative Proportion   0.8111 0.9366 0.98166 0.98571 0.98955 0.99279 0.99566</span></span>
-<span id="cb388-23"><a href="主成分分析-pca.html#cb388-23" tabindex="-1"></a><span class="co">#&gt;                            PC8     PC9</span></span>
-<span id="cb388-24"><a href="主成分分析-pca.html#cb388-24" tabindex="-1"></a><span class="co">#&gt; Standard deviation     1.21402 1.05623</span></span>
-<span id="cb388-25"><a href="主成分分析-pca.html#cb388-25" tabindex="-1"></a><span class="co">#&gt; Proportion of Variance 0.00247 0.00187</span></span>
-<span id="cb388-26"><a href="主成分分析-pca.html#cb388-26" tabindex="-1"></a><span class="co">#&gt; Cumulative Proportion  0.99813 1.00000</span></span></code></pre></div>
-<p>少数の主成分で, 利回り変化の大部分 (第3主成分までで98.2%) を説明できる.</p>
+<div class="sourceCode" id="cb389"><pre class="sourceCode r"><code class="sourceCode r"><span id="cb389-1"><a href="主成分分析-pca.html#cb389-1" tabindex="-1"></a>d_yield <span class="ot">&lt;-</span> jgb <span class="sc">%&gt;%</span></span>
+<span id="cb389-2"><a href="主成分分析-pca.html#cb389-2" tabindex="-1"></a>  dplyr<span class="sc">::</span><span class="fu">select</span>(<span class="sc">-</span>month) <span class="sc">%&gt;%</span></span>
+<span id="cb389-3"><a href="主成分分析-pca.html#cb389-3" tabindex="-1"></a>  <span class="fu">as.matrix</span>() <span class="sc">%&gt;%</span></span>
+<span id="cb389-4"><a href="主成分分析-pca.html#cb389-4" tabindex="-1"></a>  <span class="fu">diff</span>() <span class="sc">*</span> <span class="dv">100</span></span>
+<span id="cb389-5"><a href="主成分分析-pca.html#cb389-5" tabindex="-1"></a><span class="fu">round</span>(<span class="fu">cor</span>(d_yield), <span class="dv">2</span>)  <span class="co"># 残存期間の近い利回りほど相関が高い</span></span>
+<span id="cb389-6"><a href="主成分分析-pca.html#cb389-6" tabindex="-1"></a><span class="co">#&gt;       1年  2年  3年  5年  7年 10年 15年 20年 30年</span></span>
+<span id="cb389-7"><a href="主成分分析-pca.html#cb389-7" tabindex="-1"></a><span class="co">#&gt; 1年  1.00 0.90 0.84 0.71 0.56 0.53 0.47 0.39 0.31</span></span>
+<span id="cb389-8"><a href="主成分分析-pca.html#cb389-8" tabindex="-1"></a><span class="co">#&gt; 2年  0.90 1.00 0.96 0.87 0.72 0.68 0.59 0.50 0.38</span></span>
+<span id="cb389-9"><a href="主成分分析-pca.html#cb389-9" tabindex="-1"></a><span class="co">#&gt; 3年  0.84 0.96 1.00 0.93 0.81 0.76 0.67 0.57 0.45</span></span>
+<span id="cb389-10"><a href="主成分分析-pca.html#cb389-10" tabindex="-1"></a><span class="co">#&gt; 5年  0.71 0.87 0.93 1.00 0.95 0.90 0.79 0.68 0.54</span></span>
+<span id="cb389-11"><a href="主成分分析-pca.html#cb389-11" tabindex="-1"></a><span class="co">#&gt; 7年  0.56 0.72 0.81 0.95 1.00 0.94 0.84 0.74 0.59</span></span>
+<span id="cb389-12"><a href="主成分分析-pca.html#cb389-12" tabindex="-1"></a><span class="co">#&gt; 10年 0.53 0.68 0.76 0.90 0.94 1.00 0.94 0.86 0.72</span></span>
+<span id="cb389-13"><a href="主成分分析-pca.html#cb389-13" tabindex="-1"></a><span class="co">#&gt; 15年 0.47 0.59 0.67 0.79 0.84 0.94 1.00 0.96 0.87</span></span>
+<span id="cb389-14"><a href="主成分分析-pca.html#cb389-14" tabindex="-1"></a><span class="co">#&gt; 20年 0.39 0.50 0.57 0.68 0.74 0.86 0.96 1.00 0.95</span></span>
+<span id="cb389-15"><a href="主成分分析-pca.html#cb389-15" tabindex="-1"></a><span class="co">#&gt; 30年 0.31 0.38 0.45 0.54 0.59 0.72 0.87 0.95 1.00</span></span>
+<span id="cb389-16"><a href="主成分分析-pca.html#cb389-16" tabindex="-1"></a>pc_yield <span class="ot">&lt;-</span> <span class="fu">prcomp</span>(d_yield)</span>
+<span id="cb389-17"><a href="主成分分析-pca.html#cb389-17" tabindex="-1"></a><span class="fu">summary</span>(pc_yield)</span>
+<span id="cb389-18"><a href="主成分分析-pca.html#cb389-18" tabindex="-1"></a><span class="co">#&gt; Importance of components:</span></span>
+<span id="cb389-19"><a href="主成分分析-pca.html#cb389-19" tabindex="-1"></a><span class="co">#&gt;                            PC1    PC2     PC3     PC4     PC5     PC6     PC7</span></span>
+<span id="cb389-20"><a href="主成分分析-pca.html#cb389-20" tabindex="-1"></a><span class="co">#&gt; Standard deviation     22.2901 9.5480 5.35566 2.49084 2.02553 1.40511 1.17254</span></span>
+<span id="cb389-21"><a href="主成分分析-pca.html#cb389-21" tabindex="-1"></a><span class="co">#&gt; Proportion of Variance  0.7859 0.1442 0.04537 0.00981 0.00649 0.00312 0.00217</span></span>
+<span id="cb389-22"><a href="主成分分析-pca.html#cb389-22" tabindex="-1"></a><span class="co">#&gt; Cumulative Proportion   0.7859 0.9301 0.97550 0.98532 0.99181 0.99493 0.99711</span></span>
+<span id="cb389-23"><a href="主成分分析-pca.html#cb389-23" tabindex="-1"></a><span class="co">#&gt;                            PC8     PC9</span></span>
+<span id="cb389-24"><a href="主成分分析-pca.html#cb389-24" tabindex="-1"></a><span class="co">#&gt; Standard deviation     0.97818 0.93445</span></span>
+<span id="cb389-25"><a href="主成分分析-pca.html#cb389-25" tabindex="-1"></a><span class="co">#&gt; Proportion of Variance 0.00151 0.00138</span></span>
+<span id="cb389-26"><a href="主成分分析-pca.html#cb389-26" tabindex="-1"></a><span class="co">#&gt; Cumulative Proportion  0.99862 1.00000</span></span></code></pre></div>
+<p>少数の主成分で, 利回り変化の大部分 (第3主成分までで97.6%) を説明できる.</p>
 <p>主成分負荷量を残存期間に対してプロットする.</p>
-<div class="sourceCode" id="cb389"><pre class="sourceCode r"><code class="sourceCode r"><span id="cb389-1"><a href="主成分分析-pca.html#cb389-1" tabindex="-1"></a><span class="fu">matplot</span>(maturity, pc_yield<span class="sc">$</span>rotation[, <span class="dv">1</span><span class="sc">:</span><span class="dv">3</span>], <span class="at">type =</span> <span class="st">&quot;b&quot;</span>, <span class="at">pch =</span> <span class="dv">1</span><span class="sc">:</span><span class="dv">3</span>, <span class="at">lty =</span> <span class="dv">1</span>, <span class="at">xlab =</span> <span class="st">&quot;残存期間 (年)&quot;</span>,</span>
-<span id="cb389-2"><a href="主成分分析-pca.html#cb389-2" tabindex="-1"></a>  <span class="at">ylab =</span> <span class="st">&quot;主成分負荷量&quot;</span>)</span>
-<span id="cb389-3"><a href="主成分分析-pca.html#cb389-3" tabindex="-1"></a><span class="fu">abline</span>(<span class="at">h =</span> <span class="dv">0</span>, <span class="at">lty =</span> <span class="dv">3</span>)</span>
-<span id="cb389-4"><a href="主成分分析-pca.html#cb389-4" tabindex="-1"></a><span class="fu">legend</span>(<span class="st">&quot;bottomright&quot;</span>, <span class="at">legend =</span> <span class="fu">c</span>(<span class="st">&quot;PC1&quot;</span>, <span class="st">&quot;PC2&quot;</span>, <span class="st">&quot;PC3&quot;</span>), <span class="at">col =</span> <span class="dv">1</span><span class="sc">:</span><span class="dv">3</span>, <span class="at">pch =</span> <span class="dv">1</span><span class="sc">:</span><span class="dv">3</span>, <span class="at">lty =</span> <span class="dv">1</span>)</span></code></pre></div>
-<p><img src="_main_files/figure-html/unnamed-chunk-284-1.png" width="75%" /></p>
+<div class="sourceCode" id="cb390"><pre class="sourceCode r"><code class="sourceCode r"><span id="cb390-1"><a href="主成分分析-pca.html#cb390-1" tabindex="-1"></a><span class="fu">matplot</span>(maturity, pc_yield<span class="sc">$</span>rotation[, <span class="dv">1</span><span class="sc">:</span><span class="dv">3</span>], <span class="at">type =</span> <span class="st">&quot;b&quot;</span>, <span class="at">pch =</span> <span class="dv">1</span><span class="sc">:</span><span class="dv">3</span>, <span class="at">lty =</span> <span class="dv">1</span>, <span class="at">xlab =</span> <span class="st">&quot;残存期間 (年)&quot;</span>,</span>
+<span id="cb390-2"><a href="主成分分析-pca.html#cb390-2" tabindex="-1"></a>  <span class="at">ylab =</span> <span class="st">&quot;主成分負荷量&quot;</span>)</span>
+<span id="cb390-3"><a href="主成分分析-pca.html#cb390-3" tabindex="-1"></a><span class="fu">abline</span>(<span class="at">h =</span> <span class="dv">0</span>, <span class="at">lty =</span> <span class="dv">3</span>)</span>
+<span id="cb390-4"><a href="主成分分析-pca.html#cb390-4" tabindex="-1"></a><span class="fu">legend</span>(<span class="st">&quot;bottomright&quot;</span>, <span class="at">legend =</span> <span class="fu">c</span>(<span class="st">&quot;PC1&quot;</span>, <span class="st">&quot;PC2&quot;</span>, <span class="st">&quot;PC3&quot;</span>), <span class="at">col =</span> <span class="dv">1</span><span class="sc">:</span><span class="dv">3</span>, <span class="at">pch =</span> <span class="dv">1</span><span class="sc">:</span><span class="dv">3</span>, <span class="at">lty =</span> <span class="dv">1</span>)</span></code></pre></div>
+<p><img src="_main_files/figure-html/unnamed-chunk-285-1.png" width="75%" /></p>
 <p>典型的な解釈 (Litterman and Scheinkman, 1991):</p>
 <ul>
 <li>第1主成分: 水準 (level). 全期間の利回りがほぼ同じ方向に動く</li>
@@ -882,62 +914,9 @@ R のヘルプでは, 数値計算の精度の点で <code>prcomp()</code> (特�
 </ul>
 <p>符号は一意に定まらないので, 解釈しやすい向きに読み替えて良い.
 債券ポートフォリオの金利リスク管理では, この3つの主成分に対する感応度でリスクを把握することがある.</p>
-</div>
-<div id="参考-財務省の国債金利データ-実データ" class="section level3 unnumbered hasAnchor">
-<h3>(参考) 財務省の国債金利データ (実データ)<a href="主成分分析-pca.html#参考-財務省の国債金利データ-実データ" class="anchor-section" aria-label="Anchor link to header"></a></h3>
-<p>上の分析は, 授業の R スクリプトと同じ仮想データを使った.
-実際の国債金利 (国債の流通利回りから計算した, 残存期間ごとの金利) は, 財務省のウェブサイトで公開されており, R から直接読み込むことができる.</p>
-<pre><code>財務省「国債金利情報」: https://www.mof.go.jp/jgbs/reference/interest_rate/
-- jgbcm_all.csv: 1974年9月以降の日次データ (年限 1〜40年, 単位 %)
-- 1行目はタイトル, 2行目が列名. 文字コードは Shift_JIS. 欠損値は &quot;-&quot;. 基準日は和暦 (例: R8.10.30)</code></pre>
-<div class="sourceCode" id="cb391"><pre class="sourceCode r"><code class="sourceCode r"><span id="cb391-1"><a href="主成分分析-pca.html#cb391-1" tabindex="-1"></a>url <span class="ot">&lt;-</span> <span class="st">&quot;https://www.mof.go.jp/jgbs/reference/interest_rate/data/jgbcm_all.csv&quot;</span></span>
-<span id="cb391-2"><a href="主成分分析-pca.html#cb391-2" tabindex="-1"></a>jgb_mof <span class="ot">&lt;-</span> <span class="fu">read.csv</span>(url, <span class="at">skip =</span> <span class="dv">1</span>, <span class="at">header =</span> <span class="cn">TRUE</span>, <span class="at">fileEncoding =</span> <span class="st">&quot;Shift_JIS&quot;</span>, <span class="at">na.strings =</span> <span class="st">&quot;-&quot;</span>,</span>
-<span id="cb391-3"><a href="主成分分析-pca.html#cb391-3" tabindex="-1"></a>  <span class="at">check.names =</span> <span class="cn">FALSE</span>)</span>
-<span id="cb391-4"><a href="主成分分析-pca.html#cb391-4" tabindex="-1"></a><span class="fu">names</span>(jgb_mof)[<span class="dv">1</span>] <span class="ot">&lt;-</span> <span class="st">&quot;date&quot;</span></span>
-<span id="cb391-5"><a href="主成分分析-pca.html#cb391-5" tabindex="-1"></a><span class="fu">tail</span>(jgb_mof, <span class="dv">3</span>)</span>
-<span id="cb391-6"><a href="主成分分析-pca.html#cb391-6" tabindex="-1"></a><span class="co">#&gt;           date   1年   2年   3年   4年   5年   6年   7年   8年   9年  10年</span></span>
-<span id="cb391-7"><a href="主成分分析-pca.html#cb391-7" tabindex="-1"></a><span class="co">#&gt; 13328 R8.10.28 1.674 1.915 2.015 2.166 2.281 2.365 2.473 2.614 2.739 2.867</span></span>
-<span id="cb391-8"><a href="主成分分析-pca.html#cb391-8" tabindex="-1"></a><span class="co">#&gt; 13329 R8.10.29 1.677 1.901 2.016 2.171 2.285 2.370 2.479 2.621 2.744 2.876</span></span>
-<span id="cb391-9"><a href="主成分分析-pca.html#cb391-9" tabindex="-1"></a><span class="co">#&gt; 13330 R8.10.30 1.659 1.875 1.982 2.135 2.237 2.320 2.424 2.568 2.690 2.817</span></span>
-<span id="cb391-10"><a href="主成分分析-pca.html#cb391-10" tabindex="-1"></a><span class="co">#&gt;        15年  20年  25年  30年  40年</span></span>
-<span id="cb391-11"><a href="主成分分析-pca.html#cb391-11" tabindex="-1"></a><span class="co">#&gt; 13328 3.385 3.685 3.973 3.941 3.974</span></span>
-<span id="cb391-12"><a href="主成分分析-pca.html#cb391-12" tabindex="-1"></a><span class="co">#&gt; 13329 3.397 3.701 3.988 3.956 3.984</span></span>
-<span id="cb391-13"><a href="主成分分析-pca.html#cb391-13" tabindex="-1"></a><span class="co">#&gt; 13330 3.351 3.652 3.943 3.908 3.934</span></span>
-<span id="cb391-14"><a href="主成分分析-pca.html#cb391-14" tabindex="-1"></a><span class="co"># 基準日 (和暦: S = 昭和, H = 平成, R = 令和) を西暦の日付に変換</span></span>
-<span id="cb391-15"><a href="主成分分析-pca.html#cb391-15" tabindex="-1"></a>era <span class="ot">&lt;-</span> <span class="fu">c</span>(<span class="at">S =</span> <span class="dv">1925</span>, <span class="at">H =</span> <span class="dv">1988</span>, <span class="at">R =</span> <span class="dv">2018</span>)</span>
-<span id="cb391-16"><a href="主成分分析-pca.html#cb391-16" tabindex="-1"></a>ymd <span class="ot">&lt;-</span> <span class="fu">do.call</span>(rbind, <span class="fu">strsplit</span>(<span class="fu">substring</span>(jgb_mof<span class="sc">$</span>date, <span class="dv">2</span>), <span class="st">&quot;.&quot;</span>, <span class="at">fixed =</span> <span class="cn">TRUE</span>))</span>
-<span id="cb391-17"><a href="主成分分析-pca.html#cb391-17" tabindex="-1"></a>jgb_mof<span class="sc">$</span>date <span class="ot">&lt;-</span> <span class="fu">as.Date</span>(<span class="fu">sprintf</span>(<span class="st">&quot;%d-%s-%s&quot;</span>, era[<span class="fu">substr</span>(jgb_mof<span class="sc">$</span>date, <span class="dv">1</span>, <span class="dv">1</span>)] <span class="sc">+</span> <span class="fu">as.integer</span>(ymd[,</span>
-<span id="cb391-18"><a href="主成分分析-pca.html#cb391-18" tabindex="-1"></a>  <span class="dv">1</span>]), ymd[, <span class="dv">2</span>], ymd[, <span class="dv">3</span>]))</span>
-<span id="cb391-19"><a href="主成分分析-pca.html#cb391-19" tabindex="-1"></a><span class="fu">range</span>(jgb_mof<span class="sc">$</span>date)</span>
-<span id="cb391-20"><a href="主成分分析-pca.html#cb391-20" tabindex="-1"></a><span class="co">#&gt; [1] &quot;1974-09-24&quot; &quot;2026-10-30&quot;</span></span></code></pre></div>
-<p>2006年1月以降の各月の最終営業日の値を取り出し, 上と同じ9年限の利回りの月次変化に PCA を行う.</p>
-<div class="sourceCode" id="cb392"><pre class="sourceCode r"><code class="sourceCode r"><span id="cb392-1"><a href="主成分分析-pca.html#cb392-1" tabindex="-1"></a>jgb_m <span class="ot">&lt;-</span> jgb_mof <span class="sc">%&gt;%</span></span>
-<span id="cb392-2"><a href="主成分分析-pca.html#cb392-2" tabindex="-1"></a>  <span class="fu">filter</span>(date <span class="sc">&gt;=</span> <span class="fu">as.Date</span>(<span class="st">&quot;2006-01-01&quot;</span>)) <span class="sc">%&gt;%</span></span>
-<span id="cb392-3"><a href="主成分分析-pca.html#cb392-3" tabindex="-1"></a>  <span class="fu">mutate</span>(<span class="at">month =</span> <span class="fu">format</span>(date, <span class="st">&quot;%Y-%m&quot;</span>)) <span class="sc">%&gt;%</span></span>
-<span id="cb392-4"><a href="主成分分析-pca.html#cb392-4" tabindex="-1"></a>  <span class="fu">group_by</span>(month) <span class="sc">%&gt;%</span></span>
-<span id="cb392-5"><a href="主成分分析-pca.html#cb392-5" tabindex="-1"></a>  <span class="fu">slice_tail</span>(<span class="at">n =</span> <span class="dv">1</span>) <span class="sc">%&gt;%</span>                           <span class="co"># 各月の最終営業日</span></span>
-<span id="cb392-6"><a href="主成分分析-pca.html#cb392-6" tabindex="-1"></a>  <span class="fu">ungroup</span>() <span class="sc">%&gt;%</span></span>
-<span id="cb392-7"><a href="主成分分析-pca.html#cb392-7" tabindex="-1"></a>  dplyr<span class="sc">::</span><span class="fu">select</span>(month, <span class="st">`</span><span class="at">1年</span><span class="st">`</span>, <span class="st">`</span><span class="at">2年</span><span class="st">`</span>, <span class="st">`</span><span class="at">3年</span><span class="st">`</span>, <span class="st">`</span><span class="at">5年</span><span class="st">`</span>, <span class="st">`</span><span class="at">7年</span><span class="st">`</span>, <span class="st">`</span><span class="at">10年</span><span class="st">`</span>, <span class="st">`</span><span class="at">15年</span><span class="st">`</span>, <span class="st">`</span><span class="at">20年</span><span class="st">`</span>, <span class="st">`</span><span class="at">30年</span><span class="st">`</span>)</span>
-<span id="cb392-8"><a href="主成分分析-pca.html#cb392-8" tabindex="-1"></a>d_mof <span class="ot">&lt;-</span> <span class="fu">diff</span>(<span class="fu">as.matrix</span>(jgb_m[, <span class="sc">-</span><span class="dv">1</span>])) <span class="sc">*</span> <span class="dv">100</span>       <span class="co"># 月次変化 (bp)</span></span>
-<span id="cb392-9"><a href="主成分分析-pca.html#cb392-9" tabindex="-1"></a>pc_mof <span class="ot">&lt;-</span> <span class="fu">prcomp</span>(d_mof)</span>
-<span id="cb392-10"><a href="主成分分析-pca.html#cb392-10" tabindex="-1"></a><span class="fu">summary</span>(pc_mof)</span>
-<span id="cb392-11"><a href="主成分分析-pca.html#cb392-11" tabindex="-1"></a><span class="co">#&gt; Importance of components:</span></span>
-<span id="cb392-12"><a href="主成分分析-pca.html#cb392-12" tabindex="-1"></a><span class="co">#&gt;                            PC1    PC2     PC3     PC4     PC5     PC6     PC7</span></span>
-<span id="cb392-13"><a href="主成分分析-pca.html#cb392-13" tabindex="-1"></a><span class="co">#&gt; Standard deviation     22.2901 9.5480 5.35566 2.49084 2.02553 1.40511 1.17254</span></span>
-<span id="cb392-14"><a href="主成分分析-pca.html#cb392-14" tabindex="-1"></a><span class="co">#&gt; Proportion of Variance  0.7859 0.1442 0.04537 0.00981 0.00649 0.00312 0.00217</span></span>
-<span id="cb392-15"><a href="主成分分析-pca.html#cb392-15" tabindex="-1"></a><span class="co">#&gt; Cumulative Proportion   0.7859 0.9301 0.97550 0.98532 0.99181 0.99493 0.99711</span></span>
-<span id="cb392-16"><a href="主成分分析-pca.html#cb392-16" tabindex="-1"></a><span class="co">#&gt;                            PC8     PC9</span></span>
-<span id="cb392-17"><a href="主成分分析-pca.html#cb392-17" tabindex="-1"></a><span class="co">#&gt; Standard deviation     0.97818 0.93445</span></span>
-<span id="cb392-18"><a href="主成分分析-pca.html#cb392-18" tabindex="-1"></a><span class="co">#&gt; Proportion of Variance 0.00151 0.00138</span></span>
-<span id="cb392-19"><a href="主成分分析-pca.html#cb392-19" tabindex="-1"></a><span class="co">#&gt; Cumulative Proportion  0.99862 1.00000</span></span>
-<span id="cb392-20"><a href="主成分分析-pca.html#cb392-20" tabindex="-1"></a><span class="fu">matplot</span>(maturity, pc_mof<span class="sc">$</span>rotation[, <span class="dv">1</span><span class="sc">:</span><span class="dv">3</span>], <span class="at">type =</span> <span class="st">&quot;b&quot;</span>, <span class="at">pch =</span> <span class="dv">1</span><span class="sc">:</span><span class="dv">3</span>, <span class="at">lty =</span> <span class="dv">1</span>,</span>
-<span id="cb392-21"><a href="主成分分析-pca.html#cb392-21" tabindex="-1"></a>        <span class="at">xlab =</span> <span class="st">&quot;残存期間 (年)&quot;</span>, <span class="at">ylab =</span> <span class="st">&quot;主成分負荷量&quot;</span>, <span class="at">main =</span> <span class="st">&quot;財務省の国債金利データ&quot;</span>)</span>
-<span id="cb392-22"><a href="主成分分析-pca.html#cb392-22" tabindex="-1"></a><span class="fu">abline</span>(<span class="at">h =</span> <span class="dv">0</span>, <span class="at">lty =</span> <span class="dv">3</span>)</span>
-<span id="cb392-23"><a href="主成分分析-pca.html#cb392-23" tabindex="-1"></a><span class="fu">legend</span>(<span class="st">&quot;bottomright&quot;</span>, <span class="at">legend =</span> <span class="fu">c</span>(<span class="st">&quot;PC1&quot;</span>, <span class="st">&quot;PC2&quot;</span>, <span class="st">&quot;PC3&quot;</span>), <span class="at">col =</span> <span class="dv">1</span><span class="sc">:</span><span class="dv">3</span>, <span class="at">pch =</span> <span class="dv">1</span><span class="sc">:</span><span class="dv">3</span>, <span class="at">lty =</span> <span class="dv">1</span>)</span></code></pre></div>
-<p><img src="_main_files/figure-html/unnamed-chunk-286-1.png" width="75%" /></p>
-<p>実データでも, 第3主成分までで変動の大部分 (97.6%) を説明でき, 負荷量は水準・傾き・曲率の形になる.
-なお, 2016年から2024年まで続いた日本銀行のイールドカーブ・コントロール (長短金利操作) の期間中は, 金利の変動そのものが小さく抑えられていた.
-期間を区切って PCA を行い, 結果を比べてみよう.</p>
+<p><strong>自主課題</strong>
+日本銀行のイールドカーブ・コントロール (長短金利操作, 2016年9月〜2024年3月) の期間中は, 金利の変動そのものが小さく抑えられていた.
+この期間とそれ以外とで期間を区切って PCA を行い, 主成分の寄与率や負荷量を比べてみよう.</p>
 </div>
 </div>
 <div id="自主課題" class="section level2 hasAnchor" number="12.5">
@@ -945,7 +924,7 @@ R のヘルプでは, 数値計算の精度の点で <code>prcomp()</code> (特�
 <pre><code>stock_returns30.csv: 2016年1月〜2025年12月 (120か月) (仮想データ)
 - month: 年月, bank_1〜util_6: 各銘柄の月次リターン (%)
   (bank: 銀行, auto: 自動車, elec: 電機, pharma: 医薬品, util: 電力・ガス, 各6銘柄)</code></pre>
-<div class="sourceCode" id="cb394"><pre class="sourceCode r"><code class="sourceCode r"><span id="cb394-1"><a href="主成分分析-pca.html#cb394-1" tabindex="-1"></a>stock <span class="ot">&lt;-</span> <span class="fu">read.csv</span>(<span class="st">&quot;class/stock_returns30.csv&quot;</span>)</span></code></pre></div>
+<div class="sourceCode" id="cb392"><pre class="sourceCode r"><code class="sourceCode r"><span id="cb392-1"><a href="主成分分析-pca.html#cb392-1" tabindex="-1"></a>stock <span class="ot">&lt;-</span> <span class="fu">read.csv</span>(<span class="st">&quot;class/stock_returns30.csv&quot;</span>)</span></code></pre></div>
 <p><strong>自主課題</strong></p>
 <ol style="list-style-type: decimal">
 <li>30銘柄のリターンに PCA を実行し, 第1主成分の寄与率と負荷量を確認しよう. 第1主成分はどのような意味を持つか? (ヒント: 市場全体の動き)</li>
