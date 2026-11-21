@@ -1,0 +1,1017 @@
+<!DOCTYPE html>
+<html lang="" xml:lang="">
+<head>
+
+  <meta charset="utf-8" />
+  <meta http-equiv="X-UA-Compatible" content="IE=edge" />
+  <title>Chapter 16 生成AIによる R コーディング | 金融データサイエンス</title>
+  <meta name="description" content="Chapter 16 生成AIによる R コーディング | 金融データサイエンス" />
+  <meta name="generator" content="bookdown 0.37 and GitBook 2.6.7" />
+
+  <meta property="og:title" content="Chapter 16 生成AIによる R コーディング | 金融データサイエンス" />
+  <meta property="og:type" content="book" />
+  
+  
+  
+
+  <meta name="twitter:card" content="summary" />
+  <meta name="twitter:title" content="Chapter 16 生成AIによる R コーディング | 金融データサイエンス" />
+  
+  
+  
+
+<meta name="author" content="林 高樹" />
+
+
+
+  <meta name="viewport" content="width=device-width, initial-scale=1" />
+  <meta name="apple-mobile-web-app-capable" content="yes" />
+  <meta name="apple-mobile-web-app-status-bar-style" content="black" />
+  
+  
+<link rel="prev" href="xai-説明可能な-ai.html"/>
+
+<script src="libs/jquery-3.6.1/jquery-3.6.1.min.js"></script>
+<script src="https://cdn.jsdelivr.net/npm/fuse.js@6.4.6/dist/fuse.min.js"></script>
+<link href="libs/gitbook-2.6.7/css/style.css" rel="stylesheet" />
+<link href="libs/gitbook-2.6.7/css/plugin-table.css" rel="stylesheet" />
+<link href="libs/gitbook-2.6.7/css/plugin-bookdown.css" rel="stylesheet" />
+<link href="libs/gitbook-2.6.7/css/plugin-highlight.css" rel="stylesheet" />
+<link href="libs/gitbook-2.6.7/css/plugin-search.css" rel="stylesheet" />
+<link href="libs/gitbook-2.6.7/css/plugin-fontsettings.css" rel="stylesheet" />
+<link href="libs/gitbook-2.6.7/css/plugin-clipboard.css" rel="stylesheet" />
+
+
+
+
+
+
+
+
+<link href="libs/anchor-sections-1.1.0/anchor-sections.css" rel="stylesheet" />
+<link href="libs/anchor-sections-1.1.0/anchor-sections-hash.css" rel="stylesheet" />
+<script src="libs/anchor-sections-1.1.0/anchor-sections.js"></script>
+
+
+<style type="text/css">
+pre > code.sourceCode { white-space: pre; position: relative; }
+pre > code.sourceCode > span { line-height: 1.25; }
+pre > code.sourceCode > span:empty { height: 1.2em; }
+.sourceCode { overflow: visible; }
+code.sourceCode > span { color: inherit; text-decoration: inherit; }
+pre.sourceCode { margin: 0; }
+@media screen {
+div.sourceCode { overflow: auto; }
+}
+@media print {
+pre > code.sourceCode { white-space: pre-wrap; }
+pre > code.sourceCode > span { text-indent: -5em; padding-left: 5em; }
+}
+pre.numberSource code
+  { counter-reset: source-line 0; }
+pre.numberSource code > span
+  { position: relative; left: -4em; counter-increment: source-line; }
+pre.numberSource code > span > a:first-child::before
+  { content: counter(source-line);
+    position: relative; left: -1em; text-align: right; vertical-align: baseline;
+    border: none; display: inline-block;
+    -webkit-touch-callout: none; -webkit-user-select: none;
+    -khtml-user-select: none; -moz-user-select: none;
+    -ms-user-select: none; user-select: none;
+    padding: 0 4px; width: 4em;
+    color: #aaaaaa;
+  }
+pre.numberSource { margin-left: 3em; border-left: 1px solid #aaaaaa;  padding-left: 4px; }
+div.sourceCode
+  {   }
+@media screen {
+pre > code.sourceCode > span > a:first-child::before { text-decoration: underline; }
+}
+code span.al { color: #ff0000; font-weight: bold; } /* Alert */
+code span.an { color: #60a0b0; font-weight: bold; font-style: italic; } /* Annotation */
+code span.at { color: #7d9029; } /* Attribute */
+code span.bn { color: #40a070; } /* BaseN */
+code span.bu { color: #008000; } /* BuiltIn */
+code span.cf { color: #007020; font-weight: bold; } /* ControlFlow */
+code span.ch { color: #4070a0; } /* Char */
+code span.cn { color: #880000; } /* Constant */
+code span.co { color: #60a0b0; font-style: italic; } /* Comment */
+code span.cv { color: #60a0b0; font-weight: bold; font-style: italic; } /* CommentVar */
+code span.do { color: #ba2121; font-style: italic; } /* Documentation */
+code span.dt { color: #902000; } /* DataType */
+code span.dv { color: #40a070; } /* DecVal */
+code span.er { color: #ff0000; font-weight: bold; } /* Error */
+code span.ex { } /* Extension */
+code span.fl { color: #40a070; } /* Float */
+code span.fu { color: #06287e; } /* Function */
+code span.im { color: #008000; font-weight: bold; } /* Import */
+code span.in { color: #60a0b0; font-weight: bold; font-style: italic; } /* Information */
+code span.kw { color: #007020; font-weight: bold; } /* Keyword */
+code span.op { color: #666666; } /* Operator */
+code span.ot { color: #007020; } /* Other */
+code span.pp { color: #bc7a00; } /* Preprocessor */
+code span.sc { color: #4070a0; } /* SpecialChar */
+code span.ss { color: #bb6688; } /* SpecialString */
+code span.st { color: #4070a0; } /* String */
+code span.va { color: #19177c; } /* Variable */
+code span.vs { color: #4070a0; } /* VerbatimString */
+code span.wa { color: #60a0b0; font-weight: bold; font-style: italic; } /* Warning */
+</style>
+
+<style type="text/css">
+  
+  div.hanging-indent{margin-left: 1.5em; text-indent: -1.5em;}
+</style>
+
+</head>
+
+<body>
+
+
+
+  <div class="book without-animation with-summary font-size-2 font-family-1" data-basepath=".">
+
+    <div class="book-summary">
+      <nav role="navigation">
+
+<ul class="summary">
+<li><a href="./">金融データサイエンス</a></li>
+
+<li class="divider"></li>
+<li class="chapter" data-level="1" data-path="index.html"><a href="index.html"><i class="fa fa-check"></i><b>1</b> はじめに</a>
+<ul>
+<li class="chapter" data-level="1.1" data-path="index.html"><a href="index.html#コースの目的"><i class="fa fa-check"></i><b>1.1</b> コースの目的</a></li>
+<li class="chapter" data-level="1.2" data-path="index.html"><a href="index.html#統計学統計的手法の学習について"><i class="fa fa-check"></i><b>1.2</b> 統計学/統計的手法の学習について</a>
+<ul>
+<li class="chapter" data-level="" data-path="index.html"><a href="index.html#学習の目標"><i class="fa fa-check"></i>学習の目標</a></li>
+<li class="chapter" data-level="" data-path="index.html"><a href="index.html#統計学統計的手法の学習方法"><i class="fa fa-check"></i>統計学/統計的手法の学習方法</a></li>
+<li class="chapter" data-level="" data-path="index.html"><a href="index.html#統計学統計的手法の学習ステップ"><i class="fa fa-check"></i>統計学/統計的手法の学習ステップ</a></li>
+</ul></li>
+<li class="chapter" data-level="1.3" data-path="index.html"><a href="index.html#金融ビジネス応用における統計学の最近の趨勢"><i class="fa fa-check"></i><b>1.3</b> 金融・ビジネス応用における統計学の最近の趨勢</a></li>
+<li class="chapter" data-level="1.4" data-path="index.html"><a href="index.html#本書内の記載の注意点"><i class="fa fa-check"></i><b>1.4</b> 本書内の記載の注意点</a></li>
+</ul></li>
+<li class="chapter" data-level="2" data-path="r言語の基本.html"><a href="r言語の基本.html"><i class="fa fa-check"></i><b>2</b> R言語の基本</a>
+<ul>
+<li class="chapter" data-level="2.1" data-path="r言語の基本.html"><a href="r言語の基本.html#rの基本プログラミング"><i class="fa fa-check"></i><b>2.1</b> Rの基本プログラミング</a>
+<ul>
+<li class="chapter" data-level="" data-path="r言語の基本.html"><a href="r言語の基本.html#生成ai利用に関する注意事項"><i class="fa fa-check"></i>生成AI利用に関する注意事項</a></li>
+<li class="chapter" data-level="2.1.1" data-path="r言語の基本.html"><a href="r言語の基本.html#基本操作"><i class="fa fa-check"></i><b>2.1.1</b> 基本操作</a></li>
+<li class="chapter" data-level="2.1.2" data-path="r言語の基本.html"><a href="r言語の基本.html#基本構文"><i class="fa fa-check"></i><b>2.1.2</b> 基本構文</a></li>
+<li class="chapter" data-level="2.1.3" data-path="r言語の基本.html"><a href="r言語の基本.html#自作関数"><i class="fa fa-check"></i><b>2.1.3</b> 自作関数</a></li>
+<li class="chapter" data-level="2.1.4" data-path="r言語の基本.html"><a href="r言語の基本.html#パッケージのインストール-読み込み"><i class="fa fa-check"></i><b>2.1.4</b> パッケージのインストール &amp; 読み込み</a></li>
+<li class="chapter" data-level="2.1.5" data-path="r言語の基本.html"><a href="r言語の基本.html#ヘルプ"><i class="fa fa-check"></i><b>2.1.5</b> ヘルプ</a></li>
+</ul></li>
+<li class="chapter" data-level="2.2" data-path="r言語の基本.html"><a href="r言語の基本.html#データの型や構造"><i class="fa fa-check"></i><b>2.2</b> データの型や構造</a>
+<ul>
+<li class="chapter" data-level="2.2.1" data-path="r言語の基本.html"><a href="r言語の基本.html#データの値の種類-データ型"><i class="fa fa-check"></i><b>2.2.1</b> データの値の種類 (“データ型”)</a></li>
+<li class="chapter" data-level="2.2.2" data-path="r言語の基本.html"><a href="r言語の基本.html#データの配列の仕方-データ構造"><i class="fa fa-check"></i><b>2.2.2</b> データの配列の仕方 (“データ構造”)</a></li>
+<li class="chapter" data-level="2.2.3" data-path="r言語の基本.html"><a href="r言語の基本.html#ベクトル"><i class="fa fa-check"></i><b>2.2.3</b> ベクトル</a></li>
+<li class="chapter" data-level="2.2.4" data-path="r言語の基本.html"><a href="r言語の基本.html#行列"><i class="fa fa-check"></i><b>2.2.4</b> 行列</a></li>
+<li class="chapter" data-level="2.2.5" data-path="r言語の基本.html"><a href="r言語の基本.html#リスト"><i class="fa fa-check"></i><b>2.2.5</b> リスト</a></li>
+<li class="chapter" data-level="2.2.6" data-path="r言語の基本.html"><a href="r言語の基本.html#データフレーム"><i class="fa fa-check"></i><b>2.2.6</b> データフレーム</a></li>
+</ul></li>
+<li class="chapter" data-level="2.3" data-path="r言語の基本.html"><a href="r言語の基本.html#データの操作演算"><i class="fa fa-check"></i><b>2.3</b> データの操作・演算</a>
+<ul>
+<li class="chapter" data-level="2.3.1" data-path="r言語の基本.html"><a href="r言語の基本.html#ベクトルの結合-ソート"><i class="fa fa-check"></i><b>2.3.1</b> ベクトルの結合, ソート</a></li>
+<li class="chapter" data-level="2.3.2" data-path="r言語の基本.html"><a href="r言語の基本.html#二項演算"><i class="fa fa-check"></i><b>2.3.2</b> 二項演算</a></li>
+<li class="chapter" data-level="2.3.3" data-path="r言語の基本.html"><a href="r言語の基本.html#論理演算"><i class="fa fa-check"></i><b>2.3.3</b> 論理演算</a></li>
+<li class="chapter" data-level="2.3.4" data-path="r言語の基本.html"><a href="r言語の基本.html#条件式"><i class="fa fa-check"></i><b>2.3.4</b> 条件式</a></li>
+<li class="chapter" data-level="2.3.5" data-path="r言語の基本.html"><a href="r言語の基本.html#行列演算"><i class="fa fa-check"></i><b>2.3.5</b> 行列演算</a></li>
+</ul></li>
+<li class="chapter" data-level="2.4" data-path="r言語の基本.html"><a href="r言語の基本.html#r関数"><i class="fa fa-check"></i><b>2.4</b> R関数</a>
+<ul>
+<li class="chapter" data-level="2.4.1" data-path="r言語の基本.html"><a href="r言語の基本.html#数学基本関数"><i class="fa fa-check"></i><b>2.4.1</b> 数学基本関数</a></li>
+<li class="chapter" data-level="2.4.2" data-path="r言語の基本.html"><a href="r言語の基本.html#基本統計量の計算"><i class="fa fa-check"></i><b>2.4.2</b> 基本統計量の計算</a></li>
+<li class="chapter" data-level="2.4.3" data-path="r言語の基本.html"><a href="r言語の基本.html#確率分布"><i class="fa fa-check"></i><b>2.4.3</b> 確率分布</a></li>
+<li class="chapter" data-level="2.4.4" data-path="r言語の基本.html"><a href="r言語の基本.html#その他便利な関数"><i class="fa fa-check"></i><b>2.4.4</b> その他便利な関数</a></li>
+</ul></li>
+<li class="chapter" data-level="2.5" data-path="r言語の基本.html"><a href="r言語の基本.html#データの可視化"><i class="fa fa-check"></i><b>2.5</b> データの可視化</a></li>
+<li class="chapter" data-level="2.6" data-path="r言語の基本.html"><a href="r言語の基本.html#ファイル入出力"><i class="fa fa-check"></i><b>2.6</b> ファイル入出力</a>
+<ul>
+<li class="chapter" data-level="2.6.1" data-path="r言語の基本.html"><a href="r言語の基本.html#テキストファイル読み込み"><i class="fa fa-check"></i><b>2.6.1</b> テキストファイル読み込み</a></li>
+<li class="chapter" data-level="2.6.2" data-path="r言語の基本.html"><a href="r言語の基本.html#テキストファイル書き出し"><i class="fa fa-check"></i><b>2.6.2</b> テキストファイル書き出し</a></li>
+</ul></li>
+<li class="chapter" data-level="2.7" data-path="r言語の基本.html"><a href="r言語の基本.html#パッケージtidyverse"><i class="fa fa-check"></i><b>2.7</b> パッケージ<strong>tidyverse</strong></a>
+<ul>
+<li class="chapter" data-level="2.7.1" data-path="r言語の基本.html"><a href="r言語の基本.html#初心者がtidyverseから学び始めることについて"><i class="fa fa-check"></i><b>2.7.1</b> 初心者が<strong>tidyverse</strong>から学び始めることについて</a></li>
+<li class="chapter" data-level="2.7.2" data-path="r言語の基本.html"><a href="r言語の基本.html#tidyverseの基本"><i class="fa fa-check"></i><b>2.7.2</b> <strong>tidyverse</strong>の基本</a></li>
+</ul></li>
+</ul></li>
+<li class="chapter" data-level="3" data-path="線形回帰分析.html"><a href="線形回帰分析.html"><i class="fa fa-check"></i><b>3</b> 線形回帰分析</a>
+<ul>
+<li class="chapter" data-level="3.1" data-path="線形回帰分析.html"><a href="線形回帰分析.html#基本操作-1"><i class="fa fa-check"></i><b>3.1</b> 基本操作</a>
+<ul>
+<li class="chapter" data-level="" data-path="線形回帰分析.html"><a href="線形回帰分析.html#データ-1ルーム賃貸マンションの家賃-仮想データ"><i class="fa fa-check"></i>データ: 1ルーム賃貸マンションの家賃 (仮想データ)</a></li>
+</ul></li>
+<li class="chapter" data-level="3.2" data-path="線形回帰分析.html"><a href="線形回帰分析.html#結果の見方と変数選択"><i class="fa fa-check"></i><b>3.2</b> 結果の見方と変数選択</a>
+<ul>
+<li class="chapter" data-level="" data-path="線形回帰分析.html"><a href="線形回帰分析.html#データ-上場企業の-pbr-と財務指標-仮想データ"><i class="fa fa-check"></i>データ: 上場企業の PBR と財務指標 (仮想データ)</a></li>
+</ul></li>
+<li class="chapter" data-level="3.3" data-path="線形回帰分析.html"><a href="線形回帰分析.html#説明変数に質的変数を含む回帰"><i class="fa fa-check"></i><b>3.3</b> 説明変数に質的変数を含む回帰</a>
+<ul>
+<li class="chapter" data-level="" data-path="線形回帰分析.html"><a href="線形回帰分析.html#データ-高速道路の事故率-実データ-hoffstedt-の-highway-データ"><i class="fa fa-check"></i>データ: 高速道路の事故率 (実データ: Hoffstedt の Highway データ)</a></li>
+</ul></li>
+<li class="chapter" data-level="3.4" data-path="線形回帰分析.html"><a href="線形回帰分析.html#説明変数に質的変数を含む回帰-2"><i class="fa fa-check"></i><b>3.4</b> 説明変数に質的変数を含む回帰 (2)</a>
+<ul>
+<li class="chapter" data-level="" data-path="線形回帰分析.html"><a href="線形回帰分析.html#データ-キャリア年数と月収-仮想データ"><i class="fa fa-check"></i>データ: キャリア年数と月収 (仮想データ)</a></li>
+</ul></li>
+<li class="chapter" data-level="3.5" data-path="線形回帰分析.html"><a href="線形回帰分析.html#多項式回帰"><i class="fa fa-check"></i><b>3.5</b> 多項式回帰</a>
+<ul>
+<li class="chapter" data-level="" data-path="線形回帰分析.html"><a href="線形回帰分析.html#データ-男性労働者の賃金-実データ-islr2-の-wage"><i class="fa fa-check"></i>データ: 男性労働者の賃金 (実データ: ISLR2 の <code>Wage</code>)</a></li>
+</ul></li>
+<li class="chapter" data-level="3.6" data-path="線形回帰分析.html"><a href="線形回帰分析.html#関数factor"><i class="fa fa-check"></i><b>3.6</b> 関数<code>factor()</code></a>
+<ul>
+<li class="chapter" data-level="" data-path="線形回帰分析.html"><a href="線形回帰分析.html#関数factorの使い方"><i class="fa fa-check"></i>関数<code>factor()</code>の使い方</a></li>
+</ul></li>
+</ul></li>
+<li class="chapter" data-level="4" data-path="ロジットプロビット回帰分析.html"><a href="ロジットプロビット回帰分析.html"><i class="fa fa-check"></i><b>4</b> ロジット/プロビット回帰分析</a>
+<ul>
+<li class="chapter" data-level="4.1" data-path="ロジットプロビット回帰分析.html"><a href="ロジットプロビット回帰分析.html#基本操作-2"><i class="fa fa-check"></i><b>4.1</b> 基本操作</a>
+<ul>
+<li class="chapter" data-level="" data-path="ロジットプロビット回帰分析.html"><a href="ロジットプロビット回帰分析.html#シミュレーションデータによる確認"><i class="fa fa-check"></i>シミュレーションデータによる確認</a></li>
+</ul></li>
+<li class="chapter" data-level="4.2" data-path="ロジットプロビット回帰分析.html"><a href="ロジットプロビット回帰分析.html#データ分析例"><i class="fa fa-check"></i><b>4.2</b> データ分析例</a>
+<ul>
+<li class="chapter" data-level="" data-path="ロジットプロビット回帰分析.html"><a href="ロジットプロビット回帰分析.html#データ-社債発行体のデフォルト-集計データ-仮想データ"><i class="fa fa-check"></i>データ: 社債発行体のデフォルト (集計データ, 仮想データ)</a></li>
+<li class="chapter" data-level="" data-path="ロジットプロビット回帰分析.html"><a href="ロジットプロビット回帰分析.html#データ-個人向けローンのデフォルト-仮想データ"><i class="fa fa-check"></i>データ: 個人向けローンのデフォルト (仮想データ)</a></li>
+</ul></li>
+<li class="chapter" data-level="4.3" data-path="ロジットプロビット回帰分析.html"><a href="ロジットプロビット回帰分析.html#オッズ比と相対リスク"><i class="fa fa-check"></i><b>4.3</b> オッズ比と相対リスク</a></li>
+<li class="chapter" data-level="4.4" data-path="ロジットプロビット回帰分析.html"><a href="ロジットプロビット回帰分析.html#疑似r2の計算"><i class="fa fa-check"></i><b>4.4</b> 疑似R2の計算</a>
+<ul>
+<li class="chapter" data-level="" data-path="ロジットプロビット回帰分析.html"><a href="ロジットプロビット回帰分析.html#パッケージdesctools"><i class="fa fa-check"></i>パッケージ<strong>DescTools</strong></a></li>
+<li class="chapter" data-level="" data-path="ロジットプロビット回帰分析.html"><a href="ロジットプロビット回帰分析.html#パッケージpscl"><i class="fa fa-check"></i>パッケージ<strong>pscl</strong></a></li>
+<li class="chapter" data-level="" data-path="ロジットプロビット回帰分析.html"><a href="ロジットプロビット回帰分析.html#パッケージperformance"><i class="fa fa-check"></i>パッケージ<strong>performance</strong></a></li>
+<li class="chapter" data-level="" data-path="ロジットプロビット回帰分析.html"><a href="ロジットプロビット回帰分析.html#参考-疑似r2の使い分け"><i class="fa fa-check"></i>(参考) 疑似R2の使い分け</a></li>
+</ul></li>
+</ul></li>
+<li class="chapter" data-level="5" data-path="一般化加法モデル-gam.html"><a href="一般化加法モデル-gam.html"><i class="fa fa-check"></i><b>5</b> 一般化加法モデル (GAM)</a>
+<ul>
+<li class="chapter" data-level="5.1" data-path="一般化加法モデル-gam.html"><a href="一般化加法モデル-gam.html#多項式回帰とスプライン"><i class="fa fa-check"></i><b>5.1</b> 多項式回帰とスプライン</a>
+<ul>
+<li class="chapter" data-level="" data-path="一般化加法モデル-gam.html"><a href="一般化加法モデル-gam.html#データ-社債の信用スプレッド-仮想データ"><i class="fa fa-check"></i>データ: 社債の信用スプレッド (仮想データ)</a></li>
+<li class="chapter" data-level="" data-path="一般化加法モデル-gam.html"><a href="一般化加法モデル-gam.html#多項式回帰-1"><i class="fa fa-check"></i>多項式回帰</a></li>
+<li class="chapter" data-level="" data-path="一般化加法モデル-gam.html"><a href="一般化加法モデル-gam.html#スプライン"><i class="fa fa-check"></i>スプライン</a></li>
+</ul></li>
+<li class="chapter" data-level="5.2" data-path="一般化加法モデル-gam.html"><a href="一般化加法モデル-gam.html#パッケージgam"><i class="fa fa-check"></i><b>5.2</b> パッケージ<strong>gam</strong></a></li>
+<li class="chapter" data-level="5.3" data-path="一般化加法モデル-gam.html"><a href="一般化加法モデル-gam.html#パッケージmgcv"><i class="fa fa-check"></i><b>5.3</b> パッケージ<strong>mgcv</strong></a>
+<ul>
+<li class="chapter" data-level="" data-path="一般化加法モデル-gam.html"><a href="一般化加法モデル-gam.html#関数名の衝突について"><i class="fa fa-check"></i>関数名の衝突について</a></li>
+<li class="chapter" data-level="" data-path="一般化加法モデル-gam.html"><a href="一般化加法モデル-gam.html#gam-の当てはめ"><i class="fa fa-check"></i>GAM の当てはめ</a></li>
+<li class="chapter" data-level="" data-path="一般化加法モデル-gam.html"><a href="一般化加法モデル-gam.html#交互作用を含めた-gam"><i class="fa fa-check"></i>交互作用を含めた GAM</a></li>
+<li class="chapter" data-level="" data-path="一般化加法モデル-gam.html"><a href="一般化加法モデル-gam.html#gam-によるロジット回帰"><i class="fa fa-check"></i>GAM によるロジット回帰</a></li>
+</ul></li>
+<li class="chapter" data-level="5.4" data-path="一般化加法モデル-gam.html"><a href="一般化加法モデル-gam.html#パッケージprophet"><i class="fa fa-check"></i><b>5.4</b> パッケージ<strong>prophet</strong></a>
+<ul>
+<li class="chapter" data-level="" data-path="一般化加法モデル-gam.html"><a href="一般化加法モデル-gam.html#データ-atm-出金額-仮想データ"><i class="fa fa-check"></i>データ: ATM 出金額 (仮想データ)</a></li>
+<li class="chapter" data-level="" data-path="一般化加法モデル-gam.html"><a href="一般化加法モデル-gam.html#prophet-による予測"><i class="fa fa-check"></i>prophet による予測</a></li>
+</ul></li>
+</ul></li>
+<li class="chapter" data-level="6" data-path="正則化回帰-lasso-ridge回帰-elastic-net.html"><a href="正則化回帰-lasso-ridge回帰-elastic-net.html"><i class="fa fa-check"></i><b>6</b> 正則化回帰 (lasso, ridge回帰, elastic net)</a>
+<ul>
+<li class="chapter" data-level="6.1" data-path="正則化回帰-lasso-ridge回帰-elastic-net.html"><a href="正則化回帰-lasso-ridge回帰-elastic-net.html#検証用セット法による予測精度の評価"><i class="fa fa-check"></i><b>6.1</b> 検証用セット法による予測精度の評価</a>
+<ul>
+<li class="chapter" data-level="" data-path="正則化回帰-lasso-ridge回帰-elastic-net.html"><a href="正則化回帰-lasso-ridge回帰-elastic-net.html#データ-社債の信用スプレッドと企業特性-仮想データ"><i class="fa fa-check"></i>データ: 社債の信用スプレッドと企業特性 (仮想データ)</a></li>
+</ul></li>
+<li class="chapter" data-level="6.2" data-path="正則化回帰-lasso-ridge回帰-elastic-net.html"><a href="正則化回帰-lasso-ridge回帰-elastic-net.html#lasso"><i class="fa fa-check"></i><b>6.2</b> lasso</a>
+<ul>
+<li class="chapter" data-level="" data-path="正則化回帰-lasso-ridge回帰-elastic-net.html"><a href="正則化回帰-lasso-ridge回帰-elastic-net.html#関数glmnetの基本操作"><i class="fa fa-check"></i>関数<code>glmnet()</code>の基本操作</a></li>
+<li class="chapter" data-level="" data-path="正則化回帰-lasso-ridge回帰-elastic-net.html"><a href="正則化回帰-lasso-ridge回帰-elastic-net.html#lambda-のグリッド指定"><i class="fa fa-check"></i><code>lambda</code> のグリッド指定</a></li>
+<li class="chapter" data-level="" data-path="正則化回帰-lasso-ridge回帰-elastic-net.html"><a href="正則化回帰-lasso-ridge回帰-elastic-net.html#交差検証によるパラメータチューニング"><i class="fa fa-check"></i>交差検証によるパラメータ・チューニング</a></li>
+</ul></li>
+<li class="chapter" data-level="6.3" data-path="正則化回帰-lasso-ridge回帰-elastic-net.html"><a href="正則化回帰-lasso-ridge回帰-elastic-net.html#ridge回帰"><i class="fa fa-check"></i><b>6.3</b> ridge回帰</a></li>
+<li class="chapter" data-level="6.4" data-path="正則化回帰-lasso-ridge回帰-elastic-net.html"><a href="正則化回帰-lasso-ridge回帰-elastic-net.html#elastic-net"><i class="fa fa-check"></i><b>6.4</b> elastic net</a>
+<ul>
+<li class="chapter" data-level="" data-path="正則化回帰-lasso-ridge回帰-elastic-net.html"><a href="正則化回帰-lasso-ridge回帰-elastic-net.html#テストmse-の比較"><i class="fa fa-check"></i>テストMSE の比較</a></li>
+</ul></li>
+<li class="chapter" data-level="6.5" data-path="正則化回帰-lasso-ridge回帰-elastic-net.html"><a href="正則化回帰-lasso-ridge回帰-elastic-net.html#glm-正則化"><i class="fa fa-check"></i><b>6.5</b> GLM + 正則化</a>
+<ul>
+<li class="chapter" data-level="" data-path="正則化回帰-lasso-ridge回帰-elastic-net.html"><a href="正則化回帰-lasso-ridge回帰-elastic-net.html#データ-german-credit-実データを加工"><i class="fa fa-check"></i>データ: German Credit (実データを加工)</a></li>
+</ul></li>
+<li class="chapter" data-level="6.6" data-path="正則化回帰-lasso-ridge回帰-elastic-net.html"><a href="正則化回帰-lasso-ridge回帰-elastic-net.html#参考-glm-の変数選択の代替的方法"><i class="fa fa-check"></i><b>6.6</b> (参考) GLM の変数選択の代替的方法</a></li>
+</ul></li>
+<li class="chapter" data-level="7" data-path="回帰モデルの評価と交差検証.html"><a href="回帰モデルの評価と交差検証.html"><i class="fa fa-check"></i><b>7</b> 回帰モデルの評価と交差検証</a>
+<ul>
+<li class="chapter" data-level="7.1" data-path="回帰モデルの評価と交差検証.html"><a href="回帰モデルの評価と交差検証.html#学習誤差と予測誤差"><i class="fa fa-check"></i><b>7.1</b> 学習誤差と予測誤差</a>
+<ul>
+<li class="chapter" data-level="" data-path="回帰モデルの評価と交差検証.html"><a href="回帰モデルの評価と交差検証.html#データ-社債の信用スプレッド-仮想データ-1"><i class="fa fa-check"></i>データ: 社債の信用スプレッド (仮想データ)</a></li>
+<li class="chapter" data-level="" data-path="回帰モデルの評価と交差検証.html"><a href="回帰モデルの評価と交差検証.html#モデルの複雑さと学習誤差"><i class="fa fa-check"></i>モデルの複雑さと学習誤差</a></li>
+</ul></li>
+<li class="chapter" data-level="7.2" data-path="回帰モデルの評価と交差検証.html"><a href="回帰モデルの評価と交差検証.html#検証用セットアプローチ"><i class="fa fa-check"></i><b>7.2</b> 検証用セット・アプローチ</a></li>
+<li class="chapter" data-level="7.3" data-path="回帰モデルの評価と交差検証.html"><a href="回帰モデルの評価と交差検証.html#交差検証"><i class="fa fa-check"></i><b>7.3</b> 交差検証</a>
+<ul>
+<li class="chapter" data-level="" data-path="回帰モデルの評価と交差検証.html"><a href="回帰モデルの評価と交差検証.html#loocv-1個抜き交差検証"><i class="fa fa-check"></i>LOOCV (1個抜き交差検証)</a></li>
+<li class="chapter" data-level="" data-path="回帰モデルの評価と交差検証.html"><a href="回帰モデルの評価と交差検証.html#k-分割交差検証-k-fold-cv"><i class="fa fa-check"></i>k-分割交差検証 (k-fold CV)</a></li>
+<li class="chapter" data-level="" data-path="回帰モデルの評価と交差検証.html"><a href="回帰モデルの評価と交差検証.html#標準誤差ルール"><i class="fa fa-check"></i>1標準誤差ルール</a></li>
+</ul></li>
+<li class="chapter" data-level="7.4" data-path="回帰モデルの評価と交差検証.html"><a href="回帰モデルの評価と交差検証.html#その他の評価指標"><i class="fa fa-check"></i><b>7.4</b> その他の評価指標</a></li>
+</ul></li>
+<li class="chapter" data-level="8" data-path="判別分析.html"><a href="判別分析.html"><i class="fa fa-check"></i><b>8</b> 判別分析</a>
+<ul>
+<li class="chapter" data-level="8.1" data-path="判別分析.html"><a href="判別分析.html#線形判別2次判別"><i class="fa fa-check"></i><b>8.1</b> 線形判別・2次判別</a>
+<ul>
+<li class="chapter" data-level="" data-path="判別分析.html"><a href="判別分析.html#データ-sp500-の日次リターン-実データ-islr2-の-smarket"><i class="fa fa-check"></i>データ: S&amp;P500 の日次リターン (実データ: ISLR2 の <code>Smarket</code>)</a></li>
+<li class="chapter" data-level="" data-path="判別分析.html"><a href="判別分析.html#線形判別-lda"><i class="fa fa-check"></i>線形判別 (LDA)</a></li>
+<li class="chapter" data-level="" data-path="判別分析.html"><a href="判別分析.html#次判別-qda"><i class="fa fa-check"></i>2次判別 (QDA)</a></li>
+</ul></li>
+<li class="chapter" data-level="8.2" data-path="判別分析.html"><a href="判別分析.html#knn法"><i class="fa fa-check"></i><b>8.2</b> kNN法</a></li>
+<li class="chapter" data-level="8.3" data-path="判別分析.html"><a href="判別分析.html#判別境界の可視化"><i class="fa fa-check"></i><b>8.3</b> 判別境界の可視化</a>
+<ul>
+<li class="chapter" data-level="" data-path="判別分析.html"><a href="判別分析.html#データ-社債発行体の格付-仮想データ"><i class="fa fa-check"></i>データ: 社債発行体の格付 (仮想データ)</a></li>
+<li class="chapter" data-level="" data-path="判別分析.html"><a href="判別分析.html#パッケージklarの関数partimat"><i class="fa fa-check"></i>パッケージ<strong>klaR</strong>の関数<code>partimat()</code></a></li>
+<li class="chapter" data-level="" data-path="判別分析.html"><a href="判別分析.html#ナイーブベイズ法"><i class="fa fa-check"></i>ナイーブ・ベイズ法</a></li>
+<li class="chapter" data-level="" data-path="判別分析.html"><a href="判別分析.html#多変数での判別-lda-vs-qda"><i class="fa fa-check"></i>多変数での判別: LDA vs QDA</a></li>
+</ul></li>
+</ul></li>
+<li class="chapter" data-level="9" data-path="決定木分析.html"><a href="決定木分析.html"><i class="fa fa-check"></i><b>9</b> 決定木分析</a>
+<ul>
+<li class="chapter" data-level="9.1" data-path="決定木分析.html"><a href="決定木分析.html#導入-回帰木-vs-線形回帰"><i class="fa fa-check"></i><b>9.1</b> 導入: 回帰木 vs 線形回帰</a>
+<ul>
+<li class="chapter" data-level="" data-path="決定木分析.html"><a href="決定木分析.html#データ-自動車の速度と制動距離-実データ-r-の組み込みデータ-cars"><i class="fa fa-check"></i>データ: 自動車の速度と制動距離 (実データ: R の組み込みデータ <code>cars</code>)</a></li>
+<li class="chapter" data-level="9.1.1" data-path="決定木分析.html"><a href="決定木分析.html#回帰木の基本操作"><i class="fa fa-check"></i><b>9.1.1</b> 回帰木の基本操作</a></li>
+</ul></li>
+<li class="chapter" data-level="9.2" data-path="決定木分析.html"><a href="決定木分析.html#回帰木"><i class="fa fa-check"></i><b>9.2</b> 回帰木</a>
+<ul>
+<li class="chapter" data-level="" data-path="決定木分析.html"><a href="決定木分析.html#データ-sp500-の日次リターン-実データ-islr2-の-smarket-再掲"><i class="fa fa-check"></i>データ: S&amp;P500 の日次リターン (実データ: ISLR2 の <code>Smarket</code>, 再掲)</a></li>
+</ul></li>
+<li class="chapter" data-level="9.3" data-path="決定木分析.html"><a href="決定木分析.html#分類木"><i class="fa fa-check"></i><b>9.3</b> 分類木</a></li>
+</ul></li>
+<li class="chapter" data-level="10" data-path="決定木とアンサンブル学習.html"><a href="決定木とアンサンブル学習.html"><i class="fa fa-check"></i><b>10</b> 決定木とアンサンブル学習</a>
+<ul>
+<li class="chapter" data-level="10.1" data-path="決定木とアンサンブル学習.html"><a href="決定木とアンサンブル学習.html#基本操作-3"><i class="fa fa-check"></i><b>10.1</b> 基本操作</a>
+<ul>
+<li class="chapter" data-level="" data-path="決定木とアンサンブル学習.html"><a href="決定木とアンサンブル学習.html#データ-german-credit-実データを加工-再掲"><i class="fa fa-check"></i>データ: German Credit (実データを加工, 再掲)</a></li>
+</ul></li>
+<li class="chapter" data-level="10.2" data-path="決定木とアンサンブル学習.html"><a href="決定木とアンサンブル学習.html#分類モデルの評価指標"><i class="fa fa-check"></i><b>10.2</b> 分類モデルの評価指標</a></li>
+<li class="chapter" data-level="10.3" data-path="決定木とアンサンブル学習.html"><a href="決定木とアンサンブル学習.html#パッケージrpart"><i class="fa fa-check"></i><b>10.3</b> パッケージ<strong>rpart</strong></a></li>
+<li class="chapter" data-level="10.4" data-path="決定木とアンサンブル学習.html"><a href="決定木とアンサンブル学習.html#ランダムフォレスト"><i class="fa fa-check"></i><b>10.4</b> ランダムフォレスト</a></li>
+<li class="chapter" data-level="10.5" data-path="決定木とアンサンブル学習.html"><a href="決定木とアンサンブル学習.html#勾配ブースティング"><i class="fa fa-check"></i><b>10.5</b> 勾配ブースティング</a></li>
+</ul></li>
+<li class="chapter" data-level="11" data-path="サポートベクターマシン-svm.html"><a href="サポートベクターマシン-svm.html"><i class="fa fa-check"></i><b>11</b> サポートベクターマシン (SVM)</a>
+<ul>
+<li class="chapter" data-level="11.1" data-path="サポートベクターマシン-svm.html"><a href="サポートベクターマシン-svm.html#rbf-カーネル-svm-の特徴"><i class="fa fa-check"></i><b>11.1</b> RBF カーネル SVM の特徴</a>
+<ul>
+<li class="chapter" data-level="" data-path="サポートベクターマシン-svm.html"><a href="サポートベクターマシン-svm.html#データ-社債発行体の格付-仮想データ-第8章と同じ"><i class="fa fa-check"></i>データ: 社債発行体の格付 (仮想データ, 第8章と同じ)</a></li>
+<li class="chapter" data-level="" data-path="サポートベクターマシン-svm.html"><a href="サポートベクターマシン-svm.html#svmの実行"><i class="fa fa-check"></i>SVMの実行</a></li>
+</ul></li>
+<li class="chapter" data-level="11.2" data-path="サポートベクターマシン-svm.html"><a href="サポートベクターマシン-svm.html#値分類"><i class="fa fa-check"></i><b>11.2</b> 2値分類</a>
+<ul>
+<li class="chapter" data-level="" data-path="サポートベクターマシン-svm.html"><a href="サポートベクターマシン-svm.html#データ-クレジットカードの延滞-実データ-uci-machine-learning-repository"><i class="fa fa-check"></i>データ: クレジットカードの延滞 (実データ: UCI Machine Learning Repository)</a></li>
+<li class="chapter" data-level="" data-path="サポートベクターマシン-svm.html"><a href="サポートベクターマシン-svm.html#svmの実行-1"><i class="fa fa-check"></i>SVMの実行</a></li>
+<li class="chapter" data-level="" data-path="サポートベクターマシン-svm.html"><a href="サポートベクターマシン-svm.html#roc-曲線と-auc"><i class="fa fa-check"></i>ROC 曲線と AUC</a></li>
+</ul></li>
+<li class="chapter" data-level="11.3" data-path="サポートベクターマシン-svm.html"><a href="サポートベクターマシン-svm.html#多クラス分類"><i class="fa fa-check"></i><b>11.3</b> 多クラス分類</a></li>
+<li class="chapter" data-level="11.4" data-path="サポートベクターマシン-svm.html"><a href="サポートベクターマシン-svm.html#パッケージe1071"><i class="fa fa-check"></i><b>11.4</b> パッケージ<strong>e1071</strong></a>
+<ul>
+<li class="chapter" data-level="" data-path="サポートベクターマシン-svm.html"><a href="サポートベクターマシン-svm.html#不均衡データとクラスの重み"><i class="fa fa-check"></i>不均衡データとクラスの重み</a></li>
+</ul></li>
+<li class="chapter" data-level="11.5" data-path="サポートベクターマシン-svm.html"><a href="サポートベクターマシン-svm.html#ハイパーパラメータのチューニング"><i class="fa fa-check"></i><b>11.5</b> ハイパーパラメータのチューニング</a>
+<ul>
+<li class="chapter" data-level="" data-path="サポートベクターマシン-svm.html"><a href="サポートベクターマシン-svm.html#パッケージe1071のチューニング用の関数"><i class="fa fa-check"></i>パッケージ<strong>e1071</strong>のチューニング用の関数</a></li>
+</ul></li>
+</ul></li>
+<li class="chapter" data-level="12" data-path="主成分分析-pca.html"><a href="主成分分析-pca.html"><i class="fa fa-check"></i><b>12</b> 主成分分析 (PCA)</a>
+<ul>
+<li class="chapter" data-level="12.1" data-path="主成分分析-pca.html"><a href="主成分分析-pca.html#導入"><i class="fa fa-check"></i><b>12.1</b> 導入</a>
+<ul>
+<li class="chapter" data-level="" data-path="主成分分析-pca.html"><a href="主成分分析-pca.html#データ-米国50州の凶悪犯罪-実データ-r-の組み込みデータ-usarrests"><i class="fa fa-check"></i>データ: 米国50州の凶悪犯罪 (実データ: R の組み込みデータ <code>USArrests</code>)</a></li>
+</ul></li>
+<li class="chapter" data-level="12.2" data-path="主成分分析-pca.html"><a href="主成分分析-pca.html#基本操作-4"><i class="fa fa-check"></i><b>12.2</b> 基本操作</a>
+<ul>
+<li class="chapter" data-level="" data-path="主成分分析-pca.html"><a href="主成分分析-pca.html#データ-企業の評価スコア-仮想データ"><i class="fa fa-check"></i>データ: 企業の評価スコア (仮想データ)</a></li>
+<li class="chapter" data-level="" data-path="主成分分析-pca.html"><a href="主成分分析-pca.html#pca-の実行"><i class="fa fa-check"></i>PCA の実行</a></li>
+<li class="chapter" data-level="" data-path="主成分分析-pca.html"><a href="主成分分析-pca.html#主成分負荷量"><i class="fa fa-check"></i>主成分負荷量</a></li>
+<li class="chapter" data-level="" data-path="主成分分析-pca.html"><a href="主成分分析-pca.html#主成分得点"><i class="fa fa-check"></i>主成分得点</a></li>
+<li class="chapter" data-level="" data-path="主成分分析-pca.html"><a href="主成分分析-pca.html#バイプロット"><i class="fa fa-check"></i>バイプロット</a></li>
+<li class="chapter" data-level="" data-path="主成分分析-pca.html"><a href="主成分分析-pca.html#計算結果の確認"><i class="fa fa-check"></i>計算結果の確認</a></li>
+<li class="chapter" data-level="" data-path="主成分分析-pca.html"><a href="主成分分析-pca.html#関数prcomp"><i class="fa fa-check"></i>関数<code>prcomp()</code></a></li>
+</ul></li>
+<li class="chapter" data-level="12.3" data-path="主成分分析-pca.html"><a href="主成分分析-pca.html#分散共分散行列-vs-相関行列"><i class="fa fa-check"></i><b>12.3</b> 分散共分散行列 vs 相関行列</a>
+<ul>
+<li class="chapter" data-level="" data-path="主成分分析-pca.html"><a href="主成分分析-pca.html#データ-上場企業の財務比率-仮想データ"><i class="fa fa-check"></i>データ: 上場企業の財務比率 (仮想データ)</a></li>
+<li class="chapter" data-level="" data-path="主成分分析-pca.html"><a href="主成分分析-pca.html#分散共分散行列に対する-pca"><i class="fa fa-check"></i>分散共分散行列に対する PCA</a></li>
+<li class="chapter" data-level="" data-path="主成分分析-pca.html"><a href="主成分分析-pca.html#相関行列に対する-pca"><i class="fa fa-check"></i>相関行列に対する PCA</a></li>
+</ul></li>
+<li class="chapter" data-level="12.4" data-path="主成分分析-pca.html"><a href="主成分分析-pca.html#イールドカーブへの応用"><i class="fa fa-check"></i><b>12.4</b> イールドカーブへの応用</a>
+<ul>
+<li class="chapter" data-level="" data-path="主成分分析-pca.html"><a href="主成分分析-pca.html#データ-国債金利-実データ-財務省国債金利情報"><i class="fa fa-check"></i>データ: 国債金利 (実データ: 財務省「国債金利情報」)</a></li>
+<li class="chapter" data-level="" data-path="主成分分析-pca.html"><a href="主成分分析-pca.html#pca-の実行-1"><i class="fa fa-check"></i>PCA の実行</a></li>
+</ul></li>
+<li class="chapter" data-level="12.5" data-path="主成分分析-pca.html"><a href="主成分分析-pca.html#自主課題"><i class="fa fa-check"></i><b>12.5</b> 自主課題</a>
+<ul>
+<li class="chapter" data-level="" data-path="主成分分析-pca.html"><a href="主成分分析-pca.html#データ-米国株の30業種ポートフォリオのリターン-実データ-kenneth-french-data-library"><i class="fa fa-check"></i>データ: 米国株の30業種ポートフォリオのリターン (実データ: Kenneth French Data Library)</a></li>
+</ul></li>
+</ul></li>
+<li class="chapter" data-level="13" data-path="探索的因子分析.html"><a href="探索的因子分析.html"><i class="fa fa-check"></i><b>13</b> 探索的因子分析</a>
+<ul>
+<li class="chapter" data-level="13.1" data-path="探索的因子分析.html"><a href="探索的因子分析.html#基本操作-5"><i class="fa fa-check"></i><b>13.1</b> 基本操作</a>
+<ul>
+<li class="chapter" data-level="" data-path="探索的因子分析.html"><a href="探索的因子分析.html#データ-企業の評価スコア-仮想データ-1"><i class="fa fa-check"></i>データ: 企業の評価スコア (仮想データ)</a></li>
+<li class="chapter" data-level="" data-path="探索的因子分析.html"><a href="探索的因子分析.html#因子分析の実行"><i class="fa fa-check"></i>因子分析の実行</a></li>
+<li class="chapter" data-level="" data-path="探索的因子分析.html"><a href="探索的因子分析.html#因子軸の回転と因子得点"><i class="fa fa-check"></i>因子軸の回転と因子得点</a></li>
+<li class="chapter" data-level="" data-path="探索的因子分析.html"><a href="探索的因子分析.html#パッケージpsychの関数fa"><i class="fa fa-check"></i>パッケージ<strong>psych</strong>の関数<code>fa()</code></a></li>
+<li class="chapter" data-level="" data-path="探索的因子分析.html"><a href="探索的因子分析.html#因子数の決定-平行分析"><i class="fa fa-check"></i>因子数の決定: 平行分析</a></li>
+</ul></li>
+<li class="chapter" data-level="13.2" data-path="探索的因子分析.html"><a href="探索的因子分析.html#実践的な手順"><i class="fa fa-check"></i><b>13.2</b> 実践的な手順</a>
+<ul>
+<li class="chapter" data-level="" data-path="探索的因子分析.html"><a href="探索的因子分析.html#データ-上場企業の財務比率-仮想データ-1"><i class="fa fa-check"></i>データ: 上場企業の財務比率 (仮想データ)</a></li>
+<li class="chapter" data-level="" data-path="探索的因子分析.html"><a href="探索的因子分析.html#前提条件のチェック"><i class="fa fa-check"></i>前提条件のチェック</a></li>
+<li class="chapter" data-level="" data-path="探索的因子分析.html"><a href="探索的因子分析.html#因子数の決定"><i class="fa fa-check"></i>因子数の決定</a></li>
+<li class="chapter" data-level="" data-path="探索的因子分析.html"><a href="探索的因子分析.html#因子分析の実行-1"><i class="fa fa-check"></i>因子分析の実行</a></li>
+<li class="chapter" data-level="" data-path="探索的因子分析.html"><a href="探索的因子分析.html#因子得点の活用"><i class="fa fa-check"></i>因子得点の活用</a></li>
+<li class="chapter" data-level="" data-path="探索的因子分析.html"><a href="探索的因子分析.html#主成分分析との比較"><i class="fa fa-check"></i>主成分分析との比較</a></li>
+</ul></li>
+<li class="chapter" data-level="13.3" data-path="探索的因子分析.html"><a href="探索的因子分析.html#参考-相関構造の可視化"><i class="fa fa-check"></i><b>13.3</b> (参考) 相関構造の可視化</a></li>
+</ul></li>
+<li class="chapter" data-level="14" data-path="クラスター分析.html"><a href="クラスター分析.html"><i class="fa fa-check"></i><b>14</b> クラスター分析</a>
+<ul>
+<li class="chapter" data-level="14.1" data-path="クラスター分析.html"><a href="クラスター分析.html#基本操作-6"><i class="fa fa-check"></i><b>14.1</b> 基本操作</a>
+<ul>
+<li class="chapter" data-level="" data-path="クラスター分析.html"><a href="クラスター分析.html#データ-株式スタイル指標-仮想データ"><i class="fa fa-check"></i>データ: 株式スタイル指標 (仮想データ)</a></li>
+<li class="chapter" data-level="" data-path="クラスター分析.html"><a href="クラスター分析.html#距離行列"><i class="fa fa-check"></i>距離行列</a></li>
+<li class="chapter" data-level="" data-path="クラスター分析.html"><a href="クラスター分析.html#標準化の影響"><i class="fa fa-check"></i>標準化の影響</a></li>
+<li class="chapter" data-level="" data-path="クラスター分析.html"><a href="クラスター分析.html#結合方法の比較"><i class="fa fa-check"></i>結合方法の比較</a></li>
+<li class="chapter" data-level="" data-path="クラスター分析.html"><a href="クラスター分析.html#参考-chaining-の典型例"><i class="fa fa-check"></i>(参考) chaining の典型例</a></li>
+<li class="chapter" data-level="" data-path="クラスター分析.html"><a href="クラスター分析.html#クラスターの形成履歴と切断"><i class="fa fa-check"></i>クラスターの形成履歴と切断</a></li>
+<li class="chapter" data-level="" data-path="クラスター分析.html"><a href="クラスター分析.html#k-means-法"><i class="fa fa-check"></i>k-means 法</a></li>
+<li class="chapter" data-level="" data-path="クラスター分析.html"><a href="クラスター分析.html#gower-距離"><i class="fa fa-check"></i>Gower 距離</a></li>
+<li class="chapter" data-level="" data-path="クラスター分析.html"><a href="クラスター分析.html#参考-量的変数とダミー変数のスケール"><i class="fa fa-check"></i>(参考) 量的変数とダミー変数のスケール</a></li>
+</ul></li>
+<li class="chapter" data-level="14.2" data-path="クラスター分析.html"><a href="クラスター分析.html#相関係数に基づく距離"><i class="fa fa-check"></i><b>14.2</b> 相関係数に基づく距離</a>
+<ul>
+<li class="chapter" data-level="" data-path="クラスター分析.html"><a href="クラスター分析.html#データ-米国株の30業種ポートフォリオのリターン-実データ-kenneth-french-data-library-1"><i class="fa fa-check"></i>データ: 米国株の30業種ポートフォリオのリターン (実データ: Kenneth French Data Library)</a></li>
+<li class="chapter" data-level="" data-path="クラスター分析.html"><a href="クラスター分析.html#相関係数による距離と平均連結法"><i class="fa fa-check"></i>相関係数による距離と平均連結法</a></li>
+<li class="chapter" data-level="" data-path="クラスター分析.html"><a href="クラスター分析.html#ウォード法"><i class="fa fa-check"></i>ウォード法</a></li>
+</ul></li>
+<li class="chapter" data-level="14.3" data-path="クラスター分析.html"><a href="クラスター分析.html#k-means-法とクラスター数の決定"><i class="fa fa-check"></i><b>14.3</b> k-means 法とクラスター数の決定</a>
+<ul>
+<li class="chapter" data-level="" data-path="クラスター分析.html"><a href="クラスター分析.html#クラスター数-k-の決定"><i class="fa fa-check"></i>クラスター数 K の決定</a></li>
+<li class="chapter" data-level="" data-path="クラスター分析.html"><a href="クラスター分析.html#k-4-での実行"><i class="fa fa-check"></i>K = 4 での実行</a></li>
+</ul></li>
+<li class="chapter" data-level="14.4" data-path="クラスター分析.html"><a href="クラスター分析.html#疎なデータと距離の選び方"><i class="fa fa-check"></i><b>14.4</b> 疎なデータと距離の選び方</a>
+<ul>
+<li class="chapter" data-level="" data-path="クラスター分析.html"><a href="クラスター分析.html#商品-変数-のクラスタリング"><i class="fa fa-check"></i>商品 (変数) のクラスタリング</a></li>
+<li class="chapter" data-level="" data-path="クラスター分析.html"><a href="クラスター分析.html#顧客セグメンテーション"><i class="fa fa-check"></i>顧客セグメンテーション</a></li>
+</ul></li>
+<li class="chapter" data-level="14.5" data-path="クラスター分析.html"><a href="クラスター分析.html#混合データへの応用-gower-距離-pam"><i class="fa fa-check"></i><b>14.5</b> 混合データへの応用 (Gower 距離 + PAM)</a>
+<ul>
+<li class="chapter" data-level="" data-path="クラスター分析.html"><a href="クラスター分析.html#データ-銀行の顧客と定期預金の勧誘-実データ-uci-machine-learning-repository"><i class="fa fa-check"></i>データ: 銀行の顧客と定期預金の勧誘 (実データ: UCI Machine Learning Repository)</a></li>
+<li class="chapter" data-level="" data-path="クラスター分析.html"><a href="クラスター分析.html#gower-距離と-pam"><i class="fa fa-check"></i>Gower 距離と PAM</a></li>
+</ul></li>
+<li class="chapter" data-level="14.6" data-path="クラスター分析.html"><a href="クラスター分析.html#参考-発展的なクラスター分析"><i class="fa fa-check"></i><b>14.6</b> (参考) 発展的なクラスター分析</a>
+<ul>
+<li class="chapter" data-level="" data-path="クラスター分析.html"><a href="クラスター分析.html#関数agnes"><i class="fa fa-check"></i>関数<code>agnes()</code></a></li>
+<li class="chapter" data-level="" data-path="クラスター分析.html"><a href="クラスター分析.html#関数pheatmap"><i class="fa fa-check"></i>関数<code>pheatmap()</code></a></li>
+<li class="chapter" data-level="" data-path="クラスター分析.html"><a href="クラスター分析.html#関数pam-k-medoids-法"><i class="fa fa-check"></i>関数<code>pam()</code> (K-medoids 法)</a></li>
+<li class="chapter" data-level="" data-path="クラスター分析.html"><a href="クラスター分析.html#モデルベーストクラスタリング"><i class="fa fa-check"></i>モデルベースト・クラスタリング</a></li>
+</ul></li>
+</ul></li>
+<li class="chapter" data-level="15" data-path="xai-説明可能な-ai.html"><a href="xai-説明可能な-ai.html"><i class="fa fa-check"></i><b>15</b> XAI (説明可能な AI)</a>
+<ul>
+<li class="chapter" data-level="15.1" data-path="xai-説明可能な-ai.html"><a href="xai-説明可能な-ai.html#基本操作-7"><i class="fa fa-check"></i><b>15.1</b> 基本操作</a>
+<ul>
+<li class="chapter" data-level="" data-path="xai-説明可能な-ai.html"><a href="xai-説明可能な-ai.html#データ-社債の信用スプレッド-仮想データ-2"><i class="fa fa-check"></i>データ: 社債の信用スプレッド (仮想データ)</a></li>
+<li class="chapter" data-level="" data-path="xai-説明可能な-ai.html"><a href="xai-説明可能な-ai.html#ベースラインとブラックボックスモデル"><i class="fa fa-check"></i>ベースラインとブラックボックス・モデル</a></li>
+<li class="chapter" data-level="" data-path="xai-説明可能な-ai.html"><a href="xai-説明可能な-ai.html#パッケージimlの準備"><i class="fa fa-check"></i>パッケージ<strong>iml</strong>の準備</a></li>
+</ul></li>
+<li class="chapter" data-level="15.2" data-path="xai-説明可能な-ai.html"><a href="xai-説明可能な-ai.html#pfi"><i class="fa fa-check"></i><b>15.2</b> PFI</a></li>
+<li class="chapter" data-level="15.3" data-path="xai-説明可能な-ai.html"><a href="xai-説明可能な-ai.html#pdp-と-ice"><i class="fa fa-check"></i><b>15.3</b> PDP と ICE</a>
+<ul>
+<li class="chapter" data-level="" data-path="xai-説明可能な-ai.html"><a href="xai-説明可能な-ai.html#pdp"><i class="fa fa-check"></i>PDP</a></li>
+<li class="chapter" data-level="" data-path="xai-説明可能な-ai.html"><a href="xai-説明可能な-ai.html#ice"><i class="fa fa-check"></i>ICE</a></li>
+<li class="chapter" data-level="" data-path="xai-説明可能な-ai.html"><a href="xai-説明可能な-ai.html#つの特徴量の-pdp"><i class="fa fa-check"></i>2つの特徴量の PDP</a></li>
+</ul></li>
+<li class="chapter" data-level="15.4" data-path="xai-説明可能な-ai.html"><a href="xai-説明可能な-ai.html#lime"><i class="fa fa-check"></i><b>15.4</b> LIME</a></li>
+<li class="chapter" data-level="15.5" data-path="xai-説明可能な-ai.html"><a href="xai-説明可能な-ai.html#shap"><i class="fa fa-check"></i><b>15.5</b> SHAP</a>
+<ul>
+<li class="chapter" data-level="" data-path="xai-説明可能な-ai.html"><a href="xai-説明可能な-ai.html#局所的な説明"><i class="fa fa-check"></i>局所的な説明</a></li>
+<li class="chapter" data-level="" data-path="xai-説明可能な-ai.html"><a href="xai-説明可能な-ai.html#大域的な説明"><i class="fa fa-check"></i>大域的な説明</a></li>
+</ul></li>
+<li class="chapter" data-level="15.6" data-path="xai-説明可能な-ai.html"><a href="xai-説明可能な-ai.html#値分類問題"><i class="fa fa-check"></i><b>15.6</b> 2値分類問題</a>
+<ul>
+<li class="chapter" data-level="" data-path="xai-説明可能な-ai.html"><a href="xai-説明可能な-ai.html#データ-クレジットカードの延滞-仮想データ"><i class="fa fa-check"></i>データ: クレジットカードの延滞 (仮想データ)</a></li>
+<li class="chapter" data-level="" data-path="xai-説明可能な-ai.html"><a href="xai-説明可能な-ai.html#延滞確率の説明"><i class="fa fa-check"></i>延滞確率の説明</a></li>
+<li class="chapter" data-level="" data-path="xai-説明可能な-ai.html"><a href="xai-説明可能な-ai.html#個別の顧客の説明"><i class="fa fa-check"></i>個別の顧客の説明</a></li>
+</ul></li>
+<li class="chapter" data-level="15.7" data-path="xai-説明可能な-ai.html"><a href="xai-説明可能な-ai.html#多値分類問題"><i class="fa fa-check"></i><b>15.7</b> 多値分類問題</a>
+<ul>
+<li class="chapter" data-level="" data-path="xai-説明可能な-ai.html"><a href="xai-説明可能な-ai.html#データ-社債発行体の格付-仮想データ-1"><i class="fa fa-check"></i>データ: 社債発行体の格付 (仮想データ)</a></li>
+<li class="chapter" data-level="" data-path="xai-説明可能な-ai.html"><a href="xai-説明可能な-ai.html#決定木と-shap"><i class="fa fa-check"></i>決定木と SHAP</a></li>
+</ul></li>
+</ul></li>
+<li class="chapter" data-level="16" data-path="生成aiによる-r-コーディング.html"><a href="生成aiによる-r-コーディング.html"><i class="fa fa-check"></i><b>16</b> 生成AIによる R コーディング</a>
+<ul>
+<li class="chapter" data-level="16.1" data-path="生成aiによる-r-コーディング.html"><a href="生成aiによる-r-コーディング.html#生成aiへの指示"><i class="fa fa-check"></i><b>16.1</b> 生成AIへの指示</a>
+<ul>
+<li class="chapter" data-level="" data-path="生成aiによる-r-コーディング.html"><a href="生成aiによる-r-コーディング.html#最初のプロンプト"><i class="fa fa-check"></i>最初のプロンプト</a></li>
+<li class="chapter" data-level="" data-path="生成aiによる-r-コーディング.html"><a href="生成aiによる-r-コーディング.html#追加のプロンプト"><i class="fa fa-check"></i>追加のプロンプト</a></li>
+</ul></li>
+<li class="chapter" data-level="16.2" data-path="生成aiによる-r-コーディング.html"><a href="生成aiによる-r-コーディング.html#生成されたコード-第1部"><i class="fa fa-check"></i><b>16.2</b> 生成されたコード (第1部)</a></li>
+<li class="chapter" data-level="16.3" data-path="生成aiによる-r-コーディング.html"><a href="生成aiによる-r-コーディング.html#問題点の確認"><i class="fa fa-check"></i><b>16.3</b> 問題点の確認</a></li>
+<li class="chapter" data-level="16.4" data-path="生成aiによる-r-コーディング.html"><a href="生成aiによる-r-コーディング.html#改良版-第2部"><i class="fa fa-check"></i><b>16.4</b> 改良版 (第2部)</a></li>
+<li class="chapter" data-level="16.5" data-path="生成aiによる-r-コーディング.html"><a href="生成aiによる-r-コーディング.html#生成aiで-r-コードを書くときの注意点"><i class="fa fa-check"></i><b>16.5</b> 生成AIで R コードを書くときの注意点</a>
+<ul>
+<li class="chapter" data-level="" data-path="生成aiによる-r-コーディング.html"><a href="生成aiによる-r-コーディング.html#年時点の補足"><i class="fa fa-check"></i>2026年時点の補足</a></li>
+</ul></li>
+</ul></li>
+<li class="divider"></li>
+<li><a href="https://github.com/rstudio/bookdown" target="blank">Published with bookdown</a></li>
+</ul>
+
+      </nav>
+    </div>
+
+    <div class="book-body">
+      <div class="body-inner">
+        <div class="book-header" role="navigation">
+          <h1>
+            <i class="fa fa-circle-o-notch fa-spin"></i><a href="./">金融データサイエンス</a>
+          </h1>
+        </div>
+
+        <div class="page-wrapper" tabindex="-1" role="main">
+          <div class="page-inner">
+
+            <section class="normal" id="section-">
+<div id="生成aiによる-r-コーディング" class="section level1 hasAnchor" number="16">
+<h1><span class="header-section-number">Chapter 16</span> 生成AIによる R コーディング<a href="生成aiによる-r-コーディング.html#生成aiによる-r-コーディング" class="anchor-section" aria-label="Anchor link to header"></a></h1>
+<!-- 2026.11.18 Claude: 150-ChatGPT_081025.Rmd (2025年度版) を, 授業の配布資料「生成AI_Rコーディング_100926.md」と R コード R_genAI_code_example_100926.R (2026年度版) に合わせて全面改訂. 章題を「ChatGPTの利活用」から変更. 2025年度版の第1部 (GPT-4o の生成コード, プロンプト3回) と一般的注意点は残し, 問題点 (a)〜(d) の確認, 人間による改良版 (第2部), データの扱い・利用ルール・2026年時点の補足を追加. 重い計算のチャンクは cache = TRUE -->
+<p>本章の内容は, 授業の配布資料「生成AI_Rコーディング」と R コード <code>R_genAI_code_example.R</code> に対応する.</p>
+<p>生成AI (ChatGPT, Claude, Gemini など) を使って, 分類予測問題で複数のモデルを同時に学習・比較する R コードを作らせた例を示す.
+生成されたコードをそのまま信じず, 実行して確かめ, 人間が直すまでの流れを見る.</p>
+<ul>
+<li>第1部: 生成AIが出力したコード (2025年7月, GPT-4o, プロンプト3回)</li>
+<li>第2部: 出力を確認して見つけた問題点を, 人間が修正した改良版</li>
+</ul>
+<p>課題は, 分類予測モデル4種類 (kNN, ランダムフォレスト, SVM (RBF カーネル), 勾配ブースティング) をパッケージ<strong>caret</strong>で学習・チューニングし, テストデータで比較することである (データ: パッケージ<strong>kernlab</strong>の <code>spam</code>).
+全体の実行には数分かかる.</p>
+<div id="生成aiへの指示" class="section level2 hasAnchor" number="16.1">
+<h2><span class="header-section-number">16.1</span> 生成AIへの指示<a href="生成aiによる-r-コーディング.html#生成aiへの指示" class="anchor-section" aria-label="Anchor link to header"></a></h2>
+<div id="最初のプロンプト" class="section level3 unnumbered hasAnchor">
+<h3>最初のプロンプト<a href="生成aiによる-r-コーディング.html#最初のプロンプト" class="anchor-section" aria-label="Anchor link to header"></a></h3>
+<p>使用するパッケージやデータ, チューニングするパラメータ, 出力する内容など, 分析の仕様を具体的に指示した.</p>
+<pre><code>Rパッケージ caret を使って, 分類予測問題を解いた例を R コードで示してください.
+- 使用する分類モデルは, k近傍法 (kNN), ランダムフォレスト (Random Forest),
+  サポートベクターマシン (SVM: Gaussian kernel), 勾配ブースティング (gbm) の4種類です.
+- データセットは, kernlab パッケージに含まれる spam データを使用してください.
+- データは, あらかじめ 80% を訓練用, 20% を検証用に分割します (validation set approach).
+- 各モデルについて, 訓練データに対して 5-fold cross validation を用い, 以下のパラメータをチューニングします:
+  - kNN: 近傍数 k
+  - SVM: C と gamma
+  - gbm: 学習率 (shrinkage)
+- 検証データに対する予測結果から, confusion matrix を表示し, accuracy, precision, recall, F1 を計算・表示してください.
+- 各モデルの評価結果は, 表形式に整理してください.</code></pre>
+<ul>
+<li>このプロンプトは, 最初に書いた原稿を生成AIに渡して直してもらったものである.
+<ul>
+<li>もっと大まかな指示で始める方法や, 対話しながら少しずつ指示を足していく方法もある.</li>
+</ul></li>
+<li>出力の仕様がはっきりしている場合は, 指示も具体的に書くべきである.
+<ul>
+<li>仕様を具体的に書いておくほど, 後からの修正指示が少なくて済む.</li>
+</ul></li>
+</ul>
+</div>
+<div id="追加のプロンプト" class="section level3 unnumbered hasAnchor">
+<h3>追加のプロンプト<a href="生成aiによる-r-コーディング.html#追加のプロンプト" class="anchor-section" aria-label="Anchor link to header"></a></h3>
+<p>出力されたコードを実行してから, 次の2つの指示で修正させた.</p>
+<pre><code>R で実行し始めましたが, 時間がかかります. 時間が特にかかりそうな場所はどこですか.
+各ステップにタイマーを設定し, ラップ時間を表示するように改良してください.</code></pre>
+<p>このとき生成AIは, 実行時間を減らす工夫として, <code>tuneLength</code> を減らす (例: <code>tuneLength = 3</code>), <code>trainControl(method = "cv", number = 3)</code> として fold 数を減らす, 特徴量選択で変数の数を絞る, といった提案もした.</p>
+<pre><code>パラメータチューニングの範囲や, 選択された最終パラメータの値を一覧表示するように改良してください.</code></pre>
+</div>
+</div>
+<div id="生成されたコード-第1部" class="section level2 hasAnchor" number="16.2">
+<h2><span class="header-section-number">16.2</span> 生成されたコード (第1部)<a href="生成aiによる-r-コーディング.html#生成されたコード-第1部" class="anchor-section" aria-label="Anchor link to header"></a></h2>
+<p>上のようにプロンプトを3回与え, 生成AIが出力したコードを, そのまま実行する.</p>
+<div class="sourceCode" id="cb519"><pre class="sourceCode r"><code class="sourceCode r"><span id="cb519-1"><a href="生成aiによる-r-コーディング.html#cb519-1" tabindex="-1"></a><span class="fu">library</span>(caret)</span>
+<span id="cb519-2"><a href="生成aiによる-r-コーディング.html#cb519-2" tabindex="-1"></a><span class="fu">library</span>(kernlab)        <span class="co"># spam データ, SVM</span></span>
+<span id="cb519-3"><a href="生成aiによる-r-コーディング.html#cb519-3" tabindex="-1"></a><span class="fu">library</span>(gbm)</span>
+<span id="cb519-4"><a href="生成aiによる-r-コーディング.html#cb519-4" tabindex="-1"></a><span class="fu">library</span>(randomForest)</span>
+<span id="cb519-5"><a href="生成aiによる-r-コーディング.html#cb519-5" tabindex="-1"></a><span class="co"># install.packages(c(&quot;caret&quot;, &quot;kernlab&quot;, &quot;gbm&quot;, &quot;randomForest&quot;))</span></span></code></pre></div>
+<div class="sourceCode" id="cb520"><pre class="sourceCode r"><code class="sourceCode r"><span id="cb520-1"><a href="生成aiによる-r-コーディング.html#cb520-1" tabindex="-1"></a><span class="co"># データロードと分割</span></span>
+<span id="cb520-2"><a href="生成aiによる-r-コーディング.html#cb520-2" tabindex="-1"></a><span class="fu">data</span>(spam)</span>
+<span id="cb520-3"><a href="生成aiによる-r-コーディング.html#cb520-3" tabindex="-1"></a><span class="fu">set.seed</span>(<span class="dv">123</span>)</span>
+<span id="cb520-4"><a href="生成aiによる-r-コーディング.html#cb520-4" tabindex="-1"></a><span class="fu">cat</span>(<span class="st">&quot;== Start: Data Partition ==</span><span class="sc">\n</span><span class="st">&quot;</span>)</span>
+<span id="cb520-5"><a href="生成aiによる-r-コーディング.html#cb520-5" tabindex="-1"></a><span class="co">#&gt; == Start: Data Partition ==</span></span>
+<span id="cb520-6"><a href="生成aiによる-r-コーディング.html#cb520-6" tabindex="-1"></a>t_start <span class="ot">&lt;-</span> <span class="fu">Sys.time</span>()</span>
+<span id="cb520-7"><a href="生成aiによる-r-コーディング.html#cb520-7" tabindex="-1"></a>trainIndex <span class="ot">&lt;-</span> <span class="fu">createDataPartition</span>(spam<span class="sc">$</span>type, <span class="at">p =</span> <span class="fl">0.8</span>, <span class="at">list =</span> <span class="cn">FALSE</span>)</span>
+<span id="cb520-8"><a href="生成aiによる-r-コーディング.html#cb520-8" tabindex="-1"></a>trainData <span class="ot">&lt;-</span> spam[trainIndex, ]</span>
+<span id="cb520-9"><a href="生成aiによる-r-コーディング.html#cb520-9" tabindex="-1"></a>testData  <span class="ot">&lt;-</span> spam[<span class="sc">-</span>trainIndex, ]</span>
+<span id="cb520-10"><a href="生成aiによる-r-コーディング.html#cb520-10" tabindex="-1"></a>t_end <span class="ot">&lt;-</span> <span class="fu">Sys.time</span>()</span>
+<span id="cb520-11"><a href="生成aiによる-r-コーディング.html#cb520-11" tabindex="-1"></a><span class="fu">cat</span>(<span class="st">&quot;Duration:&quot;</span>, <span class="fu">round</span>(<span class="fu">difftime</span>(t_end, t_start, <span class="at">units =</span> <span class="st">&quot;secs&quot;</span>), <span class="dv">2</span>), <span class="st">&quot;sec</span><span class="sc">\n\n</span><span class="st">&quot;</span>)</span>
+<span id="cb520-12"><a href="生成aiによる-r-コーディング.html#cb520-12" tabindex="-1"></a><span class="co">#&gt; Duration: 0.01 sec</span></span></code></pre></div>
+<div class="sourceCode" id="cb521"><pre class="sourceCode r"><code class="sourceCode r"><span id="cb521-1"><a href="生成aiによる-r-コーディング.html#cb521-1" tabindex="-1"></a>ctrl <span class="ot">&lt;-</span> <span class="fu">trainControl</span>(<span class="at">method =</span> <span class="st">&quot;cv&quot;</span>, <span class="at">number =</span> <span class="dv">5</span>)</span>
+<span id="cb521-2"><a href="生成aiによる-r-コーディング.html#cb521-2" tabindex="-1"></a></span>
+<span id="cb521-3"><a href="生成aiによる-r-コーディング.html#cb521-3" tabindex="-1"></a><span class="co"># kNN</span></span>
+<span id="cb521-4"><a href="生成aiによる-r-コーディング.html#cb521-4" tabindex="-1"></a><span class="fu">cat</span>(<span class="st">&quot;== Training: kNN ==</span><span class="sc">\n</span><span class="st">&quot;</span>)</span>
+<span id="cb521-5"><a href="生成aiによる-r-コーディング.html#cb521-5" tabindex="-1"></a><span class="co">#&gt; == Training: kNN ==</span></span>
+<span id="cb521-6"><a href="生成aiによる-r-コーディング.html#cb521-6" tabindex="-1"></a>t_start <span class="ot">&lt;-</span> <span class="fu">Sys.time</span>()</span>
+<span id="cb521-7"><a href="生成aiによる-r-コーディング.html#cb521-7" tabindex="-1"></a>knn_model <span class="ot">&lt;-</span> <span class="fu">train</span>(type <span class="sc">~</span> ., <span class="at">data =</span> trainData, <span class="at">method =</span> <span class="st">&quot;knn&quot;</span>,</span>
+<span id="cb521-8"><a href="生成aiによる-r-コーディング.html#cb521-8" tabindex="-1"></a>                   <span class="at">trControl =</span> ctrl, <span class="at">tuneLength =</span> <span class="dv">10</span>)</span>
+<span id="cb521-9"><a href="生成aiによる-r-コーディング.html#cb521-9" tabindex="-1"></a>t_end <span class="ot">&lt;-</span> <span class="fu">Sys.time</span>()</span>
+<span id="cb521-10"><a href="生成aiによる-r-コーディング.html#cb521-10" tabindex="-1"></a><span class="fu">cat</span>(<span class="st">&quot;Duration:&quot;</span>, <span class="fu">round</span>(<span class="fu">difftime</span>(t_end, t_start, <span class="at">units =</span> <span class="st">&quot;secs&quot;</span>), <span class="dv">2</span>), <span class="st">&quot;sec</span><span class="sc">\n\n</span><span class="st">&quot;</span>)</span>
+<span id="cb521-11"><a href="生成aiによる-r-コーディング.html#cb521-11" tabindex="-1"></a><span class="co">#&gt; Duration: 5.9 sec</span></span>
+<span id="cb521-12"><a href="生成aiによる-r-コーディング.html#cb521-12" tabindex="-1"></a><span class="fu">cat</span>(<span class="st">&quot;kNN tuning candidates:</span><span class="sc">\n</span><span class="st">&quot;</span>); <span class="fu">print</span>(knn_model<span class="sc">$</span>results)</span>
+<span id="cb521-13"><a href="生成aiによる-r-コーディング.html#cb521-13" tabindex="-1"></a><span class="co">#&gt; kNN tuning candidates:</span></span>
+<span id="cb521-14"><a href="生成aiによる-r-コーディング.html#cb521-14" tabindex="-1"></a><span class="co">#&gt;     k  Accuracy     Kappa AccuracySD    KappaSD</span></span>
+<span id="cb521-15"><a href="生成aiによる-r-コーディング.html#cb521-15" tabindex="-1"></a><span class="co">#&gt; 1   5 0.7979349 0.5749206 0.00997044 0.01766480</span></span>
+<span id="cb521-16"><a href="生成aiによる-r-コーディング.html#cb521-16" tabindex="-1"></a><span class="co">#&gt; 2   7 0.7914205 0.5597179 0.01659118 0.03114351</span></span>
+<span id="cb521-17"><a href="生成aiによる-r-コーディング.html#cb521-17" tabindex="-1"></a><span class="co">#&gt; 3   9 0.7857140 0.5466562 0.02043985 0.03987066</span></span>
+<span id="cb521-18"><a href="生成aiによる-r-コーディング.html#cb521-18" tabindex="-1"></a><span class="co">#&gt; 4  11 0.7824487 0.5395782 0.01773198 0.03622694</span></span>
+<span id="cb521-19"><a href="生成aiによる-r-コーディング.html#cb521-19" tabindex="-1"></a><span class="co">#&gt; 5  13 0.7778332 0.5294885 0.01513913 0.02863758</span></span>
+<span id="cb521-20"><a href="生成aiによる-r-コーディング.html#cb521-20" tabindex="-1"></a><span class="co">#&gt; 6  15 0.7729437 0.5189134 0.01530400 0.03069340</span></span>
+<span id="cb521-21"><a href="生成aiによる-r-コーディング.html#cb521-21" tabindex="-1"></a><span class="co">#&gt; 7  17 0.7685988 0.5096245 0.01455800 0.02816584</span></span>
+<span id="cb521-22"><a href="生成aiによる-r-コーディング.html#cb521-22" tabindex="-1"></a><span class="co">#&gt; 8  19 0.7688713 0.5098699 0.01535839 0.02840001</span></span>
+<span id="cb521-23"><a href="生成aiによる-r-コーディング.html#cb521-23" tabindex="-1"></a><span class="co">#&gt; 9  21 0.7645268 0.5005809 0.01820008 0.03443447</span></span>
+<span id="cb521-24"><a href="生成aiによる-r-コーディング.html#cb521-24" tabindex="-1"></a><span class="co">#&gt; 10 23 0.7577344 0.4851065 0.02311847 0.04757803</span></span>
+<span id="cb521-25"><a href="生成aiによる-r-コーディング.html#cb521-25" tabindex="-1"></a><span class="fu">cat</span>(<span class="st">&quot;Best k:</span><span class="sc">\n</span><span class="st">&quot;</span>); <span class="fu">print</span>(knn_model<span class="sc">$</span>bestTune); <span class="fu">cat</span>(<span class="st">&quot;</span><span class="sc">\n</span><span class="st">&quot;</span>)</span>
+<span id="cb521-26"><a href="生成aiによる-r-コーディング.html#cb521-26" tabindex="-1"></a><span class="co">#&gt; Best k:</span></span>
+<span id="cb521-27"><a href="生成aiによる-r-コーディング.html#cb521-27" tabindex="-1"></a><span class="co">#&gt;   k</span></span>
+<span id="cb521-28"><a href="生成aiによる-r-コーディング.html#cb521-28" tabindex="-1"></a><span class="co">#&gt; 1 5</span></span>
+<span id="cb521-29"><a href="生成aiによる-r-コーディング.html#cb521-29" tabindex="-1"></a></span>
+<span id="cb521-30"><a href="生成aiによる-r-コーディング.html#cb521-30" tabindex="-1"></a><span class="co"># Random Forest</span></span>
+<span id="cb521-31"><a href="生成aiによる-r-コーディング.html#cb521-31" tabindex="-1"></a><span class="fu">cat</span>(<span class="st">&quot;== Training: Random Forest ==</span><span class="sc">\n</span><span class="st">&quot;</span>)</span>
+<span id="cb521-32"><a href="生成aiによる-r-コーディング.html#cb521-32" tabindex="-1"></a><span class="co">#&gt; == Training: Random Forest ==</span></span>
+<span id="cb521-33"><a href="生成aiによる-r-コーディング.html#cb521-33" tabindex="-1"></a>t_start <span class="ot">&lt;-</span> <span class="fu">Sys.time</span>()</span>
+<span id="cb521-34"><a href="生成aiによる-r-コーディング.html#cb521-34" tabindex="-1"></a>rf_model <span class="ot">&lt;-</span> <span class="fu">train</span>(type <span class="sc">~</span> ., <span class="at">data =</span> trainData, <span class="at">method =</span> <span class="st">&quot;rf&quot;</span>,</span>
+<span id="cb521-35"><a href="生成aiによる-r-コーディング.html#cb521-35" tabindex="-1"></a>                  <span class="at">trControl =</span> ctrl, <span class="at">tuneLength =</span> <span class="dv">5</span>)</span>
+<span id="cb521-36"><a href="生成aiによる-r-コーディング.html#cb521-36" tabindex="-1"></a>t_end <span class="ot">&lt;-</span> <span class="fu">Sys.time</span>()</span>
+<span id="cb521-37"><a href="生成aiによる-r-コーディング.html#cb521-37" tabindex="-1"></a><span class="fu">cat</span>(<span class="st">&quot;Duration:&quot;</span>, <span class="fu">round</span>(<span class="fu">difftime</span>(t_end, t_start, <span class="at">units =</span> <span class="st">&quot;secs&quot;</span>), <span class="dv">2</span>), <span class="st">&quot;sec</span><span class="sc">\n\n</span><span class="st">&quot;</span>)</span>
+<span id="cb521-38"><a href="生成aiによる-r-コーディング.html#cb521-38" tabindex="-1"></a><span class="co">#&gt; Duration: 159.09 sec</span></span>
+<span id="cb521-39"><a href="生成aiによる-r-コーディング.html#cb521-39" tabindex="-1"></a><span class="fu">cat</span>(<span class="st">&quot;Random Forest tuning candidates:</span><span class="sc">\n</span><span class="st">&quot;</span>); <span class="fu">print</span>(rf_model<span class="sc">$</span>results)</span>
+<span id="cb521-40"><a href="生成aiによる-r-コーディング.html#cb521-40" tabindex="-1"></a><span class="co">#&gt; Random Forest tuning candidates:</span></span>
+<span id="cb521-41"><a href="生成aiによる-r-コーディング.html#cb521-41" tabindex="-1"></a><span class="co">#&gt;   mtry  Accuracy     Kappa  AccuracySD     KappaSD</span></span>
+<span id="cb521-42"><a href="生成aiによる-r-コーディング.html#cb521-42" tabindex="-1"></a><span class="co">#&gt; 1    2 0.9432386 0.8800838 0.004817769 0.009753394</span></span>
+<span id="cb521-43"><a href="生成aiによる-r-コーディング.html#cb521-43" tabindex="-1"></a><span class="co">#&gt; 2   15 0.9492135 0.8932134 0.004844040 0.010048146</span></span>
+<span id="cb521-44"><a href="生成aiによる-r-コーディング.html#cb521-44" tabindex="-1"></a><span class="co">#&gt; 3   29 0.9462281 0.8868691 0.006930239 0.014745599</span></span>
+<span id="cb521-45"><a href="生成aiによる-r-コーディング.html#cb521-45" tabindex="-1"></a><span class="co">#&gt; 4   43 0.9435092 0.8813178 0.002966184 0.006015911</span></span>
+<span id="cb521-46"><a href="生成aiによる-r-コーディング.html#cb521-46" tabindex="-1"></a><span class="co">#&gt; 5   57 0.9413379 0.8768591 0.004514989 0.009587370</span></span>
+<span id="cb521-47"><a href="生成aiによる-r-コーディング.html#cb521-47" tabindex="-1"></a><span class="fu">cat</span>(<span class="st">&quot;Best mtry:</span><span class="sc">\n</span><span class="st">&quot;</span>); <span class="fu">print</span>(rf_model<span class="sc">$</span>bestTune); <span class="fu">cat</span>(<span class="st">&quot;</span><span class="sc">\n</span><span class="st">&quot;</span>)</span>
+<span id="cb521-48"><a href="生成aiによる-r-コーディング.html#cb521-48" tabindex="-1"></a><span class="co">#&gt; Best mtry:</span></span>
+<span id="cb521-49"><a href="生成aiによる-r-コーディング.html#cb521-49" tabindex="-1"></a><span class="co">#&gt;   mtry</span></span>
+<span id="cb521-50"><a href="生成aiによる-r-コーディング.html#cb521-50" tabindex="-1"></a><span class="co">#&gt; 2   15</span></span>
+<span id="cb521-51"><a href="生成aiによる-r-コーディング.html#cb521-51" tabindex="-1"></a></span>
+<span id="cb521-52"><a href="生成aiによる-r-コーディング.html#cb521-52" tabindex="-1"></a><span class="co"># SVM</span></span>
+<span id="cb521-53"><a href="生成aiによる-r-コーディング.html#cb521-53" tabindex="-1"></a><span class="fu">cat</span>(<span class="st">&quot;== Training: SVM (RBF) ==</span><span class="sc">\n</span><span class="st">&quot;</span>)</span>
+<span id="cb521-54"><a href="生成aiによる-r-コーディング.html#cb521-54" tabindex="-1"></a><span class="co">#&gt; == Training: SVM (RBF) ==</span></span>
+<span id="cb521-55"><a href="生成aiによる-r-コーディング.html#cb521-55" tabindex="-1"></a>t_start <span class="ot">&lt;-</span> <span class="fu">Sys.time</span>()</span>
+<span id="cb521-56"><a href="生成aiによる-r-コーディング.html#cb521-56" tabindex="-1"></a>svm_model <span class="ot">&lt;-</span> <span class="fu">train</span>(type <span class="sc">~</span> ., <span class="at">data =</span> trainData, <span class="at">method =</span> <span class="st">&quot;svmRadial&quot;</span>,</span>
+<span id="cb521-57"><a href="生成aiによる-r-コーディング.html#cb521-57" tabindex="-1"></a>                   <span class="at">trControl =</span> ctrl, <span class="at">tuneLength =</span> <span class="dv">5</span>)</span>
+<span id="cb521-58"><a href="生成aiによる-r-コーディング.html#cb521-58" tabindex="-1"></a>t_end <span class="ot">&lt;-</span> <span class="fu">Sys.time</span>()</span>
+<span id="cb521-59"><a href="生成aiによる-r-コーディング.html#cb521-59" tabindex="-1"></a><span class="fu">cat</span>(<span class="st">&quot;Duration:&quot;</span>, <span class="fu">round</span>(<span class="fu">difftime</span>(t_end, t_start, <span class="at">units =</span> <span class="st">&quot;secs&quot;</span>), <span class="dv">2</span>), <span class="st">&quot;sec</span><span class="sc">\n\n</span><span class="st">&quot;</span>)</span>
+<span id="cb521-60"><a href="生成aiによる-r-コーディング.html#cb521-60" tabindex="-1"></a><span class="co">#&gt; Duration: 12.99 sec</span></span>
+<span id="cb521-61"><a href="生成aiによる-r-コーディング.html#cb521-61" tabindex="-1"></a><span class="fu">cat</span>(<span class="st">&quot;SVM tuning candidates:</span><span class="sc">\n</span><span class="st">&quot;</span>); <span class="fu">print</span>(svm_model<span class="sc">$</span>results)</span>
+<span id="cb521-62"><a href="生成aiによる-r-コーディング.html#cb521-62" tabindex="-1"></a><span class="co">#&gt; SVM tuning candidates:</span></span>
+<span id="cb521-63"><a href="生成aiによる-r-コーディング.html#cb521-63" tabindex="-1"></a><span class="co">#&gt;        sigma    C  Accuracy     Kappa  AccuracySD     KappaSD</span></span>
+<span id="cb521-64"><a href="生成aiによる-r-コーディング.html#cb521-64" tabindex="-1"></a><span class="co">#&gt; 1 0.02942501 0.25 0.9139037 0.8163864 0.009113929 0.019859748</span></span>
+<span id="cb521-65"><a href="生成aiによる-r-コーディング.html#cb521-65" tabindex="-1"></a><span class="co">#&gt; 2 0.02942501 0.50 0.9250391 0.8411845 0.006352306 0.013664365</span></span>
+<span id="cb521-66"><a href="生成aiによる-r-コーディング.html#cb521-66" tabindex="-1"></a><span class="co">#&gt; 3 0.02942501 1.00 0.9329158 0.8584251 0.003691116 0.007645367</span></span>
+<span id="cb521-67"><a href="生成aiによる-r-コーディング.html#cb521-67" tabindex="-1"></a><span class="co">#&gt; 4 0.02942501 2.00 0.9329158 0.8584527 0.002845820 0.006024444</span></span>
+<span id="cb521-68"><a href="生成aiによる-r-コーディング.html#cb521-68" tabindex="-1"></a><span class="co">#&gt; 5 0.02942501 4.00 0.9340032 0.8608235 0.003912305 0.008049610</span></span>
+<span id="cb521-69"><a href="生成aiによる-r-コーディング.html#cb521-69" tabindex="-1"></a><span class="fu">cat</span>(<span class="st">&quot;Best C and sigma:</span><span class="sc">\n</span><span class="st">&quot;</span>); <span class="fu">print</span>(svm_model<span class="sc">$</span>bestTune); <span class="fu">cat</span>(<span class="st">&quot;</span><span class="sc">\n</span><span class="st">&quot;</span>)</span>
+<span id="cb521-70"><a href="生成aiによる-r-コーディング.html#cb521-70" tabindex="-1"></a><span class="co">#&gt; Best C and sigma:</span></span>
+<span id="cb521-71"><a href="生成aiによる-r-コーディング.html#cb521-71" tabindex="-1"></a><span class="co">#&gt;        sigma C</span></span>
+<span id="cb521-72"><a href="生成aiによる-r-コーディング.html#cb521-72" tabindex="-1"></a><span class="co">#&gt; 5 0.02942501 4</span></span>
+<span id="cb521-73"><a href="生成aiによる-r-コーディング.html#cb521-73" tabindex="-1"></a></span>
+<span id="cb521-74"><a href="生成aiによる-r-コーディング.html#cb521-74" tabindex="-1"></a><span class="co"># GBM</span></span>
+<span id="cb521-75"><a href="生成aiによる-r-コーディング.html#cb521-75" tabindex="-1"></a><span class="fu">cat</span>(<span class="st">&quot;== Training: GBM ==</span><span class="sc">\n</span><span class="st">&quot;</span>)</span>
+<span id="cb521-76"><a href="生成aiによる-r-コーディング.html#cb521-76" tabindex="-1"></a><span class="co">#&gt; == Training: GBM ==</span></span>
+<span id="cb521-77"><a href="生成aiによる-r-コーディング.html#cb521-77" tabindex="-1"></a>t_start <span class="ot">&lt;-</span> <span class="fu">Sys.time</span>()</span>
+<span id="cb521-78"><a href="生成aiによる-r-コーディング.html#cb521-78" tabindex="-1"></a>gbm_model <span class="ot">&lt;-</span> <span class="fu">train</span>(type <span class="sc">~</span> ., <span class="at">data =</span> trainData, <span class="at">method =</span> <span class="st">&quot;gbm&quot;</span>,</span>
+<span id="cb521-79"><a href="生成aiによる-r-コーディング.html#cb521-79" tabindex="-1"></a>                   <span class="at">trControl =</span> ctrl, <span class="at">verbose =</span> <span class="cn">FALSE</span>, <span class="at">tuneLength =</span> <span class="dv">5</span>)</span>
+<span id="cb521-80"><a href="生成aiによる-r-コーディング.html#cb521-80" tabindex="-1"></a>t_end <span class="ot">&lt;-</span> <span class="fu">Sys.time</span>()</span>
+<span id="cb521-81"><a href="生成aiによる-r-コーディング.html#cb521-81" tabindex="-1"></a><span class="fu">cat</span>(<span class="st">&quot;Duration:&quot;</span>, <span class="fu">round</span>(<span class="fu">difftime</span>(t_end, t_start, <span class="at">units =</span> <span class="st">&quot;secs&quot;</span>), <span class="dv">2</span>), <span class="st">&quot;sec</span><span class="sc">\n\n</span><span class="st">&quot;</span>)</span>
+<span id="cb521-82"><a href="生成aiによる-r-コーディング.html#cb521-82" tabindex="-1"></a><span class="co">#&gt; Duration: 32.3 sec</span></span>
+<span id="cb521-83"><a href="生成aiによる-r-コーディング.html#cb521-83" tabindex="-1"></a><span class="fu">cat</span>(<span class="st">&quot;GBM tuning candidates:</span><span class="sc">\n</span><span class="st">&quot;</span>); <span class="fu">print</span>(gbm_model<span class="sc">$</span>results)</span>
+<span id="cb521-84"><a href="生成aiによる-r-コーディング.html#cb521-84" tabindex="-1"></a><span class="co">#&gt; GBM tuning candidates:</span></span>
+<span id="cb521-85"><a href="生成aiによる-r-コーディング.html#cb521-85" tabindex="-1"></a><span class="co">#&gt;    shrinkage interaction.depth n.minobsinnode n.trees  Accuracy     Kappa</span></span>
+<span id="cb521-86"><a href="生成aiによる-r-コーディング.html#cb521-86" tabindex="-1"></a><span class="co">#&gt; 1        0.1                 1             10      50 0.9163501 0.8212356</span></span>
+<span id="cb521-87"><a href="生成aiによる-r-コーディング.html#cb521-87" tabindex="-1"></a><span class="co">#&gt; 6        0.1                 2             10      50 0.9318292 0.8557474</span></span>
+<span id="cb521-88"><a href="生成aiによる-r-コーディング.html#cb521-88" tabindex="-1"></a><span class="co">#&gt; 11       0.1                 3             10      50 0.9378034 0.8685728</span></span>
+<span id="cb521-89"><a href="生成aiによる-r-コーディング.html#cb521-89" tabindex="-1"></a><span class="co">#&gt; 16       0.1                 4             10      50 0.9375321 0.8680881</span></span>
+<span id="cb521-90"><a href="生成aiによる-r-コーディング.html#cb521-90" tabindex="-1"></a><span class="co">#&gt; 21       0.1                 5             10      50 0.9394343 0.8720027</span></span>
+<span id="cb521-91"><a href="生成aiによる-r-コーディング.html#cb521-91" tabindex="-1"></a><span class="co">#&gt; 2        0.1                 1             10     100 0.9307441 0.8532194</span></span>
+<span id="cb521-92"><a href="生成aiによる-r-コーディング.html#cb521-92" tabindex="-1"></a><span class="co">#&gt; 7        0.1                 2             10     100 0.9421494 0.8779280</span></span>
+<span id="cb521-93"><a href="生成aiによる-r-コーディング.html#cb521-93" tabindex="-1"></a><span class="co">#&gt; 12       0.1                 3             10     100 0.9443226 0.8826052</span></span>
+<span id="cb521-94"><a href="生成aiによる-r-コーディング.html#cb521-94" tabindex="-1"></a><span class="co">#&gt; 17       0.1                 4             10     100 0.9432364 0.8802112</span></span>
+<span id="cb521-95"><a href="生成aiによる-r-コーディング.html#cb521-95" tabindex="-1"></a><span class="co">#&gt; 22       0.1                 5             10     100 0.9448665 0.8838029</span></span>
+<span id="cb521-96"><a href="生成aiによる-r-コーディング.html#cb521-96" tabindex="-1"></a><span class="co">#&gt; 3        0.1                 1             10     150 0.9372618 0.8673084</span></span>
+<span id="cb521-97"><a href="生成aiによる-r-コーディング.html#cb521-97" tabindex="-1"></a><span class="co">#&gt; 8        0.1                 2             10     150 0.9448650 0.8836934</span></span>
+<span id="cb521-98"><a href="生成aiによる-r-コーディング.html#cb521-98" tabindex="-1"></a><span class="co">#&gt; 13       0.1                 3             10     150 0.9478534 0.8902822</span></span>
+<span id="cb521-99"><a href="生成aiによる-r-コーディング.html#cb521-99" tabindex="-1"></a><span class="co">#&gt; 18       0.1                 4             10     150 0.9459516 0.8861422</span></span>
+<span id="cb521-100"><a href="生成aiによる-r-コーディング.html#cb521-100" tabindex="-1"></a><span class="co">#&gt; 23       0.1                 5             10     150 0.9505697 0.8961141</span></span>
+<span id="cb521-101"><a href="生成aiによる-r-コーディング.html#cb521-101" tabindex="-1"></a><span class="co">#&gt; 4        0.1                 1             10     200 0.9416071 0.8767217</span></span>
+<span id="cb521-102"><a href="生成aiによる-r-コーディング.html#cb521-102" tabindex="-1"></a><span class="co">#&gt; 9        0.1                 2             10     200 0.9448661 0.8838575</span></span>
+<span id="cb521-103"><a href="生成aiによる-r-コーディング.html#cb521-103" tabindex="-1"></a><span class="co">#&gt; 14       0.1                 3             10     200 0.9481258 0.8909030</span></span>
+<span id="cb521-104"><a href="生成aiによる-r-コーディング.html#cb521-104" tabindex="-1"></a><span class="co">#&gt; 19       0.1                 4             10     200 0.9467675 0.8880317</span></span>
+<span id="cb521-105"><a href="生成aiによる-r-コーディング.html#cb521-105" tabindex="-1"></a><span class="co">#&gt; 24       0.1                 5             10     200 0.9497544 0.8943895</span></span>
+<span id="cb521-106"><a href="生成aiによる-r-コーディング.html#cb521-106" tabindex="-1"></a><span class="co">#&gt; 5        0.1                 1             10     250 0.9424215 0.8784760</span></span>
+<span id="cb521-107"><a href="生成aiによる-r-コーディング.html#cb521-107" tabindex="-1"></a><span class="co">#&gt; 10       0.1                 2             10     250 0.9470378 0.8884881</span></span>
+<span id="cb521-108"><a href="生成aiによる-r-コーディング.html#cb521-108" tabindex="-1"></a><span class="co">#&gt; 15       0.1                 3             10     250 0.9470396 0.8887173</span></span>
+<span id="cb521-109"><a href="生成aiによる-r-コーディング.html#cb521-109" tabindex="-1"></a><span class="co">#&gt; 20       0.1                 4             10     250 0.9473088 0.8892741</span></span>
+<span id="cb521-110"><a href="生成aiによる-r-コーディング.html#cb521-110" tabindex="-1"></a><span class="co">#&gt; 25       0.1                 5             10     250 0.9511131 0.8972745</span></span>
+<span id="cb521-111"><a href="生成aiによる-r-コーディング.html#cb521-111" tabindex="-1"></a><span class="co">#&gt;     AccuracySD     KappaSD</span></span>
+<span id="cb521-112"><a href="生成aiによる-r-コーディング.html#cb521-112" tabindex="-1"></a><span class="co">#&gt; 1  0.005476534 0.011393148</span></span>
+<span id="cb521-113"><a href="生成aiによる-r-コーディング.html#cb521-113" tabindex="-1"></a><span class="co">#&gt; 6  0.008463779 0.017513964</span></span>
+<span id="cb521-114"><a href="生成aiによる-r-コーディング.html#cb521-114" tabindex="-1"></a><span class="co">#&gt; 11 0.007669477 0.015873609</span></span>
+<span id="cb521-115"><a href="生成aiによる-r-コーディング.html#cb521-115" tabindex="-1"></a><span class="co">#&gt; 16 0.006247065 0.013067207</span></span>
+<span id="cb521-116"><a href="生成aiによる-r-コーディング.html#cb521-116" tabindex="-1"></a><span class="co">#&gt; 21 0.003929173 0.008025564</span></span>
+<span id="cb521-117"><a href="生成aiによる-r-コーディング.html#cb521-117" tabindex="-1"></a><span class="co">#&gt; 2  0.004296590 0.008585207</span></span>
+<span id="cb521-118"><a href="生成aiによる-r-コーディング.html#cb521-118" tabindex="-1"></a><span class="co">#&gt; 7  0.007110646 0.014773060</span></span>
+<span id="cb521-119"><a href="生成aiによる-r-コーディング.html#cb521-119" tabindex="-1"></a><span class="co">#&gt; 12 0.005188175 0.010567325</span></span>
+<span id="cb521-120"><a href="生成aiによる-r-コーディング.html#cb521-120" tabindex="-1"></a><span class="co">#&gt; 17 0.003402714 0.006923910</span></span>
+<span id="cb521-121"><a href="生成aiによる-r-コーディング.html#cb521-121" tabindex="-1"></a><span class="co">#&gt; 22 0.004367333 0.008838739</span></span>
+<span id="cb521-122"><a href="生成aiによる-r-コーディング.html#cb521-122" tabindex="-1"></a><span class="co">#&gt; 3  0.003899216 0.008089222</span></span>
+<span id="cb521-123"><a href="生成aiによる-r-コーディング.html#cb521-123" tabindex="-1"></a><span class="co">#&gt; 8  0.005912044 0.012124776</span></span>
+<span id="cb521-124"><a href="生成aiによる-r-コーディング.html#cb521-124" tabindex="-1"></a><span class="co">#&gt; 13 0.006775934 0.013927300</span></span>
+<span id="cb521-125"><a href="生成aiによる-r-コーディング.html#cb521-125" tabindex="-1"></a><span class="co">#&gt; 18 0.006048480 0.012557541</span></span>
+<span id="cb521-126"><a href="生成aiによる-r-コーディング.html#cb521-126" tabindex="-1"></a><span class="co">#&gt; 23 0.005321683 0.010905760</span></span>
+<span id="cb521-127"><a href="生成aiによる-r-コーディング.html#cb521-127" tabindex="-1"></a><span class="co">#&gt; 4  0.003734957 0.007480852</span></span>
+<span id="cb521-128"><a href="生成aiによる-r-コーディング.html#cb521-128" tabindex="-1"></a><span class="co">#&gt; 9  0.005821304 0.011697367</span></span>
+<span id="cb521-129"><a href="生成aiによる-r-コーディング.html#cb521-129" tabindex="-1"></a><span class="co">#&gt; 14 0.006821367 0.013955762</span></span>
+<span id="cb521-130"><a href="生成aiによる-r-コーディング.html#cb521-130" tabindex="-1"></a><span class="co">#&gt; 19 0.008233379 0.017028441</span></span>
+<span id="cb521-131"><a href="生成aiによる-r-コーディング.html#cb521-131" tabindex="-1"></a><span class="co">#&gt; 24 0.004519471 0.009521020</span></span>
+<span id="cb521-132"><a href="生成aiによる-r-コーディング.html#cb521-132" tabindex="-1"></a><span class="co">#&gt; 5  0.005745020 0.011620359</span></span>
+<span id="cb521-133"><a href="生成aiによる-r-コーディング.html#cb521-133" tabindex="-1"></a><span class="co">#&gt; 10 0.006169148 0.012782701</span></span>
+<span id="cb521-134"><a href="生成aiによる-r-コーディング.html#cb521-134" tabindex="-1"></a><span class="co">#&gt; 15 0.006151068 0.012582475</span></span>
+<span id="cb521-135"><a href="生成aiによる-r-コーディング.html#cb521-135" tabindex="-1"></a><span class="co">#&gt; 20 0.007668703 0.015800107</span></span>
+<span id="cb521-136"><a href="生成aiによる-r-コーディング.html#cb521-136" tabindex="-1"></a><span class="co">#&gt; 25 0.004610826 0.009831474</span></span>
+<span id="cb521-137"><a href="生成aiによる-r-コーディング.html#cb521-137" tabindex="-1"></a><span class="fu">cat</span>(<span class="st">&quot;Best parameters (n.trees, interaction.depth, shrinkage, n.minobsinnode):</span><span class="sc">\n</span><span class="st">&quot;</span>)</span>
+<span id="cb521-138"><a href="生成aiによる-r-コーディング.html#cb521-138" tabindex="-1"></a><span class="co">#&gt; Best parameters (n.trees, interaction.depth, shrinkage, n.minobsinnode):</span></span>
+<span id="cb521-139"><a href="生成aiによる-r-コーディング.html#cb521-139" tabindex="-1"></a><span class="fu">print</span>(gbm_model<span class="sc">$</span>bestTune); <span class="fu">cat</span>(<span class="st">&quot;</span><span class="sc">\n</span><span class="st">&quot;</span>)</span>
+<span id="cb521-140"><a href="生成aiによる-r-コーディング.html#cb521-140" tabindex="-1"></a><span class="co">#&gt;    n.trees interaction.depth shrinkage n.minobsinnode</span></span>
+<span id="cb521-141"><a href="生成aiによる-r-コーディング.html#cb521-141" tabindex="-1"></a><span class="co">#&gt; 25     250                 5       0.1             10</span></span></code></pre></div>
+<div class="sourceCode" id="cb522"><pre class="sourceCode r"><code class="sourceCode r"><span id="cb522-1"><a href="生成aiによる-r-コーディング.html#cb522-1" tabindex="-1"></a><span class="co"># モデル評価</span></span>
+<span id="cb522-2"><a href="生成aiによる-r-コーディング.html#cb522-2" tabindex="-1"></a>evaluate_model <span class="ot">&lt;-</span> <span class="cf">function</span>(model, testData) {</span>
+<span id="cb522-3"><a href="生成aiによる-r-コーディング.html#cb522-3" tabindex="-1"></a>  pred <span class="ot">&lt;-</span> <span class="fu">predict</span>(model, <span class="at">newdata =</span> testData)</span>
+<span id="cb522-4"><a href="生成aiによる-r-コーディング.html#cb522-4" tabindex="-1"></a>  cm <span class="ot">&lt;-</span> <span class="fu">confusionMatrix</span>(pred, testData<span class="sc">$</span>type, <span class="at">positive =</span> <span class="st">&quot;spam&quot;</span>)</span>
+<span id="cb522-5"><a href="生成aiによる-r-コーディング.html#cb522-5" tabindex="-1"></a>  acc <span class="ot">&lt;-</span> cm<span class="sc">$</span>overall[<span class="st">&quot;Accuracy&quot;</span>]</span>
+<span id="cb522-6"><a href="生成aiによる-r-コーディング.html#cb522-6" tabindex="-1"></a>  prec <span class="ot">&lt;-</span> cm<span class="sc">$</span>byClass[<span class="st">&quot;Precision&quot;</span>]</span>
+<span id="cb522-7"><a href="生成aiによる-r-コーディング.html#cb522-7" tabindex="-1"></a>  recall <span class="ot">&lt;-</span> cm<span class="sc">$</span>byClass[<span class="st">&quot;Recall&quot;</span>]</span>
+<span id="cb522-8"><a href="生成aiによる-r-コーディング.html#cb522-8" tabindex="-1"></a>  f1 <span class="ot">&lt;-</span> <span class="dv">2</span> <span class="sc">*</span> (prec <span class="sc">*</span> recall) <span class="sc">/</span> (prec <span class="sc">+</span> recall)</span>
+<span id="cb522-9"><a href="生成aiによる-r-コーディング.html#cb522-9" tabindex="-1"></a>  <span class="fu">return</span>(<span class="fu">c</span>(<span class="at">Accuracy =</span> acc, <span class="at">Precision =</span> prec, <span class="at">Recall =</span> recall, <span class="at">F1 =</span> f1))</span>
+<span id="cb522-10"><a href="生成aiによる-r-コーディング.html#cb522-10" tabindex="-1"></a>}</span>
+<span id="cb522-11"><a href="生成aiによる-r-コーディング.html#cb522-11" tabindex="-1"></a></span>
+<span id="cb522-12"><a href="生成aiによる-r-コーディング.html#cb522-12" tabindex="-1"></a><span class="fu">cat</span>(<span class="st">&quot;== Evaluation ==</span><span class="sc">\n</span><span class="st">&quot;</span>)</span>
+<span id="cb522-13"><a href="生成aiによる-r-コーディング.html#cb522-13" tabindex="-1"></a><span class="co">#&gt; == Evaluation ==</span></span>
+<span id="cb522-14"><a href="生成aiによる-r-コーディング.html#cb522-14" tabindex="-1"></a>t_start <span class="ot">&lt;-</span> <span class="fu">Sys.time</span>()</span>
+<span id="cb522-15"><a href="生成aiによる-r-コーディング.html#cb522-15" tabindex="-1"></a>models <span class="ot">&lt;-</span> <span class="fu">list</span>(<span class="at">kNN =</span> knn_model, <span class="at">RF =</span> rf_model, <span class="at">SVM =</span> svm_model, <span class="at">GBM =</span> gbm_model)</span>
+<span id="cb522-16"><a href="生成aiによる-r-コーディング.html#cb522-16" tabindex="-1"></a>results <span class="ot">&lt;-</span> <span class="fu">do.call</span>(rbind, <span class="fu">lapply</span>(models, evaluate_model, <span class="at">testData =</span> testData))</span>
+<span id="cb522-17"><a href="生成aiによる-r-コーディング.html#cb522-17" tabindex="-1"></a>t_end <span class="ot">&lt;-</span> <span class="fu">Sys.time</span>()</span>
+<span id="cb522-18"><a href="生成aiによる-r-コーディング.html#cb522-18" tabindex="-1"></a><span class="fu">cat</span>(<span class="st">&quot;Duration:&quot;</span>, <span class="fu">round</span>(<span class="fu">difftime</span>(t_end, t_start, <span class="at">units =</span> <span class="st">&quot;secs&quot;</span>), <span class="dv">2</span>), <span class="st">&quot;sec</span><span class="sc">\n\n</span><span class="st">&quot;</span>)</span>
+<span id="cb522-19"><a href="生成aiによる-r-コーディング.html#cb522-19" tabindex="-1"></a><span class="co">#&gt; Duration: 0.28 sec</span></span>
+<span id="cb522-20"><a href="生成aiによる-r-コーディング.html#cb522-20" tabindex="-1"></a></span>
+<span id="cb522-21"><a href="生成aiによる-r-コーディング.html#cb522-21" tabindex="-1"></a><span class="fu">print</span>(<span class="fu">round</span>(results, <span class="dv">4</span>))</span>
+<span id="cb522-22"><a href="生成aiによる-r-コーディング.html#cb522-22" tabindex="-1"></a><span class="co">#&gt;     Accuracy.Accuracy Precision.Precision Recall.Recall F1.Precision</span></span>
+<span id="cb522-23"><a href="生成aiによる-r-コーディング.html#cb522-23" tabindex="-1"></a><span class="co">#&gt; kNN            0.7987              0.7452        0.7431       0.7441</span></span>
+<span id="cb522-24"><a href="生成aiによる-r-コーディング.html#cb522-24" tabindex="-1"></a><span class="co">#&gt; RF             0.9521              0.9543        0.9227       0.9382</span></span>
+<span id="cb522-25"><a href="生成aiによる-r-コーディング.html#cb522-25" tabindex="-1"></a><span class="co">#&gt; SVM            0.9336              0.9413        0.8867       0.9132</span></span>
+<span id="cb522-26"><a href="生成aiによる-r-コーディング.html#cb522-26" tabindex="-1"></a><span class="co">#&gt; GBM            0.9565              0.9548        0.9337       0.9441</span></span></code></pre></div>
+</div>
+<div id="問題点の確認" class="section level2 hasAnchor" number="16.3">
+<h2><span class="header-section-number">16.3</span> 問題点の確認<a href="生成aiによる-r-コーディング.html#問題点の確認" class="anchor-section" aria-label="Anchor link to header"></a></h2>
+<p>コードはエラーなく動くが, 出力をよく見ると, 指示した内容が実現されていない.</p>
+<ol style="list-style-type: lower-alpha">
+<li><strong>チューニングの指示が反映されていない.</strong>
+<code>tuneLength</code> で候補の数だけを指定しており, 何をどの範囲で探すかは caret に任されている.
+例えば, gbm の学習率 (shrinkage) は 0.1 に固定されたままで (指示では「学習率をチューニング」), SVM (<code>svmRadial</code>) の sigma (= gamma) も候補を探さず, データから1つの値に決められている.</li>
+</ol>
+<div class="sourceCode" id="cb523"><pre class="sourceCode r"><code class="sourceCode r"><span id="cb523-1"><a href="生成aiによる-r-コーディング.html#cb523-1" tabindex="-1"></a><span class="fu">unique</span>(gbm_model<span class="sc">$</span>results<span class="sc">$</span>shrinkage)               <span class="co"># gbm の学習率の候補</span></span>
+<span id="cb523-2"><a href="生成aiによる-r-コーディング.html#cb523-2" tabindex="-1"></a><span class="co">#&gt; [1] 0.1</span></span>
+<span id="cb523-3"><a href="生成aiによる-r-コーディング.html#cb523-3" tabindex="-1"></a><span class="fu">unique</span>(svm_model<span class="sc">$</span>results<span class="sc">$</span>sigma)                   <span class="co"># SVM の sigma の候補</span></span>
+<span id="cb523-4"><a href="生成aiによる-r-コーディング.html#cb523-4" tabindex="-1"></a><span class="co">#&gt; [1] 0.02942501</span></span></code></pre></div>
+<ol start="2" style="list-style-type: lower-alpha">
+<li><strong>kNN (と SVM) の前処理がない.</strong>
+距離やカーネルを使う手法では, 変数のスケールをそろえる (標準化する) ことが重要だが, kNN では標準化していない (<code>svmRadial</code> は関数<code>ksvm()</code>の既定で内部で標準化する).</li>
+</ol>
+<div class="sourceCode" id="cb524"><pre class="sourceCode r"><code class="sourceCode r"><span id="cb524-1"><a href="生成aiによる-r-コーディング.html#cb524-1" tabindex="-1"></a><span class="fu">summary</span>(trainData[, <span class="fu">c</span>(<span class="st">&quot;capitalAve&quot;</span>, <span class="st">&quot;capitalLong&quot;</span>, <span class="st">&quot;capitalTotal&quot;</span>, <span class="st">&quot;charExclamation&quot;</span>)])</span>
+<span id="cb524-2"><a href="生成aiによる-r-コーディング.html#cb524-2" tabindex="-1"></a><span class="co">#&gt;    capitalAve        capitalLong       capitalTotal     charExclamation  </span></span>
+<span id="cb524-3"><a href="生成aiによる-r-コーディング.html#cb524-3" tabindex="-1"></a><span class="co">#&gt;  Min.   :   1.000   Min.   :   1.00   Min.   :    1.0   Min.   : 0.0000  </span></span>
+<span id="cb524-4"><a href="生成aiによる-r-コーディング.html#cb524-4" tabindex="-1"></a><span class="co">#&gt;  1st Qu.:   1.583   1st Qu.:   6.00   1st Qu.:   35.0   1st Qu.: 0.0000  </span></span>
+<span id="cb524-5"><a href="生成aiによる-r-コーディング.html#cb524-5" tabindex="-1"></a><span class="co">#&gt;  Median :   2.277   Median :  15.00   Median :   95.0   Median : 0.0000  </span></span>
+<span id="cb524-6"><a href="生成aiによる-r-コーディング.html#cb524-6" tabindex="-1"></a><span class="co">#&gt;  Mean   :   5.607   Mean   :  54.85   Mean   :  284.5   Mean   : 0.2729  </span></span>
+<span id="cb524-7"><a href="生成aiによる-r-コーディング.html#cb524-7" tabindex="-1"></a><span class="co">#&gt;  3rd Qu.:   3.702   3rd Qu.:  43.00   3rd Qu.:  267.0   3rd Qu.: 0.3088  </span></span>
+<span id="cb524-8"><a href="生成aiによる-r-コーディング.html#cb524-8" tabindex="-1"></a><span class="co">#&gt;  Max.   :1102.500   Max.   :9989.00   Max.   :10062.0   Max.   :32.4780</span></span></code></pre></div>
+<ol start="3" style="list-style-type: lower-alpha">
+<li><strong>結果の表の列名が重複・不正確になる.</strong>
+<code>c()</code> に名前付きの値を入れたため, <code>Accuracy.Accuracy</code> のようになり, F1 の列は <code>F1.Precision</code> になっている.</li>
+</ol>
+<div class="sourceCode" id="cb525"><pre class="sourceCode r"><code class="sourceCode r"><span id="cb525-1"><a href="生成aiによる-r-コーディング.html#cb525-1" tabindex="-1"></a><span class="fu">colnames</span>(results)</span>
+<span id="cb525-2"><a href="生成aiによる-r-コーディング.html#cb525-2" tabindex="-1"></a><span class="co">#&gt; [1] &quot;Accuracy.Accuracy&quot;   &quot;Precision.Precision&quot; &quot;Recall.Recall&quot;      </span></span>
+<span id="cb525-3"><a href="生成aiによる-r-コーディング.html#cb525-3" tabindex="-1"></a><span class="co">#&gt; [4] &quot;F1.Precision&quot;</span></span></code></pre></div>
+<ol start="4" style="list-style-type: lower-alpha">
+<li><strong>モデルごとに交差検証の分割が異なり, 比較の条件がそろっていない.</strong></li>
+</ol>
+<p>改良の方法は2つある.</p>
+<ul>
+<li>生成AIに, パラメータごとに具体的な候補を指示して直させる</li>
+<li>R コードを手で直す (確実). 次の第2部の改良版は, <code>tuneGrid</code> で候補を明示し, 標準化と共通の CV 分割を加えたもの</li>
+</ul>
+</div>
+<div id="改良版-第2部" class="section level2 hasAnchor" number="16.4">
+<h2><span class="header-section-number">16.4</span> 改良版 (第2部)<a href="生成aiによる-r-コーディング.html#改良版-第2部" class="anchor-section" aria-label="Anchor link to header"></a></h2>
+<p>改良点:</p>
+<ul>
+<li>各モデルのチューニング候補を <code>tuneGrid</code> で明示する (何を探したかが分かる)</li>
+<li>kNN と SVM は <code>preProcess = c("center", "scale")</code> で標準化する</li>
+<li>全モデルで同じ CV の分割を使う (<code>trainControl()</code> の引数<code>index</code>で固定)</li>
+<li>結果の表の列名を整える</li>
+</ul>
+<div class="sourceCode" id="cb526"><pre class="sourceCode r"><code class="sourceCode r"><span id="cb526-1"><a href="生成aiによる-r-コーディング.html#cb526-1" tabindex="-1"></a><span class="fu">set.seed</span>(<span class="dv">123</span>)</span>
+<span id="cb526-2"><a href="生成aiによる-r-コーディング.html#cb526-2" tabindex="-1"></a>cv_folds <span class="ot">&lt;-</span> <span class="fu">createFolds</span>(trainData<span class="sc">$</span>type, <span class="at">k =</span> <span class="dv">5</span>, <span class="at">returnTrain =</span> <span class="cn">TRUE</span>)</span>
+<span id="cb526-3"><a href="生成aiによる-r-コーディング.html#cb526-3" tabindex="-1"></a>ctrl2 <span class="ot">&lt;-</span> <span class="fu">trainControl</span>(<span class="at">method =</span> <span class="st">&quot;cv&quot;</span>, <span class="at">index =</span> cv_folds)</span>
+<span id="cb526-4"><a href="生成aiによる-r-コーディング.html#cb526-4" tabindex="-1"></a></span>
+<span id="cb526-5"><a href="生成aiによる-r-コーディング.html#cb526-5" tabindex="-1"></a>time_it <span class="ot">&lt;-</span> <span class="cf">function</span>(expr) {                       <span class="co"># 経過時間を表示する小さな関数</span></span>
+<span id="cb526-6"><a href="生成aiによる-r-コーディング.html#cb526-6" tabindex="-1"></a>  t0 <span class="ot">&lt;-</span> <span class="fu">Sys.time</span>(); res <span class="ot">&lt;-</span> expr</span>
+<span id="cb526-7"><a href="生成aiによる-r-コーディング.html#cb526-7" tabindex="-1"></a>  <span class="fu">cat</span>(<span class="st">&quot;  経過時間:&quot;</span>, <span class="fu">round</span>(<span class="fu">difftime</span>(<span class="fu">Sys.time</span>(), t0, <span class="at">units =</span> <span class="st">&quot;secs&quot;</span>), <span class="dv">1</span>), <span class="st">&quot;秒</span><span class="sc">\n</span><span class="st">&quot;</span>)</span>
+<span id="cb526-8"><a href="生成aiによる-r-コーディング.html#cb526-8" tabindex="-1"></a>  res</span>
+<span id="cb526-9"><a href="生成aiによる-r-コーディング.html#cb526-9" tabindex="-1"></a>}</span></code></pre></div>
+<div class="sourceCode" id="cb527"><pre class="sourceCode r"><code class="sourceCode r"><span id="cb527-1"><a href="生成aiによる-r-コーディング.html#cb527-1" tabindex="-1"></a><span class="fu">cat</span>(<span class="st">&quot;== kNN ==</span><span class="sc">\n</span><span class="st">&quot;</span>)</span>
+<span id="cb527-2"><a href="生成aiによる-r-コーディング.html#cb527-2" tabindex="-1"></a><span class="co">#&gt; == kNN ==</span></span>
+<span id="cb527-3"><a href="生成aiによる-r-コーディング.html#cb527-3" tabindex="-1"></a>knn2 <span class="ot">&lt;-</span> <span class="fu">time_it</span>(<span class="fu">train</span>(type <span class="sc">~</span> ., <span class="at">data =</span> trainData, <span class="at">method =</span> <span class="st">&quot;knn&quot;</span>, <span class="at">trControl =</span> ctrl2,</span>
+<span id="cb527-4"><a href="生成aiによる-r-コーディング.html#cb527-4" tabindex="-1"></a>                      <span class="at">preProcess =</span> <span class="fu">c</span>(<span class="st">&quot;center&quot;</span>, <span class="st">&quot;scale&quot;</span>),</span>
+<span id="cb527-5"><a href="生成aiによる-r-コーディング.html#cb527-5" tabindex="-1"></a>                      <span class="at">tuneGrid =</span> <span class="fu">data.frame</span>(<span class="at">k =</span> <span class="fu">c</span>(<span class="dv">3</span>, <span class="dv">5</span>, <span class="dv">7</span>, <span class="dv">9</span>, <span class="dv">15</span>, <span class="dv">21</span>))))</span>
+<span id="cb527-6"><a href="生成aiによる-r-コーディング.html#cb527-6" tabindex="-1"></a><span class="co">#&gt;   経過時間: 3.8 秒</span></span>
+<span id="cb527-7"><a href="生成aiによる-r-コーディング.html#cb527-7" tabindex="-1"></a><span class="fu">cat</span>(<span class="st">&quot;== Random Forest ==</span><span class="sc">\n</span><span class="st">&quot;</span>)</span>
+<span id="cb527-8"><a href="生成aiによる-r-コーディング.html#cb527-8" tabindex="-1"></a><span class="co">#&gt; == Random Forest ==</span></span>
+<span id="cb527-9"><a href="生成aiによる-r-コーディング.html#cb527-9" tabindex="-1"></a>rf2 <span class="ot">&lt;-</span> <span class="fu">time_it</span>(<span class="fu">train</span>(type <span class="sc">~</span> ., <span class="at">data =</span> trainData, <span class="at">method =</span> <span class="st">&quot;rf&quot;</span>, <span class="at">trControl =</span> ctrl2, <span class="at">ntree =</span> <span class="dv">300</span>,</span>
+<span id="cb527-10"><a href="生成aiによる-r-コーディング.html#cb527-10" tabindex="-1"></a>                     <span class="at">tuneGrid =</span> <span class="fu">data.frame</span>(<span class="at">mtry =</span> <span class="fu">c</span>(<span class="dv">3</span>, <span class="dv">7</span>, <span class="dv">15</span>))))</span>
+<span id="cb527-11"><a href="生成aiによる-r-コーディング.html#cb527-11" tabindex="-1"></a><span class="co">#&gt;   経過時間: 46.7 秒</span></span>
+<span id="cb527-12"><a href="生成aiによる-r-コーディング.html#cb527-12" tabindex="-1"></a><span class="fu">cat</span>(<span class="st">&quot;== SVM (RBF) ==</span><span class="sc">\n</span><span class="st">&quot;</span>)</span>
+<span id="cb527-13"><a href="生成aiによる-r-コーディング.html#cb527-13" tabindex="-1"></a><span class="co">#&gt; == SVM (RBF) ==</span></span>
+<span id="cb527-14"><a href="生成aiによる-r-コーディング.html#cb527-14" tabindex="-1"></a>svm2 <span class="ot">&lt;-</span> <span class="fu">time_it</span>(<span class="fu">train</span>(type <span class="sc">~</span> ., <span class="at">data =</span> trainData, <span class="at">method =</span> <span class="st">&quot;svmRadial&quot;</span>, <span class="at">trControl =</span> ctrl2,</span>
+<span id="cb527-15"><a href="生成aiによる-r-コーディング.html#cb527-15" tabindex="-1"></a>                      <span class="at">preProcess =</span> <span class="fu">c</span>(<span class="st">&quot;center&quot;</span>, <span class="st">&quot;scale&quot;</span>),</span>
+<span id="cb527-16"><a href="生成aiによる-r-コーディング.html#cb527-16" tabindex="-1"></a>                      <span class="at">tuneGrid =</span> <span class="fu">expand.grid</span>(<span class="at">C =</span> <span class="fu">c</span>(<span class="dv">1</span>, <span class="dv">4</span>, <span class="dv">16</span>), <span class="at">sigma =</span> <span class="fu">c</span>(<span class="fl">0.005</span>, <span class="fl">0.01</span>, <span class="fl">0.03</span>))))</span>
+<span id="cb527-17"><a href="生成aiによる-r-コーディング.html#cb527-17" tabindex="-1"></a><span class="co">#&gt;   経過時間: 18.7 秒</span></span>
+<span id="cb527-18"><a href="生成aiによる-r-コーディング.html#cb527-18" tabindex="-1"></a><span class="co"># 注) kernlab の sigma は, スライドの γ (gamma) に相当する</span></span>
+<span id="cb527-19"><a href="生成aiによる-r-コーディング.html#cb527-19" tabindex="-1"></a><span class="fu">cat</span>(<span class="st">&quot;== GBM ==</span><span class="sc">\n</span><span class="st">&quot;</span>)</span>
+<span id="cb527-20"><a href="生成aiによる-r-コーディング.html#cb527-20" tabindex="-1"></a><span class="co">#&gt; == GBM ==</span></span>
+<span id="cb527-21"><a href="生成aiによる-r-コーディング.html#cb527-21" tabindex="-1"></a>gbm2 <span class="ot">&lt;-</span> <span class="fu">time_it</span>(<span class="fu">train</span>(type <span class="sc">~</span> ., <span class="at">data =</span> trainData, <span class="at">method =</span> <span class="st">&quot;gbm&quot;</span>, <span class="at">trControl =</span> ctrl2, <span class="at">verbose =</span> <span class="cn">FALSE</span>,</span>
+<span id="cb527-22"><a href="生成aiによる-r-コーディング.html#cb527-22" tabindex="-1"></a>                      <span class="at">tuneGrid =</span> <span class="fu">expand.grid</span>(<span class="at">n.trees =</span> <span class="fu">c</span>(<span class="dv">150</span>, <span class="dv">300</span>), <span class="at">interaction.depth =</span> <span class="dv">3</span>,</span>
+<span id="cb527-23"><a href="生成aiによる-r-コーディング.html#cb527-23" tabindex="-1"></a>                                             <span class="at">shrinkage =</span> <span class="fu">c</span>(<span class="fl">0.01</span>, <span class="fl">0.05</span>, <span class="fl">0.1</span>), <span class="at">n.minobsinnode =</span> <span class="dv">10</span>)))</span>
+<span id="cb527-24"><a href="生成aiによる-r-コーディング.html#cb527-24" tabindex="-1"></a><span class="co">#&gt;   経過時間: 22.7 秒</span></span></code></pre></div>
+<p>チューニング結果 (選ばれたパラメータ):</p>
+<div class="sourceCode" id="cb528"><pre class="sourceCode r"><code class="sourceCode r"><span id="cb528-1"><a href="生成aiによる-r-コーディング.html#cb528-1" tabindex="-1"></a><span class="fu">list</span>(<span class="at">kNN =</span> knn2<span class="sc">$</span>bestTune, <span class="at">RF =</span> rf2<span class="sc">$</span>bestTune, <span class="at">SVM =</span> svm2<span class="sc">$</span>bestTune, <span class="at">GBM =</span> gbm2<span class="sc">$</span>bestTune)</span>
+<span id="cb528-2"><a href="生成aiによる-r-コーディング.html#cb528-2" tabindex="-1"></a><span class="co">#&gt; $kNN</span></span>
+<span id="cb528-3"><a href="生成aiによる-r-コーディング.html#cb528-3" tabindex="-1"></a><span class="co">#&gt;   k</span></span>
+<span id="cb528-4"><a href="生成aiによる-r-コーディング.html#cb528-4" tabindex="-1"></a><span class="co">#&gt; 1 3</span></span>
+<span id="cb528-5"><a href="生成aiによる-r-コーディング.html#cb528-5" tabindex="-1"></a><span class="co">#&gt; </span></span>
+<span id="cb528-6"><a href="生成aiによる-r-コーディング.html#cb528-6" tabindex="-1"></a><span class="co">#&gt; $RF</span></span>
+<span id="cb528-7"><a href="生成aiによる-r-コーディング.html#cb528-7" tabindex="-1"></a><span class="co">#&gt;   mtry</span></span>
+<span id="cb528-8"><a href="生成aiによる-r-コーディング.html#cb528-8" tabindex="-1"></a><span class="co">#&gt; 2    7</span></span>
+<span id="cb528-9"><a href="生成aiによる-r-コーディング.html#cb528-9" tabindex="-1"></a><span class="co">#&gt; </span></span>
+<span id="cb528-10"><a href="生成aiによる-r-コーディング.html#cb528-10" tabindex="-1"></a><span class="co">#&gt; $SVM</span></span>
+<span id="cb528-11"><a href="生成aiによる-r-コーディング.html#cb528-11" tabindex="-1"></a><span class="co">#&gt;   sigma  C</span></span>
+<span id="cb528-12"><a href="生成aiによる-r-コーディング.html#cb528-12" tabindex="-1"></a><span class="co">#&gt; 7 0.005 16</span></span>
+<span id="cb528-13"><a href="生成aiによる-r-コーディング.html#cb528-13" tabindex="-1"></a><span class="co">#&gt; </span></span>
+<span id="cb528-14"><a href="生成aiによる-r-コーディング.html#cb528-14" tabindex="-1"></a><span class="co">#&gt; $GBM</span></span>
+<span id="cb528-15"><a href="生成aiによる-r-コーディング.html#cb528-15" tabindex="-1"></a><span class="co">#&gt;   n.trees interaction.depth shrinkage n.minobsinnode</span></span>
+<span id="cb528-16"><a href="生成aiによる-r-コーディング.html#cb528-16" tabindex="-1"></a><span class="co">#&gt; 6     300                 3       0.1             10</span></span>
+<span id="cb528-17"><a href="生成aiによる-r-コーディング.html#cb528-17" tabindex="-1"></a><span class="fu">plot</span>(svm2)                                        <span class="co"># CV 正解率とパラメータの関係</span></span></code></pre></div>
+<p><img src="_main_files/figure-html/unnamed-chunk-389-1.png" width="75%" /></p>
+<p>テストデータでの評価:</p>
+<div class="sourceCode" id="cb529"><pre class="sourceCode r"><code class="sourceCode r"><span id="cb529-1"><a href="生成aiによる-r-コーディング.html#cb529-1" tabindex="-1"></a>evaluate_model2 <span class="ot">&lt;-</span> <span class="cf">function</span>(model) {</span>
+<span id="cb529-2"><a href="生成aiによる-r-コーディング.html#cb529-2" tabindex="-1"></a>  pred <span class="ot">&lt;-</span> <span class="fu">predict</span>(model, <span class="at">newdata =</span> testData)</span>
+<span id="cb529-3"><a href="生成aiによる-r-コーディング.html#cb529-3" tabindex="-1"></a>  cm <span class="ot">&lt;-</span> <span class="fu">confusionMatrix</span>(pred, testData<span class="sc">$</span>type, <span class="at">positive =</span> <span class="st">&quot;spam&quot;</span>, <span class="at">mode =</span> <span class="st">&quot;prec_recall&quot;</span>)</span>
+<span id="cb529-4"><a href="生成aiによる-r-コーディング.html#cb529-4" tabindex="-1"></a>  <span class="fu">c</span>(cm<span class="sc">$</span>overall[<span class="st">&quot;Accuracy&quot;</span>], cm<span class="sc">$</span>byClass[<span class="fu">c</span>(<span class="st">&quot;Precision&quot;</span>, <span class="st">&quot;Recall&quot;</span>, <span class="st">&quot;F1&quot;</span>)])</span>
+<span id="cb529-5"><a href="生成aiによる-r-コーディング.html#cb529-5" tabindex="-1"></a>}</span>
+<span id="cb529-6"><a href="生成aiによる-r-コーディング.html#cb529-6" tabindex="-1"></a>models2 <span class="ot">&lt;-</span> <span class="fu">list</span>(<span class="at">kNN =</span> knn2, <span class="at">RF =</span> rf2, <span class="at">SVM =</span> svm2, <span class="at">GBM =</span> gbm2)</span>
+<span id="cb529-7"><a href="生成aiによる-r-コーディング.html#cb529-7" tabindex="-1"></a>(res2 <span class="ot">&lt;-</span> <span class="fu">round</span>(<span class="fu">t</span>(<span class="fu">sapply</span>(models2, evaluate_model2)), <span class="dv">4</span>))</span>
+<span id="cb529-8"><a href="生成aiによる-r-コーディング.html#cb529-8" tabindex="-1"></a><span class="co">#&gt;     Accuracy Precision Recall     F1</span></span>
+<span id="cb529-9"><a href="生成aiによる-r-コーディング.html#cb529-9" tabindex="-1"></a><span class="co">#&gt; kNN   0.9064    0.9012 0.8564 0.8782</span></span>
+<span id="cb529-10"><a href="生成aiによる-r-コーディング.html#cb529-10" tabindex="-1"></a><span class="co">#&gt; RF    0.9489    0.9539 0.9144 0.9337</span></span>
+<span id="cb529-11"><a href="生成aiによる-r-コーディング.html#cb529-11" tabindex="-1"></a><span class="co">#&gt; SVM   0.9412    0.9375 0.9116 0.9244</span></span>
+<span id="cb529-12"><a href="生成aiによる-r-コーディング.html#cb529-12" tabindex="-1"></a><span class="co">#&gt; GBM   0.9499    0.9514 0.9199 0.9354</span></span></code></pre></div>
+<p>標準化を加えるだけで, kNN のテストデータの正解率は 0.8 から 0.91 に上がった.</p>
+<p>同じ CV の分割を使ったので, CV の結果も公平に比較できる.</p>
+<div class="sourceCode" id="cb530"><pre class="sourceCode r"><code class="sourceCode r"><span id="cb530-1"><a href="生成aiによる-r-コーディング.html#cb530-1" tabindex="-1"></a><span class="fu">summary</span>(<span class="fu">resamples</span>(models2))</span>
+<span id="cb530-2"><a href="生成aiによる-r-コーディング.html#cb530-2" tabindex="-1"></a><span class="co">#&gt; </span></span>
+<span id="cb530-3"><a href="生成aiによる-r-コーディング.html#cb530-3" tabindex="-1"></a><span class="co">#&gt; Call:</span></span>
+<span id="cb530-4"><a href="生成aiによる-r-コーディング.html#cb530-4" tabindex="-1"></a><span class="co">#&gt; summary.resamples(object = resamples(models2))</span></span>
+<span id="cb530-5"><a href="生成aiによる-r-コーディング.html#cb530-5" tabindex="-1"></a><span class="co">#&gt; </span></span>
+<span id="cb530-6"><a href="生成aiによる-r-コーディング.html#cb530-6" tabindex="-1"></a><span class="co">#&gt; Models: kNN, RF, SVM, GBM </span></span>
+<span id="cb530-7"><a href="生成aiによる-r-コーディング.html#cb530-7" tabindex="-1"></a><span class="co">#&gt; Number of resamples: 5 </span></span>
+<span id="cb530-8"><a href="生成aiによる-r-コーディング.html#cb530-8" tabindex="-1"></a><span class="co">#&gt; </span></span>
+<span id="cb530-9"><a href="生成aiによる-r-コーディング.html#cb530-9" tabindex="-1"></a><span class="co">#&gt; Accuracy </span></span>
+<span id="cb530-10"><a href="生成aiによる-r-コーディング.html#cb530-10" tabindex="-1"></a><span class="co">#&gt;          Min.   1st Qu.    Median      Mean   3rd Qu.      Max. NA&#39;s</span></span>
+<span id="cb530-11"><a href="生成aiによる-r-コーディング.html#cb530-11" tabindex="-1"></a><span class="co">#&gt; kNN 0.8940217 0.8967391 0.8980978 0.9057500 0.9158752 0.9240163    0</span></span>
+<span id="cb530-12"><a href="生成aiによる-r-コーディング.html#cb530-12" tabindex="-1"></a><span class="co">#&gt; RF  0.9429348 0.9497283 0.9524457 0.9511113 0.9538670 0.9565807    0</span></span>
+<span id="cb530-13"><a href="生成aiによる-r-コーディング.html#cb530-13" tabindex="-1"></a><span class="co">#&gt; SVM 0.9293478 0.9320652 0.9388587 0.9367165 0.9389417 0.9443691    0</span></span>
+<span id="cb530-14"><a href="生成aiによる-r-コーディング.html#cb530-14" tabindex="-1"></a><span class="co">#&gt; GBM 0.9415761 0.9429348 0.9429348 0.9473073 0.9457259 0.9633650    0</span></span>
+<span id="cb530-15"><a href="生成aiによる-r-コーディング.html#cb530-15" tabindex="-1"></a><span class="co">#&gt; </span></span>
+<span id="cb530-16"><a href="生成aiによる-r-コーディング.html#cb530-16" tabindex="-1"></a><span class="co">#&gt; Kappa </span></span>
+<span id="cb530-17"><a href="生成aiによる-r-コーディング.html#cb530-17" tabindex="-1"></a><span class="co">#&gt;          Min.   1st Qu.    Median      Mean   3rd Qu.      Max. NA&#39;s</span></span>
+<span id="cb530-18"><a href="生成aiによる-r-コーディング.html#cb530-18" tabindex="-1"></a><span class="co">#&gt; kNN 0.7778053 0.7808563 0.7849228 0.8014019 0.8241740 0.8392509    0</span></span>
+<span id="cb530-19"><a href="生成aiによる-r-コーディング.html#cb530-19" tabindex="-1"></a><span class="co">#&gt; RF  0.8799217 0.8942808 0.8992632 0.8970972 0.9028775 0.9091427    0</span></span>
+<span id="cb530-20"><a href="生成aiによる-r-コーディング.html#cb530-20" tabindex="-1"></a><span class="co">#&gt; SVM 0.8516911 0.8573953 0.8696863 0.8667819 0.8710632 0.8840737    0</span></span>
+<span id="cb530-21"><a href="生成aiによる-r-コーディング.html#cb530-21" tabindex="-1"></a><span class="co">#&gt; GBM 0.8765390 0.8800670 0.8803567 0.8891893 0.8855990 0.9233849    0</span></span></code></pre></div>
+<p><em>参考: 実行結果をコンソールではなくテキストファイルに書き出す場合には, 次のようにする.</em></p>
+<div class="sourceCode" id="cb531"><pre class="sourceCode r"><code class="sourceCode r"><span id="cb531-1"><a href="生成aiによる-r-コーディング.html#cb531-1" tabindex="-1"></a><span class="fu">sink</span>(<span class="st">&quot;genAI_code_output.txt&quot;</span>)  <span class="co"># 画面出力をファイルへ</span></span>
+<span id="cb531-2"><a href="生成aiによる-r-コーディング.html#cb531-2" tabindex="-1"></a><span class="co"># --- 上の R コードを実行 ---</span></span>
+<span id="cb531-3"><a href="生成aiによる-r-コーディング.html#cb531-3" tabindex="-1"></a><span class="fu">sink</span>()                         <span class="co"># 元に戻す</span></span></code></pre></div>
+</div>
+<div id="生成aiで-r-コードを書くときの注意点" class="section level2 hasAnchor" number="16.5">
+<h2><span class="header-section-number">16.5</span> 生成AIで R コードを書くときの注意点<a href="生成aiによる-r-コーディング.html#生成aiで-r-コードを書くときの注意点" class="anchor-section" aria-label="Anchor link to header"></a></h2>
+<ul>
+<li>簡単なタスクでない限り, 1回の指示で完結することはまずない.</li>
+<li>大きなタスクは小さく分けて指示する.</li>
+<li>使いたいパッケージや関数が分かっていれば, 指定する.</li>
+<li><strong>存在しないパッケージ・関数・引数を使ったコードが返ってくることがある</strong> (学習した情報が古い・誤っている, またはハルシネーション).
+→ 必ず実行して確かめ, バグを取る. 必要に応じてヘルプ (<code>?関数名</code>) やマニュアルで確認する.</li>
+<li><strong>エラーなく動いても, 正しいとは限らない.</strong> 上の例のように, 指示が実現されていないことがある. 出力の中身 (チューニングの候補, 選ばれたパラメータ, 前処理) を自分の目で確認する.</li>
+<li>データの扱いに注意する. 個人情報や社外秘のデータを, そのまま外部の生成AIサービスに入力しない. 所属組織のルールに従う.</li>
+<li>生成AIの利用ルール (授業・試験・レポートで認められる範囲) を守り, 利用した場合はその旨を明記する.</li>
+<li><strong>生成AIを使った R プログラミングにも, R と統計の基礎知識は欠かせない.</strong> 生成されたコードの良し悪しを判断できるのは, 使う人自身である.</li>
+</ul>
+<div id="年時点の補足" class="section level3 unnumbered hasAnchor">
+<h3>2026年時点の補足<a href="生成aiによる-r-コーディング.html#年時点の補足" class="anchor-section" aria-label="Anchor link to header"></a></h3>
+<ul>
+<li>対話型のチャットに加えて, エディタや RStudio・Positron の中でコードを補完・修正する支援機能や, ファイルを読み書きし, コードを実行しながら作業を進める「コーディング・エージェント」も使われるようになっている.</li>
+<li>どの道具を使う場合でも, 上の注意点 (実行して確かめる, 出力を自分で確認する, データの扱いに注意する) は変わらない.</li>
+</ul>
+<p><strong>自主課題</strong></p>
+<ol style="list-style-type: decimal">
+<li>生成AIに, 第1部のコードの問題点を指摘させてみよう. 上の (a)〜(d) をすべて見つけられるか?</li>
+<li>金融データ (例: SVM の章の <code>card_default.csv</code>) で同じ比較を行うコードを, 生成AIに書かせてみよう. クラスの不均衡 (延滞は全体の7%程度) に対して, どのような工夫を提案するか?</li>
+</ol>
+
+</div>
+</div>
+</div>
+            </section>
+
+          </div>
+        </div>
+      </div>
+<a href="xai-説明可能な-ai.html" class="navigation navigation-prev navigation-unique" aria-label="Previous page"><i class="fa fa-angle-left"></i></a>
+
+    </div>
+  </div>
+<script src="libs/gitbook-2.6.7/js/app.min.js"></script>
+<script src="libs/gitbook-2.6.7/js/clipboard.min.js"></script>
+<script src="libs/gitbook-2.6.7/js/plugin-search.js"></script>
+<script src="libs/gitbook-2.6.7/js/plugin-sharing.js"></script>
+<script src="libs/gitbook-2.6.7/js/plugin-fontsettings.js"></script>
+<script src="libs/gitbook-2.6.7/js/plugin-bookdown.js"></script>
+<script src="libs/gitbook-2.6.7/js/jquery.highlight.js"></script>
+<script src="libs/gitbook-2.6.7/js/plugin-clipboard.js"></script>
+<script>
+gitbook.require(["gitbook"], function(gitbook) {
+gitbook.start({
+"sharing": {
+"github": false,
+"facebook": true,
+"twitter": true,
+"linkedin": false,
+"weibo": false,
+"instapaper": false,
+"vk": false,
+"whatsapp": false,
+"all": ["facebook", "twitter", "linkedin", "weibo", "instapaper"]
+},
+"fontsettings": {
+"theme": "white",
+"family": "sans",
+"size": 2
+},
+"edit": {
+"link": null,
+"text": null
+},
+"history": {
+"link": null,
+"text": null
+},
+"view": {
+"link": null,
+"text": null
+},
+"download": null,
+"search": {
+"engine": "fuse",
+"options": null
+},
+"toc": {
+"collapse": "subsection"
+}
+});
+});
+</script>
+
+<!-- dynamically load mathjax for compatibility with self-contained -->
+<script>
+  (function () {
+    var script = document.createElement("script");
+    script.type = "text/javascript";
+    var src = "true";
+    if (src === "" || src === "true") src = "https://cdnjs.cloudflare.com/ajax/libs/mathjax/2.7.9/latest.js?config=TeX-MML-AM_CHTML";
+    if (location.protocol !== "file:")
+      if (/^https?:/.test(src))
+        src = src.replace(/^https?:/, '');
+    script.src = src;
+    document.getElementsByTagName("head")[0].appendChild(script);
+  })();
+</script>
+</body>
+
+</html>

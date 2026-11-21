@@ -1,0 +1,1150 @@
+<!DOCTYPE html>
+<html lang="" xml:lang="">
+<head>
+
+  <meta charset="utf-8" />
+  <meta http-equiv="X-UA-Compatible" content="IE=edge" />
+  <title>Chapter 15 XAI (説明可能な AI) | 金融データサイエンス</title>
+  <meta name="description" content="Chapter 15 XAI (説明可能な AI) | 金融データサイエンス" />
+  <meta name="generator" content="bookdown 0.37 and GitBook 2.6.7" />
+
+  <meta property="og:title" content="Chapter 15 XAI (説明可能な AI) | 金融データサイエンス" />
+  <meta property="og:type" content="book" />
+  
+  
+  
+
+  <meta name="twitter:card" content="summary" />
+  <meta name="twitter:title" content="Chapter 15 XAI (説明可能な AI) | 金融データサイエンス" />
+  
+  
+  
+
+<meta name="author" content="林 高樹" />
+
+
+
+  <meta name="viewport" content="width=device-width, initial-scale=1" />
+  <meta name="apple-mobile-web-app-capable" content="yes" />
+  <meta name="apple-mobile-web-app-status-bar-style" content="black" />
+  
+  
+<link rel="prev" href="クラスター分析.html"/>
+<link rel="next" href="生成aiによる-r-コーディング.html"/>
+<script src="libs/jquery-3.6.1/jquery-3.6.1.min.js"></script>
+<script src="https://cdn.jsdelivr.net/npm/fuse.js@6.4.6/dist/fuse.min.js"></script>
+<link href="libs/gitbook-2.6.7/css/style.css" rel="stylesheet" />
+<link href="libs/gitbook-2.6.7/css/plugin-table.css" rel="stylesheet" />
+<link href="libs/gitbook-2.6.7/css/plugin-bookdown.css" rel="stylesheet" />
+<link href="libs/gitbook-2.6.7/css/plugin-highlight.css" rel="stylesheet" />
+<link href="libs/gitbook-2.6.7/css/plugin-search.css" rel="stylesheet" />
+<link href="libs/gitbook-2.6.7/css/plugin-fontsettings.css" rel="stylesheet" />
+<link href="libs/gitbook-2.6.7/css/plugin-clipboard.css" rel="stylesheet" />
+
+
+
+
+
+
+
+
+<link href="libs/anchor-sections-1.1.0/anchor-sections.css" rel="stylesheet" />
+<link href="libs/anchor-sections-1.1.0/anchor-sections-hash.css" rel="stylesheet" />
+<script src="libs/anchor-sections-1.1.0/anchor-sections.js"></script>
+
+
+<style type="text/css">
+pre > code.sourceCode { white-space: pre; position: relative; }
+pre > code.sourceCode > span { line-height: 1.25; }
+pre > code.sourceCode > span:empty { height: 1.2em; }
+.sourceCode { overflow: visible; }
+code.sourceCode > span { color: inherit; text-decoration: inherit; }
+pre.sourceCode { margin: 0; }
+@media screen {
+div.sourceCode { overflow: auto; }
+}
+@media print {
+pre > code.sourceCode { white-space: pre-wrap; }
+pre > code.sourceCode > span { text-indent: -5em; padding-left: 5em; }
+}
+pre.numberSource code
+  { counter-reset: source-line 0; }
+pre.numberSource code > span
+  { position: relative; left: -4em; counter-increment: source-line; }
+pre.numberSource code > span > a:first-child::before
+  { content: counter(source-line);
+    position: relative; left: -1em; text-align: right; vertical-align: baseline;
+    border: none; display: inline-block;
+    -webkit-touch-callout: none; -webkit-user-select: none;
+    -khtml-user-select: none; -moz-user-select: none;
+    -ms-user-select: none; user-select: none;
+    padding: 0 4px; width: 4em;
+    color: #aaaaaa;
+  }
+pre.numberSource { margin-left: 3em; border-left: 1px solid #aaaaaa;  padding-left: 4px; }
+div.sourceCode
+  {   }
+@media screen {
+pre > code.sourceCode > span > a:first-child::before { text-decoration: underline; }
+}
+code span.al { color: #ff0000; font-weight: bold; } /* Alert */
+code span.an { color: #60a0b0; font-weight: bold; font-style: italic; } /* Annotation */
+code span.at { color: #7d9029; } /* Attribute */
+code span.bn { color: #40a070; } /* BaseN */
+code span.bu { color: #008000; } /* BuiltIn */
+code span.cf { color: #007020; font-weight: bold; } /* ControlFlow */
+code span.ch { color: #4070a0; } /* Char */
+code span.cn { color: #880000; } /* Constant */
+code span.co { color: #60a0b0; font-style: italic; } /* Comment */
+code span.cv { color: #60a0b0; font-weight: bold; font-style: italic; } /* CommentVar */
+code span.do { color: #ba2121; font-style: italic; } /* Documentation */
+code span.dt { color: #902000; } /* DataType */
+code span.dv { color: #40a070; } /* DecVal */
+code span.er { color: #ff0000; font-weight: bold; } /* Error */
+code span.ex { } /* Extension */
+code span.fl { color: #40a070; } /* Float */
+code span.fu { color: #06287e; } /* Function */
+code span.im { color: #008000; font-weight: bold; } /* Import */
+code span.in { color: #60a0b0; font-weight: bold; font-style: italic; } /* Information */
+code span.kw { color: #007020; font-weight: bold; } /* Keyword */
+code span.op { color: #666666; } /* Operator */
+code span.ot { color: #007020; } /* Other */
+code span.pp { color: #bc7a00; } /* Preprocessor */
+code span.sc { color: #4070a0; } /* SpecialChar */
+code span.ss { color: #bb6688; } /* SpecialString */
+code span.st { color: #4070a0; } /* String */
+code span.va { color: #19177c; } /* Variable */
+code span.vs { color: #4070a0; } /* VerbatimString */
+code span.wa { color: #60a0b0; font-weight: bold; font-style: italic; } /* Warning */
+</style>
+
+<style type="text/css">
+  
+  div.hanging-indent{margin-left: 1.5em; text-indent: -1.5em;}
+</style>
+
+</head>
+
+<body>
+
+
+
+  <div class="book without-animation with-summary font-size-2 font-family-1" data-basepath=".">
+
+    <div class="book-summary">
+      <nav role="navigation">
+
+<ul class="summary">
+<li><a href="./">金融データサイエンス</a></li>
+
+<li class="divider"></li>
+<li class="chapter" data-level="1" data-path="index.html"><a href="index.html"><i class="fa fa-check"></i><b>1</b> はじめに</a>
+<ul>
+<li class="chapter" data-level="1.1" data-path="index.html"><a href="index.html#コースの目的"><i class="fa fa-check"></i><b>1.1</b> コースの目的</a></li>
+<li class="chapter" data-level="1.2" data-path="index.html"><a href="index.html#統計学統計的手法の学習について"><i class="fa fa-check"></i><b>1.2</b> 統計学/統計的手法の学習について</a>
+<ul>
+<li class="chapter" data-level="" data-path="index.html"><a href="index.html#学習の目標"><i class="fa fa-check"></i>学習の目標</a></li>
+<li class="chapter" data-level="" data-path="index.html"><a href="index.html#統計学統計的手法の学習方法"><i class="fa fa-check"></i>統計学/統計的手法の学習方法</a></li>
+<li class="chapter" data-level="" data-path="index.html"><a href="index.html#統計学統計的手法の学習ステップ"><i class="fa fa-check"></i>統計学/統計的手法の学習ステップ</a></li>
+</ul></li>
+<li class="chapter" data-level="1.3" data-path="index.html"><a href="index.html#金融ビジネス応用における統計学の最近の趨勢"><i class="fa fa-check"></i><b>1.3</b> 金融・ビジネス応用における統計学の最近の趨勢</a></li>
+<li class="chapter" data-level="1.4" data-path="index.html"><a href="index.html#本書内の記載の注意点"><i class="fa fa-check"></i><b>1.4</b> 本書内の記載の注意点</a></li>
+</ul></li>
+<li class="chapter" data-level="2" data-path="r言語の基本.html"><a href="r言語の基本.html"><i class="fa fa-check"></i><b>2</b> R言語の基本</a>
+<ul>
+<li class="chapter" data-level="2.1" data-path="r言語の基本.html"><a href="r言語の基本.html#rの基本プログラミング"><i class="fa fa-check"></i><b>2.1</b> Rの基本プログラミング</a>
+<ul>
+<li class="chapter" data-level="" data-path="r言語の基本.html"><a href="r言語の基本.html#生成ai利用に関する注意事項"><i class="fa fa-check"></i>生成AI利用に関する注意事項</a></li>
+<li class="chapter" data-level="2.1.1" data-path="r言語の基本.html"><a href="r言語の基本.html#基本操作"><i class="fa fa-check"></i><b>2.1.1</b> 基本操作</a></li>
+<li class="chapter" data-level="2.1.2" data-path="r言語の基本.html"><a href="r言語の基本.html#基本構文"><i class="fa fa-check"></i><b>2.1.2</b> 基本構文</a></li>
+<li class="chapter" data-level="2.1.3" data-path="r言語の基本.html"><a href="r言語の基本.html#自作関数"><i class="fa fa-check"></i><b>2.1.3</b> 自作関数</a></li>
+<li class="chapter" data-level="2.1.4" data-path="r言語の基本.html"><a href="r言語の基本.html#パッケージのインストール-読み込み"><i class="fa fa-check"></i><b>2.1.4</b> パッケージのインストール &amp; 読み込み</a></li>
+<li class="chapter" data-level="2.1.5" data-path="r言語の基本.html"><a href="r言語の基本.html#ヘルプ"><i class="fa fa-check"></i><b>2.1.5</b> ヘルプ</a></li>
+</ul></li>
+<li class="chapter" data-level="2.2" data-path="r言語の基本.html"><a href="r言語の基本.html#データの型や構造"><i class="fa fa-check"></i><b>2.2</b> データの型や構造</a>
+<ul>
+<li class="chapter" data-level="2.2.1" data-path="r言語の基本.html"><a href="r言語の基本.html#データの値の種類-データ型"><i class="fa fa-check"></i><b>2.2.1</b> データの値の種類 (“データ型”)</a></li>
+<li class="chapter" data-level="2.2.2" data-path="r言語の基本.html"><a href="r言語の基本.html#データの配列の仕方-データ構造"><i class="fa fa-check"></i><b>2.2.2</b> データの配列の仕方 (“データ構造”)</a></li>
+<li class="chapter" data-level="2.2.3" data-path="r言語の基本.html"><a href="r言語の基本.html#ベクトル"><i class="fa fa-check"></i><b>2.2.3</b> ベクトル</a></li>
+<li class="chapter" data-level="2.2.4" data-path="r言語の基本.html"><a href="r言語の基本.html#行列"><i class="fa fa-check"></i><b>2.2.4</b> 行列</a></li>
+<li class="chapter" data-level="2.2.5" data-path="r言語の基本.html"><a href="r言語の基本.html#リスト"><i class="fa fa-check"></i><b>2.2.5</b> リスト</a></li>
+<li class="chapter" data-level="2.2.6" data-path="r言語の基本.html"><a href="r言語の基本.html#データフレーム"><i class="fa fa-check"></i><b>2.2.6</b> データフレーム</a></li>
+</ul></li>
+<li class="chapter" data-level="2.3" data-path="r言語の基本.html"><a href="r言語の基本.html#データの操作演算"><i class="fa fa-check"></i><b>2.3</b> データの操作・演算</a>
+<ul>
+<li class="chapter" data-level="2.3.1" data-path="r言語の基本.html"><a href="r言語の基本.html#ベクトルの結合-ソート"><i class="fa fa-check"></i><b>2.3.1</b> ベクトルの結合, ソート</a></li>
+<li class="chapter" data-level="2.3.2" data-path="r言語の基本.html"><a href="r言語の基本.html#二項演算"><i class="fa fa-check"></i><b>2.3.2</b> 二項演算</a></li>
+<li class="chapter" data-level="2.3.3" data-path="r言語の基本.html"><a href="r言語の基本.html#論理演算"><i class="fa fa-check"></i><b>2.3.3</b> 論理演算</a></li>
+<li class="chapter" data-level="2.3.4" data-path="r言語の基本.html"><a href="r言語の基本.html#条件式"><i class="fa fa-check"></i><b>2.3.4</b> 条件式</a></li>
+<li class="chapter" data-level="2.3.5" data-path="r言語の基本.html"><a href="r言語の基本.html#行列演算"><i class="fa fa-check"></i><b>2.3.5</b> 行列演算</a></li>
+</ul></li>
+<li class="chapter" data-level="2.4" data-path="r言語の基本.html"><a href="r言語の基本.html#r関数"><i class="fa fa-check"></i><b>2.4</b> R関数</a>
+<ul>
+<li class="chapter" data-level="2.4.1" data-path="r言語の基本.html"><a href="r言語の基本.html#数学基本関数"><i class="fa fa-check"></i><b>2.4.1</b> 数学基本関数</a></li>
+<li class="chapter" data-level="2.4.2" data-path="r言語の基本.html"><a href="r言語の基本.html#基本統計量の計算"><i class="fa fa-check"></i><b>2.4.2</b> 基本統計量の計算</a></li>
+<li class="chapter" data-level="2.4.3" data-path="r言語の基本.html"><a href="r言語の基本.html#確率分布"><i class="fa fa-check"></i><b>2.4.3</b> 確率分布</a></li>
+<li class="chapter" data-level="2.4.4" data-path="r言語の基本.html"><a href="r言語の基本.html#その他便利な関数"><i class="fa fa-check"></i><b>2.4.4</b> その他便利な関数</a></li>
+</ul></li>
+<li class="chapter" data-level="2.5" data-path="r言語の基本.html"><a href="r言語の基本.html#データの可視化"><i class="fa fa-check"></i><b>2.5</b> データの可視化</a></li>
+<li class="chapter" data-level="2.6" data-path="r言語の基本.html"><a href="r言語の基本.html#ファイル入出力"><i class="fa fa-check"></i><b>2.6</b> ファイル入出力</a>
+<ul>
+<li class="chapter" data-level="2.6.1" data-path="r言語の基本.html"><a href="r言語の基本.html#テキストファイル読み込み"><i class="fa fa-check"></i><b>2.6.1</b> テキストファイル読み込み</a></li>
+<li class="chapter" data-level="2.6.2" data-path="r言語の基本.html"><a href="r言語の基本.html#テキストファイル書き出し"><i class="fa fa-check"></i><b>2.6.2</b> テキストファイル書き出し</a></li>
+</ul></li>
+<li class="chapter" data-level="2.7" data-path="r言語の基本.html"><a href="r言語の基本.html#パッケージtidyverse"><i class="fa fa-check"></i><b>2.7</b> パッケージ<strong>tidyverse</strong></a>
+<ul>
+<li class="chapter" data-level="2.7.1" data-path="r言語の基本.html"><a href="r言語の基本.html#初心者がtidyverseから学び始めることについて"><i class="fa fa-check"></i><b>2.7.1</b> 初心者が<strong>tidyverse</strong>から学び始めることについて</a></li>
+<li class="chapter" data-level="2.7.2" data-path="r言語の基本.html"><a href="r言語の基本.html#tidyverseの基本"><i class="fa fa-check"></i><b>2.7.2</b> <strong>tidyverse</strong>の基本</a></li>
+</ul></li>
+</ul></li>
+<li class="chapter" data-level="3" data-path="線形回帰分析.html"><a href="線形回帰分析.html"><i class="fa fa-check"></i><b>3</b> 線形回帰分析</a>
+<ul>
+<li class="chapter" data-level="3.1" data-path="線形回帰分析.html"><a href="線形回帰分析.html#基本操作-1"><i class="fa fa-check"></i><b>3.1</b> 基本操作</a>
+<ul>
+<li class="chapter" data-level="" data-path="線形回帰分析.html"><a href="線形回帰分析.html#データ-1ルーム賃貸マンションの家賃-仮想データ"><i class="fa fa-check"></i>データ: 1ルーム賃貸マンションの家賃 (仮想データ)</a></li>
+</ul></li>
+<li class="chapter" data-level="3.2" data-path="線形回帰分析.html"><a href="線形回帰分析.html#結果の見方と変数選択"><i class="fa fa-check"></i><b>3.2</b> 結果の見方と変数選択</a>
+<ul>
+<li class="chapter" data-level="" data-path="線形回帰分析.html"><a href="線形回帰分析.html#データ-上場企業の-pbr-と財務指標-仮想データ"><i class="fa fa-check"></i>データ: 上場企業の PBR と財務指標 (仮想データ)</a></li>
+</ul></li>
+<li class="chapter" data-level="3.3" data-path="線形回帰分析.html"><a href="線形回帰分析.html#説明変数に質的変数を含む回帰"><i class="fa fa-check"></i><b>3.3</b> 説明変数に質的変数を含む回帰</a>
+<ul>
+<li class="chapter" data-level="" data-path="線形回帰分析.html"><a href="線形回帰分析.html#データ-高速道路の事故率-実データ-hoffstedt-の-highway-データ"><i class="fa fa-check"></i>データ: 高速道路の事故率 (実データ: Hoffstedt の Highway データ)</a></li>
+</ul></li>
+<li class="chapter" data-level="3.4" data-path="線形回帰分析.html"><a href="線形回帰分析.html#説明変数に質的変数を含む回帰-2"><i class="fa fa-check"></i><b>3.4</b> 説明変数に質的変数を含む回帰 (2)</a>
+<ul>
+<li class="chapter" data-level="" data-path="線形回帰分析.html"><a href="線形回帰分析.html#データ-キャリア年数と月収-仮想データ"><i class="fa fa-check"></i>データ: キャリア年数と月収 (仮想データ)</a></li>
+</ul></li>
+<li class="chapter" data-level="3.5" data-path="線形回帰分析.html"><a href="線形回帰分析.html#多項式回帰"><i class="fa fa-check"></i><b>3.5</b> 多項式回帰</a>
+<ul>
+<li class="chapter" data-level="" data-path="線形回帰分析.html"><a href="線形回帰分析.html#データ-男性労働者の賃金-実データ-islr2-の-wage"><i class="fa fa-check"></i>データ: 男性労働者の賃金 (実データ: ISLR2 の <code>Wage</code>)</a></li>
+</ul></li>
+<li class="chapter" data-level="3.6" data-path="線形回帰分析.html"><a href="線形回帰分析.html#関数factor"><i class="fa fa-check"></i><b>3.6</b> 関数<code>factor()</code></a>
+<ul>
+<li class="chapter" data-level="" data-path="線形回帰分析.html"><a href="線形回帰分析.html#関数factorの使い方"><i class="fa fa-check"></i>関数<code>factor()</code>の使い方</a></li>
+</ul></li>
+</ul></li>
+<li class="chapter" data-level="4" data-path="ロジットプロビット回帰分析.html"><a href="ロジットプロビット回帰分析.html"><i class="fa fa-check"></i><b>4</b> ロジット/プロビット回帰分析</a>
+<ul>
+<li class="chapter" data-level="4.1" data-path="ロジットプロビット回帰分析.html"><a href="ロジットプロビット回帰分析.html#基本操作-2"><i class="fa fa-check"></i><b>4.1</b> 基本操作</a>
+<ul>
+<li class="chapter" data-level="" data-path="ロジットプロビット回帰分析.html"><a href="ロジットプロビット回帰分析.html#シミュレーションデータによる確認"><i class="fa fa-check"></i>シミュレーションデータによる確認</a></li>
+</ul></li>
+<li class="chapter" data-level="4.2" data-path="ロジットプロビット回帰分析.html"><a href="ロジットプロビット回帰分析.html#データ分析例"><i class="fa fa-check"></i><b>4.2</b> データ分析例</a>
+<ul>
+<li class="chapter" data-level="" data-path="ロジットプロビット回帰分析.html"><a href="ロジットプロビット回帰分析.html#データ-社債発行体のデフォルト-集計データ-仮想データ"><i class="fa fa-check"></i>データ: 社債発行体のデフォルト (集計データ, 仮想データ)</a></li>
+<li class="chapter" data-level="" data-path="ロジットプロビット回帰分析.html"><a href="ロジットプロビット回帰分析.html#データ-個人向けローンのデフォルト-仮想データ"><i class="fa fa-check"></i>データ: 個人向けローンのデフォルト (仮想データ)</a></li>
+</ul></li>
+<li class="chapter" data-level="4.3" data-path="ロジットプロビット回帰分析.html"><a href="ロジットプロビット回帰分析.html#オッズ比と相対リスク"><i class="fa fa-check"></i><b>4.3</b> オッズ比と相対リスク</a></li>
+<li class="chapter" data-level="4.4" data-path="ロジットプロビット回帰分析.html"><a href="ロジットプロビット回帰分析.html#疑似r2の計算"><i class="fa fa-check"></i><b>4.4</b> 疑似R2の計算</a>
+<ul>
+<li class="chapter" data-level="" data-path="ロジットプロビット回帰分析.html"><a href="ロジットプロビット回帰分析.html#パッケージdesctools"><i class="fa fa-check"></i>パッケージ<strong>DescTools</strong></a></li>
+<li class="chapter" data-level="" data-path="ロジットプロビット回帰分析.html"><a href="ロジットプロビット回帰分析.html#パッケージpscl"><i class="fa fa-check"></i>パッケージ<strong>pscl</strong></a></li>
+<li class="chapter" data-level="" data-path="ロジットプロビット回帰分析.html"><a href="ロジットプロビット回帰分析.html#パッケージperformance"><i class="fa fa-check"></i>パッケージ<strong>performance</strong></a></li>
+<li class="chapter" data-level="" data-path="ロジットプロビット回帰分析.html"><a href="ロジットプロビット回帰分析.html#参考-疑似r2の使い分け"><i class="fa fa-check"></i>(参考) 疑似R2の使い分け</a></li>
+</ul></li>
+</ul></li>
+<li class="chapter" data-level="5" data-path="一般化加法モデル-gam.html"><a href="一般化加法モデル-gam.html"><i class="fa fa-check"></i><b>5</b> 一般化加法モデル (GAM)</a>
+<ul>
+<li class="chapter" data-level="5.1" data-path="一般化加法モデル-gam.html"><a href="一般化加法モデル-gam.html#多項式回帰とスプライン"><i class="fa fa-check"></i><b>5.1</b> 多項式回帰とスプライン</a>
+<ul>
+<li class="chapter" data-level="" data-path="一般化加法モデル-gam.html"><a href="一般化加法モデル-gam.html#データ-社債の信用スプレッド-仮想データ"><i class="fa fa-check"></i>データ: 社債の信用スプレッド (仮想データ)</a></li>
+<li class="chapter" data-level="" data-path="一般化加法モデル-gam.html"><a href="一般化加法モデル-gam.html#多項式回帰-1"><i class="fa fa-check"></i>多項式回帰</a></li>
+<li class="chapter" data-level="" data-path="一般化加法モデル-gam.html"><a href="一般化加法モデル-gam.html#スプライン"><i class="fa fa-check"></i>スプライン</a></li>
+</ul></li>
+<li class="chapter" data-level="5.2" data-path="一般化加法モデル-gam.html"><a href="一般化加法モデル-gam.html#パッケージgam"><i class="fa fa-check"></i><b>5.2</b> パッケージ<strong>gam</strong></a></li>
+<li class="chapter" data-level="5.3" data-path="一般化加法モデル-gam.html"><a href="一般化加法モデル-gam.html#パッケージmgcv"><i class="fa fa-check"></i><b>5.3</b> パッケージ<strong>mgcv</strong></a>
+<ul>
+<li class="chapter" data-level="" data-path="一般化加法モデル-gam.html"><a href="一般化加法モデル-gam.html#関数名の衝突について"><i class="fa fa-check"></i>関数名の衝突について</a></li>
+<li class="chapter" data-level="" data-path="一般化加法モデル-gam.html"><a href="一般化加法モデル-gam.html#gam-の当てはめ"><i class="fa fa-check"></i>GAM の当てはめ</a></li>
+<li class="chapter" data-level="" data-path="一般化加法モデル-gam.html"><a href="一般化加法モデル-gam.html#交互作用を含めた-gam"><i class="fa fa-check"></i>交互作用を含めた GAM</a></li>
+<li class="chapter" data-level="" data-path="一般化加法モデル-gam.html"><a href="一般化加法モデル-gam.html#gam-によるロジット回帰"><i class="fa fa-check"></i>GAM によるロジット回帰</a></li>
+</ul></li>
+<li class="chapter" data-level="5.4" data-path="一般化加法モデル-gam.html"><a href="一般化加法モデル-gam.html#パッケージprophet"><i class="fa fa-check"></i><b>5.4</b> パッケージ<strong>prophet</strong></a>
+<ul>
+<li class="chapter" data-level="" data-path="一般化加法モデル-gam.html"><a href="一般化加法モデル-gam.html#データ-atm-出金額-仮想データ"><i class="fa fa-check"></i>データ: ATM 出金額 (仮想データ)</a></li>
+<li class="chapter" data-level="" data-path="一般化加法モデル-gam.html"><a href="一般化加法モデル-gam.html#prophet-による予測"><i class="fa fa-check"></i>prophet による予測</a></li>
+</ul></li>
+</ul></li>
+<li class="chapter" data-level="6" data-path="正則化回帰-lasso-ridge回帰-elastic-net.html"><a href="正則化回帰-lasso-ridge回帰-elastic-net.html"><i class="fa fa-check"></i><b>6</b> 正則化回帰 (lasso, ridge回帰, elastic net)</a>
+<ul>
+<li class="chapter" data-level="6.1" data-path="正則化回帰-lasso-ridge回帰-elastic-net.html"><a href="正則化回帰-lasso-ridge回帰-elastic-net.html#検証用セット法による予測精度の評価"><i class="fa fa-check"></i><b>6.1</b> 検証用セット法による予測精度の評価</a>
+<ul>
+<li class="chapter" data-level="" data-path="正則化回帰-lasso-ridge回帰-elastic-net.html"><a href="正則化回帰-lasso-ridge回帰-elastic-net.html#データ-社債の信用スプレッドと企業特性-仮想データ"><i class="fa fa-check"></i>データ: 社債の信用スプレッドと企業特性 (仮想データ)</a></li>
+</ul></li>
+<li class="chapter" data-level="6.2" data-path="正則化回帰-lasso-ridge回帰-elastic-net.html"><a href="正則化回帰-lasso-ridge回帰-elastic-net.html#lasso"><i class="fa fa-check"></i><b>6.2</b> lasso</a>
+<ul>
+<li class="chapter" data-level="" data-path="正則化回帰-lasso-ridge回帰-elastic-net.html"><a href="正則化回帰-lasso-ridge回帰-elastic-net.html#関数glmnetの基本操作"><i class="fa fa-check"></i>関数<code>glmnet()</code>の基本操作</a></li>
+<li class="chapter" data-level="" data-path="正則化回帰-lasso-ridge回帰-elastic-net.html"><a href="正則化回帰-lasso-ridge回帰-elastic-net.html#lambda-のグリッド指定"><i class="fa fa-check"></i><code>lambda</code> のグリッド指定</a></li>
+<li class="chapter" data-level="" data-path="正則化回帰-lasso-ridge回帰-elastic-net.html"><a href="正則化回帰-lasso-ridge回帰-elastic-net.html#交差検証によるパラメータチューニング"><i class="fa fa-check"></i>交差検証によるパラメータ・チューニング</a></li>
+</ul></li>
+<li class="chapter" data-level="6.3" data-path="正則化回帰-lasso-ridge回帰-elastic-net.html"><a href="正則化回帰-lasso-ridge回帰-elastic-net.html#ridge回帰"><i class="fa fa-check"></i><b>6.3</b> ridge回帰</a></li>
+<li class="chapter" data-level="6.4" data-path="正則化回帰-lasso-ridge回帰-elastic-net.html"><a href="正則化回帰-lasso-ridge回帰-elastic-net.html#elastic-net"><i class="fa fa-check"></i><b>6.4</b> elastic net</a>
+<ul>
+<li class="chapter" data-level="" data-path="正則化回帰-lasso-ridge回帰-elastic-net.html"><a href="正則化回帰-lasso-ridge回帰-elastic-net.html#テストmse-の比較"><i class="fa fa-check"></i>テストMSE の比較</a></li>
+</ul></li>
+<li class="chapter" data-level="6.5" data-path="正則化回帰-lasso-ridge回帰-elastic-net.html"><a href="正則化回帰-lasso-ridge回帰-elastic-net.html#glm-正則化"><i class="fa fa-check"></i><b>6.5</b> GLM + 正則化</a>
+<ul>
+<li class="chapter" data-level="" data-path="正則化回帰-lasso-ridge回帰-elastic-net.html"><a href="正則化回帰-lasso-ridge回帰-elastic-net.html#データ-german-credit-実データを加工"><i class="fa fa-check"></i>データ: German Credit (実データを加工)</a></li>
+</ul></li>
+<li class="chapter" data-level="6.6" data-path="正則化回帰-lasso-ridge回帰-elastic-net.html"><a href="正則化回帰-lasso-ridge回帰-elastic-net.html#参考-glm-の変数選択の代替的方法"><i class="fa fa-check"></i><b>6.6</b> (参考) GLM の変数選択の代替的方法</a></li>
+</ul></li>
+<li class="chapter" data-level="7" data-path="回帰モデルの評価と交差検証.html"><a href="回帰モデルの評価と交差検証.html"><i class="fa fa-check"></i><b>7</b> 回帰モデルの評価と交差検証</a>
+<ul>
+<li class="chapter" data-level="7.1" data-path="回帰モデルの評価と交差検証.html"><a href="回帰モデルの評価と交差検証.html#学習誤差と予測誤差"><i class="fa fa-check"></i><b>7.1</b> 学習誤差と予測誤差</a>
+<ul>
+<li class="chapter" data-level="" data-path="回帰モデルの評価と交差検証.html"><a href="回帰モデルの評価と交差検証.html#データ-社債の信用スプレッド-仮想データ-1"><i class="fa fa-check"></i>データ: 社債の信用スプレッド (仮想データ)</a></li>
+<li class="chapter" data-level="" data-path="回帰モデルの評価と交差検証.html"><a href="回帰モデルの評価と交差検証.html#モデルの複雑さと学習誤差"><i class="fa fa-check"></i>モデルの複雑さと学習誤差</a></li>
+</ul></li>
+<li class="chapter" data-level="7.2" data-path="回帰モデルの評価と交差検証.html"><a href="回帰モデルの評価と交差検証.html#検証用セットアプローチ"><i class="fa fa-check"></i><b>7.2</b> 検証用セット・アプローチ</a></li>
+<li class="chapter" data-level="7.3" data-path="回帰モデルの評価と交差検証.html"><a href="回帰モデルの評価と交差検証.html#交差検証"><i class="fa fa-check"></i><b>7.3</b> 交差検証</a>
+<ul>
+<li class="chapter" data-level="" data-path="回帰モデルの評価と交差検証.html"><a href="回帰モデルの評価と交差検証.html#loocv-1個抜き交差検証"><i class="fa fa-check"></i>LOOCV (1個抜き交差検証)</a></li>
+<li class="chapter" data-level="" data-path="回帰モデルの評価と交差検証.html"><a href="回帰モデルの評価と交差検証.html#k-分割交差検証-k-fold-cv"><i class="fa fa-check"></i>k-分割交差検証 (k-fold CV)</a></li>
+<li class="chapter" data-level="" data-path="回帰モデルの評価と交差検証.html"><a href="回帰モデルの評価と交差検証.html#標準誤差ルール"><i class="fa fa-check"></i>1標準誤差ルール</a></li>
+</ul></li>
+<li class="chapter" data-level="7.4" data-path="回帰モデルの評価と交差検証.html"><a href="回帰モデルの評価と交差検証.html#その他の評価指標"><i class="fa fa-check"></i><b>7.4</b> その他の評価指標</a></li>
+</ul></li>
+<li class="chapter" data-level="8" data-path="判別分析.html"><a href="判別分析.html"><i class="fa fa-check"></i><b>8</b> 判別分析</a>
+<ul>
+<li class="chapter" data-level="8.1" data-path="判別分析.html"><a href="判別分析.html#線形判別2次判別"><i class="fa fa-check"></i><b>8.1</b> 線形判別・2次判別</a>
+<ul>
+<li class="chapter" data-level="" data-path="判別分析.html"><a href="判別分析.html#データ-sp500-の日次リターン-実データ-islr2-の-smarket"><i class="fa fa-check"></i>データ: S&amp;P500 の日次リターン (実データ: ISLR2 の <code>Smarket</code>)</a></li>
+<li class="chapter" data-level="" data-path="判別分析.html"><a href="判別分析.html#線形判別-lda"><i class="fa fa-check"></i>線形判別 (LDA)</a></li>
+<li class="chapter" data-level="" data-path="判別分析.html"><a href="判別分析.html#次判別-qda"><i class="fa fa-check"></i>2次判別 (QDA)</a></li>
+</ul></li>
+<li class="chapter" data-level="8.2" data-path="判別分析.html"><a href="判別分析.html#knn法"><i class="fa fa-check"></i><b>8.2</b> kNN法</a></li>
+<li class="chapter" data-level="8.3" data-path="判別分析.html"><a href="判別分析.html#判別境界の可視化"><i class="fa fa-check"></i><b>8.3</b> 判別境界の可視化</a>
+<ul>
+<li class="chapter" data-level="" data-path="判別分析.html"><a href="判別分析.html#データ-社債発行体の格付-仮想データ"><i class="fa fa-check"></i>データ: 社債発行体の格付 (仮想データ)</a></li>
+<li class="chapter" data-level="" data-path="判別分析.html"><a href="判別分析.html#パッケージklarの関数partimat"><i class="fa fa-check"></i>パッケージ<strong>klaR</strong>の関数<code>partimat()</code></a></li>
+<li class="chapter" data-level="" data-path="判別分析.html"><a href="判別分析.html#ナイーブベイズ法"><i class="fa fa-check"></i>ナイーブ・ベイズ法</a></li>
+<li class="chapter" data-level="" data-path="判別分析.html"><a href="判別分析.html#多変数での判別-lda-vs-qda"><i class="fa fa-check"></i>多変数での判別: LDA vs QDA</a></li>
+</ul></li>
+</ul></li>
+<li class="chapter" data-level="9" data-path="決定木分析.html"><a href="決定木分析.html"><i class="fa fa-check"></i><b>9</b> 決定木分析</a>
+<ul>
+<li class="chapter" data-level="9.1" data-path="決定木分析.html"><a href="決定木分析.html#導入-回帰木-vs-線形回帰"><i class="fa fa-check"></i><b>9.1</b> 導入: 回帰木 vs 線形回帰</a>
+<ul>
+<li class="chapter" data-level="" data-path="決定木分析.html"><a href="決定木分析.html#データ-自動車の速度と制動距離-実データ-r-の組み込みデータ-cars"><i class="fa fa-check"></i>データ: 自動車の速度と制動距離 (実データ: R の組み込みデータ <code>cars</code>)</a></li>
+<li class="chapter" data-level="9.1.1" data-path="決定木分析.html"><a href="決定木分析.html#回帰木の基本操作"><i class="fa fa-check"></i><b>9.1.1</b> 回帰木の基本操作</a></li>
+</ul></li>
+<li class="chapter" data-level="9.2" data-path="決定木分析.html"><a href="決定木分析.html#回帰木"><i class="fa fa-check"></i><b>9.2</b> 回帰木</a>
+<ul>
+<li class="chapter" data-level="" data-path="決定木分析.html"><a href="決定木分析.html#データ-sp500-の日次リターン-実データ-islr2-の-smarket-再掲"><i class="fa fa-check"></i>データ: S&amp;P500 の日次リターン (実データ: ISLR2 の <code>Smarket</code>, 再掲)</a></li>
+</ul></li>
+<li class="chapter" data-level="9.3" data-path="決定木分析.html"><a href="決定木分析.html#分類木"><i class="fa fa-check"></i><b>9.3</b> 分類木</a></li>
+</ul></li>
+<li class="chapter" data-level="10" data-path="決定木とアンサンブル学習.html"><a href="決定木とアンサンブル学習.html"><i class="fa fa-check"></i><b>10</b> 決定木とアンサンブル学習</a>
+<ul>
+<li class="chapter" data-level="10.1" data-path="決定木とアンサンブル学習.html"><a href="決定木とアンサンブル学習.html#基本操作-3"><i class="fa fa-check"></i><b>10.1</b> 基本操作</a>
+<ul>
+<li class="chapter" data-level="" data-path="決定木とアンサンブル学習.html"><a href="決定木とアンサンブル学習.html#データ-german-credit-実データを加工-再掲"><i class="fa fa-check"></i>データ: German Credit (実データを加工, 再掲)</a></li>
+</ul></li>
+<li class="chapter" data-level="10.2" data-path="決定木とアンサンブル学習.html"><a href="決定木とアンサンブル学習.html#分類モデルの評価指標"><i class="fa fa-check"></i><b>10.2</b> 分類モデルの評価指標</a></li>
+<li class="chapter" data-level="10.3" data-path="決定木とアンサンブル学習.html"><a href="決定木とアンサンブル学習.html#パッケージrpart"><i class="fa fa-check"></i><b>10.3</b> パッケージ<strong>rpart</strong></a></li>
+<li class="chapter" data-level="10.4" data-path="決定木とアンサンブル学習.html"><a href="決定木とアンサンブル学習.html#ランダムフォレスト"><i class="fa fa-check"></i><b>10.4</b> ランダムフォレスト</a></li>
+<li class="chapter" data-level="10.5" data-path="決定木とアンサンブル学習.html"><a href="決定木とアンサンブル学習.html#勾配ブースティング"><i class="fa fa-check"></i><b>10.5</b> 勾配ブースティング</a></li>
+</ul></li>
+<li class="chapter" data-level="11" data-path="サポートベクターマシン-svm.html"><a href="サポートベクターマシン-svm.html"><i class="fa fa-check"></i><b>11</b> サポートベクターマシン (SVM)</a>
+<ul>
+<li class="chapter" data-level="11.1" data-path="サポートベクターマシン-svm.html"><a href="サポートベクターマシン-svm.html#rbf-カーネル-svm-の特徴"><i class="fa fa-check"></i><b>11.1</b> RBF カーネル SVM の特徴</a>
+<ul>
+<li class="chapter" data-level="" data-path="サポートベクターマシン-svm.html"><a href="サポートベクターマシン-svm.html#データ-社債発行体の格付-仮想データ-第8章と同じ"><i class="fa fa-check"></i>データ: 社債発行体の格付 (仮想データ, 第8章と同じ)</a></li>
+<li class="chapter" data-level="" data-path="サポートベクターマシン-svm.html"><a href="サポートベクターマシン-svm.html#svmの実行"><i class="fa fa-check"></i>SVMの実行</a></li>
+</ul></li>
+<li class="chapter" data-level="11.2" data-path="サポートベクターマシン-svm.html"><a href="サポートベクターマシン-svm.html#値分類"><i class="fa fa-check"></i><b>11.2</b> 2値分類</a>
+<ul>
+<li class="chapter" data-level="" data-path="サポートベクターマシン-svm.html"><a href="サポートベクターマシン-svm.html#データ-クレジットカードの延滞-実データ-uci-machine-learning-repository"><i class="fa fa-check"></i>データ: クレジットカードの延滞 (実データ: UCI Machine Learning Repository)</a></li>
+<li class="chapter" data-level="" data-path="サポートベクターマシン-svm.html"><a href="サポートベクターマシン-svm.html#svmの実行-1"><i class="fa fa-check"></i>SVMの実行</a></li>
+<li class="chapter" data-level="" data-path="サポートベクターマシン-svm.html"><a href="サポートベクターマシン-svm.html#roc-曲線と-auc"><i class="fa fa-check"></i>ROC 曲線と AUC</a></li>
+</ul></li>
+<li class="chapter" data-level="11.3" data-path="サポートベクターマシン-svm.html"><a href="サポートベクターマシン-svm.html#多クラス分類"><i class="fa fa-check"></i><b>11.3</b> 多クラス分類</a></li>
+<li class="chapter" data-level="11.4" data-path="サポートベクターマシン-svm.html"><a href="サポートベクターマシン-svm.html#パッケージe1071"><i class="fa fa-check"></i><b>11.4</b> パッケージ<strong>e1071</strong></a>
+<ul>
+<li class="chapter" data-level="" data-path="サポートベクターマシン-svm.html"><a href="サポートベクターマシン-svm.html#不均衡データとクラスの重み"><i class="fa fa-check"></i>不均衡データとクラスの重み</a></li>
+</ul></li>
+<li class="chapter" data-level="11.5" data-path="サポートベクターマシン-svm.html"><a href="サポートベクターマシン-svm.html#ハイパーパラメータのチューニング"><i class="fa fa-check"></i><b>11.5</b> ハイパーパラメータのチューニング</a>
+<ul>
+<li class="chapter" data-level="" data-path="サポートベクターマシン-svm.html"><a href="サポートベクターマシン-svm.html#パッケージe1071のチューニング用の関数"><i class="fa fa-check"></i>パッケージ<strong>e1071</strong>のチューニング用の関数</a></li>
+</ul></li>
+</ul></li>
+<li class="chapter" data-level="12" data-path="主成分分析-pca.html"><a href="主成分分析-pca.html"><i class="fa fa-check"></i><b>12</b> 主成分分析 (PCA)</a>
+<ul>
+<li class="chapter" data-level="12.1" data-path="主成分分析-pca.html"><a href="主成分分析-pca.html#導入"><i class="fa fa-check"></i><b>12.1</b> 導入</a>
+<ul>
+<li class="chapter" data-level="" data-path="主成分分析-pca.html"><a href="主成分分析-pca.html#データ-米国50州の凶悪犯罪-実データ-r-の組み込みデータ-usarrests"><i class="fa fa-check"></i>データ: 米国50州の凶悪犯罪 (実データ: R の組み込みデータ <code>USArrests</code>)</a></li>
+</ul></li>
+<li class="chapter" data-level="12.2" data-path="主成分分析-pca.html"><a href="主成分分析-pca.html#基本操作-4"><i class="fa fa-check"></i><b>12.2</b> 基本操作</a>
+<ul>
+<li class="chapter" data-level="" data-path="主成分分析-pca.html"><a href="主成分分析-pca.html#データ-企業の評価スコア-仮想データ"><i class="fa fa-check"></i>データ: 企業の評価スコア (仮想データ)</a></li>
+<li class="chapter" data-level="" data-path="主成分分析-pca.html"><a href="主成分分析-pca.html#pca-の実行"><i class="fa fa-check"></i>PCA の実行</a></li>
+<li class="chapter" data-level="" data-path="主成分分析-pca.html"><a href="主成分分析-pca.html#主成分負荷量"><i class="fa fa-check"></i>主成分負荷量</a></li>
+<li class="chapter" data-level="" data-path="主成分分析-pca.html"><a href="主成分分析-pca.html#主成分得点"><i class="fa fa-check"></i>主成分得点</a></li>
+<li class="chapter" data-level="" data-path="主成分分析-pca.html"><a href="主成分分析-pca.html#バイプロット"><i class="fa fa-check"></i>バイプロット</a></li>
+<li class="chapter" data-level="" data-path="主成分分析-pca.html"><a href="主成分分析-pca.html#計算結果の確認"><i class="fa fa-check"></i>計算結果の確認</a></li>
+<li class="chapter" data-level="" data-path="主成分分析-pca.html"><a href="主成分分析-pca.html#関数prcomp"><i class="fa fa-check"></i>関数<code>prcomp()</code></a></li>
+</ul></li>
+<li class="chapter" data-level="12.3" data-path="主成分分析-pca.html"><a href="主成分分析-pca.html#分散共分散行列-vs-相関行列"><i class="fa fa-check"></i><b>12.3</b> 分散共分散行列 vs 相関行列</a>
+<ul>
+<li class="chapter" data-level="" data-path="主成分分析-pca.html"><a href="主成分分析-pca.html#データ-上場企業の財務比率-仮想データ"><i class="fa fa-check"></i>データ: 上場企業の財務比率 (仮想データ)</a></li>
+<li class="chapter" data-level="" data-path="主成分分析-pca.html"><a href="主成分分析-pca.html#分散共分散行列に対する-pca"><i class="fa fa-check"></i>分散共分散行列に対する PCA</a></li>
+<li class="chapter" data-level="" data-path="主成分分析-pca.html"><a href="主成分分析-pca.html#相関行列に対する-pca"><i class="fa fa-check"></i>相関行列に対する PCA</a></li>
+</ul></li>
+<li class="chapter" data-level="12.4" data-path="主成分分析-pca.html"><a href="主成分分析-pca.html#イールドカーブへの応用"><i class="fa fa-check"></i><b>12.4</b> イールドカーブへの応用</a>
+<ul>
+<li class="chapter" data-level="" data-path="主成分分析-pca.html"><a href="主成分分析-pca.html#データ-国債金利-実データ-財務省国債金利情報"><i class="fa fa-check"></i>データ: 国債金利 (実データ: 財務省「国債金利情報」)</a></li>
+<li class="chapter" data-level="" data-path="主成分分析-pca.html"><a href="主成分分析-pca.html#pca-の実行-1"><i class="fa fa-check"></i>PCA の実行</a></li>
+</ul></li>
+<li class="chapter" data-level="12.5" data-path="主成分分析-pca.html"><a href="主成分分析-pca.html#自主課題"><i class="fa fa-check"></i><b>12.5</b> 自主課題</a>
+<ul>
+<li class="chapter" data-level="" data-path="主成分分析-pca.html"><a href="主成分分析-pca.html#データ-米国株の30業種ポートフォリオのリターン-実データ-kenneth-french-data-library"><i class="fa fa-check"></i>データ: 米国株の30業種ポートフォリオのリターン (実データ: Kenneth French Data Library)</a></li>
+</ul></li>
+</ul></li>
+<li class="chapter" data-level="13" data-path="探索的因子分析.html"><a href="探索的因子分析.html"><i class="fa fa-check"></i><b>13</b> 探索的因子分析</a>
+<ul>
+<li class="chapter" data-level="13.1" data-path="探索的因子分析.html"><a href="探索的因子分析.html#基本操作-5"><i class="fa fa-check"></i><b>13.1</b> 基本操作</a>
+<ul>
+<li class="chapter" data-level="" data-path="探索的因子分析.html"><a href="探索的因子分析.html#データ-企業の評価スコア-仮想データ-1"><i class="fa fa-check"></i>データ: 企業の評価スコア (仮想データ)</a></li>
+<li class="chapter" data-level="" data-path="探索的因子分析.html"><a href="探索的因子分析.html#因子分析の実行"><i class="fa fa-check"></i>因子分析の実行</a></li>
+<li class="chapter" data-level="" data-path="探索的因子分析.html"><a href="探索的因子分析.html#因子軸の回転と因子得点"><i class="fa fa-check"></i>因子軸の回転と因子得点</a></li>
+<li class="chapter" data-level="" data-path="探索的因子分析.html"><a href="探索的因子分析.html#パッケージpsychの関数fa"><i class="fa fa-check"></i>パッケージ<strong>psych</strong>の関数<code>fa()</code></a></li>
+<li class="chapter" data-level="" data-path="探索的因子分析.html"><a href="探索的因子分析.html#因子数の決定-平行分析"><i class="fa fa-check"></i>因子数の決定: 平行分析</a></li>
+</ul></li>
+<li class="chapter" data-level="13.2" data-path="探索的因子分析.html"><a href="探索的因子分析.html#実践的な手順"><i class="fa fa-check"></i><b>13.2</b> 実践的な手順</a>
+<ul>
+<li class="chapter" data-level="" data-path="探索的因子分析.html"><a href="探索的因子分析.html#データ-上場企業の財務比率-仮想データ-1"><i class="fa fa-check"></i>データ: 上場企業の財務比率 (仮想データ)</a></li>
+<li class="chapter" data-level="" data-path="探索的因子分析.html"><a href="探索的因子分析.html#前提条件のチェック"><i class="fa fa-check"></i>前提条件のチェック</a></li>
+<li class="chapter" data-level="" data-path="探索的因子分析.html"><a href="探索的因子分析.html#因子数の決定"><i class="fa fa-check"></i>因子数の決定</a></li>
+<li class="chapter" data-level="" data-path="探索的因子分析.html"><a href="探索的因子分析.html#因子分析の実行-1"><i class="fa fa-check"></i>因子分析の実行</a></li>
+<li class="chapter" data-level="" data-path="探索的因子分析.html"><a href="探索的因子分析.html#因子得点の活用"><i class="fa fa-check"></i>因子得点の活用</a></li>
+<li class="chapter" data-level="" data-path="探索的因子分析.html"><a href="探索的因子分析.html#主成分分析との比較"><i class="fa fa-check"></i>主成分分析との比較</a></li>
+</ul></li>
+<li class="chapter" data-level="13.3" data-path="探索的因子分析.html"><a href="探索的因子分析.html#参考-相関構造の可視化"><i class="fa fa-check"></i><b>13.3</b> (参考) 相関構造の可視化</a></li>
+</ul></li>
+<li class="chapter" data-level="14" data-path="クラスター分析.html"><a href="クラスター分析.html"><i class="fa fa-check"></i><b>14</b> クラスター分析</a>
+<ul>
+<li class="chapter" data-level="14.1" data-path="クラスター分析.html"><a href="クラスター分析.html#基本操作-6"><i class="fa fa-check"></i><b>14.1</b> 基本操作</a>
+<ul>
+<li class="chapter" data-level="" data-path="クラスター分析.html"><a href="クラスター分析.html#データ-株式スタイル指標-仮想データ"><i class="fa fa-check"></i>データ: 株式スタイル指標 (仮想データ)</a></li>
+<li class="chapter" data-level="" data-path="クラスター分析.html"><a href="クラスター分析.html#距離行列"><i class="fa fa-check"></i>距離行列</a></li>
+<li class="chapter" data-level="" data-path="クラスター分析.html"><a href="クラスター分析.html#標準化の影響"><i class="fa fa-check"></i>標準化の影響</a></li>
+<li class="chapter" data-level="" data-path="クラスター分析.html"><a href="クラスター分析.html#結合方法の比較"><i class="fa fa-check"></i>結合方法の比較</a></li>
+<li class="chapter" data-level="" data-path="クラスター分析.html"><a href="クラスター分析.html#参考-chaining-の典型例"><i class="fa fa-check"></i>(参考) chaining の典型例</a></li>
+<li class="chapter" data-level="" data-path="クラスター分析.html"><a href="クラスター分析.html#クラスターの形成履歴と切断"><i class="fa fa-check"></i>クラスターの形成履歴と切断</a></li>
+<li class="chapter" data-level="" data-path="クラスター分析.html"><a href="クラスター分析.html#k-means-法"><i class="fa fa-check"></i>k-means 法</a></li>
+<li class="chapter" data-level="" data-path="クラスター分析.html"><a href="クラスター分析.html#gower-距離"><i class="fa fa-check"></i>Gower 距離</a></li>
+<li class="chapter" data-level="" data-path="クラスター分析.html"><a href="クラスター分析.html#参考-量的変数とダミー変数のスケール"><i class="fa fa-check"></i>(参考) 量的変数とダミー変数のスケール</a></li>
+</ul></li>
+<li class="chapter" data-level="14.2" data-path="クラスター分析.html"><a href="クラスター分析.html#相関係数に基づく距離"><i class="fa fa-check"></i><b>14.2</b> 相関係数に基づく距離</a>
+<ul>
+<li class="chapter" data-level="" data-path="クラスター分析.html"><a href="クラスター分析.html#データ-米国株の30業種ポートフォリオのリターン-実データ-kenneth-french-data-library-1"><i class="fa fa-check"></i>データ: 米国株の30業種ポートフォリオのリターン (実データ: Kenneth French Data Library)</a></li>
+<li class="chapter" data-level="" data-path="クラスター分析.html"><a href="クラスター分析.html#相関係数による距離と平均連結法"><i class="fa fa-check"></i>相関係数による距離と平均連結法</a></li>
+<li class="chapter" data-level="" data-path="クラスター分析.html"><a href="クラスター分析.html#ウォード法"><i class="fa fa-check"></i>ウォード法</a></li>
+</ul></li>
+<li class="chapter" data-level="14.3" data-path="クラスター分析.html"><a href="クラスター分析.html#k-means-法とクラスター数の決定"><i class="fa fa-check"></i><b>14.3</b> k-means 法とクラスター数の決定</a>
+<ul>
+<li class="chapter" data-level="" data-path="クラスター分析.html"><a href="クラスター分析.html#クラスター数-k-の決定"><i class="fa fa-check"></i>クラスター数 K の決定</a></li>
+<li class="chapter" data-level="" data-path="クラスター分析.html"><a href="クラスター分析.html#k-4-での実行"><i class="fa fa-check"></i>K = 4 での実行</a></li>
+</ul></li>
+<li class="chapter" data-level="14.4" data-path="クラスター分析.html"><a href="クラスター分析.html#疎なデータと距離の選び方"><i class="fa fa-check"></i><b>14.4</b> 疎なデータと距離の選び方</a>
+<ul>
+<li class="chapter" data-level="" data-path="クラスター分析.html"><a href="クラスター分析.html#商品-変数-のクラスタリング"><i class="fa fa-check"></i>商品 (変数) のクラスタリング</a></li>
+<li class="chapter" data-level="" data-path="クラスター分析.html"><a href="クラスター分析.html#顧客セグメンテーション"><i class="fa fa-check"></i>顧客セグメンテーション</a></li>
+</ul></li>
+<li class="chapter" data-level="14.5" data-path="クラスター分析.html"><a href="クラスター分析.html#混合データへの応用-gower-距離-pam"><i class="fa fa-check"></i><b>14.5</b> 混合データへの応用 (Gower 距離 + PAM)</a>
+<ul>
+<li class="chapter" data-level="" data-path="クラスター分析.html"><a href="クラスター分析.html#データ-銀行の顧客と定期預金の勧誘-実データ-uci-machine-learning-repository"><i class="fa fa-check"></i>データ: 銀行の顧客と定期預金の勧誘 (実データ: UCI Machine Learning Repository)</a></li>
+<li class="chapter" data-level="" data-path="クラスター分析.html"><a href="クラスター分析.html#gower-距離と-pam"><i class="fa fa-check"></i>Gower 距離と PAM</a></li>
+</ul></li>
+<li class="chapter" data-level="14.6" data-path="クラスター分析.html"><a href="クラスター分析.html#参考-発展的なクラスター分析"><i class="fa fa-check"></i><b>14.6</b> (参考) 発展的なクラスター分析</a>
+<ul>
+<li class="chapter" data-level="" data-path="クラスター分析.html"><a href="クラスター分析.html#関数agnes"><i class="fa fa-check"></i>関数<code>agnes()</code></a></li>
+<li class="chapter" data-level="" data-path="クラスター分析.html"><a href="クラスター分析.html#関数pheatmap"><i class="fa fa-check"></i>関数<code>pheatmap()</code></a></li>
+<li class="chapter" data-level="" data-path="クラスター分析.html"><a href="クラスター分析.html#関数pam-k-medoids-法"><i class="fa fa-check"></i>関数<code>pam()</code> (K-medoids 法)</a></li>
+<li class="chapter" data-level="" data-path="クラスター分析.html"><a href="クラスター分析.html#モデルベーストクラスタリング"><i class="fa fa-check"></i>モデルベースト・クラスタリング</a></li>
+</ul></li>
+</ul></li>
+<li class="chapter" data-level="15" data-path="xai-説明可能な-ai.html"><a href="xai-説明可能な-ai.html"><i class="fa fa-check"></i><b>15</b> XAI (説明可能な AI)</a>
+<ul>
+<li class="chapter" data-level="15.1" data-path="xai-説明可能な-ai.html"><a href="xai-説明可能な-ai.html#基本操作-7"><i class="fa fa-check"></i><b>15.1</b> 基本操作</a>
+<ul>
+<li class="chapter" data-level="" data-path="xai-説明可能な-ai.html"><a href="xai-説明可能な-ai.html#データ-社債の信用スプレッド-仮想データ-2"><i class="fa fa-check"></i>データ: 社債の信用スプレッド (仮想データ)</a></li>
+<li class="chapter" data-level="" data-path="xai-説明可能な-ai.html"><a href="xai-説明可能な-ai.html#ベースラインとブラックボックスモデル"><i class="fa fa-check"></i>ベースラインとブラックボックス・モデル</a></li>
+<li class="chapter" data-level="" data-path="xai-説明可能な-ai.html"><a href="xai-説明可能な-ai.html#パッケージimlの準備"><i class="fa fa-check"></i>パッケージ<strong>iml</strong>の準備</a></li>
+</ul></li>
+<li class="chapter" data-level="15.2" data-path="xai-説明可能な-ai.html"><a href="xai-説明可能な-ai.html#pfi"><i class="fa fa-check"></i><b>15.2</b> PFI</a></li>
+<li class="chapter" data-level="15.3" data-path="xai-説明可能な-ai.html"><a href="xai-説明可能な-ai.html#pdp-と-ice"><i class="fa fa-check"></i><b>15.3</b> PDP と ICE</a>
+<ul>
+<li class="chapter" data-level="" data-path="xai-説明可能な-ai.html"><a href="xai-説明可能な-ai.html#pdp"><i class="fa fa-check"></i>PDP</a></li>
+<li class="chapter" data-level="" data-path="xai-説明可能な-ai.html"><a href="xai-説明可能な-ai.html#ice"><i class="fa fa-check"></i>ICE</a></li>
+<li class="chapter" data-level="" data-path="xai-説明可能な-ai.html"><a href="xai-説明可能な-ai.html#つの特徴量の-pdp"><i class="fa fa-check"></i>2つの特徴量の PDP</a></li>
+</ul></li>
+<li class="chapter" data-level="15.4" data-path="xai-説明可能な-ai.html"><a href="xai-説明可能な-ai.html#lime"><i class="fa fa-check"></i><b>15.4</b> LIME</a></li>
+<li class="chapter" data-level="15.5" data-path="xai-説明可能な-ai.html"><a href="xai-説明可能な-ai.html#shap"><i class="fa fa-check"></i><b>15.5</b> SHAP</a>
+<ul>
+<li class="chapter" data-level="" data-path="xai-説明可能な-ai.html"><a href="xai-説明可能な-ai.html#局所的な説明"><i class="fa fa-check"></i>局所的な説明</a></li>
+<li class="chapter" data-level="" data-path="xai-説明可能な-ai.html"><a href="xai-説明可能な-ai.html#大域的な説明"><i class="fa fa-check"></i>大域的な説明</a></li>
+</ul></li>
+<li class="chapter" data-level="15.6" data-path="xai-説明可能な-ai.html"><a href="xai-説明可能な-ai.html#値分類問題"><i class="fa fa-check"></i><b>15.6</b> 2値分類問題</a>
+<ul>
+<li class="chapter" data-level="" data-path="xai-説明可能な-ai.html"><a href="xai-説明可能な-ai.html#データ-クレジットカードの延滞-仮想データ"><i class="fa fa-check"></i>データ: クレジットカードの延滞 (仮想データ)</a></li>
+<li class="chapter" data-level="" data-path="xai-説明可能な-ai.html"><a href="xai-説明可能な-ai.html#延滞確率の説明"><i class="fa fa-check"></i>延滞確率の説明</a></li>
+<li class="chapter" data-level="" data-path="xai-説明可能な-ai.html"><a href="xai-説明可能な-ai.html#個別の顧客の説明"><i class="fa fa-check"></i>個別の顧客の説明</a></li>
+</ul></li>
+<li class="chapter" data-level="15.7" data-path="xai-説明可能な-ai.html"><a href="xai-説明可能な-ai.html#多値分類問題"><i class="fa fa-check"></i><b>15.7</b> 多値分類問題</a>
+<ul>
+<li class="chapter" data-level="" data-path="xai-説明可能な-ai.html"><a href="xai-説明可能な-ai.html#データ-社債発行体の格付-仮想データ-1"><i class="fa fa-check"></i>データ: 社債発行体の格付 (仮想データ)</a></li>
+<li class="chapter" data-level="" data-path="xai-説明可能な-ai.html"><a href="xai-説明可能な-ai.html#決定木と-shap"><i class="fa fa-check"></i>決定木と SHAP</a></li>
+</ul></li>
+</ul></li>
+<li class="chapter" data-level="16" data-path="生成aiによる-r-コーディング.html"><a href="生成aiによる-r-コーディング.html"><i class="fa fa-check"></i><b>16</b> 生成AIによる R コーディング</a>
+<ul>
+<li class="chapter" data-level="16.1" data-path="生成aiによる-r-コーディング.html"><a href="生成aiによる-r-コーディング.html#生成aiへの指示"><i class="fa fa-check"></i><b>16.1</b> 生成AIへの指示</a>
+<ul>
+<li class="chapter" data-level="" data-path="生成aiによる-r-コーディング.html"><a href="生成aiによる-r-コーディング.html#最初のプロンプト"><i class="fa fa-check"></i>最初のプロンプト</a></li>
+<li class="chapter" data-level="" data-path="生成aiによる-r-コーディング.html"><a href="生成aiによる-r-コーディング.html#追加のプロンプト"><i class="fa fa-check"></i>追加のプロンプト</a></li>
+</ul></li>
+<li class="chapter" data-level="16.2" data-path="生成aiによる-r-コーディング.html"><a href="生成aiによる-r-コーディング.html#生成されたコード-第1部"><i class="fa fa-check"></i><b>16.2</b> 生成されたコード (第1部)</a></li>
+<li class="chapter" data-level="16.3" data-path="生成aiによる-r-コーディング.html"><a href="生成aiによる-r-コーディング.html#問題点の確認"><i class="fa fa-check"></i><b>16.3</b> 問題点の確認</a></li>
+<li class="chapter" data-level="16.4" data-path="生成aiによる-r-コーディング.html"><a href="生成aiによる-r-コーディング.html#改良版-第2部"><i class="fa fa-check"></i><b>16.4</b> 改良版 (第2部)</a></li>
+<li class="chapter" data-level="16.5" data-path="生成aiによる-r-コーディング.html"><a href="生成aiによる-r-コーディング.html#生成aiで-r-コードを書くときの注意点"><i class="fa fa-check"></i><b>16.5</b> 生成AIで R コードを書くときの注意点</a>
+<ul>
+<li class="chapter" data-level="" data-path="生成aiによる-r-コーディング.html"><a href="生成aiによる-r-コーディング.html#年時点の補足"><i class="fa fa-check"></i>2026年時点の補足</a></li>
+</ul></li>
+</ul></li>
+<li class="divider"></li>
+<li><a href="https://github.com/rstudio/bookdown" target="blank">Published with bookdown</a></li>
+</ul>
+
+      </nav>
+    </div>
+
+    <div class="book-body">
+      <div class="body-inner">
+        <div class="book-header" role="navigation">
+          <h1>
+            <i class="fa fa-circle-o-notch fa-spin"></i><a href="./">金融データサイエンス</a>
+          </h1>
+        </div>
+
+        <div class="page-wrapper" tabindex="-1" role="main">
+          <div class="page-inner">
+
+            <section class="normal" id="section-">
+<div id="xai-説明可能な-ai" class="section level1 hasAnchor" number="15">
+<h1><span class="header-section-number">Chapter 15</span> XAI (説明可能な AI)<a href="xai-説明可能な-ai.html#xai-説明可能な-ai" class="anchor-section" aria-label="Anchor link to header"></a></h1>
+<!-- 2026.11.18 Claude: 結果の解釈 (ファイナンス的な意味, LIME と SHAP の違い, 推定誤差の注意) を追加. R演習スクリプト R_xai_100926_dist.R (2026年度版) に合わせて全面改訂. データを Boston Housing / iris から, 社債の信用スプレッド (bond_spread.csv), クレジットカードの延滞 (card_default.csv), 社債発行体の格付 (rating.csv) に変更 (いずれも仮想データ). 2025年度版から残したもの: 冒頭の XAI の背景の説明, randomForest の変数重要度の説明, iml の R6 クラスのメモ, LocalModel() と標準の LIME の違い, Shapley 値の出力の読み方とモンテカルロ近似の注, LIME の結果をデータ点間で比較する際の注意. 2025年度版から削ったもの: ICE 単独のプロット (pdp+ice に統合), 授業内配布コードの訂正の注記 (shapley$explain(X) の削除の件. 新しいコードでは複数のデータ点の Shapley 値から大域的な重要度を計算する) -->
+<p>本章の内容は, 授業の R 演習スクリプト <code>R_xai_dist.R</code> に対応する.</p>
+<p>深層学習に代表される「予測精度」を追求する (機械学習を含む) AI のモデルは, 「高精度」な一方「ブラックボックス」なものが多い.
+しかし, これらのモデル・アルゴリズムの実用化に際して, 特に, 医療・金融・司法など人のいのちや財産, 社会秩序に関する領域などにおいては, 「説明責任」「透明性」が強く求められる.
+XAI (Explainable AI) は, AI 研究の一領域として登場し, AI の予測力の向上に伴い, 2010年代後半頃から活発に研究が行われるようになってきている.</p>
+<p>XAI の進展の裏にある社会的・倫理的な背景として, 欧州を中心に, AI の開発・利用に対して, 意思決定の過程がわかること (透明性), 人間がモデルの判断に責任を持てること (説明責任), 差別やバイアスがないこと (公正性), 利用者が安心して使えること (信頼性) などを求める機運の高まりがある (国際・国内のガイドラインとして, EU: Art. 22 GDPR, OECD: AI原則 (2019), 内閣府: 人間中心のAI社会原則 (2019), 等).
+金融では, 与信判断の理由を顧客に説明することや, モデル・リスク管理の観点から, モデルの挙動を把握しておくことが求められる.</p>
+<p>このような AI 技術を取り巻く世界的な潮流の中, XAI は, 「ブラックボックス」である AI を「解釈可能」にすることを目的とする方法 (論) の総称を指す.</p>
+<p>本章では, XAI の以下の手法を取り上げ, パッケージ<strong>iml</strong>を用いて実際に動かしてみる.
+いずれも, 予測モデルの種類によらずに使える方法 (model-agnostic) である.</p>
+<ul>
+<li>大域的な説明 (モデル全体の挙動)
+<ul>
+<li>PFI (Permutation Feature Importance)</li>
+<li>PDP (Partial Dependence Plot)</li>
+</ul></li>
+<li>局所的な説明 (個々のデータ点の予測)
+<ul>
+<li>ICE (Individual Conditional Expectation)</li>
+<li>LIME (Local Interpretable Model-agnostic Explanations)</li>
+<li>SHAP (SHapley Additive exPlanations)</li>
+</ul></li>
+</ul>
+<p><strong>本章の主要な参考資料:</strong></p>
+<ul>
+<li><a href="https://cran.r-project.org/web/packages/iml/vignettes/intro.html">https://cran.r-project.org/web/packages/iml/vignettes/intro.html</a></li>
+<li>C. Molnar, <em>Interpretable Machine Learning</em>, <a href="https://christophm.github.io/interpretable-ml-book/">https://christophm.github.io/interpretable-ml-book/</a></li>
+</ul>
+<div class="sourceCode" id="cb476"><pre class="sourceCode r"><code class="sourceCode r"><span id="cb476-1"><a href="xai-説明可能な-ai.html#cb476-1" tabindex="-1"></a><span class="fu">library</span>(tidyverse)</span>
+<span id="cb476-2"><a href="xai-説明可能な-ai.html#cb476-2" tabindex="-1"></a><span class="fu">library</span>(randomForest)</span>
+<span id="cb476-3"><a href="xai-説明可能な-ai.html#cb476-3" tabindex="-1"></a><span class="co"># install.packages(&#39;iml&#39;)</span></span>
+<span id="cb476-4"><a href="xai-説明可能な-ai.html#cb476-4" tabindex="-1"></a><span class="fu">library</span>(iml)  <span class="co"># 機械学習モデルの解釈 (PFI, PDP, ICE, LIME, SHAP)</span></span></code></pre></div>
+<div id="基本操作-7" class="section level2 hasAnchor" number="15.1">
+<h2><span class="header-section-number">15.1</span> 基本操作<a href="xai-説明可能な-ai.html#基本操作-7" class="anchor-section" aria-label="Anchor link to header"></a></h2>
+<div id="データ-社債の信用スプレッド-仮想データ-2" class="section level3 unnumbered hasAnchor">
+<h3>データ: 社債の信用スプレッド (仮想データ)<a href="xai-説明可能な-ai.html#データ-社債の信用スプレッド-仮想データ-2" class="anchor-section" aria-label="Anchor link to header"></a></h3>
+<p>一般化加法モデル (GAM) の章と同じデータである.
+スプレッドは, 信用リスクの構造モデル (Merton モデル) の考え方で作られている: 株価ボラティリティとレバレッジから資産ボラティリティ (= 株価ボラティリティ × (1 − レバレッジ)) とデフォルト距離を計算し, デフォルト確率からスプレッドを決める.
+このため, スプレッドはレバレッジやボラティリティに対して非線形に増加し, 両者の交互作用も含む.
+これに, 残存期間 (長いほど大きい, 対数的に増加), 企業規模 (大きいほど小さい), 業種 (公益は小さい) の効果を加えている.
+仮想データなので「正解」が分かっており, XAI の結果が正しく構造を捉えているかを確認できる.</p>
+<pre><code>bond_spread.csv: 600銘柄
+- spread: 信用スプレッド (bp) (目的変数)
+- leverage: 負債比率 (%), equity_vol: 株価ボラティリティ (%), maturity: 残存期間 (年)
+- log_assets: 総資産 (対数), industry: 業種 (&quot;manuf&quot;: 製造業 / &quot;nonmanuf&quot;: 非製造業 / &quot;utility&quot;: 公益)</code></pre>
+<div class="sourceCode" id="cb478"><pre class="sourceCode r"><code class="sourceCode r"><span id="cb478-1"><a href="xai-説明可能な-ai.html#cb478-1" tabindex="-1"></a>bond <span class="ot">&lt;-</span> <span class="fu">read.csv</span>(<span class="st">&quot;class/bond_spread.csv&quot;</span>, <span class="at">stringsAsFactors =</span> <span class="cn">TRUE</span>)</span>
+<span id="cb478-2"><a href="xai-説明可能な-ai.html#cb478-2" tabindex="-1"></a><span class="fu">summary</span>(bond)</span>
+<span id="cb478-3"><a href="xai-説明可能な-ai.html#cb478-3" tabindex="-1"></a><span class="co">#&gt;      spread          leverage       equity_vol       maturity    </span></span>
+<span id="cb478-4"><a href="xai-説明可能な-ai.html#cb478-4" tabindex="-1"></a><span class="co">#&gt;  Min.   :  3.00   Min.   : 5.00   Min.   :12.00   Min.   : 1.10  </span></span>
+<span id="cb478-5"><a href="xai-説明可能な-ai.html#cb478-5" tabindex="-1"></a><span class="co">#&gt;  1st Qu.: 51.50   1st Qu.:24.07   1st Qu.:22.90   1st Qu.: 6.00  </span></span>
+<span id="cb478-6"><a href="xai-説明可能な-ai.html#cb478-6" tabindex="-1"></a><span class="co">#&gt;  Median : 68.60   Median :40.20   Median :28.20   Median :10.40  </span></span>
+<span id="cb478-7"><a href="xai-説明可能な-ai.html#cb478-7" tabindex="-1"></a><span class="co">#&gt;  Mean   : 85.79   Mean   :40.21   Mean   :29.61   Mean   :10.52  </span></span>
+<span id="cb478-8"><a href="xai-説明可能な-ai.html#cb478-8" tabindex="-1"></a><span class="co">#&gt;  3rd Qu.: 99.08   3rd Qu.:54.52   3rd Qu.:35.00   3rd Qu.:15.10  </span></span>
+<span id="cb478-9"><a href="xai-説明可能な-ai.html#cb478-9" tabindex="-1"></a><span class="co">#&gt;  Max.   :399.00   Max.   :85.00   Max.   :66.50   Max.   :20.00  </span></span>
+<span id="cb478-10"><a href="xai-説明可能な-ai.html#cb478-10" tabindex="-1"></a><span class="co">#&gt;    log_assets        industry  </span></span>
+<span id="cb478-11"><a href="xai-説明可能な-ai.html#cb478-11" tabindex="-1"></a><span class="co">#&gt;  Min.   : 7.63   manuf   :273  </span></span>
+<span id="cb478-12"><a href="xai-説明可能な-ai.html#cb478-12" tabindex="-1"></a><span class="co">#&gt;  1st Qu.:10.17   nonmanuf:238  </span></span>
+<span id="cb478-13"><a href="xai-説明可能な-ai.html#cb478-13" tabindex="-1"></a><span class="co">#&gt;  Median :11.01   utility : 89  </span></span>
+<span id="cb478-14"><a href="xai-説明可能な-ai.html#cb478-14" tabindex="-1"></a><span class="co">#&gt;  Mean   :11.01                 </span></span>
+<span id="cb478-15"><a href="xai-説明可能な-ai.html#cb478-15" tabindex="-1"></a><span class="co">#&gt;  3rd Qu.:11.84                 </span></span>
+<span id="cb478-16"><a href="xai-説明可能な-ai.html#cb478-16" tabindex="-1"></a><span class="co">#&gt;  Max.   :14.54</span></span></code></pre></div>
+</div>
+<div id="ベースラインとブラックボックスモデル" class="section level3 unnumbered hasAnchor">
+<h3>ベースラインとブラックボックス・モデル<a href="xai-説明可能な-ai.html#ベースラインとブラックボックスモデル" class="anchor-section" aria-label="Anchor link to header"></a></h3>
+<p>はじめに, 比較のためのベースラインとして, 線形回帰を実行しておく.
+線形回帰では, 係数がそのまま「解釈」になる.</p>
+<div class="sourceCode" id="cb479"><pre class="sourceCode r"><code class="sourceCode r"><span id="cb479-1"><a href="xai-説明可能な-ai.html#cb479-1" tabindex="-1"></a>fit_lm <span class="ot">&lt;-</span> <span class="fu">lm</span>(spread <span class="sc">~</span> ., <span class="at">data =</span> bond)</span>
+<span id="cb479-2"><a href="xai-説明可能な-ai.html#cb479-2" tabindex="-1"></a><span class="fu">summary</span>(fit_lm)</span>
+<span id="cb479-3"><a href="xai-説明可能な-ai.html#cb479-3" tabindex="-1"></a><span class="co">#&gt; </span></span>
+<span id="cb479-4"><a href="xai-説明可能な-ai.html#cb479-4" tabindex="-1"></a><span class="co">#&gt; Call:</span></span>
+<span id="cb479-5"><a href="xai-説明可能な-ai.html#cb479-5" tabindex="-1"></a><span class="co">#&gt; lm(formula = spread ~ ., data = bond)</span></span>
+<span id="cb479-6"><a href="xai-説明可能な-ai.html#cb479-6" tabindex="-1"></a><span class="co">#&gt; </span></span>
+<span id="cb479-7"><a href="xai-説明可能な-ai.html#cb479-7" tabindex="-1"></a><span class="co">#&gt; Residuals:</span></span>
+<span id="cb479-8"><a href="xai-説明可能な-ai.html#cb479-8" tabindex="-1"></a><span class="co">#&gt;     Min      1Q  Median      3Q     Max </span></span>
+<span id="cb479-9"><a href="xai-説明可能な-ai.html#cb479-9" tabindex="-1"></a><span class="co">#&gt; -80.278 -17.984  -4.935  13.928 127.398 </span></span>
+<span id="cb479-10"><a href="xai-説明可能な-ai.html#cb479-10" tabindex="-1"></a><span class="co">#&gt; </span></span>
+<span id="cb479-11"><a href="xai-説明可能な-ai.html#cb479-11" tabindex="-1"></a><span class="co">#&gt; Coefficients:</span></span>
+<span id="cb479-12"><a href="xai-説明可能な-ai.html#cb479-12" tabindex="-1"></a><span class="co">#&gt;                   Estimate Std. Error t value Pr(&gt;|t|)    </span></span>
+<span id="cb479-13"><a href="xai-説明可能な-ai.html#cb479-13" tabindex="-1"></a><span class="co">#&gt; (Intercept)      -44.45709   11.21034  -3.966 8.21e-05 ***</span></span>
+<span id="cb479-14"><a href="xai-説明可能な-ai.html#cb479-14" tabindex="-1"></a><span class="co">#&gt; leverage           1.05497    0.05888  17.918  &lt; 2e-16 ***</span></span>
+<span id="cb479-15"><a href="xai-説明可能な-ai.html#cb479-15" tabindex="-1"></a><span class="co">#&gt; equity_vol         4.92080    0.12794  38.463  &lt; 2e-16 ***</span></span>
+<span id="cb479-16"><a href="xai-説明可能な-ai.html#cb479-16" tabindex="-1"></a><span class="co">#&gt; maturity           1.08810    0.21488   5.064 5.49e-07 ***</span></span>
+<span id="cb479-17"><a href="xai-説明可能な-ai.html#cb479-17" tabindex="-1"></a><span class="co">#&gt; log_assets        -6.14400    0.95746  -6.417 2.85e-10 ***</span></span>
+<span id="cb479-18"><a href="xai-説明可能な-ai.html#cb479-18" tabindex="-1"></a><span class="co">#&gt; industrynonmanuf   2.64075    2.46991   1.069    0.285    </span></span>
+<span id="cb479-19"><a href="xai-説明可能な-ai.html#cb479-19" tabindex="-1"></a><span class="co">#&gt; industryutility  -18.36033    3.40994  -5.384 1.05e-07 ***</span></span>
+<span id="cb479-20"><a href="xai-説明可能な-ai.html#cb479-20" tabindex="-1"></a><span class="co">#&gt; ---</span></span>
+<span id="cb479-21"><a href="xai-説明可能な-ai.html#cb479-21" tabindex="-1"></a><span class="co">#&gt; Signif. codes:  0 &#39;***&#39; 0.001 &#39;**&#39; 0.01 &#39;*&#39; 0.05 &#39;.&#39; 0.1 &#39; &#39; 1</span></span>
+<span id="cb479-22"><a href="xai-説明可能な-ai.html#cb479-22" tabindex="-1"></a><span class="co">#&gt; </span></span>
+<span id="cb479-23"><a href="xai-説明可能な-ai.html#cb479-23" tabindex="-1"></a><span class="co">#&gt; Residual standard error: 27.83 on 593 degrees of freedom</span></span>
+<span id="cb479-24"><a href="xai-説明可能な-ai.html#cb479-24" tabindex="-1"></a><span class="co">#&gt; Multiple R-squared:  0.768,  Adjusted R-squared:  0.7657 </span></span>
+<span id="cb479-25"><a href="xai-説明可能な-ai.html#cb479-25" tabindex="-1"></a><span class="co">#&gt; F-statistic: 327.2 on 6 and 593 DF,  p-value: &lt; 2.2e-16</span></span></code></pre></div>
+<p>レバレッジが 1%ポイント高いとスプレッドは約1.1bp, 株価ボラティリティが 1%ポイント高いと約4.9bp 大きく, 総資産が大きい (信用力の高い大企業) ほど, 公益業種ほどスプレッドが小さい.
+符号はいずれもファイナンスの直感と整合的だが, 線形回帰では「ボラティリティが高い企業ほど, 1%ポイントの上昇の影響が大きい」といった非線形性や交互作用は表現できない.</p>
+<p>XAI を適用する「ブラックボックス」のモデルとして, ランダムフォレストを使う.</p>
+<div class="sourceCode" id="cb480"><pre class="sourceCode r"><code class="sourceCode r"><span id="cb480-1"><a href="xai-説明可能な-ai.html#cb480-1" tabindex="-1"></a><span class="fu">set.seed</span>(<span class="dv">123</span>)  <span class="co"># 乱数を使う関数の直前で設定する</span></span>
+<span id="cb480-2"><a href="xai-説明可能な-ai.html#cb480-2" tabindex="-1"></a>fit_rf <span class="ot">&lt;-</span> <span class="fu">randomForest</span>(spread <span class="sc">~</span> ., <span class="at">data =</span> bond, <span class="at">importance =</span> <span class="cn">TRUE</span>)</span>
+<span id="cb480-3"><a href="xai-説明可能な-ai.html#cb480-3" tabindex="-1"></a>fit_rf  <span class="co"># OOB による MSE, 決定係数</span></span>
+<span id="cb480-4"><a href="xai-説明可能な-ai.html#cb480-4" tabindex="-1"></a><span class="co">#&gt; </span></span>
+<span id="cb480-5"><a href="xai-説明可能な-ai.html#cb480-5" tabindex="-1"></a><span class="co">#&gt; Call:</span></span>
+<span id="cb480-6"><a href="xai-説明可能な-ai.html#cb480-6" tabindex="-1"></a><span class="co">#&gt;  randomForest(formula = spread ~ ., data = bond, importance = TRUE) </span></span>
+<span id="cb480-7"><a href="xai-説明可能な-ai.html#cb480-7" tabindex="-1"></a><span class="co">#&gt;                Type of random forest: regression</span></span>
+<span id="cb480-8"><a href="xai-説明可能な-ai.html#cb480-8" tabindex="-1"></a><span class="co">#&gt;                      Number of trees: 500</span></span>
+<span id="cb480-9"><a href="xai-説明可能な-ai.html#cb480-9" tabindex="-1"></a><span class="co">#&gt; No. of variables tried at each split: 1</span></span>
+<span id="cb480-10"><a href="xai-説明可能な-ai.html#cb480-10" tabindex="-1"></a><span class="co">#&gt; </span></span>
+<span id="cb480-11"><a href="xai-説明可能な-ai.html#cb480-11" tabindex="-1"></a><span class="co">#&gt;           Mean of squared residuals: 738.0505</span></span>
+<span id="cb480-12"><a href="xai-説明可能な-ai.html#cb480-12" tabindex="-1"></a><span class="co">#&gt;                     % Var explained: 77.63</span></span></code></pre></div>
+<p>OOB による決定係数 (<code>% Var explained</code>) は約78%である.</p>
+<p>ちなみに, パッケージ<strong>iml</strong>を使わずとも, パッケージ<strong>randomForest</strong>の関数<code>randomForest()</code>の出力に関数<code>varImpPlot()</code>, <code>importance()</code>を適用することで, 予測の精度に大きく影響を与える変数を調べることができる (変数重要度, variable importance, または特徴量重要度, feature importance).
+ただし, これはランダムフォレストに固有の (モデル依存型の) 指標である.</p>
+<div class="sourceCode" id="cb481"><pre class="sourceCode r"><code class="sourceCode r"><span id="cb481-1"><a href="xai-説明可能な-ai.html#cb481-1" tabindex="-1"></a><span class="fu">varImpPlot</span>(fit_rf)</span></code></pre></div>
+<p><img src="_main_files/figure-html/unnamed-chunk-359-1.png" width="75%" /></p>
+<div class="sourceCode" id="cb482"><pre class="sourceCode r"><code class="sourceCode r"><span id="cb482-1"><a href="xai-説明可能な-ai.html#cb482-1" tabindex="-1"></a><span class="fu">importance</span>(fit_rf)</span>
+<span id="cb482-2"><a href="xai-説明可能な-ai.html#cb482-2" tabindex="-1"></a><span class="co">#&gt;              %IncMSE IncNodePurity</span></span>
+<span id="cb482-3"><a href="xai-説明可能な-ai.html#cb482-3" tabindex="-1"></a><span class="co">#&gt; leverage   37.535576     312671.95</span></span>
+<span id="cb482-4"><a href="xai-説明可能な-ai.html#cb482-4" tabindex="-1"></a><span class="co">#&gt; equity_vol 57.094392     980111.97</span></span>
+<span id="cb482-5"><a href="xai-説明可能な-ai.html#cb482-5" tabindex="-1"></a><span class="co">#&gt; maturity    4.315564     152645.74</span></span>
+<span id="cb482-6"><a href="xai-説明可能な-ai.html#cb482-6" tabindex="-1"></a><span class="co">#&gt; log_assets  3.895640     151857.53</span></span>
+<span id="cb482-7"><a href="xai-説明可能な-ai.html#cb482-7" tabindex="-1"></a><span class="co">#&gt; industry    7.647373      60225.62</span></span></code></pre></div>
+<ul>
+<li><code>%IncMSE</code>: OOB (Out-Of-Bag) データで, その変数の値をランダムに並べ替えたときの MSE の増加を, 全ての木にわたって標準化した値 (分類問題では誤分類率を使う).</li>
+<li><code>IncNodePurity</code>: その変数による木の分岐での RSS (分類問題ではジニ不純度) の減少の合計.</li>
+</ul>
+</div>
+<div id="パッケージimlの準備" class="section level3 unnumbered hasAnchor">
+<h3>パッケージ<strong>iml</strong>の準備<a href="xai-説明可能な-ai.html#パッケージimlの準備" class="anchor-section" aria-label="Anchor link to header"></a></h3>
+<pre><code>メモ
+- パッケージ iml は, &quot;R6 クラス&quot; と呼ばれる (オブジェクト指向型プログラミングのための) R のオブジェクト・クラスを使う
+- → 例えば Predictor$new() で新しいオブジェクトを生成し, $plot() や $results で結果を取り出す</code></pre>
+<p>関数<code>Predictor$new()</code>で, 「モデル + データ」を包んだオブジェクトを作り, 以下ではこれに各手法を適用する.</p>
+<div class="sourceCode" id="cb484"><pre class="sourceCode r"><code class="sourceCode r"><span id="cb484-1"><a href="xai-説明可能な-ai.html#cb484-1" tabindex="-1"></a>X <span class="ot">&lt;-</span> bond <span class="sc">%&gt;%</span></span>
+<span id="cb484-2"><a href="xai-説明可能な-ai.html#cb484-2" tabindex="-1"></a>  dplyr<span class="sc">::</span><span class="fu">select</span>(<span class="sc">-</span>spread)</span>
+<span id="cb484-3"><a href="xai-説明可能な-ai.html#cb484-3" tabindex="-1"></a>predictor <span class="ot">&lt;-</span> Predictor<span class="sc">$</span><span class="fu">new</span>(fit_rf, <span class="at">data =</span> X, <span class="at">y =</span> bond<span class="sc">$</span>spread)</span></code></pre></div>
+</div>
+</div>
+<div id="pfi" class="section level2 hasAnchor" number="15.2">
+<h2><span class="header-section-number">15.2</span> PFI<a href="xai-説明可能な-ai.html#pfi" class="anchor-section" aria-label="Anchor link to header"></a></h2>
+<p><strong>PFI (Permutation Feature Importance)</strong> は, ある特徴量の値をデータ点の間でランダムに並べ替えたとき, 予測誤差がどれだけ大きくなるかで, その特徴量の重要度を測る.</p>
+<div class="sourceCode" id="cb485"><pre class="sourceCode r"><code class="sourceCode r"><span id="cb485-1"><a href="xai-説明可能な-ai.html#cb485-1" tabindex="-1"></a><span class="fu">set.seed</span>(<span class="dv">111</span>)  <span class="co"># 並べ替えは乱数で行う</span></span>
+<span id="cb485-2"><a href="xai-説明可能な-ai.html#cb485-2" tabindex="-1"></a>imp <span class="ot">&lt;-</span> FeatureImp<span class="sc">$</span><span class="fu">new</span>(predictor, <span class="at">loss =</span> <span class="st">&quot;mae&quot;</span>)  <span class="co"># 損失関数: MAE (&#39;mse&#39; なども可)</span></span>
+<span id="cb485-3"><a href="xai-説明可能な-ai.html#cb485-3" tabindex="-1"></a>imp<span class="sc">$</span><span class="fu">plot</span>()</span></code></pre></div>
+<p><img src="_main_files/figure-html/unnamed-chunk-361-1.png" width="75%" /></p>
+<div class="sourceCode" id="cb486"><pre class="sourceCode r"><code class="sourceCode r"><span id="cb486-1"><a href="xai-説明可能な-ai.html#cb486-1" tabindex="-1"></a>imp<span class="sc">$</span>results</span>
+<span id="cb486-2"><a href="xai-説明可能な-ai.html#cb486-2" tabindex="-1"></a><span class="co">#&gt;      feature importance.05 importance importance.95 permutation.error</span></span>
+<span id="cb486-3"><a href="xai-説明可能な-ai.html#cb486-3" tabindex="-1"></a><span class="co">#&gt; 1 equity_vol      3.160594   3.168184      3.235535          38.00651</span></span>
+<span id="cb486-4"><a href="xai-説明可能な-ai.html#cb486-4" tabindex="-1"></a><span class="co">#&gt; 2   leverage      1.928712   1.966275      1.987003          23.58804</span></span>
+<span id="cb486-5"><a href="xai-説明可能な-ai.html#cb486-5" tabindex="-1"></a><span class="co">#&gt; 3   maturity      1.350277   1.371481      1.399634          16.45271</span></span>
+<span id="cb486-6"><a href="xai-説明可能な-ai.html#cb486-6" tabindex="-1"></a><span class="co">#&gt; 4 log_assets      1.330359   1.356967      1.370515          16.27859</span></span>
+<span id="cb486-7"><a href="xai-説明可能な-ai.html#cb486-7" tabindex="-1"></a><span class="co">#&gt; 5   industry      1.255971   1.285521      1.290604          15.42150</span></span></code></pre></div>
+<p><code>importance</code> は (並べ替え後の誤差) / (元の誤差) であり, 1 に近い特徴量は予測にほとんど寄与していない.
+この結果では, equity_vol (並べ替えると誤差が約3.2倍), leverage の重要度が大きく, 構造モデルでデフォルト確率を決める2つの変数が上位に来ている.
+残存期間, 企業規模, 業種の重要度は小さいが, 1 よりは大きく, 予測に一定の寄与をしている.</p>
+</div>
+<div id="pdp-と-ice" class="section level2 hasAnchor" number="15.3">
+<h2><span class="header-section-number">15.3</span> PDP と ICE<a href="xai-説明可能な-ai.html#pdp-と-ice" class="anchor-section" aria-label="Anchor link to header"></a></h2>
+<div id="pdp" class="section level3 unnumbered hasAnchor">
+<h3>PDP<a href="xai-説明可能な-ai.html#pdp" class="anchor-section" aria-label="Anchor link to header"></a></h3>
+<p><strong>PDP (Partial Dependence Plot)</strong> は, ある特徴量の値を変えたときに, 予測値が (他の特徴量について平均して) どう変わるかを描く.</p>
+<div class="sourceCode" id="cb487"><pre class="sourceCode r"><code class="sourceCode r"><span id="cb487-1"><a href="xai-説明可能な-ai.html#cb487-1" tabindex="-1"></a>pdp <span class="ot">&lt;-</span> FeatureEffect<span class="sc">$</span><span class="fu">new</span>(predictor, <span class="at">feature =</span> <span class="st">&quot;equity_vol&quot;</span>, <span class="at">method =</span> <span class="st">&quot;pdp&quot;</span>, <span class="at">grid.size =</span> <span class="dv">20</span>)</span>
+<span id="cb487-2"><a href="xai-説明可能な-ai.html#cb487-2" tabindex="-1"></a>pdp<span class="sc">$</span><span class="fu">plot</span>()</span></code></pre></div>
+<p><img src="_main_files/figure-html/unnamed-chunk-362-1.png" width="75%" /></p>
+<p>他の特徴量に対する PDP は, <code>$set.feature()</code> で特徴量を切り替えて描ける.</p>
+<div class="sourceCode" id="cb488"><pre class="sourceCode r"><code class="sourceCode r"><span id="cb488-1"><a href="xai-説明可能な-ai.html#cb488-1" tabindex="-1"></a>pdp<span class="sc">$</span><span class="fu">set.feature</span>(<span class="st">&quot;leverage&quot;</span>)</span>
+<span id="cb488-2"><a href="xai-説明可能な-ai.html#cb488-2" tabindex="-1"></a>pdp<span class="sc">$</span><span class="fu">plot</span>()</span></code></pre></div>
+<p><img src="_main_files/figure-html/unnamed-chunk-363-1.png" width="75%" /></p>
+<div class="sourceCode" id="cb489"><pre class="sourceCode r"><code class="sourceCode r"><span id="cb489-1"><a href="xai-説明可能な-ai.html#cb489-1" tabindex="-1"></a>pdp<span class="sc">$</span><span class="fu">set.feature</span>(<span class="st">&quot;maturity&quot;</span>)</span>
+<span id="cb489-2"><a href="xai-説明可能な-ai.html#cb489-2" tabindex="-1"></a>pdp<span class="sc">$</span><span class="fu">plot</span>()</span></code></pre></div>
+<p><img src="_main_files/figure-html/unnamed-chunk-363-2.png" width="75%" /></p>
+<p>線形回帰の係数は「1単位増えたときの一定の変化」しか表さないが, PDP からは次のような非線形な関係が読み取れる.</p>
+<ul>
+<li><strong>株価ボラティリティ</strong>: 25%程度まではスプレッドはほぼ一定 (約63〜67bp) だが, 30〜45%で急に拡大し, 55%以上では約190bp で頭打ちになる.
+ボラティリティが低いうちはデフォルト確率がほぼ 0 で, 一定水準を超えるとデフォルト距離が縮まってデフォルト確率が急に高まる, という構造モデルの性質 (凸性) と整合的である.
+一方, 高い領域での頭打ちは, データが少ない (第3四分位点は35%) ためと, ランダムフォレストが学習データの範囲外を外挿できない (予測値は学習データの平均の組合せになる) ためで, 実際の関係を表すものではない.</li>
+<li><strong>レバレッジ</strong>: 約69bp から約117bp まで, ボラティリティより緩やかに増加する (35〜40%付近で傾きが大きくなる).</li>
+<li><strong>残存期間</strong>: 長いほど緩やかに大きくなる. 投資適格の社債で, 信用スプレッドの期間構造が右上がりになるのと整合的である.
+ただし, 1〜3年でいったん下がる部分は, 生成モデル (対数的に単調増加) にはなく, 推定の誤差である.</li>
+</ul>
+</div>
+<div id="ice" class="section level3 unnumbered hasAnchor">
+<h3>ICE<a href="xai-説明可能な-ai.html#ice" class="anchor-section" aria-label="Anchor link to header"></a></h3>
+<p>データ点ごとの, 特徴量に対する予測値の変化は, <strong>ICE (Individual Conditional Expectation)</strong> で知ることができる.
+<code>method = "pdp+ice"</code> とすると, 個々の銘柄ごとの曲線 (ICE) と, その平均 (PDP, 太線) を同時に描く.</p>
+<div class="sourceCode" id="cb490"><pre class="sourceCode r"><code class="sourceCode r"><span id="cb490-1"><a href="xai-説明可能な-ai.html#cb490-1" tabindex="-1"></a>ice <span class="ot">&lt;-</span> FeatureEffect<span class="sc">$</span><span class="fu">new</span>(predictor, <span class="at">feature =</span> <span class="st">&quot;leverage&quot;</span>, <span class="at">method =</span> <span class="st">&quot;pdp+ice&quot;</span>, <span class="at">grid.size =</span> <span class="dv">20</span>)</span>
+<span id="cb490-2"><a href="xai-説明可能な-ai.html#cb490-2" tabindex="-1"></a>ice<span class="sc">$</span><span class="fu">plot</span>()</span></code></pre></div>
+<p><img src="_main_files/figure-html/unnamed-chunk-364-1.png" width="75%" /></p>
+<p>個々の曲線の高さが違うのは, 他の特徴量 (特にボラティリティ) の値が銘柄ごとに違うためである.
+曲線が平行に上下にずれているだけなら, レバレッジの効果は銘柄によらず同じ (加法的) だが, ここでは, 曲線の傾き (レバレッジが上がったときの増え方) も銘柄によって違う.
+これは, レバレッジの効果が他の特徴量の値によって変わる, すなわち交互作用があることを示す.</p>
+</div>
+<div id="つの特徴量の-pdp" class="section level3 unnumbered hasAnchor">
+<h3>2つの特徴量の PDP<a href="xai-説明可能な-ai.html#つの特徴量の-pdp" class="anchor-section" aria-label="Anchor link to header"></a></h3>
+<p>2つの特徴量を同時に指定すると, 交互作用を確認できる.</p>
+<div class="sourceCode" id="cb491"><pre class="sourceCode r"><code class="sourceCode r"><span id="cb491-1"><a href="xai-説明可能な-ai.html#cb491-1" tabindex="-1"></a>pdp2 <span class="ot">&lt;-</span> FeatureEffect<span class="sc">$</span><span class="fu">new</span>(predictor, <span class="at">feature =</span> <span class="fu">c</span>(<span class="st">&quot;leverage&quot;</span>, <span class="st">&quot;equity_vol&quot;</span>), <span class="at">method =</span> <span class="st">&quot;pdp&quot;</span>,</span>
+<span id="cb491-2"><a href="xai-説明可能な-ai.html#cb491-2" tabindex="-1"></a>  <span class="at">grid.size =</span> <span class="dv">15</span>)</span>
+<span id="cb491-3"><a href="xai-説明可能な-ai.html#cb491-3" tabindex="-1"></a>pdp2<span class="sc">$</span><span class="fu">plot</span>()</span></code></pre></div>
+<p><img src="_main_files/figure-html/unnamed-chunk-365-1.png" width="75%" /></p>
+<p>色の濃さが予測スプレッドを表す.
+数値で見ると, ボラティリティが最も低い (12%) 銘柄では, レバレッジが 5% から 85% に上がってもスプレッドは約54bp から約89bp へ (約35bp) しか増えないが, ボラティリティが最も高い (66.5%) 銘柄では約152bp から約218bp へ (約66bp) 増える.
+すなわち, レバレッジの効果は, ボラティリティが高いほど大きい (右上ほど色の変化が急になる).
+構造モデルでは, デフォルト距離は「負債までの余裕 (レバレッジ)」を「資産価値の変動の大きさ (ボラティリティ)」で割ったものであり, 両方が悪い企業ほどデフォルト確率が非線形に高まるので, 自然な結果である.</p>
+<p><em>注) PDP は, 他の特徴量の分布を固定したまま1つの特徴量の値を動かすので, 特徴量どうしの相関が強いと, 現実にはあり得ない組合せ (例: 低レバレッジなのに高ボラティリティ) での予測値を平均してしまう. このデータでは, レバレッジとボラティリティの相関は 0.04 とほぼ無相関なので, その心配は小さい.</em></p>
+</div>
+</div>
+<div id="lime" class="section level2 hasAnchor" number="15.4">
+<h2><span class="header-section-number">15.4</span> LIME<a href="xai-説明可能な-ai.html#lime" class="anchor-section" aria-label="Anchor link to header"></a></h2>
+<p>局所代理モデルの一手法である <strong>LIME (Local Interpretable Model-agnostic Explanations)</strong> は, 説明したいデータ点の近くでブラックボックス・モデルを単純なモデル (線形モデルなど) で近似し, その係数で予測を説明する.
+パッケージ<strong>iml</strong>では, その一種を関数<code>LocalModel$new()</code>で実行する.</p>
+<pre><code>LocalModel():
+- LIME の一種. 局所的な重み付き回帰モデルによる近似
+   - 説明したいデータ点からの距離で重み付け
+   - 回帰問題は線形回帰, 分類問題はロジスティック回帰
+   - L1 正則化 (lasso) で使う特徴量を絞る (内部で関数 glmnet() を使用)
+- 標準の LIME との違い
+   - 近傍データとして, 乱数で作るのではなく, 元のデータを使う
+   - ユークリッド距離に基づくカーネルではなく, Gower 距離で近さを測る (パッケージ gower が必要)</code></pre>
+<p>1番目の銘柄の予測に対する説明 (<code>k</code>: 使う特徴量の数):</p>
+<div class="sourceCode" id="cb493"><pre class="sourceCode r"><code class="sourceCode r"><span id="cb493-1"><a href="xai-説明可能な-ai.html#cb493-1" tabindex="-1"></a><span class="co"># install.packages(&#39;gower&#39;)</span></span>
+<span id="cb493-2"><a href="xai-説明可能な-ai.html#cb493-2" tabindex="-1"></a>lime_explain <span class="ot">&lt;-</span> LocalModel<span class="sc">$</span><span class="fu">new</span>(predictor, <span class="at">x.interest =</span> X[<span class="dv">1</span>, ], <span class="at">k =</span> <span class="dv">3</span>)</span>
+<span id="cb493-3"><a href="xai-説明可能な-ai.html#cb493-3" tabindex="-1"></a>lime_explain<span class="sc">$</span>results</span>
+<span id="cb493-4"><a href="xai-説明可能な-ai.html#cb493-4" tabindex="-1"></a><span class="co">#&gt;                  beta x.recoded      effect x.original    feature</span></span>
+<span id="cb493-5"><a href="xai-説明可能な-ai.html#cb493-5" tabindex="-1"></a><span class="co">#&gt; leverage   0.65162460      11.9   7.7543327       11.9   leverage</span></span>
+<span id="cb493-6"><a href="xai-説明可能な-ai.html#cb493-6" tabindex="-1"></a><span class="co">#&gt; equity_vol 3.28905996      60.5 198.9881275       60.5 equity_vol</span></span>
+<span id="cb493-7"><a href="xai-説明可能な-ai.html#cb493-7" tabindex="-1"></a><span class="co">#&gt; maturity   0.07119467       9.2   0.6549909        9.2   maturity</span></span>
+<span id="cb493-8"><a href="xai-説明可能な-ai.html#cb493-8" tabindex="-1"></a><span class="co">#&gt;              feature.value</span></span>
+<span id="cb493-9"><a href="xai-説明可能な-ai.html#cb493-9" tabindex="-1"></a><span class="co">#&gt; leverage     leverage=11.9</span></span>
+<span id="cb493-10"><a href="xai-説明可能な-ai.html#cb493-10" tabindex="-1"></a><span class="co">#&gt; equity_vol equity_vol=60.5</span></span>
+<span id="cb493-11"><a href="xai-説明可能な-ai.html#cb493-11" tabindex="-1"></a><span class="co">#&gt; maturity      maturity=9.2</span></span>
+<span id="cb493-12"><a href="xai-説明可能な-ai.html#cb493-12" tabindex="-1"></a>lime_explain<span class="sc">$</span><span class="fu">plot</span>()</span></code></pre></div>
+<p><img src="_main_files/figure-html/unnamed-chunk-366-1.png" width="75%" /></p>
+<div class="sourceCode" id="cb494"><pre class="sourceCode r"><code class="sourceCode r"><span id="cb494-1"><a href="xai-説明可能な-ai.html#cb494-1" tabindex="-1"></a><span class="fu">predict</span>(lime_explain)  <span class="co"># 局所線形モデルによる予測値</span></span>
+<span id="cb494-2"><a href="xai-説明可能な-ai.html#cb494-2" tabindex="-1"></a><span class="co">#&gt;   prediction</span></span>
+<span id="cb494-3"><a href="xai-説明可能な-ai.html#cb494-3" tabindex="-1"></a><span class="co">#&gt; 1    169.214</span></span>
+<span id="cb494-4"><a href="xai-説明可能な-ai.html#cb494-4" tabindex="-1"></a><span class="fu">predict</span>(fit_rf, bond[<span class="dv">1</span>, ])  <span class="co"># ランダムフォレストの予測値</span></span>
+<span id="cb494-5"><a href="xai-説明可能な-ai.html#cb494-5" tabindex="-1"></a><span class="co">#&gt;        1 </span></span>
+<span id="cb494-6"><a href="xai-説明可能な-ai.html#cb494-6" tabindex="-1"></a><span class="co">#&gt; 175.4043</span></span></code></pre></div>
+<p><code>beta</code> が局所線形モデルの係数, <code>effect</code> が係数 × 特徴量の値で, 横棒グラフで示されている.</p>
+<p>1番目の銘柄は, レバレッジが 11.9% と低い一方, 株価ボラティリティが 60.5% と非常に高く, ランダムフォレストの予測スプレッドは約175bp と大きい.
+LIME は, 予測に使う特徴量としてボラティリティ, レバレッジ, 残存期間の3つを選び, この銘柄の周りでは「ボラティリティが 1%ポイント高いとスプレッドが約3.3bp 大きい」と説明している.
+<code>effect</code> を見ると, ボラティリティの寄与 (約199bp) が圧倒的に大きく, 「この銘柄のスプレッドが大きいのは, ボラティリティが高いため」という説明になる.</p>
+<p>ただし, 読み取りには次の注意が必要である.</p>
+<ul>
+<li><code>effect</code> は「特徴量の値が 0 の場合」との比較であり, 平均的な銘柄との比較ではない (切片も表示されない). このため, レバレッジの <code>effect</code> は (平均より低いのに) プラスになっている. 次の SHAP と比べてみよう.</li>
+<li>局所線形モデルの予測値 (約169bp) は, ランダムフォレストの予測値 (約175bp) とおおむね近いが, 一致はしない.</li>
+</ul>
+<p>別のデータ点の説明は, <code>$explain()</code> で求める.</p>
+<div class="sourceCode" id="cb495"><pre class="sourceCode r"><code class="sourceCode r"><span id="cb495-1"><a href="xai-説明可能な-ai.html#cb495-1" tabindex="-1"></a>lime_explain<span class="sc">$</span><span class="fu">explain</span>(X[<span class="dv">2</span>, ])</span>
+<span id="cb495-2"><a href="xai-説明可能な-ai.html#cb495-2" tabindex="-1"></a>lime_explain<span class="sc">$</span>results</span>
+<span id="cb495-3"><a href="xai-説明可能な-ai.html#cb495-3" tabindex="-1"></a><span class="co">#&gt;                  beta x.recoded     effect x.original    feature</span></span>
+<span id="cb495-4"><a href="xai-説明可能な-ai.html#cb495-4" tabindex="-1"></a><span class="co">#&gt; leverage   0.60595506      28.9 17.5121012       28.9   leverage</span></span>
+<span id="cb495-5"><a href="xai-説明可能な-ai.html#cb495-5" tabindex="-1"></a><span class="co">#&gt; equity_vol 3.19204341      30.7 97.9957326       30.7 equity_vol</span></span>
+<span id="cb495-6"><a href="xai-説明可能な-ai.html#cb495-6" tabindex="-1"></a><span class="co">#&gt; maturity   0.05061844       8.8  0.4454422        8.8   maturity</span></span>
+<span id="cb495-7"><a href="xai-説明可能な-ai.html#cb495-7" tabindex="-1"></a><span class="co">#&gt;              feature.value</span></span>
+<span id="cb495-8"><a href="xai-説明可能な-ai.html#cb495-8" tabindex="-1"></a><span class="co">#&gt; leverage     leverage=28.9</span></span>
+<span id="cb495-9"><a href="xai-説明可能な-ai.html#cb495-9" tabindex="-1"></a><span class="co">#&gt; equity_vol equity_vol=30.7</span></span>
+<span id="cb495-10"><a href="xai-説明可能な-ai.html#cb495-10" tabindex="-1"></a><span class="co">#&gt; maturity      maturity=8.8</span></span>
+<span id="cb495-11"><a href="xai-説明可能な-ai.html#cb495-11" tabindex="-1"></a>lime_explain<span class="sc">$</span><span class="fu">plot</span>()</span></code></pre></div>
+<p><img src="_main_files/figure-html/unnamed-chunk-367-1.png" width="75%" /></p>
+<div class="sourceCode" id="cb496"><pre class="sourceCode r"><code class="sourceCode r"><span id="cb496-1"><a href="xai-説明可能な-ai.html#cb496-1" tabindex="-1"></a><span class="fu">predict</span>(lime_explain)</span>
+<span id="cb496-2"><a href="xai-説明可能な-ai.html#cb496-2" tabindex="-1"></a><span class="co">#&gt;   prediction</span></span>
+<span id="cb496-3"><a href="xai-説明可能な-ai.html#cb496-3" tabindex="-1"></a><span class="co">#&gt; 1   82.04911</span></span>
+<span id="cb496-4"><a href="xai-説明可能な-ai.html#cb496-4" tabindex="-1"></a><span class="fu">predict</span>(fit_rf, bond[<span class="dv">2</span>, ])</span>
+<span id="cb496-5"><a href="xai-説明可能な-ai.html#cb496-5" tabindex="-1"></a><span class="co">#&gt;        2 </span></span>
+<span id="cb496-6"><a href="xai-説明可能な-ai.html#cb496-6" tabindex="-1"></a><span class="co">#&gt; 68.87523</span></span></code></pre></div>
+<p>2番目の銘柄 (レバレッジ 28.9%, ボラティリティ 30.7%) では, 局所線形モデルの予測値 (約82bp) とランダムフォレストの予測値 (約69bp) の差が大きく, 近似があまり良くない.
+また, 係数 (<code>beta</code>) は1番目の銘柄とほぼ同じである.
+PDP で見たように, ボラティリティの効果は 30%付近では急で 60%付近では平らなはずなので, LIME の係数は「その銘柄のごく近く」の傾きというより, かなり広い範囲の平均的な傾きになっている.
+<code>LocalModel$new()</code> は元のデータ全体を Gower 距離で重み付けして使うので, 近傍の範囲が広くなりやすい.
+LIME の結果は, 近傍の取り方 (カーネルの幅) に依存し, 不安定になりやすいことが知られている.</p>
+<p>ただし, LIME ではデータ点ごとに異なる代理モデルで説明するので, 異なるデータ点の間で結果を直接比較することは, 元来想定されていない.
+異なるデータ点を比較したい場合には, 先の ICE や, 次の SHAP などが有効である.</p>
+</div>
+<div id="shap" class="section level2 hasAnchor" number="15.5">
+<h2><span class="header-section-number">15.5</span> SHAP<a href="xai-説明可能な-ai.html#shap" class="anchor-section" aria-label="Anchor link to header"></a></h2>
+<p><strong>SHAP (SHapley Additive exPlanations)</strong> は, 協力ゲーム理論の Shapley 値に基づいて, データ点に対するモデルの予測値を, 予測値の平均と各特徴量の「貢献度」の和に分解する方法である.
+<span class="math display">\[
+\hat{f}(\mathbf{x}_i) = E[\hat{f}(\mathbf{X})] + \phi_{leverage} + \phi_{equity\_vol} + \cdots + \phi_{industry}
+\]</span></p>
+<div id="局所的な説明" class="section level3 unnumbered hasAnchor">
+<h3>局所的な説明<a href="xai-説明可能な-ai.html#局所的な説明" class="anchor-section" aria-label="Anchor link to header"></a></h3>
+<p>1番目の銘柄の予測値を, 各特徴量の貢献度に分解する.</p>
+<div class="sourceCode" id="cb497"><pre class="sourceCode r"><code class="sourceCode r"><span id="cb497-1"><a href="xai-説明可能な-ai.html#cb497-1" tabindex="-1"></a>X[<span class="dv">1</span>, ]</span>
+<span id="cb497-2"><a href="xai-説明可能な-ai.html#cb497-2" tabindex="-1"></a><span class="co">#&gt;   leverage equity_vol maturity log_assets industry</span></span>
+<span id="cb497-3"><a href="xai-説明可能な-ai.html#cb497-3" tabindex="-1"></a><span class="co">#&gt; 1     11.9       60.5      9.2      10.69 nonmanuf</span></span>
+<span id="cb497-4"><a href="xai-説明可能な-ai.html#cb497-4" tabindex="-1"></a><span class="fu">predict</span>(fit_rf, bond[<span class="dv">1</span>, ])  <span class="co"># 予測値</span></span>
+<span id="cb497-5"><a href="xai-説明可能な-ai.html#cb497-5" tabindex="-1"></a><span class="co">#&gt;        1 </span></span>
+<span id="cb497-6"><a href="xai-説明可能な-ai.html#cb497-6" tabindex="-1"></a><span class="co">#&gt; 175.4043</span></span>
+<span id="cb497-7"><a href="xai-説明可能な-ai.html#cb497-7" tabindex="-1"></a><span class="fu">mean</span>(<span class="fu">predict</span>(fit_rf))  <span class="co"># 予測値の平均 (ベースライン)</span></span>
+<span id="cb497-8"><a href="xai-説明可能な-ai.html#cb497-8" tabindex="-1"></a><span class="co">#&gt; [1] 85.17802</span></span>
+<span id="cb497-9"><a href="xai-説明可能な-ai.html#cb497-9" tabindex="-1"></a><span class="fu">set.seed</span>(<span class="dv">222</span>)</span>
+<span id="cb497-10"><a href="xai-説明可能な-ai.html#cb497-10" tabindex="-1"></a>shapley <span class="ot">&lt;-</span> Shapley<span class="sc">$</span><span class="fu">new</span>(predictor, <span class="at">x.interest =</span> X[<span class="dv">1</span>, ], <span class="at">sample.size =</span> <span class="dv">100</span>)</span>
+<span id="cb497-11"><a href="xai-説明可能な-ai.html#cb497-11" tabindex="-1"></a>shapley<span class="sc">$</span><span class="fu">plot</span>()</span></code></pre></div>
+<p><img src="_main_files/figure-html/unnamed-chunk-368-1.png" width="75%" /></p>
+<div class="sourceCode" id="cb498"><pre class="sourceCode r"><code class="sourceCode r"><span id="cb498-1"><a href="xai-説明可能な-ai.html#cb498-1" tabindex="-1"></a>shapley<span class="sc">$</span>results</span>
+<span id="cb498-2"><a href="xai-説明可能な-ai.html#cb498-2" tabindex="-1"></a><span class="co">#&gt;      feature        phi   phi.var     feature.value</span></span>
+<span id="cb498-3"><a href="xai-説明可能な-ai.html#cb498-3" tabindex="-1"></a><span class="co">#&gt; 1   leverage -17.754215 495.08239     leverage=11.9</span></span>
+<span id="cb498-4"><a href="xai-説明可能な-ai.html#cb498-4" tabindex="-1"></a><span class="co">#&gt; 2 equity_vol 102.448308 684.87448   equity_vol=60.5</span></span>
+<span id="cb498-5"><a href="xai-説明可能な-ai.html#cb498-5" tabindex="-1"></a><span class="co">#&gt; 3   maturity   6.465599 103.49851      maturity=9.2</span></span>
+<span id="cb498-6"><a href="xai-説明可能な-ai.html#cb498-6" tabindex="-1"></a><span class="co">#&gt; 4 log_assets   3.866448  52.99302  log_assets=10.69</span></span>
+<span id="cb498-7"><a href="xai-説明可能な-ai.html#cb498-7" tabindex="-1"></a><span class="co">#&gt; 5   industry   1.260824  98.92527 industry=nonmanuf</span></span>
+<span id="cb498-8"><a href="xai-説明可能な-ai.html#cb498-8" tabindex="-1"></a><span class="fu">sum</span>(shapley<span class="sc">$</span>results<span class="sc">$</span>phi)  <span class="co"># = 予測値 - 予測値の平均 (近似的に)</span></span>
+<span id="cb498-9"><a href="xai-説明可能な-ai.html#cb498-9" tabindex="-1"></a><span class="co">#&gt; [1] 96.28696</span></span></code></pre></div>
+<p>出力のうち, Shapley 値は <code>phi</code> を読めばよい.</p>
+<p>1番目の銘柄の予測スプレッド (約175bp) は, 平均的な予測値 (約86bp) より約90bp 大きい.
+その内訳は, 株価ボラティリティ (60.5%) が約 +102bp と大部分を占め, レバレッジ (11.9%, 平均の約40%より低い) は約 −18bp と, スプレッドを小さくする方向に働いている.
+総資産 (対数で 10.69, 中央値 11.01 よりやや小さい) と残存期間は小さなプラスである.
+LIME ではレバレッジの寄与がプラスだったが, SHAP は「平均的な銘柄と比べて」の寄与なので, 平均より低いレバレッジはマイナスの寄与になる.
+「ボラティリティが高いことがスプレッドを大きく押し上げ, 低レバレッジがそれを一部打ち消している」という, ファイナンス的に自然な説明が得られる.</p>
+<p><code>phi.var</code> はモンテカルロ標本から計算される寄与の分散で, 小さいほど推定の信頼性が高い.
+<code>feature.value</code> は, 指定したデータ点における各特徴量の値である.
+ここでは, ボラティリティの <code>phi.var</code> は約680 (標準偏差で約26bp) と大きく, <code>sample.size = 100</code> では推定の誤差がかなりあることに注意する.</p>
+<p>Shapley 値の合計 (96.3) は, 予測値と予測値の平均の差 (89.9) に近似的に一致する.
+ずれは, 下の注にあるモンテカルロ法による近似の誤差である (<code>sample.size</code> を大きくすると小さくなる).
+なお, <code>predict(fit_rf)</code> のように新しいデータを指定しないと, ランダムフォレストは OOB による予測値を返す.
+<strong>iml</strong> が基準とする平均は, 全データに対する予測値の平均 <code>mean(predict(fit_rf, newdata = bond))</code> (= 85.54) で, OOB による予測値の平均 (85.18) とはわずかに異なる.</p>
+<p><em>注) Shapley 値の厳密な計算には, 特徴量の全ての組合せについて計算する必要があり, 特徴量が多いと計算量が爆発する. そこで, <strong>iml</strong> の <code>Shapley$new()</code> は, 引数<code>sample.size</code>で指定した回数だけランダムに組合せを生成して近似値を計算する (大きいほど正確だが, 計算時間が増える). 結果を再現するためには, <code>Shapley$new()</code> の直前に <code>set.seed()</code> で乱数を固定する.</em></p>
+<p>別の銘柄 (例: スプレッドが最も大きい銘柄) の説明は, <code>$explain()</code> で求める.</p>
+<div class="sourceCode" id="cb499"><pre class="sourceCode r"><code class="sourceCode r"><span id="cb499-1"><a href="xai-説明可能な-ai.html#cb499-1" tabindex="-1"></a>i_max <span class="ot">&lt;-</span> <span class="fu">which.max</span>(bond<span class="sc">$</span>spread)</span>
+<span id="cb499-2"><a href="xai-説明可能な-ai.html#cb499-2" tabindex="-1"></a>bond[i_max, ]  <span class="co"># 実際のスプレッド</span></span>
+<span id="cb499-3"><a href="xai-説明可能な-ai.html#cb499-3" tabindex="-1"></a><span class="co">#&gt;     spread leverage equity_vol maturity log_assets industry</span></span>
+<span id="cb499-4"><a href="xai-説明可能な-ai.html#cb499-4" tabindex="-1"></a><span class="co">#&gt; 306    399     68.1       59.9     15.1      11.33 nonmanuf</span></span>
+<span id="cb499-5"><a href="xai-説明可能な-ai.html#cb499-5" tabindex="-1"></a><span class="fu">predict</span>(fit_rf, bond[i_max, ])  <span class="co"># 予測値</span></span>
+<span id="cb499-6"><a href="xai-説明可能な-ai.html#cb499-6" tabindex="-1"></a><span class="co">#&gt;     306 </span></span>
+<span id="cb499-7"><a href="xai-説明可能な-ai.html#cb499-7" tabindex="-1"></a><span class="co">#&gt; 296.601</span></span>
+<span id="cb499-8"><a href="xai-説明可能な-ai.html#cb499-8" tabindex="-1"></a>shapley<span class="sc">$</span><span class="fu">explain</span>(<span class="at">x.interest =</span> X[i_max, ])</span>
+<span id="cb499-9"><a href="xai-説明可能な-ai.html#cb499-9" tabindex="-1"></a>shapley<span class="sc">$</span><span class="fu">plot</span>()</span></code></pre></div>
+<p><img src="_main_files/figure-html/unnamed-chunk-369-1.png" width="75%" /></p>
+<div class="sourceCode" id="cb500"><pre class="sourceCode r"><code class="sourceCode r"><span id="cb500-1"><a href="xai-説明可能な-ai.html#cb500-1" tabindex="-1"></a>shapley<span class="sc">$</span>results</span>
+<span id="cb500-2"><a href="xai-説明可能な-ai.html#cb500-2" tabindex="-1"></a><span class="co">#&gt;      feature       phi   phi.var     feature.value</span></span>
+<span id="cb500-3"><a href="xai-説明可能な-ai.html#cb500-3" tabindex="-1"></a><span class="co">#&gt; 1   leverage  36.70743  789.7522     leverage=68.1</span></span>
+<span id="cb500-4"><a href="xai-説明可能な-ai.html#cb500-4" tabindex="-1"></a><span class="co">#&gt; 2 equity_vol 129.57110 1791.3370   equity_vol=59.9</span></span>
+<span id="cb500-5"><a href="xai-説明可能な-ai.html#cb500-5" tabindex="-1"></a><span class="co">#&gt; 3   maturity  15.83133  229.0063     maturity=15.1</span></span>
+<span id="cb500-6"><a href="xai-説明可能な-ai.html#cb500-6" tabindex="-1"></a><span class="co">#&gt; 4 log_assets  19.11607  244.2515  log_assets=11.33</span></span>
+<span id="cb500-7"><a href="xai-説明可能な-ai.html#cb500-7" tabindex="-1"></a><span class="co">#&gt; 5   industry  12.10461  413.0221 industry=nonmanuf</span></span></code></pre></div>
+<p>スプレッドが最も大きい銘柄 (実績 399bp) は, ボラティリティ (59.9%) とレバレッジ (68.1%) がともに高く, ボラティリティ (約 +130bp) とレバレッジ (約 +37bp) の寄与が大きい.
+1番目の銘柄と違い, レバレッジもスプレッドを押し上げている.</p>
+<p>この例からは, 次の2点も読み取れる.</p>
+<ul>
+<li>ランダムフォレストの予測値 (約297bp) は実績 (399bp) よりかなり小さい. ランダムフォレストは多数の木の予測の平均なので, 極端な値は平均の方向に引き寄せられやすい.</li>
+<li>総資産 (対数で 11.33, 中央値より大きい) の寄与が約 +19bp とプラスになっている. 生成モデルでは企業規模が大きいほどスプレッドは小さい (この銘柄では約 −2bp) ので, 直感と逆である. ただし <code>phi.var</code> は約244 (標準偏差で約16bp) と大きく, 0 と区別できない. 符号が直感と逆の Shapley 値を見たときは, まず推定の誤差 (<code>phi.var</code>) を確認し, 必要なら <code>sample.size</code> を大きくして再計算する.</li>
+</ul>
+<p><em>注) x.interest をコンストラクタ<code>Shapley$new()</code>に渡した時点で Shapley 値が計算され, <code>shapley$results</code> に格納される. <code>$explain()</code> は, 別のデータ点を後から説明したいときに使うメソッドである.</em></p>
+</div>
+<div id="大域的な説明" class="section level3 unnumbered hasAnchor">
+<h3>大域的な説明<a href="xai-説明可能な-ai.html#大域的な説明" class="anchor-section" aria-label="Anchor link to header"></a></h3>
+<p>多数のデータ点で Shapley 値を計算し, その絶対値の平均をとると, 特徴量の (大域的な) 重要度になる.
+計算に時間がかかるので, ここでは50銘柄だけで計算する.</p>
+<div class="sourceCode" id="cb501"><pre class="sourceCode r"><code class="sourceCode r"><span id="cb501-1"><a href="xai-説明可能な-ai.html#cb501-1" tabindex="-1"></a><span class="fu">set.seed</span>(<span class="dv">333</span>)</span>
+<span id="cb501-2"><a href="xai-説明可能な-ai.html#cb501-2" tabindex="-1"></a>idx <span class="ot">&lt;-</span> <span class="fu">sample</span>(<span class="fu">nrow</span>(X), <span class="dv">50</span>)</span>
+<span id="cb501-3"><a href="xai-説明可能な-ai.html#cb501-3" tabindex="-1"></a>shap_all <span class="ot">&lt;-</span> <span class="fu">map_dfr</span>(idx, <span class="cf">function</span>(i) {</span>
+<span id="cb501-4"><a href="xai-説明可能な-ai.html#cb501-4" tabindex="-1"></a>  shapley<span class="sc">$</span><span class="fu">explain</span>(<span class="at">x.interest =</span> X[i, ])</span>
+<span id="cb501-5"><a href="xai-説明可能な-ai.html#cb501-5" tabindex="-1"></a>  shapley<span class="sc">$</span>results <span class="sc">%&gt;%</span></span>
+<span id="cb501-6"><a href="xai-説明可能な-ai.html#cb501-6" tabindex="-1"></a>    <span class="fu">mutate</span>(<span class="at">id =</span> i)</span>
+<span id="cb501-7"><a href="xai-説明可能な-ai.html#cb501-7" tabindex="-1"></a>})</span>
+<span id="cb501-8"><a href="xai-説明可能な-ai.html#cb501-8" tabindex="-1"></a>shap_all <span class="sc">%&gt;%</span></span>
+<span id="cb501-9"><a href="xai-説明可能な-ai.html#cb501-9" tabindex="-1"></a>  <span class="fu">group_by</span>(feature) <span class="sc">%&gt;%</span></span>
+<span id="cb501-10"><a href="xai-説明可能な-ai.html#cb501-10" tabindex="-1"></a>  <span class="fu">summarise</span>(<span class="at">mean_abs_phi =</span> <span class="fu">mean</span>(<span class="fu">abs</span>(phi))) <span class="sc">%&gt;%</span></span>
+<span id="cb501-11"><a href="xai-説明可能な-ai.html#cb501-11" tabindex="-1"></a>  <span class="fu">arrange</span>(<span class="fu">desc</span>(mean_abs_phi))</span>
+<span id="cb501-12"><a href="xai-説明可能な-ai.html#cb501-12" tabindex="-1"></a><span class="co">#&gt;   mean_abs_phi</span></span>
+<span id="cb501-13"><a href="xai-説明可能な-ai.html#cb501-13" tabindex="-1"></a><span class="co">#&gt; 1     8.270786</span></span></code></pre></div>
+<p>上位2つ (ボラティリティ, レバレッジ) は PFI と同じである.
+残りの3つは, PFI でも SHAP でも重要度が小さく互いに近いので, 順位の違いに大きな意味はない (50銘柄の標本や, モンテカルロ近似の誤差で入れ替わりうる).
+PFI は「その特徴量の情報を失うと予測がどれだけ悪くなるか」, SHAP の絶対値の平均は「その特徴量が予測値をどれだけ動かしているか」を測るもので, 考え方は異なるが, 重要な特徴量については結論が一致することが多い.</p>
+</div>
+</div>
+<div id="値分類問題" class="section level2 hasAnchor" number="15.6">
+<h2><span class="header-section-number">15.6</span> 2値分類問題<a href="xai-説明可能な-ai.html#値分類問題" class="anchor-section" aria-label="Anchor link to header"></a></h2>
+<div id="データ-クレジットカードの延滞-仮想データ" class="section level3 unnumbered hasAnchor">
+<h3>データ: クレジットカードの延滞 (仮想データ)<a href="xai-説明可能な-ai.html#データ-クレジットカードの延滞-仮想データ" class="anchor-section" aria-label="Anchor link to header"></a></h3>
+<pre><code>card_default.csv: 3,000件
+- default: 延滞 (yes / no) (目的変数). 延滞は全体の約6.5%
+- limit: 利用枠 (万円), util: 利用率 (%), delay: 直近6か月の支払遅延回数, age: 年齢,
+  income: 年収 (万円), cash_ratio: キャッシング比率 (%), tenure: 会員年数, n_cards: 保有カード枚数</code></pre>
+<div class="sourceCode" id="cb503"><pre class="sourceCode r"><code class="sourceCode r"><span id="cb503-1"><a href="xai-説明可能な-ai.html#cb503-1" tabindex="-1"></a>card <span class="ot">&lt;-</span> <span class="fu">read.csv</span>(<span class="st">&quot;class/card_default.csv&quot;</span>, <span class="at">stringsAsFactors =</span> <span class="cn">TRUE</span>)</span>
+<span id="cb503-2"><a href="xai-説明可能な-ai.html#cb503-2" tabindex="-1"></a>card<span class="sc">$</span>default <span class="ot">&lt;-</span> <span class="fu">factor</span>(card<span class="sc">$</span>default, <span class="at">levels =</span> <span class="fu">c</span>(<span class="st">&quot;no&quot;</span>, <span class="st">&quot;yes&quot;</span>))</span>
+<span id="cb503-3"><a href="xai-説明可能な-ai.html#cb503-3" tabindex="-1"></a><span class="fu">set.seed</span>(<span class="dv">50</span>)</span>
+<span id="cb503-4"><a href="xai-説明可能な-ai.html#cb503-4" tabindex="-1"></a>train_idx <span class="ot">&lt;-</span> <span class="fu">sample</span>(<span class="fu">nrow</span>(card), <span class="dv">2000</span>)  <span class="co"># 学習用 2,000件, テスト用 1,000件</span></span>
+<span id="cb503-5"><a href="xai-説明可能な-ai.html#cb503-5" tabindex="-1"></a>card_train <span class="ot">&lt;-</span> card[train_idx, ]</span>
+<span id="cb503-6"><a href="xai-説明可能な-ai.html#cb503-6" tabindex="-1"></a>card_test <span class="ot">&lt;-</span> card[<span class="sc">-</span>train_idx, ]</span>
+<span id="cb503-7"><a href="xai-説明可能な-ai.html#cb503-7" tabindex="-1"></a><span class="fu">set.seed</span>(<span class="dv">123</span>)</span>
+<span id="cb503-8"><a href="xai-説明可能な-ai.html#cb503-8" tabindex="-1"></a>fit_rf2 <span class="ot">&lt;-</span> <span class="fu">randomForest</span>(default <span class="sc">~</span> ., <span class="at">data =</span> card_train, <span class="at">ntree =</span> <span class="dv">300</span>)</span>
+<span id="cb503-9"><a href="xai-説明可能な-ai.html#cb503-9" tabindex="-1"></a>fit_rf2</span>
+<span id="cb503-10"><a href="xai-説明可能な-ai.html#cb503-10" tabindex="-1"></a><span class="co">#&gt; </span></span>
+<span id="cb503-11"><a href="xai-説明可能な-ai.html#cb503-11" tabindex="-1"></a><span class="co">#&gt; Call:</span></span>
+<span id="cb503-12"><a href="xai-説明可能な-ai.html#cb503-12" tabindex="-1"></a><span class="co">#&gt;  randomForest(formula = default ~ ., data = card_train, ntree = 300) </span></span>
+<span id="cb503-13"><a href="xai-説明可能な-ai.html#cb503-13" tabindex="-1"></a><span class="co">#&gt;                Type of random forest: classification</span></span>
+<span id="cb503-14"><a href="xai-説明可能な-ai.html#cb503-14" tabindex="-1"></a><span class="co">#&gt;                      Number of trees: 300</span></span>
+<span id="cb503-15"><a href="xai-説明可能な-ai.html#cb503-15" tabindex="-1"></a><span class="co">#&gt; No. of variables tried at each split: 2</span></span>
+<span id="cb503-16"><a href="xai-説明可能な-ai.html#cb503-16" tabindex="-1"></a><span class="co">#&gt; </span></span>
+<span id="cb503-17"><a href="xai-説明可能な-ai.html#cb503-17" tabindex="-1"></a><span class="co">#&gt;         OOB estimate of  error rate: 4.85%</span></span>
+<span id="cb503-18"><a href="xai-説明可能な-ai.html#cb503-18" tabindex="-1"></a><span class="co">#&gt; Confusion matrix:</span></span>
+<span id="cb503-19"><a href="xai-説明可能な-ai.html#cb503-19" tabindex="-1"></a><span class="co">#&gt;       no yes class.error</span></span>
+<span id="cb503-20"><a href="xai-説明可能な-ai.html#cb503-20" tabindex="-1"></a><span class="co">#&gt; no  1854  18 0.009615385</span></span>
+<span id="cb503-21"><a href="xai-説明可能な-ai.html#cb503-21" tabindex="-1"></a><span class="co">#&gt; yes   79  49 0.617187500</span></span></code></pre></div>
+</div>
+<div id="延滞確率の説明" class="section level3 unnumbered hasAnchor">
+<h3>延滞確率の説明<a href="xai-説明可能な-ai.html#延滞確率の説明" class="anchor-section" aria-label="Anchor link to header"></a></h3>
+<p>延滞 (yes) の確率を説明の対象にする (<code>type = "prob", class = "yes"</code>).
+解釈にはテストデータを使う (学習データでは, ランダムフォレストの予測は学習データに過剰に適合しているため).</p>
+<div class="sourceCode" id="cb504"><pre class="sourceCode r"><code class="sourceCode r"><span id="cb504-1"><a href="xai-説明可能な-ai.html#cb504-1" tabindex="-1"></a>X2 <span class="ot">&lt;-</span> card_test <span class="sc">%&gt;%</span></span>
+<span id="cb504-2"><a href="xai-説明可能な-ai.html#cb504-2" tabindex="-1"></a>  dplyr<span class="sc">::</span><span class="fu">select</span>(<span class="sc">-</span>default)</span>
+<span id="cb504-3"><a href="xai-説明可能な-ai.html#cb504-3" tabindex="-1"></a>y2 <span class="ot">&lt;-</span> <span class="fu">as.numeric</span>(card_test<span class="sc">$</span>default <span class="sc">==</span> <span class="st">&quot;yes&quot;</span>)  <span class="co"># 1: 延滞, 0: 延滞なし</span></span>
+<span id="cb504-4"><a href="xai-説明可能な-ai.html#cb504-4" tabindex="-1"></a>pred_card <span class="ot">&lt;-</span> Predictor<span class="sc">$</span><span class="fu">new</span>(fit_rf2, <span class="at">data =</span> X2, <span class="at">y =</span> y2, <span class="at">type =</span> <span class="st">&quot;prob&quot;</span>, <span class="at">class =</span> <span class="st">&quot;yes&quot;</span>)</span></code></pre></div>
+<p>PFI の損失関数には, 交差エントロピー (対数損失) を使う.
+予測確率が 0 や 1 になると交差エントロピーが無限大になるので, 0.001〜0.999 に切り詰めた関数を自作して渡す.</p>
+<div class="sourceCode" id="cb505"><pre class="sourceCode r"><code class="sourceCode r"><span id="cb505-1"><a href="xai-説明可能な-ai.html#cb505-1" tabindex="-1"></a>log_loss <span class="ot">&lt;-</span> <span class="cf">function</span>(actual, predicted) {</span>
+<span id="cb505-2"><a href="xai-説明可能な-ai.html#cb505-2" tabindex="-1"></a>  p <span class="ot">&lt;-</span> <span class="fu">pmin</span>(<span class="fu">pmax</span>(predicted, <span class="fl">0.001</span>), <span class="fl">0.999</span>)</span>
+<span id="cb505-3"><a href="xai-説明可能な-ai.html#cb505-3" tabindex="-1"></a>  <span class="sc">-</span><span class="fu">mean</span>(actual <span class="sc">*</span> <span class="fu">log</span>(p) <span class="sc">+</span> (<span class="dv">1</span> <span class="sc">-</span> actual) <span class="sc">*</span> <span class="fu">log</span>(<span class="dv">1</span> <span class="sc">-</span> p))</span>
+<span id="cb505-4"><a href="xai-説明可能な-ai.html#cb505-4" tabindex="-1"></a>}</span>
+<span id="cb505-5"><a href="xai-説明可能な-ai.html#cb505-5" tabindex="-1"></a><span class="fu">set.seed</span>(<span class="dv">111</span>)</span>
+<span id="cb505-6"><a href="xai-説明可能な-ai.html#cb505-6" tabindex="-1"></a>imp2 <span class="ot">&lt;-</span> FeatureImp<span class="sc">$</span><span class="fu">new</span>(pred_card, <span class="at">loss =</span> log_loss, <span class="at">n.repetitions =</span> <span class="dv">5</span>)</span>
+<span id="cb505-7"><a href="xai-説明可能な-ai.html#cb505-7" tabindex="-1"></a>imp2<span class="sc">$</span><span class="fu">plot</span>()</span></code></pre></div>
+<p><img src="_main_files/figure-html/unnamed-chunk-373-1.png" width="75%" /></p>
+<div class="sourceCode" id="cb506"><pre class="sourceCode r"><code class="sourceCode r"><span id="cb506-1"><a href="xai-説明可能な-ai.html#cb506-1" tabindex="-1"></a>imp2<span class="sc">$</span>results</span>
+<span id="cb506-2"><a href="xai-説明可能な-ai.html#cb506-2" tabindex="-1"></a><span class="co">#&gt;      feature importance.05 importance importance.95 permutation.error</span></span>
+<span id="cb506-3"><a href="xai-説明可能な-ai.html#cb506-3" tabindex="-1"></a><span class="co">#&gt; 1       util     1.7614046  1.8331339      1.878579         0.3027291</span></span>
+<span id="cb506-4"><a href="xai-説明可能な-ai.html#cb506-4" tabindex="-1"></a><span class="co">#&gt; 2      delay     1.0435925  1.0680454      1.130226         0.1763802</span></span>
+<span id="cb506-5"><a href="xai-説明可能な-ai.html#cb506-5" tabindex="-1"></a><span class="co">#&gt; 3     income     1.0076072  1.0254664      1.046572         0.1693486</span></span>
+<span id="cb506-6"><a href="xai-説明可能な-ai.html#cb506-6" tabindex="-1"></a><span class="co">#&gt; 4    n_cards     0.9779199  1.0049006      1.015768         0.1659523</span></span>
+<span id="cb506-7"><a href="xai-説明可能な-ai.html#cb506-7" tabindex="-1"></a><span class="co">#&gt; 5      limit     0.9853763  1.0015278      1.018784         0.1653952</span></span>
+<span id="cb506-8"><a href="xai-説明可能な-ai.html#cb506-8" tabindex="-1"></a><span class="co">#&gt; 6     tenure     0.9792463  1.0009014      1.023274         0.1652918</span></span>
+<span id="cb506-9"><a href="xai-説明可能な-ai.html#cb506-9" tabindex="-1"></a><span class="co">#&gt; 7        age     0.9833249  0.9958311      1.005027         0.1644545</span></span>
+<span id="cb506-10"><a href="xai-説明可能な-ai.html#cb506-10" tabindex="-1"></a><span class="co">#&gt; 8 cash_ratio     0.9606864  0.9820700      1.004136         0.1621819</span></span></code></pre></div>
+<p>利用率 (<code>util</code>) の重要度が突出して大きく, 次が支払遅延回数 (<code>delay</code>) である.
+その他の特徴量は重要度がほぼ 1 (1 を下回るものもあるが, 並べ替えの乱数による誤差) で, このモデルの予測にはほとんど寄与していない.</p>
+<p>PDP で, 利用率, 年齢と延滞確率の関係を見る.</p>
+<div class="sourceCode" id="cb507"><pre class="sourceCode r"><code class="sourceCode r"><span id="cb507-1"><a href="xai-説明可能な-ai.html#cb507-1" tabindex="-1"></a>pdp_util <span class="ot">&lt;-</span> FeatureEffect<span class="sc">$</span><span class="fu">new</span>(pred_card, <span class="at">feature =</span> <span class="st">&quot;util&quot;</span>, <span class="at">method =</span> <span class="st">&quot;pdp&quot;</span>, <span class="at">grid.size =</span> <span class="dv">20</span>)</span>
+<span id="cb507-2"><a href="xai-説明可能な-ai.html#cb507-2" tabindex="-1"></a>pdp_util<span class="sc">$</span><span class="fu">plot</span>()</span></code></pre></div>
+<p><img src="_main_files/figure-html/unnamed-chunk-374-1.png" width="75%" /></p>
+<div class="sourceCode" id="cb508"><pre class="sourceCode r"><code class="sourceCode r"><span id="cb508-1"><a href="xai-説明可能な-ai.html#cb508-1" tabindex="-1"></a>pdp_util<span class="sc">$</span><span class="fu">set.feature</span>(<span class="st">&quot;age&quot;</span>)</span>
+<span id="cb508-2"><a href="xai-説明可能な-ai.html#cb508-2" tabindex="-1"></a>pdp_util<span class="sc">$</span><span class="fu">plot</span>()</span></code></pre></div>
+<p><img src="_main_files/figure-html/unnamed-chunk-374-2.png" width="75%" /></p>
+<ul>
+<li><strong>利用率</strong>: 70%程度までは延滞確率は 2〜5%程度でほぼ一定だが, 80%を超えると急に上がり, 85%前後で約27%, 90%以上では約50%になる.
+利用枠の上限近くまで使っている顧客は, 資金繰りに余裕がない (流動性の制約に直面している) と考えられ, 実際の与信審査 (クレジット・スコアリング) でも, リボルビング枠の利用率は代表的な説明変数である.</li>
+<li><strong>年齢</strong>: 20代前半と60歳以上で延滞確率が高く, その間はほぼ一定の U 字型である.
+若年層は所得が不安定で信用履歴が短い, 高齢層は退職による所得の減少, といった解釈が考えられる.
+ただし, 両端はデータが少なく (年齢は 20〜75歳に分布し, 中心は40歳前後), PDP の推定は不安定である.
+また, 年齢のような属性を与信判断に使うことには, 公平性の観点から慎重な検討が必要である.</li>
+</ul>
+</div>
+<div id="個別の顧客の説明" class="section level3 unnumbered hasAnchor">
+<h3>個別の顧客の説明<a href="xai-説明可能な-ai.html#個別の顧客の説明" class="anchor-section" aria-label="Anchor link to header"></a></h3>
+<p>延滞確率が最も高いと予測された顧客について, SHAP で理由を分解する.</p>
+<div class="sourceCode" id="cb509"><pre class="sourceCode r"><code class="sourceCode r"><span id="cb509-1"><a href="xai-説明可能な-ai.html#cb509-1" tabindex="-1"></a>p_yes <span class="ot">&lt;-</span> <span class="fu">predict</span>(fit_rf2, <span class="at">newdata =</span> X2, <span class="at">type =</span> <span class="st">&quot;prob&quot;</span>)[, <span class="st">&quot;yes&quot;</span>]  <span class="co"># テストデータの予測確率</span></span>
+<span id="cb509-2"><a href="xai-説明可能な-ai.html#cb509-2" tabindex="-1"></a>i_hi <span class="ot">&lt;-</span> <span class="fu">which.max</span>(p_yes)</span>
+<span id="cb509-3"><a href="xai-説明可能な-ai.html#cb509-3" tabindex="-1"></a>p_yes[i_hi]</span>
+<span id="cb509-4"><a href="xai-説明可能な-ai.html#cb509-4" tabindex="-1"></a><span class="co">#&gt; 1682 </span></span>
+<span id="cb509-5"><a href="xai-説明可能な-ai.html#cb509-5" tabindex="-1"></a><span class="co">#&gt; 0.88</span></span>
+<span id="cb509-6"><a href="xai-説明可能な-ai.html#cb509-6" tabindex="-1"></a>X2[i_hi, ]</span>
+<span id="cb509-7"><a href="xai-説明可能な-ai.html#cb509-7" tabindex="-1"></a><span class="co">#&gt;      limit util delay age income cash_ratio tenure n_cards</span></span>
+<span id="cb509-8"><a href="xai-説明可能な-ai.html#cb509-8" tabindex="-1"></a><span class="co">#&gt; 1682   100 94.1     2  52    361       25.8    2.2       2</span></span>
+<span id="cb509-9"><a href="xai-説明可能な-ai.html#cb509-9" tabindex="-1"></a><span class="fu">set.seed</span>(<span class="dv">222</span>)</span>
+<span id="cb509-10"><a href="xai-説明可能な-ai.html#cb509-10" tabindex="-1"></a>shap_card <span class="ot">&lt;-</span> Shapley<span class="sc">$</span><span class="fu">new</span>(pred_card, <span class="at">x.interest =</span> X2[i_hi, ], <span class="at">sample.size =</span> <span class="dv">100</span>)</span>
+<span id="cb509-11"><a href="xai-説明可能な-ai.html#cb509-11" tabindex="-1"></a>shap_card<span class="sc">$</span><span class="fu">plot</span>()</span></code></pre></div>
+<p><img src="_main_files/figure-html/unnamed-chunk-375-1.png" width="75%" /></p>
+<div class="sourceCode" id="cb510"><pre class="sourceCode r"><code class="sourceCode r"><span id="cb510-1"><a href="xai-説明可能な-ai.html#cb510-1" tabindex="-1"></a>shap_card<span class="sc">$</span>results</span>
+<span id="cb510-2"><a href="xai-説明可能な-ai.html#cb510-2" tabindex="-1"></a><span class="co">#&gt;      feature          phi      phi.var   feature.value</span></span>
+<span id="cb510-3"><a href="xai-説明可能な-ai.html#cb510-3" tabindex="-1"></a><span class="co">#&gt; 1      limit  0.002066667 0.0006744736       limit=100</span></span>
+<span id="cb510-4"><a href="xai-説明可能な-ai.html#cb510-4" tabindex="-1"></a><span class="co">#&gt; 2       util  0.618600000 0.0492828687       util=94.1</span></span>
+<span id="cb510-5"><a href="xai-説明可能な-ai.html#cb510-5" tabindex="-1"></a><span class="co">#&gt; 3      delay  0.123433333 0.0170431998         delay=2</span></span>
+<span id="cb510-6"><a href="xai-説明可能な-ai.html#cb510-6" tabindex="-1"></a><span class="co">#&gt; 4        age  0.011866667 0.0015848081          age=52</span></span>
+<span id="cb510-7"><a href="xai-説明可能な-ai.html#cb510-7" tabindex="-1"></a><span class="co">#&gt; 5     income  0.035933333 0.0040338002      income=361</span></span>
+<span id="cb510-8"><a href="xai-説明可能な-ai.html#cb510-8" tabindex="-1"></a><span class="co">#&gt; 6 cash_ratio  0.018800000 0.0014315421 cash_ratio=25.8</span></span>
+<span id="cb510-9"><a href="xai-説明可能な-ai.html#cb510-9" tabindex="-1"></a><span class="co">#&gt; 7     tenure -0.002733333 0.0010573244      tenure=2.2</span></span>
+<span id="cb510-10"><a href="xai-説明可能な-ai.html#cb510-10" tabindex="-1"></a><span class="co">#&gt; 8    n_cards -0.003766667 0.0010513255       n_cards=2</span></span></code></pre></div>
+<p>この顧客の延滞確率の予測値は約88%で, 平均的な予測値 (約6%) を大きく上回る.
+その内訳の大部分は, 利用率 (94.1%) の寄与 (約 +62%ポイント) で, 次いで直近6か月の支払遅延 (2回) の寄与 (約 +12%ポイント) が大きい.
+年収 (361万円, 中央値の約440万円より低い) やキャッシング比率 (25.8%, 中央値の約15%より高い) は, 小さなプラスの寄与である.</p>
+<p><strong>自主課題</strong></p>
+<ol style="list-style-type: decimal">
+<li>この顧客の延滞確率が高い理由を, 顧客に説明するとしたらどう伝えるか? (説明可能性・説明責任: 与信判断の理由の開示)
+ヒント: 顧客が自分で変えられる要因 (利用率, 支払遅延) と, 変えられない要因 (年齢など) を区別して考えよう. 例えば, 利用率を 80%未満に下げると, 予測される延滞確率はどう変わるか? (<code>X2[i_hi, ]</code> の <code>util</code> を書き換えて <code>predict()</code> してみよう. このような説明は「反実仮想的な説明 (counterfactual explanation)」と呼ばれる)</li>
+<li>年齢を特徴量から除いたモデルを学習し, 予測精度や説明がどう変わるか確かめよう.</li>
+</ol>
+</div>
+</div>
+<div id="多値分類問題" class="section level2 hasAnchor" number="15.7">
+<h2><span class="header-section-number">15.7</span> 多値分類問題<a href="xai-説明可能な-ai.html#多値分類問題" class="anchor-section" aria-label="Anchor link to header"></a></h2>
+<div id="データ-社債発行体の格付-仮想データ-1" class="section level3 unnumbered hasAnchor">
+<h3>データ: 社債発行体の格付 (仮想データ)<a href="xai-説明可能な-ai.html#データ-社債発行体の格付-仮想データ-1" class="anchor-section" aria-label="Anchor link to header"></a></h3>
+<p>判別分析の章と同じデータである.</p>
+<pre><code>rating.csv: 600社
+- rating: 格付 (A / BBB / HY) (目的変数)
+- mcap, debt_ebitda, int_coverage, roa, equity_ratio, equity_vol (財務指標など)</code></pre>
+</div>
+<div id="決定木と-shap" class="section level3 unnumbered hasAnchor">
+<h3>決定木と SHAP<a href="xai-説明可能な-ai.html#決定木と-shap" class="anchor-section" aria-label="Anchor link to header"></a></h3>
+<p>ここでは, それ自体が「解釈可能なモデル」(ホワイトボックス・モデル) である決定木に SHAP を適用して, その出力を確認する.</p>
+<div class="sourceCode" id="cb512"><pre class="sourceCode r"><code class="sourceCode r"><span id="cb512-1"><a href="xai-説明可能な-ai.html#cb512-1" tabindex="-1"></a><span class="fu">library</span>(rpart)</span>
+<span id="cb512-2"><a href="xai-説明可能な-ai.html#cb512-2" tabindex="-1"></a><span class="fu">library</span>(rpart.plot)</span>
+<span id="cb512-3"><a href="xai-説明可能な-ai.html#cb512-3" tabindex="-1"></a>rating <span class="ot">&lt;-</span> <span class="fu">read.csv</span>(<span class="st">&quot;class/rating.csv&quot;</span>, <span class="at">stringsAsFactors =</span> <span class="cn">TRUE</span>)</span>
+<span id="cb512-4"><a href="xai-説明可能な-ai.html#cb512-4" tabindex="-1"></a>rating<span class="sc">$</span>rating <span class="ot">&lt;-</span> <span class="fu">factor</span>(rating<span class="sc">$</span>rating, <span class="at">levels =</span> <span class="fu">c</span>(<span class="st">&quot;A&quot;</span>, <span class="st">&quot;BBB&quot;</span>, <span class="st">&quot;HY&quot;</span>))</span>
+<span id="cb512-5"><a href="xai-説明可能な-ai.html#cb512-5" tabindex="-1"></a><span class="fu">set.seed</span>(<span class="dv">123</span>)</span>
+<span id="cb512-6"><a href="xai-説明可能な-ai.html#cb512-6" tabindex="-1"></a>fit_rpart <span class="ot">&lt;-</span> <span class="fu">rpart</span>(rating <span class="sc">~</span> ., <span class="at">data =</span> rating)</span>
+<span id="cb512-7"><a href="xai-説明可能な-ai.html#cb512-7" tabindex="-1"></a><span class="fu">rpart.plot</span>(fit_rpart, <span class="at">digits =</span> <span class="dv">3</span>)</span></code></pre></div>
+<p><img src="_main_files/figure-html/unnamed-chunk-376-1.png" width="75%" /></p>
+<p>最初の分岐は時価総額 (<code>mcap</code>), 次が負債 / EBITDA 倍率 (<code>debt_ebitda</code>) で, 「企業規模」と「レバレッジ (債務の返済能力)」で格付が大きく分かれる.
+格付会社の格付手法でも, 事業規模と財務レバレッジは主要な評価項目であり, 自然な結果である.</p>
+<p>各クラスの予測確率に対する Shapley 値は, 3クラス分を同時に表示できる.
+HY の企業の例:</p>
+<div class="sourceCode" id="cb513"><pre class="sourceCode r"><code class="sourceCode r"><span id="cb513-1"><a href="xai-説明可能な-ai.html#cb513-1" tabindex="-1"></a>X3 <span class="ot">&lt;-</span> rating <span class="sc">%&gt;%</span></span>
+<span id="cb513-2"><a href="xai-説明可能な-ai.html#cb513-2" tabindex="-1"></a>  dplyr<span class="sc">::</span><span class="fu">select</span>(<span class="sc">-</span>rating)</span>
+<span id="cb513-3"><a href="xai-説明可能な-ai.html#cb513-3" tabindex="-1"></a>pred_rt <span class="ot">&lt;-</span> Predictor<span class="sc">$</span><span class="fu">new</span>(fit_rpart, <span class="at">data =</span> X3, <span class="at">type =</span> <span class="st">&quot;prob&quot;</span>)</span>
+<span id="cb513-4"><a href="xai-説明可能な-ai.html#cb513-4" tabindex="-1"></a>i_hy <span class="ot">&lt;-</span> <span class="fu">which</span>(rating<span class="sc">$</span>rating <span class="sc">==</span> <span class="st">&quot;HY&quot;</span>)[<span class="dv">1</span>]</span>
+<span id="cb513-5"><a href="xai-説明可能な-ai.html#cb513-5" tabindex="-1"></a><span class="fu">predict</span>(fit_rpart, rating[i_hy, ])</span>
+<span id="cb513-6"><a href="xai-説明可能な-ai.html#cb513-6" tabindex="-1"></a><span class="co">#&gt;   A        BBB       HY</span></span>
+<span id="cb513-7"><a href="xai-説明可能な-ai.html#cb513-7" tabindex="-1"></a><span class="co">#&gt; 4 0 0.05633803 0.943662</span></span>
+<span id="cb513-8"><a href="xai-説明可能な-ai.html#cb513-8" tabindex="-1"></a><span class="fu">set.seed</span>(<span class="dv">222</span>)</span>
+<span id="cb513-9"><a href="xai-説明可能な-ai.html#cb513-9" tabindex="-1"></a>shap_rt <span class="ot">&lt;-</span> Shapley<span class="sc">$</span><span class="fu">new</span>(pred_rt, <span class="at">x.interest =</span> X3[i_hy, ])</span>
+<span id="cb513-10"><a href="xai-説明可能な-ai.html#cb513-10" tabindex="-1"></a>shap_rt<span class="sc">$</span><span class="fu">plot</span>()</span></code></pre></div>
+<p><img src="_main_files/figure-html/unnamed-chunk-377-1.png" width="75%" /></p>
+<div class="sourceCode" id="cb514"><pre class="sourceCode r"><code class="sourceCode r"><span id="cb514-1"><a href="xai-説明可能な-ai.html#cb514-1" tabindex="-1"></a>shap_rt<span class="sc">$</span>results <span class="sc">%&gt;%</span></span>
+<span id="cb514-2"><a href="xai-説明可能な-ai.html#cb514-2" tabindex="-1"></a>  <span class="fu">filter</span>(class <span class="sc">==</span> <span class="st">&quot;HY&quot;</span>)</span>
+<span id="cb514-3"><a href="xai-説明可能な-ai.html#cb514-3" tabindex="-1"></a><span class="co">#&gt;        feature class           phi      phi.var     feature.value</span></span>
+<span id="cb514-4"><a href="xai-説明可能な-ai.html#cb514-4" tabindex="-1"></a><span class="co">#&gt; 1         mcap    HY  0.2892665363 1.627078e-01          mcap=273</span></span>
+<span id="cb514-5"><a href="xai-説明可能な-ai.html#cb514-5" tabindex="-1"></a><span class="co">#&gt; 2  debt_ebitda    HY  0.2854742750 1.372134e-01  debt_ebitda=4.05</span></span>
+<span id="cb514-6"><a href="xai-説明可能な-ai.html#cb514-6" tabindex="-1"></a><span class="co">#&gt; 3 int_coverage    HY  0.0007619048 2.873176e-05    int_coverage=7</span></span>
+<span id="cb514-7"><a href="xai-説明可能な-ai.html#cb514-7" tabindex="-1"></a><span class="co">#&gt; 4          roa    HY  0.1716078007 1.034103e-01          roa=3.31</span></span>
+<span id="cb514-8"><a href="xai-説明可能な-ai.html#cb514-8" tabindex="-1"></a><span class="co">#&gt; 5 equity_ratio    HY  0.0000000000 0.000000e+00 equity_ratio=29.3</span></span>
+<span id="cb514-9"><a href="xai-説明可能な-ai.html#cb514-9" tabindex="-1"></a><span class="co">#&gt; 6   equity_vol    HY -0.0203846154 1.228274e-02   equity_vol=28.2</span></span></code></pre></div>
+<p>この企業 (時価総額 273, 負債 / EBITDA 4.05倍, ROA 3.31%) は, 決定木で HY の確率が約94%と予測されている (平均的な HY の確率は 25%).
+HY の確率を押し上げているのは, 時価総額が小さいこと (約 +0.29), 負債 / EBITDA 倍率が高いこと (約 +0.29), ROA が低いこと (約 +0.17) で, 「規模が小さく, レバレッジが高く, 収益性が低い」という, ハイイールド企業の典型的な姿である.
+インタレスト・カバレッジ・レシオ (7倍) は, この企業がたどる木の経路で使われていないので, 寄与はほぼ 0 である.</p>
+<p>なお, 3クラスの確率の合計は常に 1 なので, 各特徴量の Shapley 値を3クラスについて足すと 0 になる (例えば時価総額は, A で約 −0.26, BBB で約 −0.03, HY で約 +0.29).
+HY の確率を押し上げる特徴量は, A や BBB の確率を押し下げている.</p>
+<p>1つのクラス (HY か否か) に絞る場合は, <code>class = "HY"</code> を指定する.</p>
+<div class="sourceCode" id="cb515"><pre class="sourceCode r"><code class="sourceCode r"><span id="cb515-1"><a href="xai-説明可能な-ai.html#cb515-1" tabindex="-1"></a>pred_hy <span class="ot">&lt;-</span> Predictor<span class="sc">$</span><span class="fu">new</span>(fit_rpart, <span class="at">data =</span> X3, <span class="at">type =</span> <span class="st">&quot;prob&quot;</span>, <span class="at">class =</span> <span class="st">&quot;HY&quot;</span>)</span>
+<span id="cb515-2"><a href="xai-説明可能な-ai.html#cb515-2" tabindex="-1"></a><span class="fu">set.seed</span>(<span class="dv">222</span>)</span>
+<span id="cb515-3"><a href="xai-説明可能な-ai.html#cb515-3" tabindex="-1"></a>shap_hy <span class="ot">&lt;-</span> Shapley<span class="sc">$</span><span class="fu">new</span>(pred_hy, <span class="at">x.interest =</span> X3[i_hy, ])</span>
+<span id="cb515-4"><a href="xai-説明可能な-ai.html#cb515-4" tabindex="-1"></a>shap_hy<span class="sc">$</span><span class="fu">plot</span>()</span></code></pre></div>
+<p><img src="_main_files/figure-html/unnamed-chunk-378-1.png" width="75%" /></p>
+<p>自己資本比率 (<code>equity_ratio</code>) のように, 決定木のどの分岐にも使われていない変数の Shapley 値は, ちょうど 0 になる.
+一方, 株価ボラティリティ (<code>equity_vol</code>) は, この企業がたどる経路では使われていないが, 木の別の分岐では使われているので, Shapley 値は小さいが 0 ではない.
+Shapley 値の計算では, 他の特徴量の値を別のデータ点の値に置き換えた組合せも評価するので, その組合せでは別の経路をたどり, そこで使われる変数にも寄与が配分されるためである.</p>
+
+</div>
+</div>
+</div>
+            </section>
+
+          </div>
+        </div>
+      </div>
+<a href="クラスター分析.html" class="navigation navigation-prev " aria-label="Previous page"><i class="fa fa-angle-left"></i></a>
+<a href="生成aiによる-r-コーディング.html" class="navigation navigation-next " aria-label="Next page"><i class="fa fa-angle-right"></i></a>
+    </div>
+  </div>
+<script src="libs/gitbook-2.6.7/js/app.min.js"></script>
+<script src="libs/gitbook-2.6.7/js/clipboard.min.js"></script>
+<script src="libs/gitbook-2.6.7/js/plugin-search.js"></script>
+<script src="libs/gitbook-2.6.7/js/plugin-sharing.js"></script>
+<script src="libs/gitbook-2.6.7/js/plugin-fontsettings.js"></script>
+<script src="libs/gitbook-2.6.7/js/plugin-bookdown.js"></script>
+<script src="libs/gitbook-2.6.7/js/jquery.highlight.js"></script>
+<script src="libs/gitbook-2.6.7/js/plugin-clipboard.js"></script>
+<script>
+gitbook.require(["gitbook"], function(gitbook) {
+gitbook.start({
+"sharing": {
+"github": false,
+"facebook": true,
+"twitter": true,
+"linkedin": false,
+"weibo": false,
+"instapaper": false,
+"vk": false,
+"whatsapp": false,
+"all": ["facebook", "twitter", "linkedin", "weibo", "instapaper"]
+},
+"fontsettings": {
+"theme": "white",
+"family": "sans",
+"size": 2
+},
+"edit": {
+"link": null,
+"text": null
+},
+"history": {
+"link": null,
+"text": null
+},
+"view": {
+"link": null,
+"text": null
+},
+"download": null,
+"search": {
+"engine": "fuse",
+"options": null
+},
+"toc": {
+"collapse": "subsection"
+}
+});
+});
+</script>
+
+<!-- dynamically load mathjax for compatibility with self-contained -->
+<script>
+  (function () {
+    var script = document.createElement("script");
+    script.type = "text/javascript";
+    var src = "true";
+    if (src === "" || src === "true") src = "https://cdnjs.cloudflare.com/ajax/libs/mathjax/2.7.9/latest.js?config=TeX-MML-AM_CHTML";
+    if (location.protocol !== "file:")
+      if (/^https?:/.test(src))
+        src = src.replace(/^https?:/, '');
+    script.src = src;
+    document.getElementsByTagName("head")[0].appendChild(script);
+  })();
+</script>
+</body>
+
+</html>
