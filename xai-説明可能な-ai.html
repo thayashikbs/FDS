@@ -883,18 +883,24 @@ LIME ではレバレッジの寄与がプラスだったが, SHAP は「平均�
 <span id="cb501-2"><a href="xai-説明可能な-ai.html#cb501-2" tabindex="-1"></a>idx <span class="ot">&lt;-</span> <span class="fu">sample</span>(<span class="fu">nrow</span>(X), <span class="dv">50</span>)</span>
 <span id="cb501-3"><a href="xai-説明可能な-ai.html#cb501-3" tabindex="-1"></a>shap_all <span class="ot">&lt;-</span> <span class="fu">map_dfr</span>(idx, <span class="cf">function</span>(i) {</span>
 <span id="cb501-4"><a href="xai-説明可能な-ai.html#cb501-4" tabindex="-1"></a>  shapley<span class="sc">$</span><span class="fu">explain</span>(<span class="at">x.interest =</span> X[i, ])</span>
-<span id="cb501-5"><a href="xai-説明可能な-ai.html#cb501-5" tabindex="-1"></a>  shapley<span class="sc">$</span>results <span class="sc">%&gt;%</span></span>
-<span id="cb501-6"><a href="xai-説明可能な-ai.html#cb501-6" tabindex="-1"></a>    <span class="fu">mutate</span>(<span class="at">id =</span> i)</span>
-<span id="cb501-7"><a href="xai-説明可能な-ai.html#cb501-7" tabindex="-1"></a>})</span>
-<span id="cb501-8"><a href="xai-説明可能な-ai.html#cb501-8" tabindex="-1"></a>shap_all <span class="sc">%&gt;%</span></span>
-<span id="cb501-9"><a href="xai-説明可能な-ai.html#cb501-9" tabindex="-1"></a>  <span class="fu">group_by</span>(feature) <span class="sc">%&gt;%</span></span>
-<span id="cb501-10"><a href="xai-説明可能な-ai.html#cb501-10" tabindex="-1"></a>  <span class="fu">summarise</span>(<span class="at">mean_abs_phi =</span> <span class="fu">mean</span>(<span class="fu">abs</span>(phi))) <span class="sc">%&gt;%</span></span>
-<span id="cb501-11"><a href="xai-説明可能な-ai.html#cb501-11" tabindex="-1"></a>  <span class="fu">arrange</span>(<span class="fu">desc</span>(mean_abs_phi))</span>
-<span id="cb501-12"><a href="xai-説明可能な-ai.html#cb501-12" tabindex="-1"></a><span class="co">#&gt;   mean_abs_phi</span></span>
-<span id="cb501-13"><a href="xai-説明可能な-ai.html#cb501-13" tabindex="-1"></a><span class="co">#&gt; 1     8.270786</span></span></code></pre></div>
+<span id="cb501-5"><a href="xai-説明可能な-ai.html#cb501-5" tabindex="-1"></a>  shapley<span class="sc">$</span>results <span class="sc">%&gt;%</span> <span class="fu">mutate</span>(<span class="at">id =</span> i)</span>
+<span id="cb501-6"><a href="xai-説明可能な-ai.html#cb501-6" tabindex="-1"></a>})</span>
+<span id="cb501-7"><a href="xai-説明可能な-ai.html#cb501-7" tabindex="-1"></a>shap_all <span class="sc">%&gt;%</span></span>
+<span id="cb501-8"><a href="xai-説明可能な-ai.html#cb501-8" tabindex="-1"></a>  <span class="fu">group_by</span>(feature) <span class="sc">%&gt;%</span></span>
+<span id="cb501-9"><a href="xai-説明可能な-ai.html#cb501-9" tabindex="-1"></a>  dplyr<span class="sc">::</span><span class="fu">summarise</span>(<span class="at">mean_abs_phi =</span> <span class="fu">mean</span>(<span class="fu">abs</span>(phi))) <span class="sc">%&gt;%</span>   <span class="co"># dplyr:: を明示 (下の注を参照)</span></span>
+<span id="cb501-10"><a href="xai-説明可能な-ai.html#cb501-10" tabindex="-1"></a>  <span class="fu">arrange</span>(<span class="fu">desc</span>(mean_abs_phi))</span>
+<span id="cb501-11"><a href="xai-説明可能な-ai.html#cb501-11" tabindex="-1"></a><span class="co">#&gt; # A tibble: 5 × 2</span></span>
+<span id="cb501-12"><a href="xai-説明可能な-ai.html#cb501-12" tabindex="-1"></a><span class="co">#&gt;   feature    mean_abs_phi</span></span>
+<span id="cb501-13"><a href="xai-説明可能な-ai.html#cb501-13" tabindex="-1"></a><span class="co">#&gt;   &lt;chr&gt;             &lt;dbl&gt;</span></span>
+<span id="cb501-14"><a href="xai-説明可能な-ai.html#cb501-14" tabindex="-1"></a><span class="co">#&gt; 1 equity_vol        20.8 </span></span>
+<span id="cb501-15"><a href="xai-説明可能な-ai.html#cb501-15" tabindex="-1"></a><span class="co">#&gt; 2 leverage          10.3 </span></span>
+<span id="cb501-16"><a href="xai-説明可能な-ai.html#cb501-16" tabindex="-1"></a><span class="co">#&gt; 3 maturity           3.70</span></span>
+<span id="cb501-17"><a href="xai-説明可能な-ai.html#cb501-17" tabindex="-1"></a><span class="co">#&gt; 4 industry           3.32</span></span>
+<span id="cb501-18"><a href="xai-説明可能な-ai.html#cb501-18" tabindex="-1"></a><span class="co">#&gt; 5 log_assets         3.30</span></span></code></pre></div>
 <p>上位2つ (ボラティリティ, レバレッジ) は PFI と同じである.
 残りの3つは, PFI でも SHAP でも重要度が小さく互いに近いので, 順位の違いに大きな意味はない (50銘柄の標本や, モンテカルロ近似の誤差で入れ替わりうる).
 PFI は「その特徴量の情報を失うと予測がどれだけ悪くなるか」, SHAP の絶対値の平均は「その特徴量が予測値をどれだけ動かしているか」を測るもので, 考え方は異なるが, 重要な特徴量については結論が一致することが多い.</p>
+<p><em>注) <code>summarise()</code> に <code>dplyr::</code> を付けているのは, パッケージ<strong>plyr</strong>が読み込まれていると (例えば, パッケージ<strong>caret</strong>で勾配ブースティング (<code>method = "gbm"</code>) を使った後など), <code>summarise()</code> が plyr の同名の関数になり, <code>group_by()</code> が無視されて全体の平均が1行だけ表示されてしまうためである. 意図しない結果になったときは, 関数名の衝突 (一般化加法モデルの章を参照) を疑うとよい.</em></p>
 </div>
 </div>
 <div id="値分類問題" class="section level2 hasAnchor" number="15.6">
